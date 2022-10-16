@@ -1,0 +1,451 @@
+// Tailwind CSS
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;700&display=swap'); // Teko
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap'); // Montserrat
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Teko&display=swap'); // Space Mono
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Text:wght@400;500;600&display=swap'); // Big Shoulder
+
+:root{
+  // background
+  --main-bg: #E5E4E3;
+  // text color
+  --main-color: #0F0E17;
+  // pallete
+  --red: #CC2525;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  color: #0F0E17;
+  text-transform: uppercase;
+	-webkit-overflow-scrolling: touch;
+	// overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  
+  body{
+    background: var(--main-bg);
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: visible;
+    // height: 100vh;
+
+    // navbar - logo
+    #logo-container{
+      height: 30px;
+      position: relative;
+      overflow: hidden; 
+      
+      #logo{
+        position: absolute;
+        top: 30px;
+      }
+    }
+
+    // navbar - links
+    #link-container{
+      height: 30px;
+      position: relative;
+      overflow: hidden; 
+      
+      #link{
+        position: absolute;
+        top: 30px;
+        text-align: right;
+        
+        span{
+          position: relative;
+          letter-spacing: 0;
+          transition: .3s ease-in-out;
+
+          &:hover{
+            letter-spacing: 2px;
+          }
+
+          #icon{
+            transform: rotate(0deg);
+            transition: all .3s ease-in-out;
+            border-radius: 50%;
+          }
+  
+          &:hover{
+            #icon{
+              transform: rotate(-45deg);
+              transition: all .3s ease-in-out;
+              background: var(--main-color);
+              fill: var(--main-bg);
+              border-radius: 50%;
+            }
+          }
+
+          // &::before{
+          //   content: '';
+          //   position: absolute;
+          //   width: 100%;
+          //   height: 1px;
+          //   background-color: var(--main-color);
+          //   left: 0;
+          //   bottom: 1px;
+          //   transform-origin: right;
+          //   transform: scaleX(0);
+          //   transition: transform .3s ease-in-out;
+          // }
+
+          // &:hover::before{
+          //   transform-origin: left;
+          //   transform: scaleX(1);
+          // }
+        }
+      }
+    }
+
+    //hero section
+    #hero-container{
+      height: 150px;
+      width: 100%;
+      position: relative;
+      
+      #span-container{
+        height: 150px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        
+        #span{
+          position: absolute;
+          top: 150px;
+          width: 100%;
+
+          #highlight{
+            &:hover{
+              cursor: pointer;
+              color: var(--main-bg);
+              -webkit-text-stroke-width: 2px;
+              -webkit-text-stroke-color: var(--main-color);
+            }
+          }
+        }
+      }
+    }
+
+    #cta-container{
+      height: 25px;
+      width: 100%;
+      position: relative;
+      overflow: hidden; 
+      
+      #cta{
+        position: absolute;
+        top: 50px;
+        letter-spacing: 0;
+        transition: .3s ease-in-out;
+
+        #icon{
+          transform: rotate(0deg);
+          transition: all .3s ease-in-out;
+          border-radius: 50%;
+        }
+        
+        &:hover{
+          letter-spacing: 2px;
+
+          #icon{
+            transform: rotate(-45deg);
+            transition: all .3s ease-in-out;
+            background: var(--main-color);
+            fill: var(--main-bg);
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+
+    #p-container{
+      height: 20px;
+      width: 100%;
+      position: relative;
+      overflow: hidden; 
+
+      #p{
+        position: absolute;
+        top: 20px;
+        width: 100%;
+      }
+    }
+
+    // about section
+    #about-container{
+      height: 95px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+
+      #greet{
+        position: absolute;
+        top: 95px;
+      }
+
+      #text{
+        position: absolute;
+        top: 95px;
+        width: 100%;
+        margin-left: 315px;
+        // color: var(--main-bg);
+        // -webkit-text-stroke-width: 1px;
+        // -webkit-text-stroke-color: var(--main-color);
+      }
+    }
+
+    #content-container{
+      height: 50px;
+      width: 100%;
+      position: relative;
+      overflow: hidden; 
+
+      #about{
+        position: absolute;
+        top: 130px;
+        width: 100%;
+      }
+    }
+
+    #reveal{
+      #img{
+        width: 400px;
+        height: 500px;
+        position: absolute;
+        top: 1250px;
+        object-fit: cover;
+        transform-origin: left;
+      }
+    }
+
+    #list{
+      border-top: 1px solid var(--main-color);
+      position: relative;
+      overflow: hidden;
+      // width: 0px;
+      
+      &:last-child{
+        border-bottom: 1px solid var(--main-color);
+      }
+
+      ul{
+        li{
+          margin-right: 10px;
+        }
+      }
+    }
+
+    #stack-container{
+      height: 50px;
+      position: relative;
+      overflow: hidden;
+
+      #stack-header{
+        position: absolute;
+        top: 50px;
+        width: 100%;
+      }
+    }
+
+    #stacks{
+      height: 20px;
+      position: relative;
+      overflow: hidden;
+
+      #stack-context{
+        position: absolute;
+        top: 20px;
+        width: 100%;
+      }
+    }
+
+    #btn-container{
+      height: 50px;
+      width: 100%;
+      position: relative;
+      overflow: hidden; 
+      
+      #btn{
+        width: 235px;
+        position: absolute;
+        letter-spacing: 0;
+        transition: .3s ease-in-out;
+
+        &:hover{
+          letter-spacing: 2px;
+        }
+
+        // #icon{
+        //   transform: rotate(0deg);
+        //   transition: all .3s ease-in-out;
+        //   border-radius: 50%;
+        // }
+
+        // &:hover{
+        //   #icon{
+        //     transform: rotate(-45deg);
+        //     transition: all .3s ease-in-out;
+        //     background: var(--main-color);
+        //     fill: var(--main-bg);
+        //     border-radius: 50%;
+        //   }
+        // }
+      }
+    }
+
+    // selected projects
+    #selected-project{
+      height: 95px;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    
+      #projects{
+        position: absolute;
+        height: 95px;
+        width: 100%;
+        top: 100px;
+      }
+    }
+
+    #description-container{
+      height: 20px;
+      width: 100%;
+      overflow: hidden; 
+      position: relative;
+    
+      #description {
+        position: absolute;
+        width: 100%;
+        top: 100px;
+      }
+    }
+
+    #card{
+      margin-top: 200px;
+    }
+
+    #project-container{
+      height: 70px;
+      position: relative;
+      overflow: hidden;
+
+      #project-title{
+        position: absolute;
+        top: 70px;
+      }
+    }
+
+    #project-context{
+      height: 20px;
+      position: relative;
+      overflow: hidden;
+
+      #project-timeline{
+        position: absolute;
+        top: 20px;
+      }
+    }
+
+    #data-list{
+      li{
+        margin-right: 10px;
+      }
+    }
+    
+    #project-link{
+      // position: relative;
+      // overflow: hidden;
+
+      a{
+        // position: absolute;
+        // left: -28px;
+        // top: -28px;
+        
+        #icon{
+          transform: rotate(0deg);
+          transition: all .3s ease-in-out;
+          border-radius: 50%;
+        }
+  
+        &:hover{
+          #icon{
+            transform: rotate(-45deg);
+            transition: all .3s ease-in-out;
+            background: var(--main-bg);
+            fill: var(--main-color);
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+
+    // contact
+    #email-container{
+      height: 180px;
+      width: 100%;
+      overflow: hidden; 
+      position: relative;
+
+      #drop{
+        position: absolute;
+        top: 180px;
+        width: 100%;
+      }
+      
+      #message{
+        position: absolute;
+        top: 180px;
+        width: 100%;
+      }
+    }
+
+    #contact-container{
+      height: 20px;
+      width: 100%;
+      overflow: hidden; 
+      position: relative;
+
+      #context{
+        position: absolute;
+        width: 100%;
+        top: 20px;
+      }
+    }
+
+    #account-container{
+      height: 35px;
+      width: 100%;
+      overflow: hidden; 
+      position: relative;
+
+      #accounts{
+        position: absolute;
+        width: 100%;
+        top: 35px;
+      }
+    }
+
+    // footer
+    #footer-container{
+      height: 20px;
+      width: 100%;
+      position: relative;
+      overflow: hidden; 
+
+      #context{
+        position: absolute;
+        width: 100%;
+        top: 20px;
+      }
+    }
+  }
+}
