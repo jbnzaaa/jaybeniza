@@ -25,15 +25,15 @@
   font-family: 'Montserrat', sans-serif;
   color: #0F0E17;
   text-transform: uppercase;
-	-webkit-overflow-scrolling: touch;
+	// -webkit-overflow-scrolling: touch;
 	// overflow-scrolling: touch;
   scroll-behavior: smooth;
   
   body{
     background: var(--main-bg);
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: visible;
+    // position: relative;
+    // overflow-x: hidden;
+    // overflow-y: visible;
     // height: 100vh;
 
     // navbar - logo
@@ -330,7 +330,7 @@
     }
 
     #card{
-      margin-top: 200px;
+      margin-top: 100px;
     }
 
     #project-container{
@@ -365,10 +365,18 @@
       // position: relative;
       // overflow: hidden;
 
-      a{
-        // position: absolute;
-        // left: -28px;
-        // top: -28px;
+      a, button{
+        border-radius: 50%;
+
+        span{
+          position: relative;
+          letter-spacing: 0;
+          transition: .3s ease-in-out;
+
+          &:hover{
+            letter-spacing: 2px;
+          }
+        }
         
         #icon{
           transform: rotate(0deg);
@@ -383,6 +391,73 @@
             background: var(--main-bg);
             fill: var(--main-color);
             border-radius: 50%;
+          }
+        }
+      }
+    }
+
+    #card-container{
+      position: relative;
+      overflow: hidden;
+
+      #project-card{
+        position: absolute;
+        top: 100vh;
+
+        #span-container{
+          position: relative;
+          overflow: hidden;
+          height: 20px;
+
+          span, ul{
+            position: absolute;
+            top: 20px;
+          }
+        }
+
+        #title-container{
+          position: relative;
+          overflow: hidden;
+          height: 40px;
+
+          #title{
+            position: absolute;
+            top: 40px;
+          }
+        }
+
+        #p-container{
+          position: relative;
+          overflow: hidden;
+          height: 20px;
+
+          p{
+            position: absolute;
+            top: 20px;
+          }
+        }
+
+        #button-container{
+          position: relative;
+          overflow: hidden;
+          height: 25px;
+          border-radius: 0;
+
+          span{
+            position: absolute;
+            top: 25px;
+          }
+        }
+
+        #img-container{
+          position: relative;
+          overflow: hidden;
+          height: 100%;
+
+          #project-img{
+            position: absolute;
+            top: 723px;
+            transform-origin: bottom;
           }
         }
       }

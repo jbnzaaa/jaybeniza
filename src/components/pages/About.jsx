@@ -284,7 +284,7 @@ function About() {
 
   return (
     <>
-      <div className="px-[3em]" id='about'>
+      <div id='about'>
         {/* first grid */}
         <div className="grid grid-cols-4 gap-0 py-40" ref={effectContainer}>
           {/*  */}

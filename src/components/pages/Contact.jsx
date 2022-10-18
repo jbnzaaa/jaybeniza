@@ -1,7 +1,5 @@
 //
-import React, { useRef, useState, useEffect } from 'react'
-// icons
-import {RiArrowRightDownLine} from 'react-icons/ri'
+import React, { useRef, useEffect } from 'react'
 // GSAP
 import gsap from 'gsap' 
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -38,8 +36,9 @@ function Contact() {
       ease: 'power1.inOut',
       scrollTrigger: {
         trigger: fxDrop.current,
-        start: 'bottom 125%',
+        start: 'bottom 130%',
         toggleActions: "play none none reverse",
+        // markers: true
       }
     });
     
@@ -49,8 +48,9 @@ function Contact() {
       ease: 'power1.inOut',
       scrollTrigger: {
         trigger: fxMessage.current,
-        start: 'bottom 125%',
+        start: 'bottom 130%',
         toggleActions: "play none none reverse",
+        // markers: true
       }
     });
     
@@ -169,19 +169,19 @@ function Contact() {
 
   return (
     <>
-      <div className="px-[3em]" id='contact'>
+      <div id='contact'>
         {/*  */}
-        <div className="grid grid-cols-4 gap-0 pt-20" ref={fxEmailContainer}>
+        <div className="grid grid-cols-4 gap-0 py-20" ref={fxEmailContainer}>
           {/*  */}
-          <div className="col-span-3 h-[90vh] flex flex-col justify-end py-10">
+          <section className="col-span-3 flex flex-col justify-end py-10">
             <div id='email-container'>
               <span className='font-teko font-medium text-[15em] leading-none italic tracking-tight' id='drop' ref={fxDrop}>Drop a</span>
             </div>
             <div id='email-container'>
               <span className='font-teko font-medium text-[15em] leading-none italic tracking-tight' id='message' ref={fxMessage}>Message</span>
             </div>
-          </div>
-          <div className="col-span-1 col-start-4 h-[85vh] flex flex-col justify-end py-10">
+          </section>
+          <section className="col-span-1 col-start-4 flex flex-col justify-end py-10">
             <div className='font-montserrat font-regular text-[1em]'>
               <div id="contact-container">
                 <p className='indent-20' id='context' ref={fxContext1}>DO YOU HAVE ANY IDEAS IN MIND?</p>
@@ -198,7 +198,7 @@ function Contact() {
             </div>
             <div className="flex flex-col flew-wrap font-montserrat text-[1em] pt-10">
               <div id='account-container'>
-                <a className='my-2' href='' target='' id='accounts' ref={fxAccounts1}>Email</a>
+                <a className='my-2' href='mailto:jaysonbeniza@gmail.com' target='mailto:jaysonbeniza@gmail.com' id='accounts' ref={fxAccounts1}>Email</a>
               </div>
               <div id='account-container'>
                 <a className='my-2' href='https://www.facebook.com/jbnzaaa' target='https://www.facebook.com/jbnzaaa' id='accounts' ref={fxAccounts2}>Facebook</a>
@@ -216,7 +216,7 @@ function Contact() {
                 <a className='my-2' href='https://www.linkedin.com/in/jaybeniza/' target='https://www.linkedin.com/in/jaybeniza/' id='accounts' ref={fxAccounts6}>LinkedIn</a>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </>

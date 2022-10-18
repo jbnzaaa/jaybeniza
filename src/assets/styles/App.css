@@ -19,15 +19,11 @@
   font-family: 'Montserrat', sans-serif;
   color: #0F0E17;
   text-transform: uppercase;
-  -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
 }
 
 * body {
   background: var(--main-bg);
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: visible;
 }
 
 * body #logo-container {
@@ -286,7 +282,7 @@
 }
 
 * body #card {
-  margin-top: 200px;
+  margin-top: 100px;
 }
 
 * body #project-container {
@@ -315,7 +311,22 @@
   margin-right: 10px;
 }
 
-* body #project-link a #icon {
+* body #project-link a, * body #project-link button {
+  border-radius: 50%;
+}
+
+* body #project-link a span, * body #project-link button span {
+  position: relative;
+  letter-spacing: 0;
+  -webkit-transition: .3s ease-in-out;
+  transition: .3s ease-in-out;
+}
+
+* body #project-link a span:hover, * body #project-link button span:hover {
+  letter-spacing: 2px;
+}
+
+* body #project-link a #icon, * body #project-link button #icon {
   -webkit-transform: rotate(0deg);
           transform: rotate(0deg);
   -webkit-transition: all .3s ease-in-out;
@@ -323,7 +334,7 @@
   border-radius: 50%;
 }
 
-* body #project-link a:hover #icon {
+* body #project-link a:hover #icon, * body #project-link button:hover #icon {
   -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
   -webkit-transition: all .3s ease-in-out;
@@ -331,6 +342,74 @@
   background: var(--main-bg);
   fill: var(--main-color);
   border-radius: 50%;
+}
+
+* body #card-container {
+  position: relative;
+  overflow: hidden;
+}
+
+* body #card-container #project-card {
+  position: absolute;
+  top: 100vh;
+}
+
+* body #card-container #project-card #span-container {
+  position: relative;
+  overflow: hidden;
+  height: 20px;
+}
+
+* body #card-container #project-card #span-container span, * body #card-container #project-card #span-container ul {
+  position: absolute;
+  top: 20px;
+}
+
+* body #card-container #project-card #title-container {
+  position: relative;
+  overflow: hidden;
+  height: 40px;
+}
+
+* body #card-container #project-card #title-container #title {
+  position: absolute;
+  top: 40px;
+}
+
+* body #card-container #project-card #p-container {
+  position: relative;
+  overflow: hidden;
+  height: 20px;
+}
+
+* body #card-container #project-card #p-container p {
+  position: absolute;
+  top: 20px;
+}
+
+* body #card-container #project-card #button-container {
+  position: relative;
+  overflow: hidden;
+  height: 25px;
+  border-radius: 0;
+}
+
+* body #card-container #project-card #button-container span {
+  position: absolute;
+  top: 25px;
+}
+
+* body #card-container #project-card #img-container {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+* body #card-container #project-card #img-container #project-img {
+  position: absolute;
+  top: 723px;
+  -webkit-transform-origin: bottom;
+          transform-origin: bottom;
 }
 
 * body #email-container {

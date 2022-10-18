@@ -206,58 +206,56 @@ function Hero() {
 
   return (
     <>
-      <BrowserRouter>
-        <div className="grid grid-cols-4 grid-rows-4 gap-0 py-20">
-          <section className='col-span-1'>
-            <div className='text-[1em]'>
-              <div id="p-container">
-                <p className='indent-20' id='p' ref={fxParagraph1}>I'm an passionate web and user</p>
-              </div>
-              <div id="p-container">
-                <p id='p' ref={fxParagraph2}>interface designer based in Philippines.</p>
-              </div>
-              <div id="p-container">
-                <p id='p' ref={fxParagraph3}>Striving to create and deliver design</p>
-              </div>
-              <div id="p-container">
-                <p id='p' ref={fxParagraph4}>interface that go above and beyond </p>
-              </div>
-              <div id="p-container">
-                <p id='p' ref={fxParagraph5}>what user expects.</p>
-              </div>
+      <div className="grid grid-cols-4 grid-rows-4 gap-0 py-20">
+        <section className='col-span-1'>
+          <div className='text-[1em]'>
+            <div id="p-container">
+              <p className='indent-20' id='p' ref={fxParagraph1}>I'm an passionate web and user</p>
             </div>
-          </section>
-          <section className="col-span-3" id='hero-container'>
-            <div id='span-container' ref={fxVisible1}>
-              <span className='font-teko font-semibold text-[12.6em] leading-none italic tracking-normal text-right' id='span' ref={fxWord1}>
-                I create <span className='font-teko font-semibold leading-none italic tracking-normal text-right pr-7' id='highlight'>web</span>
+            <div id="p-container">
+              <p id='p' ref={fxParagraph2}>interface designer based in Philippines.</p>
+            </div>
+            <div id="p-container">
+              <p id='p' ref={fxParagraph3}>Striving to create and deliver design</p>
+            </div>
+            <div id="p-container">
+              <p id='p' ref={fxParagraph4}>interface that go above and beyond </p>
+            </div>
+            <div id="p-container">
+              <p id='p' ref={fxParagraph5}>what user expects.</p>
+            </div>
+          </div>
+        </section>
+        <section className="col-span-3" id='hero-container'>
+          <div id='span-container' ref={fxVisible1}>
+            <span className='font-teko font-semibold text-[12.6em] leading-none italic tracking-normal text-right' id='span' ref={fxWord1}>
+              I create <span className='font-teko font-semibold leading-none italic tracking-normal text-right pr-7' id='highlight'>web</span>
+            </span>
+          </div>
+        </section>
+        <section className="col-span-4" id='hero-container'>
+          <div id="span-container" ref={fxVisible2}>
+            <span className='font-teko font-semibold text-[12.6em] leading-none italic tracking-tight' id='span' ref={fxWord2}>
+              and <span className='font-teko font-semibold leading-none italic tracking-tight' id='highlight'>user interface</span>
+            </span>
+          </div>
+        </section>
+        <section className="col-span-3" id='hero-container'>
+          <div id="span-container" ref={fxVisible3}>
+            <span className='font-teko font-semibold text-[12.6em] leading-none italic tracking-tight' id='span' ref={fxWord3}>designs</span>
+          </div>
+        </section>
+        <section className='col-start-4 flex items-end'>
+          {/* <div className="flex justify-end" id='cta-container'>
+            <Link to='/#about' className="flex items-center" id='cta' ref={fxButton}>
+              <span className='text-black text-[1em] font-regular flex'>
+                Keep scrolling
+                <RiArrowRightDownLine id='icon' className='fill-black text-2xl ml-1'/>  
               </span>
-            </div>
-          </section>
-          <section className="col-span-4" id='hero-container'>
-            <div id="span-container" ref={fxVisible2}>
-              <span className='font-teko font-semibold text-[12.6em] leading-none italic tracking-tight' id='span' ref={fxWord2}>
-                and <span className='font-teko font-semibold leading-none italic tracking-tight' id='highlight'>user interface</span>
-              </span>
-            </div>
-          </section>
-          <section className="col-span-3" id='hero-container'>
-            <div id="span-container" ref={fxVisible3}>
-              <span className='font-teko font-semibold text-[12.6em] leading-none italic tracking-tight' id='span' ref={fxWord3}>designs</span>
-            </div>
-          </section>
-          <section className='col-start-4 flex items-end'>
-            {/* <div className="flex justify-end" id='cta-container'>
-              <Link to='/#about' className="flex items-center" id='cta' ref={fxButton}>
-                <span className='text-black text-[1em] font-regular flex'>
-                  Keep scrolling
-                  <RiArrowRightDownLine id='icon' className='fill-black text-2xl ml-1'/>  
-                </span>
-              </Link>
-            </div> */}
-          </section>
-        </div>
-      </BrowserRouter>
+            </Link>
+          </div> */}
+        </section>
+      </div>
     </>
   )
 }

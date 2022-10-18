@@ -1,7 +1,7 @@
 //
 import React, { useRef, useState, useEffect } from 'react'
-// icons
-import {RiArrowRightDownLine} from 'react-icons/ri'
+// React Router DOM
+import { useLocation } from 'react-router-dom'
 // GSAP
 import gsap from 'gsap' 
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -13,6 +13,10 @@ function Footer() {
   const fxDate = useRef();
   const fxDevDes = useRef();
   const fxMe = useRef();
+  const test = useRef();
+
+  const [showFooter] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     gsap.to(fxCopyright.current ,{
@@ -21,6 +25,7 @@ function Footer() {
       ease: 'expo.out',
       scrollTrigger: {
         trigger: fxCopyright.current,
+        start: 'bottom 115%',
         toggleActions: "play none none reverse",
       }
     });
@@ -31,6 +36,7 @@ function Footer() {
       ease: 'expo.out',
       scrollTrigger: {
         trigger: fxLastUpdate.current,
+        start: 'bottom 115%',
         toggleActions: "play none none reverse",
       }
     });
@@ -41,6 +47,7 @@ function Footer() {
       ease: 'expo.out',
       scrollTrigger: {
         trigger: fxDate.current,
+        start: 'bottom 115%',
         toggleActions: "play none none reverse",
       }
     });
@@ -51,6 +58,7 @@ function Footer() {
       ease: 'expo.out',
       scrollTrigger: {
         trigger: fxDevDes.current,
+        start: 'bottom 115%',
         toggleActions: "play none none reverse",
       }
     });
@@ -61,35 +69,42 @@ function Footer() {
       ease: 'expo.out',
       scrollTrigger: {
         trigger: fxMe.current,
+        start: 'bottom 115%',
         toggleActions: "play none none reverse",
       }
     });
   }, []);
 
   return (
-    <div className="px-[3em]">
-      <div className="grid grid-cols-4 gap-0 py-10 font-montserrat font-regular text-[1em]">
-        <div className="col-start-1 flex flex-col" id='footer-container'>
-          <span id='context' ref={fxCopyright}>© 2022 JAYSON BENIZA </span>
+    <>
+      { location.pathname === '/dailydiscount' ? showFooter !== false : 
+        location.pathname === '/jbnza' ? showFooter !== false :
+        location.pathname === '/regain' ? showFooter !== false :
+        <div className="px-[3em]">
+          <div className="grid grid-cols-4 gap-0 py-10 font-montserrat font-regular text-[1em]" ref={test}>
+            <section className="col-start-1 flex flex-col" id='footer-container'>
+              <span id='context' ref={fxCopyright}>© 2022 JAYSON BENIZA </span>
+            </section>
+            <section className="col-start-3 flex flex-col">
+              <div id="footer-container">
+                <span className='text-end' id='context' ref={fxLastUpdate}>LAST UPDATE</span>
+              </div>
+              <div id="footer-container">
+                <span className='text-end' id='context' ref={fxDate}>OCTOBER 2022</span>
+              </div>
+            </section>
+            <section className="col-start-4 flex flex-col">
+              <div id="footer-container">
+                <span className='text-end' id='context' ref={fxDevDes}>DEVELOP & DESIGN BY</span>
+              </div>
+              <div id="footer-container">
+                <span className='text-end' id='context' ref={fxMe}>JAYSON BENIZA</span>
+              </div>
+            </section>
+          </div>
         </div>
-        <div className="col-start-3 flex flex-col">
-          <div id="footer-container">
-            <span className='text-end' id='context' ref={fxLastUpdate}>LAST UPDATE</span>
-          </div>
-          <div id="footer-container">
-            <span className='text-end' id='context' ref={fxDate}>OCTOBER 2022</span>
-          </div>
-        </div>
-        <div className="col-start-4 flex flex-col">
-          <div id="footer-container">
-            <span className='text-end' id='context' ref={fxDevDes}>DEVELOP & DESIGN BY</span>
-          </div>
-          <div id="footer-container">
-            <span className='text-end' id='context' ref={fxMe}>JAYSON BENIZA</span>
-          </div>
-        </div>
-      </div>
-    </div>
+      }
+    </>
   )
 }
 

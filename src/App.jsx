@@ -1,25 +1,33 @@
+// React 
+import React from 'react';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 // 
 import './assets/styles/App.css';
 // Pages
 import Navbar from './components/pages/Navbar';
 import Home from './components/pages/Home';
-import About from './components/pages/About';
-import Project from './components/pages/Project';
-import Contact from './components/pages/Contact';
 import Footer from './components/pages/Footer';
-import SelectedProject from './components/pages/SelectedProject';
-import Scroll from './components/animation/SmoothScrollbar';
+import DailyDiscount from './components/pages/projects/DailyDiscount';
+import Jbnza from './components/pages/projects/Jbnza';
+import Regain from './components/pages/projects/Regain';
+// import Scroll from './components/animation/SmoothScrollbar';
 
 function App() {
   return (
     <>
-      <Navbar/>
-      <Home/>
-      <About/>
-      <Project/>
-      {/* <SelectedProject/> */}
-      <Contact/>
-      <Footer/>
+      <Router>
+        {/* navbar */}
+        <Navbar/>
+        {/* routes */}
+        <Routes>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/dailydiscount' element={<DailyDiscount/>}/>
+          <Route path='/jbnza' element={<Jbnza/>}/>
+          <Route path='/regain' element={<Regain/>}/>
+        </Routes>
+        {/* footer */}
+        <Footer/>
+      </Router>
     </>
   );
 }
