@@ -1,10 +1,10 @@
 // 
 import React, { useRef, useEffect } from 'react'
 // React Router DOM
-import { BrowserRouter } from 'react-router-dom'
-import { HashLink as Link} from 'react-router-hash-link'
+// import { BrowserRouter } from 'react-router-dom'
+// import { HashLink as Link} from 'react-router-hash-link'
 // icons
-import {RiArrowRightDownLine} from 'react-icons/ri'
+// import {RiArrowRightDownLine} from 'react-icons/ri'
 // GSAP
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'

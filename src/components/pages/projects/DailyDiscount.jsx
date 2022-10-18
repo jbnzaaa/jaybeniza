@@ -45,7 +45,7 @@ function DailyDiscount() {
       ease: 'power1.inOut',
       scrollTrigger: {
         trigger: fxRevealImg.current,
-        start: 'top 200%',
+        start: 'top 220%',
       }
     });
 
