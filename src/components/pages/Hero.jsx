@@ -228,21 +228,21 @@ function Hero() {
         </section>
         <section className="col-span-3" id='hero-container'>
           <div id='span-container' ref={fxVisible1}>
-            <span className='font-teko font-semibold text-[12.6em] leading-none italic tracking-normal text-right' id='span' ref={fxWord1}>
+            <span className='font-teko font-semibold text-[10em] leading-none italic tracking-normal text-right' id='span' ref={fxWord1}>
               I create <span className='font-teko font-semibold leading-none italic tracking-normal text-right pr-7' id='highlight'>web</span>
             </span>
           </div>
         </section>
         <section className="col-span-4" id='hero-container'>
           <div id="span-container" ref={fxVisible2}>
-            <span className='font-teko font-semibold text-[12.6em] leading-none italic tracking-tight' id='span' ref={fxWord2}>
+            <span className='font-teko font-semibold text-[10em] leading-none italic tracking-tight' id='span' ref={fxWord2}>
               and <span className='font-teko font-semibold leading-none italic tracking-tight' id='highlight'>user interface</span>
             </span>
           </div>
         </section>
         <section className="col-span-3" id='hero-container'>
           <div id="span-container" ref={fxVisible3}>
-            <span className='font-teko font-semibold text-[12.6em] leading-none italic tracking-tight' id='span' ref={fxWord3}>designs</span>
+            <span className='font-teko font-semibold text-[10em] leading-none italic tracking-tight' id='span' ref={fxWord3}>designs</span>
           </div>
         </section>
         <section className='col-start-4 flex items-end'>
