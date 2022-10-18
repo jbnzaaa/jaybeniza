@@ -110,7 +110,7 @@ function Project() {
                     <p id='description' ref={fxDesc2}>worked on throughout my journey as</p>
                   </div>
                   <div id='description-container'>
-                    <p id='description' ref={fxDesc3}>self-taught front-end web developer</p>
+                    <p id='description' ref={fxDesc3}>self-taught front-end web dev</p>
                   </div>
                   <div id='description-container'>
                     <p id='description' ref={fxDesc4}>and user interface designer.</p>
