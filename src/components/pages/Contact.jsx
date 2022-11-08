@@ -1,219 +1,174 @@
 //
-import React, { useRef, useEffect } from 'react'
+import React, { useEffect } from 'react'
 // GSAP
 import gsap from 'gsap' 
 import ScrollTrigger from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 function Contact() {
-  const fxEmailContainer = useRef();
-  const fxDrop = useRef();
-  const fxMessage = useRef();
-  const fxContext1 = useRef();
-  const fxContext2 = useRef();
-  const fxContext3 = useRef();
-  const fxContext4 = useRef();
-  const fxAccounts1 = useRef();
-  const fxAccounts2 = useRef();
-  const fxAccounts3 = useRef();
-  const fxAccounts4 = useRef();
-  const fxAccounts5 = useRef();
-  const fxAccounts6 = useRef();
-
   useEffect(() => {
-    gsap.to(fxEmailContainer.current, {
-      scrollTrigger: {
-        trigger: fxEmailContainer.current,
-        // pin: true,
-        // start: "bottom 600px",
-        // end: "bottom 500px",
-      }
-    });
-    
-    gsap.to(fxDrop.current, {
+    // drop a message animation
+    // contact description animation
+    gsap.to('#context', {
       duration: 1,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxDrop.current,
-        start: 'bottom 130%',
-        toggleActions: "play none none reverse",
-        // markers: true
+      y: 0,
+      stagger: .05,
+      ease: 'power1.out',
+      scrollTrigger: { 
+        trigger: '#context', 
+        start: 'bottom 100%',
       }
     });
-    
-    gsap.to(fxMessage.current, {
+
+    // contact email links animation
+    gsap.to('#accounts', {
       duration: 1,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxMessage.current,
-        start: 'bottom 130%',
-        toggleActions: "play none none reverse",
-        // markers: true
-      }
-    });
-    
-    //
-    gsap.to(fxContext1.current, {
-      duration: 1.1,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxContext1.current,
+      delay: 1.3,
+      y: 0,
+      stagger: .05,
+      ease: 'power1.out',
+      scrollTrigger: { 
+        trigger: '#accounts', 
         start: 'bottom 100%',
-        toggleActions: "play none none reverse",
-      }
-    });
-    
-    gsap.to(fxContext2.current, {
-      duration: 1.2,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxContext2.current,
-        start: 'bottom 100%',
-        toggleActions: "play none none reverse",
-      }
-    });
-    
-    gsap.to(fxContext3.current, {
-      duration: 1.3,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxContext3.current,
-        start: 'bottom 100%',
-        toggleActions: "play none none reverse",
-      }
-    });
-    
-    gsap.to(fxContext4.current, {
-      duration: 1.4,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxContext4.current,
-        start: 'bottom 100%',
-        toggleActions: "play none none reverse",
-      }
-    });
-    
-    //
-    gsap.to(fxAccounts1.current, {
-      duration: 1.4,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxAccounts1.current,
-        start: 'bottom 100%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxAccounts2.current, {
-      duration: 1.4,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxAccounts2.current,
-        start: 'bottom 100%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxAccounts3.current, {
-      duration: 1.4,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxAccounts3.current,
-        start: 'bottom 100%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxAccounts4.current, {
-      duration: 1.4,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxAccounts4.current,
-        start: 'bottom 100%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxAccounts5.current, {
-      duration: 1.4,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxAccounts5.current,
-        start: 'bottom 100%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxAccounts6.current, {
-      duration: 1.4,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxAccounts6.current,
-        start: 'bottom 100%',
-        toggleActions: "play none none reverse",
       }
     });
   },[]);
 
   return (
     <>
+      {/* contact container */}
       <div id='contact'>
         {/*  */}
-        <div className="grid grid-cols-4 gap-0 py-20" ref={fxEmailContainer}>
-          {/*  */}
-          <section className="col-span-3 flex flex-col justify-end py-10">
-            <div id='email-container'>
-              <span className='font-teko font-medium text-[15em] leading-none italic tracking-tight' id='drop' ref={fxDrop}>Drop a</span>
+        <div className='grid grid-cols-8 gap-0'>
+          <section className='col-span-8 bg-black grid grid-cols-8 grid-rows-2 gap-0
+            mobile:p-[.9rem] mobile:h-[80vh] mobile:grid-flow-row
+            tablet:p-[1rem] tablet:h-[90vh] tablet:grid-flow-row
+            laptop:p-[2rem] laptop:h-[60vh] laptop:grid-flow-col
+            laptop-lg:p-[3rem] laptop:h-[60vh] laptop-lg:grid-flow-col
+            desktop:p-[3rem] desktop:h-[60vh] desktop:grid-flow-col'>
+            {/* drop a message */}
+            <div className='
+              mobile:col-span-8 mobile:row-span-1 mobile:row-start-1
+              tablet:col-span-8 tablet:row-span-1 tablet:row-start-1
+              laptop:col-span-5 laptop:row-span-1 laptop:row-start-1
+              laptop-lg:col-span-5 laptop-lg:row-span-1 laptop-lg:row-start-1
+              desktop:col-span-5 desktop:row-span-1 desktop:row-start-1'>
+              <div className='flex flex-wrap leading-none font-lexend font-semibold leading-none tracking-tight
+                mobile:h-[100px] mobile:text-[5rem]
+                tablet:h-[100px] tablet:text-[6rem]
+                laptop:h-[150px] laptop:text-[7rem]
+                laptop-lg:h-[150px] laptop-lg:text-[10rem]
+                desktop:h-[150px] laptop-lg:text-[10rem]'>
+                <div id='drop-message-container'>
+                  <p className='text-white 
+                  mobile:translate-y-[100px]
+                  tablet:translate-y-[100px]
+                  laptop:translate-y-[150px]
+                  laptop-lg:translate-y-[150px]
+                  desktop:translate-y-[150px]' 
+                  id="context">Drop</p>
+                </div>
+                <div id="drop-message-container">
+                  <p className='text-white ml-2
+                  mobile:translate-y-[100px]
+                  tablet:translate-y-[100px]
+                  laptop:translate-y-[150px]
+                  laptop-lg:translate-y-[150px]
+                  desktop:translate-y-[150px]' 
+                  id="context">a</p>
+                </div>
+                <div id="drop-message-container">
+                  <p className='text-white 
+                  mobile:translate-y-[100px]
+                  tablet:translate-y-[100px]
+                  laptop:translate-y-[150px]
+                  laptop-lg:translate-y-[150px]
+                  desktop:translate-y-[150px]' 
+                  id="context">Message</p>
+                </div>
+              </div>
             </div>
-            <div id='email-container'>
-              <span className='font-teko font-medium text-[15em] leading-none italic tracking-tight' id='message' ref={fxMessage}>Message</span>
-            </div>
-          </section>
-          <section className="col-span-1 col-start-4 flex flex-col justify-end py-10">
-            <div className='font-montserrat font-regular text-[1em]'>
-              <div id="contact-container">
-                <p className='indent-20' id='context' ref={fxContext1}>DO YOU HAVE ANY IDEAS IN MIND?</p>
+            {/* contact description content */}
+            <div className='
+              mobile:col-span-6 mobile:col-start-3 mobile:row-span-1 mobile:row-start-2
+              tablet:col-span-5 tablet:col-start-4 tablet:row-span-1 tablet:row-start-2
+              laptop:col-span-3 laptop:col-start-6 laptop:row-span-2 laptop:row-start-1
+              laptop-lg:col-span-2 laptop-lg:col-start-7 laptop-lg:row-span-2 laptop-lg:row-start-1
+              desktop:col-span-2 desktop:col-start-7 desktop:row-span-2 desktop:row-start-1'>
+              {/* description content */}
+              <div className='flex flex-wrap font-montserrat font-regular h-[20px] mb-20
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.8rem]
+                laptop-lg:text-[.8rem]
+                desktop:text-[.8rem]'>
+                <div id='contact-description-container'><p className='text-white' id="context">Do</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">you</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">have</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">any</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">ideas</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">in</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">mind?</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">I’m</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">willing</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">to</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">help</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">you</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">turn</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">your</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">web</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">design</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">ideas</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">into</p></div>
+                <div id='contact-description-container'><p className='text-white' id="context">reality.</p></div>
               </div>
-              <div id="contact-container">
-                <p id='context' ref={fxContext2}>FEEL FREE TO GET IN TOUCH IN ME. I’M ALWAYS</p>
-              </div>
-              <div id="contact-container">
-                <p id='context' ref={fxContext3}>WILLING TO HELP YOU TURN YOUR CREATIVE</p>
-              </div>
-              <div id="contact-container">
-                <p id='context' ref={fxContext4}>IDEAS INTO REALITY.</p>
-              </div>
-            </div>
-            <div className="flex flex-col flew-wrap font-montserrat text-[1em] pt-10">
-              <div id='account-container'>
-                <a className='my-2' href='mailto:jaysonbeniza@gmail.com' target='mailto:jaysonbeniza@gmail.com' id='accounts' ref={fxAccounts1}>Email</a>
-              </div>
-              <div id='account-container'>
-                <a className='my-2' href='https://www.facebook.com/jbnzaaa' target='https://www.facebook.com/jbnzaaa' id='accounts' ref={fxAccounts2}>Facebook</a>
-              </div>
-              <div id='account-container'>
-                <a className='my-2' href='https://www.instagram.com/jbnza_/?hl=en' target='https://www.instagram.com/jbnza_/?hl=en' id='accounts' ref={fxAccounts3}>Instagram</a>
-              </div>
-              <div id='account-container'>
-                <a className='my-2' href='https://github.com/jbnzaaa' target='https://github.com/jbnzaaa' id='accounts' ref={fxAccounts4}>Github</a>
-              </div>
-              <div id='account-container'>
-                <a className='my-2' href='https://www.behance.net/jbnza' target='https://www.behance.net/jbnza' id='accounts' ref={fxAccounts5}>Behance</a>
-              </div>
-              <div id='account-container'>
-                <a className='my-2' href='https://www.linkedin.com/in/jaybeniza/' target='https://www.linkedin.com/in/jaybeniza/' id='accounts' ref={fxAccounts6}>LinkedIn</a>
+              {/* email accounts content */}
+              <div className='flex justify-between w-full font-montserrat h-[20px]
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.8rem]
+                laptop-lg:text-[.8rem]
+                desktop:text-[.8rem]'>
+                <div className='w-[50%]'>
+                  <div id='account-container'>
+                    <div className='mb-2' id='accounts'>
+                      <a href='mailto:jaysonbeniza@gmail.com' target='mailto:jaysonbeniza@gmail.com' 
+                        className='text-white'>Email</a>
+                    </div>
+                  </div>
+                  <div id='account-container'>
+                    <div className='mb-2' id='accounts'>
+                      <a href='https://www.facebook.com/jbnzaaa' target='https://www.facebook.com/jbnzaaa' 
+                        className='text-white'>Facebook</a>
+                    </div>
+                  </div>
+                  <div id='account-container'>
+                    <div className='mb-2' id='accounts'>
+                      <a href='https://www.instagram.com/jbnza_/' target='https://www.instagram.com/jbnza_/' 
+                        className='text-white'>Instagram</a>
+                    </div>
+                  </div>
+                </div>
+                <div className='w-[50%]'>
+                  <div id='account-container'>
+                    <div className='mb-2' id='accounts'>
+                      <a href='https://github.com/jbnzaaa' target='https://github.com/jbnzaaa' 
+                        className='text-white'>Github</a>
+                    </div>
+                  </div>
+                  <div id='account-container'>
+                    <div className='mb-2' id='accounts'>
+                      <a href='https://www.behance.net/jbnza' target='https://www.behance.net/jbnza' 
+                        className='text-white'>Behance</a>
+                    </div>
+                  </div>
+                  <div id='account-container'>
+                    <div className='mb-2' id='accounts'>
+                      <a href='https://www.linkedin.com/in/jaybeniza/' target='https://www.linkedin.com/in/jaybeniza/' 
+                        className='text-white'>Linked In</a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </section>

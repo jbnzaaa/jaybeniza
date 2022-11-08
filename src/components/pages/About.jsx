@@ -1,394 +1,205 @@
 // 
 import React, { useRef, useEffect } from 'react'
-// icons
-import {RiArrowRightDownLine} from 'react-icons/ri'
+// Components
+import AboutParagraph from './about/AboutParagraph';
+import WhatIUse from './about/WhatIUse';
+import WebDev from './about/WebDev';
+import FrameworkLibrary from './about/FrameworkLibrary';
+import ToolTechnology from './about/ToolTechnology';
 // GSAP
 import gsap from 'gsap' 
 import ScrollTrigger from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 function About() {
-  const effectContainer = useRef();
-  const fxGreet = useRef();
-  const fxText = useRef();
-  const fxAbout1 = useRef();
-  const fxAbout2 = useRef();
-  const fxAbout3 = useRef();
-  const fxAbout4 = useRef();
-  const fxAbout5 = useRef();
-  const fxImg = useRef();
-  const fxUse = useRef();
-  const fxContext1 = useRef();
-  const fxContext2 = useRef();
-  const fxContext3 = useRef();
-  const fxWebDev = useRef();
-  const fxStackWeb = useRef();
-  const fxFrameworkLibrary = useRef();
-  const fxStackFrameworkLibrary = useRef();
-  const fxToolsnTech = useRef();
-  const fxStackToolsnTech = useRef();
-  
   useEffect(() => {
-    gsap.to(effectContainer.current, {
-      scrollTrigger: {
-        trigger: effectContainer.current,
-        // pin: true,
-        // start: "bottom 800px",
-      }
-    });
-
-    gsap.to(fxGreet.current, {
+    // greeting container animation
+    gsap.to('#greet', {
       duration: 1,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxGreet.current,
-        start: 'bottom 105%',
-        end: 'bottom 100%',
-        toggleActions: "play none none reverse",
-        // markers: true
-      },
-    });
-
-    const timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: fxText.current,
-        start: 'bottom 100%',
-        end: 'bottom 90%',
-        toggleActions: "play none none reverse",
+      y: 0,
+      stagger: .08,
+      ease: 'power1.out',
+      scrollTrigger: { 
+        trigger: '#greet', 
+        start: 'bottom 100%'
       }
     });
+
+    // const timeline = gsap.timeline({
+    //   scrollTrigger: {
+    //     trigger: fxText.current,
+    //     start: 'bottom 100%',
+    //     end: 'bottom 90%',
+    //     toggleActions: "play none none reverse",
+    //   }
+    // });
     
-    timeline.to(fxText.current, {
-      duration: 1,
-      // delay: 0.1,
-      top: '0px',
-      ease: 'power1.inOut',
-    })
-    .set(fxText.current, {
-      innerHTML: 'Responsible',
-      scrollTrigger: {
-        trigger: fxText.current,
-        start: 'bottom 95%',
-        end: 'bottom 90%',
-        toggleActions: "play complete reverse reset",
-        // markers: true
-      }
-    })
-    .set(fxText.current, {
-      innerHTML: 'Hard-Working',
-      scrollTrigger: {
-        trigger: fxText.current,
-        start: 'bottom 90%',
-        end: 'bottom 85%',
-        toggleActions: "play complete reverse reset",
-        // markers: true
-      }
-    })
-    .set(fxText.current, {
-      innerHTML: 'Jayson',
-      scrollTrigger: {
-        trigger: fxText.current,
-        start: 'bottom 85%',
-        end: 'bottom 80%',
-        toggleActions: "play complete reverse reset",
-        // markers: true
-      }
-    })
-
-    // about content
-    gsap.to(fxAbout1.current , {
-      duration: 1, 
-      ease: 'power1.inOut',
-      top: '0px',
-      scrollTrigger: {
-        trigger: fxAbout1.current,
-        start: 'top 90%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxAbout2.current , {
-      duration: 1, 
-      ease: 'power1.inOut',
-      top: '0px',
-      scrollTrigger: {
-        trigger: fxAbout2.current,
-        start: 'top 95%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxAbout3.current , {
-      duration: 1, 
-      ease: 'power1.inOut',
-      top: '0px',
-      scrollTrigger: {
-        trigger: fxAbout3.current,
-        start: 'top 100%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxAbout4.current , {
-      duration: 1, 
-      ease: 'power1.inOut',
-      top: '0px',
-      scrollTrigger: {
-        trigger: fxAbout4.current,
-        start: 'top 105%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxAbout5.current , {
-      duration: 1, 
-      ease: 'power1.inOut',
-      top: '0px',
-      scrollTrigger: {
-        trigger: fxAbout5.current,
-        start: 'top 110%',
-        // end: 'top 300px',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    // profile image
-    gsap.to(fxImg.current, {
-      duration: 1,
-      // width: '400px',
-      // top: '1300px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxImg.current,
-        start: 'bottom 120%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    // what i use
-    gsap.to(fxUse.current, {
-      duration: 1,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxUse.current,
-        start: 'bottom 100%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxContext1.current, {
-      duration: 1,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxContext1.current,
-        start: 'bottom 90%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxContext2.current, {
-      duration: 1,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxContext2.current,
-        start: 'bottom 90%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxContext3.current, {
-      duration: 1,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxContext3.current,
-        start: 'bottom 90%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    // web dev stack
-    gsap.to(fxWebDev.current, {
-      duration: 1,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxWebDev.current,
-        start: 'bottom 100%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxStackWeb.current, {
-      duration: 1,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxStackWeb.current,
-        start: 'bottom 90%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    // framework & library
-    gsap.to(fxFrameworkLibrary.current, {
-      duration: 1,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxFrameworkLibrary.current,
-        start: 'bottom 100%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxStackFrameworkLibrary.current, {
-      duration: 1,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxStackFrameworkLibrary.current,
-        start: 'bottom 90%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    // tools & tech
-    gsap.to(fxToolsnTech.current, {
-      duration: 1,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxToolsnTech.current,
-        start: 'bottom 100%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxStackToolsnTech.current, {
-      duration: 1,
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxStackToolsnTech.current,
-        start: 'bottom 90%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
+    // timeline.to(fxText.current, {
+    //   duration: 1,
+    //   // delay: 0.1,
+    //   top: '0px',
+    //   ease: 'power1.inOut',
+    // })
+    // .set(fxText.current, {
+    //   innerHTML: 'Responsible',
+    //   scrollTrigger: {
+    //     trigger: fxText.current,
+    //     start: 'bottom 95%',
+    //     end: 'bottom 90%',
+    //     toggleActions: "play complete reverse reset",
+    //     // markers: true
+    //   }
+    // })
+    // .set(fxText.current, {
+    //   innerHTML: 'Hard-Working',
+    //   scrollTrigger: {
+    //     trigger: fxText.current,
+    //     start: 'bottom 90%',
+    //     end: 'bottom 85%',
+    //     toggleActions: "play complete reverse reset",
+    //     // markers: true
+    //   }
+    // })
+    // .set(fxText.current, {
+    //   innerHTML: 'Jayson',
+    //   scrollTrigger: {
+    //     trigger: fxText.current,
+    //     start: 'bottom 85%',
+    //     end: 'bottom 80%',
+    //     toggleActions: "play complete reverse reset",
+    //     // markers: true
+    //   }
+    // })
   }, []);
 
   return (
     <>
-      <div id='about'>
-        {/* first grid */}
-        <div className="grid grid-cols-4 gap-0 py-40" ref={effectContainer}>
-          {/*  */}
-          <section className="col-span-4 pb-10">
-            {/*  */}
-            <div id='about-container'>
-              <span className='font-teko font-medium text-[6.3em] leading-none italic tracking-tight' id='greet' ref={fxGreet}>Hello, I'm</span>
-              <ul className='flex flex-col' id='about-container'>
-                <li className='font-teko font-medium text-[6.3em] leading-none italic trackng-tight' id='text' ref={fxText}>Dedicated</li>
-              </ul>
+      {/* about container */}
+      <div className='flex flex-col justify-center
+        mobile:h-[130vh]
+        tablet:h-[150vh]
+        laptop:h-[180vh]
+        laptop-lg:h-[180vh]
+        desktop:h-[200vh]' 
+        id='about'>
+        {/* grid */}
+        <div className='grid grid-cols-8 gap-0 
+          mobile:py-20 mobile:px-[.9rem] 
+          tablet:py-20 tablet:px-[1rem] 
+          laptop:py-20 laptop:px-[2rem]
+          laptop-lg:py-20 laptop-lg:px-[3rem]
+          desktop:py-40 desktop:px-[3rem]'>
+          {/* greeting */}
+          <section className="col-span-8">
+            <div className='flex flex-wrap
+              mobile:h-[35px] mobile:mb-2 mobile:text-[2rem]
+              tablet:h-[60px] tablet:mb-2 tablet:text-[3rem]
+              laptop:h-[90px] laptop:mb-3 laptop:text-[5rem]
+              laptop-lg:h-[100px] laptop-lg:mb-3 laptop-lg:text-[5.3rem]
+              desktop:h-[110px] desktop:mb-3 desktop:text-[5.5rem]'
+              id='about-container'>
+              <span className='font-lexend font-medium leading-none tracking-tighter
+                mobile:translate-y-[35px]
+                tablet:translate-y-[60px]
+                laptop:translate-y-[120px]
+                laptop-lg:translate-y-[100px]
+                desktop:translate-y-[110px]'
+                id='greet'>
+                Hello,
+              </span>
+              <span className='font-lexend font-medium leading-none tracking-tighter
+                mobile:translate-y-[35px]
+                tablet:translate-y-[60px]
+                laptop:translate-y-[120px]
+                laptop-lg:translate-y-[100px]
+                desktop:translate-y-[110px]'
+                id='greet'>
+                I'm
+              </span>
+              <span className='font-lexend font-medium leading-none tracking-tighter
+                mobile:translate-y-[35px]
+                tablet:translate-y-[60px]
+                laptop:translate-y-[120px]
+                laptop-lg:translate-y-[100px]
+                desktop:translate-y-[110px]'
+                id='greet'>
+                Jayson
+              </span>
+              {/* <ul className='
+                mobile:left-[168px] mobile:h-[34px]
+                tablet:left-[250px] tablet:h-[55px]
+                laptop:left-[420px] laptop:h-[90px]
+                laptop-lg:left-[490px] laptop-lg:h-[100px]
+                desktop:left-[520px] desktop:h-[110px]' 
+                id='about-container'>
+                <li className='font-lexend font-medium leading-none tracking-tighter
+                  mobile:text-[2rem]
+                  tablet:text-[3rem]
+                  laptop:text-[5rem]
+                  laptop-lg:text-[6rem]
+                  desktop:text-[6.3rem]'
+                  id='text' ref={fxText}>
+                  Dedicated
+                </li>
+              </ul> */}
             </div>
           </section>
-          <section className="col-span-4 pb-20">
-            {/*  */}
-            <div className='font-montserrat font-regular text-[3.2em] leading-none'>
-              <div id='content-container'>
-                <p className='indent-20' id='about' ref={fxAbout1}>An enthusiastic self-taught web </p>
-              </div>
-              <div id='content-container'>
-                <p id='about' ref={fxAbout2}>and ui designer from Philippines. I am </p>
-              </div>
-              <div id='content-container'>
-                <p id='about' ref={fxAbout3}>passionate in building and designing </p>
-              </div>
-              <div id='content-container'>
-                <p id='about' ref={fxAbout4}>website interface with the use of </p>
-              </div>
-              <div id='content-container'>
-                <p id='about' ref={fxAbout5}>modern web technology.</p>
-              </div>
-            </div>
+          {/* about me */}
+          <section className='
+            mobile:col-span-8 mobile:mb-4
+            tablet:col-span-7 tablet:mb-6
+            laptop:col-span-7 laptop:mb-8
+            laptop-lg:col-span-7 laptop-lg:mb-8
+            desktop:col-span-7 desktop:mb-8'>
+            <AboutParagraph/>
           </section>
-          <section className="col-span-4">
-            {/*  */}
-            <ul className="grid grid-cols-4">
-              <li id="list" className='col-span-4 grid grid-cols-4 py-3 h-[100px]'>
-                <div className='col-span-2' id='stack-container'>
-                  <span className='text-[2em] font-medium' id='stack-header' ref={fxUse}>What I use?</span>
-                </div>
-                <div className='col-span-2'>
-                  <div id='stacks'>
-                    <span className='text-[1em]' id='stack-context' ref={fxContext1}>I've been utilizing in producing UI Design, Wireframing, Prototyping,</span>
-                  </div>
-                  <div id='stacks'>
-                    <span className='text-[1em]' id='stack-context' ref={fxContext2}>Visual Design, and Develop Website. The tools and technologies listed </span>
-                  </div>
-                  <div id='stacks'>
-                    <span className='text-[1em]' id='stack-context' ref={fxContext3}>below are those that I have used and am familiar with.</span>
-                  </div>
-                </div>
+          {/* skills */}
+          <section className='col-span-8'>
+            {/* skills container */}
+            <ul className='grid 
+              mobile:grid-cols-1
+              tablet:grid-cols-4
+              laptop:grid-cols-8
+              laptop-lg:grid-cols-8
+              desktop:grid-cols-8'>
+              {/* what i use? */}
+              <li id="list" className='col-span-8 grid py-6
+                mobile:grid-cols-1 mobile:h-full
+                tablet:grid-cols-1 tablet:h-full
+                laptop:grid-cols-2 laptop:h-full
+                laptop-lg:grid-cols-2 laptop-lg:h-full
+                desktop:grid-cols-2 desktop:h-full'>
+                <WhatIUse/>
               </li>
-              <li id="list" className="col-span-4 grid grid-cols-4 py-3 h-[100px]">
-                <div className='col-span-2' id='stack-container'>
-                  <span className='text-[2em] font-medium' id='stack-header' ref={fxWebDev}>
-                    Web Development
-                  </span>
-                </div>
-                <div className='col-span-2' id='stacks'>
-                  <ul className='text-[1em] flex flex-wrap' id='stack-context' ref={fxStackWeb}>
-                    <li>HTML5</li>
-                    <li>CSS3</li>
-                    <li>SASS</li>
-                    <li>JavaScript</li>
-                    <li>React JS</li>
-                  </ul>
-                </div>
+              {/* web development */}
+              <li id="list" className='col-span-8 grid py-6
+                mobile:grid-cols-1 mobile:h-full
+                tablet:grid-cols-1 tablet:h-full
+                laptop:grid-cols-2 laptop:h-full
+                laptop-lg:grid-cols-2 laptop-lg:h-[97px]
+                desktop:grid-cols-2 desktop:h-[97px]'>
+                <WebDev/>
               </li>
-              <li id="list" className="col-span-4 grid grid-cols-4 py-3 h-[100px]">
-                <div className='col-span-2' id='stack-container'>
-                  <span className='text-[2em] font-medium' id='stack-header' ref={fxFrameworkLibrary}>
-                    Framework & Library
-                  </span>
-                </div>
-                <div className='col-span-2' id='stacks'>
-                  <ul className='text-[1em] flex flex-wrap' id='stack-context' ref={fxStackFrameworkLibrary}>
-                    <li>BootStrap</li>
-                    <li>Tailwind CSS</li>
-                    <li>GSAP</li>
-                  </ul>
-                </div>
+              {/* framework & library */}
+              <li id="list" className='col-span-8 grid py-6
+                mobile:grid-cols-1 mobile:h-full
+                tablet:grid-cols-1 tablet:h-full
+                laptop:grid-cols-2 laptop:h-full
+                laptop-lg:grid-cols-2 laptop-lg:h-[97px]
+                desktop:grid-cols-2 desktop:h-[97px]'>
+                <FrameworkLibrary/>
               </li>
-              <li id="list" className="col-span-4 grid grid-cols-4 py-3 h-[100px]">
-                <div className='col-span-2' id='stack-container'>
-                  <span className='text-[2em] font-medium' id='stack-header' ref={fxToolsnTech}>
-                    Tools & Technologies
-                  </span>
-                </div>
-                <div className='col-span-2' id='stacks'>
-                  <ul className='text-[1em] flex flex-wrap' id='stack-context' ref={fxStackToolsnTech}>
-                    <li>VS Code</li>
-                    {/* <li>Git</li> */}
-                    <li>NPM</li>
-                    <li>Figma</li>
-                    <li>Adobe Photoshop</li>
-                    <li>Adobe Illustrator</li>
-                  </ul>
-                </div>
+              {/* tools & technologies */}
+              <li id="list" className='col-span-8 grid py-6
+                mobile:grid-cols-1 mobile:h-full
+                tablet:grid-cols-1 tablet:h-full
+                laptop:grid-cols-2 laptop:h-full
+                laptop-lg:grid-cols-2 laptop-lg:h-[97px]
+                desktop:grid-cols-2 desktop:h-[97px]'>
+                <ToolTechnology/>
               </li>
             </ul>
           </section>
-          {/*  */}
-          {/* <section className="col-span-1 col-start-4" id='reveal' ref={fxReveal}>
-            <div className="bg-profile bg-cover bg-center" id='img' ref={fxImg}/>
-          </section> */}
         </div>
       </div>
     </>

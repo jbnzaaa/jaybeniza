@@ -9,262 +9,369 @@ import gsap from 'gsap'
 // import ScrollTrigger from 'gsap/ScrollTrigger'
 
 function Jbnza() {
-  const fxOnload = useRef();
-  const fxRevealImg = useRef();
-  const fxTitle1 = useRef();
-  const fxBack = useRef();
-  const fxParagraph1 = useRef();
-  const fxParagraph2 = useRef();
-  const fxParagraph3 = useRef();
-  const fxCategory = useRef();
-  const fxCatCon = useRef();
-  const fxRole = useRef();
-  const fxRoleCon = useRef();
-  const fxTectStack = useRef();
-  const fxTectStackCon = useRef();
-  const fxLink = useRef();
-
   useEffect(() => {
     // onload animation
-    gsap.to(fxOnload.current, {
+    gsap.to('#project-card', {
       duration: 1, 
       delay: .5,
-      top: '0px',
-      ease: 'power1.inOut',
+      y: '-100vh',
+      stagger: .05,
+      ease: 'power1.out',
       scrollTrigger: {
-        trigger: fxOnload.current,
-        start: 'bottom 250%',
+        trigger: '#project-card',
+        start: 'top 110%',
       }
     });
 
     // image animation
-    gsap.to(fxRevealImg.current, {
+    gsap.to('#project-img', {
       duration: 1,
-      delay: 1.2, 
-      top: '0px',
-      ease: 'power1.inOut',
+      delay: 1, 
+      y: 0,
+      ease: 'power1.out',
       scrollTrigger: {
-        trigger: fxRevealImg.current,
-        start: 'top 220%',
-      }
-    });
-
-    // project title
-    gsap.to(fxTitle1.current, {
-      duration: 1,
-      delay: 1.5, 
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxTitle1.current,
-        start: 'top 200%',
+        trigger: '#project-img',
+        start: 'top 150%',
+        // markers: true
       }
     });
 
     // back button
-    gsap.to(fxBack.current, {
+    gsap.to('#back', {
       duration: 1,
-      delay: 1.5, 
-      top: '0px',
-      ease: 'power1.inOut',
+      delay: 1, 
+      y: 0,
+      stagger: .05,
+      ease: 'power1.out',
       scrollTrigger: {
-        trigger: fxBack.current,
-        start: 'top 200%',
+        trigger: '#back',
+      }
+    });
+    
+    // project title
+    gsap.to('#title', {
+      duration: 1,
+      delay: 1.1,
+      y: 0,
+      stagger: .05,
+      ease: 'power1.out',
+      scrollTrigger: {
+        trigger: '#title',
       }
     });
 
     // paragraph
-    gsap.to(fxParagraph1.current, {
+    gsap.to('#project-p', {
       duration: 1,
-      delay: 1.8, 
-      top: '0px',
-      ease: 'power1.inOut',
+      delay: 1.2, 
+      y: 0,
+      stagger: .05,
+      ease: 'power1.out',
       scrollTrigger: {
-        trigger: fxParagraph1.current,
-        start: 'top 200%',
+        trigger: '#project-p',
       }
     });
 
-    gsap.to(fxParagraph2.current, {
+    // project link
+    gsap.to('#visit', {
       duration: 1,
-      delay: 1.8, 
-      top: '0px',
-      ease: 'power1.inOut',
+      delay: 1.6, 
+      y: 0,
+      stagger: .05,
+      ease: 'power1.out',
       scrollTrigger: {
-        trigger: fxParagraph2.current,
-        start: 'top 200%',
-      }
-    });
-
-    gsap.to(fxParagraph3.current, {
-      duration: 1,
-      delay: 1.8, 
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxParagraph3.current,
-        start: 'top 200%',
-      }
-    });
-    
-    // category 
-    gsap.to(fxCategory.current, {
-      duration: 1,
-      delay: 1.8, 
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxCategory.current,
-        start: 'top 200%',
-      }
-    });
-    
-    gsap.to(fxCatCon.current, {
-      duration: 1,
-      delay: 1.8, 
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxCatCon.current,
-        start: 'top 200%',
-      }
-    });
-    
-    // role
-    gsap.to(fxRole.current, {
-      duration: 1,
-      delay: 1.8, 
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxRole.current,
-        start: 'top 200%',
-      }
-    });
-    
-    gsap.to(fxRoleCon.current, {
-      duration: 1,
-      delay: 1.8, 
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxRoleCon.current,
-        start: 'top 200%',
-      }
-    });
-
-    // tech stack
-    gsap.to(fxTectStack.current, {
-      duration: 1,
-      delay: 1.8, 
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxTectStack.current,
-        start: 'top 200%',
-      }
-    });
-    
-    gsap.to(fxTectStackCon.current, {
-      duration: 1,
-      delay: 1.8, 
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxTectStackCon.current,
-        start: 'top 200%',
-      }
-    });
-    
-    gsap.to(fxLink.current, {
-      duration: 1,
-      delay: 1.8, 
-      top: '0px',
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: fxLink.current,
-        start: 'top 200%',
+        trigger: '#visit',
       }
     });
   }, []);
 
   return (
     <>
-      <div className="fixed">
-        <div className='h-screen w-screen' id="card-container">
-          <div className="p-[3em] bg-black h-screen w-full" id='project-card' ref={fxOnload}>
-            <div className="grid grid-cols-4 gap-x-10">
-              {/* contet */}
-              <section className="col-span-1 col-start-1 flex flex-col justify-between h-[90vh]">
-                <div className='w-full flex justify-start' id='span-container'>
-                  <Link to='/'>
-                    <span className='font-montserrat text-[.9em] text-white' ref={fxBack}>back</span>
-                  </Link>
-                </div>
-                <div>
-                  <div className="flex flex-col pb-5">
-                    <div id="title-container">
-                      <span className='font-teko font-medium text-[3em] leading-none italic tracking-tight text-white' id='title' ref={fxTitle1}>jbnza <span className='font-teko font-normal text-white text-[.5em]'>/ 2022</span></span>
-                    </div>
-                    <div id='p-container'>
-                      <p className='font-regular text-[.9em] text-white' ref={fxParagraph1}>A WEB-BASED PORTFOLIO THAT SHOWCASES</p>
-                    </div>
-                    <div id='p-container'>
-                      <p className='font-regular text-[.9em] text-white' ref={fxParagraph2}>MY MOST CURRENT PROJECTS AS WELL AS AN</p>
-                    </div>
-                    <div id='p-container'>
-                      <p className='font-regular text-[.9em] text-white' ref={fxParagraph3}>OVERVIEW OF MY PERSONAL INFORMATION.</p>
-                    </div>
-                  </div>
-                  <div className="flex flex-col pb-5">
-                    <div id="span-container">
-                      <span className='font-semibold text-[.5em] text-white' ref={fxCategory}>Category</span>
-                    </div>
-                    <div id="span-container">
-                      <span className='font-regular text-[.9em] text-white' ref={fxCatCon}>Personal / Web Development</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col pb-5">
-                    <div id="span-container">
-                      <span className='font-semibold text-[.5em] text-white' ref={fxRole}>Role</span>
-                    </div>
-                    <div id="span-container">
-                      <ul className="flex flex-wrap" id='data-list' ref={fxRoleCon}>
-                        <li className='font-regular text-[.9em] text-white'>Web Developer</li>
-                        <li className='font-regular text-[.9em] text-white'>UI Designer</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="flex flex-col pb-14">
-                    <div id="span-container">
-                      <span className='font-semibold text-[.5em] text-white' ref={fxTectStack}>Technologies Used</span>
-                    </div>
-                    <div id="span-container">
-                      <ul className="flex flex-wrap" id='data-list' ref={fxTectStackCon}>
-                        <li className='font-regular text-[.9em] text-white'>React JS</li>
-                        <li className='font-regular text-[.9em] text-white'>Material UI</li>
-                        <li className='font-regular text-[.9em] text-white'>Vercel</li>
-                        <li className='font-regular text-[.9em] text-white'>Figma</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div id='project-link'>
-                    <a href='https://jbnza.vercel.app' target='https://jbnza.vercel.app' className='flex items-center' id='button-container'>
-                      <span className='font-montserrat text-[.9em] text-white flex' ref={fxLink}>
-                        visit website
-                        <RiArrowRightDownLine id='icon' className='fill-white text-2xl ml-2'/>
-                      </span>
-                    </a>
-                  </div>
-                </div>
-              </section>
-              <section className="col-span-3 col-start-2" id='img-container'>
-                <div className='col-span-3 bg-jbnza bg-cover h-full w-full' id='project-img' ref={fxRevealImg}/>
-              </section>
+      <div id='card-container'>
+        <div id='sticky'>
+          <div className='bg-black w-full h-screen' id='project-card'/>
+        </div>
+        <div className='grid 
+          mobile:p-[.9rem] mobile:gap-3 mobile:grid-cols-1
+          tablet:p-[1rem] tablet:gap-3 tablet:grid-cols-1
+          laptop:p-[2rem] laptop:gap-5 laptop:grid-cols-8
+          laptop-lg:p-[3rem] laptop-lg:gap-5 laptop-lg:grid-cols-8
+          desktop:p-[3rem] desktop:gap-5 desktop:grid-cols-8'>
+          {/* project header */}
+          <section className='col-start-1 flex justify-between mb-10
+            mobile:col-span-1
+            tablet:col-span-1
+            laptop:col-span-8
+            laptop-lg:col-span-8
+            desktop:col-span-8'>
+            <div className='flex flex-col' id='title-container'>
+              <p className='font-lexend font-semibold leading-none tracking-tighter text-black w-[600px]
+              mobile:translate-y-[20px] mobile:text-[2.3rem]
+              tablet:translate-y-[20px] tablet:text-[3rem]
+              laptop:translate-y-[45px] laptop:text-[3.5rem]
+              laptop-lg:translate-y-[45px] laptop-lg:text-[4rem]
+              desktop:translate-y-[45px] desktop:text-[4rem]'
+              id='title'>
+                jbnza
+              </p>
             </div>
-          </div>
+            <div id='span-container'>
+              <Link to='/'>
+                <p className='font-montserrat text-black
+                  mobile:text-[.5rem]
+                  tablet:text-[.5rem]
+                  laptop:text-[.5rem]
+                  laptop-lg:text-[.9rem]
+                  desktop:text-[.9rem]' 
+                  id='back'>
+                  Back
+                </p>
+              </Link>
+            </div>
+          </section>
+          {/*  */}
+          <section className='grid grid-cols-8 grid-rows-3 gap-y-5
+            mobile:col-span-1 mobile:my-10
+            tablet:col-span-1 tablet:my-10
+            laptop:col-span-8 laptop:my-20
+            laptop-lg:col-span-8 laptop-lg:my-20
+            desktop:col-span-8 desktop:my-20'>
+            <div className='col-start-1 row-span-1 row-start-1
+              mobile:col-span-2
+              tablet:col-span-2
+              laptop:col-span-1
+              laptop-lg:col-span-1
+              desktop:col-span-1'>
+              <div className='flex flex-col' id='title-container'>
+                <span className='font-lexend text-black text-[.9rem]
+                  mobile:translate-y-[20px]
+                  tablet:translate-y-[20px]
+                  laptop:translate-y-[15px]
+                  laptop-lg:translate-y-[15px]
+                  desktop:translate-y-[15px]'
+                  id='title'>
+                  2022
+                </span>
+              </div>
+            </div>
+            <div className='row-span-3 row-start-1
+              mobile:col-span-6 mobile:col-start-3 mobile:mb-16 mobile:h-[auto]
+              tablet:col-span-5 tablet:col-start-3 tablet:mb-10 tablet:h-[auto]
+              laptop:col-span-2 laptop:col-start-2 laptop:mb-3 laptop:h-[auto]
+              laptop-lg:col-span-2 laptop-lg:col-start-2 laptop-lg:mb-3 laptop-lg:h-[auto]
+              desktop:col-span-2 desktop:col-start-2 desktop:mb-3 desktop:h-[auto]'>
+              <div className='flex flex-wrap leading-none
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.5em]
+                laptop-lg:text-[.9rem]
+                desktop:text-[.9rem]'>
+                <div id='p-container'><p id='project-p'>jbnza</p></div>
+                <div id='p-container'><p id='project-p'>is</p></div>
+                <div id='p-container'><p id='project-p'>a</p></div>
+                <div id='p-container'><p id='project-p'>web-based</p></div>
+                <div id='p-container'><p id='project-p'>portfolio</p></div>
+                <div id='p-container'><p id='project-p'>designed</p></div>
+                <div id='p-container'><p id='project-p'>to</p></div>
+                <div id='p-container'><p id='project-p'>showcase</p></div>
+                <div id='p-container'><p id='project-p'>my</p></div>
+                <div id='p-container'><p id='project-p'>most</p></div>
+                <div id='p-container'><p id='project-p'>recent</p></div>
+                <div id='p-container'><p id='project-p'>projects,</p></div>
+                <div id='p-container'><p id='project-p'>tech</p></div>
+                <div id='p-container'><p id='project-p'>stacks</p></div>
+                <div id='p-container'><p id='project-p'>I</p></div>
+                <div id='p-container'><p id='project-p'>use</p></div>
+                <div id='p-container'><p id='project-p'>and</p></div>
+                <div id='p-container'><p id='project-p'>a</p></div>
+                <div id='p-container'><p id='project-p'>bit</p></div>
+                <div id='p-container'><p id='project-p'>information</p></div>
+                <div id='p-container'><p id='project-p'>about</p></div>
+                <div id='p-container'><p id='project-p'>myself.</p></div>
+              </div>
+            </div>
+            <div className='
+              mobile:col-span-6 mobile:col-start-3
+              tablet:col-span-3 tablet:col-start-3
+              laptop:col-span-2 laptop:col-start-5
+              laptop-lg:col-span-2 laptop-lg:col-start-5
+              desktop:col-span-2 desktop:col-start-5'>
+              <div className='flex flex-col leading-none
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.5rem]
+                laptop-lg:text-[.9rem]
+                desktop:text-[.9rem]'>
+                <div id='span-container'>
+                  <p className='font-semibold mb-1
+                    mobile:translate-y-[30px] mobile:text-[.5rem]
+                    tablet:translate-y-[30px] tablet:text-[.5rem]
+                    laptop:translate-y-[45px] laptop:text-[.5rem]
+                    laptop-lg:translate-y-[45px] laptop-lg:text-[.5rem]
+                    desktop:translate-y-[45px] desktop:text-[.5rem]' 
+                    id='project-p'>Category</p>
+                </div>
+                <div id='span-container'>
+                  <p className='font-normal
+                    mobile:translate-y-[30px]
+                    tablet:translate-y-[30px]
+                    laptop:translate-y-[45px]
+                    laptop-lg:translate-y-[45px]
+                    desktop:translate-y-[45px]' 
+                    id='project-p'>Personal / Web Development</p>
+                </div>
+              </div>
+            </div>
+            <div className='
+              mobile:col-span-6 mobile:col-start-3
+              tablet:col-span-3 tablet:col-start-6
+              laptop:col-span-2 laptop:col-start-7
+              laptop-lg:col-span-2 laptop-lg:col-start-7
+              desktop:col-span-2 desktop:col-start-7'>
+              <div className='flex flex-col leading-none
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.5rem]
+                laptop-lg:text-[.9rem]
+                desktop:text-[.9rem]'>
+                <div id='span-container'>
+                  <p className='font-semibold mb-1
+                    mobile:translate-y-[30px] mobile:text-[.5rem]
+                    tablet:translate-y-[30px] tablet:text-[.5rem]
+                    laptop:translate-y-[45px] laptop:text-[.5rem]
+                    laptop-lg:translate-y-[45px] laptop-lg:text-[.9rem]
+                    desktop:translate-y-[45px] desktop:text-[.9rem]' 
+                    id='project-p'>Role</p>
+                </div>
+                <ul>
+                  <li id='span-container'>
+                    <p className='font-normal
+                      mobile:translate-y-[30px]
+                      tablet:translate-y-[30px]
+                      laptop:translate-y-[45px]
+                      laptop-lg:translate-y-[45px]
+                      desktop:translate-y-[45px]' 
+                      id='project-p'>Web Developer</p>
+                  </li>
+                  <li id='span-container'>
+                    <p className='font-normal
+                      mobile:translate-y-[30px]
+                      tablet:translate-y-[30px]
+                      laptop:translate-y-[45px]
+                      laptop-lg:translate-y-[45px]
+                      desktop:translate-y-[45px]' 
+                      id='project-p'>UI Designer</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className='
+              mobile:col-span-6 mobile:col-start-3
+              tablet:col-span-3 tablet:col-start-3
+              laptop:col-span-2 laptop:col-start-5
+              laptop-lg:col-span-2 laptop-lg:col-start-5
+              desktop:col-span-2 desktop:col-start-5'>
+              <div className='flex flex-col leading-none
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.5rem]
+                laptop-lg:text-[.9rem]
+                desktop:text-[.9rem]'>
+                <div id='span-container'>
+                  <p className='font-semibold mb-1
+                    mobile:translate-y-[20px] mobile:text-[.5rem]
+                    tablet:translate-y-[30px] tablet:text-[.5rem]
+                    laptop:translate-y-[45px] laptop:text-[.5rem]
+                    laptop-lg:translate-y-[45px] laptop-lg:text-[.9rem]
+                    desktop:translate-y-[45px] desktop:text-[.9rem]' 
+                    id='project-p'>Technology Used</p>
+                </div>
+                <ul className='flex flex-row flex-wrap'>
+                  <li id='span-container'>
+                    <p className='font-normal
+                      mobile:translate-y-[30px]
+                      tablet:translate-y-[30px]
+                      laptop:translate-y-[45px]
+                      laptop-lg:translate-y-[45px]
+                      desktop:translate-y-[45px]' 
+                      id='project-p'>React JS</p>
+                  </li>
+                  <li id='span-container'>
+                    <p className='font-normal
+                      mobile:translate-y-[30px]
+                      tablet:translate-y-[20px]
+                      laptop:translate-y-[45px]
+                      laptop-lg:translate-y-[45px]
+                      desktop:translate-y-[45px]' 
+                      id='project-p'>Material UI</p>
+                  </li>
+                  <li id='span-container'>
+                    <p className='font-normal
+                      mobile:translate-y-[30px]
+                      tablet:translate-y-[30px]
+                      laptop:translate-y-[45px]
+                      laptop-lg:translate-y-[45px]
+                      desktop:translate-y-[45px]' 
+                      id='project-p'>Vercel</p>
+                  </li>
+                  <li id='span-container'>
+                    <p className='font-normal
+                      mobile:translate-y-[30px]
+                      tablet:translate-y-[30px]
+                      laptop:translate-y-[45px]
+                      laptop-lg:translate-y-[45px]
+                      desktop:translate-y-[45px]' 
+                      id='project-p'>Figma</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className='
+              mobile:col-span-6 mobile:col-start-3
+              tablet:col-span-3 tablet:col-start-6
+              laptop:col-span-2 laptop:col-start-7
+              laptop-lg:col-span-2 laptop-lg:col-start-7
+              desktop:col-span-2 desktop:col-start-7'>
+              <div className='flex flex-col leading-none
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.5rem]
+                laptop-lg:text-[.9rem]
+                desktop:text-[.9rem]'>
+                <div className='flex flex-col justify-center mt-3' id='project-link'>
+                  <a href='https://jbnza.vercel.app' target='https://jbnza.vercel.app' className='flex items-center' id='button-container'>
+                    <p className='text-black flex items-center
+                      mobile:text-[.5rem]
+                      tablet:text-[.5rem]
+                      laptop:text-[.5rem]
+                      laptop-lg:text-[.9rem]
+                      desktop:text-[.9rem]' id='visit'>
+                      visit website
+                      <RiArrowRightDownLine id='icons' className='fill-black text-2xl ml-2'/>
+                    </p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section className='
+            mobile:col-span-1 mobile:col-start-1
+            tablet:col-span-1 tablet:col-start-1
+            laptop:col-span-8 laptop:col-start-1
+            laptop-lg:col-span-8 laptop-lg:col-start-1
+            desktop:col-span-8 desktop:col-start-1' id='img-container'>
+            <div className='bg-jbnza bg-cover w-full
+              mobile:translate-y-[350px] mobile:h-[350px]
+              tablet:translate-y-[450px] tablet:h-[450px]
+              laptop:translate-y-[550px] laptop:h-[550px]
+              laptop-lg:translate-y-[550px] laptop-lg:h-[550px]
+              desktop:translate-y-[550px] desktop:h-[550px]'
+              id='project-img'/>
+          </section>
         </div>
       </div>
+
+      
     </>
   )
 }

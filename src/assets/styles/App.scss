@@ -8,6 +8,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap'); // Montserrat
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Teko&display=swap'); // Space Mono
 @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Text:wght@400;500;600&display=swap'); // Big Shoulder
+@import url('https://fonts.googleapis.com/css2?family=Unica+One&display=swap'); // Unica one
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Unica+One&display=swap'); // Lexend
 
 :root{
   // background
@@ -31,32 +33,45 @@
   
   body{
     background: var(--main-bg);
-    // position: relative;
-    // overflow-x: hidden;
-    // overflow-y: visible;
-    // height: 100vh;
+
+    // onload animation style
+    #onload-container{
+      position: relative;
+      // overflow: hidden;
+
+      #sticky{
+        position: absolute;
+        z-index: 100;
+        position: sticky;
+        top: 0px;
+
+        #main-container{
+          position: absolute;
+          top: 0px;
+        }
+      }
+    }
 
     // navbar - logo
     #logo-container{
-      height: 30px;
+      height: auto;
       position: relative;
       overflow: hidden; 
       
       #logo{
-        position: absolute;
-        top: 30px;
+        transform: translateY(20px);
       }
     }
 
     // navbar - links
     #link-container{
-      height: 30px;
+      height: 25px;
       position: relative;
       overflow: hidden; 
       
       #link{
         position: absolute;
-        top: 30px;
+        transform: translateY(25px);
         text-align: right;
         
         span{
@@ -71,7 +86,7 @@
           #icon{
             transform: rotate(0deg);
             transition: all .3s ease-in-out;
-            border-radius: 50%;
+            border-radius: 100%;
           }
   
           &:hover{
@@ -80,157 +95,137 @@
               transition: all .3s ease-in-out;
               background: var(--main-color);
               fill: var(--main-bg);
-              border-radius: 50%;
+              border-radius: 100%;
             }
           }
+        }
+      }
+    }
 
-          // &::before{
-          //   content: '';
-          //   position: absolute;
-          //   width: 100%;
-          //   height: 1px;
-          //   background-color: var(--main-color);
-          //   left: 0;
-          //   bottom: 1px;
-          //   transform-origin: right;
-          //   transform: scaleX(0);
-          //   transition: transform .3s ease-in-out;
-          // }
+    #menu-link{
+      height: 20px;
+      position: relative;
+      overflow: hidden;
 
-          // &:hover::before{
-          //   transform-origin: left;
-          //   transform: scaleX(1);
-          // }
+      div{
+        transform: translateY(20px);
+
+        span{
+          position: relative;
+          letter-spacing: 0;
+          transition: .3s ease-in-out;
+
+          &:hover{
+            letter-spacing: 2px;
+          }
+        }
+      }
+    }
+
+    #page-link{
+      height: 60px;
+      position: relative;
+      overflow: hidden;
+
+      #link,
+      #mobileview-link{
+        transform: translateY(50px);
+        
+        span{
+          position: relative;
+          letter-spacing: 0;
+          transition: .3s ease-in-out;
+
+          &:hover{
+            letter-spacing: 2px;
+          }
+
+          #icon{
+            transform: rotate(0deg);
+            transition: all .3s ease-in-out;
+            border-radius: 100%;
+          }
+  
+          &:hover{
+            #icon{
+              transform: rotate(-45deg);
+              transition: all .3s ease-in-out;
+              background: var(--main-bg);
+              fill: var(--main-color);
+              border-radius: 100%;
+            }
+          }
         }
       }
     }
 
     //hero section
-    #hero-container{
-      height: 150px;
-      width: 100%;
-      position: relative;
-      
-      #span-container{
-        height: 150px;
-        width: 100%;
-        position: relative;
-        overflow: hidden;
-        
-        #span{
-          position: absolute;
-          top: 150px;
-          width: 100%;
-
-          #highlight{
-            &:hover{
-              cursor: pointer;
-              color: var(--main-bg);
-              -webkit-text-stroke-width: 2px;
-              -webkit-text-stroke-color: var(--main-color);
-            }
-          }
-        }
-      }
-    }
-
-    #cta-container{
-      height: 25px;
-      width: 100%;
-      position: relative;
-      overflow: hidden; 
-      
-      #cta{
-        position: absolute;
-        top: 50px;
-        letter-spacing: 0;
-        transition: .3s ease-in-out;
-
-        #icon{
-          transform: rotate(0deg);
-          transition: all .3s ease-in-out;
-          border-radius: 50%;
-        }
-        
-        &:hover{
-          letter-spacing: 2px;
-
-          #icon{
-            transform: rotate(-45deg);
-            transition: all .3s ease-in-out;
-            background: var(--main-color);
-            fill: var(--main-bg);
-            border-radius: 50%;
-          }
-        }
-      }
-    }
-
     #p-container{
-      height: 20px;
-      width: 100%;
       position: relative;
-      overflow: hidden; 
+      overflow: hidden;
+      // height: auto;
+      
+      #hero-p{
+        transform: translateY(20px);
+        margin-right: 5px; 
+      }
+    }
+    
+    #hero-container{
+      position: relative;
+      overflow: hidden;
+      
+      #hero-aspiringweb{
+        margin-right: 10px;
 
-      #p{
+        // -webkit-text-stroke-width: 2px;
+        // -webkit-text-stroke-color: var(--main-color);
+      }
+
+      #hero-designerdev{
         position: absolute;
-        top: 20px;
         width: 100%;
       }
     }
 
     // about section
     #about-container{
-      height: 95px;
-      width: 100%;
       position: relative;
       overflow: hidden;
+      // height: auto;
 
-      #greet{
-        position: absolute;
-        top: 95px;
+      span{
+        margin-right: 10px;
       }
 
-      #text{
-        position: absolute;
-        top: 95px;
-        width: 100%;
-        margin-left: 315px;
-        // color: var(--main-bg);
-        // -webkit-text-stroke-width: 1px;
-        // -webkit-text-stroke-color: var(--main-color);
-      }
+      // #text{
+      //   position: absolute;
+      //   top: 95px;
+      //   width: 100%;
+      // }
     }
 
     #content-container{
-      height: 50px;
-      width: 100%;
       position: relative;
       overflow: hidden; 
-
-      #about{
-        position: absolute;
-        top: 130px;
-        width: 100%;
-      }
+      height: auto;
     }
 
-    #reveal{
-      #img{
-        width: 400px;
-        height: 500px;
-        position: absolute;
-        top: 1250px;
-        object-fit: cover;
-        transform-origin: left;
-      }
-    }
+    // #reveal{
+    //   #img{
+    //     width: 400px;
+    //     height: 500px;
+    //     position: absolute;
+    //     top: 1250px;
+    //     object-fit: cover;
+    //     transform-origin: left;
+    //   }
+    // }
 
     #list{
       border-top: 1px solid var(--main-color);
       position: relative;
       overflow: hidden;
-      // width: 0px;
       
       &:last-child{
         border-bottom: 1px solid var(--main-color);
@@ -244,130 +239,52 @@
     }
 
     #stack-container{
-      height: 50px;
       position: relative;
       overflow: hidden;
+      height: auto;
 
-      #stack-header{
-        position: absolute;
-        top: 50px;
-        width: 100%;
+      span{
+        margin-right: 10px;
       }
     }
 
     #stacks{
-      height: 20px;
       position: relative;
       overflow: hidden;
+      // height: auto;
 
-      #stack-context{
-        position: absolute;
-        top: 20px;
-        width: 100%;
-      }
-    }
-
-    #btn-container{
-      height: 50px;
-      width: 100%;
-      position: relative;
-      overflow: hidden; 
-      
-      #btn{
-        width: 235px;
-        position: absolute;
-        letter-spacing: 0;
-        transition: .3s ease-in-out;
-
-        &:hover{
-          letter-spacing: 2px;
-        }
-
-        // #icon{
-        //   transform: rotate(0deg);
-        //   transition: all .3s ease-in-out;
-        //   border-radius: 50%;
-        // }
-
-        // &:hover{
-        //   #icon{
-        //     transform: rotate(-45deg);
-        //     transition: all .3s ease-in-out;
-        //     background: var(--main-color);
-        //     fill: var(--main-bg);
-        //     border-radius: 50%;
-        //   }
-        // }
+      p{
+        margin-right: 5px;
       }
     }
 
     // selected projects
-    #selected-project{
-      height: 95px;
+    #description{
       position: relative;
       overflow: hidden;
-      width: 100%;
+      height: auto;
+
+      #description-p{
+        transform: translateY(20px);
+        margin-right: 5px;
+      }
+    }
+
+    #selected-project-header{
+      position: relative;
+      overflow: hidden;
     
+      #selected,
       #projects{
         position: absolute;
-        height: 95px;
-        width: 100%;
-        top: 100px;
       }
     }
 
-    #description-container{
-      height: 20px;
-      width: 100%;
-      overflow: hidden; 
-      position: relative;
-    
-      #description {
-        position: absolute;
-        width: 100%;
-        top: 100px;
-      }
-    }
-
-    #card{
-      margin-top: 100px;
-    }
-
-    #project-container{
-      height: 70px;
+    #behance-link-container{
       position: relative;
       overflow: hidden;
 
-      #project-title{
-        position: absolute;
-        top: 70px;
-      }
-    }
-
-    #project-context{
-      height: 20px;
-      position: relative;
-      overflow: hidden;
-
-      #project-timeline{
-        position: absolute;
-        top: 20px;
-      }
-    }
-
-    #data-list{
-      li{
-        margin-right: 10px;
-      }
-    }
-    
-    #project-link{
-      // position: relative;
-      // overflow: hidden;
-
-      a, button{
-        border-radius: 50%;
-
+      a{
         span{
           position: relative;
           letter-spacing: 0;
@@ -381,7 +298,7 @@
         #icon{
           transform: rotate(0deg);
           transition: all .3s ease-in-out;
-          border-radius: 50%;
+          border-radius: 100%;
         }
   
         &:hover{
@@ -390,7 +307,84 @@
             transition: all .3s ease-in-out;
             background: var(--main-bg);
             fill: var(--main-color);
-            border-radius: 50%;
+            border-radius: 100%;
+          }
+        }
+        
+        #icons{
+          transform: rotate(0deg);
+          transition: all .3s ease-in-out;
+          border-radius: 100%;
+        }
+  
+        &:hover{
+          #icons{
+            transform: rotate(-45deg);
+            transition: all .3s ease-in-out;
+            background: var(--main-bg);
+            fill: var(--main-color);
+            border-radius: 100%;
+          }
+        }
+      }
+    }
+
+    #project-card-container{
+      position: relative;
+      overflow: hidden;
+
+      #project-image{
+        transition: .5s ease-in-out;
+
+        &:hover{
+          transform: scale(1.05);
+          transition: .5s ease-in-out;
+        }
+      }
+    }
+
+    #project-link{
+      a, button{
+        span,
+        #visit{
+          position: relative;
+          letter-spacing: 0;
+          transition: .3s ease-in-out;
+
+          &:hover{
+            letter-spacing: 2px;
+          }
+        }
+        
+        #icon{
+          transform: rotate(0deg);
+          transition: all .3s ease-in-out;
+          border-radius: 100%;
+        }
+  
+        &:hover{
+          #icon{
+            transform: rotate(-45deg);
+            transition: all .3s ease-in-out;
+            background: var(--main-color);
+            fill: var(--main-bg);
+            border-radius: 100%;
+          }
+        }
+        
+        #icons{
+          transform: rotate(0deg);
+          transition: all .3s ease-in-out;
+          border-radius: 100%;
+        }
+  
+        &:hover{
+          #icons{
+            transform: rotate(-45deg);
+            transition: all .3s ease-in-out;
+            background: var(--main-color);
+            fill: var(--main-bg);
+            border-radius: 100%;
           }
         }
       }
@@ -399,127 +393,111 @@
     #card-container{
       position: relative;
       overflow: hidden;
+      height: max-content;
 
-      #project-card{
-        position: absolute;
-        top: 100vh;
+      // #project-card{
+      //   position: absolute;
+      //   transform: translateY(0px);
+      // }
 
-        #span-container{
-          position: relative;
-          overflow: hidden;
-          height: 20px;
+      #span-container{
+        position: relative;
+        overflow: hidden;
+        // height: auto;
 
-          span, ul{
-            position: absolute;
-            top: 20px;
-          }
+        #back{
+          transform: translateY(20px);
         }
 
-        #title-container{
-          position: relative;
-          overflow: hidden;
-          height: 40px;
-
-          #title{
-            position: absolute;
-            top: 40px;
-          }
+        #project-p{
+          margin-right: 8px;
         }
+      }
 
-        #p-container{
-          position: relative;
-          overflow: hidden;
-          height: 20px;
+      #title-container{
+        position: relative;
+        overflow: hidden;
+        height: auto;
+      }
 
-          p{
-            position: absolute;
-            top: 20px;
-          }
+      #p-container{
+        position: relative;
+        overflow: hidden;
+        height: auto;
+
+        #project-p{
+          margin-right: 5px;
+          transform: translateY(20px);
         }
+      }
 
-        #button-container{
-          position: relative;
-          overflow: hidden;
-          height: 25px;
-          border-radius: 0;
+      #button-container{
+        position: relative;
+        overflow: hidden;
+        height: auto;
 
-          span{
-            position: absolute;
-            top: 25px;
-          }
+        #visit{
+          transform: translateY(30px);
         }
+      }
 
-        #img-container{
-          position: relative;
-          overflow: hidden;
-          height: 100%;
+      #img-container{
+        position: relative;
+        overflow: hidden;
+        height: auto;
 
-          #project-img{
-            position: absolute;
-            top: 723px;
-            transform-origin: bottom;
-          }
+        #project-img{
+          transform: translateY(0px);
+          transform-origin: bottom;
         }
       }
     }
 
     // contact
-    #email-container{
-      height: 180px;
-      width: 100%;
-      overflow: hidden; 
+    #drop-message-container{
       position: relative;
+      overflow: hidden; 
+      height: auto;
 
-      #drop{
-        position: absolute;
-        top: 180px;
-        width: 100%;
-      }
-      
-      #message{
-        position: absolute;
-        top: 180px;
-        width: 100%;
+      p{
+        margin-right: 20px;
       }
     }
 
-    #contact-container{
-      height: 20px;
-      width: 100%;
-      overflow: hidden; 
+    #contact-description-container{
+      height: auto;
       position: relative;
+      overflow: hidden; 
 
       #context{
-        position: absolute;
-        width: 100%;
-        top: 20px;
+        transform: translateY(20px);
+        margin-right: 5px;
       }
     }
 
     #account-container{
-      height: 35px;
-      width: 100%;
-      overflow: hidden; 
       position: relative;
+      overflow: hidden; 
+      height: auto;
 
       #accounts{
-        position: absolute;
-        width: 100%;
-        top: 35px;
+        transform: translateY(25px);
       }
     }
 
     // footer
     #footer-container{
-      height: 20px;
-      width: 100%;
       position: relative;
-      overflow: hidden; 
+      overflow: hidden;
+      height: auto;
 
-      #context{
-        position: absolute;
-        width: 100%;
-        top: 20px;
+      #footer{
+        transform: translateY(20px);
+        margin-right: 5px;
+      }
+
+      #footer-update-date{
+        margin-right: 5px;
       }
     }
   }

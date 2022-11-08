@@ -8,69 +8,19 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 function Footer() {
-  const fxCopyright = useRef();
-  const fxLastUpdate = useRef();
-  const fxDate = useRef();
-  const fxDevDes = useRef();
-  const fxMe = useRef();
-  const test = useRef();
-
   const [showFooter] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
-    gsap.to(fxCopyright.current ,{
+    // footer animation
+    gsap.to('#footer', {
       duration: 1,
-      top: '0px',
-      ease: 'expo.out',
-      scrollTrigger: {
-        trigger: fxCopyright.current,
-        start: 'bottom 115%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxLastUpdate.current ,{
-      duration: 1.2,
-      top: '0px',
-      ease: 'expo.out',
-      scrollTrigger: {
-        trigger: fxLastUpdate.current,
-        start: 'bottom 115%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxDate.current ,{
-      duration: 1.3,
-      top: '0px',
-      ease: 'expo.out',
-      scrollTrigger: {
-        trigger: fxDate.current,
-        start: 'bottom 115%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxDevDes.current ,{
-      duration: 1.4,
-      top: '0px',
-      ease: 'expo.out',
-      scrollTrigger: {
-        trigger: fxDevDes.current,
-        start: 'bottom 115%',
-        toggleActions: "play none none reverse",
-      }
-    });
-
-    gsap.to(fxMe.current ,{
-      duration: 1.5,
-      top: '0px',
-      ease: 'expo.out',
-      scrollTrigger: {
-        trigger: fxMe.current,
-        start: 'bottom 115%',
-        toggleActions: "play none none reverse",
+      y: 0,
+      stagger: .05,
+      ease: 'power1.out',
+      scrollTrigger: { 
+        trigger: '#footer', 
+        start: 'bottom 100%',
       }
     });
   }, []);
@@ -80,28 +30,72 @@ function Footer() {
       { location.pathname === '/dailydiscount' ? showFooter !== false : 
         location.pathname === '/jbnza' ? showFooter !== false :
         location.pathname === '/regain' ? showFooter !== false :
-        <div className="px-[3em]">
-          <div className="grid grid-cols-4 gap-0 py-10 font-montserrat font-regular text-[1em]" ref={test}>
-            <section className="col-start-1 flex flex-col" id='footer-container'>
-              <span id='context' ref={fxCopyright}>© 2022 JAYSON BENIZA </span>
-            </section>
-            <section className="col-start-3 flex flex-col">
-              <div id="footer-container">
-                <span className='text-end' id='context' ref={fxLastUpdate}>LAST UPDATE</span>
-              </div>
-              <div id="footer-container">
-                <span className='text-end' id='context' ref={fxDate}>OCTOBER 2022</span>
-              </div>
-            </section>
-            <section className="col-start-4 flex flex-col">
-              <div id="footer-container">
-                <span className='text-end' id='context' ref={fxDevDes}>DEVELOP & DESIGN BY</span>
-              </div>
-              <div id="footer-container">
-                <span className='text-end' id='context' ref={fxMe}>JAYSON BENIZA</span>
-              </div>
-            </section>
-          </div>
+        <div className='grid gap-0 py-10 bg-black font-montserrat font-regular
+          mobile:p-[.9rem] mobile:h-[15vh] mobile:grid-cols-8 mobile:text-[.5rem]
+          tablet:p-[1rem] tablet:h-[15vh] tablet:grid-cols-8 tablet:text-[.5rem]
+          laptop:p-[2rem] laptop:h-[15vh] laptop:grid-cols-8 laptop:text-[.8rem]
+          laptop-lg:p-[3rem] laptop-lg:h-[15vh] laptop-lg:grid-cols-8 laptop-lg:text-[.8rem]
+          desktop:p-[3rem] desktop:h-full desktop:grid-cols-8 desktop:text-[.8rem]'>
+          <section className='col-start-1 flex flex-row h-[20px] leading-none
+            mobile:col-span-8 
+            tablet:col-span-3
+            laptop:col-span-3
+            laptop-lg:col-span-2
+            desktop:col-span-2'>
+            <div id='footer-container'>
+              <p className='text-white' id='footer'>&copy;</p>
+            </div>
+            <div id='footer-container'>
+              <p className='text-white' id='footer'>2022</p>
+            </div>
+            <div id='footer-container'>
+              <p className='text-white' id='footer'>Jayson</p>
+            </div>
+            <div id='footer-container'>
+              <p className='text-white' id='footer'>Beniza</p>
+            </div>
+          </section>
+          <section className='flex flex-row h-[20px] leading-none
+            mobile:col-span-8 mobile:col-start-1 mobile:justify-start
+            tablet:col-span-8 tablet:col-start-1 tablet:justify-start
+            laptop:col-span-2 laptop:col-start-5 laptop:justify-end
+            laptop-lg:col-span-2 laptop-lg:col-start-5 laptop-lg:justify-end
+            desktop:col-span-2 laptop-lg:col-start-5 desktop:justify-end'>
+            <div id='footer-container'>
+              <p className='text-white' id='footer'>Last</p>
+            </div>
+            <div id='footer-container'>
+              <p className='text-white' id='footer'>Update</p>
+            </div>
+            <div id='footer-container'>
+              <p className='text-white' id='footer'>November</p>
+            </div>
+            <div id='footer-container'>
+              <p className='text-white' id='footer'>2022</p>
+            </div>
+          </section>
+          <section className='flex flex-row justify-end h-[20px] leading-none
+            mobile:col-span-8 mobile:col-start-1 mobile:justify-start
+            tablet:col-span-8 tablet:col-start-1 tablet:justify-start
+            laptop:col-span-2 laptop:col-start-7 laptop:justify-end
+            laptop-lg:col-span-2 laptop:col-start-7 laptop-lg:justify-end
+            desktop:col-span-2 laptop:col-start-7 desktop:justify-end'>
+            <div id='footer-container'>
+              <p className='text-white' id='footer'>Design</p>
+            </div>
+            <div id='footer-container'>
+              <p className='text-white' id='footer'>&</p>
+            </div>
+            <div id='footer-container'>
+              <p className='text-white' id='footer'>Develop</p>
+            </div>
+            <div id='footer-container'>
+              <p className='text-white' id='footer'>by</p>
+            </div>
+            <div id='footer-container'>
+              <p className='text-white' id='footer'>Me</p>
+            </div>
+          </section>
         </div>
       }
     </>

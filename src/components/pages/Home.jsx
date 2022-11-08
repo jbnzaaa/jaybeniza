@@ -8,7 +8,7 @@ import Contact from './Contact';
 function Home() {
   return (
     <>
-      <div className="px-[3em] overflow-hidden">
+      <div className='overflow-hidden'>
         <Hero/>
         <About/>
         <Project/>
