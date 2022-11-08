@@ -1,27 +1,11 @@
 //
 import React, { useRef, useEffect } from 'react'
-// 
-import { Link } from 'react-router-dom'
-// icons
-import {RiArrowRightDownLine} from 'react-icons/ri'
-// images
-import regain from '../../assets/files/images/portfolio_mockup_1.png'
-import jbnza from '../../assets/files/images/portfolio_mockup_2.png'
-import dailydiscount from '../../assets/files/images/portfolio_mockup_3.png'
 // GSAP
 import gsap from 'gsap' 
 import ScrollTrigger from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 function ProjectCard() {
-  // const fxCardAnim1 = useRef();
-  // const fxCardAnim2 = useRef();
-  // const fxCardAnim3 = useRef();
-  // const fxCardAnim4 = useRef();
-  // const fxLink1 = useRef();
-  // const fxCard = useRef();
-  // const fxProjTitle = useRef();
-
   useEffect(() => {
     // gsap.to(fxCard.current , {
     //   duration: 1,
@@ -110,11 +94,11 @@ function ProjectCard() {
         laptop-lg:px-[3rem]
         desktop:px-[3rem]'>
         <div className='grid grid-cols-8 gap-x-5
-          mobile:gap-y-5
+          mobile:gap-y-10
           tablet:gap-y-10
           laptop:gap-y-14
           laptop-lg:gap-y-20
-          desktop:pgap-y-20'>
+          desktop:gap-y-20'>
           {/* daily discount */}
           <div className='
             mobile:col-span-8 mobile:col-start-1
@@ -148,15 +132,15 @@ function ProjectCard() {
                 tablet:text-[1.3rem]
                 laptop:text-[1.3rem]
                 laptop-lg:text-[1.5rem]
-                desktop:text-[1.5rem]'>
+                desktop:text-[2rem]'>
                 DailyDiscount
               </span>
               <span className='
                 mobile:text-[.5rem]
                 tablet:text-[.5rem]
-                laptop:text-[.8rem]
+                laptop:text-[.8rem] 
                 laptop-lg:text-[.8rem]
-                desktop:text-[.8rem]'>
+                desktop:text-[.9rem]'>
                 2022
               </span>
             </div>
@@ -194,15 +178,15 @@ function ProjectCard() {
                 tablet:text-[1.3rem]
                 laptop:text-[1.3rem]
                 laptop-lg:text-[1.5rem]
-                desktop:text-[1.5rem]'>
+                desktop:text-[2rem]'>
                 jbnza
               </span>
               <span className='
                 mobile:text-[.5rem]
                 tablet:text-[.5rem]
-                laptop:text-[.8rem]
+                laptop:text-[.8rem] 
                 laptop-lg:text-[.8rem]
-                desktop:text-[.8rem]'>
+                desktop:text-[.9rem]'>
                 2022
               </span>
             </div>
@@ -240,15 +224,15 @@ function ProjectCard() {
                 tablet:text-[1.3rem]
                 laptop:text-[1.3rem]
                 laptop-lg:text-[1.5rem]
-                desktop:text-[1.5rem]'>
+                desktop:text-[2rem]'>
                 ReGain
               </span>
               <span className='
                 mobile:text-[.5rem]
                 tablet:text-[.5rem]
-                laptop:text-[.8rem]
+                laptop:text-[.8rem] 
                 laptop-lg:text-[.8rem]
-                desktop:text-[.8rem]'>
+                desktop:text-[.9rem]'>
                 2021
               </span>
             </div>

@@ -13,7 +13,7 @@ function Contact() {
       duration: 1,
       y: 0,
       stagger: .05,
-      ease: 'power1.out',
+      ease: 'power1.in',
       scrollTrigger: { 
         trigger: '#context', 
         start: 'bottom 100%',
@@ -26,7 +26,7 @@ function Contact() {
       delay: 1.3,
       y: 0,
       stagger: .05,
-      ease: 'power1.out',
+      ease: 'power1.in',
       scrollTrigger: { 
         trigger: '#accounts', 
         start: 'bottom 100%',
@@ -53,12 +53,12 @@ function Contact() {
               laptop:col-span-5 laptop:row-span-1 laptop:row-start-1
               laptop-lg:col-span-5 laptop-lg:row-span-1 laptop-lg:row-start-1
               desktop:col-span-5 desktop:row-span-1 desktop:row-start-1'>
-              <div className='flex flex-wrap leading-none font-lexend font-semibold leading-none tracking-tight
-                mobile:h-[100px] mobile:text-[5rem]
-                tablet:h-[100px] tablet:text-[6rem]
+              <div className='flex flex-wrap font-lexend font-semibold leading-none tracking-tight
+                mobile:h-[100px] mobile:text-[6rem] mobile:mt-10
+                tablet:h-[100px] tablet:text-[6rem] tablet:mt-14
                 laptop:h-[150px] laptop:text-[7rem]
                 laptop-lg:h-[150px] laptop-lg:text-[10rem]
-                desktop:h-[150px] laptop-lg:text-[10rem]'>
+                desktop:h-[150px] desktop:text-[10rem]'>
                 <div id='drop-message-container'>
                   <p className='text-white 
                   mobile:translate-y-[100px]
@@ -96,12 +96,12 @@ function Contact() {
               laptop-lg:col-span-2 laptop-lg:col-start-7 laptop-lg:row-span-2 laptop-lg:row-start-1
               desktop:col-span-2 desktop:col-start-7 desktop:row-span-2 desktop:row-start-1'>
               {/* description content */}
-              <div className='flex flex-wrap font-montserrat font-regular h-[20px] mb-20
-                mobile:text-[.5rem]
-                tablet:text-[.5rem]
-                laptop:text-[.8rem]
-                laptop-lg:text-[.8rem]
-                desktop:text-[.8rem]'>
+              <div className='flex flex-wrap font-montserrat font-regular
+                mobile:text-[1rem] mobile:mb-20
+                tablet:text-[1.1rem] tablet:mb-20
+                laptop:text-[1.2rem] laptop:mb-28
+                laptop-lg:text-[1.2rem] laptop-lg:mb-24
+                desktop:text-[1.3rem] desktop:mb-28'>
                 <div id='contact-description-container'><p className='text-white' id="context">Do</p></div>
                 <div id='contact-description-container'><p className='text-white' id="context">you</p></div>
                 <div id='contact-description-container'><p className='text-white' id="context">have</p></div>
@@ -124,11 +124,11 @@ function Contact() {
               </div>
               {/* email accounts content */}
               <div className='flex justify-between w-full font-montserrat h-[20px]
-                mobile:text-[.5rem]
-                tablet:text-[.5rem]
-                laptop:text-[.8rem]
-                laptop-lg:text-[.8rem]
-                desktop:text-[.8rem]'>
+                mobile:text-[1rem]
+                tablet:text-[1.1rem]
+                laptop:text-[1.2rem]
+                laptop-lg:text-[1.2rem]
+                desktop:text-[1.3rem]'>
                 <div className='w-[50%]'>
                   <div id='account-container'>
                     <div className='mb-2' id='accounts'>

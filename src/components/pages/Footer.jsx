@@ -17,7 +17,7 @@ function Footer() {
       duration: 1,
       y: 0,
       stagger: .05,
-      ease: 'power1.out',
+      ease: 'power1.in',
       scrollTrigger: { 
         trigger: '#footer', 
         start: 'bottom 100%',
@@ -31,12 +31,12 @@ function Footer() {
         location.pathname === '/jbnza' ? showFooter !== false :
         location.pathname === '/regain' ? showFooter !== false :
         <div className='grid gap-0 py-10 bg-black font-montserrat font-regular
-          mobile:p-[.9rem] mobile:h-[15vh] mobile:grid-cols-8 mobile:text-[.5rem]
-          tablet:p-[1rem] tablet:h-[15vh] tablet:grid-cols-8 tablet:text-[.5rem]
-          laptop:p-[2rem] laptop:h-[15vh] laptop:grid-cols-8 laptop:text-[.8rem]
-          laptop-lg:p-[3rem] laptop-lg:h-[15vh] laptop-lg:grid-cols-8 laptop-lg:text-[.8rem]
-          desktop:p-[3rem] desktop:h-full desktop:grid-cols-8 desktop:text-[.8rem]'>
-          <section className='col-start-1 flex flex-row h-[20px] leading-none
+          mobile:p-[.9rem] mobile:h-[15vh] mobile:grid-cols-8 mobile:text-[1rem]
+          tablet:p-[1rem] tablet:h-[15vh] tablet:grid-cols-8 tablet:text-[1.1rem]
+          laptop:p-[2rem] laptop:h-[15vh] laptop:grid-cols-8 laptop:text-[1.2rem]
+          laptop-lg:p-[3rem] laptop-lg:h-[15vh] laptop-lg:grid-cols-8 laptop-lg:text-[1.2rem]
+          desktop:p-[3rem] desktop:h-full desktop:grid-cols-8 desktop:text-[1.3rem]'>
+          <section className='col-start-1 flex flex-row h-[35px]
             mobile:col-span-8 
             tablet:col-span-3
             laptop:col-span-3
@@ -55,12 +55,12 @@ function Footer() {
               <p className='text-white' id='footer'>Beniza</p>
             </div>
           </section>
-          <section className='flex flex-row h-[20px] leading-none
+          <section className='flex flex-row justify-end h-[35px]
             mobile:col-span-8 mobile:col-start-1 mobile:justify-start
             tablet:col-span-8 tablet:col-start-1 tablet:justify-start
             laptop:col-span-2 laptop:col-start-5 laptop:justify-end
             laptop-lg:col-span-2 laptop-lg:col-start-5 laptop-lg:justify-end
-            desktop:col-span-2 laptop-lg:col-start-5 desktop:justify-end'>
+            desktop:col-span-2 desktop:col-start-5 desktop:justify-end'>
             <div id='footer-container'>
               <p className='text-white' id='footer'>Last</p>
             </div>
@@ -74,12 +74,12 @@ function Footer() {
               <p className='text-white' id='footer'>2022</p>
             </div>
           </section>
-          <section className='flex flex-row justify-end h-[20px] leading-none
+          <section className='flex flex-row justify-end h-[35px] leading-none
             mobile:col-span-8 mobile:col-start-1 mobile:justify-start
             tablet:col-span-8 tablet:col-start-1 tablet:justify-start
             laptop:col-span-2 laptop:col-start-7 laptop:justify-end
             laptop-lg:col-span-2 laptop:col-start-7 laptop-lg:justify-end
-            desktop:col-span-2 laptop:col-start-7 desktop:justify-end'>
+            desktop:col-span-2 desktop:col-start-7 desktop:justify-end'>
             <div id='footer-container'>
               <p className='text-white' id='footer'>Design</p>
             </div>

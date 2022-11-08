@@ -12,7 +12,7 @@ function AboutParagraph() {
       duration: 1,
       y: 0,
       stagger: .05,
-      ease: 'power1.out',
+      ease: 'power1.in',
       scrollTrigger: { 
         trigger: '#about-paragraph', 
         start: 'bottom 100%'
@@ -25,16 +25,16 @@ function AboutParagraph() {
     <>
     {/* animation broken */}
       <div>
-        <div className='flex flex-wrap leading-tight
-          mobile:text-[.5rem]
-          tablet:text-[.5rem] 
-          laptop:text-[2.5rem]
-          laptop-lg:text-[2.5rem]
-          desktop:text-[2.5rem]'>
+        <div className='flex flex-wrap 
+          mobile:text-[1rem] 
+          tablet:text-[1.1rem] 
+          laptop:text-[2rem] laptop:leading-tight
+          laptop-lg:text-[2.1rem] laptop-lg:leading-tight
+          desktop:text-[3rem] desktop:leading-tight'>
           <div id='content-container'>
             <p className='
               mobile:indent-10 mobile:translate-y-[20px] mobile:mr-[5px] 
-              tablet:indent-10 tablet:translate-y-[30px] tablet:mr-[8px] 
+              tablet:indent-10 tablett:translate-y-[30px] tablet:mr-[8px] 
               laptop:indent-20 laptop:translate-y-[50px] laptop:mr-[15px]
               laptop-lg:indent-20 laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
               desktop:indent-20 desktop:translate-y-[50px] desktop:mr-[20px]' 
@@ -46,20 +46,20 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]' 
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 enthusiastic
             </p>
           </div>
           <div id='content-container'>
             <p className='
-              mmobile:translate-y-[20px] mobile:mr-[5px] 
+              mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 self-taught
             </p>
@@ -68,9 +68,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 web
             </p>
@@ -79,9 +79,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 and
             </p>
@@ -90,9 +90,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 ui
             </p>
@@ -101,9 +101,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 designer
             </p>
@@ -112,9 +112,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 from
             </p>
@@ -123,9 +123,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 Philippines.
             </p>
@@ -134,9 +134,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 I
             </p>
@@ -145,9 +145,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 am
             </p>
@@ -156,9 +156,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 passionate
             </p>
@@ -167,9 +167,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 in
             </p>
@@ -178,9 +178,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 building
             </p>
@@ -189,9 +189,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 web
             </p>
@@ -200,9 +200,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 page
             </p>
@@ -211,9 +211,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 and
             </p>
@@ -222,9 +222,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 designing
             </p>
@@ -233,9 +233,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 user
             </p>
@@ -244,9 +244,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 friendly
             </p>
@@ -255,9 +255,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 interface.
             </p>
@@ -266,9 +266,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 When
             </p>
@@ -277,9 +277,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 I'm
             </p>
@@ -288,9 +288,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 not
             </p>
@@ -299,9 +299,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 typing
             </p>
@@ -310,9 +310,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 some
             </p>
@@ -321,9 +321,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 line
             </p>
@@ -332,9 +332,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 of
             </p>
@@ -343,9 +343,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 codes,
             </p>
@@ -354,9 +354,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 I'm
             </p>
@@ -365,9 +365,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 probably
             </p>
@@ -376,9 +376,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 playing
             </p>
@@ -387,9 +387,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 online
             </p>
@@ -398,9 +398,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 games
             </p>
@@ -409,9 +409,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 or
             </p>
@@ -420,9 +420,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 riding
             </p>
@@ -431,9 +431,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 my
             </p>
@@ -442,9 +442,9 @@ function AboutParagraph() {
             <p className='
               mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[50px] desktop:mr-[20px]'
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 bicycle.
             </p>

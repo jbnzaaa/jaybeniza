@@ -32,7 +32,7 @@ function Project() {
     gsap.to('#selected', {
       duration: 1,
       left: '30px',
-      ease: 'power1.out',
+      ease: 'power1.in',
       scrollTrigger: { 
         trigger: '#selected', 
         start: 'top 100%',
@@ -42,8 +42,8 @@ function Project() {
 
     gsap.to('#projects', {
       duration: 1,
-      right: '80px',
-      ease: 'power1.out',
+      right: '30px',
+      ease: 'power1.in',
       scrollTrigger: { 
         trigger: '#projects', 
         start: 'top 150%',
@@ -57,7 +57,7 @@ function Project() {
       delay: 1.1,
       y: 0,
       stagger: .05,
-      ease: 'power1.out',
+      ease: 'power1.in',
       scrollTrigger: { 
         trigger: '#description-p', 
         start: 'bottom 120%',
@@ -69,7 +69,7 @@ function Project() {
       duration: 1,
       // delay: 1,
       y: 0,
-      ease: 'power1.inOut',
+      ease: 'power1.in',
       scrollTrigger: {
         trigger: '#behance-link',
         start: 'top 100%',
@@ -91,12 +91,7 @@ function Project() {
             laptop-lg:px-[3rem] laptop:h-[130vh]
             desktop:px-[3rem] desktop:h-[130vh]'>
             {/* grid container */}
-            <div className='grid grid-cols-8 grid-rows-5 gap-0 h-full
-              mobile:py-[1rem]
-              tablet:py-[3rem]
-              laptop:py-[3rem]
-              laptop-lg:py-[3rem]
-              desktop:py-[3rem]'>
+            <div className='grid grid-cols-8 grid-rows-5 gap-0 h-full py-[3rem]'>
               <div className='row-start-1 row-span-1
                 mobile:col-span-6 mobile:col-start-3
                 tablet:col-span-5 tablet:col-start-4
@@ -104,11 +99,11 @@ function Project() {
                 laptop-lg:col-span-2 laptop-lg:col-start-7
                 desktop:col-span-2 desktop:col-start-7'>
                 <div className='flex flex-wrap
-                  mobile:h-[18px] mobile:text-[.5rem]
-                  tablet:h-[18px] tablet:text-[.5rem]
-                  laptop:h-[20px] laptop:text-[.8rem]
-                  laptop-lg:h-[20px] laptop-lg:text-[.8rem]
-                  desktop:h-[20px] desktop:text-[.8rem]'>
+                  mobile:h-[25px] mobile:text-[1rem]
+                  tablet:h-[30px] tablet:text-[1.1rem]
+                  laptop:h-[50px] laptop:text-[1.2rem]
+                  laptop-lg:h-[50px] laptop-lg:text-[1.2rem]
+                  desktop:h-[50px] desktop:text-[1.3rem]'>
                   <div id='description'><p className='text-white' id='description-p'>A</p></div>
                   <div id='description'><p className='text-white' id='description-p'>collection</p></div>
                   <div id='description'><p className='text-white' id='description-p'>of</p></div>
@@ -133,65 +128,70 @@ function Project() {
               {/* page header */}
               <div className='col-span-8 col-start-1 w-full flex flex-col row-start-2 row-span-3 flex justify-center'>
                 <div className='
-                  mobile:h-[90px]
-                  tablet:h-[130px]
+                  mobile:h-[190px]
+                  tablet:h-[150px]
                   laptop:h-[250px]
                   laptop-lg:h-[250px]
                   desktop:h-[250px]' 
                   id='selected-project-header' ref={fxOverflow1}>
                   <span className='font-lexend font-medium leading-none tracking-tight text-white
-                    mobile:text-[5rem] mobile:left-[-30px]
-                    tablet:text-[9rem] tablet:left-[-30px]
-                    laptop:text-[12rem] laptop:left-[-100px]
-                    laptop-lg:text-[17rem] laptop-lg:left-[-100px]
-                    desktop:text-[18rem] desktop:left-[-100px]'
+                    mobile:text-[15rem] mobile:left-[-80px]
+                    tablet:text-[17rem] tablet:left-[-80px]
+                    laptop:text-[20rem] laptop:left-[-110px]
+                    laptop-lg:text-[20rem] laptop-lg:left-[-120px]
+                    desktop:text-[20rem] desktop:left-[-250px]'
                     id='selected'>
                     Selected
                   </span>
                 </div>
                 <div className='
-                  mobile:h-[90px]
-                  tablet:h-[130px]
+                  mobile:h-[190px]
+                  tablet:h-[150px]
                   laptop:h-[250px]
                   laptop-lg:h-[250px]
                   desktop:h-[250px]' 
                   id='selected-project-header' ref={fxOverflow2}>
                   <span className='font-lexend font-medium leading-none tracking-tight text-white
-                    mobile:text-[5rem] mobile:right-[-30px]
-                    tablet:text-[9rem] tablet:right-[-30px]
-                    laptop:text-[12rem] laptop:right-[-100px]
-                    laptop-lg:text-[17rem] laptop-lg:right-[-100px]
-                    desktop:text-[18rem] desktop:right-[-100px]'
+                    mobile:text-[15rem] mobile:right-[-80px]
+                    tablet:text-[17rem] tablet:right-[-80px]
+                    laptop:text-[20rem] laptop:right-[-110px]
+                    laptop-lg:text-[20rem] laptop-lg:right-[-120px]
+                    desktop:text-[20rem] desktop:right-[-250px]'
                     id='projects'>
                     Projects
                   </span>
                 </div>
               </div>
               {/* page links */}
-              <span className='col-span-8 col-start-1 flex items-end row-start-5 row-span-1
-                mobile:text-[.5rem]
-                tablet:text-[.5rem]
-                laptop:text-[.8rem]
-                laptop-lg:text-[.8rem]
-                desktop:text-[.8rem]'>
+              <span className='col-span-8 col-start-1 flex items-end row-start-5 row-span-1'>
                 <div className='
-                  mobile:h-[30px]
-                  tablet:h-[32px]
-                  laptop:h-[34px]
-                  laptop-lg:h-[43px]
-                  desktop:h-[43px]' 
+                  mobile:h-[20px]
+                  tablet:h-[35px]
+                  laptop:h-[50px]
+                  laptop-lg:h-[50px]
+                  desktop:h-[50px]' 
                   id='behance-link-container'>
                   <a href='https://www.behance.net/jbnza' target='https://www.behance.net/jbnza' 
                     className='flex items-center p-2.5
-                    mobile:translate-y-[30px]
-                    tablet:translate-y-[32px]
-                    laptop:translate-y-[34px]
-                    laptop-lg:translate-y-[43px]
-                    desktop:translate-y-[43px]' 
+                    mobile:translate-y-[20px]
+                    tablet:translate-y-[35px]
+                    laptop:translate-y-[50px]
+                    laptop-lg:translate-y-[50px]
+                    desktop:translate-y-[50px]' 
                     id='behance-link'>
-                    <span className='flex items-center text-white'>
+                    <span className='flex items-center text-white
+                      mobile:text-[1rem]
+                      tablet:text-[1.1rem]
+                      laptop:text-[1.2rem] 
+                      laptop-lg:text-[1.2rem]
+                      desktop:text-[1.3rem]'>
                       Look at my UI Designs 
-                      <RiArrowRightDownLine id='icon' className='fill-white text-2xl ml-1'/>
+                      <RiArrowRightDownLine id='icon' className='fill-white ml-1
+                      mobile:text-xl
+                      tablet:text-1xl
+                      laptop:text-2xl
+                      laptop-lg:text-2xl
+                      desktop:text-3xl'/>
                     </span>
                   </a>
                 </div>

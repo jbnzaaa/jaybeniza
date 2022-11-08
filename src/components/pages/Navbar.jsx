@@ -28,33 +28,33 @@ function Navbar() {
 
   useEffect(() => {
     // nav links animation
-    gsap.to('#logo', { duration: 1, y: 0, ease: 'power1.out', });
+    gsap.to('#logo', { duration: 1, y: 0, ease: 'power1.in', });
     gsap.to('#link', {
       duration: 1,
       // delay: 1.2,
       y: 0,
       stagger: 0.1,
-      ease: 'power1.out',
+      ease: 'power1.in',
       scrollTrigger: { trigger: '#link', }
     });
 
     // open menu animation
-    gsap.to(fxOpen.current, { duration: 1, y: 0, ease: 'power1.out', });
-    gsap.to(fxMenuOpenAnimation.current, { duration: 1, height: '100vh', ease: 'power1.out',
+    gsap.to(fxOpen.current, { duration: 1, y: 0, ease: 'power1.in', });
+    gsap.to(fxMenuOpenAnimation.current, { duration: 1, height: '100vh', ease: 'power1.in',
       scrollTrigger: { trigger: fxMenuOpenAnimation.current, }
     });
 
     // close menu animation
-    gsap.to(fxClose.current, { duration: 1, y: 0,  ease: 'power1.out', });
-    gsap.to(fxMenuCloseAnimation.current, { duration: 1, height: '0vh', ease: 'power1.out',
+    gsap.to(fxClose.current, { duration: 1, y: 0,  ease: 'power1.in', });
+    gsap.to(fxMenuCloseAnimation.current, { duration: 1, height: '0vh', ease: 'power1.in',
       scrollTrigger: { trigger: fxMenuCloseAnimation.current, }
     });
 
     // nav menu link animation
-    gsap.to(fxLinkAnimation1.current, { duration: 1, delay: 1, y: 0, ease: 'power1.out', });
-    gsap.to(fxLinkAnimation2.current, { duration: 1, delay: 1.1, y: 0, ease: 'power1.out', });
-    gsap.to(fxLinkAnimation3.current, { duration: 1, delay: 1.2, y: 0, ease: 'power1.out', });
-    gsap.to(fxLinkAnimation4.current, { duration: 1, delay: 1.3, y: 0, ease: 'power1.out', });
+    gsap.to(fxLinkAnimation1.current, { duration: 1, delay: 1, y: 0, ease: 'power1.in', });
+    gsap.to(fxLinkAnimation2.current, { duration: 1, delay: 1.1, y: 0, ease: 'power1.in', });
+    gsap.to(fxLinkAnimation3.current, { duration: 1, delay: 1.2, y: 0, ease: 'power1.in', });
+    gsap.to(fxLinkAnimation4.current, { duration: 1, delay: 1.3, y: 0, ease: 'power1.in', });
   });
 
   return (
@@ -64,11 +64,11 @@ function Navbar() {
         location.pathname === '/jbnza' ? showNav !== false :
         location.pathname === '/regain' ? showNav !== false :
         <div className='sticky top-0 z-10
-          mobile:px-[.9rem] 
-          tablet:px-[1rem] 
+          mobile:px-[.9rem]
+          tablet:px-[1rem]
           laptop:px-[2rem]
           laptop-lg:px-[3rem]
-          desktop:px-[3rem]'>
+          desktop:px-[3rem] '>
           {/* grid */}
           <div className='grid grid-cols-8 gap-0
             mobile:py-3
@@ -81,11 +81,11 @@ function Navbar() {
               <div id='logo-container'>
                 <Link to='/#'>
                   <div className='font-lexend font-medium cursor-pointer tracking-tighter 
-                    mobile:text-[.5rem]
-                    tablet:text-[.5rem]
-                    laptop:text-[.9rem] 
-                    laptop-lg:text-[1rem]
-                    desktop:text-[1rem]' 
+                    mobile:text-[1rem]
+                    tablet:text-[1.1rem]
+                    laptop:text-[1.2rem]
+                    laptop-lg:text-[1.2rem]
+                    desktop:text-[1.3rem]' 
                     id='logo'>
                     jaysonbeniza
                   </div>
@@ -103,13 +103,18 @@ function Navbar() {
                 <div id='link'>
                   <Link to='/#'>
                     <span className='flex items-center
-                      mobile:text-[.5rem]
-                      tablet:text-[.5rem]
-                      laptop:text-[.8rem] 
-                      laptop-lg:text-[.8rem]
-                      desktop:text-[.8rem]'>
+                      mobile:text-[1rem]
+                      tablet:text-[1.1rem]
+                      laptop:text-[1.2rem] 
+                      laptop-lg:text-[1.2rem]
+                      desktop:text-[1.3rem]'>
                       Intro
-                      <RiArrowRightDownLine id='icon' className='fill-black text-2xl ml-1'/>
+                      <RiArrowRightDownLine id='icon' className='fill-black ml-1
+                        mobile:text-xl
+                        tablet:text-1xl
+                        laptop:text-2xl
+                        laptop-lg:text-2xl
+                        desktop:text-3xl'/>
                     </span> 
                   </Link>
                 </div>
@@ -118,13 +123,18 @@ function Navbar() {
                 <div id='link'>
                   <Link to='/#project'>
                     <span className='flex items-center
-                      mobile:text-[.5rem]
-                      tablet:text-[.5rem]
-                      laptop:text-[.8rem]  
-                      laptop-lg:text-[.8rem] 
-                      desktop:text-[.8rem]'>
+                      mobile:text-[1rem]
+                      tablet:text-[1.1rem]
+                      laptop:text-[1.2rem] 
+                      laptop-lg:text-[1.2rem]
+                      desktop:text-[1.3rem]'>
                       Project
-                      <RiArrowRightDownLine id='icon' className='fill-black text-2xl ml-1'/>
+                      <RiArrowRightDownLine id='icon' className='fill-black ml-1
+                      mobile:text-xl
+                      tablet:text-1xl
+                      laptop:text-2xl
+                      laptop-lg:text-2xl
+                      desktop:text-3xl'/>
                     </span>
                   </Link> 
                 </div>
@@ -141,13 +151,18 @@ function Navbar() {
                 <div id='link'>
                   <Link to='/#contact'>
                     <span className='flex items-center
-                      mobile:text-[.5rem]
-                      tablet:text-[.5rem]
-                      laptop:text-[.8rem] 
-                      laptop-lg:text-[.8rem] 
-                      desktop:tetext-[.8rem] '>
+                      mobile:text-[1rem]
+                      tablet:text-[1.1rem]
+                      laptop:text-[1.2rem] 
+                      laptop-lg:text-[1.2rem]
+                      desktop:text-[1.3rem]'>
                       Contact
-                      <RiArrowRightDownLine id='icon' className='fill-black text-2xl ml-1'/>
+                      <RiArrowRightDownLine id='icon' className='fill-black ml-1
+                      mobile:text-xl
+                      tablet:text-1xl
+                      laptop:text-2xl
+                      laptop-lg:text-2xl
+                      desktop:text-3xl'/>
                     </span> 
                   </Link>
                 </div>
@@ -156,13 +171,18 @@ function Navbar() {
                 <div id='link'>
                   <Link to={Resume} target={Resume}>
                     <span className='flex items-center
-                      mobile:text-[.5rem]
-                      tablet:text-[.5rem]
-                      laptop:text-[.8rem] 
-                      laptop-lg:ttext-[.8rem] 
-                      desktop:text-[.8rem] '>
+                      mobile:text-[1rem]
+                      tablet:text-[1.1rem]
+                      laptop:text-[1.2rem] 
+                      laptop-lg:text-[1.2rem]
+                      desktop:text-[1.3rem]'>
                       Resume
-                      <RiArrowRightDownLine id='icon' className='fill-black text-2xl ml-1'/>
+                      <RiArrowRightDownLine id='icon' className='fill-black ml-1
+                      mobile:text-xl
+                      tablet:text-1xl
+                      laptop:text-2xl
+                      laptop-lg:text-2xl
+                      desktop:text-3xl'/>
                     </span> 
                   </Link>
                 </div>
@@ -178,8 +198,8 @@ function Navbar() {
               <div className='flex justify-end' id='link-container'>
                 <div id='link' ref={fxOpen}>
                   <span className='font-lexend font-medium cursor-pointer tracking-tighter 
-                    mobile:text-[.5rem]
-                    tablet:text-[.5rem]'
+                    mobile:text-[1rem]
+                    tablet:text-[1.1rem]'
                     onClick={() => setShowMenu(true)}>
                     Menu
                   </span> 
@@ -189,15 +209,15 @@ function Navbar() {
               {showMenu ? (
                 <div className='flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50'>
                   <div className='relative flex flex-col w-screen h-[0vh] bg-black
-                    mobile:px-[.5rem] mobile:py-3
-                    tablet:px-[.5rem] tablet:py-3'
+                    mobile:px-[1rem] mobile:py-3
+                    tablet:px-[1.1rem] tablet:py-3'
                     ref={fxMenuOpenAnimation}>
                     {/* close button */}
                     <div id="menu-link">
                       <div className='flex w-full justify-end' ref={fxClose}>
                         <span className='font-lexend font-medium cursor-pointer tracking-tighter text-offwhite
-                          mobile:text-[.5rem]
-                          tablet:text-[.5rem]'
+                          mobile:text-[1rem]
+                          tablet:text-[1.1rem]'
                           onClick={() => setShowMenu(false)}>
                           Close
                         </span> 

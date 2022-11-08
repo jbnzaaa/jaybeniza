@@ -52,21 +52,25 @@
 }
 
 * body #logo-container #logo {
-  -webkit-transform: translateY(20px);
-          transform: translateY(20px);
+  -webkit-transform: translateY(30px);
+          transform: translateY(30px);
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #link-container {
-  height: 25px;
+  height: 32px;
   position: relative;
   overflow: hidden;
 }
 
 * body #link-container #link {
   position: absolute;
-  -webkit-transform: translateY(25px);
-          transform: translateY(25px);
+  -webkit-transform: translateY(32px);
+          transform: translateY(32px);
   text-align: right;
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #link-container #link span {
@@ -107,6 +111,8 @@
 * body #menu-link div {
   -webkit-transform: translateY(20px);
           transform: translateY(20px);
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #menu-link div span {
@@ -130,6 +136,8 @@
 * body #page-link #mobileview-link {
   -webkit-transform: translateY(50px);
           transform: translateY(50px);
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #page-link #link span,
@@ -171,9 +179,11 @@
 }
 
 * body #p-container #hero-p {
-  -webkit-transform: translateY(20px);
-          transform: translateY(20px);
+  -webkit-transform: translateY(30px);
+          transform: translateY(30px);
   margin-right: 5px;
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #hero-container {
@@ -183,26 +193,38 @@
 
 * body #hero-container #hero-aspiringweb {
   margin-right: 10px;
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #hero-container #hero-designerdev {
   position: absolute;
   width: 100%;
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #about-container {
   position: relative;
   overflow: hidden;
+  height: auto;
 }
 
 * body #about-container span {
   margin-right: 10px;
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #content-container {
   position: relative;
   overflow: hidden;
   height: auto;
+}
+
+* body #content-container p {
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #list {
@@ -222,20 +244,24 @@
 * body #stack-container {
   position: relative;
   overflow: hidden;
-  height: auto;
 }
 
 * body #stack-container span {
   margin-right: 10px;
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #stacks {
   position: relative;
   overflow: hidden;
+  height: auto;
 }
 
 * body #stacks p {
   margin-right: 5px;
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #description {
@@ -245,9 +271,11 @@
 }
 
 * body #description #description-p {
-  -webkit-transform: translateY(20px);
-          transform: translateY(20px);
+  -webkit-transform: translateY(30px);
+          transform: translateY(30px);
   margin-right: 5px;
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #selected-project-header {
@@ -263,6 +291,12 @@
 * body #behance-link-container {
   position: relative;
   overflow: hidden;
+  height: 35px;
+}
+
+* body #behance-link-container a {
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #behance-link-container a span {
@@ -396,6 +430,8 @@
 * body #card-container #span-container #back {
   -webkit-transform: translateY(20px);
           transform: translateY(20px);
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #card-container #span-container #project-p {
@@ -452,6 +488,8 @@
 
 * body #drop-message-container p {
   margin-right: 20px;
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #contact-description-container {
@@ -461,9 +499,11 @@
 }
 
 * body #contact-description-container #context {
-  -webkit-transform: translateY(20px);
-          transform: translateY(20px);
+  -webkit-transform: translateY(35px);
+          transform: translateY(35px);
   margin-right: 5px;
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #account-container {
@@ -473,8 +513,10 @@
 }
 
 * body #account-container #accounts {
-  -webkit-transform: translateY(25px);
-          transform: translateY(25px);
+  -webkit-transform: translateY(35px);
+          transform: translateY(35px);
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
 }
 
 * body #footer-container {
@@ -484,8 +526,8 @@
 }
 
 * body #footer-container #footer {
-  -webkit-transform: translateY(20px);
-          transform: translateY(20px);
+  -webkit-transform: translateY(35px);
+          transform: translateY(35px);
   margin-right: 5px;
 }
 

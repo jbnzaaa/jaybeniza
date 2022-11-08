@@ -100,28 +100,28 @@ function About() {
               id='about-container'>
               <span className='font-lexend font-medium leading-none tracking-tighter
                 mobile:translate-y-[35px]
-                tablet:translate-y-[60px]
-                laptop:translate-y-[120px]
-                laptop-lg:translate-y-[100px]
-                desktop:translate-y-[110px]'
+                tablet:translate-y-[80px]
+                laptop:translate-y-[110px]
+                laptop-lg:translate-y-[110px]
+                desktop:translate-y-[120px]'
                 id='greet'>
                 Hello,
               </span>
               <span className='font-lexend font-medium leading-none tracking-tighter
                 mobile:translate-y-[35px]
-                tablet:translate-y-[60px]
-                laptop:translate-y-[120px]
-                laptop-lg:translate-y-[100px]
-                desktop:translate-y-[110px]'
+                tablet:translate-y-[80px]
+                laptop:translate-y-[110px]
+                laptop-lg:translate-y-[110px]
+                desktop:translate-y-[120px]'
                 id='greet'>
                 I'm
               </span>
               <span className='font-lexend font-medium leading-none tracking-tighter
                 mobile:translate-y-[35px]
-                tablet:translate-y-[60px]
-                laptop:translate-y-[120px]
-                laptop-lg:translate-y-[100px]
-                desktop:translate-y-[110px]'
+                tablet:translate-y-[80px]
+                laptop:translate-y-[110px]
+                laptop-lg:translate-y-[110px]
+                desktop:translate-y-[120px]'
                 id='greet'>
                 Jayson
               </span>
