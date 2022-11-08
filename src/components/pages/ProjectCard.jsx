@@ -123,7 +123,7 @@ function ProjectCard() {
             laptop-lg:col-span-5 laptop-lg:col-start-2
             desktop:col-span-5 desktop:col-start-2'>
             <div className='bg-black' id='project-card-container'>
-              <Link to='/dailydiscount' >
+              {/* <Link to='/dailydiscount' >
                 <div className='bg-dailydiscount bg-cover object-cover opacity-40
                   mobile:h-[300px]
                   tablet:h-[400px]
@@ -131,7 +131,16 @@ function ProjectCard() {
                   laptop-lg:h-[600px]
                   desktop:h-[600px]' 
                   id='project-image'/>
-              </Link>
+              </Link> */}
+              <a href='https://daily-discount.vercel.app/' target='https://daily-discount.vercel.app/'>
+                <div className='bg-dailydiscount bg-cover object-cover opacity-40
+                  mobile:h-[300px]
+                  tablet:h-[400px]
+                  laptop:h-[500px]
+                  laptop-lg:h-[600px]
+                  desktop:h-[600px]' 
+                  id='project-image'/>
+              </a>
             </div>
             <div className='flex justify-between mt-1'>
               <span className='font-lexend font-medium leading-none tracking-tighter text-black
@@ -160,7 +169,7 @@ function ProjectCard() {
             laptop-lg:col-span-4 laptop-lg:col-start-5
             desktop:col-span-4 desktop:col-start-5'>
             <div className='bg-black' id='project-card-container'>
-              <Link to='/jbnza'>
+              {/* <Link to='/jbnza'>
                 <div className='bg-jbnza bg-cover object-cover opacity-40
                 mobile:h-[300px]
                 tablet:h-[400px]
@@ -168,7 +177,16 @@ function ProjectCard() {
                 laptop-lg:h-[400px]
                 desktop:h-[400px]' 
                 id='project-image'/>
-              </Link>
+              </Link> */}
+              <a href='https://jbnza.vercel.app' target='https://jbnza.vercel.app'>
+                <div className='bg-jbnza bg-cover object-cover opacity-40
+                  mobile:h-[300px]
+                  tablet:h-[400px]
+                  laptop:h-[400px]
+                  laptop-lg:h-[400px]
+                  desktop:h-[400px]' 
+                  id='project-image'/>
+              </a>
             </div>
             <div className='flex justify-between mt-1'>
               <span className='font-lexend font-medium leading-none tracking-tighter text-black
@@ -197,7 +215,7 @@ function ProjectCard() {
             laptop-lg:col-span-5 laptop-lg:col-start-1
             desktop:col-span-5 desktop:col-start-1'>
             <div className='bg-black' id='project-card-container'>
-              <Link to='/regain'>
+              {/* <Link to='/regain'>
                 <div className='bg-regain bg-cover object-cover opacity-40
                 mobile:h-[300px]
                 tablet:h-[400px]
@@ -205,7 +223,16 @@ function ProjectCard() {
                 laptop-lg:h-[400px]
                 desktop:h-[400px]' 
                 id='project-image'/>
-              </Link>
+              </Link> */}
+              <a href='https://regain-caps.web.app/' target='https://regain-caps.web.app/' >
+                <div className='bg-regain bg-cover object-cover opacity-40
+                  mobile:h-[300px]
+                  tablet:h-[400px]
+                  laptop:h-[400px]
+                  laptop-lg:h-[400px]
+                  desktop:h-[400px]' 
+                  id='project-image'/>
+              </a>
             </div>
             <div className='flex justify-between mt-1'>
               <span className='font-lexend font-medium leading-none tracking-tighter text-black
