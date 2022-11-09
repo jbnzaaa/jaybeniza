@@ -97,11 +97,11 @@ function Contact() {
               desktop:col-span-2 desktop:col-start-7 desktop:row-span-2 desktop:row-start-1'>
               {/* description content */}
               <div className='flex flex-wrap font-montserrat font-regular
-                mobile:text-[1rem] mobile:mb-20
-                tablet:text-[1.1rem] tablet:mb-20
-                laptop:text-[1.2rem] laptop:mb-28
-                laptop-lg:text-[1.2rem] laptop-lg:mb-24
-                desktop:text-[1.3rem] desktop:mb-28'>
+                mobile:text-[.9rem] mobile:mb-20
+                tablet:text-[.9rem] tablet:mb-20
+                laptop:text-[1rem] laptop:mb-28
+                laptop-lg:text-[1rem] laptop-lg:mb-24
+                desktop:text-[1.1rem] desktop:mb-28'>
                 <div id='contact-description-container'><p className='text-white' id="context">Do</p></div>
                 <div id='contact-description-container'><p className='text-white' id="context">you</p></div>
                 <div id='contact-description-container'><p className='text-white' id="context">have</p></div>
@@ -124,11 +124,11 @@ function Contact() {
               </div>
               {/* email accounts content */}
               <div className='flex justify-between w-full font-montserrat h-[20px]
-                mobile:text-[1rem]
-                tablet:text-[1.1rem]
-                laptop:text-[1.2rem]
-                laptop-lg:text-[1.2rem]
-                desktop:text-[1.3rem]'>
+                mobile:text-[.9rem]
+                tablet:text-[.9rem]
+                laptop:text-[1rem]
+                laptop-lg:text-[1rem]
+                desktop:text-[1.1rem]'>
                 <div className='w-[50%]'>
                   <div id='account-container'>
                     <div className='mb-2' id='accounts'>

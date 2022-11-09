@@ -81,11 +81,11 @@ function Navbar() {
               <div id='logo-container'>
                 <Link to='/#'>
                   <div className='font-lexend font-medium cursor-pointer tracking-tighter 
-                    mobile:text-[1rem]
-                    tablet:text-[1.1rem]
-                    laptop:text-[1.2rem]
-                    laptop-lg:text-[1.2rem]
-                    desktop:text-[1.3rem]' 
+                    mobile:text-[.9rem]
+                    tablet:text-[.9rem]
+                    laptop:text-[1rem]
+                    laptop-lg:text-[1rem]
+                    desktop:text-[1.1rem]'
                     id='logo'>
                     jaysonbeniza
                   </div>
@@ -103,18 +103,18 @@ function Navbar() {
                 <div id='link'>
                   <Link to='/#'>
                     <span className='flex items-center
-                      mobile:text-[1rem]
-                      tablet:text-[1.1rem]
-                      laptop:text-[1.2rem] 
-                      laptop-lg:text-[1.2rem]
-                      desktop:text-[1.3rem]'>
+                      mobile:text-[.9rem]
+                      tablet:text-[.9rem]
+                      laptop:text-[1rem]
+                      laptop-lg:text-[1rem]
+                      desktop:text-[1.1rem]'>
                       Intro
                       <RiArrowRightDownLine id='icon' className='fill-black ml-1
                         mobile:text-xl
                         tablet:text-1xl
                         laptop:text-2xl
                         laptop-lg:text-2xl
-                        desktop:text-3xl'/>
+                        desktop:text-2xl'/>
                     </span> 
                   </Link>
                 </div>
@@ -123,18 +123,18 @@ function Navbar() {
                 <div id='link'>
                   <Link to='/#project'>
                     <span className='flex items-center
-                      mobile:text-[1rem]
-                      tablet:text-[1.1rem]
-                      laptop:text-[1.2rem] 
-                      laptop-lg:text-[1.2rem]
-                      desktop:text-[1.3rem]'>
+                      mobile:text-[.9rem]
+                      tablet:text-[.9rem]
+                      laptop:text-[1rem]
+                      laptop-lg:text-[1rem]
+                      desktop:text-[1.1rem]'>
                       Project
                       <RiArrowRightDownLine id='icon' className='fill-black ml-1
                       mobile:text-xl
                       tablet:text-1xl
                       laptop:text-2xl
                       laptop-lg:text-2xl
-                      desktop:text-3xl'/>
+                      desktop:text-2xl'/>
                     </span>
                   </Link> 
                 </div>
@@ -151,18 +151,18 @@ function Navbar() {
                 <div id='link'>
                   <Link to='/#contact'>
                     <span className='flex items-center
-                      mobile:text-[1rem]
-                      tablet:text-[1.1rem]
-                      laptop:text-[1.2rem] 
-                      laptop-lg:text-[1.2rem]
-                      desktop:text-[1.3rem]'>
+                      mobile:text-[.9rem]
+                      tablet:text-[.9rem]
+                      laptop:text-[1rem]
+                      laptop-lg:text-[1rem]
+                      desktop:text-[1.1rem]'>
                       Contact
                       <RiArrowRightDownLine id='icon' className='fill-black ml-1
                       mobile:text-xl
                       tablet:text-1xl
                       laptop:text-2xl
                       laptop-lg:text-2xl
-                      desktop:text-3xl'/>
+                      desktop:text-2xl'/>
                     </span> 
                   </Link>
                 </div>
@@ -171,18 +171,18 @@ function Navbar() {
                 <div id='link'>
                   <Link to={Resume} target={Resume}>
                     <span className='flex items-center
-                      mobile:text-[1rem]
-                      tablet:text-[1.1rem]
-                      laptop:text-[1.2rem] 
-                      laptop-lg:text-[1.2rem]
-                      desktop:text-[1.3rem]'>
+                      mobile:text-[.9rem]
+                      tablet:text-[.9rem]
+                      laptop:text-[1rem]
+                      laptop-lg:text-[1rem]
+                      desktop:text-[1.1rem]'>
                       Resume
                       <RiArrowRightDownLine id='icon' className='fill-black ml-1
                       mobile:text-xl
                       tablet:text-1xl
                       laptop:text-2xl
                       laptop-lg:text-2xl
-                      desktop:text-3xl'/>
+                      desktop:text-2xl'/>
                     </span> 
                   </Link>
                 </div>
@@ -198,8 +198,8 @@ function Navbar() {
               <div className='flex justify-end' id='link-container'>
                 <div id='link' ref={fxOpen}>
                   <span className='font-lexend font-medium cursor-pointer tracking-tighter 
-                    mobile:text-[1rem]
-                    tablet:text-[1.1rem]'
+                    mobile:text-[.9rem]
+                    tablet:text-[.9rem]'
                     onClick={() => setShowMenu(true)}>
                     Menu
                   </span> 
@@ -216,8 +216,8 @@ function Navbar() {
                     <div id="menu-link">
                       <div className='flex w-full justify-end' ref={fxClose}>
                         <span className='font-lexend font-medium cursor-pointer tracking-tighter text-offwhite
-                          mobile:text-[1rem]
-                          tablet:text-[1.1rem]'
+                          mobile:text-[.9rem]
+                          tablet:text-[.9rem]'
                           onClick={() => setShowMenu(false)}>
                           Close
                         </span> 

@@ -99,11 +99,11 @@ function Project() {
                 laptop-lg:col-span-2 laptop-lg:col-start-7
                 desktop:col-span-2 desktop:col-start-7'>
                 <div className='flex flex-wrap
-                  mobile:h-[25px] mobile:text-[1rem]
-                  tablet:h-[30px] tablet:text-[1.1rem]
-                  laptop:h-[50px] laptop:text-[1.2rem]
-                  laptop-lg:h-[50px] laptop-lg:text-[1.2rem]
-                  desktop:h-[50px] desktop:text-[1.3rem]'>
+                  mobile:h-[25px] mobile:text-[.9rem]
+                  tablet:h-[30px] tablet:text-[.9rem]
+                  laptop:h-[50px] laptop:text-[1rem]
+                  laptop-lg:h-[50px] laptop-lg:text-[1rem]
+                  desktop:h-[50px] desktop:text-[1.1rem]'>
                   <div id='description'><p className='text-white' id='description-p'>A</p></div>
                   <div id='description'><p className='text-white' id='description-p'>collection</p></div>
                   <div id='description'><p className='text-white' id='description-p'>of</p></div>
@@ -180,11 +180,11 @@ function Project() {
                     desktop:translate-y-[50px]' 
                     id='behance-link'>
                     <span className='flex items-center text-white
-                      mobile:text-[1rem]
-                      tablet:text-[1.1rem]
-                      laptop:text-[1.2rem] 
-                      laptop-lg:text-[1.2rem]
-                      desktop:text-[1.3rem]'>
+                      mobile:text-[.9rem]
+                      tablet:text-[.9rem]
+                      laptop:text-[1rem] 
+                      laptop-lg:text-[1rem]
+                      desktop:text-[1.1rem]'>
                       Look at my UI Designs 
                       <RiArrowRightDownLine id='icon' className='fill-white ml-1
                       mobile:text-xl

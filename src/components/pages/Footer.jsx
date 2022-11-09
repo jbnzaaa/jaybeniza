@@ -15,12 +15,13 @@ function Footer() {
     // footer animation
     gsap.to('#footer', {
       duration: 1,
+      delay: 1,
       y: 0,
       stagger: .05,
       ease: 'power1.in',
       scrollTrigger: { 
         trigger: '#footer', 
-        start: 'bottom 100%',
+        start: 'bottom 110%',
       }
     });
   }, []);
@@ -31,11 +32,11 @@ function Footer() {
         location.pathname === '/jbnza' ? showFooter !== false :
         location.pathname === '/regain' ? showFooter !== false :
         <div className='grid gap-0 py-10 bg-black font-montserrat font-regular
-          mobile:p-[.9rem] mobile:h-[15vh] mobile:grid-cols-8 mobile:text-[1rem]
-          tablet:p-[1rem] tablet:h-[15vh] tablet:grid-cols-8 tablet:text-[1.1rem]
-          laptop:p-[2rem] laptop:h-[15vh] laptop:grid-cols-8 laptop:text-[1.2rem]
-          laptop-lg:p-[3rem] laptop-lg:h-[15vh] laptop-lg:grid-cols-8 laptop-lg:text-[1.2rem]
-          desktop:p-[3rem] desktop:h-full desktop:grid-cols-8 desktop:text-[1.3rem]'>
+          mobile:p-[.9rem] mobile:h-[15vh] mobile:grid-cols-8 mobile:text-[.9rem]
+          tablet:p-[1rem] tablet:h-[15vh] tablet:grid-cols-8 tablet:text-[.9rem]
+          laptop:p-[2rem] laptop:h-[15vh] laptop:grid-cols-8 laptop:text-[1rem]
+          laptop-lg:p-[3rem] laptop-lg:h-[15vh] laptop-lg:grid-cols-8 laptop-lg:text-[1rem]
+          desktop:p-[3rem] desktop:h-full desktop:grid-cols-8 desktop:text-[1.1rem]'>
           <section className='col-start-1 flex flex-row h-[35px]
             mobile:col-span-8 
             tablet:col-span-3

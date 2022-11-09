@@ -53,11 +53,11 @@ function Hero() {
           laptop-lg:col-start-7 laptop-lg:col-span-2 laptop-lg:h-[300px]
           desktop:col-start-7 desktop:col-span-2 desktop:h-[230px]'>
           <div className='flex flex-wrap h-[30px]
-            mobile:text-[1rem]
-            tablet:text-[1.1rem]
-            laptop:text-[1.2rem] 
-            laptop-lg:text-[1.2rem] 
-            desktop:text-[1.3rem] '>
+            mobile:text-[.9rem]
+            tablet:text-[.9rem]
+            laptop:text-[1rem] 
+            laptop-lg:text-[1rem] 
+            desktop:text-[1.1rem] '>
             <div id='p-container'><p id='hero-p'>Seeking</p></div>
             <div id='p-container'><p id='hero-p'>to</p></div>
             <div id='p-container'><p id='hero-p'>develop</p></div>

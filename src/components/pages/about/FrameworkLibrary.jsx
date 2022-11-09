@@ -26,9 +26,9 @@ function FrameworkLibrary() {
       <div className='col-span-1 flex flex-wrap
         mobile:h-[25px] mobile:mb-1 mobile:text-[1rem]
         tablet:h-[30px] tablet:text-[1.1rem]
-        laptop:h-[40px] laptop:text-[1.5rem]
-        laptop-lg:h-[40px] laptop-lg:text-[1.5rem]
-        desktop:h-[50px] desktop:text-[1.5em]'
+        laptop:h-[40px] laptop:text-[1.4rem]
+        laptop-lg:h-[40px] laptop-lg:text-[1.4rem]
+        desktop:h-[50px] desktop:text-[1.4em]'
         id='stack-container'>
         <span className='font-medium
           mobile:translate-y-[25px]
@@ -61,11 +61,11 @@ function FrameworkLibrary() {
       {/* stacks */}
       <ul className='col-span-1 flex flex-wrap'>
         <li className='h-[30px]
-          mobile:text-[1rem]
-          tablet:text-[1.1rem]
-          laptop:text-[1.2rem]
-          laptop-lg:text-[1.2rem]
-          desktop:text-[1.3rem]'
+          mobile:text-[.9rem]
+          tablet:text-[.9rem]
+          laptop:text-[1rem]
+          laptop-lg:text-[1rem]
+          desktop:text-[1.1rem]'
           id='stacks'>
           <p className='
             mobile:translate-y-[25px]
@@ -78,11 +78,11 @@ function FrameworkLibrary() {
           </p>
         </li>
         <li className='h-[30px]
-          mobile:text-[1rem]
-          tablet:text-[1.1rem]
-          laptop:text-[1.2rem]
-          laptop-lg:text-[1.2rem]
-          desktop:text-[1.3rem]'
+          mobile:text-[.9rem]
+          tablet:text-[.9rem]
+          laptop:text-[1rem]
+          laptop-lg:text-[1rem]
+          desktop:text-[1.1rem]'
           id='stacks'>
           <p className='
             mobile:translate-y-[25px]
@@ -95,11 +95,11 @@ function FrameworkLibrary() {
           </p>
         </li>
         <li className='h-[30px]
-          mobile:text-[1rem]
-          tablet:text-[1.1rem]
-          laptop:text-[1.2rem]
-          laptop-lg:text-[1.2rem]
-          desktop:text-[1.3rem]'
+          mobile:text-[.9rem]
+          tablet:text-[.9rem]
+          laptop:text-[1rem]
+          laptop-lg:text-[1rem]
+          desktop:text-[1.1rem]'
           id='stacks'>
           <p className='
             mobile:translate-y-[25px]

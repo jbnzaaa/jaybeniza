@@ -121,8 +121,8 @@ function ProjectCard() {
                   mobile:h-[300px]
                   tablet:h-[400px]
                   laptop:h-[500px]
-                  laptop-lg:h-[600px]
-                  desktop:h-[600px]' 
+                  laptop-lg:h-[500px]
+                  desktop:h-[500px]' 
                   id='project-image'/>
               </a>
             </div>
@@ -138,8 +138,8 @@ function ProjectCard() {
               <span className='
                 mobile:text-[.8rem]
                 tablet:text-[.8rem]
-                laptop:text-[.8rem] 
-                laptop-lg:text-[.8rem]
+                laptop:text-[.9rem] 
+                laptop-lg:text-[.9rem]
                 desktop:text-[.9rem]'>
                 2022
               </span>
@@ -184,8 +184,8 @@ function ProjectCard() {
               <span className='
                 mobile:text-[.8rem]
                 tablet:text-[.8rem]
-                laptop:text-[.8rem] 
-                laptop-lg:text-[.8rem]
+                laptop:text-[.9rem] 
+                laptop-lg:text-[.9rem]
                 desktop:text-[.9rem]'>
                 2022
               </span>
@@ -230,8 +230,8 @@ function ProjectCard() {
               <span className='
                 mobile:text-[.8rem]
                 tablet:text-[.8rem]
-                laptop:text-[.8rem] 
-                laptop-lg:text-[.8rem]
+                laptop:text-[.9rem] 
+                laptop-lg:text-[.9rem]
                 desktop:text-[.9rem]'>
                 2021
               </span>

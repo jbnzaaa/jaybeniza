@@ -26,8 +26,8 @@ function AboutParagraph() {
     {/* animation broken */}
       <div>
         <div className='flex flex-wrap 
-          mobile:text-[1rem] 
-          tablet:text-[1.1rem] 
+          mobile:text-[.9rem] 
+          tablet:text-[.9rem] 
           laptop:text-[2rem] laptop:leading-tight
           laptop-lg:text-[2.1rem] laptop-lg:leading-tight
           desktop:text-[3rem] desktop:leading-tight'>
