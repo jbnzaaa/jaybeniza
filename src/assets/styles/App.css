@@ -227,18 +227,15 @@
   transition: 1s ease;
 }
 
-* body #list {
+* body #line {
   border-top: 1px solid var(--main-color);
   position: relative;
   overflow: hidden;
+  width: 0px;
 }
 
-* body #list:last-child {
-  border-bottom: 1px solid var(--main-color);
-}
-
-* body #list ul li {
-  margin-right: 10px;
+* body ul li {
+  margin-right: 15px;
 }
 
 * body #stack-container {

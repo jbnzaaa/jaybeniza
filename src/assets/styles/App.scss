@@ -234,19 +234,20 @@
     //   }
     // }
 
-    #list{
+    #line{
       border-top: 1px solid var(--main-color);
       position: relative;
       overflow: hidden;
+      width: 0px;
       
-      &:last-child{
-        border-bottom: 1px solid var(--main-color);
-      }
+      // &:last-child{
+      //   border-bottom: 1px solid var(--main-color);
+      // }
+    }
 
-      ul{
-        li{
-          margin-right: 10px;
-        }
+    ul{
+      li{
+        margin-right: 15px;
       }
     }
 

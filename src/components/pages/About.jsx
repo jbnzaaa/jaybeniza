@@ -18,9 +18,21 @@ function About() {
       duration: 1,
       y: 0,
       stagger: .08,
-      ease: 'power1.out',
+      ease: 'power1.in',
       scrollTrigger: { 
         trigger: '#greet', 
+        start: 'bottom 100%'
+      }
+    });
+
+    // line animation
+    gsap.to('#line', {
+      duration: 1,
+      width: '100%',
+      stagger: .08,
+      ease: 'power1.in',
+      scrollTrigger: { 
+        trigger: '#line', 
         start: 'bottom 100%'
       }
     });
@@ -163,7 +175,8 @@ function About() {
               laptop-lg:grid-cols-8
               desktop:grid-cols-8'>
               {/* what i use? */}
-              <li id="list" className='col-span-8 grid py-6
+              <div className='col-span-8' id='line'/>
+              <li className='col-span-8 grid py-6
                 mobile:grid-cols-1 mobile:h-full
                 tablet:grid-cols-1 tablet:h-full
                 laptop:grid-cols-2 laptop:h-full
@@ -172,7 +185,8 @@ function About() {
                 <WhatIUse/>
               </li>
               {/* web development */}
-              <li id="list" className='col-span-8 grid py-6
+              <div className='col-span-8' id='line'/>
+              <li className='col-span-8 grid py-6
                 mobile:grid-cols-1 mobile:h-full
                 tablet:grid-cols-1 tablet:h-full
                 laptop:grid-cols-2 laptop:h-full
@@ -181,7 +195,8 @@ function About() {
                 <WebDev/>
               </li>
               {/* framework & library */}
-              <li id="list" className='col-span-8 grid py-6
+              <div className='col-span-8' id='line'/>
+              <li className='col-span-8 grid py-6
                 mobile:grid-cols-1 mobile:h-full
                 tablet:grid-cols-1 tablet:h-full
                 laptop:grid-cols-2 laptop:h-full
@@ -190,7 +205,8 @@ function About() {
                 <FrameworkLibrary/>
               </li>
               {/* tools & technologies */}
-              <li id="list" className='col-span-8 grid py-6
+              <div className='col-span-8' id='line'/>
+              <li className='col-span-8 grid py-6
                 mobile:grid-cols-1 mobile:h-full
                 tablet:grid-cols-1 tablet:h-full
                 laptop:grid-cols-2 laptop:h-full
@@ -198,6 +214,7 @@ function About() {
                 desktop:grid-cols-2 desktop:h-[97px]'>
                 <ToolTechnology/>
               </li>
+              <div className='col-span-8' id='line'/>
             </ul>
           </section>
         </div>

@@ -31,7 +31,6 @@ function Navbar() {
     gsap.to('#logo', { duration: 1, y: 0, ease: 'power1.in', });
     gsap.to('#link', {
       duration: 1,
-      // delay: 1.2,
       y: 0,
       stagger: 0.1,
       ease: 'power1.in',
@@ -74,8 +73,8 @@ function Navbar() {
             mobile:py-3
             tablet:py-3
             laptop:py-4
-            laptop-lg:py-5
-            desktop:py-5'>
+            laptop-lg:py-4
+            desktop:py-4'>
             {/* Logo */}
             <section className='col-span-3 col-start-1'>
               <div id='logo-container'>
@@ -83,9 +82,9 @@ function Navbar() {
                   <div className='font-lexend font-medium cursor-pointer tracking-tighter 
                     mobile:text-[.9rem]
                     tablet:text-[.9rem]
-                    laptop:text-[1rem]
-                    laptop-lg:text-[1rem]
-                    desktop:text-[1.1rem]'
+                    laptop:text-[1.1rem]
+                    laptop-lg:text-[1.1rem]
+                    desktop:text-[1.3rem]'
                     id='logo'>
                     jaysonbeniza
                   </div>

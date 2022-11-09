@@ -1,9 +1,9 @@
 // // 
-// import React, { useRef, useEffect } from 'react'
+// import React, { useEffect } from 'react'
 // // 
 // import { Link } from 'react-router-dom'
 // // icons
-// import {RiArrowRightDownLine} from 'react-icons/ri'
+// // import {RiArrowRightDownLine} from 'react-icons/ri'
 // // GSAP
 // import gsap from 'gsap' 
 // // import ScrollTrigger from 'gsap/ScrollTrigger'
