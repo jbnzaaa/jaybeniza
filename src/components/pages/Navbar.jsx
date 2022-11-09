@@ -207,8 +207,8 @@ function Navbar() {
               </div>
               {/* menu container */}
               {showMenu ? (
-                <div className='flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50'>
-                  <div className='relative flex flex-col w-screen h-[0vh] bg-black
+                <div className='flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 h-screen'>
+                  <div className='relative flex flex-col w-screen h-[0vh] bg-black fixed
                     mobile:px-[1rem] mobile:py-3
                     tablet:px-[1.1rem] tablet:py-3'
                     ref={fxMenuOpenAnimation}>
