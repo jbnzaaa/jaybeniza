@@ -35,9 +35,9 @@ function AboutParagraph() {
             <p className='
               mobile:indent-10 mobile:translate-y-[20px] mobile:mr-[5px] 
               tablet:indent-10 tablett:translate-y-[30px] tablet:mr-[8px] 
-              laptop:indent-20 laptop:translate-y-[50px] laptop:mr-[15px]
-              laptop-lg:indent-20 laptop-lg:translate-y-[50px] laptop-lg:mr-[18px] 
-              desktop:indent-20 desktop:translate-y-[50px] desktop:mr-[20px]' 
+              laptop:indent-20 laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:indent-20 laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:indent-20 desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='about-paragraph'>
                 An
             </p>

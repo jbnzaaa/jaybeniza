@@ -28,8 +28,9 @@ function About() {
     // line animation
     gsap.to('#line', {
       duration: 1,
+      delay: 1.3,
       width: '100%',
-      stagger: .08,
+      stagger: .10,
       ease: 'power1.in',
       scrollTrigger: { 
         trigger: '#line', 
@@ -96,11 +97,11 @@ function About() {
         id='about'>
         {/* grid */}
         <div className='grid grid-cols-8 gap-0 
-          mobile:py-20 mobile:px-[.9rem] 
-          tablet:py-20 tablet:px-[1rem] 
-          laptop:py-20 laptop:px-[2rem]
-          laptop-lg:py-20 laptop-lg:px-[3rem]
-          desktop:py-40 desktop:px-[3rem]'>
+          mobile:py-16 mobile:px-[.9rem] 
+          tablet:py-16 tablet:px-[1rem] 
+          laptop:py-16 laptop:px-[2rem]
+          laptop-lg:py-16 laptop-lg:px-[3rem]
+          desktop:py-36 desktop:px-[3rem]'>
           {/* greeting */}
           <section className="col-span-8">
             <div className='flex flex-wrap
