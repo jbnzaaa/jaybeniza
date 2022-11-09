@@ -1,5 +1,5 @@
 //
-import React, { useRef, useEffect } from 'react'
+import React, { useEffect } from 'react'
 // GSAP
 import gsap from 'gsap' 
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -136,8 +136,8 @@ function ProjectCard() {
                 DailyDiscount
               </span>
               <span className='
-                mobile:text-[.5rem]
-                tablet:text-[.5rem]
+                mobile:text-[.8rem]
+                tablet:text-[.8rem]
                 laptop:text-[.8rem] 
                 laptop-lg:text-[.8rem]
                 desktop:text-[.9rem]'>
@@ -182,8 +182,8 @@ function ProjectCard() {
                 jbnza
               </span>
               <span className='
-                mobile:text-[.5rem]
-                tablet:text-[.5rem]
+                mobile:text-[.8rem]
+                tablet:text-[.8rem]
                 laptop:text-[.8rem] 
                 laptop-lg:text-[.8rem]
                 desktop:text-[.9rem]'>
@@ -228,8 +228,8 @@ function ProjectCard() {
                 ReGain
               </span>
               <span className='
-                mobile:text-[.5rem]
-                tablet:text-[.5rem]
+                mobile:text-[.8rem]
+                tablet:text-[.8rem]
                 laptop:text-[.8rem] 
                 laptop-lg:text-[.8rem]
                 desktop:text-[.9rem]'>

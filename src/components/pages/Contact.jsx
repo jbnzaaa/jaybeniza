@@ -54,7 +54,7 @@ function Contact() {
               laptop-lg:col-span-5 laptop-lg:row-span-1 laptop-lg:row-start-1
               desktop:col-span-5 desktop:row-span-1 desktop:row-start-1'>
               <div className='flex flex-wrap font-lexend font-semibold leading-none tracking-tight
-                mobile:h-[100px] mobile:text-[6rem] mobile:mt-10
+                mobile:h-[100px] mobile:text-[4.5rem] mobile:mt-10
                 tablet:h-[100px] tablet:text-[6rem] tablet:mt-14
                 laptop:h-[150px] laptop:text-[7rem]
                 laptop-lg:h-[150px] laptop-lg:text-[10rem]

@@ -76,8 +76,8 @@ function Hero() {
         </section>
         {/* profession */}
         <section className='col-start-1 col-span-8 flex
-          mobile:h-[45px] mobile:mt-30 mobile:text-[2rem] 
-          tablet:h-[105px] tablet:mt-28 tablet:text-[2rem] 
+          mobile:h-[45px] mobile:mt-18 mobile:text-[1.8rem] 
+          tablet:h-[105px] tablet:mt-20 tablet:text-[2rem] 
           laptop:h-[50px] laptop:text-[2.5rem] 
           laptop-lg:h-[50px] laptop-lg:text-[3rem] 
           desktop:h-[75px] desktop:text-[3.5rem]'
@@ -103,14 +103,14 @@ function Hero() {
         </section>
         {/* profession */}
         <section className='col-start-1 col-span-8 
-          mobile:h-[80px]
+          mobile:h-[60px]
           tablet:h-[105px]
           laptop:h-[130px]
           laptop-lg:h-[160px]
           desktop:h-[175px]'
           id='hero-container'>
           <span className='font-lexend font-bold leading-none tracking-tight
-            mobile:text-[5.7rem] mobile:right-2 mobile:translate-y-[80px]
+            mobile:text-[4rem] mobile:right-2 mobile:translate-y-[80px]
             tablet:text-[7rem] tablet:right-2 tablet:translate-y-[105px]
             laptop:text-[9rem] laptop:right-4 laptop:translate-y-[160px]
             laptop-lg:text-[11rem] laptop-lg:right-4 laptop-lg:translate-y-[170px]
@@ -121,14 +121,14 @@ function Hero() {
         </section>
         {/* profession */}
         <section className='col-start-1
-          mobile:h-[80px] mobile:col-span-8
+          mobile:h-[60px] mobile:col-span-8
           tablet:h-[105px] tablet:col-span-8
           laptop:h-[130px] laptop:col-span-8
           laptop-lg:h-[160px] laptop-lg:col-span-8
           desktop:h-[175px] desktop:col-span-7'
           id='hero-container'>
           <span className='font-lexend font-bold leading-none tracking-tight
-            mobile:text-[5.7rem] mobile:right-2 mobile:translate-y-[80px]
+            mobile:text-[4rem] mobile:right-2 mobile:translate-y-[80px]
             tablet:text-[7rem] tablet:right-2 tablet:translate-y-[105px]
             laptop:text-[9rem] laptop:right-4 laptop:translate-y-[160px]
             laptop-lg:text-[11rem] laptop-lg:right-4 laptop-lg:translate-y-[170px]

@@ -30,7 +30,7 @@ function Project() {
 
     // selected projects
     gsap.to('#selected', {
-      duration: 1,
+      duration: .5,
       left: '30px',
       ease: 'power1.in',
       scrollTrigger: { 
@@ -41,7 +41,7 @@ function Project() {
     });
 
     gsap.to('#projects', {
-      duration: 1,
+      duration: .5,
       right: '30px',
       ease: 'power1.in',
       scrollTrigger: { 
@@ -135,7 +135,7 @@ function Project() {
                   desktop:h-[250px]' 
                   id='selected-project-header' ref={fxOverflow1}>
                   <span className='font-lexend font-medium leading-none tracking-tight text-white
-                    mobile:text-[15rem] mobile:left-[-80px]
+                    mobile:text-[15rem] mobile:left-[-200px]
                     tablet:text-[17rem] tablet:left-[-80px]
                     laptop:text-[20rem] laptop:left-[-110px]
                     laptop-lg:text-[20rem] laptop-lg:left-[-120px]
@@ -152,7 +152,7 @@ function Project() {
                   desktop:h-[250px]' 
                   id='selected-project-header' ref={fxOverflow2}>
                   <span className='font-lexend font-medium leading-none tracking-tight text-white
-                    mobile:text-[15rem] mobile:right-[-80px]
+                    mobile:text-[15rem] mobile:right-[-200px]
                     tablet:text-[17rem] tablet:right-[-80px]
                     laptop:text-[20rem] laptop:right-[-110px]
                     laptop-lg:text-[20rem] laptop-lg:right-[-120px]

@@ -1,5 +1,5 @@
 // 
-import React, { useRef, useEffect } from 'react'
+import React, { useEffect } from 'react'
 // Components
 import AboutParagraph from './about/AboutParagraph';
 import WhatIUse from './about/WhatIUse';
