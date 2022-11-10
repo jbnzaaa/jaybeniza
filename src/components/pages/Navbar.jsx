@@ -24,6 +24,7 @@ function Navbar() {
 
   const [showNav] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
+  const [closeMenu, setCloseMenu] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -32,14 +33,14 @@ function Navbar() {
     gsap.to('#link', {
       duration: 1,
       y: 0,
-      stagger: 0.1,
+      stagger: .05,
       ease: 'power1.in',
       scrollTrigger: { trigger: '#link', }
     });
 
     // open menu animation
     gsap.to(fxOpen.current, { duration: 1, y: 0, ease: 'power1.in', });
-    gsap.to(fxMenuOpenAnimation.current, { duration: 1, height: '100vh', ease: 'power1.in',
+    gsap.to(fxMenuOpenAnimation.current, { duration: 1, height: '100vh', ease: 'power1.in', padding: '12px 14.4px 12px 14.4px',
       scrollTrigger: { trigger: fxMenuOpenAnimation.current, }
     });
 
@@ -79,7 +80,7 @@ function Navbar() {
             <section className='col-span-3 col-start-1'>
               <div id='logo-container'>
                 <Link to='/#'>
-                  <div className='font-lexend font-medium cursor-pointer tracking-tighter 
+                  <h1 className='font-lexend font-medium cursor-pointer tracking-tighter 
                     mobile:text-[.9rem]
                     tablet:text-[.9rem]
                     laptop:text-[1.1rem]
@@ -87,7 +88,7 @@ function Navbar() {
                     desktop:text-[1.3rem]'
                     id='logo'>
                     jaysonbeniza
-                  </div>
+                  </h1>
                 </Link>
               </div>
             </section>
@@ -98,7 +99,13 @@ function Navbar() {
               laptop:block
               laptop-lg:block
               desktop:block">
-              <div className='flex justify-end' id='link-container'>
+              <div className='flex justify-end
+                mobile:h-[20px]
+                tablet:h-[23px]
+                laptop:h-[32px]
+                laptop-lg:h-[32px]
+                desktop:h-[32px]' 
+                id='link-container'>
                 <div id='link'>
                   <Link to='/#'>
                     <span className='flex items-center
@@ -118,7 +125,13 @@ function Navbar() {
                   </Link>
                 </div>
               </div>
-              <div className='flex justify-end' id='link-container'>
+              <div className='flex justify-end
+                mobile:h-[20px]
+                tablet:h-[23px]
+                laptop:h-[32px]
+                laptop-lg:h-[32px]
+                desktop:h-[32px]' 
+                id='link-container'>
                 <div id='link'>
                   <Link to='/#project'>
                     <span className='flex items-center
@@ -146,7 +159,13 @@ function Navbar() {
               laptop:block
               laptop-lg:block
               desktop:block'>
-              <div className='flex justify-end' id='link-container'>
+              <div className='flex justify-end
+                mobile:h-[20px]
+                tablet:h-[23px]
+                laptop:h-[32px]
+                laptop-lg:h-[32px]
+                desktop:h-[32px]' 
+                id='link-container'>
                 <div id='link'>
                   <Link to='/#contact'>
                     <span className='flex items-center
@@ -166,7 +185,13 @@ function Navbar() {
                   </Link>
                 </div>
               </div>
-              <div className='flex justify-end' id='link-container'>
+              <div className='flex justify-end
+                mobile:h-[20px]
+                tablet:h-[23px]
+                laptop:h-[32px]
+                laptop-lg:h-[32px]
+                desktop:h-[32px]' 
+                id='link-container'>
                 <div id='link'>
                   <Link to={Resume} target={Resume}>
                     <span className='flex items-center
@@ -194,11 +219,15 @@ function Navbar() {
               laptop:hidden
               laptop-lg:hidden
               desktop:hidden'>
-              <div className='flex justify-end' id='link-container'>
+              <div className='flex justify-end
+                mobile:h-[20px]
+                tablet:h-[23px]
+                laptop:h-[32px]
+                laptop-lg:h-[32px]
+                desktop:h-[32px]' 
+                id='link-container'>
                 <div id='link' ref={fxOpen}>
-                  <span className='font-lexend font-medium cursor-pointer tracking-tighter 
-                    mobile:text-[.9rem]
-                    tablet:text-[.9rem]'
+                  <span className='font-lexend font-medium cursor-pointer tracking-tighter text-[.9rem]'
                     onClick={() => setShowMenu(true)}>
                     Menu
                   </span> 
@@ -206,63 +235,61 @@ function Navbar() {
               </div>
               {/* menu container */}
               {showMenu ? (
-                <div className='flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 h-screen'>
-                  <div className='relative flex flex-col w-screen h-[0vh] bg-black fixed
-                    mobile:px-[1rem] mobile:py-3
-                    tablet:px-[1.1rem] tablet:py-3'
+                <div className='flex overflow-x-hidden overflow-y-auto fixed inset-0 h-screen'>
+                  <div className='relative flex flex-col w-screen h-[0vh] bg-black fixed'
                     ref={fxMenuOpenAnimation}>
-                    {/* close button */}
-                    <div id="menu-link">
-                      <div className='flex w-full justify-end' ref={fxClose}>
-                        <span className='font-lexend font-medium cursor-pointer tracking-tighter text-offwhite
-                          mobile:text-[.9rem]
-                          tablet:text-[.9rem]'
-                          onClick={() => setShowMenu(false)}>
-                          Close
-                        </span> 
+                    <div className='h-[90vh]'>
+                      {/* close button */}
+                      <div id="menu-link">
+                        <div className='flex w-full justify-end' ref={fxClose}>
+                          <span className='font-lexend font-medium cursor-pointer tracking-tighter text-offwhite text-[.9rem]'
+                            onClick={() => setShowMenu(false)} >
+                            Close
+                          </span> 
+                        </div>
                       </div>
-                    </div>
-                    {/* menu nav links */}
-                    <div className='flex flex-col w-full h-full justify-end'>
-                      <div id='page-link'>
-                        <Link to='/#'>
-                          <div id='link' ref={fxLinkAnimation1}>
-                            <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
-                              Intro
-                              <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
-                            </span> 
-                          </div>
-                        </Link>
-                      </div>
-                      <div id='page-link'>
-                        <Link to='/#project'>
-                          <div id='link' ref={fxLinkAnimation2}>
-                            <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
-                              Project
-                              <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
-                            </span> 
-                          </div>
-                        </Link>
-                      </div>
-                      <div id='page-link'>
-                        <Link to='/#contact'>
-                          <div id='link' ref={fxLinkAnimation3}>
-                            <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
-                              Contact
-                              <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
-                            </span> 
-                          </div>
-                        </Link>
-                      </div>
-                      <div id='page-link'>
-                        <Link to={Resume} target={Resume}>
-                          <div id='link' ref={fxLinkAnimation4} >
-                            <span className='flex items-center text-[2.3rem] text-offwhite'onClick={() => setShowMenu(false)}>
-                              Resume
-                              <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
-                            </span> 
-                          </div>
-                        </Link>
+                      {/* menu nav links */}
+                      <div className='flex flex-col w-full h-full justify-end'>
+                        <div id='page-link'>
+                          <Link to='/#'>
+                            <div id='link' ref={fxLinkAnimation1}>
+                              <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
+                                Intro
+                                <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
+                              </span> 
+                            </div>
+                          </Link>
+                        </div>
+                        <div id='page-link'>
+                          <Link to='/#project'>
+                            <div id='link' ref={fxLinkAnimation2}>
+                              <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
+                                Project
+                                <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
+                              </span> 
+                            </div>
+                          </Link>
+                        </div>
+                        <div id='page-link'>
+                          <Link to='/#contact'>
+                            <div id='link' ref={fxLinkAnimation3}>
+                              <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
+                                Contact
+                                <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
+                              </span> 
+                            </div>
+                          </Link>
+                        </div>
+                        <div id='page-link'>
+                          <Link to={Resume} target={Resume}>
+                            <div id='link' ref={fxLinkAnimation4} >
+                              <span className='flex items-center text-[2.3rem] text-offwhite'onClick={() => setShowMenu(false)}>
+                                Resume
+                                <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
+                              </span> 
+                            </div>
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>

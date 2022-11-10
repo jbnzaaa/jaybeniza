@@ -59,7 +59,6 @@
 }
 
 * body #link-container {
-  height: 32px;
   position: relative;
   overflow: hidden;
 }
@@ -134,8 +133,8 @@
 
 * body #page-link #link,
 * body #page-link #mobileview-link {
-  -webkit-transform: translateY(50px);
-          transform: translateY(50px);
+  -webkit-transform: translateY(60px);
+          transform: translateY(60px);
   -webkit-transition: 1s ease;
   transition: 1s ease;
 }
@@ -519,7 +518,6 @@
 * body #footer-container {
   position: relative;
   overflow: hidden;
-  height: auto;
 }
 
 * body #footer-container #footer {

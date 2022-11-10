@@ -64,8 +64,8 @@ function Contact() {
                   mobile:translate-y-[100px]
                   tablet:translate-y-[100px]
                   laptop:translate-y-[150px]
-                  laptop-lg:translate-y-[150px]
-                  desktop:translate-y-[150px]' 
+                  laptop-lg:translate-y-[160px]
+                  desktop:translate-y-[160px]' 
                   id="context">Drop</p>
                 </div>
                 <div id="drop-message-container">
@@ -73,8 +73,8 @@ function Contact() {
                   mobile:translate-y-[100px]
                   tablet:translate-y-[100px]
                   laptop:translate-y-[150px]
-                  laptop-lg:translate-y-[150px]
-                  desktop:translate-y-[150px]' 
+                  laptop-lg:translate-y-[160px]
+                  desktop:translate-y-[160px]' 
                   id="context">a</p>
                 </div>
                 <div id="drop-message-container">
@@ -82,8 +82,8 @@ function Contact() {
                   mobile:translate-y-[100px]
                   tablet:translate-y-[100px]
                   laptop:translate-y-[150px]
-                  laptop-lg:translate-y-[150px]
-                  desktop:translate-y-[150px]' 
+                  laptop-lg:translate-y-[160px]
+                  desktop:translate-y-[160px]' 
                   id="context">Message</p>
                 </div>
               </div>
