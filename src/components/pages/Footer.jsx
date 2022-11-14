@@ -13,14 +13,14 @@ function Footer() {
 
   useEffect(() => {
     // footer animation
-    gsap.to('#footer', {
+    gsap.to('#animate-footer', {
       duration: 1,
       delay: 1,
       y: 0,
       stagger: .05,
       ease: 'power1.in',
       scrollTrigger: { 
-        trigger: '#footer', 
+        trigger: '#animate-footer', 
         start: 'bottom 110%',
       }
     });
@@ -43,17 +43,17 @@ function Footer() {
             laptop:col-span-3 laptop:h-[35px]
             laptop-lg:col-span-2 laptop-lg:h-[35px]
             desktop:col-span-2 desktop:h-[35px]'>
-            <div id='footer-container'>
-              <p className='text-white' id='footer'>&copy;</p>
+            <div className='footer-container'>
+              <p className='footer text-white' id='animate-footer'>&copy;</p>
             </div>
-            <div id='footer-container'>
-              <p className='text-white' id='footer'>2022</p>
+            <div className='footer-container'>
+              <p className='footer text-white' id='animate-footer'>2022</p>
             </div>
-            <div id='footer-container'>
-              <p className='text-white' id='footer'>Jayson</p>
+            <div className='footer-container'>
+              <p className='footer text-white' id='animate-footer'>Jayson</p>
             </div>
-            <div id='footer-container'>
-              <p className='text-white' id='footer'>Beniza</p>
+            <div className='footer-container'>
+              <p className='footer text-white' id='animate-footer'>Beniza</p>
             </div>
           </section>
           <section className='flex flex-row
@@ -62,17 +62,17 @@ function Footer() {
             laptop:col-span-2 laptop:col-start-5 laptop:justify-end laptop:h-[35px]
             laptop-lg:col-span-2 laptop-lg:col-start-5 laptop-lg:justify-end laptop-lg:h-[35px]
             desktop:col-span-2 desktop:col-start-5 desktop:justify-end desktop:h-[35px]'>
-            <div id='footer-container'>
-              <p className='text-white' id='footer'>Last</p>
+            <div className='footer-container'>
+              <p className='footer text-white' id='animate-footer'>Last</p>
             </div>
-            <div id='footer-container'>
-              <p className='text-white' id='footer'>Update</p>
+            <div className='footer-container'>
+              <p className='footer text-white' id='animate-footer'>Update</p>
             </div>
-            <div id='footer-container'>
-              <p className='text-white' id='footer'>November</p>
+            <div className='footer-container'>
+              <p className='footer text-white' id='animate-footer'>November</p>
             </div>
-            <div id='footer-container'>
-              <p className='text-white' id='footer'>2022</p>
+            <div className='footer-container'>
+              <p className='footer text-white' id='animate-footer'>2022</p>
             </div>
           </section>
           <section className='flex flex-row
@@ -81,20 +81,20 @@ function Footer() {
             laptop:col-span-2 laptop:col-start-7 laptop:justify-end laptop:h-[35px]
             laptop-lg:col-span-2 laptop:col-start-7 laptop-lg:justify-end l laptop-lg:h-[35px]
             desktop:col-span-2 desktop:col-start-7 desktop:justify-end desktop:h-[35px]'>
-            <div id='footer-container'>
-              <p className='text-white' id='footer'>Design</p>
+            <div className='footer-container'>
+              <p className='footer text-white' id='animate-footer'>Design</p>
             </div>
-            <div id='footer-container'>
-              <p className='text-white' id='footer'>&</p>
+            <div className='footer-container'>
+              <p className='footer text-white' id='animate-footer'>&</p>
             </div>
-            <div id='footer-container'>
-              <p className='text-white' id='footer'>Develop</p>
+            <div className='footer-container'>
+              <p className='footer text-white' id='animate-footer'>Develop</p>
             </div>
-            <div id='footer-container'>
-              <p className='text-white' id='footer'>by</p>
+            <div className='footer-container'>
+              <p className='footer text-white' id='animate-footer'>by</p>
             </div>
-            <div id='footer-container'>
-              <p className='text-white' id='footer'>Me</p>
+            <div className='footer-container'>
+              <p className='footer text-white' id='animate-footer'>Me</p>
             </div>
           </section>
         </div>

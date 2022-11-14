@@ -13,48 +13,48 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 function Navbar() {
-  const fxOpen = useRef();
   const fxMenuOpenAnimation = useRef();
-  const fxClose = useRef();
   const fxMenuCloseAnimation = useRef();
-  const fxLinkAnimation1 = useRef();
-  const fxLinkAnimation2 = useRef();
-  const fxLinkAnimation3 = useRef();
-  const fxLinkAnimation4 = useRef();
 
   const [showNav] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
-  const [closeMenu, setCloseMenu] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     // nav links animation
-    gsap.to('#logo', { duration: 1, y: 0, ease: 'power1.in', });
-    gsap.to('#link', {
+    gsap.to('#animate-nav', {
       duration: 1,
       y: 0,
       stagger: .05,
       ease: 'power1.in',
-      scrollTrigger: { trigger: '#link', }
+      scrollTrigger: { trigger: '#animate-nav', }
+    });
+
+    // mobile nav link animation
+    gsap.to('#mobile-nav-animate', { 
+      duration: 1, 
+      delay: 1, 
+      y: 0, 
+      stagger: .05,
+      ease: 'power1.in', 
     });
 
     // open menu animation
-    gsap.to(fxOpen.current, { duration: 1, y: 0, ease: 'power1.in', });
-    gsap.to(fxMenuOpenAnimation.current, { duration: 1, height: '100vh', ease: 'power1.in', padding: '12px 14.4px 12px 14.4px',
+    gsap.to(fxMenuOpenAnimation.current, { 
+      duration: 1, 
+      height: '100vh', 
+      ease: 'power1.in', 
+      padding: '12px 14.4px 12px 14.4px',
       scrollTrigger: { trigger: fxMenuOpenAnimation.current, }
     });
 
     // close menu animation
-    gsap.to(fxClose.current, { duration: 1, y: 0,  ease: 'power1.in', });
-    gsap.to(fxMenuCloseAnimation.current, { duration: 1, height: '0vh', ease: 'power1.in',
+    gsap.to(fxMenuCloseAnimation.current, { 
+      duration: 1, 
+      height: '0vh', 
+      ease: 'power1.in',
       scrollTrigger: { trigger: fxMenuCloseAnimation.current, }
     });
-
-    // nav menu link animation
-    gsap.to(fxLinkAnimation1.current, { duration: 1, delay: 1, y: 0, ease: 'power1.in', });
-    gsap.to(fxLinkAnimation2.current, { duration: 1, delay: 1.1, y: 0, ease: 'power1.in', });
-    gsap.to(fxLinkAnimation3.current, { duration: 1, delay: 1.2, y: 0, ease: 'power1.in', });
-    gsap.to(fxLinkAnimation4.current, { duration: 1, delay: 1.3, y: 0, ease: 'power1.in', });
   });
 
   return (
@@ -78,15 +78,15 @@ function Navbar() {
             desktop:py-4'>
             {/* Logo */}
             <section className='col-span-3 col-start-1'>
-              <div id='logo-container'>
+              <div className='logo-container'>
                 <Link to='/#'>
-                  <h1 className='font-lexend font-medium cursor-pointer tracking-tighter 
+                  <h1 className='logo font-lexend font-medium cursor-pointer tracking-tighter 
                     mobile:text-[.9rem]
                     tablet:text-[.9rem]
                     laptop:text-[1.1rem]
                     laptop-lg:text-[1.1rem]
                     desktop:text-[1.3rem]'
-                    id='logo'>
+                    id='animate-nav'>
                     jaysonbeniza
                   </h1>
                 </Link>
@@ -99,14 +99,13 @@ function Navbar() {
               laptop:block
               laptop-lg:block
               desktop:block">
-              <div className='flex justify-end
+              <div className='link-container flex justify-end
                 mobile:h-[20px]
                 tablet:h-[23px]
                 laptop:h-[32px]
                 laptop-lg:h-[32px]
-                desktop:h-[32px]' 
-                id='link-container'>
-                <div id='link'>
+                desktop:h-[32px]'>
+                <div className='link' id='animate-nav'>
                   <Link to='/#'>
                     <span className='flex items-center
                       mobile:text-[.9rem]
@@ -125,14 +124,13 @@ function Navbar() {
                   </Link>
                 </div>
               </div>
-              <div className='flex justify-end
+              <div className='link-container flex justify-end
                 mobile:h-[20px]
                 tablet:h-[23px]
                 laptop:h-[32px]
                 laptop-lg:h-[32px]
-                desktop:h-[32px]' 
-                id='link-container'>
-                <div id='link'>
+                desktop:h-[32px]' >
+                <div className='link' id='animate-nav'>
                   <Link to='/#project'>
                     <span className='flex items-center
                       mobile:text-[.9rem]
@@ -159,14 +157,13 @@ function Navbar() {
               laptop:block
               laptop-lg:block
               desktop:block'>
-              <div className='flex justify-end
+              <div className='link-container flex justify-end
                 mobile:h-[20px]
                 tablet:h-[23px]
                 laptop:h-[32px]
                 laptop-lg:h-[32px]
-                desktop:h-[32px]' 
-                id='link-container'>
-                <div id='link'>
+                desktop:h-[32px]'>
+                <div className='link' id='animate-nav'>
                   <Link to='/#contact'>
                     <span className='flex items-center
                       mobile:text-[.9rem]
@@ -185,14 +182,13 @@ function Navbar() {
                   </Link>
                 </div>
               </div>
-              <div className='flex justify-end
+              <div className='link-container flex justify-end
                 mobile:h-[20px]
                 tablet:h-[23px]
                 laptop:h-[32px]
                 laptop-lg:h-[32px]
-                desktop:h-[32px]' 
-                id='link-container'>
-                <div id='link'>
+                desktop:h-[32px]'>
+                <div className='link' id='animate-nav'>
                   <Link to={Resume} target={Resume}>
                     <span className='flex items-center
                       mobile:text-[.9rem]
@@ -219,14 +215,14 @@ function Navbar() {
               laptop:hidden
               laptop-lg:hidden
               desktop:hidden'>
-              <div className='flex justify-end
+              <div className='link-container flex justify-end
                 mobile:h-[20px]
                 tablet:h-[23px]
                 laptop:h-[32px]
                 laptop-lg:h-[32px]
                 desktop:h-[32px]' 
-                id='link-container'>
-                <div id='link' ref={fxOpen}>
+                id='animate-nav'>
+                <div className='link' id='animate-nav'>
                   <span className='font-lexend font-medium cursor-pointer tracking-tighter text-[.9rem]'
                     onClick={() => setShowMenu(true)}>
                     Menu
@@ -240,8 +236,8 @@ function Navbar() {
                     ref={fxMenuOpenAnimation}>
                     <div className='h-[90vh]'>
                       {/* close button */}
-                      <div id="menu-link">
-                        <div className='flex w-full justify-end' ref={fxClose}>
+                      <div className="menu-link">
+                        <div className='flex w-full justify-end' id='mobile-nav-animate'>
                           <span className='font-lexend font-medium cursor-pointer tracking-tighter text-offwhite text-[.9rem]'
                             onClick={() => setShowMenu(false)} >
                             Close
@@ -250,9 +246,9 @@ function Navbar() {
                       </div>
                       {/* menu nav links */}
                       <div className='flex flex-col w-full h-full justify-end'>
-                        <div id='page-link'>
+                        <div className='page-link'>
                           <Link to='/#'>
-                            <div id='link' ref={fxLinkAnimation1}>
+                            <div className='link' id='mobile-nav-animate'>
                               <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
                                 Intro
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
@@ -260,9 +256,9 @@ function Navbar() {
                             </div>
                           </Link>
                         </div>
-                        <div id='page-link'>
+                        <div className='page-link'>
                           <Link to='/#project'>
-                            <div id='link' ref={fxLinkAnimation2}>
+                            <div className='link' id='mobile-nav-animate'>
                               <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
                                 Project
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
@@ -270,9 +266,9 @@ function Navbar() {
                             </div>
                           </Link>
                         </div>
-                        <div id='page-link'>
+                        <div className='page-link'>
                           <Link to='/#contact'>
-                            <div id='link' ref={fxLinkAnimation3}>
+                            <div className='link' id='mobile-nav-animate'>
                               <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
                                 Contact
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
@@ -280,9 +276,9 @@ function Navbar() {
                             </div>
                           </Link>
                         </div>
-                        <div id='page-link'>
+                        <div className='page-link'>
                           <Link to={Resume} target={Resume}>
-                            <div id='link' ref={fxLinkAnimation4} >
+                            <div className='link' id='mobile-nav-animate'>
                               <span className='flex items-center text-[2.3rem] text-offwhite'onClick={() => setShowMenu(false)}>
                                 Resume
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>

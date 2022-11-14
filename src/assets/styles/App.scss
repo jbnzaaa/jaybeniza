@@ -53,24 +53,23 @@
     }
 
     // navbar - logo
-    #logo-container{
+    .logo-container{
       height: auto;
       position: relative;
       overflow: hidden; 
       
-      #logo{
+      .logo{
         transform: translateY(30px);
         transition: 1s ease;
       }
     }
 
     // navbar - links
-    #link-container{
-      // height: auto;
+    .link-container{
       position: relative;
       overflow: hidden; 
       
-      #link{
+      .link{
         position: absolute;
         transform: translateY(32px);
         text-align: right;
@@ -104,7 +103,7 @@
       }
     }
 
-    #menu-link{
+    .menu-link{
       height: 20px;
       position: relative;
       overflow: hidden;
@@ -125,12 +124,12 @@
       }
     }
 
-    #page-link{
+    .page-link{
       height: 60px;
       position: relative;
       overflow: hidden;
 
-      #link,
+      .link,
       #mobileview-link{
         transform: translateY(60px);
         transition: 1s ease;
@@ -164,31 +163,27 @@
     }
 
     //hero section
-    #p-container{
+    .p-container{
       position: relative;
       overflow: hidden;
-      // height: auto;
       
-      #hero-p{
+      .hero-p{
         transform: translateY(30px);
         margin-right: 5px; 
         transition: 1s ease;
       }
     }
     
-    #hero-container{
+    .hero-container{
       position: relative;
       overflow: hidden;
 
-      #hero-aspiringweb{
+      .hero-aspiringweb{
         margin-right: 10px;
         transition: 1s ease;
-
-        // -webkit-text-stroke-width: 2px;
-        // -webkit-text-stroke-color: var(--main-color);
       }
 
-      #hero-designerdev{
+      .hero-designerdev{
         position: absolute;
         width: 100%;
         transition: 1s ease;
@@ -196,12 +191,11 @@
     }
 
     // about section
-    #about-container{
+    .about-container{
       position: relative;
       overflow: hidden;
-      height: auto;
 
-      span{
+      .about-greetings{
         margin-right: 10px;
         transition: 1s ease;
       }
@@ -213,12 +207,12 @@
       // }
     }
 
-    #content-container{
+    .content-container{
       position: relative;
       overflow: hidden; 
       height: auto;
 
-      p{
+      .about-paragraph{
         transition: 1s ease;
       }
     }
@@ -234,15 +228,15 @@
     //   }
     // }
 
-    #line{
+    #line,
+    #what-i-use-line,
+    #web-dev-line,
+    #framework-and-library-line,
+    #tools-and-tech-line{
       border-top: 1px solid var(--main-color);
       position: relative;
       overflow: hidden;
       width: 0px;
-      
-      // &:last-child{
-      //   border-bottom: 1px solid var(--main-color);
-      // }
     }
 
     ul{
@@ -251,41 +245,41 @@
       }
     }
 
-    #stack-container{
+    .stack-container{
       position: relative;
       overflow: hidden;
 
-      span{
+      .stack-context{
         margin-right: 10px;
         transition: 1s ease;
       }
     }
 
-    #stacks{
+    .stacks{
       position: relative;
       overflow: hidden;
       height: auto;
 
-      p{
+      .stack-context{
         margin-right: 5px;
         transition: 1s ease;
       }
     }
 
     // selected projects
-    #description{
+    .description{
       position: relative;
       overflow: hidden;
       height: auto;
 
-      #description-p{
+      .description-p{
         transform: translateY(30px);
         margin-right: 5px;
         transition: 1s ease;
       }
     }
 
-    #selected-project-header{
+    .selected-project-header{
       position: relative;
       overflow: hidden;
     
@@ -296,7 +290,7 @@
       }
     }
 
-    #behance-link-container{
+    .behance-link-container{
       position: relative;
       overflow: hidden;
       height: 35px;
@@ -304,7 +298,7 @@
       a{
         transition: 1s ease;
 
-        span{
+        .behance-link{
           position: relative;
           letter-spacing: 0;
           transition: .3s ease-in-out;
@@ -409,116 +403,116 @@
       }
     }
 
-    #card-container{
-      position: relative;
-      overflow: hidden;
-      height: max-content;
+    // #card-container{
+    //   position: relative;
+    //   overflow: hidden;
+    //   height: max-content;
 
-      // #project-card{
-      //   position: absolute;
-      //   transform: translateY(0px);
-      // }
+    //   // #project-card{
+    //   //   position: absolute;
+    //   //   transform: translateY(0px);
+    //   // }
 
-      #span-container{
-        position: relative;
-        overflow: hidden;
-        // height: auto;
+    //   #span-container{
+    //     position: relative;
+    //     overflow: hidden;
+    //     // height: auto;
 
-        #back{
-          transform: translateY(20px);
-          transition: 1s ease;
-        }
+    //     #back{
+    //       transform: translateY(20px);
+    //       transition: 1s ease;
+    //     }
 
-        #project-p{
-          margin-right: 8px;
-        }
-      }
+    //     #project-p{
+    //       margin-right: 8px;
+    //     }
+    //   }
 
-      #title-container{
-        position: relative;
-        overflow: hidden;
-        height: auto;
-      }
+    //   #title-container{
+    //     position: relative;
+    //     overflow: hidden;
+    //     height: auto;
+    //   }
 
-      #p-container{
-        position: relative;
-        overflow: hidden;
-        height: auto;
+    //   #p-container{
+    //     position: relative;
+    //     overflow: hidden;
+    //     height: auto;
 
-        #project-p{
-          margin-right: 5px;
-          transform: translateY(20px);
-        }
-      }
+    //     #project-p{
+    //       margin-right: 5px;
+    //       transform: translateY(20px);
+    //     }
+    //   }
 
-      #button-container{
-        position: relative;
-        overflow: hidden;
-        height: auto;
+    //   #button-container{
+    //     position: relative;
+    //     overflow: hidden;
+    //     height: auto;
 
-        #visit{
-          transform: translateY(30px);
-        }
-      }
+    //     #visit{
+    //       transform: translateY(30px);
+    //     }
+    //   }
 
-      #img-container{
-        position: relative;
-        overflow: hidden;
-        height: auto;
+    //   #img-container{
+    //     position: relative;
+    //     overflow: hidden;
+    //     height: auto;
 
-        #project-img{
-          transform: translateY(0px);
-          transform-origin: bottom;
-        }
-      }
-    }
+    //     #project-img{
+    //       transform: translateY(0px);
+    //       transform-origin: bottom;
+    //     }
+    //   }
+    // }
 
     // contact
-    #drop-message-container{
+    .drop-message-container{
       position: relative;
       overflow: hidden; 
       height: auto;
 
-      p{
+      .context{
         margin-right: 20px;
         transition: 1s ease;
       }
     }
 
-    #contact-description-container{
+    .contact-description-container{
       height: auto;
       position: relative;
       overflow: hidden; 
 
-      #context{
+      .context{
         transform: translateY(35px);
         margin-right: 5px;
         transition: 1s ease;
       }
     }
 
-    #account-container{
+    .account-container{
       position: relative;
       overflow: hidden; 
       height: auto;
 
-      #accounts{
+      .accounts{
         transform: translateY(35px);
         transition: 1s ease;
       }
     }
 
     // footer
-    #footer-container{
+    .footer-container{
       position: relative;
       overflow: hidden;
 
-      #footer{
+      .footer{
         transform: translateY(35px);
         margin-right: 5px;
       }
 
-      #footer-update-date{
+      .footer-update-date{
         margin-right: 5px;
       }
     }

@@ -14,17 +14,17 @@ function Project() {
 
   useEffect(() => {
     // overflow visible
-    gsap.to(fxOverflow1.current, {
+    gsap.to('#animate-project-header', {
       overflow: 'visible',
       scrollTrigger: {
-        trigger: fxOverflow1.current,
+        trigger: '#animate-project-header',
       }
     });
 
-    gsap.to(fxOverflow2.current, {
+    gsap.to('#animate-project-header', {
       overflow: 'visible',
       scrollTrigger: {
-        trigger: fxOverflow2.current,
+        trigger: '#animate-project-header',
       }
     });
 
@@ -52,26 +52,26 @@ function Project() {
     });
     
     // description
-    gsap.to('#description-p', {
+    gsap.to('#animate-project', {
       duration: 1,
-      delay: 1.1,
+      // delay: 1.1,
       y: 0,
       stagger: .05,
       ease: 'power1.in',
       scrollTrigger: { 
-        trigger: '#description-p', 
+        trigger: '#animate-project', 
         start: 'bottom 120%',
       }
     });
 
     // behance link
-    gsap.to('#behance-link', {
+    gsap.to('#animate-link', {
       duration: 1,
       // delay: 1,
       y: 0,
       ease: 'power1.in',
       scrollTrigger: {
-        trigger: '#behance-link',
+        trigger: '#animate-link',
         start: 'top 100%',
       }
     });
@@ -104,36 +104,36 @@ function Project() {
                   laptop:h-[50px] laptop:text-[1rem]
                   laptop-lg:h-[50px] laptop-lg:text-[1rem]
                   desktop:h-[50px] desktop:text-[1.1rem]'>
-                  <div id='description'><p className='text-white' id='description-p'>A</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>collection</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>of</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>projects</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>I've</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>worked</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>on</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>throughout</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>my</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>journey</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>as</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>self-taught</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>front-end</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>web</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>developer</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>and</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>user</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>interface</p></div>
-                  <div id='description'><p className='text-white' id='description-p'>designer.</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>A</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>collection</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>of</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>projects</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>I've</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>worked</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>on</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>throughout</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>my</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>journey</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>as</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>self-taught</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>front-end</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>web</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>developer</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>and</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>user</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>interface</p></div>
+                  <div className='description'><p className='text-white description-p' id='animate-project'>designer.</p></div>
                 </div>
               </div>
               {/* page header */}
               <div className='col-span-8 col-start-1 w-full flex flex-col row-start-2 row-span-3 flex justify-center'>
-                <div className='
+                <div className='selected-project-header
                   mobile:h-[190px]
                   tablet:h-[150px]
                   laptop:h-[250px]
                   laptop-lg:h-[250px]
                   desktop:h-[250px]' 
-                  id='selected-project-header' ref={fxOverflow1}>
+                  id='animate-project-header'>
                   <span className='font-lexend font-medium leading-none tracking-tight text-white
                     mobile:text-[15rem] mobile:left-[-200px]
                     tablet:text-[17rem] tablet:left-[-80px]
@@ -144,13 +144,13 @@ function Project() {
                     Selected
                   </span>
                 </div>
-                <div className='
+                <div className='selected-project-header
                   mobile:h-[190px]
                   tablet:h-[150px]
                   laptop:h-[250px]
                   laptop-lg:h-[250px]
                   desktop:h-[250px]' 
-                  id='selected-project-header' ref={fxOverflow2}>
+                  id='animate-project-header'>
                   <span className='font-lexend font-medium leading-none tracking-tight text-white
                     mobile:text-[15rem] mobile:right-[-200px]
                     tablet:text-[17rem] tablet:right-[-80px]
@@ -164,21 +164,20 @@ function Project() {
               </div>
               {/* page links */}
               <span className='col-span-8 col-start-1 flex items-end row-start-5 row-span-1'>
-                <div className='
-                  mobile:h-[20px]
+                <div className='behance-link-container
+                  mobile:h-[28px]
                   tablet:h-[35px]
                   laptop:h-[50px]
                   laptop-lg:h-[50px]
-                  desktop:h-[50px]' 
-                  id='behance-link-container'>
+                  desktop:h-[50px]'>
                   <a href='https://www.behance.net/jbnza' target='https://www.behance.net/jbnza' 
-                    className='flex items-center p-2.5
-                    mobile:translate-y-[20px]
+                    className='behance-link flex items-center p-2.5
+                    mobile:translate-y-[28px]
                     tablet:translate-y-[35px]
                     laptop:translate-y-[50px]
                     laptop-lg:translate-y-[50px]
-                    desktop:translate-y-[50px]' 
-                    id='behance-link'>
+                    desktop:translate-y-[50px]'
+                    id='animate-link'>
                     <span className='flex items-center text-white
                       mobile:text-[.9rem]
                       tablet:text-[.9rem]

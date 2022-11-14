@@ -14,26 +14,13 @@ gsap.registerPlugin(ScrollTrigger)
 function About() {
   useEffect(() => {
     // greeting container animation
-    gsap.to('#greet', {
+    gsap.to('#animate-about', {
       duration: 1,
       y: 0,
-      stagger: .08,
+      stagger: .05,
       ease: 'power1.in',
       scrollTrigger: { 
-        trigger: '#greet', 
-        start: 'bottom 100%'
-      }
-    });
-
-    // line animation
-    gsap.to('#line', {
-      duration: 1,
-      delay: 1.3,
-      width: '100%',
-      stagger: .10,
-      ease: 'power1.in',
-      scrollTrigger: { 
-        trigger: '#line', 
+        trigger: '#animate-about', 
         start: 'bottom 100%'
       }
     });
@@ -93,8 +80,7 @@ function About() {
         tablet:h-[150vh]
         laptop:h-[180vh]
         laptop-lg:h-[180vh]
-        desktop:h-[200vh]' 
-        id='about'>
+        desktop:h-[200vh]'>
         {/* grid */}
         <div className='grid grid-cols-8 gap-0 
           mobile:py-16 mobile:px-[.9rem] 
@@ -104,38 +90,37 @@ function About() {
           desktop:py-36 desktop:px-[3rem]'>
           {/* greeting */}
           <section className="col-span-8">
-            <div className='flex flex-wrap
+            <div className='about-container flex flex-wrap
               mobile:h-[35px] mobile:mb-2 mobile:text-[2rem]
               tablet:h-[60px] tablet:mb-2 tablet:text-[3rem]
               laptop:h-[90px] laptop:mb-3 laptop:text-[5rem]
               laptop-lg:h-[100px] laptop-lg:mb-3 laptop-lg:text-[5.3rem]
-              desktop:h-[110px] desktop:mb-3 desktop:text-[5.5rem]'
-              id='about-container'>
-              <span className='font-lexend font-medium leading-none tracking-tighter
+              desktop:h-[110px] desktop:mb-3 desktop:text-[5.5rem]'>
+              <span className='about-greetings font-lexend font-medium leading-none tracking-tighter
                 mobile:translate-y-[35px]
                 tablet:translate-y-[80px]
                 laptop:translate-y-[110px]
                 laptop-lg:translate-y-[110px]
                 desktop:translate-y-[120px]'
-                id='greet'>
+                id='animate-about'>
                 Hello,
               </span>
-              <span className='font-lexend font-medium leading-none tracking-tighter
+              <span className='about-greetings font-lexend font-medium leading-none tracking-tighter
                 mobile:translate-y-[35px]
                 tablet:translate-y-[80px]
                 laptop:translate-y-[110px]
                 laptop-lg:translate-y-[110px]
                 desktop:translate-y-[120px]'
-                id='greet'>
+                id='animate-about'>
                 I'm
               </span>
-              <span className='font-lexend font-medium leading-none tracking-tighter
+              <span className='about-greetings font-lexend font-medium leading-none tracking-tighter
                 mobile:translate-y-[35px]
                 tablet:translate-y-[80px]
                 laptop:translate-y-[110px]
                 laptop-lg:translate-y-[110px]
                 desktop:translate-y-[120px]'
-                id='greet'>
+                id='animate-about'>
                 Jayson
               </span>
               {/* <ul className='
@@ -176,46 +161,13 @@ function About() {
               laptop-lg:grid-cols-8
               desktop:grid-cols-8'>
               {/* what i use? */}
-              <div className='col-span-8' id='line'/>
-              <li className='col-span-8 grid py-6
-                mobile:grid-cols-1 mobile:h-full
-                tablet:grid-cols-1 tablet:h-full
-                laptop:grid-cols-2 laptop:h-full
-                laptop-lg:grid-cols-2 laptop-lg:h-full
-                desktop:grid-cols-2 desktop:h-full'>
-                <WhatIUse/>
-              </li>
+              <WhatIUse/>
               {/* web development */}
-              <div className='col-span-8' id='line'/>
-              <li className='col-span-8 grid py-6
-                mobile:grid-cols-1 mobile:h-full
-                tablet:grid-cols-1 tablet:h-full
-                laptop:grid-cols-2 laptop:h-full
-                laptop-lg:grid-cols-2 laptop-lg:h-[97px]
-                desktop:grid-cols-2 desktop:h-[97px]'>
-                <WebDev/>
-              </li>
+              <WebDev/>
               {/* framework & library */}
-              <div className='col-span-8' id='line'/>
-              <li className='col-span-8 grid py-6
-                mobile:grid-cols-1 mobile:h-full
-                tablet:grid-cols-1 tablet:h-full
-                laptop:grid-cols-2 laptop:h-full
-                laptop-lg:grid-cols-2 laptop-lg:h-[97px]
-                desktop:grid-cols-2 desktop:h-[97px]'>
-                <FrameworkLibrary/>
-              </li>
+              <FrameworkLibrary/>
               {/* tools & technologies */}
-              <div className='col-span-8' id='line'/>
-              <li className='col-span-8 grid py-6
-                mobile:grid-cols-1 mobile:h-full
-                tablet:grid-cols-1 tablet:h-full
-                laptop:grid-cols-2 laptop:h-full
-                laptop-lg:grid-cols-2 laptop-lg:h-[97px]
-                desktop:grid-cols-2 desktop:h-[97px]'>
-                <ToolTechnology/>
-              </li>
-              <div className='col-span-8' id='line'/>
+              <ToolTechnology/>
             </ul>
           </section>
         </div>

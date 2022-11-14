@@ -7,14 +7,14 @@ gsap.registerPlugin(ScrollTrigger)
 
 function WebDev() {
   useEffect(() => {
-    // titleand description animation
-    gsap.to('#stack-context', {
+    // line animation
+    gsap.to('#web-dev-line', {
       duration: 1,
-      y: 0,
-      stagger: .05,
+      // delay: 3,
+      width: '100%',
       ease: 'power1.in',
       scrollTrigger: { 
-        trigger: '#stack-context', 
+        trigger: '#web-dev-line', 
         start: 'bottom 100%'
       }
     });
@@ -22,121 +22,123 @@ function WebDev() {
 
   return (
     <>
-      {/* title */}
-      <div className='col-span-1 flex flex-wrap
-        mobile:h-[25px] mobile:mb-1 mobile:text-[1rem]
-        tablet:h-[30px] tablet:text-[1.1rem]
-        laptop:h-[40px] laptop:text-[1.4rem]
-        laptop-lg:h-[40px] laptop-lg:text-[1.4rem]
-        desktop:h-[50px] desktop:text-[1.4em]'
-        id='stack-container'>
-        <span className='font-medium
-          mobile:translate-y-[25px]
-          tablet:translate-y-[30px]
-          laptop:translate-y-[50px]
-          laptop-lg:translate-y-[50px]
-          desktop:translate-y-[50px]'
-          id='stack-context'>
-          Web 
-        </span>
-        <span className='font-medium
-          mobile:translate-y-[25px]
-          tablet:translate-y-[30px]
-          laptop:translate-y-[50px]
-          laptop-lg:translate-y-[50px]
-          desktop:translate-y-[50px]'
-          id='stack-context'>
-          Development
-        </span>
-      </div>
-      {/* stacks */}
-      <ul className='col-span-1 flex flex-wrap'>
-        <li className='h-[30px]
-          mobile:text-[.9rem]
-          tablet:text-[.9rem]
-          laptop:text-[1rem]
-          laptop-lg:text-[1rem]
-          desktop:text-[1.1rem]'
-          id='stacks'>
-          <p className='
+      <div className='col-span-8' id='web-dev-line'/>
+      <li className='col-span-8 grid py-6
+        mobile:grid-cols-1 mobile:h-full
+        tablet:grid-cols-1 tablet:h-full
+        laptop:grid-cols-2 laptop:h-full
+        laptop-lg:grid-cols-2 laptop-lg:h-[97px]
+        desktop:grid-cols-2 desktop:h-[97px]'>
+        {/* title */}
+        <div className='stack-container col-span-1 flex flex-wrap
+          mobile:h-[25px] mobile:mb-1 mobile:text-[1rem]
+          tablet:h-[30px] tablet:text-[1.3rem]
+          laptop:h-[30px] laptop:text-[1.4rem]
+          laptop-lg:h-[30px] laptop-lg:text-[1.4rem]
+          desktop:h-[30px] desktop:text-[1.4em]'>
+          <span className='stack-context font-medium
             mobile:translate-y-[25px]
             tablet:translate-y-[30px]
             laptop:translate-y-[50px]
             laptop-lg:translate-y-[50px]
-            desktop:translate-y-[50px]'  
-            id='stack-context'>
-            HTML
-          </p>
-        </li>
-        <li className='h-[30px]
-          mobile:text-[.9rem]
-          tablet:text-[.9rem]
-          laptop:text-[1rem]
-          laptop-lg:text-[1rem]
-          desktop:text-[1.1rem]'
-          id='stacks'>
-          <p className='
+            desktop:translate-y-[50px]'
+            id='animate-about'>
+            Web 
+          </span>
+          <span className='stack-context font-medium
             mobile:translate-y-[25px]
             tablet:translate-y-[30px]
             laptop:translate-y-[50px]
             laptop-lg:translate-y-[50px]
-            desktop:translate-y-[50px]'  
-            id='stack-context'>
-            CSS3
-          </p>
-        </li>
-        <li className='h-[30px]
-          mobile:text-[.9rem]
-          tablet:text-[.9rem]
-          laptop:text-[1rem]
-          laptop-lg:text-[1rem]
-          desktop:text-[1.1rem]'
-          id='stacks'>
-          <p className='
-            mobile:translate-y-[25px]
-            tablet:translate-y-[30px]
-            laptop:translate-y-[50px]
-            laptop-lg:translate-y-[50px]
-            desktop:translate-y-[50px]'   
-            id='stack-context'>
-            SASS
-          </p>
-        </li>
-        <li className='h-[30px]
-          mobile:text-[.9rem]
-          tablet:text-[.9rem]
-          laptop:text-[1rem]
-          laptop-lg:text-[1rem]
-          desktop:text-[1.1rem]'
-          id='stacks'>
-          <p className='
-            mobile:translate-y-[25px]
-            tablet:translate-y-[30px]
-            laptop:translate-y-[50px]
-            laptop-lg:translate-y-[50px]
-            desktop:translate-y-[50px]'  
-            id='stack-context'>
-            JavaScript
-          </p>
-        </li>
-        <li className='h-[30px]
-          mobile:text-[.9rem]
-          tablet:text-[.9rem]
-          laptop:text-[1rem]
-          laptop-lg:text-[1rem]
-          desktop:text-[1.1rem]'
-          id='stacks'>
-          <p className='
-            mobile:translate-y-[25px]
-            tablet:translate-y-[30px]
-            laptop:translate-y-[50px]
-            laptop-lg:translate-y-[50px]
-            desktop:translate-y-[50px]'  
-            id='stack-context'>
-            React JS
-          </p>
-        </li>
-      </ul>
+            desktop:translate-y-[50px]'
+            id='animate-about'>
+            Development
+          </span>
+        </div>
+        {/* stacks */}
+        <ul className='col-span-1 flex flex-wrap h-[30px]'>
+          <li className='stacks h-[30px]
+            mobile:text-[.9rem]
+            tablet:text-[.9rem]
+            laptop:text-[1rem]
+            laptop-lg:text-[1rem]
+            desktop:text-[1.1rem]'>
+            <p className='stack-context
+              mobile:translate-y-[28px]
+              tablet:translate-y-[30px]
+              laptop:translate-y-[30px]
+              laptop-lg:translate-y-[30px]
+              desktop:translate-y-[30px]'  
+              id='animate-about'>
+              HTML
+            </p>
+          </li>
+          <li className='stacks h-[30px]
+            mobile:text-[.9rem]
+            tablet:text-[.9rem]
+            laptop:text-[1rem]
+            laptop-lg:text-[1rem]
+            desktop:text-[1.1rem]'>
+            <p className='stack-context
+              mobile:translate-y-[28px]
+              tablet:translate-y-[30px]
+              laptop:translate-y-[30px]
+              laptop-lg:translate-y-[30px]
+              desktop:translate-y-[30px]'  
+              id='animate-about'>
+              CSS3
+            </p>
+          </li>
+          <li className='stacks h-[30px]
+            mobile:text-[.9rem]
+            tablet:text-[.9rem]
+            laptop:text-[1rem]
+            laptop-lg:text-[1rem]
+            desktop:text-[1.1rem]'>
+            <p className='stack-context
+              mobile:translate-y-[28px]
+              tablet:translate-y-[30px]
+              laptop:translate-y-[30px]
+              laptop-lg:translate-y-[30px]
+              desktop:translate-y-[30px]'  
+              id='animate-about'>
+              SASS
+            </p>
+          </li>
+          <li className='stacks h-[30px]
+            mobile:text-[.9rem]
+            tablet:text-[.9rem]
+            laptop:text-[1rem]
+            laptop-lg:text-[1rem]
+            desktop:text-[1.1rem]'>
+            <p className='stack-context
+              mobile:translate-y-[28px]
+              tablet:translate-y-[30px]
+              laptop:translate-y-[30px]
+              laptop-lg:translate-y-[30px]
+              desktop:translate-y-[30px]'   
+              id='animate-about'>
+              JavaScript
+            </p>
+          </li>
+          <li className='stacks h-[30px]
+            mobile:text-[.9rem]
+            tablet:text-[.9rem]
+            laptop:text-[1rem]
+            laptop-lg:text-[1rem]
+            desktop:text-[1.1rem]'>
+            <p className='stack-context
+              mobile:translate-y-[28px]
+              tablet:translate-y-[30px]
+              laptop:translate-y-[30px]
+              laptop-lg:translate-y-[30px]
+              desktop:translate-y-[30px]' 
+              id='animate-about'>
+              React JS
+            </p>
+          </li>
+        </ul>
+      </li>
     </>
   )
 }

@@ -9,26 +9,13 @@ function Contact() {
   useEffect(() => {
     // drop a message animation
     // contact description animation
-    gsap.to('#context', {
+    gsap.to('#animate-contact', {
       duration: 1,
       y: 0,
       stagger: .05,
       ease: 'power1.in',
       scrollTrigger: { 
-        trigger: '#context', 
-        start: 'bottom 100%',
-      }
-    });
-
-    // contact email links animation
-    gsap.to('#accounts', {
-      duration: 1,
-      delay: 1.3,
-      y: 0,
-      stagger: .05,
-      ease: 'power1.in',
-      scrollTrigger: { 
-        trigger: '#accounts', 
+        trigger: '#animate-contact', 
         start: 'bottom 100%',
       }
     });
@@ -59,32 +46,32 @@ function Contact() {
                 laptop:h-[150px] laptop:text-[7rem]
                 laptop-lg:h-[150px] laptop-lg:text-[10rem]
                 desktop:h-[150px] desktop:text-[10rem]'>
-                <div id='drop-message-container'>
-                  <p className='text-white 
+                <div className='drop-message-container'>
+                  <p className='context text-white 
                   mobile:translate-y-[100px]
                   tablet:translate-y-[100px]
                   laptop:translate-y-[150px]
                   laptop-lg:translate-y-[160px]
                   desktop:translate-y-[160px]' 
-                  id="context">Drop</p>
+                  id='animate-contact'>Drop</p>
                 </div>
-                <div id="drop-message-container">
-                  <p className='text-white ml-2
+                <div className='drop-message-container'>
+                  <p className='context text-white ml-2
                   mobile:translate-y-[100px]
                   tablet:translate-y-[100px]
                   laptop:translate-y-[150px]
                   laptop-lg:translate-y-[160px]
                   desktop:translate-y-[160px]' 
-                  id="context">a</p>
+                  id='animate-contact'>a</p>
                 </div>
-                <div id="drop-message-container">
-                  <p className='text-white 
+                <div className='drop-message-container'>
+                  <p className='context text-white 
                   mobile:translate-y-[100px]
                   tablet:translate-y-[100px]
                   laptop:translate-y-[150px]
                   laptop-lg:translate-y-[160px]
                   desktop:translate-y-[160px]' 
-                  id="context">Message</p>
+                  id='animate-contact'>Message</p>
                 </div>
               </div>
             </div>
@@ -102,25 +89,25 @@ function Contact() {
                 laptop:text-[1rem] laptop:mb-28
                 laptop-lg:text-[1rem] laptop-lg:mb-24
                 desktop:text-[1.1rem] desktop:mb-28'>
-                <div id='contact-description-container'><p className='text-white' id="context">Do</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">you</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">have</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">any</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">ideas</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">in</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">mind?</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">I’m</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">willing</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">to</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">help</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">you</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">turn</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">your</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">web</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">design</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">ideas</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">into</p></div>
-                <div id='contact-description-container'><p className='text-white' id="context">reality.</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>Do</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>you</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>have</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>any</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>ideas</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>in</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>mind?</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>I’m</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>willing</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>to</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>help</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>you</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>turn</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>your</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>web</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>design</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>ideas</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>into</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>reality.</p></div>
               </div>
               {/* email accounts content */}
               <div className='flex justify-between w-full font-montserrat h-[20px]
@@ -130,40 +117,40 @@ function Contact() {
                 laptop-lg:text-[1rem]
                 desktop:text-[1.1rem]'>
                 <div className='w-[50%]'>
-                  <div id='account-container'>
-                    <div className='mb-2' id='accounts'>
+                  <div className='account-container'>
+                    <div className='accounts mb-2' id='animate-contact'>
                       <a href='mailto:jaysonbeniza@gmail.com' target='mailto:jaysonbeniza@gmail.com' 
                         className='text-white'>Email</a>
                     </div>
                   </div>
-                  <div id='account-container'>
-                    <div className='mb-2' id='accounts'>
+                  <div className='account-container'>
+                    <div className='accounts mb-2' id='animate-contact'>
                       <a href='https://www.facebook.com/jbnzaaa' target='https://www.facebook.com/jbnzaaa' 
                         className='text-white'>Facebook</a>
                     </div>
                   </div>
-                  <div id='account-container'>
-                    <div className='mb-2' id='accounts'>
+                  <div className='account-container'>
+                    <div className='accounts mb-2' id='animate-contact'>
                       <a href='https://www.instagram.com/jbnza_/' target='https://www.instagram.com/jbnza_/' 
                         className='text-white'>Instagram</a>
                     </div>
                   </div>
                 </div>
                 <div className='w-[50%]'>
-                  <div id='account-container'>
-                    <div className='mb-2' id='accounts'>
+                  <div className='account-container'>
+                    <div className='accounts mb-2' id='animate-contact'>
                       <a href='https://github.com/jbnzaaa' target='https://github.com/jbnzaaa' 
                         className='text-white'>Github</a>
                     </div>
                   </div>
-                  <div id='account-container'>
-                    <div className='mb-2' id='accounts'>
+                  <div className='account-container'>
+                    <div className='accounts mb-2' id='animate-contact'>
                       <a href='https://www.behance.net/jbnza' target='https://www.behance.net/jbnza' 
                         className='text-white'>Behance</a>
                     </div>
                   </div>
-                  <div id='account-container'>
-                    <div className='mb-2' id='accounts'>
+                  <div className='account-container'>
+                    <div className='accounts mb-2' id='animate-contact'>
                       <a href='https://www.linkedin.com/in/jaybeniza/' target='https://www.linkedin.com/in/jaybeniza/' 
                         className='text-white'>Linked In</a>
                     </div>

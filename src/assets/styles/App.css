@@ -45,25 +45,25 @@
   top: 0px;
 }
 
-* body #logo-container {
+* body .logo-container {
   height: auto;
   position: relative;
   overflow: hidden;
 }
 
-* body #logo-container #logo {
+* body .logo-container .logo {
   -webkit-transform: translateY(30px);
           transform: translateY(30px);
   -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
-* body #link-container {
+* body .link-container {
   position: relative;
   overflow: hidden;
 }
 
-* body #link-container #link {
+* body .link-container .link {
   position: absolute;
   -webkit-transform: translateY(32px);
           transform: translateY(32px);
@@ -72,18 +72,18 @@
   transition: 1s ease;
 }
 
-* body #link-container #link span {
+* body .link-container .link span {
   position: relative;
   letter-spacing: 0;
   -webkit-transition: .3s ease-in-out;
   transition: .3s ease-in-out;
 }
 
-* body #link-container #link span:hover {
+* body .link-container .link span:hover {
   letter-spacing: 2px;
 }
 
-* body #link-container #link span #icon {
+* body .link-container .link span #icon {
   -webkit-transform: rotate(0deg);
           transform: rotate(0deg);
   -webkit-transition: all .3s ease-in-out;
@@ -91,7 +91,7 @@
   border-radius: 100%;
 }
 
-* body #link-container #link span:hover #icon {
+* body .link-container .link span:hover #icon {
   -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
   -webkit-transition: all .3s ease-in-out;
@@ -101,59 +101,59 @@
   border-radius: 100%;
 }
 
-* body #menu-link {
+* body .menu-link {
   height: 20px;
   position: relative;
   overflow: hidden;
 }
 
-* body #menu-link div {
+* body .menu-link div {
   -webkit-transform: translateY(20px);
           transform: translateY(20px);
   -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
-* body #menu-link div span {
+* body .menu-link div span {
   position: relative;
   letter-spacing: 0;
   -webkit-transition: .3s ease-in-out;
   transition: .3s ease-in-out;
 }
 
-* body #menu-link div span:hover {
+* body .menu-link div span:hover {
   letter-spacing: 2px;
 }
 
-* body #page-link {
+* body .page-link {
   height: 60px;
   position: relative;
   overflow: hidden;
 }
 
-* body #page-link #link,
-* body #page-link #mobileview-link {
+* body .page-link .link,
+* body .page-link #mobileview-link {
   -webkit-transform: translateY(60px);
           transform: translateY(60px);
   -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
-* body #page-link #link span,
-* body #page-link #mobileview-link span {
+* body .page-link .link span,
+* body .page-link #mobileview-link span {
   position: relative;
   letter-spacing: 0;
   -webkit-transition: .3s ease-in-out;
   transition: .3s ease-in-out;
 }
 
-* body #page-link #link span:hover,
-* body #page-link #mobileview-link span:hover {
+* body .page-link .link span:hover,
+* body .page-link #mobileview-link span:hover {
   letter-spacing: 2px;
 }
 
-* body #page-link #link span #icon,
-* body #page-link #mobileview-link span #icon {
+* body .page-link .link span #icon,
+* body .page-link #mobileview-link span #icon {
   -webkit-transform: rotate(0deg);
           transform: rotate(0deg);
   -webkit-transition: all .3s ease-in-out;
@@ -161,8 +161,8 @@
   border-radius: 100%;
 }
 
-* body #page-link #link span:hover #icon,
-* body #page-link #mobileview-link span:hover #icon {
+* body .page-link .link span:hover #icon,
+* body .page-link #mobileview-link span:hover #icon {
   -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
   -webkit-transition: all .3s ease-in-out;
@@ -172,12 +172,12 @@
   border-radius: 100%;
 }
 
-* body #p-container {
+* body .p-container {
   position: relative;
   overflow: hidden;
 }
 
-* body #p-container #hero-p {
+* body .p-container .hero-p {
   -webkit-transform: translateY(30px);
           transform: translateY(30px);
   margin-right: 5px;
@@ -185,48 +185,51 @@
   transition: 1s ease;
 }
 
-* body #hero-container {
+* body .hero-container {
   position: relative;
   overflow: hidden;
 }
 
-* body #hero-container #hero-aspiringweb {
+* body .hero-container .hero-aspiringweb {
   margin-right: 10px;
   -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
-* body #hero-container #hero-designerdev {
+* body .hero-container .hero-designerdev {
   position: absolute;
   width: 100%;
   -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
-* body #about-container {
+* body .about-container {
   position: relative;
   overflow: hidden;
-  height: auto;
 }
 
-* body #about-container span {
+* body .about-container .about-greetings {
   margin-right: 10px;
   -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
-* body #content-container {
+* body .content-container {
   position: relative;
   overflow: hidden;
   height: auto;
 }
 
-* body #content-container p {
+* body .content-container .about-paragraph {
   -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
-* body #line {
+* body #line,
+* body #what-i-use-line,
+* body #web-dev-line,
+* body #framework-and-library-line,
+* body #tools-and-tech-line {
   border-top: 1px solid var(--main-color);
   position: relative;
   overflow: hidden;
@@ -237,36 +240,36 @@
   margin-right: 15px;
 }
 
-* body #stack-container {
+* body .stack-container {
   position: relative;
   overflow: hidden;
 }
 
-* body #stack-container span {
+* body .stack-container .stack-context {
   margin-right: 10px;
   -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
-* body #stacks {
+* body .stacks {
   position: relative;
   overflow: hidden;
   height: auto;
 }
 
-* body #stacks p {
+* body .stacks .stack-context {
   margin-right: 5px;
   -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
-* body #description {
+* body .description {
   position: relative;
   overflow: hidden;
   height: auto;
 }
 
-* body #description #description-p {
+* body .description .description-p {
   -webkit-transform: translateY(30px);
           transform: translateY(30px);
   margin-right: 5px;
@@ -274,39 +277,39 @@
   transition: 1s ease;
 }
 
-* body #selected-project-header {
+* body .selected-project-header {
   position: relative;
   overflow: hidden;
 }
 
-* body #selected-project-header #selected,
-* body #selected-project-header #projects {
+* body .selected-project-header #selected,
+* body .selected-project-header #projects {
   position: absolute;
 }
 
-* body #behance-link-container {
+* body .behance-link-container {
   position: relative;
   overflow: hidden;
   height: 35px;
 }
 
-* body #behance-link-container a {
+* body .behance-link-container a {
   -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
-* body #behance-link-container a span {
+* body .behance-link-container a .behance-link {
   position: relative;
   letter-spacing: 0;
   -webkit-transition: .3s ease-in-out;
   transition: .3s ease-in-out;
 }
 
-* body #behance-link-container a span:hover {
+* body .behance-link-container a .behance-link:hover {
   letter-spacing: 2px;
 }
 
-* body #behance-link-container a #icon {
+* body .behance-link-container a #icon {
   -webkit-transform: rotate(0deg);
           transform: rotate(0deg);
   -webkit-transition: all .3s ease-in-out;
@@ -314,7 +317,7 @@
   border-radius: 100%;
 }
 
-* body #behance-link-container a:hover #icon {
+* body .behance-link-container a:hover #icon {
   -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
   -webkit-transition: all .3s ease-in-out;
@@ -324,7 +327,7 @@
   border-radius: 100%;
 }
 
-* body #behance-link-container a #icons {
+* body .behance-link-container a #icons {
   -webkit-transform: rotate(0deg);
           transform: rotate(0deg);
   -webkit-transition: all .3s ease-in-out;
@@ -332,7 +335,7 @@
   border-radius: 100%;
 }
 
-* body #behance-link-container a:hover #icons {
+* body .behance-link-container a:hover #icons {
   -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
   -webkit-transition: all .3s ease-in-out;
@@ -410,91 +413,25 @@
   border-radius: 100%;
 }
 
-* body #card-container {
-  position: relative;
-  overflow: hidden;
-  height: -webkit-max-content;
-  height: -moz-max-content;
-  height: max-content;
-}
-
-* body #card-container #span-container {
-  position: relative;
-  overflow: hidden;
-}
-
-* body #card-container #span-container #back {
-  -webkit-transform: translateY(20px);
-          transform: translateY(20px);
-  -webkit-transition: 1s ease;
-  transition: 1s ease;
-}
-
-* body #card-container #span-container #project-p {
-  margin-right: 8px;
-}
-
-* body #card-container #title-container {
+* body .drop-message-container {
   position: relative;
   overflow: hidden;
   height: auto;
 }
 
-* body #card-container #p-container {
-  position: relative;
-  overflow: hidden;
-  height: auto;
-}
-
-* body #card-container #p-container #project-p {
-  margin-right: 5px;
-  -webkit-transform: translateY(20px);
-          transform: translateY(20px);
-}
-
-* body #card-container #button-container {
-  position: relative;
-  overflow: hidden;
-  height: auto;
-}
-
-* body #card-container #button-container #visit {
-  -webkit-transform: translateY(30px);
-          transform: translateY(30px);
-}
-
-* body #card-container #img-container {
-  position: relative;
-  overflow: hidden;
-  height: auto;
-}
-
-* body #card-container #img-container #project-img {
-  -webkit-transform: translateY(0px);
-          transform: translateY(0px);
-  -webkit-transform-origin: bottom;
-          transform-origin: bottom;
-}
-
-* body #drop-message-container {
-  position: relative;
-  overflow: hidden;
-  height: auto;
-}
-
-* body #drop-message-container p {
+* body .drop-message-container .context {
   margin-right: 20px;
   -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
-* body #contact-description-container {
+* body .contact-description-container {
   height: auto;
   position: relative;
   overflow: hidden;
 }
 
-* body #contact-description-container #context {
+* body .contact-description-container .context {
   -webkit-transform: translateY(35px);
           transform: translateY(35px);
   margin-right: 5px;
@@ -502,31 +439,31 @@
   transition: 1s ease;
 }
 
-* body #account-container {
+* body .account-container {
   position: relative;
   overflow: hidden;
   height: auto;
 }
 
-* body #account-container #accounts {
+* body .account-container .accounts {
   -webkit-transform: translateY(35px);
           transform: translateY(35px);
   -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
-* body #footer-container {
+* body .footer-container {
   position: relative;
   overflow: hidden;
 }
 
-* body #footer-container #footer {
+* body .footer-container .footer {
   -webkit-transform: translateY(35px);
           transform: translateY(35px);
   margin-right: 5px;
 }
 
-* body #footer-container #footer-update-date {
+* body .footer-container .footer-update-date {
   margin-right: 5px;
 }
 /*# sourceMappingURL=App.css.map */
