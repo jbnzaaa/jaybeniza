@@ -11,7 +11,7 @@ function ToolTechnology() {
     gsap.to('#tools-and-tech-line', {
       duration: 1,
       // delay: 3,
-      // stagger: 1,
+      stagger: 1,
       width: '100%',
       ease: 'power1.in',
       scrollTrigger: { 
