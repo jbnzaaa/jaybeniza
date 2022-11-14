@@ -292,21 +292,20 @@
     .behance-link-container{
       position: relative;
       overflow: hidden;
-      height: 35px;
+      height: 41px;
+
+      .behance-link{
+        position: relative;
+        letter-spacing: 0;
+        transition: .3s ease-in-out;
+
+        &:hover{
+          letter-spacing: 2px;
+        }
+      }
 
       a{
         transition: 1s ease;
-
-        .behance-link{
-          position: relative;
-          letter-spacing: 0;
-          transition: .3s ease-in-out;
-
-          &:hover{
-            letter-spacing: 2px;
-          }
-        }
-        
         #icon{
           transform: rotate(0deg);
           transition: all .3s ease-in-out;
@@ -341,11 +340,11 @@
       }
     }
 
-    #project-card-container{
+    .project-card-container{
       position: relative;
       overflow: hidden;
 
-      #project-image{
+      .project-image{
         transition: .5s ease-in-out;
 
         &:hover{
@@ -355,52 +354,60 @@
       }
     }
 
-    #project-link{
-      a, button{
-        span,
-        #visit{
-          position: relative;
-          letter-spacing: 0;
-          transition: .3s ease-in-out;
+    // .project-content{
+    //   div{
+    //     span{
+    //       margin-left: 10px;
+    //     }
+    //   }
+    // }
 
-          &:hover{
-            letter-spacing: 2px;
-          }
-        }
+    // #project-link{
+    //   a, button{
+    //     span,
+    //     #visit{
+    //       position: relative;
+    //       letter-spacing: 0;
+    //       transition: .3s ease-in-out;
+
+    //       &:hover{
+    //         letter-spacing: 2px;
+    //       }
+    //     }
         
-        #icon{
-          transform: rotate(0deg);
-          transition: all .3s ease-in-out;
-          border-radius: 100%;
-        }
+    //     #icon{
+    //       transform: rotate(0deg);
+    //       transition: all .3s ease-in-out;
+    //       border-radius: 100%;
+    //     }
   
-        &:hover{
-          #icon{
-            transform: rotate(-45deg);
-            transition: all .3s ease-in-out;
-            background: var(--main-color);
-            fill: var(--main-bg);
-            border-radius: 100%;
-          }
-        }
+    //     &:hover{
+    //       #icon{
+    //         transform: rotate(-45deg);
+    //         transition: all .3s ease-in-out;
+    //         background: var(--main-color);
+    //         fill: var(--main-bg);
+    //         border-radius: 100%;
+    //       }
+    //     }
         
-        #icons{
-          transform: rotate(0deg);
-          transition: all .3s ease-in-out;
-          border-radius: 100%;
-        }
+    //     #icons{
+    //       transform: rotate(0deg);
+    //       transition: all .3s ease-in-out;
+    //       border-radius: 100%;
+    //     }
   
-        &:hover{
-          #icons{
-            transform: rotate(-45deg);
-            transition: all .3s ease-in-out;
-            background: var(--main-color);
-            fill: var(--main-bg);
-            border-radius: 100%;
-          }
-        }
-      }
-    }
+    //     &:hover{
+    //       #icons{
+    //         transform: rotate(-45deg);
+    //         transition: all .3s ease-in-out;
+    //         background: var(--main-color);
+    //         fill: var(--main-bg);
+    //         border-radius: 100%;
+    //       }
+    //     }
+    //   }
+    // }
 
     // #card-container{
     //   position: relative;

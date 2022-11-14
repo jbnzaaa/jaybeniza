@@ -23,6 +23,7 @@ module.exports = {
         'regain': "url('/public/images/portfolio_mockup_1.png')",
         'jbnza': "url('/public/images/portfolio_mockup_2.png')",
         'dailydiscount': "url('/public/images/portfolio_mockup_3.png')",
+        'jaysonbeniza': "url('/public/images/portfolio_mockup_4.png')",
         // profile
         'profile': "url(/public/images/profile.JPG)"
       },

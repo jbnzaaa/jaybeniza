@@ -96,6 +96,11 @@ function Contact() {
                 <div className='contact-description-container'><p className='context text-white' id='animate-contact'>ideas</p></div>
                 <div className='contact-description-container'><p className='context text-white' id='animate-contact'>in</p></div>
                 <div className='contact-description-container'><p className='context text-white' id='animate-contact'>mind?</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>Feel</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>free</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>to</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>message</p></div>
+                <div className='contact-description-container'><p className='context text-white' id='animate-contact'>me,</p></div>
                 <div className='contact-description-container'><p className='context text-white' id='animate-contact'>I’m</p></div>
                 <div className='contact-description-container'><p className='context text-white' id='animate-contact'>willing</p></div>
                 <div className='contact-description-container'><p className='context text-white' id='animate-contact'>to</p></div>

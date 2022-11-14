@@ -1,5 +1,5 @@
 //
-import React, { useRef, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import ProjectCard from './ProjectCard'
 // icons
 import {RiArrowRightDownLine} from 'react-icons/ri'
@@ -9,9 +9,6 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 function Project() {
-  const fxOverflow1 = useRef();
-  const fxOverflow2 = useRef();
-
   useEffect(() => {
     // overflow visible
     gsap.to('#animate-project-header', {
