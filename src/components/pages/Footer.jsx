@@ -15,7 +15,6 @@ function Footer() {
     // footer animation
     gsap.to('#animate-footer', {
       duration: 1,
-      delay: 1,
       y: 0,
       stagger: .05,
       ease: 'power1.in',
