@@ -51,7 +51,7 @@ function FrameworkLibrary() {
             laptop:translate-y-[50px]
             laptop-lg:translate-y-[50px]
             desktop:translate-y-[50px]'
-            id='animate-framework-and-library'>
+            id='animate-about'>
             &
           </span>
           <span className='stack-context font-medium
