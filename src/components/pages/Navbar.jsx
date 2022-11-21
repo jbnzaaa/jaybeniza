@@ -42,7 +42,7 @@ function Navbar() {
     // open menu animation
     gsap.to(fxMenuOpenAnimation.current, { 
       duration: 1, 
-      height: '100vh', 
+      height: '106vh', 
       ease: 'power1.in', 
       padding: '12px 14.4px 12px 14.4px',
       scrollTrigger: { trigger: fxMenuOpenAnimation.current, }
