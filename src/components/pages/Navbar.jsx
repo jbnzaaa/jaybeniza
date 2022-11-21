@@ -234,7 +234,7 @@ function Navbar() {
                 <div className='flex overflow-x-hidden overflow-y-auto fixed inset-0 h-screen'>
                   <div className='relative flex flex-col w-screen h-[0vh] bg-black fixed'
                     ref={fxMenuOpenAnimation}>
-                    <div className='h-[90vh]'>
+                    <div className='h-[100vh]'>
                       {/* close button */}
                       <div className="menu-link">
                         <div className='flex w-full justify-end' id='mobile-nav-animate'>
