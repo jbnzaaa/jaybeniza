@@ -57,7 +57,7 @@ function Project() {
       ease: 'power1.in',
       scrollTrigger: { 
         trigger: '#animate-project', 
-        start: 'bottom 120%',
+        start: 'bottom 100%',
       }
     });
 
@@ -113,7 +113,6 @@ function Project() {
                   <div className='description'><p className='text-white description-p' id='animate-project'>journey</p></div>
                   <div className='description'><p className='text-white description-p' id='animate-project'>as</p></div>
                   <div className='description'><p className='text-white description-p' id='animate-project'>self-taught</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>front-end</p></div>
                   <div className='description'><p className='text-white description-p' id='animate-project'>web</p></div>
                   <div className='description'><p className='text-white description-p' id='animate-project'>developer</p></div>
                   <div className='description'><p className='text-white description-p' id='animate-project'>and</p></div>
