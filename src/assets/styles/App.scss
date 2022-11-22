@@ -340,16 +340,23 @@
       }
     }
 
-    .project-card-container{
+    .project-container{
       position: relative;
       overflow: hidden;
+      transition: .5s ease-in-out;
 
-      .project-image{
-        transition: .5s ease-in-out;
-
-        &:hover{
-          transform: scale(1.05);
+      .project-card-container{
+        position: relative;
+        overflow: hidden;
+        transform: translateY(100%);
+  
+        .project-image{
           transition: .5s ease-in-out;
+  
+          &:hover{
+            transform: scale(1.05);
+            transition: .5s ease-in-out;
+          }
         }
       }
     }
@@ -514,7 +521,8 @@
       overflow: hidden;
 
       .footer{
-        transform: translateY(35px);
+        transition: 1s ease;
+        transform: translateY(23px);
         margin-right: 5px;
       }
 

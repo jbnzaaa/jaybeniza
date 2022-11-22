@@ -39,9 +39,9 @@ function Footer() {
           <section className='col-start-1 flex flex-row
             mobile:col-span-8 mobile:h-[20px]
             tablet:col-span-3 tablet:h-[20px]
-            laptop:col-span-3 laptop:h-[35px]
-            laptop-lg:col-span-2 laptop-lg:h-[35px]
-            desktop:col-span-2 desktop:h-[35px]'>
+            laptop:col-span-3 laptop:h-[23px]
+            laptop-lg:col-span-2 laptop-lg:h-[23px]
+            desktop:col-span-2 desktop:h-[23px]'>
             <div className='footer-container'>
               <p className='footer text-white' id='animate-footer'>&copy;</p>
             </div>
@@ -58,9 +58,9 @@ function Footer() {
           <section className='flex flex-row
             mobile:col-span-8 mobile:col-start-1 mobile:justify-start mobile:h-[20px]
             tablet:col-span-8 tablet:col-start-1 tablet:justify-start tablet:h-[20px]
-            laptop:col-span-2 laptop:col-start-5 laptop:justify-end laptop:h-[35px]
-            laptop-lg:col-span-2 laptop-lg:col-start-5 laptop-lg:justify-end laptop-lg:h-[35px]
-            desktop:col-span-2 desktop:col-start-5 desktop:justify-end desktop:h-[35px]'>
+            laptop:col-span-2 laptop:col-start-5 laptop:justify-end laptop:h-[23px]
+            laptop-lg:col-span-2 laptop-lg:col-start-5 laptop-lg:justify-end laptop-lg:h-[23px]
+            desktop:col-span-2 desktop:col-start-5 desktop:justify-end desktop:h-[23px]'>
             <div className='footer-container'>
               <p className='footer text-white' id='animate-footer'>Last</p>
             </div>
@@ -77,9 +77,9 @@ function Footer() {
           <section className='flex flex-row
             mobile:col-span-8 mobile:col-start-1 mobile:justify-start mobile:h-[20px]
             tablet:col-span-8 tablet:col-start-1 tablet:justify-start tablet:h-[20px]
-            laptop:col-span-2 laptop:col-start-7 laptop:justify-end laptop:h-[35px]
-            laptop-lg:col-span-2 laptop:col-start-7 laptop-lg:justify-end l laptop-lg:h-[35px]
-            desktop:col-span-2 desktop:col-start-7 desktop:justify-end desktop:h-[35px]'>
+            laptop:col-span-2 laptop:col-start-7 laptop:justify-end laptop:h-[23px]
+            laptop-lg:col-span-2 laptop:col-start-7 laptop-lg:justify-end l laptop-lg:h-[23px]
+            desktop:col-span-2 desktop:col-start-7 desktop:justify-end desktop:h-[23px]'>
             <div className='footer-container'>
               <p className='footer text-white' id='animate-footer'>Design</p>
             </div>

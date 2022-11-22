@@ -7,6 +7,19 @@ gsap.registerPlugin(ScrollTrigger)
 
 function ProjectCard() {
   useEffect(() => {
+    // card animation
+    gsap.to('#animate-project-card', {
+      duration: 1,
+      stagger: .05,
+      y: 0,
+      ease: 'power1.in',
+      scrollTrigger: { 
+        trigger: '#animate-project-card', 
+        // start: 'top 100%',
+        // markers: true
+      }
+    });
+
     // gsap.to(fxCard.current , {
     //   duration: 1,
     //   y: 0,
@@ -296,7 +309,9 @@ function ProjectCard() {
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>JQUERY</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>BOOTSTRAP</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>NODEJS</span>
-                <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>CLOUD FIREBASE</span>
+                <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>DIALOGFLOW</span>
+                <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>FIREBASE REALTIME DATABASE</span>
+                <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>CLOUD FIRESTORE</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>FIREBASE ADMIN</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>GOOGLE CLOUD STORAGE</span>
               </div>

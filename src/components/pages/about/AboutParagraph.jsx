@@ -288,6 +288,39 @@ function AboutParagraph() {
               laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
               desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='animate-about'>
+                adjusting
+            </p>
+          </div>
+          <div className='content-container'>
+            <p className='about-paragraph
+              mobile:translate-y-[20px] mobile:mr-[5px] 
+              tablet:translate-y-[30px] tablet:mr-[8px] 
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
+              id='animate-about'>
+                pixels
+            </p>
+          </div>
+          <div className='content-container'>
+            <p className='about-paragraph
+              mobile:translate-y-[20px] mobile:mr-[5px] 
+              tablet:translate-y-[30px] tablet:mr-[8px] 
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
+              id='animate-about'>
+                and
+            </p>
+          </div>
+          <div className='content-container'>
+            <p className='about-paragraph
+              mobile:translate-y-[20px] mobile:mr-[5px] 
+              tablet:translate-y-[30px] tablet:mr-[8px] 
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
+              id='animate-about'>
                 typing
             </p>
           </div>
@@ -365,6 +398,39 @@ function AboutParagraph() {
               laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
               desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='animate-about'>
+                spending
+            </p>
+          </div>
+          <div className='content-container'>
+            <p className='about-paragraph
+              mobile:translate-y-[20px] mobile:mr-[5px] 
+              tablet:translate-y-[30px] tablet:mr-[8px] 
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
+              id='animate-about'>
+                my
+            </p>
+          </div>
+          <div className='content-container'>
+            <p className='about-paragraph
+              mobile:translate-y-[20px] mobile:mr-[5px] 
+              tablet:translate-y-[30px] tablet:mr-[8px] 
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
+              id='animate-about'>
+                time
+            </p>
+          </div>
+          <div className='content-container'>
+            <p className='about-paragraph
+              mobile:translate-y-[20px] mobile:mr-[5px] 
+              tablet:translate-y-[30px] tablet:mr-[8px] 
+              laptop:translate-y-[60px] laptop:mr-[15px]
+              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
+              desktop:translate-y-[60px] desktop:mr-[20px]' 
+              id='animate-about'>
                 playing
             </p>
           </div>
@@ -387,51 +453,7 @@ function AboutParagraph() {
               laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
               desktop:translate-y-[60px] desktop:mr-[20px]' 
               id='animate-about'>
-                games
-            </p>
-          </div>
-          <div className='content-container'>
-            <p className='about-paragraph
-              mobile:translate-y-[20px] mobile:mr-[5px] 
-              tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[60px] laptop:mr-[15px]
-              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[60px] desktop:mr-[20px]' 
-              id='animate-about'>
-                or
-            </p>
-          </div>
-          <div className='content-container'>
-            <p className='about-paragraph
-              mobile:translate-y-[20px] mobile:mr-[5px] 
-              tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[60px] laptop:mr-[15px]
-              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[60px] desktop:mr-[20px]' 
-              id='animate-about'>
-                riding
-            </p>
-          </div>
-          <div className='content-container'>
-            <p className='about-paragraph
-              mobile:translate-y-[20px] mobile:mr-[5px] 
-              tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[60px] laptop:mr-[15px]
-              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[60px] desktop:mr-[20px]' 
-              id='animate-about'>
-                my
-            </p>
-          </div>
-          <div className='content-container'>
-            <p className='about-paragraph
-              mobile:translate-y-[20px] mobile:mr-[5px] 
-              tablet:translate-y-[30px] tablet:mr-[8px] 
-              laptop:translate-y-[60px] laptop:mr-[15px]
-              laptop-lg:translate-y-[60px] laptop-lg:mr-[18px] 
-              desktop:translate-y-[60px] desktop:mr-[20px]' 
-              id='animate-about'>
-                bicycle.
+                games.
             </p>
           </div>
         </div>
