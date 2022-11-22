@@ -243,6 +243,7 @@ function ProjectCard() {
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>REACTJS</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>MATERIAL UI</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>SASS</span>
+                <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>REACT-REVEAL</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>VERCEL APP</span>
               </div>
             </div>
