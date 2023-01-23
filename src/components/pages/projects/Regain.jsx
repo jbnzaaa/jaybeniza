@@ -1,315 +1,347 @@
-// // 
-// import React, { useEffect } from 'react'
-// // 
-// import { Link } from 'react-router-dom'
-// // icons
-// // import {RiArrowRightDownLine} from 'react-icons/ri'
-// // GSAP
-// import gsap from 'gsap' 
-// // import ScrollTrigger from 'gsap/ScrollTrigger'
+// 
+import React, { useEffect } from 'react'
+// 
+import { Link } from 'react-router-dom'
+// icons
+import {RiArrowRightDownLine} from 'react-icons/ri'
+// Project screenshot
+import regain_landingpage from '../../../../src/assets/files/images/regain/regain-landing-page.png'
+import regain_login from '../../../../src/assets/files/images/regain/student-login-page.png'
+import regain_dashboard from '../../../../src/assets/files/images/regain/student-dashboard-page.png'
+import regain_assessment from '../../../../src/assets/files/images/regain/student-assessment-page.png'
+import regain_ejournal from '../../../../src/assets/files/images/regain/student-e-journal-page.png'
+import regain_message from '../../../../src/assets/files/images/regain/student-message-page.png'
+import regain_history from '../../../../src/assets/files/images/regain/student-history-page.png'
+// GSAP
+import gsap from 'gsap' 
+import ScrollTrigger from 'gsap/ScrollTrigger'
+import Contact from '../Contact'
+gsap.registerPlugin(ScrollTrigger)
 
-// function Regain() {
-//   const fxOnload = useRef();
-//   const fxRevealImg = useRef();
-//   const fxTitle1 = useRef();
-//   const fxBack = useRef();
-//   const fxParagraph1 = useRef();
-//   const fxParagraph2 = useRef();
-//   const fxParagraph3 = useRef();
-//   const fxParagraph4 = useRef();
-//   const fxCategory = useRef();
-//   const fxCatCon = useRef();
-//   const fxRole = useRef();
-//   const fxRoleCon = useRef();
-//   const fxTectStack = useRef();
-//   const fxTectStackCon1 = useRef();
-//   const fxTectStackCon2 = useRef();
-//   const fxTectStackCon3 = useRef();
-//   const fxLink = useRef();
+function Regain() {
+  useEffect(() => {
+    // project content animation
+    gsap.to('#animate-dailydiscount', {
+      duration: 1,
+      y: 0,
+      stagger: .05,
+      ease: 'power1.in',
+      scrollTrigger: { 
+        trigger: '#animate-dailydiscount', 
+        // start: 'bottom 100%',
+        // markers: true
+      }
+    });
+    window.scrollTo(0, 0)
+  }, []);
 
-//   useEffect(() => {
-//     // onload animation
-//     gsap.to(fxOnload.current, {
-//       duration: 1, 
-//       delay: .5,
-//       top: '-100vh',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxOnload.current,
-//         start: 'top 110%',
-//       }
-//     });
+  return (
+    <>
+      <section className='px-0 py-3 h-full
+        mobile:px-[.9rem]
+        tablet:px-[1rem]
+        laptop:px-[2rem]
+        laptop-lg:px-[3rem]
+        desktop:px-[3rem]'>
+        <div className='project-container grid grid-cols-8 gap-x-5
+          mobile:gap-y-10
+          tablet:gap-y-10
+          laptop:gap-y-14
+          laptop-lg:gap-y-20
+          desktop:gap-y-20'>
+          {/* project container row 1 */}
+          <div className='col-start-1
+            mobile:col-span-6
+            tablet:col-span-6
+            tablet:col-span-4
+            laptop:col-span-4
+            laptop-lg:col-span-4
+            desktop:col-span-4'>
+            <div className='p-container flex flex-wrap
+              mobile:h-[35px] mobile:mb-2 mobile:text-[2rem]
+              tablet:h-[60px] tablet:mb-2 tablet:text-[3rem]
+              laptop:h-[90px] laptop:mb-3 laptop:text-[4rem]
+              laptop-lg:h-[100px] laptop-lg:mb-3 laptop-lg:text-[5.3rem]
+              desktop:h-[110px] desktop:mb-3 desktop:text-[5.5rem]'>
+              <span className='project-h1 font-lexend font-medium leading-none tracking-tighter
+                mobile:translate-y-[35px]
+                tablet:translate-y-[80px]
+                laptop:translate-y-[110px]
+                laptop-lg:translate-y-[110px]
+                desktop:translate-y-[110px]'
+                id='animate-dailydiscount'>
+                Regain
+              </span>
+            </div>
+          </div>
+          <div className='col-span-2 col-start-7'>
+            <div className='font-lexend font-medium cursor-pointer tracking-tighter text-right
+              mobile:text-[.9rem] mobile:h-[20px] 
+              tablet:text-[.9rem] tablet:h-[20px] 
+              laptop:text-[1rem] laptop:h-[30px] 
+              laptop-lg:text-[1rem] laptop-lg:h-[30px] 
+              desktop:text-[1.1rem] desktop:h-[30px]'>
+              <Link to='/'>
+                <div className='p-container'><p className='project-p' id='animate-dailydiscount'>Return</p></div>
+              </Link>
+            </div>
+          </div>
+          {/* project container row 2 */}
+          <div className='col-start-1
+            mobile:col-span-2
+            tablet:col-span-1
+            laptop:col-span-1
+            laptop-lg:col-span-1
+            desktop:col-span-1'>
+            <div className='h-[30px]
+              mobile:text-[.9rem] mobile:h-[20px] 
+              tablet:text-[.9rem] tablet:h-[20px] 
+              laptop:text-[1rem] laptop:h-[30px] 
+              laptop-lg:text-[1rem] laptop-lg:h-[30px]
+              desktop:text-[1.1rem] desktop:h-[30px]'>
+              <div className='p-container'><p className='project-p' id='animate-dailydiscount'>2021</p></div>
+            </div>
+          </div>
+          <div className='col-start-2
+            mobile:col-span-6
+            tablet:col-span-6
+            laptop:col-span-2
+            laptop-lg:col-span-2
+            desktop:col-span-2'>
+            <div className='flex flex-wrap
+              mobile:text-[.9rem]
+              tablet:text-[.9rem]
+              laptop:text-[1rem] 
+              laptop-lg:text-[1rem]
+              desktop:text-[1.1rem] '>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>Regain</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>is</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>a</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>web-based</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>self-assessment</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>and</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>E-journal</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>system</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>with</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>chatbot</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>assistance</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>for</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>troubled</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>student</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>in</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>STI</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>College</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>Novaliches.</p></div>
+            </div>
+          </div>
+          <div className='
+            mobile:col-span-6 mobile:col-start-3
+            tablet:col-span-6 tablet:col-start-2
+            laptop:col-span-4 laptop:col-start-4
+            laptop-lg:col-span-4 laptop-lg:col-start-5
+            desktop:col-span-4 desktop:col-start-5'>
+            {/* category */}
+            <div className='
+              mobile:mb-2
+              tablet:mb-2
+              laptop:mb-5
+              laptop-lg:mb-5
+              desktop:mb-5'>
+              <div className='h-[20px]
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.9rem] 
+                laptop-lg:text-[.9rem] 
+                desktop:text-[.9rem] '>
+                <div className='p-container'><p className='project-ps font-semibold' id='animate-dailydiscount'>Category</p></div>
+              </div>
+              <div className='h-[30px]
+                mobile:text-[.9rem]
+                tablet:text-[.9rem]
+                laptop:text-[1rem] 
+                laptop-lg:text-[1rem] 
+                desktop:text-[1.1rem] '>
+                <div className='p-container'><p className='project-ps' id='animate-dailydiscount'>Team / Web Development</p></div>
+              </div>
+            </div>
+            {/* role */}
+            <div className='
+              mobile:mb-2
+              tablet:mb-2
+              laptop:mb-5
+              laptop-lg:mb-5
+              desktop:mb-5'>
+              <div className='h-[20px]
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.9rem] 
+                laptop-lg:text-[.9rem] 
+                desktop:text-[.9rem] '>
+                <div className='p-container'><p className='project-ps font-semibold' id='animate-dailydiscount'>Role</p></div>
+              </div>
+              <div className='flex flex-wrap h-[30px]
+                mobile:text-[.9rem]
+                tablet:text-[.9rem]
+                laptop:text-[1rem] 
+                laptop-lg:text-[1rem] 
+                desktop:text-[1.1rem] '>
+                <div className='p-container'><p className='project-ps' id='animate-dailydiscount'>Lead Programmer</p></div>
+              </div>
+            </div>
+            {/* technology used */}
+            <div className='
+              mobile:mb-2
+              tablet:mb-2
+              laptop:mb-5
+              laptop-lg:mb-5
+              desktop:mb-5'>
+              <div className='h-[20px]
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.9rem] 
+                laptop-lg:text-[.9rem] 
+                desktop:text-[.9rem] '>
+                <div className='p-container'><p className='project-ps font-semibold' id='animate-dailydiscount'>Technology Used</p></div>
+              </div>
+              <div className='flex flex-wrap
+                mobile:text-[.9rem]
+                tablet:text-[.9rem]
+                laptop:text-[1rem] 
+                laptop-lg:text-[1rem] 
+                desktop:text-[1.1rem] '>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>HTML</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>CSS</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>JavaScript</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>JQUERY</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>Bootstrap</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>NodeJS</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>Dialogflow</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>Firebase Realtime Database</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>Cloud Firestore</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>Firebase Admin</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>Google Cloud Storage</p></div>
+              </div>
+            </div>
+            {/* project link */}
+            <div className='
+              mobile:mb-2
+              tablet:mb-2
+              laptop:mb-5
+              laptop-lg:mb-5
+              desktop:mb-5'>
+              <div className='h-[20px]
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.9rem] 
+                laptop-lg:text-[.9rem] 
+                desktop:text-[.9rem] '>
+                <div className='p-container'><p className='project-ps font-semibold' id='animate-dailydiscount'>Visit site</p></div>
+              </div>
+              <div className='flex flex-wrap h-[30px]
+                mobile:text-[.9rem]
+                tablet:text-[.9rem]
+                laptop:text-[1rem] 
+                laptop-lg:text-[1rem] 
+                desktop:text-[1.1rem] '>
+                <div className="p-container">
+                  <div className='project-link' id='animate-dailydiscount'>
+                    <a href='https://regain-caps.web.app/' target='https://regain-caps.web.app/'>
+                      <span className='flex items-center
+                        mobile:text-[.9rem]
+                        tablet:text-[.9rem]
+                        laptop:text-[1rem]
+                        laptop-lg:text-[1rem]
+                        desktop:text-[1.1rem]'>
+                        Regain
+                        <RiArrowRightDownLine id='icon' className='fill-black ml-1
+                        mobile:text-xl
+                        tablet:text-1xl
+                        laptop:text-2xl
+                        laptop-lg:text-2xl
+                        desktop:text-2xl'/>
+                      </span> 
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* project container row 3 */}
+        <div className='project-container grid grid-cols-8 gap-x-5 mt-10
+            mobile:gap-y-5
+            tablet:gap-y-10
+            laptop:gap-y-14
+            laptop-lg:gap-y-20
+            desktop:gap-y-20'>
+            {/* landing page */}
+            <div className='
+              mobile:col-span-8 mobile:col-start-1
+              tablet:col-span-8 tablet:col-start-1
+              laptop:col-span-8 laptop:col-start-1
+              laptop-lg:col-span-8 laptop-lg:col-start-1
+              desktop:col-span-8 desktop:col-start-1'>
+              <img src={regain_landingpage} alt="regain-landingpage" className='border border-black' />
+            </div>
+            {/* login */}
+            <div className='
+              mobile:col-span-8 mobile:col-start-1
+              tablet:col-span-8 tablet:col-start-1
+              laptop:col-span-5 laptop:col-start-3
+              laptop-lg:col-span-5 laptop-lg:col-start-3
+              desktop:col-span-5 desktop:col-start-3'>
+              <img src={regain_login} alt="regain-login" className='border border-black' />
+            </div>
+            {/* dashboard */}
+            <div className='
+              mobile:col-span-8 mobile:col-start-1
+              tablet:col-span-8 tablet:col-start-1
+              laptop:col-span-5 laptop:col-start-1
+              laptop-lg:col-span-5 laptop-lg:col-start-1
+              desktop:col-span-5 desktop:col-start-1'>
+              <img src={regain_dashboard} alt="regain-dashboard" className='border border-black' />
+            </div>
+            {/* assessment */}
+            <div className='
+              mobile:col-span-8 mobile:col-start-1
+              tablet:col-span-8 tablet:col-start-1
+              laptop:col-span-5 laptop:col-start-4
+              laptop-lg:col-span-5 laptop-lg:col-start-4
+              desktop:col-span-5 desktop:col-start-4'>
+              <img src={regain_assessment} alt="regain-assessment" className='border border-black' />
+            </div>
+            {/* ejournal */}
+            <div className='
+              mobile:col-span-8 mobile:col-start-1
+              tablet:col-span-8 tablet:col-start-1
+              laptop:col-span-5 laptop:col-start-2
+              laptop-lg:col-span-5 laptop-lg:col-start-2
+              desktop:col-span-5 desktop:col-start-2'>
+              <img src={regain_ejournal} alt="regain-ejournal" className='border border-black' />
+            </div>
+            {/* message */}
+            <div className='
+              mobile:col-span-8 mobile:col-start-1
+              tablet:col-span-8 tablet:col-start-1
+              laptop:col-span-5 laptop:col-start-1
+              laptop-lg:col-span-5 laptop-lg:col-start-1
+              desktop:col-span-5 desktop:col-start-1'>
+              <img src={regain_message} alt="regain-message" className='border border-black' />
+            </div>
+            {/* history */}
+            <div className='
+              mobile:col-span-8 mobile:col-start-1
+              tablet:col-span-8 tablet:col-start-1
+              laptop:col-span-5 laptop:col-start-4
+              laptop-lg:col-span-5 laptop-lg:col-start-4
+              desktop:col-span-5 desktop:col-start-4'>
+              <img src={regain_history} alt="regain-history" className='border border-black' />
+            </div>
+          </div>
+      </section>
+      <Contact/>
+    </>
+  )
+}
 
-//     // image animation
-//     gsap.to(fxRevealImg.current, {
-//       duration: 1,
-//       delay: 1, 
-//       top: '0px',
-//       // background: 'red',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxRevealImg.current,
-//         start: 'top 100%',
-//         // markers: true
-//       }
-//     });
-
-//     // back button
-//     gsap.to(fxBack.current, {
-//       duration: 1,
-//       delay: 1, 
-//       top: '0px',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxBack.current,
-//         // start: 'top 200%',
-//       }
-//     });
-    
-//     // project title
-//     gsap.to(fxTitle1.current, {
-//       duration: 1,
-//       delay: 1.1,
-//       top: '0px',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxTitle1.current,
-//         // start: 'top 200%',
-//       }
-//     });
-
-//     // paragraph
-//     gsap.to(fxParagraph1.current, {
-//       duration: 1,
-//       delay: 1.2, 
-//       top: '0px',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxParagraph1.current,
-//         // start: 'top 200%',
-//       }
-//     });
-
-//     gsap.to(fxParagraph2.current, {
-//       duration: 1,
-//       delay: 1.3, 
-//       top: '0px',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxParagraph2.current,
-//         // start: 'top 200%',
-//       }
-//     });
-
-//     gsap.to(fxParagraph3.current, {
-//       duration: 1,
-//       delay: 1.4, 
-//       top: '0px',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxParagraph3.current,
-//         // start: 'top 200%',
-//       }
-//     });
-    
-//     // category 
-//     gsap.to(fxCategory.current, {
-//       duration: 1,
-//       delay: 1.5, 
-//       top: '0px',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxCategory.current,
-//         // start: 'top 200%',
-//       }
-//     });
-    
-//     gsap.to(fxCatCon.current, {
-//       duration: 1,
-//       delay: 1.6, 
-//       top: '0px',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxCatCon.current,
-//         // start: 'top 200%',
-//       }
-//     });
-    
-//     // role
-//     gsap.to(fxRole.current, {
-//       duration: 1,
-//       delay: 1.7, 
-//       top: '0px',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxRole.current,
-//         // start: 'top 200%',
-//       }
-//     });
-    
-//     gsap.to(fxRoleCon.current, {
-//       duration: 1,
-//       delay: 1.8, 
-//       top: '0px',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxRoleCon.current,
-//         // start: 'top 200%',
-//       }
-//     });
-
-//     // tech stack
-//     gsap.to(fxTectStack.current, {
-//       duration: 1,
-//       delay: 1.9, 
-//       top: '0px',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxTectStack.current,
-//         // start: 'top 200%',
-//       }
-//     });
-    
-//     gsap.to(fxTectStackCon1.current, {
-//       duration: 1,
-//       delay: 2, 
-//       top: '0px',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxTectStackCon1.current,
-//         // start: 'top 200%',
-//       }
-//     });
-    
-//     gsap.to(fxTectStackCon2.current, {
-//       duration: 1,
-//       delay: 2.1, 
-//       top: '0px',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxTectStackCon2.current,
-//         // start: 'top 200%',
-//       }
-//     });
-    
-//     gsap.to(fxTectStackCon3.current, {
-//       duration: 1,
-//       delay: 2.2, 
-//       top: '0px',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxTectStackCon3.current,
-//         // start: 'top 200%',
-//       }
-//     });
-    
-//     // project link
-//     gsap.to(fxLink.current, {
-//       duration: 1,
-//       delay: 2.3, 
-//       top: '0px',
-//       ease: 'power1.inOut',
-//       scrollTrigger: {
-//         trigger: fxLink.current,
-//         // start: 'top 200%',
-//       }
-//     });
-//   }, []);
-  
-//   return (
-//     <>
-//       <div id="card-container">
-//         <div id="sticky">
-//           <div className='bg-black w-full h-screen' id="project-card" ref={fxOnload}/>
-//         </div>
-//         <div className="grid grid-cols-4 gap-x-10 p-[3em] h-screen">
-//           {/* contet */}
-//           <section className="col-span-1 col-start-1 flex flex-col justify-between">
-//             <div className='w-full flex justify-start' id='span-container'>
-//               <Link to='/'>
-//                 <span className='font-montserrat text-[.9em] text-black' ref={fxBack}>back</span>
-//               </Link>
-//             </div>
-//             <div>
-//               <div className="flex flex-col pb-5">
-//                 <div id="title-container">
-//                   <span className='font-teko font-medium text-[3em] leading-none italic tracking-tight text-black' id='title' ref={fxTitle1}>Regain <span className='font-teko font-normal text-black text-[.5em]'>/ 2021</span></span>
-//                 </div>
-//                 <div id='p-container'>
-//                   <p className='font-regular text-[.9em] text-black' ref={fxParagraph1}>A WEB-BASED SELF-ASSESSMENT AND E-</p>
-//                 </div>
-//                 <div id='p-container'>
-//                   <p className='font-regular text-[.9em] text-black' ref={fxParagraph2}>JOURNAL SYSTEM WITH CHATBOT AND STUDENT</p>
-//                 </div>
-//                 <div id='p-container'>
-//                   <p className='font-regular text-[.9em] text-black' ref={fxParagraph3}>COUNSELOR ASSISTANCE FOR TROUBLED</p>
-//                 </div>
-//                 <div id='p-container'>
-//                   <p className='font-regular text-[.9em] text-black' ref={fxParagraph4}>STUDENT IN STI COLLEGE NOVALICHES.</p>
-//                 </div>
-//               </div>
-//               <div className="flex flex-col pb-5">
-//                 <div id="span-container">
-//                   <span className='font-semibold text-[.5em] text-black' ref={fxCategory}>Category</span>
-//                 </div>
-//                 <div id="span-container">
-//                   <span className='font-regular text-[.9em] text-black' ref={fxCatCon}>Team / Web Development</span>
-//                 </div>
-//               </div>
-//               <div className="flex flex-col pb-5">
-//                 <div id="span-container">
-//                   <span className='font-semibold text-[.5em] text-black' ref={fxRole}>Role</span>
-//                 </div>
-//                 <div id="span-container">
-//                   <ul className="flex flex-wrap" id='data-list' ref={fxRoleCon}>
-//                     <li className='font-regular text-[.9em] text-black'>Lead Programmer</li>
-//                   </ul>
-//                 </div>
-//               </div>
-//               <div className="flex flex-col pb-10">
-//                 <div id="span-container">
-//                   <span className='font-semibold text-[.5em] text-black' ref={fxTectStack}>Technologies Used</span>
-//                 </div>
-//                 <div id="span-container">
-//                   <ul className="flex flex-wrap" id='data-list' ref={fxTectStackCon1}>
-//                     <li className='font-regular text-[.9em] text-black'>HTML</li>
-//                     <li className='font-regular text-[.9em] text-black'>CSS</li>
-//                     <li className='font-regular text-[.9em] text-black'>SASS</li>
-//                     <li className='font-regular text-[.9em] text-black'>JavaScript</li>
-//                     <li className='font-regular text-[.9em] text-black'>JQuery</li>
-//                   </ul>
-//                 </div>
-//                 <div id="span-container">
-//                   <ul className="flex flex-wrap" id='data-list' ref={fxTectStackCon2}>
-//                     <li className='font-regular text-[.9em] text-black'>Bootstrap</li>
-//                     <li className='font-regular text-[.9em] text-black'>NodeJS</li>
-//                     <li className='font-regular text-[.9em] text-black'>Cloud Firestore</li>
-//                   </ul>
-//                 </div>
-//                 <div id="span-container">
-//                   <ul className="flex flex-wrap" id='data-list' ref={fxTectStackCon3}>
-//                     <li className='font-regular text-[.9em] text-black'>Firebase Admin</li>
-//                     <li className='font-regular text-[.9em] text-black'>Google Cloud Storage</li>
-//                   </ul>
-//                 </div>
-//               </div>
-//               <div id='project-link'>
-//                 <a href='https://regain-caps.web.app/' target='https://regain-caps.web.app/' className='flex items-center' id='button-container'>
-//                   <span className='font-montserrat text-[.9em] text-black flex' ref={fxLink}>
-//                     visit website
-//                     <RiArrowRightDownLine id='icons' className='fill-black text-2xl ml-2'/>
-//                   </span>
-//                 </a>
-//               </div>
-//             </div>
-//           </section>
-//           <section className="col-span-3 col-start-2" id='img-container'>
-//             <div className='col-span-3 bg-regain bg-cover h-full w-full' id='project-img' ref={fxRevealImg}/>
-//           </section>
-//         </div>
-//       </div>
-//     </>
-//   )
-// }
-
-// export default Regain
+export default Regain

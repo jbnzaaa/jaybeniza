@@ -60,7 +60,8 @@ function Navbar() {
   return (
     <>
       {/* navbar container */}
-      { location.pathname === '/dailydiscount' ? showNav !== false : 
+      { location.pathname === '/jaysonbeniza' ? showNav !== false : 
+        location.pathname === '/dailydiscount' ? showNav !== false : 
         location.pathname === '/jbnza' ? showNav !== false :
         location.pathname === '/regain' ? showNav !== false :
         <div className='sticky top-0 z-10

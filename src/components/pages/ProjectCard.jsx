@@ -1,5 +1,7 @@
 //
 import React, { useEffect } from 'react'
+// 
+import { Link } from 'react-router-dom'
 // GSAP
 import gsap from 'gsap' 
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -120,23 +122,22 @@ function ProjectCard() {
             laptop-lg:col-span-5 laptop-lg:col-start-2
             desktop:col-span-5 desktop:col-start-2'>
             <div className='project-card-container bg-black'>
-              {/* <Link to='/dailydiscount' >
-                <div className='bg-dailydiscount bg-cover object-cover opacity-40
+              <Link to='/jaysonbeniza' >
+                <div className='project-image bg-jaysonbeniza bg-cover object-cover opacity-40
                   mobile:h-[300px]
                   tablet:h-[400px]
-                  laptop:h-[500px]
-                  laptop-lg:h-[600px]
-                  desktop:h-[600px]' 
-                  id='project-image'/>
-              </Link> */}
-              <a href='https://jaysonbeniza.vercel.app/' target='https://jaysonbeniza.vercel.app/'>
+                  laptop:h-[400px]
+                  laptop-lg:h-[400px]
+                  desktop:h-[400px]'/>
+              </Link>
+              {/* <a href='https://jaysonbeniza.vercel.app/' target='https://jaysonbeniza.vercel.app/'>
                 <div className='project-image bg-jaysonbeniza bg-cover object-cover opacity-40
                   mobile:h-[300px]
                   tablet:h-[400px]
                   laptop:h-[500px]
                   laptop-lg:h-[500px]
                   desktop:h-[500px]'/>
-              </a>
+              </a> */}
             </div>
             <div className='project-content flex justify-between mt-1
               mobile:flex-col
@@ -158,6 +159,7 @@ function ProjectCard() {
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>TAILWIND CSS</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>SASS</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>GSAP</span>
+                <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>FIGMA</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>VERCEL APP</span>
               </div>
             </div>
@@ -170,23 +172,22 @@ function ProjectCard() {
             laptop-lg:col-span-4 laptop-lg:col-start-5
             desktop:col-span-4 desktop:col-start-5'>
             <div className='project-card-container bg-black'>
-              {/* <Link to='/dailydiscount' >
-                <div className='bg-dailydiscount bg-cover object-cover opacity-40
-                  mobile:h-[300px]
-                  tablet:h-[400px]
-                  laptop:h-[500px]
-                  laptop-lg:h-[600px]
-                  desktop:h-[600px]' 
-                  id='project-image'/>
-              </Link> */}
-              <a href='https://daily-discount.vercel.app/' target='https://daily-discount.vercel.app/'>
+              <Link to='/dailydiscount' >
                 <div className='project-image bg-dailydiscount bg-cover object-cover opacity-40
                   mobile:h-[300px]
                   tablet:h-[400px]
                   laptop:h-[400px]
                   laptop-lg:h-[400px]
                   desktop:h-[400px]'/>
-              </a>
+              </Link>
+              {/* <a href='https://daily-discount.vercel.app/' target='https://daily-discount.vercel.app/'>
+                <div className='project-image bg-dailydiscount bg-cover object-cover opacity-40
+                  mobile:h-[300px]
+                  tablet:h-[400px]
+                  laptop:h-[400px]
+                  laptop-lg:h-[400px]
+                  desktop:h-[400px]'/>
+              </a> */}
             </div>
             <div className='project-content flex justify-between mt-1
               mobile:flex-col
@@ -207,6 +208,7 @@ function ProjectCard() {
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>REACTJS</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>TAILWIND CSS</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>SASS</span>
+                <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>FIGMA</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>VERCEL APP</span>
               </div>
             </div>
@@ -219,23 +221,22 @@ function ProjectCard() {
             laptop-lg:col-span-5 laptop-lg:col-start-1
             desktop:col-span-5 desktop:col-start-1'>
             <div className='project-card-container bg-black'>
-              {/* <Link to='/jbnza'>
-                <div className='bg-jbnza bg-cover object-cover opacity-40
-                mobile:h-[300px]
-                tablet:h-[400px]
-                laptop:h-[400px]
-                laptop-lg:h-[400px]
-                desktop:h-[400px]' 
-                id='project-image'/>
-              </Link> */}
-              <a href='https://jbnza.vercel.app' target='https://jbnza.vercel.app'>
+              <Link to='/jbnza' >
                 <div className='project-image bg-jbnza bg-cover object-cover opacity-40
                   mobile:h-[300px]
                   tablet:h-[400px]
                   laptop:h-[400px]
                   laptop-lg:h-[400px]
                   desktop:h-[400px]'/>
-              </a>
+              </Link>
+              {/* <a href='https://jbnza.vercel.app' target='https://jbnza.vercel.app'>
+                <div className='project-image bg-jbnza bg-cover object-cover opacity-40
+                  mobile:h-[300px]
+                  tablet:h-[400px]
+                  laptop:h-[400px]
+                  laptop-lg:h-[400px]
+                  desktop:h-[400px]'/>
+              </a> */}
             </div>
             <div className='project-content flex justify-between mt-1
               mobile:flex-col
@@ -257,6 +258,7 @@ function ProjectCard() {
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>MATERIAL UI</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>SASS</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>REACT-REVEAL</span>
+                <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>FIGMA</span>
                 <span className='ml-[10px] mobile:ml-0 mobile:mr-2'>VERCEL APP</span>
               </div>
             </div>
@@ -269,23 +271,22 @@ function ProjectCard() {
             laptop-lg:col-span-5 laptop-lg:col-start-3
             desktop:col-span-5 desktop:col-start-3'>
             <div className='project-card-container bg-black'>
-              {/* <Link to='/regain'>
-                <div className='bg-regain bg-cover object-cover opacity-40
-                mobile:h-[300px]
-                tablet:h-[400px]
-                laptop:h-[400px]
-                laptop-lg:h-[400px]
-                desktop:h-[400px]' 
-                id='project-image'/>
-              </Link> */}
-              <a href='https://regain-caps.web.app/' target='https://regain-caps.web.app/' >
+              <Link to='/regain' >
                 <div className='project-image bg-regain bg-cover object-cover opacity-40
                   mobile:h-[300px]
                   tablet:h-[400px]
                   laptop:h-[400px]
                   laptop-lg:h-[400px]
                   desktop:h-[400px]'/>
-              </a>
+              </Link>
+              {/* <a href='https://regain-caps.web.app/' target='https://regain-caps.web.app/' >
+                <div className='project-image bg-regain bg-cover object-cover opacity-40
+                  mobile:h-[300px]
+                  tablet:h-[400px]
+                  laptop:h-[400px]
+                  laptop-lg:h-[400px]
+                  desktop:h-[400px]'/>
+              </a> */}
             </div>
             <div className='project-content flex justify-between mt-1
               mobile:flex-col

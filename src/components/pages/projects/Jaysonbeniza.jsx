@@ -5,19 +5,17 @@ import { Link } from 'react-router-dom'
 // icons
 import {RiArrowRightDownLine} from 'react-icons/ri'
 // Project screenshot
-import dd_landingpage from '../../../../src/assets/files/images/dailydiscount/landing-page.png'
-import dd_dashboard from '../../../../src/assets/files/images/dailydiscount/dashboard-page.png'
-import dd_heroes_skins from '../../../../src/assets/files/images/dailydiscount/heroes-&-skins-page.png'
-import dd_price from '../../../../src/assets/files/images/dailydiscount/price-page.png'
-import dd_order_details from '../../../../src/assets/files/images/dailydiscount/order-details-page.png'
-import dd_cart from '../../../../src/assets/files/images/dailydiscount/cart-page.png'
+import jaysonbeniza_hero from '../../../../src/assets/files/images/portfolio/jaysonbeniza-landing-page-1.png'
+import jaysonbeniza_about from '../../../../src/assets/files/images/portfolio/jaysonbeniza-landing-page-2.png'
+import jaysonbeniza_project from '../../../../src/assets/files/images/portfolio/jaysonbeniza-landing-page-3.png'
+import jaysonbeniza_contact from '../../../../src/assets/files/images/portfolio/jaysonbeniza-landing-page-4.png'
 // GSAP
 import gsap from 'gsap' 
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import Contact from '../Contact'
 gsap.registerPlugin(ScrollTrigger)
 
-function DailyDiscount() {
+function Jaysonbeniza() {
   useEffect(() => {
     // project content animation
     gsap.to('#animate-dailydiscount', {
@@ -69,7 +67,7 @@ function DailyDiscount() {
                 laptop-lg:translate-y-[110px]
                 desktop:translate-y-[110px]'
                 id='animate-dailydiscount'>
-                Dailydiscount
+                Portfolio v2
               </span>
             </div>
           </div>
@@ -113,21 +111,29 @@ function DailyDiscount() {
               laptop:text-[1rem] 
               laptop-lg:text-[1rem]
               desktop:text-[1.1rem] '>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>Dailydiscount</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>Jaysonbeniza</p></div>
               <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>is</p></div>
               <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>a</p></div>
               <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>web-based</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>application</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>developed</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>to</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>help</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>small</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>online</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>business</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>sell</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>discounted</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>game</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>credits.</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>portfolio</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>showcasing</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>my</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>current</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>user</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>interface</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>and</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>web</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>design</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>projects,</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>information</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>about</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>myself,</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>programming language,</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>frameworks,</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>and</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>software's</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>I</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>have used.</p></div>
             </div>
           </div>
           <div className='
@@ -152,12 +158,12 @@ function DailyDiscount() {
                 <div className='p-container'><p className='project-ps font-semibold' id='animate-dailydiscount'>Category</p></div>
               </div>
               <div className='
-                mobile:text-[.9rem] 
-                tablet:text-[.9rem]
-                laptop:text-[1rem]
-                laptop-lg:text-[1rem]
-                desktop:text-[1.1rem]'>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>Team / Ongoing Web Development</p></div>
+                mobile:text-[.9rem] mobile:h-[20px] 
+                tablet:text-[.9rem] tablet:h-[20px] 
+                laptop:text-[1rem] laptop:h-[30px] 
+                laptop-lg:text-[1rem] laptop-lg:h-[30px] 
+                desktop:text-[1.1rem] desktop:h-[30px]'>
+                <div className='p-container'><p className='project-ps' id='animate-dailydiscount'>Personal / Web Development</p></div>
               </div>
             </div>
             {/* role */}
@@ -176,13 +182,13 @@ function DailyDiscount() {
                 <div className='p-container'><p className='project-ps font-semibold' id='animate-dailydiscount'>Role</p></div>
               </div>
               <div className='flex flex-wrap
-                mobile:text-[.9rem]
-                tablet:text-[.9rem]
-                laptop:text-[1rem]
-                laptop-lg:text-[1rem]
-                desktop:text-[1.1rem]'>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>UI Designer</p></div>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>Front-End Web Developer</p></div>
+                mobile:text-[.9rem] mobile:h-[20px] 
+                tablet:text-[.9rem] tablet:h-[20px] 
+                laptop:text-[1rem] laptop:h-[30px] 
+                laptop-lg:text-[1rem] laptop-lg:h-[30px] 
+                desktop:text-[1.1rem] desktop:h-[30px]'>
+                <div className='p-container'><p className='project-ps' id='animate-dailydiscount'>UI Designer</p></div>
+                <div className='p-container'><p className='project-ps' id='animate-dailydiscount'>Web Developer</p></div>
               </div>
             </div>
             {/* technology used */}
@@ -206,11 +212,12 @@ function DailyDiscount() {
                 laptop:text-[1rem]
                 laptop-lg:text-[1rem]
                 desktop:text-[1.1rem]'>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>React JS</p></div>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>Tailwind CSS</p></div>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>SASS</p></div>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>FIGMA</p></div>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>VERCEL APP</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>React JS</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>Tailwind CSS</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>SASS</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>GSAP</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>FIGMA</p></div>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-ps' id='animate-dailydiscount'>VERCEL APP</p></div>
               </div>
             </div>
             {/* project link */}
@@ -236,14 +243,14 @@ function DailyDiscount() {
                 desktop:text-[1.1rem] '>
                 <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'>
                   <div className='project-link' id='animate-dailydiscount'>
-                    <a href='https://daily-discount.vercel.app/' target='https://daily-discount.vercel.app/'>
+                    <a href='https://jaysonbeniza.vercel.app' target='https://jaysonbeniza.vercel.app'>
                       <span className='flex items-center
                         mobile:text-[.9rem]
                         tablet:text-[.9rem]
                         laptop:text-[1rem]
                         laptop-lg:text-[1rem]
                         desktop:text-[1.1rem]'>
-                        Dailydiscount
+                        jaysonbeniza
                         <RiArrowRightDownLine id='icon' className='fill-black ml-1
                         mobile:text-xl
                         tablet:text-1xl
@@ -265,59 +272,41 @@ function DailyDiscount() {
           laptop:gap-y-14
           laptop-lg:gap-y-20
           desktop:gap-y-20'>
-          {/* landing page */}
+          {/* hero section */}
           <div className='
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-8 laptop:col-start-1
             laptop-lg:col-span-8 laptop-lg:col-start-1
             desktop:col-span-8 desktop:col-start-1'>
-            <img src={dd_landingpage} alt="dailydiscount-landing-page" className='border border-black' />
+            <img src={jaysonbeniza_hero} alt="jaysonbeniza-hero-section" className='border border-black' />
           </div>
-          {/* dashboard */}
-          <div className='
-            mobile:col-span-8 mobile:col-start-1
-            tablet:col-span-8 tablet:col-start-1
-            laptop:col-span-5 laptop:col-start-2
-            laptop-lg:col-span-5 laptop-lg:col-start-2
-            desktop:col-span-5 desktop:col-start-2'>
-            <img src={dd_dashboard} alt="dailydiscount-dashboard" className='border border-black' />
-          </div>
-          {/* heroes and skins */}
-          <div className='
-            mobile:col-span-8 mobile:col-start-1
-            tablet:col-span-8 tablet:col-start-1
-            laptop:col-span-5 laptop:col-start-4
-            laptop-lg:col-span-5 laptop-lg:col-start-4
-            desktop:col-span-5 desktop:col-start-4'>
-            <img src={dd_heroes_skins} alt="dailydiscount-heroes-and-skins" className='border border-black' />
-          </div>
-          {/* price */}
-          <div className='
-            mobile:col-span-8 mobile:col-start-1
-            tablet:col-span-8 tablet:col-start-1
-            laptop:col-span-5 laptop:col-start-1
-            laptop-lg:col-span-5 laptop-lg:col-start-1
-            desktop:col-span-5 desktop:col-start-1'>
-            <img src={dd_price} alt="dailydiscount-price" className='border border-black' />
-          </div>
-          {/* order details */}
+          {/* about */}
           <div className='
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-5 laptop:col-start-3
             laptop-lg:col-span-5 laptop-lg:col-start-3
             desktop:col-span-5 desktop:col-start-3'>
-            <img src={dd_order_details} alt="dailydiscount-order-details" className='border border-black' />
+            <img src={jaysonbeniza_about} alt="jaysonbeniza-hero-about" className='border border-black' />
           </div>
-          {/* cart */}
+          {/* project */}
+          <div className='
+            mobile:col-span-8 mobile:col-start-1
+            tablet:col-span-8 tablet:col-start-1
+            laptop:col-span-5 laptop:col-start-2
+            laptop-lg:col-span-5 laptop-lg:col-start-2
+            desktop:col-span-5 desktop:col-start-2'>
+            <img src={jaysonbeniza_project} alt="jaysonbeniza-hero-project" className='border border-black' />
+          </div>
+          {/* contact */}
           <div className='
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-5 laptop:col-start-4
             laptop-lg:col-span-5 laptop-lg:col-start-4
             desktop:col-span-5 desktop:col-start-4'>
-            <img src={dd_cart} alt="dailydiscount-card" className='border border-black' />
+            <img src={jaysonbeniza_contact} alt="jaysonbeniza-hero-contact" className='border border-black' />
           </div>
         </div>
       </section>
@@ -326,4 +315,4 @@ function DailyDiscount() {
   )
 }
 
-export default DailyDiscount
+export default Jaysonbeniza

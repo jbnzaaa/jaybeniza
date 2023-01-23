@@ -19,13 +19,45 @@ module.exports = {
         'red': '#CC2525'
       },
       backgroundImage: {
-        // projects
-        'regain': "url('/public/images/portfolio_mockup_1.png')",
-        'jbnza': "url('/public/images/portfolio_mockup_2.png')",
-        'dailydiscount': "url('/public/images/portfolio_mockup_3.png')",
-        'jaysonbeniza': "url('/public/images/portfolio_mockup_4.png')",
+        // // regain
+        // 'regain': "url('/public/images/portfolio_mockup_1.png')",
+        // // project screenshots
+        // 'regain-landing-page': "url('/public/images/regain/regain-landing-page.png')",
+        // 'regain-login': "url('/public/images/regain/student-login-page.png')",
+        // 'regain-dashboard': "url('/public/images/regain/student-dashboard-page.png')",
+        // 'regain-assessment': "url('/public/images/regain/student-assessment-page-1.png')",
+        // 'regain-ejournal': "url('/public/images/regain/student-e-journal-page.png')",
+        // 'regain-message': "url('/public/images/regain/student-message-page.png')",
+        // 'regain-history': "url('/public/images/regain/student-history-page.png')",
+
+        // // jbnza
+        // 'jbnza': "url('/public/images/portfolio_mockup_2.png')",
+        // // project screenshots
+        // 'jbnza-hero': "url('/public/images/portfolio/jbnza-landing-page-1.png')",
+        // 'jbnza-project': "url('/public/images/portfolio/jbnza-landing-page-2.png')",
+        // 'jbnza-about': "url('/public/images/portfolio/jbnza-landing-page-3.png')",
+        // 'jbnza-contact': "url('/public/images/portfolio/jbnza-landing-page-4.png')",
+        
+        // // dailydiscount
+        // 'dailydiscount': "url('/public/images/portfolio_mockup_3.png')",
+        // // project screenshots
+        // 'dd-landing-page': "url('/public/images/dailydiscount/landing-page.png')",
+        // 'dd-dashboard': "url('/public/images/dailydiscount/dashboard-page.png')",
+        // 'dd-heroes-and-skins': "url('/public/images/dailydiscount/heroes-&-skins-page.png')",
+        // 'dd-price': "url('/public/images/dailydiscount/price-page.png')",
+        // 'dd-order-details': "url('/public/images/dailydiscount/order-details-page.png')",
+        // 'dd-cart': "url('/public/images/dailydiscount/cart-page.png')",
+        
+        // // jaysonbeniza
+        // 'jaysonbeniza': "url('/public/images/portfolio_mockup_4.png')",
+        // // project screenshots
+        // 'jaysonbeniza-hero': "url('/public/images/portfolio/jaysonbeniza-landing-page-1.png')",
+        // 'jaysonbeniza-about': "url('/public/images/portfolio/jaysonbeniza-landing-page-2.png')",
+        // 'jaysonbeniza-project': "url('/public/images/portfolio/jaysonbeniza-landing-page-3.png')",
+        // 'jaysonbeniza-contact': "url('/public/images/portfolio/jaysonbeniza-landing-page-4.png')",
+        
         // profile
-        'profile': "url(/public/images/profile.JPG)"
+        'profile': "url(/public/images/profile.JPG)",
       },
       screens: {
         //current

@@ -1,379 +1,318 @@
-// // 
-// import React, { useEffect } from 'react'
-// // 
-// import { Link } from 'react-router-dom'
-// // icons
-// // import {RiArrowRightDownLine} from 'react-icons/ri'
-// // GSAP
-// import gsap from 'gsap' 
-// // import ScrollTrigger from 'gsap/ScrollTrigger'
+// 
+import React, { useEffect } from 'react'
+// 
+import { Link } from 'react-router-dom'
+// icons
+import {RiArrowRightDownLine} from 'react-icons/ri'
+// Project screenshot
+import jbnza_hero from '../../../../src/assets/files/images/portfolio/jbnza-landing-page-1.png'
+import jbnza_about from '../../../../src/assets/files/images/portfolio/jbnza-landing-page-2.png'
+import jbnza_project from '../../../../src/assets/files/images/portfolio/jbnza-landing-page-3.png'
+import jbnza_contact from '../../../../src/assets/files/images/portfolio/jbnza-landing-page-4.png'
+// GSAP
+import gsap from 'gsap' 
+import ScrollTrigger from 'gsap/ScrollTrigger'
+import Contact from '../Contact'
+gsap.registerPlugin(ScrollTrigger)
 
-// function Jbnza() {
-//   useEffect(() => {
-//     // onload animation
-//     gsap.to('#project-card', {
-//       duration: 1, 
-//       delay: .5,
-//       y: '-100vh',
-//       stagger: .05,
-//       ease: 'power1.out',
-//       scrollTrigger: {
-//         trigger: '#project-card',
-//         start: 'top 110%',
-//       }
-//     });
+function Jbnza() {
+  useEffect(() => {
+    // project content animation
+    gsap.to('#animate-dailydiscount', {
+      duration: 1,
+      y: 0,
+      stagger: .05,
+      ease: 'power1.in',
+      scrollTrigger: { 
+        trigger: '#animate-dailydiscount', 
+        // start: 'bottom 100%',
+        // markers: true
+      }
+    });
+    window.scrollTo(0, 0)
+  }, []);
 
-//     // image animation
-//     gsap.to('#project-img', {
-//       duration: 1,
-//       delay: 1, 
-//       y: 0,
-//       ease: 'power1.out',
-//       scrollTrigger: {
-//         trigger: '#project-img',
-//         start: 'top 150%',
-//         // markers: true
-//       }
-//     });
+  return (
+    <>
+      <section className='px-0 py-3 h-full
+        mobile:px-[.9rem]
+        tablet:px-[1rem]
+        laptop:px-[2rem]
+        laptop-lg:px-[3rem]
+        desktop:px-[3rem]'>
+        <div className='project-container grid grid-cols-8 gap-x-5
+          mobile:gap-y-10
+          tablet:gap-y-10
+          laptop:gap-y-14
+          laptop-lg:gap-y-20
+          desktop:gap-y-20'>
+          {/* project container row 1 */}
+          <div className='col-start-1
+            mobile:col-span-6
+            tablet:col-span-6
+            tablet:col-span-4
+            laptop:col-span-4
+            laptop-lg:col-span-4
+            desktop:col-span-4'>
+            <div className='p-container flex flex-wrap
+              mobile:h-[35px] mobile:mb-2 mobile:text-[2rem]
+              tablet:h-[60px] tablet:mb-2 tablet:text-[3rem]
+              laptop:h-[90px] laptop:mb-3 laptop:text-[4rem]
+              laptop-lg:h-[100px] laptop-lg:mb-3 laptop-lg:text-[5.3rem]
+              desktop:h-[110px] desktop:mb-3 desktop:text-[5.5rem]'>
+              <span className='project-h1 font-lexend font-medium leading-none tracking-tighter
+                mobile:translate-y-[35px]
+                tablet:translate-y-[80px]
+                laptop:translate-y-[110px]
+                laptop-lg:translate-y-[110px]
+                desktop:translate-y-[110px]'
+                id='animate-dailydiscount'>
+                Portfolio v1
+              </span>
+            </div>
+          </div>
+          <div className='col-span-2 col-start-7'>
+          <div className='font-lexend font-medium cursor-pointer tracking-tighter text-right
+              mobile:text-[.9rem] mobile:h-[20px] 
+              tablet:text-[.9rem] tablet:h-[20px] 
+              laptop:text-[1rem] laptop:h-[30px] 
+              laptop-lg:text-[1rem] laptop-lg:h-[30px] 
+              desktop:text-[1.1rem] desktop:h-[30px]'>
+              <Link to='/'>
+                <div className='p-container'><p className='project-p' id='animate-dailydiscount'>Return</p></div>
+              </Link>
+            </div>
+          </div>
+          {/* project container row 2 */}
+          <div className='col-start-1
+            mobile:col-span-2
+            tablet:col-span-1
+            laptop:col-span-1
+            laptop-lg:col-span-1
+            desktop:col-span-1'>
+            <div className='
+              mobile:text-[.9rem] mobile:h-[20px] 
+              tablet:text-[.9rem] tablet:h-[20px] 
+              laptop:text-[1rem] laptop:h-[30px] 
+              laptop-lg:text-[1rem] laptop-lg:h-[30px]
+              desktop:text-[1.1rem] desktop:h-[30px]'>
+              <div className='p-container'><p className='project-p' id='animate-dailydiscount'>2022</p></div>
+            </div>
+          </div>
+          <div className='col-start-2
+            mobile:col-span-6
+            tablet:col-span-6
+            laptop:col-span-2
+            laptop-lg:col-span-2
+            desktop:col-span-2'>
+            <div className='flex flex-wrap
+              mobile:text-[.9rem]
+              tablet:text-[.9rem]
+              laptop:text-[1rem] 
+              laptop-lg:text-[1rem]
+              desktop:text-[1.1rem] '>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>Jbnza</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>is</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>a</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>web-based</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>portfolio</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>designed</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>to</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>showcase</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>my</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>most</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>recent</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>projects,</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>programming</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>language</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>and</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>softwares</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>I</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>use</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>and</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>bit</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>of</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>information</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>about</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>myself.</p></div>
+            </div>
+          </div>
+          <div className='
+            mobile:col-span-6 mobile:col-start-3
+            tablet:col-span-6 tablet:col-start-2
+            laptop:col-span-4 laptop:col-start-4
+            laptop-lg:col-span-4 laptop-lg:col-start-5
+            desktop:col-span-4 desktop:col-start-5'>
+            {/* category */}
+            <div className='
+              mobile:mb-2
+              tablet:mb-2
+              laptop:mb-5
+              laptop-lg:mb-5
+              desktop:mb-5'>
+              <div className='h-[20px]
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.9rem] 
+                laptop-lg:text-[.9rem] 
+                desktop:text-[.9rem] '>
+                <div className='p-container'><p className='project-ps font-semibold' id='animate-dailydiscount'>Category</p></div>
+              </div>
+              <div className='
+                mobile:text-[.9rem] 
+                tablet:text-[.9rem]
+                laptop:text-[1rem]
+                laptop-lg:text-[1rem]
+                desktop:text-[1.1rem]'>
+                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>Personal / Web Development</p></div>
+              </div>
+            </div>
+            {/* role */}
+            <div className='
+              mobile:mb-2
+              tablet:mb-2
+              laptop:mb-5
+              laptop-lg:mb-5
+              desktop:mb-5'>
+              <div className='h-[20px]
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.9rem] 
+                laptop-lg:text-[.9rem] 
+                desktop:text-[.9rem] '>
+                <div className='p-container'><p className='project-ps font-semibold' id='animate-dailydiscount'>Role</p></div>
+              </div>
+              <div className='flex flex-wrap h-[30px]
+                mobile:text-[.9rem]
+                tablet:text-[.9rem]
+                laptop:text-[1rem] 
+                laptop-lg:text-[1rem] 
+                desktop:text-[1.1rem] '>
+                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>UI Designer</p></div>
+                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>Web Developer</p></div>
+              </div>
+            </div>
+            {/* technology used */}
+            <div className='
+              mobile:mb-2
+              tablet:mb-2
+              laptop:mb-5
+              laptop-lg:mb-5
+              desktop:mb-5'>
+              <div className='h-[20px]
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.9rem] 
+                laptop-lg:text-[.9rem] 
+                desktop:text-[.9rem] '>
+                <div className='p-container'><p className='project-ps font-semibold' id='animate-dailydiscount'>Technology Used</p></div>
+              </div>
+              <div className='flex flex-wrap
+                mobile:text-[.9rem]
+                tablet:text-[.9rem]
+                laptop:text-[1rem]
+                laptop-lg:text-[1rem]
+                desktop:text-[1.1rem]'>
+                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>React JS</p></div>
+                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>Meterial UI</p></div>
+                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>SASS</p></div>
+                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>FIGMA</p></div>
+                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>VERCEL APP</p></div>
+              </div>
+            </div>
+            {/* project link */}
+            <div className='
+              mobile:mb-2
+              tablet:mb-2
+              laptop:mb-5
+              laptop-lg:mb-5
+              desktop:mb-5'>
+              <div className='h-[20px]
+                mobile:text-[.5rem]
+                tablet:text-[.5rem]
+                laptop:text-[.9rem] 
+                laptop-lg:text-[.9rem] 
+                desktop:text-[.9rem] '>
+                <div className='p-container'><p className='project-ps font-semibold' id='animate-dailydiscount'>Visit site</p></div>
+              </div>
+              <div className='flex flex-wrap
+                mobile:text-[.9rem]
+                tablet:text-[.9rem]
+                laptop:text-[1rem] 
+                laptop-lg:text-[1rem] 
+                desktop:text-[1.1rem] '>
+                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'>
+                  <div className='project-link' id='animate-dailydiscount'>
+                    <a href='https://jbnza.vercel.app' target='https://jbnza.vercel.app'>
+                      <span className='flex items-center
+                        mobile:text-[.9rem]
+                        tablet:text-[.9rem]
+                        laptop:text-[1rem]
+                        laptop-lg:text-[1rem]
+                        desktop:text-[1.1rem]'>
+                        jbnza
+                        <RiArrowRightDownLine id='icon' className='fill-black ml-1
+                        mobile:text-xl
+                        tablet:text-1xl
+                        laptop:text-2xl
+                        laptop-lg:text-2xl
+                        desktop:text-2xl'/>
+                      </span> 
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* project container row 3 */}
+        <div className='project-container grid grid-cols-8 gap-x-5 mt-10
+          mobile:gap-y-5
+          tablet:gap-y-10
+          laptop:gap-y-14
+          laptop-lg:gap-y-20
+          desktop:gap-y-20'>
+          {/* hero */}
+          <div className='
+            mobile:col-span-8 mobile:col-start-1
+            tablet:col-span-8 tablet:col-start-1
+            laptop:col-span-8 laptop:col-start-1
+            laptop-lg:col-span-8 laptop-lg:col-start-1
+            desktop:col-span-8 desktop:col-start-1'>
+            <img src={jbnza_hero} alt="jbnza-hero" className='border border-black' />
+          </div>
+          {/* project */}
+          <div className='
+            mobile:col-span-8 mobile:col-start-1
+            tablet:col-span-8 tablet:col-start-1
+            laptop:col-span-5 laptop:col-start-2
+            laptop-lg:col-span-5 laptop-lg:col-start-2
+            desktop:col-span-5 desktop:col-start-2'>
+            <img src={jbnza_project} alt="jbnza-project" className='border border-black' />
+          </div>
+          {/* about */}
+          <div className='
+            mobile:col-span-8 mobile:col-start-1
+            tablet:col-span-8 tablet:col-start-1
+            laptop:col-span-5 laptop:col-start-4
+            laptop-lg:col-span-5 laptop-lg:col-start-4
+            desktop:col-span-5 desktop:col-start-4'>
+            <img src={jbnza_about} alt="jbnza-about" className='border border-black' />
+          </div>
+          {/* contact */}
+          <div className='
+            mobile:col-span-8 mobile:col-start-1
+            tablet:col-span-8 tablet:col-start-1
+            laptop:col-span-5 laptop:col-start-1
+            laptop-lg:col-span-5 laptop-lg:col-start-1
+            desktop:col-span-5 desktop:col-start-1'>
+            <img src={jbnza_contact} alt="jbnza-contact" className='border border-black' />
+          </div>
+        </div>
+      </section>
+      <Contact/>
+    </>
+  )
+}
 
-//     // back button
-//     gsap.to('#back', {
-//       duration: 1,
-//       delay: 1, 
-//       y: 0,
-//       stagger: .05,
-//       ease: 'power1.out',
-//       scrollTrigger: {
-//         trigger: '#back',
-//       }
-//     });
-    
-//     // project title
-//     gsap.to('#title', {
-//       duration: 1,
-//       delay: 1.1,
-//       y: 0,
-//       stagger: .05,
-//       ease: 'power1.out',
-//       scrollTrigger: {
-//         trigger: '#title',
-//       }
-//     });
-
-//     // paragraph
-//     gsap.to('#project-p', {
-//       duration: 1,
-//       delay: 1.2, 
-//       y: 0,
-//       stagger: .05,
-//       ease: 'power1.out',
-//       scrollTrigger: {
-//         trigger: '#project-p',
-//       }
-//     });
-
-//     // project link
-//     gsap.to('#visit', {
-//       duration: 1,
-//       delay: 1.6, 
-//       y: 0,
-//       stagger: .05,
-//       ease: 'power1.out',
-//       scrollTrigger: {
-//         trigger: '#visit',
-//       }
-//     });
-//   }, []);
-
-//   return (
-//     <>
-//       <div id='card-container'>
-//         <div id='sticky'>
-//           <div className='bg-black w-full h-screen' id='project-card'/>
-//         </div>
-//         <div className='grid 
-//           mobile:p-[.9rem] mobile:gap-3 mobile:grid-cols-1
-//           tablet:p-[1rem] tablet:gap-3 tablet:grid-cols-1
-//           laptop:p-[2rem] laptop:gap-5 laptop:grid-cols-8
-//           laptop-lg:p-[3rem] laptop-lg:gap-5 laptop-lg:grid-cols-8
-//           desktop:p-[3rem] desktop:gap-5 desktop:grid-cols-8'>
-//           {/* project header */}
-//           <section className='col-start-1 flex justify-between mb-10
-//             mobile:col-span-1
-//             tablet:col-span-1
-//             laptop:col-span-8
-//             laptop-lg:col-span-8
-//             desktop:col-span-8'>
-//             <div className='flex flex-col' id='title-container'>
-//               <p className='font-lexend font-semibold leading-none tracking-tighter text-black w-[600px]
-//               mobile:translate-y-[20px] mobile:text-[2.3rem]
-//               tablet:translate-y-[20px] tablet:text-[3rem]
-//               laptop:translate-y-[45px] laptop:text-[3.5rem]
-//               laptop-lg:translate-y-[45px] laptop-lg:text-[4rem]
-//               desktop:translate-y-[45px] desktop:text-[4rem]'
-//               id='title'>
-//                 jbnza
-//               </p>
-//             </div>
-//             <div id='span-container'>
-//               <Link to='/'>
-//                 <p className='font-montserrat text-black
-//                   mobile:text-[.5rem]
-//                   tablet:text-[.5rem]
-//                   laptop:text-[.5rem]
-//                   laptop-lg:text-[.9rem]
-//                   desktop:text-[.9rem]' 
-//                   id='back'>
-//                   Back
-//                 </p>
-//               </Link>
-//             </div>
-//           </section>
-//           {/*  */}
-//           <section className='grid grid-cols-8 grid-rows-3 gap-y-5
-//             mobile:col-span-1 mobile:my-10
-//             tablet:col-span-1 tablet:my-10
-//             laptop:col-span-8 laptop:my-20
-//             laptop-lg:col-span-8 laptop-lg:my-20
-//             desktop:col-span-8 desktop:my-20'>
-//             <div className='col-start-1 row-span-1 row-start-1
-//               mobile:col-span-2
-//               tablet:col-span-2
-//               laptop:col-span-1
-//               laptop-lg:col-span-1
-//               desktop:col-span-1'>
-//               <div className='flex flex-col' id='title-container'>
-//                 <span className='font-lexend text-black text-[.9rem]
-//                   mobile:translate-y-[20px]
-//                   tablet:translate-y-[20px]
-//                   laptop:translate-y-[15px]
-//                   laptop-lg:translate-y-[15px]
-//                   desktop:translate-y-[15px]'
-//                   id='title'>
-//                   2022
-//                 </span>
-//               </div>
-//             </div>
-//             <div className='row-span-3 row-start-1
-//               mobile:col-span-6 mobile:col-start-3 mobile:mb-16 mobile:h-[auto]
-//               tablet:col-span-5 tablet:col-start-3 tablet:mb-10 tablet:h-[auto]
-//               laptop:col-span-2 laptop:col-start-2 laptop:mb-3 laptop:h-[auto]
-//               laptop-lg:col-span-2 laptop-lg:col-start-2 laptop-lg:mb-3 laptop-lg:h-[auto]
-//               desktop:col-span-2 desktop:col-start-2 desktop:mb-3 desktop:h-[auto]'>
-//               <div className='flex flex-wrap leading-none
-//                 mobile:text-[.5rem]
-//                 tablet:text-[.5rem]
-//                 laptop:text-[.5em]
-//                 laptop-lg:text-[.9rem]
-//                 desktop:text-[.9rem]'>
-//                 <div id='p-container'><p id='project-p'>jbnza</p></div>
-//                 <div id='p-container'><p id='project-p'>is</p></div>
-//                 <div id='p-container'><p id='project-p'>a</p></div>
-//                 <div id='p-container'><p id='project-p'>web-based</p></div>
-//                 <div id='p-container'><p id='project-p'>portfolio</p></div>
-//                 <div id='p-container'><p id='project-p'>designed</p></div>
-//                 <div id='p-container'><p id='project-p'>to</p></div>
-//                 <div id='p-container'><p id='project-p'>showcase</p></div>
-//                 <div id='p-container'><p id='project-p'>my</p></div>
-//                 <div id='p-container'><p id='project-p'>most</p></div>
-//                 <div id='p-container'><p id='project-p'>recent</p></div>
-//                 <div id='p-container'><p id='project-p'>projects,</p></div>
-//                 <div id='p-container'><p id='project-p'>tech</p></div>
-//                 <div id='p-container'><p id='project-p'>stacks</p></div>
-//                 <div id='p-container'><p id='project-p'>I</p></div>
-//                 <div id='p-container'><p id='project-p'>use</p></div>
-//                 <div id='p-container'><p id='project-p'>and</p></div>
-//                 <div id='p-container'><p id='project-p'>a</p></div>
-//                 <div id='p-container'><p id='project-p'>bit</p></div>
-//                 <div id='p-container'><p id='project-p'>information</p></div>
-//                 <div id='p-container'><p id='project-p'>about</p></div>
-//                 <div id='p-container'><p id='project-p'>myself.</p></div>
-//               </div>
-//             </div>
-//             <div className='
-//               mobile:col-span-6 mobile:col-start-3
-//               tablet:col-span-3 tablet:col-start-3
-//               laptop:col-span-2 laptop:col-start-5
-//               laptop-lg:col-span-2 laptop-lg:col-start-5
-//               desktop:col-span-2 desktop:col-start-5'>
-//               <div className='flex flex-col leading-none
-//                 mobile:text-[.5rem]
-//                 tablet:text-[.5rem]
-//                 laptop:text-[.5rem]
-//                 laptop-lg:text-[.9rem]
-//                 desktop:text-[.9rem]'>
-//                 <div id='span-container'>
-//                   <p className='font-semibold mb-1
-//                     mobile:translate-y-[30px] mobile:text-[.5rem]
-//                     tablet:translate-y-[30px] tablet:text-[.5rem]
-//                     laptop:translate-y-[45px] laptop:text-[.5rem]
-//                     laptop-lg:translate-y-[45px] laptop-lg:text-[.5rem]
-//                     desktop:translate-y-[45px] desktop:text-[.5rem]' 
-//                     id='project-p'>Category</p>
-//                 </div>
-//                 <div id='span-container'>
-//                   <p className='font-normal
-//                     mobile:translate-y-[30px]
-//                     tablet:translate-y-[30px]
-//                     laptop:translate-y-[45px]
-//                     laptop-lg:translate-y-[45px]
-//                     desktop:translate-y-[45px]' 
-//                     id='project-p'>Personal / Web Development</p>
-//                 </div>
-//               </div>
-//             </div>
-//             <div className='
-//               mobile:col-span-6 mobile:col-start-3
-//               tablet:col-span-3 tablet:col-start-6
-//               laptop:col-span-2 laptop:col-start-7
-//               laptop-lg:col-span-2 laptop-lg:col-start-7
-//               desktop:col-span-2 desktop:col-start-7'>
-//               <div className='flex flex-col leading-none
-//                 mobile:text-[.5rem]
-//                 tablet:text-[.5rem]
-//                 laptop:text-[.5rem]
-//                 laptop-lg:text-[.9rem]
-//                 desktop:text-[.9rem]'>
-//                 <div id='span-container'>
-//                   <p className='font-semibold mb-1
-//                     mobile:translate-y-[30px] mobile:text-[.5rem]
-//                     tablet:translate-y-[30px] tablet:text-[.5rem]
-//                     laptop:translate-y-[45px] laptop:text-[.5rem]
-//                     laptop-lg:translate-y-[45px] laptop-lg:text-[.9rem]
-//                     desktop:translate-y-[45px] desktop:text-[.9rem]' 
-//                     id='project-p'>Role</p>
-//                 </div>
-//                 <ul>
-//                   <li id='span-container'>
-//                     <p className='font-normal
-//                       mobile:translate-y-[30px]
-//                       tablet:translate-y-[30px]
-//                       laptop:translate-y-[45px]
-//                       laptop-lg:translate-y-[45px]
-//                       desktop:translate-y-[45px]' 
-//                       id='project-p'>Web Developer</p>
-//                   </li>
-//                   <li id='span-container'>
-//                     <p className='font-normal
-//                       mobile:translate-y-[30px]
-//                       tablet:translate-y-[30px]
-//                       laptop:translate-y-[45px]
-//                       laptop-lg:translate-y-[45px]
-//                       desktop:translate-y-[45px]' 
-//                       id='project-p'>UI Designer</p>
-//                   </li>
-//                 </ul>
-//               </div>
-//             </div>
-//             <div className='
-//               mobile:col-span-6 mobile:col-start-3
-//               tablet:col-span-3 tablet:col-start-3
-//               laptop:col-span-2 laptop:col-start-5
-//               laptop-lg:col-span-2 laptop-lg:col-start-5
-//               desktop:col-span-2 desktop:col-start-5'>
-//               <div className='flex flex-col leading-none
-//                 mobile:text-[.5rem]
-//                 tablet:text-[.5rem]
-//                 laptop:text-[.5rem]
-//                 laptop-lg:text-[.9rem]
-//                 desktop:text-[.9rem]'>
-//                 <div id='span-container'>
-//                   <p className='font-semibold mb-1
-//                     mobile:translate-y-[20px] mobile:text-[.5rem]
-//                     tablet:translate-y-[30px] tablet:text-[.5rem]
-//                     laptop:translate-y-[45px] laptop:text-[.5rem]
-//                     laptop-lg:translate-y-[45px] laptop-lg:text-[.9rem]
-//                     desktop:translate-y-[45px] desktop:text-[.9rem]' 
-//                     id='project-p'>Technology Used</p>
-//                 </div>
-//                 <ul className='flex flex-row flex-wrap'>
-//                   <li id='span-container'>
-//                     <p className='font-normal
-//                       mobile:translate-y-[30px]
-//                       tablet:translate-y-[30px]
-//                       laptop:translate-y-[45px]
-//                       laptop-lg:translate-y-[45px]
-//                       desktop:translate-y-[45px]' 
-//                       id='project-p'>React JS</p>
-//                   </li>
-//                   <li id='span-container'>
-//                     <p className='font-normal
-//                       mobile:translate-y-[30px]
-//                       tablet:translate-y-[20px]
-//                       laptop:translate-y-[45px]
-//                       laptop-lg:translate-y-[45px]
-//                       desktop:translate-y-[45px]' 
-//                       id='project-p'>Material UI</p>
-//                   </li>
-//                   <li id='span-container'>
-//                     <p className='font-normal
-//                       mobile:translate-y-[30px]
-//                       tablet:translate-y-[30px]
-//                       laptop:translate-y-[45px]
-//                       laptop-lg:translate-y-[45px]
-//                       desktop:translate-y-[45px]' 
-//                       id='project-p'>Vercel</p>
-//                   </li>
-//                   <li id='span-container'>
-//                     <p className='font-normal
-//                       mobile:translate-y-[30px]
-//                       tablet:translate-y-[30px]
-//                       laptop:translate-y-[45px]
-//                       laptop-lg:translate-y-[45px]
-//                       desktop:translate-y-[45px]' 
-//                       id='project-p'>Figma</p>
-//                   </li>
-//                 </ul>
-//               </div>
-//             </div>
-//             <div className='
-//               mobile:col-span-6 mobile:col-start-3
-//               tablet:col-span-3 tablet:col-start-6
-//               laptop:col-span-2 laptop:col-start-7
-//               laptop-lg:col-span-2 laptop-lg:col-start-7
-//               desktop:col-span-2 desktop:col-start-7'>
-//               <div className='flex flex-col leading-none
-//                 mobile:text-[.5rem]
-//                 tablet:text-[.5rem]
-//                 laptop:text-[.5rem]
-//                 laptop-lg:text-[.9rem]
-//                 desktop:text-[.9rem]'>
-//                 <div className='flex flex-col justify-center mt-3' id='project-link'>
-//                   <a href='https://jbnza.vercel.app' target='https://jbnza.vercel.app' className='flex items-center' id='button-container'>
-//                     <p className='text-black flex items-center
-//                       mobile:text-[.5rem]
-//                       tablet:text-[.5rem]
-//                       laptop:text-[.5rem]
-//                       laptop-lg:text-[.9rem]
-//                       desktop:text-[.9rem]' id='visit'>
-//                       visit website
-//                       <RiArrowRightDownLine id='icons' className='fill-black text-2xl ml-2'/>
-//                     </p>
-//                   </a>
-//                 </div>
-//               </div>
-//             </div>
-//           </section>
-//           <section className='
-//             mobile:col-span-1 mobile:col-start-1
-//             tablet:col-span-1 tablet:col-start-1
-//             laptop:col-span-8 laptop:col-start-1
-//             laptop-lg:col-span-8 laptop-lg:col-start-1
-//             desktop:col-span-8 desktop:col-start-1' id='img-container'>
-//             <div className='bg-jbnza bg-cover w-full
-//               mobile:translate-y-[350px] mobile:h-[350px]
-//               tablet:translate-y-[450px] tablet:h-[450px]
-//               laptop:translate-y-[550px] laptop:h-[550px]
-//               laptop-lg:translate-y-[550px] laptop-lg:h-[550px]
-//               desktop:translate-y-[550px] desktop:h-[550px]'
-//               id='project-img'/>
-//           </section>
-//         </div>
-//       </div>
-
-      
-//     </>
-//   )
-// }
-
-// export default Jbnza
+export default Jbnza
