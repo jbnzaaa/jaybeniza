@@ -319,7 +319,7 @@ function Jbnza() {
           </div>
         </div>
       </section>
-      <Contact/>
+      {/* <Contact/> */}
     </>
   )
 }

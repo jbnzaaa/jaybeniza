@@ -320,7 +320,7 @@ function Jaysonbeniza() {
           </div>
         </div>
       </section>
-      <Contact/>
+      {/* <Contact/> */}
     </>
   )
 }

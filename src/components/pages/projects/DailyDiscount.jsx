@@ -330,7 +330,7 @@ function DailyDiscount() {
           </div>
         </div>
       </section>
-      <Contact/>
+      {/* <Contact/> */}
     </>
   )
 }

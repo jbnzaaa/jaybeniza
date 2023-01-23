@@ -348,7 +348,7 @@ function Regain() {
             </div>
           </div>
       </section>
-      <Contact/>
+      {/* <Contact/> */}
     </>
   )
 }
