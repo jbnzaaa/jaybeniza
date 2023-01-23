@@ -20,7 +20,7 @@ module.exports = {
       },
       backgroundImage: {
         // // regain
-        // 'regain': "url('/public/images/portfolio_mockup_1.png')",
+        'regain': "url('/public/images/portfolio_mockup_1.png')",
         // // project screenshots
         // 'regain-landing-page': "url('/public/images/regain/regain-landing-page.png')",
         // 'regain-login': "url('/public/images/regain/student-login-page.png')",
@@ -31,7 +31,7 @@ module.exports = {
         // 'regain-history': "url('/public/images/regain/student-history-page.png')",
 
         // // jbnza
-        // 'jbnza': "url('/public/images/portfolio_mockup_2.png')",
+        'jbnza': "url('/public/images/portfolio_mockup_2.png')",
         // // project screenshots
         // 'jbnza-hero': "url('/public/images/portfolio/jbnza-landing-page-1.png')",
         // 'jbnza-project': "url('/public/images/portfolio/jbnza-landing-page-2.png')",
@@ -39,7 +39,7 @@ module.exports = {
         // 'jbnza-contact': "url('/public/images/portfolio/jbnza-landing-page-4.png')",
         
         // // dailydiscount
-        // 'dailydiscount': "url('/public/images/portfolio_mockup_3.png')",
+        'dailydiscount': "url('/public/images/portfolio_mockup_3.png')",
         // // project screenshots
         // 'dd-landing-page': "url('/public/images/dailydiscount/landing-page.png')",
         // 'dd-dashboard': "url('/public/images/dailydiscount/dashboard-page.png')",
@@ -49,7 +49,7 @@ module.exports = {
         // 'dd-cart': "url('/public/images/dailydiscount/cart-page.png')",
         
         // // jaysonbeniza
-        // 'jaysonbeniza': "url('/public/images/portfolio_mockup_4.png')",
+        'jaysonbeniza': "url('/public/images/portfolio_mockup_4.png')",
         // // project screenshots
         // 'jaysonbeniza-hero': "url('/public/images/portfolio/jaysonbeniza-landing-page-1.png')",
         // 'jaysonbeniza-about': "url('/public/images/portfolio/jaysonbeniza-landing-page-2.png')",
