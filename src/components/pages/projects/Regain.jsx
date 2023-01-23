@@ -32,6 +32,15 @@ function Regain() {
         // markers: true
       }
     });
+    
+    gsap.to('#animate-screenshot', {
+      delay: .8,
+      duration: 1,
+      stagger: .05,
+      y: 0,
+      ease: 'power1.in'
+    });
+
     window.scrollTo(0, 0)
   }, []);
 
@@ -275,67 +284,67 @@ function Regain() {
             laptop-lg:gap-y-20
             desktop:gap-y-20'>
             {/* landing page */}
-            <div className='
+            <div className='screenshot-container
               mobile:col-span-8 mobile:col-start-1
               tablet:col-span-8 tablet:col-start-1
               laptop:col-span-8 laptop:col-start-1
               laptop-lg:col-span-8 laptop-lg:col-start-1
               desktop:col-span-8 desktop:col-start-1'>
-              <img src={regain_landingpage} alt="regain-landingpage" className='border border-black' />
+              <img src={regain_landingpage} alt="regain-landingpage" className='screenshot-img border border-black' id='animate-screenshot'/>
             </div>
             {/* login */}
-            <div className='
+            <div className='screenshot-container
               mobile:col-span-8 mobile:col-start-1
               tablet:col-span-8 tablet:col-start-1
               laptop:col-span-5 laptop:col-start-3
               laptop-lg:col-span-5 laptop-lg:col-start-3
               desktop:col-span-5 desktop:col-start-3'>
-              <img src={regain_login} alt="regain-login" className='border border-black' />
+              <img src={regain_login} alt="regain-login" className='screenshot-img border border-black' id='animate-screenshot'/>
             </div>
             {/* dashboard */}
-            <div className='
+            <div className='screenshot-container
               mobile:col-span-8 mobile:col-start-1
               tablet:col-span-8 tablet:col-start-1
               laptop:col-span-5 laptop:col-start-1
               laptop-lg:col-span-5 laptop-lg:col-start-1
               desktop:col-span-5 desktop:col-start-1'>
-              <img src={regain_dashboard} alt="regain-dashboard" className='border border-black' />
+              <img src={regain_dashboard} alt="regain-dashboard" className='screenshot-img border border-black' id='animate-screenshot'/>
             </div>
             {/* assessment */}
-            <div className='
+            <div className='screenshot-container
               mobile:col-span-8 mobile:col-start-1
               tablet:col-span-8 tablet:col-start-1
               laptop:col-span-5 laptop:col-start-4
               laptop-lg:col-span-5 laptop-lg:col-start-4
               desktop:col-span-5 desktop:col-start-4'>
-              <img src={regain_assessment} alt="regain-assessment" className='border border-black' />
+              <img src={regain_assessment} alt="regain-assessment" className='screenshot-img border border-black' id='animate-screenshot'/>
             </div>
             {/* ejournal */}
-            <div className='
+            <div className='screenshot-container
               mobile:col-span-8 mobile:col-start-1
               tablet:col-span-8 tablet:col-start-1
               laptop:col-span-5 laptop:col-start-2
               laptop-lg:col-span-5 laptop-lg:col-start-2
               desktop:col-span-5 desktop:col-start-2'>
-              <img src={regain_ejournal} alt="regain-ejournal" className='border border-black' />
+              <img src={regain_ejournal} alt="regain-ejournal" className='screenshot-img border border-black' id='animate-screenshot'/>
             </div>
             {/* message */}
-            <div className='
+            <div className='screenshot-container
               mobile:col-span-8 mobile:col-start-1
               tablet:col-span-8 tablet:col-start-1
               laptop:col-span-5 laptop:col-start-1
               laptop-lg:col-span-5 laptop-lg:col-start-1
               desktop:col-span-5 desktop:col-start-1'>
-              <img src={regain_message} alt="regain-message" className='border border-black' />
+              <img src={regain_message} alt="regain-message" className='screenshot-img border border-black' id='animate-screenshot'/>
             </div>
             {/* history */}
-            <div className='
+            <div className='screenshot-container
               mobile:col-span-8 mobile:col-start-1
               tablet:col-span-8 tablet:col-start-1
               laptop:col-span-5 laptop:col-start-4
               laptop-lg:col-span-5 laptop-lg:col-start-4
               desktop:col-span-5 desktop:col-start-4'>
-              <img src={regain_history} alt="regain-history" className='border border-black' />
+              <img src={regain_history} alt="regain-history" className='screenshot-img border border-black' id='animate-screenshot'/>
             </div>
           </div>
       </section>

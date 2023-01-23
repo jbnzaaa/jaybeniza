@@ -357,57 +357,68 @@
 
     .project-container{
       //daily discount section
-      .p-container{
-        position: relative;
-        overflow: hidden;
-        transition: 1s ease;
-        
-        .project-h1{
-          transition: 1s ease;
-        }
-
-        .project-p{
-          transform: translateY(30px);
-          margin-right: 5px; 
-          transition: 1s ease;
-        }
-        
-        .project-ps{
-          transform: translateY(30px);
-          margin-right: 15px; 
-          transition: 1s ease;
-        }
-
-        .project-link{
-        transform: translateY(30px);
-        transition: 1s ease;
-        
-        span{
+        .p-container{
           position: relative;
-          letter-spacing: 0;
-          transition: .3s ease-in-out;
-
-          &:hover{
-            letter-spacing: 2px;
+          overflow: hidden;
+          transition: 1s ease;
+          
+          .project-h1{
+            transition: 1s ease;
           }
 
-          #icon{
-            transform: rotate(0deg);
-            transition: all .3s ease-in-out;
-            border-radius: 100%;
+          .project-p{
+            transform: translateY(30px);
+            margin-right: 5px; 
+            transition: 1s ease;
           }
-  
-          &:hover{
+          
+          .project-ps{
+            transform: translateY(30px);
+            margin-right: 15px; 
+            transition: 1s ease;
+          }
+
+          .project-link{
+          transform: translateY(30px);
+          transition: 1s ease;
+          
+          span{
+            position: relative;
+            letter-spacing: 0;
+            transition: .3s ease-in-out;
+
+            &:hover{
+              letter-spacing: 2px;
+            }
+
             #icon{
-              transform: rotate(-45deg);
+              transform: rotate(0deg);
               transition: all .3s ease-in-out;
-              background: var(--main-color);
-              fill: var(--main-bg);
               border-radius: 100%;
+            }
+    
+            &:hover{
+              #icon{
+                transform: rotate(-45deg);
+                transition: all .3s ease-in-out;
+                background: var(--main-color);
+                fill: var(--main-bg);
+                border-radius: 100%;
+              }
             }
           }
         }
       }
+
+      .screenshot-container{
+        position: relative;
+        overflow: hidden;
+        transition: 1s ease;
+
+        .screenshot-img{
+          transform: translateY(100%);
+          transition: 1s ease;
+        }
       }
     }
 

@@ -29,6 +29,15 @@ function Jbnza() {
         // markers: true
       }
     });
+
+    gsap.to('#animate-screenshot', {
+      delay: .8,
+      duration: 1,
+      stagger: .05,
+      y: 0,
+      ease: 'power1.in'
+    });
+
     window.scrollTo(0, 0)
   }, []);
 
@@ -273,40 +282,40 @@ function Jbnza() {
           laptop-lg:gap-y-20
           desktop:gap-y-20'>
           {/* hero */}
-          <div className='
+          <div className='screenshot-container
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-8 laptop:col-start-1
             laptop-lg:col-span-8 laptop-lg:col-start-1
             desktop:col-span-8 desktop:col-start-1'>
-            <img src={jbnza_hero} alt="jbnza-hero" className='border border-black' />
+            <img src={jbnza_hero} alt="jbnza-hero" className='screenshot-img border border-black' id='animate-screenshot'/>
           </div>
           {/* project */}
-          <div className='
+          <div className='screenshot-container
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-5 laptop:col-start-2
             laptop-lg:col-span-5 laptop-lg:col-start-2
             desktop:col-span-5 desktop:col-start-2'>
-            <img src={jbnza_project} alt="jbnza-project" className='border border-black' />
+            <img src={jbnza_project} alt="jbnza-project" className='screenshot-img border border-black' id='animate-screenshot'/>
           </div>
           {/* about */}
-          <div className='
+          <div className='screenshot-container
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-5 laptop:col-start-4
             laptop-lg:col-span-5 laptop-lg:col-start-4
             desktop:col-span-5 desktop:col-start-4'>
-            <img src={jbnza_about} alt="jbnza-about" className='border border-black' />
+            <img src={jbnza_about} alt="jbnza-about" className='screenshot-img border border-black' id='animate-screenshot'/>
           </div>
           {/* contact */}
-          <div className='
+          <div className='screenshot-container
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-5 laptop:col-start-1
             laptop-lg:col-span-5 laptop-lg:col-start-1
             desktop:col-span-5 desktop:col-start-1'>
-            <img src={jbnza_contact} alt="jbnza-contact" className='border border-black' />
+            <img src={jbnza_contact} alt="jbnza-contact" className='screenshot-img border border-black' id='animate-screenshot'/>
           </div>
         </div>
       </section>

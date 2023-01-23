@@ -19,6 +19,7 @@ function Jaysonbeniza() {
   useEffect(() => {
     // project content animation
     gsap.to('#animate-dailydiscount', {
+      delay: .8,
       duration: 1,
       y: 0,
       stagger: .05,
@@ -29,6 +30,15 @@ function Jaysonbeniza() {
         // markers: true
       }
     });
+
+    gsap.to('#animate-screenshot', {
+      delay: .8,
+      duration: 1,
+      stagger: .05,
+      y: 0,
+      ease: 'power1.in'
+    });
+
     window.scrollTo(0, 0)
   }, []);
 
@@ -273,40 +283,40 @@ function Jaysonbeniza() {
           laptop-lg:gap-y-20
           desktop:gap-y-20'>
           {/* hero section */}
-          <div className='
+          <div className='screenshot-container
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-8 laptop:col-start-1
             laptop-lg:col-span-8 laptop-lg:col-start-1
             desktop:col-span-8 desktop:col-start-1'>
-            <img src={jaysonbeniza_hero} alt="jaysonbeniza-hero-section" className='border border-black' />
+            <img src={jaysonbeniza_hero} alt="jaysonbeniza-hero-section" className='screenshot-img border border-black' id='animate-screenshot'/>
           </div>
           {/* about */}
-          <div className='
+          <div className='screenshot-container
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-5 laptop:col-start-3
             laptop-lg:col-span-5 laptop-lg:col-start-3
             desktop:col-span-5 desktop:col-start-3'>
-            <img src={jaysonbeniza_about} alt="jaysonbeniza-hero-about" className='border border-black' />
+            <img src={jaysonbeniza_about} alt="jaysonbeniza-hero-about" className='screenshot-img border border-black' id='animate-screenshot'/>
           </div>
           {/* project */}
-          <div className='
+          <div className='screenshot-container
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-5 laptop:col-start-2
             laptop-lg:col-span-5 laptop-lg:col-start-2
             desktop:col-span-5 desktop:col-start-2'>
-            <img src={jaysonbeniza_project} alt="jaysonbeniza-hero-project" className='border border-black' />
+            <img src={jaysonbeniza_project} alt="jaysonbeniza-hero-project" className='screenshot-img border border-black' id='animate-screenshot'/>
           </div>
           {/* contact */}
-          <div className='
+          <div className='screenshot-container
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-5 laptop:col-start-4
             laptop-lg:col-span-5 laptop-lg:col-start-4
             desktop:col-span-5 desktop:col-start-4'>
-            <img src={jaysonbeniza_contact} alt="jaysonbeniza-hero-contact" className='border border-black' />
+            <img src={jaysonbeniza_contact} alt="jaysonbeniza-hero-contact" className='screenshot-img border border-black' id='animate-screenshot'/>
           </div>
         </div>
       </section>

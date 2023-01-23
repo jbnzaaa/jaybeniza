@@ -13,19 +13,19 @@ import Jaysonbeniza from './components/pages/projects/Jaysonbeniza';
 import Regain from './components/pages/projects/Regain';
 // import Scroll from './components/animation/SmoothScrollbar';
 // GSAP
-// import gsap from 'gsap' 
-// import ScrollTrigger from 'gsap/ScrollTrigger'
+import gsap from 'gsap' 
+import ScrollTrigger from 'gsap/ScrollTrigger'
 
 function App() {
-  useEffect(() => {
-    // onload animation
-    // gsap.to('#main-container', { duration: 1,  delay: .5, y: '-100vh', ease: 'power1.inOut',
-    //   scrollTrigger: {
-    //     trigger: '#main-container',
-    //     start: 'bottom 250%',
-    //   }
-    // });
-  }, []);
+  // useEffect(() => {
+  //   // onload animation
+  //   gsap.to('#main-container', { duration: 1,  delay: .5, y: '-100vh', ease: 'power1.inOut',
+  //     scrollTrigger: {
+  //       trigger: '#main-container',
+  //       start: 'bottom 250%',
+  //     }
+  //   });
+  // }, []);
 
   return (
     <>

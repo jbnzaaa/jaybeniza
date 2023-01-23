@@ -427,6 +427,20 @@
   border-radius: 100%;
 }
 
+* body .project-container .screenshot-container {
+  position: relative;
+  overflow: hidden;
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
+}
+
+* body .project-container .screenshot-container .screenshot-img {
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
+}
+
 * body .drop-message-container {
   position: relative;
   overflow: hidden;

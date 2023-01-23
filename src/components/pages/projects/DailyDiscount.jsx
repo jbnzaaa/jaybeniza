@@ -31,6 +31,15 @@ function DailyDiscount() {
         // markers: true
       }
     });
+
+    gsap.to('#animate-screenshot', {
+      delay: .8,
+      duration: 1,
+      stagger: .05,
+      y: 0,
+      ease: 'power1.in'
+    });
+
     window.scrollTo(0, 0)
   }, []);
 
@@ -266,58 +275,58 @@ function DailyDiscount() {
           laptop-lg:gap-y-20
           desktop:gap-y-20'>
           {/* landing page */}
-          <div className='
+          <div className='screenshot-container
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-8 laptop:col-start-1
             laptop-lg:col-span-8 laptop-lg:col-start-1
             desktop:col-span-8 desktop:col-start-1'>
-            <img src={dd_landingpage} alt="dailydiscount-landing-page" className='border border-black' />
+            <img src={dd_landingpage} alt="dailydiscount-landing-page" className='screenshot-img border border-black' id='animate-screenshot'/>
           </div>
           {/* dashboard */}
-          <div className='
+          <div className='screenshot-container
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-5 laptop:col-start-2
             laptop-lg:col-span-5 laptop-lg:col-start-2
             desktop:col-span-5 desktop:col-start-2'>
-            <img src={dd_dashboard} alt="dailydiscount-dashboard" className='border border-black' />
+            <img src={dd_dashboard} alt="dailydiscount-dashboard" className='screenshot-img border border-black' id='animate-screenshot'/>
           </div>
           {/* heroes and skins */}
-          <div className='
+          <div className='screenshot-container
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-5 laptop:col-start-4
             laptop-lg:col-span-5 laptop-lg:col-start-4
             desktop:col-span-5 desktop:col-start-4'>
-            <img src={dd_heroes_skins} alt="dailydiscount-heroes-and-skins" className='border border-black' />
+            <img src={dd_heroes_skins} alt="dailydiscount-heroes-and-skins" className='screenshot-img border border-black' id='animate-screenshot'/>
           </div>
           {/* price */}
-          <div className='
+          <div className='screenshot-container
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-5 laptop:col-start-1
             laptop-lg:col-span-5 laptop-lg:col-start-1
             desktop:col-span-5 desktop:col-start-1'>
-            <img src={dd_price} alt="dailydiscount-price" className='border border-black' />
+            <img src={dd_price} alt="dailydiscount-price" className='screenshot-img border border-black' id='animate-screenshot'/>
           </div>
           {/* order details */}
-          <div className='
+          <div className='screenshot-container
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-5 laptop:col-start-3
             laptop-lg:col-span-5 laptop-lg:col-start-3
             desktop:col-span-5 desktop:col-start-3'>
-            <img src={dd_order_details} alt="dailydiscount-order-details" className='border border-black' />
+            <img src={dd_order_details} alt="dailydiscount-order-details" className='screenshot-img border border-black' id='animate-screenshot'/>
           </div>
           {/* cart */}
-          <div className='
+          <div className='screenshot-container
             mobile:col-span-8 mobile:col-start-1
             tablet:col-span-8 tablet:col-start-1
             laptop:col-span-5 laptop:col-start-4
             laptop-lg:col-span-5 laptop-lg:col-start-4
             desktop:col-span-5 desktop:col-start-4'>
-            <img src={dd_cart} alt="dailydiscount-card" className='border border-black' />
+            <img src={dd_cart} alt="dailydiscount-card" className='screenshot-img border border-black' id='animate-screenshot'/>
           </div>
         </div>
       </section>
