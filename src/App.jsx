@@ -1,6 +1,7 @@
 // React 
 import React, {useEffect} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { Parallax, ParallaxProvider } from 'react-scroll-parallax';
 // 
 import './assets/styles/App.css';
 // Pages
@@ -26,6 +27,8 @@ function App() {
   //     }
   //   });
   // }, []);
+
+
 
   return (
     <>
