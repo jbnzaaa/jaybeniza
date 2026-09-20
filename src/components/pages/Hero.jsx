@@ -11,7 +11,7 @@ const HIGHLIGHT_WORDS = [
 // each line is two words sharing the same bold treatment ("UI/UX Designer.")
 const PROFESSION_LINES = [
   ['UI/UX', 'Designer.'],
-  ['Front-End', 'Designer.'],
+  ['Front-End', 'Developer.'],
 ];
 
 function Hero() {
