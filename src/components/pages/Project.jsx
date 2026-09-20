@@ -8,6 +8,8 @@ import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
+// per-letter text split
+import SplitText from '../common/SplitText'
 gsap.registerPlugin(ScrollTrigger)
 
 function Project() {
@@ -41,10 +43,10 @@ function Project() {
     });
 
     // description
-    reveals.push(scrollReveal('#animate-project', { y: 0, stagger: .05, ease: 'power1.in' }));
+    reveals.push(scrollReveal('#animate-project', { y: 0, stagger: .02, ease: 'power1.in' }));
 
     // behance link
-    reveals.push(scrollReveal('#animate-link', { y: 0, ease: 'power1.in' }));
+    reveals.push(scrollReveal('#animate-link', { y: 0, stagger: .02, ease: 'power1.in' }));
 
     return () => {
       reveals.forEach((r) => r.kill());
@@ -75,31 +77,14 @@ function Project() {
                 laptop:col-span-4 laptop:col-start-5
                 laptop-lg:col-span-2 laptop-lg:col-start-7
                 desktop:col-span-2 desktop:col-start-7'>
-                <div className='flex flex-wrap
+                <p className='flex flex-wrap text-white
                   mobile:h-[25px] mobile:text-[.9rem]
                   tablet:h-[30px] tablet:text-[.9rem]
                   laptop:h-[50px] laptop:text-[1rem]
                   laptop-lg:h-[50px] laptop-lg:text-[1rem]
                   desktop:h-[50px] desktop:text-[1.1rem]'>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>A</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>collection</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>of</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>projects</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>I've</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>worked</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>on</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>throughout</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>my</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>journey</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>as</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>self-taught</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>web</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>developer</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>and</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>user</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>interface</p></div>
-                  <div className='description'><p className='text-white description-p' id='animate-project'>designer.</p></div>
-                </div>
+                  <SplitText text="A collection of projects I've worked on throughout my journey as self-taught web developer and user interface designer." id='animate-project' />
+                </p>
               </div>
               {/* page header */}
               <div className='col-span-8 col-start-1 w-full flex flex-col row-start-2 row-span-3 flex justify-center'>
@@ -147,20 +132,14 @@ function Project() {
                   laptop-lg:h-[50px]
                   desktop:h-[50px]'>
                   <a href='https://www.behance.net/jbnza' target='_blank' rel='noreferrer'
-                    className='behance-link flex items-center p-2.5
-                    mobile:translate-y-[28px]
-                    tablet:translate-y-[35px]
-                    laptop:translate-y-[50px]
-                    laptop-lg:translate-y-[50px]
-                    desktop:translate-y-[50px]'
-                    id='animate-link'>
+                    className='behance-link flex items-center p-2.5'>
                     <span className='flex items-center text-white
                       mobile:text-[.9rem]
                       tablet:text-[.9rem]
-                      laptop:text-[1rem] 
+                      laptop:text-[1rem]
                       laptop-lg:text-[1rem]
                       desktop:text-[1.1rem]'>
-                      Look at my UI Designs 
+                      <SplitText text='Look at my UI Designs' id='animate-link' />
                       <RiArrowRightDownLine id='icon' className='fill-white ml-1
                       mobile:text-xl
                       tablet:text-1xl

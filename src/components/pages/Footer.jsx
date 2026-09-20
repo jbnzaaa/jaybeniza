@@ -4,19 +4,24 @@ import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
+// per-letter text split
+import SplitText from '../common/SplitText'
 
 function Footer() {
   const [showFooter] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
-    // footer animation - 'top bottom' (earliest possible trigger point) since
-    // the footer is the last element on the page: a later threshold like
-    // 'top 85%' can require scrolling past the page's natural max scroll
-    // position when the footer is short, so it would never fire
+    // 'top bottom' (most lenient) instead of the shared 85% default: the
+    // footer is the last, short element on the page, so 'top 85%' can
+    // require scrolling past the page's actual max scroll extent to be
+    // satisfied - confirmed directly (letters stuck at their fully hidden
+    // offset, onEnter never firing, even at max scroll). unlike the
+    // Hero/other sections this "unreachable trigger" risk was removed
+    // from, the footer's position genuinely makes this unavoidable
     const reveal = scrollReveal('#animate-footer', {
       y: 0,
-      stagger: .05,
+      stagger: .02,
       ease: 'power1.in',
     }, { start: 'top bottom' });
     return () => reveal.kill();
@@ -34,65 +39,29 @@ function Footer() {
           laptop:p-[2rem] laptop:h-[15vh] laptop:grid-cols-8 laptop:text-[1rem]
           laptop-lg:p-[3rem] laptop-lg:h-[15vh] laptop-lg:grid-cols-8 laptop-lg:text-[1rem]
           desktop:p-[3rem] desktop:h-full desktop:grid-cols-8 desktop:text-[1.1rem]'>
-          <section className='col-start-1 flex flex-row
+          <section className='col-start-1 flex flex-row text-white
             mobile:col-span-8 mobile:h-[20px]
             tablet:col-span-3 tablet:h-[20px]
             laptop:col-span-3 laptop:h-[23px]
             laptop-lg:col-span-2 laptop-lg:h-[23px]
             desktop:col-span-2 desktop:h-[23px]'>
-            <div className='footer-container'>
-              <p className='footer text-white' id='animate-footer'>&copy;</p>
-            </div>
-            <div className='footer-container'>
-              <p className='footer text-white' id='animate-footer'>{new Date().getFullYear()}</p>
-            </div>
-            <div className='footer-container'>
-              <p className='footer text-white' id='animate-footer'>Jayson</p>
-            </div>
-            <div className='footer-container'>
-              <p className='footer text-white' id='animate-footer'>Beniza</p>
-            </div>
+            <SplitText text={`© ${new Date().getFullYear()} Jayson Beniza`} id='animate-footer' />
           </section>
-          <section className='flex flex-row
+          <section className='flex flex-row text-white
             mobile:col-span-8 mobile:col-start-1 mobile:justify-start mobile:h-[20px]
             tablet:col-span-8 tablet:col-start-1 tablet:justify-start tablet:h-[20px]
             laptop:col-span-2 laptop:col-start-5 laptop:justify-end laptop:h-[23px]
             laptop-lg:col-span-2 laptop-lg:col-start-5 laptop-lg:justify-end laptop-lg:h-[23px]
             desktop:col-span-2 desktop:col-start-5 desktop:justify-end desktop:h-[23px]'>
-            <div className='footer-container'>
-              <p className='footer text-white' id='animate-footer'>Last</p>
-            </div>
-            <div className='footer-container'>
-              <p className='footer text-white' id='animate-footer'>Update</p>
-            </div>
-            <div className='footer-container'>
-              <p className='footer text-white' id='animate-footer'>September</p>
-            </div>
-            <div className='footer-container'>
-              <p className='footer text-white' id='animate-footer'>2026</p>
-            </div>
+            <SplitText text='Last Update September 2026' id='animate-footer' />
           </section>
-          <section className='flex flex-row
+          <section className='flex flex-row text-white
             mobile:col-span-8 mobile:col-start-1 mobile:justify-start mobile:h-[20px]
             tablet:col-span-8 tablet:col-start-1 tablet:justify-start tablet:h-[20px]
             laptop:col-span-2 laptop:col-start-7 laptop:justify-end laptop:h-[23px]
             laptop-lg:col-span-2 laptop-lg:col-start-7 laptop-lg:justify-end laptop-lg:h-[23px]
             desktop:col-span-2 desktop:col-start-7 desktop:justify-end desktop:h-[23px]'>
-            <div className='footer-container'>
-              <p className='footer text-white' id='animate-footer'>Design</p>
-            </div>
-            <div className='footer-container'>
-              <p className='footer text-white' id='animate-footer'>&</p>
-            </div>
-            <div className='footer-container'>
-              <p className='footer text-white' id='animate-footer'>Develop</p>
-            </div>
-            <div className='footer-container'>
-              <p className='footer text-white' id='animate-footer'>by</p>
-            </div>
-            <div className='footer-container'>
-              <p className='footer text-white' id='animate-footer'>Me</p>
-            </div>
+            <SplitText text='Design & Develop by Me' id='animate-footer' />
           </section>
         </div>
       }

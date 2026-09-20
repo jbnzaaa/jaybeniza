@@ -14,15 +14,19 @@ import Regain from './components/pages/projects/Regain';
 // GSAP
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
-gsap.registerPlugin(ScrollTrigger)
+import ScrollSmoother from 'gsap/ScrollSmoother'
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 // re-measures every ScrollTrigger against the new route's content height,
-// and resets scroll to the top, whenever the page changes
+// and resets scroll to the top, whenever the page changes. Goes through
+// ScrollSmoother.get().scrollTo() (not window.scrollTo) so the smoother's
+// own internal position - which is what actually drives the page - is
+// reset too, not just the native scroll position it proxies
 function ScrollManager() {
   const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    ScrollSmoother.get()?.scrollTo(0, true);
     const id = requestAnimationFrame(() => ScrollTrigger.refresh());
     return () => cancelAnimationFrame(id);
   }, [location.pathname]);
@@ -31,19 +35,35 @@ function ScrollManager() {
 }
 
 function App() {
+  useEffect(() => {
+    // smooth: how many seconds the scroll position takes to catch up to
+    // the actual scroll input - higher is slower/more damped (default 1)
+    const smoother = ScrollSmoother.create({
+      wrapper: '#smooth-wrapper',
+      content: '#smooth-content',
+      smooth: 1.8,
+      effects: true,
+    });
+    return () => smoother.kill();
+  }, []);
+
   return (
     <>
       <Router>
         <ScrollManager/>
-        <Navbar/>
-        <Routes>
-          <Route path='/' element={<Home/>}/>
-          <Route path='/dailydiscount' element={<DailyDiscount/>}/>
-          <Route path='/jbnza' element={<Jbnza/>}/>
-          <Route path='/jaysonbeniza' element={<Jaysonbeniza/>}/>
-          <Route path='/regain' element={<Regain/>}/>
-        </Routes>
-        <Footer/>
+        <div id='smooth-wrapper'>
+          <div id='smooth-content'>
+            <Navbar/>
+            <Routes>
+              <Route path='/' element={<Home/>}/>
+              <Route path='/dailydiscount' element={<DailyDiscount/>}/>
+              <Route path='/jbnza' element={<Jbnza/>}/>
+              <Route path='/jaysonbeniza' element={<Jaysonbeniza/>}/>
+              <Route path='/regain' element={<Regain/>}/>
+            </Routes>
+            <Footer/>
+          </div>
+        </div>
       </Router>
     </>
   );

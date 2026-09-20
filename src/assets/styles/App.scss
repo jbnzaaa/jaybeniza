@@ -24,7 +24,6 @@
   font-family: 'Montserrat', sans-serif;
   color: #0F0E17;
   text-transform: uppercase;
-  scroll-behavior: smooth;
 }
 
 * body {
@@ -61,27 +60,58 @@
   top: 0px;
 }
 
+// shared per-letter reveal building blocks (SplitText.jsx) - em-based so
+// the same rules work at any font-size without per-breakpoint tuning.
+// clip height (1.15em) is deliberately taller than the letter's travel
+// distance (1em via translateY) so there's no dead time before any
+// motion is visible (see Hero's translate-y/wrapper-height writeup this
+// pattern is based on), and .split-letter is explicitly inline-block
+// since transform has no effect on display:inline elements
+* body .split-word {
+  display: inline-block;
+  white-space: nowrap;
+  margin-right: .28em;
+  // text-indent is inherited, and every inline-block descendant below
+  // this point establishes its own "first line" - without resetting it
+  // here, a paragraph-level indent (About's first-line indent) re-applies
+  // itself at every word/letter-clip/letter nesting level and compounds,
+  // blowing up widths catastrophically. resetting it here confines the
+  // indent to only the paragraph's actual first line, as intended
+  text-indent: 0;
+  // the global `* { color: #0F0E17 }` reset matches every element
+  // DIRECTLY, including these - since it's not inheritance being
+  // overridden but a same-specificity-tier rule that also directly
+  // targets this element, a color set on an ancestor (e.g. text-white on
+  // a wrapping p/span) never reaches the letters without this
+  color: inherit;
+}
+
+* body .split-letter-clip {
+  display: inline-block;
+  color: inherit;
+  overflow: hidden;
+  height: 1.15em;
+  vertical-align: top;
+}
+
+* body .split-letter {
+  display: inline-block;
+  color: inherit;
+  transform: translateY(1em);
+}
+
 * body .logo-container {
   height: auto;
   position: relative;
-  overflow: hidden;
-}
-
-* body .logo-container .logo {
-  transform: translateY(30px);
-  transition: 1s ease;
 }
 
 * body .link-container {
   position: relative;
-  overflow: hidden;
 }
 
 * body .link-container .link {
   position: absolute;
-  transform: translateY(32px);
   text-align: right;
-  transition: 1s ease;
 }
 
 * body .link-container .link span {
@@ -115,8 +145,7 @@
 }
 
 * body .menu-link div {
-  transform: translateY(20px);
-  transition: 1s ease;
+  position: relative;
 }
 
 * body .menu-link div span {
@@ -132,13 +161,6 @@
 * body .page-link {
   height: 60px;
   position: relative;
-  overflow: hidden;
-}
-
-* body .page-link .link,
-* body .page-link #mobileview-link {
-  transform: translateY(60px);
-  transition: 1s ease;
 }
 
 * body .page-link .link span,
@@ -169,51 +191,13 @@
   border-radius: 100%;
 }
 
-* body .p-container {
-  position: relative;
-  overflow: hidden;
-}
-
-* body .p-container .hero-p {
-  transform: translateY(30px);
-  margin-right: 5px;
-  transition: 1s ease;
-}
-
 * body .hero-container {
   position: relative;
   overflow: hidden;
 }
 
-* body .hero-word-container {
-  position: relative;
-  overflow: hidden;
-}
-
-// no CSS transition on .hero-designerdev - GSAP drives this transform
-// directly every frame, and a competing CSS transition on the same
-// property fights it, which is most visible here because this element's
-// translate-y offset (65-135px) is far larger than any other reveal on
-// the site
-
 * body .about-container {
   position: relative;
-  overflow: hidden;
-}
-
-* body .about-container .about-greetings {
-  margin-right: 10px;
-  transition: 1s ease;
-}
-
-* body .content-container {
-  position: relative;
-  overflow: hidden;
-  height: auto;
-}
-
-* body .content-container .about-paragraph {
-  transition: 1s ease;
 }
 
 * body #what-i-use-line,
@@ -235,35 +219,12 @@
 
 * body .stack-container {
   position: relative;
-  overflow: hidden;
-}
-
-* body .stack-container .stack-context {
-  margin-right: 10px;
-  transition: 1s ease;
 }
 
 * body .stacks {
   position: relative;
-  overflow: hidden;
   height: auto;
-}
-
-* body .stacks .stack-context {
   margin-right: 5px;
-  transition: 1s ease;
-}
-
-* body .description {
-  position: relative;
-  overflow: hidden;
-  height: auto;
-}
-
-* body .description .description-p {
-  transform: translateY(30px);
-  margin-right: 5px;
-  transition: 1s ease;
 }
 
 * body .selected-project-header {
@@ -290,10 +251,6 @@
 
 * body .behance-link-container .behance-link:hover {
   letter-spacing: 2px;
-}
-
-* body .behance-link-container a {
-  transition: 1s ease;
 }
 
 * body .behance-link-container a #icon {
@@ -339,50 +296,23 @@
   transition: .5s ease-in-out;
 }
 
-* body .project-container .p-container {
-  position: relative;
-  overflow: hidden;
-  transition: 1s ease;
-}
-
-* body .project-container .p-container .project-h1 {
-  transition: 1s ease;
-}
-
-* body .project-container .p-container .project-p {
-  transform: translateY(30px);
-  margin-right: 5px;
-  transition: 1s ease;
-}
-
-* body .project-container .p-container .project-ps {
-  transform: translateY(30px);
-  margin-right: 15px;
-  transition: 1s ease;
-}
-
-* body .project-container .p-container .project-link {
-  transform: translateY(30px);
-  transition: 1s ease;
-}
-
-* body .project-container .p-container .project-link span {
+* body .project-container .project-link span {
   position: relative;
   letter-spacing: 0;
   transition: .3s ease-in-out;
 }
 
-* body .project-container .p-container .project-link span:hover {
+* body .project-container .project-link span:hover {
   letter-spacing: 2px;
 }
 
-* body .project-container .p-container .project-link span #icon {
+* body .project-container .project-link span #icon {
   transform: rotate(0deg);
   transition: all .3s ease-in-out;
   border-radius: 100%;
 }
 
-* body .project-container .p-container .project-link span:hover #icon {
+* body .project-container .project-link span:hover #icon {
   transform: rotate(-45deg);
   transition: all .3s ease-in-out;
   background: var(--main-color);
@@ -401,73 +331,18 @@
   transition: 1s ease;
 }
 
-* body .drop-message-container {
-  position: relative;
-  overflow: hidden;
-  height: auto;
-}
-
-* body .drop-message-container .context {
-  margin-right: 20px;
-  transition: 1s ease;
-}
-
-* body .contact-description-container {
-  height: auto;
-  position: relative;
-  overflow: hidden;
-}
-
-* body .contact-description-container .context {
-  transform: translateY(35px);
-  margin-right: 5px;
-  transition: 1s ease;
-}
-
 * body .account-container {
   position: relative;
-  overflow: hidden;
   height: auto;
-}
-
-* body .account-container .accounts {
-  transform: translateY(35px);
-  transition: 1s ease;
-}
-
-* body .footer-container {
-  position: relative;
-  overflow: hidden;
-}
-
-* body .footer-container .footer {
-  transition: 1s ease;
-  transform: translateY(23px);
-  margin-right: 5px;
-}
-
-* body .footer-container .footer-update-date {
-  margin-right: 5px;
 }
 
 * body .section-header-container {
   position: relative;
-  overflow: hidden;
-}
-
-* body .section-header-container .section-header-word {
-  margin-right: 10px;
-  transition: 1s ease;
 }
 
 * body .entry-container {
   position: relative;
-  overflow: hidden;
   height: auto;
-}
-
-* body .entry-container .entry-line {
-  transition: 1s ease;
 }
 
 * body .cert-row {

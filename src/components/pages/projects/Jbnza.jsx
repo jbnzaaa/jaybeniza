@@ -1,6 +1,6 @@
-// 
+//
 import React, { useEffect } from 'react'
-// 
+//
 import { Link } from 'react-router-dom'
 // icons
 import {RiArrowRightDownLine} from 'react-icons/ri'
@@ -14,20 +14,18 @@ import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 // scroll reveal
 import { scrollReveal } from '../../../utils/scrollReveal'
+// per-letter text split
+import SplitText from '../../common/SplitText'
 gsap.registerPlugin(ScrollTrigger)
 
-const DESCRIPTION_WORDS = [
-  'Jbnza', 'is', 'a', 'web-based', 'portfolio', 'designed', 'to', 'showcase',
-  'my', 'most', 'recent', 'projects,', 'programming', 'language', 'and',
-  'softwares', 'I', 'use', 'and', 'bit', 'of', 'information', 'about', 'myself.',
-];
+const DESCRIPTION = 'Jbnza is a web-based portfolio designed to showcase my most recent projects, programming language and softwares I use and bit of information about myself.';
 
 function Jbnza() {
   useEffect(() => {
     // project content animation
     const reveal = scrollReveal('#animate-dailydiscount', {
       y: 0,
-      stagger: .05,
+      stagger: .02,
       ease: 'power1.in',
     });
 
@@ -66,32 +64,26 @@ function Jbnza() {
             laptop:col-span-4
             laptop-lg:col-span-4
             desktop:col-span-4'>
-            <div className='p-container flex flex-wrap
+            <div className='flex flex-wrap
               mobile:h-[35px] mobile:mb-2 mobile:text-[2rem]
               tablet:h-[60px] tablet:mb-2 tablet:text-[3rem]
               laptop:h-[90px] laptop:mb-3 laptop:text-[4rem]
               laptop-lg:h-[100px] laptop-lg:mb-3 laptop-lg:text-[5.3rem]
               desktop:h-[110px] desktop:mb-3 desktop:text-[5.5rem]'>
-              <span className='project-h1 font-lexend font-medium leading-none tracking-tighter
-                mobile:translate-y-[35px]
-                tablet:translate-y-[80px]
-                laptop:translate-y-[110px]
-                laptop-lg:translate-y-[110px]
-                desktop:translate-y-[110px]'
-                id='animate-dailydiscount'>
-                Portfolio v1
+              <span className='project-h1 font-lexend font-medium leading-none tracking-tighter'>
+                <SplitText text='Portfolio v1' id='animate-dailydiscount' />
               </span>
             </div>
           </div>
           <div className='col-span-2 col-start-7'>
           <div className='font-lexend font-medium cursor-pointer tracking-tighter text-right
-              mobile:text-[.9rem] mobile:h-[20px] 
-              tablet:text-[.9rem] tablet:h-[20px] 
-              laptop:text-[1rem] laptop:h-[30px] 
-              laptop-lg:text-[1rem] laptop-lg:h-[30px] 
+              mobile:text-[.9rem] mobile:h-[20px]
+              tablet:text-[.9rem] tablet:h-[20px]
+              laptop:text-[1rem] laptop:h-[30px]
+              laptop-lg:text-[1rem] laptop-lg:h-[30px]
               desktop:text-[1.1rem] desktop:h-[30px]'>
               <Link to='/'>
-                <div className='p-container'><p className='project-p' id='animate-dailydiscount'>Return</p></div>
+                <SplitText text='Return' id='animate-dailydiscount' />
               </Link>
             </div>
           </div>
@@ -103,12 +95,12 @@ function Jbnza() {
             laptop-lg:col-span-1
             desktop:col-span-1'>
             <div className='
-              mobile:text-[.9rem] mobile:h-[20px] 
-              tablet:text-[.9rem] tablet:h-[20px] 
-              laptop:text-[1rem] laptop:h-[30px] 
+              mobile:text-[.9rem] mobile:h-[20px]
+              tablet:text-[.9rem] tablet:h-[20px]
+              laptop:text-[1rem] laptop:h-[30px]
               laptop-lg:text-[1rem] laptop-lg:h-[30px]
               desktop:text-[1.1rem] desktop:h-[30px]'>
-              <div className='p-container'><p className='project-p' id='animate-dailydiscount'>2022</p></div>
+              <SplitText text='2022' id='animate-dailydiscount' />
             </div>
           </div>
           <div className='col-start-2
@@ -117,18 +109,14 @@ function Jbnza() {
             laptop:col-span-2
             laptop-lg:col-span-2
             desktop:col-span-2'>
-            <div className='flex flex-wrap
+            <p className='flex flex-wrap
               mobile:text-[.9rem]
               tablet:text-[.9rem]
-              laptop:text-[1rem] 
+              laptop:text-[1rem]
               laptop-lg:text-[1rem]
               desktop:text-[1.1rem] '>
-              {DESCRIPTION_WORDS.map((word, i) => (
-                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]' key={i}>
-                  <p className='project-p' id='animate-dailydiscount'>{word}</p>
-                </div>
-              ))}
-            </div>
+              <SplitText text={DESCRIPTION} id='animate-dailydiscount' />
+            </p>
           </div>
           <div className='
             mobile:col-span-6 mobile:col-start-3
@@ -143,21 +131,21 @@ function Jbnza() {
               laptop:mb-5
               laptop-lg:mb-5
               desktop:mb-5'>
-              <div className='h-[20px]
+              <div className='h-[20px] font-semibold
                 mobile:text-[.5rem]
                 tablet:text-[.5rem]
-                laptop:text-[.9rem] 
-                laptop-lg:text-[.9rem] 
+                laptop:text-[.9rem]
+                laptop-lg:text-[.9rem]
                 desktop:text-[.9rem] '>
-                <div className='p-container'><p className='project-ps font-semibold' id='animate-dailydiscount'>Category</p></div>
+                <SplitText text='Category' id='animate-dailydiscount' />
               </div>
               <div className='
-                mobile:text-[.9rem] 
+                mobile:text-[.9rem]
                 tablet:text-[.9rem]
                 laptop:text-[1rem]
                 laptop-lg:text-[1rem]
                 desktop:text-[1.1rem]'>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>Personal / Web Development</p></div>
+                <SplitText text='Personal / Web Development' id='animate-dailydiscount' />
               </div>
             </div>
             {/* role */}
@@ -167,22 +155,22 @@ function Jbnza() {
               laptop:mb-5
               laptop-lg:mb-5
               desktop:mb-5'>
-              <div className='h-[20px]
+              <div className='h-[20px] font-semibold
                 mobile:text-[.5rem]
                 tablet:text-[.5rem]
-                laptop:text-[.9rem] 
-                laptop-lg:text-[.9rem] 
+                laptop:text-[.9rem]
+                laptop-lg:text-[.9rem]
                 desktop:text-[.9rem] '>
-                <div className='p-container'><p className='project-ps font-semibold' id='animate-dailydiscount'>Role</p></div>
+                <SplitText text='Role' id='animate-dailydiscount' />
               </div>
               <div className='flex flex-wrap h-[30px]
                 mobile:text-[.9rem]
                 tablet:text-[.9rem]
-                laptop:text-[1rem] 
-                laptop-lg:text-[1rem] 
+                laptop:text-[1rem]
+                laptop-lg:text-[1rem]
                 desktop:text-[1.1rem] '>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>UI Designer</p></div>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>Web Developer</p></div>
+                <SplitText text='UI Designer' id='animate-dailydiscount' />
+                <SplitText text='Web Developer' id='animate-dailydiscount' />
               </div>
             </div>
             {/* technology used */}
@@ -192,13 +180,13 @@ function Jbnza() {
               laptop:mb-5
               laptop-lg:mb-5
               desktop:mb-5'>
-              <div className='h-[20px]
+              <div className='h-[20px] font-semibold
                 mobile:text-[.5rem]
                 tablet:text-[.5rem]
-                laptop:text-[.9rem] 
-                laptop-lg:text-[.9rem] 
+                laptop:text-[.9rem]
+                laptop-lg:text-[.9rem]
                 desktop:text-[.9rem] '>
-                <div className='p-container'><p className='project-ps font-semibold' id='animate-dailydiscount'>Technology Used</p></div>
+                <SplitText text='Technology Used' id='animate-dailydiscount' />
               </div>
               <div className='flex flex-wrap
                 mobile:text-[.9rem]
@@ -206,11 +194,11 @@ function Jbnza() {
                 laptop:text-[1rem]
                 laptop-lg:text-[1rem]
                 desktop:text-[1.1rem]'>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>React JS</p></div>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>Meterial UI</p></div>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>SASS</p></div>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>FIGMA</p></div>
-                <div className='p-container'><p className='project-ps h-[30px] mobile:h-[20px] tablet:h-[20px]' id='animate-dailydiscount'>VERCEL APP</p></div>
+                <SplitText text='React JS' id='animate-dailydiscount' />
+                <SplitText text='Meterial UI' id='animate-dailydiscount' />
+                <SplitText text='SASS' id='animate-dailydiscount' />
+                <SplitText text='FIGMA' id='animate-dailydiscount' />
+                <SplitText text='VERCEL APP' id='animate-dailydiscount' />
               </div>
             </div>
             {/* project link */}
@@ -220,39 +208,37 @@ function Jbnza() {
               laptop:mb-5
               laptop-lg:mb-5
               desktop:mb-5'>
-              <div className='h-[20px]
+              <div className='h-[20px] font-semibold
                 mobile:text-[.5rem]
                 tablet:text-[.5rem]
-                laptop:text-[.9rem] 
-                laptop-lg:text-[.9rem] 
+                laptop:text-[.9rem]
+                laptop-lg:text-[.9rem]
                 desktop:text-[.9rem] '>
-                <div className='p-container'><p className='project-ps font-semibold' id='animate-dailydiscount'>Visit site</p></div>
+                <SplitText text='Visit site' id='animate-dailydiscount' />
               </div>
               <div className='flex flex-wrap
                 mobile:text-[.9rem]
                 tablet:text-[.9rem]
-                laptop:text-[1rem] 
-                laptop-lg:text-[1rem] 
+                laptop:text-[1rem]
+                laptop-lg:text-[1rem]
                 desktop:text-[1.1rem] '>
-                <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'>
-                  <div className='project-link' id='animate-dailydiscount'>
-                    <a href='https://jbnza.vercel.app' target='_blank' rel='noreferrer'>
-                      <span className='flex items-center
-                        mobile:text-[.9rem]
-                        tablet:text-[.9rem]
-                        laptop:text-[1rem]
-                        laptop-lg:text-[1rem]
-                        desktop:text-[1.1rem]'>
-                        jbnza
-                        <RiArrowRightDownLine id='icon' className='fill-black ml-1
-                        mobile:text-xl
-                        tablet:text-1xl
-                        laptop:text-2xl
-                        laptop-lg:text-2xl
-                        desktop:text-2xl'/>
-                      </span> 
-                    </a>
-                  </div>
+                <div className='project-link'>
+                  <a href='https://jbnza.vercel.app' target='_blank' rel='noreferrer'>
+                    <span className='flex items-center
+                      mobile:text-[.9rem]
+                      tablet:text-[.9rem]
+                      laptop:text-[1rem]
+                      laptop-lg:text-[1rem]
+                      desktop:text-[1.1rem]'>
+                      <SplitText text='jbnza' id='animate-dailydiscount' />
+                      <RiArrowRightDownLine id='icon' className='fill-black ml-1
+                      mobile:text-xl
+                      tablet:text-1xl
+                      laptop:text-2xl
+                      laptop-lg:text-2xl
+                      desktop:text-2xl'/>
+                    </span>
+                  </a>
                 </div>
               </div>
             </div>

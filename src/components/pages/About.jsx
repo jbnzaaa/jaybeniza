@@ -9,13 +9,15 @@ import FrameworkLibrary from './about/FrameworkLibrary';
 import ToolTechnology from './about/ToolTechnology';
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
+// per-letter text split
+import SplitText from '../common/SplitText'
 
 function About() {
   useEffect(() => {
     // greeting container animation
     const reveal = scrollReveal('#animate-about', {
       y: 0,
-      stagger: .05,
+      stagger: .02,
       ease: 'power1.in',
     });
 
@@ -46,32 +48,8 @@ function About() {
               laptop:h-[90px] laptop:mb-3 laptop:text-[5rem]
               laptop-lg:h-[100px] laptop-lg:mb-3 laptop-lg:text-[5.3rem]
               desktop:h-[110px] desktop:mb-3 desktop:text-[5.5rem]'>
-              <span className='about-greetings font-lexend font-medium leading-none tracking-tighter
-                mobile:translate-y-[35px]
-                tablet:translate-y-[80px]
-                laptop:translate-y-[110px]
-                laptop-lg:translate-y-[110px]
-                desktop:translate-y-[120px]'
-                id='animate-about'>
-                Hello,
-              </span>
-              <span className='about-greetings font-lexend font-medium leading-none tracking-tighter
-                mobile:translate-y-[35px]
-                tablet:translate-y-[80px]
-                laptop:translate-y-[110px]
-                laptop-lg:translate-y-[110px]
-                desktop:translate-y-[120px]'
-                id='animate-about'>
-                I'm
-              </span>
-              <span className='about-greetings font-lexend font-medium leading-none tracking-tighter
-                mobile:translate-y-[35px]
-                tablet:translate-y-[80px]
-                laptop:translate-y-[110px]
-                laptop-lg:translate-y-[110px]
-                desktop:translate-y-[120px]'
-                id='animate-about'>
-                Jayson
+              <span className='about-greetings font-lexend font-medium leading-none tracking-tighter'>
+                <SplitText text="Hello, I'm Jayson" id='animate-about' />
               </span>
               {/* <ul className='
                 mobile:left-[168px] mobile:h-[34px]

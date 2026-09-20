@@ -10,6 +10,10 @@ import Resume from '../../assets/files/Jayson_Beniza.pdf'
 // GSAP
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+// scroll reveal - same helper every other section on the site uses
+import { scrollReveal } from '../../utils/scrollReveal'
+// per-letter text split
+import SplitText from '../common/SplitText'
 gsap.registerPlugin(ScrollTrigger)
 
 function Navbar() {
@@ -20,14 +24,12 @@ function Navbar() {
   const location = useLocation();
 
   useEffect(() => {
-    // nav links animation
-    gsap.to('#animate-nav', {
-      duration: 1,
+    const reveal = scrollReveal('#animate-nav', {
       y: 0,
-      stagger: .05,
+      stagger: .02,
       ease: 'power1.in',
-      scrollTrigger: { trigger: '#animate-nav', }
     });
+    return () => reveal.kill();
   }, []);
 
   useEffect(() => {
@@ -44,7 +46,7 @@ function Navbar() {
       duration: 1,
       delay: 1,
       y: 0,
-      stagger: .05,
+      stagger: .02,
       ease: 'power1.in',
     });
 
@@ -87,9 +89,8 @@ function Navbar() {
                     tablet:text-[.9rem]
                     laptop:text-[1.1rem]
                     laptop-lg:text-[1.1rem]
-                    desktop:text-[1.3rem]'
-                    id='animate-nav'>
-                    jaysonbeniza
+                    desktop:text-[1.3rem]'>
+                    <SplitText text='jaybeniza' id='animate-nav' />
                   </h1>
                 </Link>
               </div>
@@ -107,7 +108,7 @@ function Navbar() {
                 laptop:h-[32px]
                 laptop-lg:h-[32px]
                 desktop:h-[32px]'>
-                <div className='link' id='animate-nav'>
+                <div className='link'>
                   <Link to='/#'>
                     <span className='flex items-center
                       mobile:text-[.9rem]
@@ -115,7 +116,7 @@ function Navbar() {
                       laptop:text-[1rem]
                       laptop-lg:text-[1rem]
                       desktop:text-[1.1rem]'>
-                      Intro
+                      <SplitText text='Intro' id='animate-nav' />
                       <RiArrowRightDownLine id='icon' className='fill-black ml-1
                         mobile:text-xl
                         tablet:text-1xl
@@ -132,7 +133,7 @@ function Navbar() {
                 laptop:h-[32px]
                 laptop-lg:h-[32px]
                 desktop:h-[32px]' >
-                <div className='link' id='animate-nav'>
+                <div className='link'>
                   <Link to='/#work-experience'>
                     <span className='flex items-center
                       mobile:text-[.9rem]
@@ -140,7 +141,7 @@ function Navbar() {
                       laptop:text-[1rem]
                       laptop-lg:text-[1rem]
                       desktop:text-[1.1rem]'>
-                      Work
+                      <SplitText text='Work' id='animate-nav' />
                       <RiArrowRightDownLine id='icon' className='fill-black ml-1
                       mobile:text-xl
                       tablet:text-1xl
@@ -165,7 +166,7 @@ function Navbar() {
                 laptop:h-[32px]
                 laptop-lg:h-[32px]
                 desktop:h-[32px]'>
-                <div className='link' id='animate-nav'>
+                <div className='link'>
                   <Link to='/#certificates-awards'>
                     <span className='flex items-center
                       mobile:text-[.9rem]
@@ -173,7 +174,7 @@ function Navbar() {
                       laptop:text-[1rem]
                       laptop-lg:text-[1rem]
                       desktop:text-[1.1rem]'>
-                      Certificates
+                      <SplitText text='Certificates' id='animate-nav' />
                       <RiArrowRightDownLine id='icon' className='fill-black ml-1
                         mobile:text-xl
                         tablet:text-1xl
@@ -190,7 +191,7 @@ function Navbar() {
                 laptop:h-[32px]
                 laptop-lg:h-[32px]
                 desktop:h-[32px]' >
-                <div className='link' id='animate-nav'>
+                <div className='link'>
                   <Link to='/#project'>
                     <span className='flex items-center
                       mobile:text-[.9rem]
@@ -198,7 +199,7 @@ function Navbar() {
                       laptop:text-[1rem]
                       laptop-lg:text-[1rem]
                       desktop:text-[1.1rem]'>
-                      Project
+                      <SplitText text='Project' id='animate-nav' />
                       <RiArrowRightDownLine id='icon' className='fill-black ml-1
                       mobile:text-xl
                       tablet:text-1xl
@@ -223,7 +224,7 @@ function Navbar() {
                 laptop:h-[32px]
                 laptop-lg:h-[32px]
                 desktop:h-[32px]'>
-                <div className='link' id='animate-nav'>
+                <div className='link'>
                   <Link to='/#contact'>
                     <span className='flex items-center
                       mobile:text-[.9rem]
@@ -231,7 +232,7 @@ function Navbar() {
                       laptop:text-[1rem]
                       laptop-lg:text-[1rem]
                       desktop:text-[1.1rem]'>
-                      Contact
+                      <SplitText text='Contact' id='animate-nav' />
                       <RiArrowRightDownLine id='icon' className='fill-black ml-1
                       mobile:text-xl
                       tablet:text-1xl
@@ -248,7 +249,7 @@ function Navbar() {
                 laptop:h-[32px]
                 laptop-lg:h-[32px]
                 desktop:h-[32px]'>
-                <div className='link' id='animate-nav'>
+                <div className='link'>
                   <Link to={Resume} target='_blank' rel='noreferrer'>
                     <span className='flex items-center
                       mobile:text-[.9rem]
@@ -256,7 +257,7 @@ function Navbar() {
                       laptop:text-[1rem]
                       laptop-lg:text-[1rem]
                       desktop:text-[1.1rem]'>
-                      Resume
+                      <SplitText text='Resume' id='animate-nav' />
                       <RiArrowRightDownLine id='icon' className='fill-black ml-1
                       mobile:text-xl
                       tablet:text-1xl
@@ -280,12 +281,11 @@ function Navbar() {
                 tablet:h-[23px]
                 laptop:h-[32px]
                 laptop-lg:h-[32px]
-                desktop:h-[32px]'
-                id='animate-nav'>
-                <div className='link' id='animate-nav'>
+                desktop:h-[32px]'>
+                <div className='link'>
                   <span className='font-lexend font-medium cursor-pointer tracking-tighter text-[.9rem]'
                     onClick={() => setShowMenu(true)}>
-                    Menu
+                    <SplitText text='Menu' id='animate-nav' />
                   </span>
                 </div>
               </div>
@@ -297,10 +297,10 @@ function Navbar() {
                     <div className='h-[100vh]'>
                       {/* close button */}
                       <div className="menu-link">
-                        <div className='flex w-full justify-end' id='mobile-nav-animate'>
+                        <div className='flex w-full justify-end'>
                           <span className='font-lexend font-medium cursor-pointer tracking-tighter text-offwhite text-[.9rem]'
                             onClick={() => setShowMenu(false)} >
-                            Close
+                            <SplitText text='Close' id='mobile-nav-animate' />
                           </span>
                         </div>
                       </div>
@@ -308,9 +308,9 @@ function Navbar() {
                       <div className='flex flex-col w-full h-full justify-end'>
                         <div className='page-link'>
                           <Link to='/#'>
-                            <div className='link' id='mobile-nav-animate'>
+                            <div className='link'>
                               <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
-                                Intro
+                                <SplitText text='Intro' id='mobile-nav-animate' />
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
                               </span>
                             </div>
@@ -318,9 +318,9 @@ function Navbar() {
                         </div>
                         <div className='page-link'>
                           <Link to='/#work-experience'>
-                            <div className='link' id='mobile-nav-animate'>
+                            <div className='link'>
                               <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
-                                Work
+                                <SplitText text='Work' id='mobile-nav-animate' />
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
                               </span>
                             </div>
@@ -328,9 +328,9 @@ function Navbar() {
                         </div>
                         <div className='page-link'>
                           <Link to='/#certificates-awards'>
-                            <div className='link' id='mobile-nav-animate'>
+                            <div className='link'>
                               <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
-                                Certificates
+                                <SplitText text='Certificates' id='mobile-nav-animate' />
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
                               </span>
                             </div>
@@ -338,9 +338,9 @@ function Navbar() {
                         </div>
                         <div className='page-link'>
                           <Link to='/#project'>
-                            <div className='link' id='mobile-nav-animate'>
+                            <div className='link'>
                               <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
-                                Project
+                                <SplitText text='Project' id='mobile-nav-animate' />
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
                               </span>
                             </div>
@@ -348,9 +348,9 @@ function Navbar() {
                         </div>
                         <div className='page-link'>
                           <Link to='/#contact'>
-                            <div className='link' id='mobile-nav-animate'>
+                            <div className='link'>
                               <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
-                                Contact
+                                <SplitText text='Contact' id='mobile-nav-animate' />
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
                               </span>
                             </div>
@@ -358,9 +358,9 @@ function Navbar() {
                         </div>
                         <div className='page-link'>
                           <Link to={Resume} target='_blank' rel='noreferrer'>
-                            <div className='link' id='mobile-nav-animate'>
+                            <div className='link'>
                               <span className='flex items-center text-[2.3rem] text-offwhite'onClick={() => setShowMenu(false)}>
-                                Resume
+                                <SplitText text='Resume' id='mobile-nav-animate' />
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
                               </span>
                             </div>

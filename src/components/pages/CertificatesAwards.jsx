@@ -2,6 +2,8 @@
 import React, { useEffect } from 'react'
 // scroll reveal
 import { scrollReveal, scrollRevealSequence } from '../../utils/scrollReveal'
+// per-letter text split
+import SplitText from '../common/SplitText'
 // certificate files
 import certDataAnalytics from '../../assets/certificates-and-awards/Data Analytics Level III Training Program.jpg'
 import certGoogleGenAiIntro from '../../assets/certificates-and-awards/Google - Introduction to Generative AI.pdf'
@@ -30,14 +32,14 @@ const ITEMS = [
 function CertificatesAwards() {
   useEffect(() => {
     // section heading reveal
-    const heading = scrollReveal('#animate-cert-header', { y: 0, stagger: .05, ease: 'power1.in' });
+    const heading = scrollReveal('#animate-cert-header', { y: 0, stagger: .02, ease: 'power1.in' });
 
     // each item gets its OWN trigger, tied to its own position, so its line
     // fully expands and then its title reveals as THAT row scrolls into
     // view - not all at once when the section's top is first reached
     const rows = ITEMS.map((item) => scrollRevealSequence([
       { targets: `#cert-line-${item.id}`, vars: { width: '100%', ease: 'power1.in' } },
-      { targets: `#animate-cert-${item.id}`, vars: { y: 0, opacity: 1, ease: 'power1.in' } },
+      { targets: `#animate-cert-${item.id}`, vars: { y: 0, stagger: .02, ease: 'power1.in' } },
     ], { trigger: `#cert-line-${item.id}` }));
 
     return () => {
@@ -57,39 +59,13 @@ function CertificatesAwards() {
           desktop:py-36 desktop:px-[3rem]'>
           {/* section header */}
           <section className='col-span-8'>
-            <div className='section-header-container flex flex-wrap
+            <div className='section-header-container flex flex-wrap font-lexend font-medium leading-none tracking-tighter
               mobile:h-[35px] mobile:mb-6 mobile:text-[2rem]
               tablet:h-[60px] tablet:mb-8 tablet:text-[3rem]
               laptop:h-[90px] laptop:mb-10 laptop:text-[5rem]
               laptop-lg:h-[100px] laptop-lg:mb-10 laptop-lg:text-[5.3rem]
               desktop:h-[110px] desktop:mb-12 desktop:text-[5.5rem]'>
-              <span className='section-header-word font-lexend font-medium leading-none tracking-tighter
-                mobile:translate-y-[35px]
-                tablet:translate-y-[80px]
-                laptop:translate-y-[110px]
-                laptop-lg:translate-y-[110px]
-                desktop:translate-y-[120px]'
-                id='animate-cert-header'>
-                Certificates
-              </span>
-              <span className='section-header-word font-lexend font-medium leading-none tracking-tighter
-                mobile:translate-y-[35px]
-                tablet:translate-y-[80px]
-                laptop:translate-y-[110px]
-                laptop-lg:translate-y-[110px]
-                desktop:translate-y-[120px]'
-                id='animate-cert-header'>
-                &
-              </span>
-              <span className='section-header-word font-lexend font-medium leading-none tracking-tighter
-                mobile:translate-y-[35px]
-                tablet:translate-y-[80px]
-                laptop:translate-y-[110px]
-                laptop-lg:translate-y-[110px]
-                desktop:translate-y-[120px]'
-                id='animate-cert-header'>
-                Awards
-              </span>
+              <SplitText text='Certificates & Awards' id='animate-cert-header' />
             </div>
           </section>
           {/* one row per item, hover to preview */}
@@ -105,15 +81,13 @@ function CertificatesAwards() {
                       laptop:text-[1.4rem]
                       laptop-lg:text-[1.5rem]
                       desktop:text-[1.6rem]'>
-                      <p className='entry-line opacity-0 font-medium
-                        mobile:translate-y-[25px]
-                        tablet:translate-y-[30px]
-                        laptop:translate-y-[50px]
-                        laptop-lg:translate-y-[50px]
-                        desktop:translate-y-[50px]'
-                        id={`animate-cert-${item.id}`}>
-                        {item.title}
-                        {item.year && <span className='text-[#7a7a7a]'> · {item.year}</span>}
+                      <p className='entry-line font-medium'>
+                        <SplitText text={item.title} id={`animate-cert-${item.id}`} />
+                        {item.year && (
+                          <span className='text-[#7a7a7a]'>
+                            <SplitText text={`· ${item.year}`} id={`animate-cert-${item.id}`} />
+                          </span>
+                        )}
                       </p>
                     </div>
                     {/* hover preview - certificate/award image or PDF only */}
