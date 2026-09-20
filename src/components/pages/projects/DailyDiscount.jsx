@@ -12,7 +12,6 @@ import dd_price from '../../../../src/assets/files/images/dailydiscount/price-pa
 import dd_order_details from '../../../../src/assets/files/images/dailydiscount/order-details-page.png'
 import dd_cart from '../../../../src/assets/files/images/dailydiscount/cart-page.png'
 // GSAP
-<<<<<<< HEAD
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 // scroll reveal
@@ -31,26 +30,6 @@ function DailyDiscount() {
       y: 0,
       stagger: .05,
       ease: 'power1.in',
-=======
-import gsap from 'gsap' 
-import ScrollTrigger from 'gsap/ScrollTrigger'
-import Contact from '../Contact'
-gsap.registerPlugin(ScrollTrigger)
-
-function DailyDiscount() {
-  useEffect(() => {
-    // project content animation
-    gsap.to('#animate-dailydiscount', {
-      duration: 1,
-      y: 0,
-      stagger: .05,
-      ease: 'power1.in',
-      scrollTrigger: { 
-        trigger: '#animate-dailydiscount', 
-        // start: 'bottom 100%',
-        // markers: true
-      }
->>>>>>> origin/master
     });
 
     gsap.to('#animate-screenshot', {
@@ -62,11 +41,8 @@ function DailyDiscount() {
     });
 
     window.scrollTo(0, 0)
-<<<<<<< HEAD
 
     return () => reveal.kill();
-=======
->>>>>>> origin/master
   }, []);
 
   return (
@@ -148,29 +124,11 @@ function DailyDiscount() {
               laptop:text-[1rem] 
               laptop-lg:text-[1rem]
               desktop:text-[1.1rem] '>
-<<<<<<< HEAD
               {DESCRIPTION_WORDS.map((word, i) => (
                 <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]' key={i}>
                   <p className='project-p' id='animate-dailydiscount'>{word}</p>
                 </div>
               ))}
-=======
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>Dailydiscount</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>is</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>a</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>web-based</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>application</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>developed</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>to</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>help</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>small</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>online</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>business</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>sell</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>discounted</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>game</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>credits.</p></div>
->>>>>>> origin/master
             </div>
           </div>
           <div className='
@@ -279,11 +237,7 @@ function DailyDiscount() {
                 desktop:text-[1.1rem] '>
                 <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'>
                   <div className='project-link' id='animate-dailydiscount'>
-<<<<<<< HEAD
                     <a href='https://daily-discount.vercel.app/' target='_blank' rel='noreferrer'>
-=======
-                    <a href='https://daily-discount.vercel.app/' target='https://daily-discount.vercel.app/'>
->>>>>>> origin/master
                       <span className='flex items-center
                         mobile:text-[.9rem]
                         tablet:text-[.9rem]

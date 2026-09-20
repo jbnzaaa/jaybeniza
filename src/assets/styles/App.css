@@ -190,24 +190,12 @@
   overflow: hidden;
 }
 
-<<<<<<< HEAD
 * body .hero-word-container {
   position: relative;
   overflow: hidden;
 }
 
 * body .hero-word-container .hero-designerdev {
-=======
-* body .hero-container .hero-aspiringweb {
-  margin-right: 10px;
-  -webkit-transition: 1s ease;
-  transition: 1s ease;
-}
-
-* body .hero-container .hero-designerdev {
-  position: absolute;
-  width: 100%;
->>>>>>> origin/master
   -webkit-transition: 1s ease;
   transition: 1s ease;
 }
@@ -235,18 +223,12 @@
 }
 
 * body #what-i-use-line,
-<<<<<<< HEAD
 * body #ui-ux-design-line,
 * body #web-dev-line,
 * body #framework-and-library-line,
 * body #tools-and-tech-line,
 * body [id^="work-line-"],
 * body [id^="cert-line-"] {
-=======
-* body #web-dev-line,
-* body #framework-and-library-line,
-* body #tools-and-tech-line {
->>>>>>> origin/master
   border-top: 1px solid var(--main-color);
   position: relative;
   overflow: hidden;
@@ -514,7 +496,6 @@
 * body .footer-container .footer-update-date {
   margin-right: 5px;
 }
-<<<<<<< HEAD
 
 * body .section-header-container {
   position: relative;
@@ -603,6 +584,3 @@
   text-align: center;
   padding: 1rem;
 }
-=======
-/*# sourceMappingURL=App.css.map */
->>>>>>> origin/master

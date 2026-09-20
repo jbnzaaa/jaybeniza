@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //
 import React, { useEffect } from 'react'
 // scroll reveal
@@ -16,29 +15,6 @@ function ToolTechnology() {
       { targets: '#animate-tooltechnology', vars: { y: 0, stagger: .04, ease: 'power1.in' } },
     ], { trigger: '#tools-and-tech-line' });
     return () => reveal.kill();
-=======
-// 
-import React, { useEffect } from 'react'
-// GSAP
-import gsap from 'gsap' 
-import ScrollTrigger from 'gsap/ScrollTrigger'
-gsap.registerPlugin(ScrollTrigger)
-
-function ToolTechnology() {
-  useEffect(() => {
-    // line animation
-    gsap.to('#tools-and-tech-line', {
-      duration: 1,
-      // delay: 3,
-      stagger: .05,
-      width: '100%',
-      ease: 'power1.in',
-      scrollTrigger: { 
-        trigger: '#tools-and-tech-line', 
-        start: 'bottom 100%'
-      }
-    });
->>>>>>> origin/master
   }, []);
 
   return (
@@ -63,13 +39,8 @@ function ToolTechnology() {
             laptop:translate-y-[50px]
             laptop-lg:translate-y-[50px]
             desktop:translate-y-[50px]'
-<<<<<<< HEAD
             id='animate-tooltechnology'>
             Design
-=======
-            id='animate-about'>
-            Tools 
->>>>>>> origin/master
           </span>
           <span className='stack-context font-medium
             mobile:translate-y-[25px]
@@ -77,11 +48,7 @@ function ToolTechnology() {
             laptop:translate-y-[50px]
             laptop-lg:translate-y-[50px]
             desktop:translate-y-[50px]'
-<<<<<<< HEAD
             id='animate-tooltechnology'>
-=======
-            id='animate-about'>
->>>>>>> origin/master
             &
           </span>
           <span className='stack-context font-medium
@@ -90,7 +57,6 @@ function ToolTechnology() {
             laptop:translate-y-[50px]
             laptop-lg:translate-y-[50px]
             desktop:translate-y-[50px]'
-<<<<<<< HEAD
             id='animate-tooltechnology'>
             Development
           </span>
@@ -102,15 +68,10 @@ function ToolTechnology() {
             desktop:translate-y-[50px]'
             id='animate-tooltechnology'>
             Tools
-=======
-            id='animate-about'>
-            Technologies
->>>>>>> origin/master
           </span>
         </div>
         {/* stacks */}
         <ul className='col-span-1 flex flex-wrap'>
-<<<<<<< HEAD
           {TOOLS.map((tool, i) => (
             <li className='stacks h-[30px]
               mobile:text-[.9rem]
@@ -130,88 +91,6 @@ function ToolTechnology() {
               </p>
             </li>
           ))}
-=======
-          <li className='stacks h-[30px]
-            mobile:text-[.9rem]
-            tablet:text-[.9rem]
-            laptop:text-[1rem]
-            laptop-lg:text-[1rem]
-            desktop:text-[1.1rem]'>
-            <p className='stack-context
-              mobile:translate-y-[28px]
-              tablet:translate-y-[30px]
-              laptop:translate-y-[50px]
-              laptop-lg:translate-y-[50px]
-              desktop:translate-y-[50px]'  
-              id='animate-about'>
-              VS Code
-            </p>
-          </li>
-          <li className='stacks h-[30px]
-            mobile:text-[.9rem]
-            tablet:text-[.9rem]
-            laptop:text-[1rem]
-            laptop-lg:text-[1rem]
-            desktop:text-[1.1rem]'>
-            <p className='stack-context
-              mobile:translate-y-[28px]
-              tablet:translate-y-[30px]
-              laptop:translate-y-[50px]
-              laptop-lg:translate-y-[50px]
-              desktop:translate-y-[50px]'  
-              id='animate-about'>
-              NPM
-            </p>
-          </li>
-          <li className='stacks h-[30px]
-            mobile:text-[.9rem]
-            tablet:text-[.9rem]
-            laptop:text-[1rem]
-            laptop-lg:text-[1rem]
-            desktop:text-[1.1rem]'>
-            <p className='stack-context
-              mobile:translate-y-[28px]
-              tablet:translate-y-[30px]
-              laptop:translate-y-[50px]
-              laptop-lg:translate-y-[50px]
-              desktop:translate-y-[50px]'  
-              id='animate-about'>
-              Figma
-            </p>
-          </li>
-          <li className='stacks h-[30px]
-            mobile:text-[.9rem]
-            tablet:text-[.9rem]
-            laptop:text-[1rem]
-            laptop-lg:text-[1rem]
-            desktop:text-[1.1rem]'>
-            <p className='stack-context
-              mobile:translate-y-[28px]
-              tablet:translate-y-[30px]
-              laptop:translate-y-[50px]
-              laptop-lg:translate-y-[50px]
-              desktop:translate-y-[50px]'  
-              id='animate-about'>
-              Adobe Photoshop
-            </p>
-          </li>
-          <li className='stacks h-[30px]
-            mobile:text-[.9rem]
-            tablet:text-[.9rem]
-            laptop:text-[1rem]
-            laptop-lg:text-[1rem]
-            desktop:text-[1.1rem]'>
-            <p className='stack-context
-              mobile:translate-y-[28px]
-              tablet:translate-y-[30px]
-              laptop:translate-y-[50px]
-              laptop-lg:translate-y-[50px]
-              desktop:translate-y-[50px]'  
-              id='animate-about'>
-              Adobe Illustrator
-            </p>
-          </li>
->>>>>>> origin/master
         </ul>
       </li>
       <div className='col-span-8' id='tools-and-tech-line'/>
@@ -219,8 +98,4 @@ function ToolTechnology() {
   )
 }
 
-<<<<<<< HEAD
 export default ToolTechnology
-=======
-export default ToolTechnology
->>>>>>> origin/master

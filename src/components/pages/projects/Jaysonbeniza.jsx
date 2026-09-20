@@ -10,7 +10,6 @@ import jaysonbeniza_about from '../../../../src/assets/files/images/portfolio/ja
 import jaysonbeniza_project from '../../../../src/assets/files/images/portfolio/jaysonbeniza-landing-page-3.png'
 import jaysonbeniza_contact from '../../../../src/assets/files/images/portfolio/jaysonbeniza-landing-page-4.png'
 // GSAP
-<<<<<<< HEAD
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 // scroll reveal
@@ -32,27 +31,6 @@ function Jaysonbeniza() {
       y: 0,
       stagger: .05,
       ease: 'power1.in',
-=======
-import gsap from 'gsap' 
-import ScrollTrigger from 'gsap/ScrollTrigger'
-import Contact from '../Contact'
-gsap.registerPlugin(ScrollTrigger)
-
-function Jaysonbeniza() {
-  useEffect(() => {
-    // project content animation
-    gsap.to('#animate-dailydiscount', {
-      delay: .8,
-      duration: 1,
-      y: 0,
-      stagger: .05,
-      ease: 'power1.in',
-      scrollTrigger: { 
-        trigger: '#animate-dailydiscount', 
-        // start: 'bottom 100%',
-        // markers: true
-      }
->>>>>>> origin/master
     });
 
     gsap.to('#animate-screenshot', {
@@ -64,11 +42,8 @@ function Jaysonbeniza() {
     });
 
     window.scrollTo(0, 0)
-<<<<<<< HEAD
 
     return () => reveal.kill();
-=======
->>>>>>> origin/master
   }, []);
 
   return (
@@ -150,37 +125,11 @@ function Jaysonbeniza() {
               laptop:text-[1rem] 
               laptop-lg:text-[1rem]
               desktop:text-[1.1rem] '>
-<<<<<<< HEAD
               {DESCRIPTION_WORDS.map((word, i) => (
                 <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]' key={i}>
                   <p className='project-p' id='animate-dailydiscount'>{word}</p>
                 </div>
               ))}
-=======
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>Jaysonbeniza</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>is</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>a</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>web-based</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>portfolio</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>showcasing</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>my</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>current</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>user</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>interface</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>and</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>web</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>design</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>projects,</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>information</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>about</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>myself,</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>programming language,</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>frameworks,</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>and</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>software's</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>I</p></div>
-              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>have used.</p></div>
->>>>>>> origin/master
             </div>
           </div>
           <div className='
@@ -290,11 +239,7 @@ function Jaysonbeniza() {
                 desktop:text-[1.1rem] '>
                 <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'>
                   <div className='project-link' id='animate-dailydiscount'>
-<<<<<<< HEAD
                     <a href='https://jaysonbeniza.vercel.app' target='_blank' rel='noreferrer'>
-=======
-                    <a href='https://jaysonbeniza.vercel.app' target='https://jaysonbeniza.vercel.app'>
->>>>>>> origin/master
                       <span className='flex items-center
                         mobile:text-[.9rem]
                         tablet:text-[.9rem]

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //
 import React, { useEffect } from 'react'
 // scroll reveal
@@ -11,28 +10,6 @@ function FrameworkLibrary() {
       { targets: '#animate-frameworklibrary', vars: { y: 0, stagger: .04, ease: 'power1.in' } },
     ], { trigger: '#framework-and-library-line' });
     return () => reveal.kill();
-=======
-// 
-import React, { useEffect } from 'react'
-// GSAP
-import gsap from 'gsap' 
-import ScrollTrigger from 'gsap/ScrollTrigger'
-gsap.registerPlugin(ScrollTrigger)
-
-function FrameworkLibrary() {
-  useEffect(() => {
-    // line animation
-    gsap.to('#framework-and-library-line', {
-      duration: 1,
-      // delay: 3,
-      width: '100%',
-      ease: 'power1.in',
-      scrollTrigger: { 
-        trigger: '#framework-and-library-line', 
-        start: 'bottom 100%'
-      }
-    });
->>>>>>> origin/master
   }, []);
 
   return (
@@ -57,11 +34,7 @@ function FrameworkLibrary() {
             laptop:translate-y-[50px]
             laptop-lg:translate-y-[50px]
             desktop:translate-y-[50px]'
-<<<<<<< HEAD
             id='animate-frameworklibrary'>
-=======
-            id='animate-about'>
->>>>>>> origin/master
             Framework 
           </span>
           <span className='stack-context font-medium
@@ -70,11 +43,7 @@ function FrameworkLibrary() {
             laptop:translate-y-[50px]
             laptop-lg:translate-y-[50px]
             desktop:translate-y-[50px]'
-<<<<<<< HEAD
             id='animate-frameworklibrary'>
-=======
-            id='animate-about'>
->>>>>>> origin/master
             &
           </span>
           <span className='stack-context font-medium
@@ -83,11 +52,7 @@ function FrameworkLibrary() {
             laptop:translate-y-[50px]
             laptop-lg:translate-y-[50px]
             desktop:translate-y-[50px]'
-<<<<<<< HEAD
             id='animate-frameworklibrary'>
-=======
-            id='animate-about'>
->>>>>>> origin/master
             Library
           </span>
         </div>
@@ -105,11 +70,7 @@ function FrameworkLibrary() {
               laptop:translate-y-[50px]
               laptop-lg:translate-y-[50px]
               desktop:translate-y-[50px]'  
-<<<<<<< HEAD
               id='animate-frameworklibrary'>
-=======
-              id='animate-about'>
->>>>>>> origin/master
               BootStrap
             </p>
           </li>
@@ -125,11 +86,7 @@ function FrameworkLibrary() {
               laptop:translate-y-[50px]
               laptop-lg:translate-y-[50px]
               desktop:translate-y-[50px]'  
-<<<<<<< HEAD
               id='animate-frameworklibrary'>
-=======
-              id='animate-about'>
->>>>>>> origin/master
               Tailwind CSS
             </p>
           </li>
@@ -145,11 +102,7 @@ function FrameworkLibrary() {
               laptop:translate-y-[50px]
               laptop-lg:translate-y-[50px]
               desktop:translate-y-[50px]'  
-<<<<<<< HEAD
               id='animate-frameworklibrary'>
-=======
-              id='animate-about'>
->>>>>>> origin/master
               GSAP
             </p>
           </li>
