@@ -1,0 +1,72 @@
+[
+  {
+    "proj_id": 0,
+    "path": [
+      "Team",
+      "2022",
+      "Ongoing Web Development"
+    ],
+    "title": "Daily Discount",
+    "description": "A WEB-BASED APPLICATION THAT OFFERS ONLINE-TRANSACTIONS FOR DISCOUNTED MOBILE GAME CREDITS.",
+    "role": [
+      "Front-End Developer"
+    ],
+    "tech_used": [
+      "React JS",
+      "Tailwind CSS",
+      "Vercel",
+      "Figma"
+    ],
+    "mockup": "../images/portfolio_mockup_3.png",
+    "link": "https://daily-discount.vercel.app/"
+  },
+  {
+    "proj_id": 1,
+    "path": [
+      "Personal",
+      "2022",
+      "Web Development"
+    ],
+    "title": "jbnza",
+    "description": "A WEB-BASED PORTFOLIO THAT SHOWCASES MY MOST CURRENT PROJECTS AS WELL AS AN OVERVIEW OF MY PERSONAL INFORMATION.",
+    "role": [
+      "Web Developer",
+      "UI Designer"
+    ],
+    "tech_used": [
+      "React JS",
+      "Material UI",
+      "Vercel",
+      "Figma"
+    ],
+    "mockup": "../images/portfolio_mockup_2.png",
+    "link": "https://jbnza.vercel.app/"
+  },
+  {
+    "proj_id": 2,
+    "path": [
+      "Team",
+      "2021",
+      "Web Development"
+    ],
+    "title": "Regain",
+    "description": "A WEB-BASED SELF-ASSESSMENT AND E-JOURNAL SYSTEM WITH CHATBOT AND STUDENT COUNSELOR ASSISTANCE FOR TROUBLED STUDENT IN STI COLLEGE NOVALICHES.",
+    "role": [
+      "Lead Programmer"
+    ],
+    "tech_used": [
+      "HTML",
+      "CSS",
+      "SASS",
+      "JavaScript",
+      "JQuery",
+      "Bootstrap",
+      "NodeJS",
+      "Cloud Firestore",
+      "Firebase Admin",
+      "Google Cloud Storage"
+    ],
+    "mockup": "../images/portfolio_mockup_1.png",
+    "link": "https://regain-caps.web.app/"
+  }
+]
