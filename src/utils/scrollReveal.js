@@ -48,10 +48,28 @@ export function scrollReveal(targets, vars, { trigger, start = 'top 85%' } = {})
     },
   });
 
+  // safety net: if the trigger's condition is ALREADY satisfied the instant
+  // it's created (e.g. above-the-fold content visible without scrolling),
+  // don't rely on onEnter firing asynchronously on a later refresh pass -
+  // play it right now so it's never stuck in its hidden starting state.
+  // trig.refresh() is called explicitly first because isActive/start/end
+  // aren't guaranteed to be fully computed synchronously the instant
+  // ScrollTrigger.create() returns - without forcing it, this check can
+  // read stale/default values and silently never fire.
+  trig.refresh();
+  if (trig.isActive) {
+    tween.duration(durationForVelocity(0));
+    tween.play();
+  }
+
   return {
+    // revert (not just kill) so GSAP's inline styles get cleared - this
+    // matters most in dev with hot-reloading: without it, a component that
+    // remounts after an edit can inherit a stale "already revealed" state
+    // from the previous mount, making the reveal look like it never played
     kill() {
       trig.kill();
-      tween.kill();
+      tween.revert();
     },
   };
 }
@@ -89,10 +107,21 @@ export function scrollRevealSequence(stages, { trigger, start = 'top 85%' } = {}
     onLeaveBack: (self) => { tl.kill(); tl = build(self.getVelocity()); tl.reverse(); },
   });
 
+  // safety net: see scrollReveal() above for why trig.refresh() is needed
+  // before this check
+  trig.refresh();
+  if (trig.isActive) {
+    tl.kill();
+    tl = build(0);
+    tl.play();
+  }
+
   return {
+    // revert (not just kill) so GSAP's inline styles get cleared - see the
+    // comment on scrollReveal()'s kill() above for why this matters
     kill() {
       trig.kill();
-      tl.kill();
+      tl.revert();
     },
   };
 }

@@ -121,7 +121,7 @@ function WorkExperience() {
                         id={`animate-work-${role.id}`}>
                         {role.company}
                       </p>
-                      <p className='entry-line opacity-0 font-regular text-red
+                      <p className='entry-line opacity-0 font-regular text-[#7a7a7a]
                         mobile:text-[.8rem] mobile:translate-y-[25px]
                         tablet:text-[.8rem] tablet:translate-y-[30px]
                         laptop:text-[.9rem] laptop:translate-y-[50px]

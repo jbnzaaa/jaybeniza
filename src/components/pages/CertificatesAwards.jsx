@@ -14,17 +14,17 @@ import certMsUiUx from '../../assets/certificates-and-awards/Microsoft - Fundame
 import certMsUx from '../../assets/certificates-and-awards/Microsoft - Designing for User Experience.pdf'
 
 const ITEMS = [
-  { id: 'data-analytics', title: 'Data Analytics Level III Training Program', file: certDataAnalytics, type: 'image' },
-  { id: 'gen-ai-intro-google', title: 'Introduction to Generative AI', file: certGoogleGenAiIntro, type: 'pdf' },
-  { id: 'gen-ai-intro-ibm', title: 'Generative AI: Introduction and Applications', file: certIbmGenAiIntro, type: 'pdf' },
-  { id: 'gen-ai-prompt', title: 'Generative AI: Prompt Engineering Basics', file: certIbmGenAiPrompt, type: 'pdf' },
-  { id: 'gen-ai-foundation', title: 'Generative AI: Foundation Models and Platforms', file: certIbmGenAiFoundation, type: 'pdf' },
-  { id: 'gen-ai-ethics', title: 'Generative AI: Impact, Considerations, and Ethical Issues', file: certIbmGenAiEthics, type: 'pdf' },
-  { id: 'gen-ai-business', title: 'Generative AI: Business Transformation and Career Growth', file: certIbmGenAiBusiness, type: 'pdf' },
-  { id: 'ms-uiux', title: 'Fundamentals of UI/UX Design', file: certMsUiUx, type: 'pdf' },
-  { id: 'ms-ux', title: 'Designing for User Experience', file: certMsUx, type: 'pdf' },
-  { id: 'award-innovation', title: 'Innovations in Action Award', file: null, type: null },
-  { id: 'award-agility', title: 'Agility Award', file: null, type: null },
+  { id: 'data-analytics', title: 'Data Analytics Level III Training Program', year: '2026', file: certDataAnalytics, type: 'image' },
+  { id: 'gen-ai-intro-google', title: 'Introduction to Generative AI', year: '2024', file: certGoogleGenAiIntro, type: 'pdf' },
+  { id: 'gen-ai-intro-ibm', title: 'Generative AI: Introduction and Applications', year: '2025', file: certIbmGenAiIntro, type: 'pdf' },
+  { id: 'gen-ai-prompt', title: 'Generative AI: Prompt Engineering Basics', year: '2025', file: certIbmGenAiPrompt, type: 'pdf' },
+  { id: 'gen-ai-foundation', title: 'Generative AI: Foundation Models and Platforms', year: '2025', file: certIbmGenAiFoundation, type: 'pdf' },
+  { id: 'gen-ai-ethics', title: 'Generative AI: Impact, Considerations, and Ethical Issues', year: '2025', file: certIbmGenAiEthics, type: 'pdf' },
+  { id: 'gen-ai-business', title: 'Generative AI: Business Transformation and Career Growth', year: '2025', file: certIbmGenAiBusiness, type: 'pdf' },
+  { id: 'ms-uiux', title: 'Fundamentals of UI/UX Design', year: '2026', file: certMsUiUx, type: 'pdf' },
+  { id: 'ms-ux', title: 'Designing for User Experience', year: '2026', file: certMsUx, type: 'pdf' },
+  { id: 'award-innovation', title: 'Innovations in Action Award', year: '', file: null, type: null },
+  { id: 'award-agility', title: 'Agility Award', year: '', file: null, type: null },
 ];
 
 function CertificatesAwards() {
@@ -113,6 +113,7 @@ function CertificatesAwards() {
                         desktop:translate-y-[50px]'
                         id={`animate-cert-${item.id}`}>
                         {item.title}
+                        {item.year && <span className='text-[#7a7a7a]'> · {item.year}</span>}
                       </p>
                     </div>
                     {/* hover preview - certificate/award image or PDF only */}

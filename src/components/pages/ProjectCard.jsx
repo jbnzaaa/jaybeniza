@@ -37,7 +37,13 @@ function ProjectCard() {
             laptop:col-span-5 laptop:col-start-2
             laptop-lg:col-span-5 laptop-lg:col-start-2
             desktop:col-span-5 desktop:col-start-2'>
-            <div className='project-card-container bg-black'>
+            <div className='project-card-container bg-black
+              mobile:translate-y-[40px]
+              tablet:translate-y-[40px]
+              laptop:translate-y-[40px]
+              laptop-lg:translate-y-[40px]
+              desktop:translate-y-[40px]'
+              id='animate-project-card'>
               <Link to='/jaysonbeniza' >
                 <div className='project-image bg-jaysonbeniza bg-cover object-cover opacity-40
                   mobile:h-[300px]
@@ -87,7 +93,13 @@ function ProjectCard() {
             laptop:col-span-4 laptop:col-start-5
             laptop-lg:col-span-4 laptop-lg:col-start-5
             desktop:col-span-4 desktop:col-start-5'>
-            <div className='project-card-container bg-black'>
+            <div className='project-card-container bg-black
+              mobile:translate-y-[40px]
+              tablet:translate-y-[40px]
+              laptop:translate-y-[40px]
+              laptop-lg:translate-y-[40px]
+              desktop:translate-y-[40px]'
+              id='animate-project-card'>
               <Link to='/dailydiscount' >
                 <div className='project-image bg-dailydiscount bg-cover object-cover opacity-40
                   mobile:h-[300px]
@@ -136,7 +148,13 @@ function ProjectCard() {
             laptop:col-span-5 laptop:col-start-1
             laptop-lg:col-span-5 laptop-lg:col-start-1
             desktop:col-span-5 desktop:col-start-1'>
-            <div className='project-card-container bg-black'>
+            <div className='project-card-container bg-black
+              mobile:translate-y-[40px]
+              tablet:translate-y-[40px]
+              laptop:translate-y-[40px]
+              laptop-lg:translate-y-[40px]
+              desktop:translate-y-[40px]'
+              id='animate-project-card'>
               <Link to='/jbnza' >
                 <div className='project-image bg-jbnza bg-cover object-cover opacity-40
                   mobile:h-[300px]
@@ -186,7 +204,13 @@ function ProjectCard() {
             laptop:col-span-5 laptop:col-start-3
             laptop-lg:col-span-5 laptop-lg:col-start-3
             desktop:col-span-5 desktop:col-start-3'>
-            <div className='project-card-container bg-black'>
+            <div className='project-card-container bg-black
+              mobile:translate-y-[40px]
+              tablet:translate-y-[40px]
+              laptop:translate-y-[40px]
+              laptop-lg:translate-y-[40px]
+              desktop:translate-y-[40px]'
+              id='animate-project-card'>
               <Link to='/regain' >
                 <div className='project-image bg-regain bg-cover object-cover opacity-40
                   mobile:h-[300px]

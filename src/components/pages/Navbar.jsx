@@ -14,7 +14,6 @@ gsap.registerPlugin(ScrollTrigger)
 
 function Navbar() {
   const fxMenuOpenAnimation = useRef();
-  const fxMenuCloseAnimation = useRef();
 
   const [showNav] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
@@ -32,6 +31,14 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
+    // the mobile menu overlay (and everything inside it, including the
+    // #mobile-nav-animate links) only exists in the DOM while showMenu is
+    // true, so skip entirely when it's closed - otherwise these target
+    // nothing on every mount and log "GSAP target not found" warnings.
+    // Closing itself needs no animation here: React just unmounts the
+    // overlay when showMenu flips back to false.
+    if (!showMenu) return;
+
     // mobile nav link animation
     gsap.to('#mobile-nav-animate', {
       duration: 1,
@@ -48,14 +55,6 @@ function Navbar() {
       ease: 'power1.in',
       padding: '12px 14.4px 12px 14.4px',
       scrollTrigger: { trigger: fxMenuOpenAnimation.current, }
-    });
-
-    // close menu animation
-    gsap.to(fxMenuCloseAnimation.current, {
-      duration: 1,
-      height: '0vh',
-      ease: 'power1.in',
-      scrollTrigger: { trigger: fxMenuCloseAnimation.current, }
     });
   }, [showMenu]);
 

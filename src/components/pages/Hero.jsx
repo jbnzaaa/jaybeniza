@@ -1,7 +1,14 @@
 //
 import React, { useEffect } from 'react'
-// scroll reveal
-import { scrollReveal } from '../../utils/scrollReveal'
+// GSAP - hero uses ScrollTrigger's native inline `scrollTrigger` config
+// directly on gsap.to(), same as this site's original, proven Hero reveal,
+// instead of the shared scrollReveal() helper: ScrollTrigger already
+// handles "trigger condition already satisfied when created" (the case
+// every element here hits, since the whole hero is visible on load)
+// correctly on its own - no manual isActive/refresh() workaround needed
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 
 const HIGHLIGHT_WORDS = [
   'Designing', 'and', 'building', 'digital', 'products', 'with', 'the', 'use',
@@ -11,34 +18,33 @@ const HIGHLIGHT_WORDS = [
 // each line is two words sharing the same bold treatment ("UI/UX Designer.")
 const PROFESSION_LINES = [
   ['UI/UX', 'Designer.'],
-  ['Front-End', 'Designer.'],
+  ['Front-End', 'Developer.'],
 ];
 
 function Hero() {
   useEffect(() => {
-    // the whole hero (highlight + profession lines) fits within one
-    // viewport, so unlike the tall multi-row sections elsewhere on the
-    // page, there's no "spread out over a long scroll" problem here - both
-    // groups are visible on load and should just reveal immediately,
-    // using the default (very lenient) trigger position
-    const highlight = scrollReveal('#animate-hero-highlight', {
-      y: 0,
-      delay: .3,
-      stagger: .05,
-      ease: 'power1.in',
-    }, { start: 'top bottom' });
+    // gsap.context() scopes every tween/ScrollTrigger created inside it so
+    // ctx.revert() on cleanup tears all of it down and clears inline
+    // styles in one call - no per-tween bookkeeping needed
+    const ctx = gsap.context(() => {
+      gsap.to('#animate-hero-highlight', {
+        duration: 1,
+        y: 0,
+        stagger: .05,
+        ease: 'power1.in',
+        scrollTrigger: { trigger: '#animate-hero-highlight' },
+      });
 
-    const profession = scrollReveal('#animate-hero-profession', {
-      y: 0,
-      delay: .5,
-      stagger: .1,
-      ease: 'power1.in',
-    }, { trigger: '#hero-profession', start: 'top bottom' });
+      gsap.to('#animate-hero-profession', {
+        duration: 1,
+        y: 0,
+        stagger: .1,
+        ease: 'power1.in',
+        scrollTrigger: { trigger: '#hero-profession' },
+      });
+    });
 
-    return () => {
-      highlight.kill();
-      profession.kill();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (

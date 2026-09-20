@@ -16,9 +16,8 @@
 * {
   margin: 0;
   padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
   color: #0F0E17;
   text-transform: uppercase;
   scroll-behavior: smooth;
@@ -26,6 +25,20 @@
 
 * body {
   background: var(--main-bg);
+  position: relative;
+}
+
+* body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 * body #onload-container {
@@ -35,7 +48,6 @@
 * body #onload-container #sticky {
   position: absolute;
   z-index: 100;
-  position: -webkit-sticky;
   position: sticky;
   top: 0px;
 }
@@ -52,9 +64,7 @@
 }
 
 * body .logo-container .logo {
-  -webkit-transform: translateY(30px);
-          transform: translateY(30px);
-  -webkit-transition: 1s ease;
+  transform: translateY(30px);
   transition: 1s ease;
 }
 
@@ -65,18 +75,15 @@
 
 * body .link-container .link {
   position: absolute;
-  -webkit-transform: translateY(32px);
-          transform: translateY(32px);
+  transform: translateY(32px);
   text-align: right;
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
 * body .link-container .link span {
   position: relative;
   letter-spacing: 0;
-  -webkit-transition: .3s ease-in-out;
-  transition: .3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 * body .link-container .link span:hover {
@@ -84,18 +91,14 @@
 }
 
 * body .link-container .link span #icon {
-  -webkit-transform: rotate(0deg);
-          transform: rotate(0deg);
-  -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
+  transform: rotate(0deg);
+  transition: all 0.3s ease-in-out;
   border-radius: 100%;
 }
 
 * body .link-container .link span:hover #icon {
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
-  -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
+  transform: rotate(-45deg);
+  transition: all 0.3s ease-in-out;
   background: var(--main-color);
   fill: var(--main-bg);
   border-radius: 100%;
@@ -108,17 +111,14 @@
 }
 
 * body .menu-link div {
-  -webkit-transform: translateY(20px);
-          transform: translateY(20px);
-  -webkit-transition: 1s ease;
+  transform: translateY(20px);
   transition: 1s ease;
 }
 
 * body .menu-link div span {
   position: relative;
   letter-spacing: 0;
-  -webkit-transition: .3s ease-in-out;
-  transition: .3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 * body .menu-link div span:hover {
@@ -133,9 +133,7 @@
 
 * body .page-link .link,
 * body .page-link #mobileview-link {
-  -webkit-transform: translateY(60px);
-          transform: translateY(60px);
-  -webkit-transition: 1s ease;
+  transform: translateY(60px);
   transition: 1s ease;
 }
 
@@ -143,8 +141,7 @@
 * body .page-link #mobileview-link span {
   position: relative;
   letter-spacing: 0;
-  -webkit-transition: .3s ease-in-out;
-  transition: .3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 * body .page-link .link span:hover,
@@ -154,19 +151,15 @@
 
 * body .page-link .link span #icon,
 * body .page-link #mobileview-link span #icon {
-  -webkit-transform: rotate(0deg);
-          transform: rotate(0deg);
-  -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
+  transform: rotate(0deg);
+  transition: all 0.3s ease-in-out;
   border-radius: 100%;
 }
 
 * body .page-link .link span:hover #icon,
 * body .page-link #mobileview-link span:hover #icon {
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
-  -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
+  transform: rotate(-45deg);
+  transition: all 0.3s ease-in-out;
   background: var(--main-bg);
   fill: var(--main-color);
   border-radius: 100%;
@@ -178,10 +171,8 @@
 }
 
 * body .p-container .hero-p {
-  -webkit-transform: translateY(30px);
-          transform: translateY(30px);
+  transform: translateY(30px);
   margin-right: 5px;
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
@@ -195,10 +186,11 @@
   overflow: hidden;
 }
 
-* body .hero-word-container .hero-designerdev {
-  -webkit-transition: 1s ease;
-  transition: 1s ease;
-}
+/* no CSS transition on .hero-designerdev - GSAP drives this transform
+   directly every frame, and a competing CSS transition on the same
+   property fights it, which is most visible here because this element's
+   translate-y offset (65-135px) is far larger than any other reveal on
+   the site */
 
 * body .about-container {
   position: relative;
@@ -207,7 +199,6 @@
 
 * body .about-container .about-greetings {
   margin-right: 10px;
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
@@ -218,7 +209,6 @@
 }
 
 * body .content-container .about-paragraph {
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
@@ -227,8 +217,8 @@
 * body #web-dev-line,
 * body #framework-and-library-line,
 * body #tools-and-tech-line,
-* body [id^="work-line-"],
-* body [id^="cert-line-"] {
+* body [id^=work-line-],
+* body [id^=cert-line-] {
   border-top: 1px solid var(--main-color);
   position: relative;
   overflow: hidden;
@@ -246,7 +236,6 @@
 
 * body .stack-container .stack-context {
   margin-right: 10px;
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
@@ -258,7 +247,6 @@
 
 * body .stacks .stack-context {
   margin-right: 5px;
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
@@ -269,10 +257,8 @@
 }
 
 * body .description .description-p {
-  -webkit-transform: translateY(30px);
-          transform: translateY(30px);
+  transform: translateY(30px);
   margin-right: 5px;
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
@@ -295,8 +281,7 @@
 * body .behance-link-container .behance-link {
   position: relative;
   letter-spacing: 0;
-  -webkit-transition: .3s ease-in-out;
-  transition: .3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 * body .behance-link-container .behance-link:hover {
@@ -304,41 +289,32 @@
 }
 
 * body .behance-link-container a {
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
 * body .behance-link-container a #icon {
-  -webkit-transform: rotate(0deg);
-          transform: rotate(0deg);
-  -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
+  transform: rotate(0deg);
+  transition: all 0.3s ease-in-out;
   border-radius: 100%;
 }
 
 * body .behance-link-container a:hover #icon {
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
-  -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
+  transform: rotate(-45deg);
+  transition: all 0.3s ease-in-out;
   background: var(--main-bg);
   fill: var(--main-color);
   border-radius: 100%;
 }
 
 * body .behance-link-container a #icons {
-  -webkit-transform: rotate(0deg);
-          transform: rotate(0deg);
-  -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
+  transform: rotate(0deg);
+  transition: all 0.3s ease-in-out;
   border-radius: 100%;
 }
 
 * body .behance-link-container a:hover #icons {
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
-  -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
+  transform: rotate(-45deg);
+  transition: all 0.3s ease-in-out;
   background: var(--main-bg);
   fill: var(--main-color);
   border-radius: 100%;
@@ -347,62 +323,49 @@
 * body .project-card-container {
   position: relative;
   overflow: hidden;
-  -webkit-transition: .5s ease-in-out;
-  transition: .5s ease-in-out;
+  transition: 0.5s ease-in-out;
 }
 
 * body .project-card-container .project-image {
-  -webkit-transition: .5s ease-in-out;
-  transition: .5s ease-in-out;
+  transition: 0.5s ease-in-out;
 }
 
 * body .project-card-container .project-image:hover {
-  -webkit-transform: scale(1.05);
-          transform: scale(1.05);
-  -webkit-transition: .5s ease-in-out;
-  transition: .5s ease-in-out;
+  transform: scale(1.05);
+  transition: 0.5s ease-in-out;
 }
 
 * body .project-container .p-container {
   position: relative;
   overflow: hidden;
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
 * body .project-container .p-container .project-h1 {
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
 * body .project-container .p-container .project-p {
-  -webkit-transform: translateY(30px);
-          transform: translateY(30px);
+  transform: translateY(30px);
   margin-right: 5px;
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
 * body .project-container .p-container .project-ps {
-  -webkit-transform: translateY(30px);
-          transform: translateY(30px);
+  transform: translateY(30px);
   margin-right: 15px;
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
 * body .project-container .p-container .project-link {
-  -webkit-transform: translateY(30px);
-          transform: translateY(30px);
-  -webkit-transition: 1s ease;
+  transform: translateY(30px);
   transition: 1s ease;
 }
 
 * body .project-container .p-container .project-link span {
   position: relative;
   letter-spacing: 0;
-  -webkit-transition: .3s ease-in-out;
-  transition: .3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 * body .project-container .p-container .project-link span:hover {
@@ -410,18 +373,14 @@
 }
 
 * body .project-container .p-container .project-link span #icon {
-  -webkit-transform: rotate(0deg);
-          transform: rotate(0deg);
-  -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
+  transform: rotate(0deg);
+  transition: all 0.3s ease-in-out;
   border-radius: 100%;
 }
 
 * body .project-container .p-container .project-link span:hover #icon {
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
-  -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
+  transform: rotate(-45deg);
+  transition: all 0.3s ease-in-out;
   background: var(--main-color);
   fill: var(--main-bg);
   border-radius: 100%;
@@ -430,14 +389,11 @@
 * body .project-container .screenshot-container {
   position: relative;
   overflow: hidden;
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
 * body .project-container .screenshot-container .screenshot-img {
-  -webkit-transform: translateY(105%);
-          transform: translateY(105%);
-  -webkit-transition: 1s ease;
+  transform: translateY(105%);
   transition: 1s ease;
 }
 
@@ -449,7 +405,6 @@
 
 * body .drop-message-container .context {
   margin-right: 20px;
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
@@ -460,10 +415,8 @@
 }
 
 * body .contact-description-container .context {
-  -webkit-transform: translateY(35px);
-          transform: translateY(35px);
+  transform: translateY(35px);
   margin-right: 5px;
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
@@ -474,9 +427,7 @@
 }
 
 * body .account-container .accounts {
-  -webkit-transform: translateY(35px);
-          transform: translateY(35px);
-  -webkit-transition: 1s ease;
+  transform: translateY(35px);
   transition: 1s ease;
 }
 
@@ -486,10 +437,8 @@
 }
 
 * body .footer-container .footer {
-  -webkit-transition: 1s ease;
   transition: 1s ease;
-  -webkit-transform: translateY(23px);
-          transform: translateY(23px);
+  transform: translateY(23px);
   margin-right: 5px;
 }
 
@@ -504,7 +453,6 @@
 
 * body .section-header-container .section-header-word {
   margin-right: 10px;
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
@@ -515,7 +463,6 @@
 }
 
 * body .entry-container .entry-line {
-  -webkit-transition: 1s ease;
   transition: 1s ease;
 }
 
@@ -536,10 +483,8 @@
   border: 0;
   opacity: 0;
   visibility: hidden;
-  -webkit-transform: translateY(-50%) translateX(16px);
-          transform: translateY(-50%) translateX(16px);
-  -webkit-transition: opacity .25s ease, -webkit-transform .25s ease;
-  transition: opacity .25s ease, transform .25s ease;
+  transform: translateY(-50%) translateX(16px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
   pointer-events: none;
 }
 
@@ -547,8 +492,7 @@
 * body .cert-row:focus-within .cert-popover {
   opacity: 1;
   visibility: visible;
-  -webkit-transform: translateY(-50%) translateX(0);
-          transform: translateY(-50%) translateX(0);
+  transform: translateY(-50%) translateX(0);
   pointer-events: auto;
 }
 
@@ -556,24 +500,20 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   border: 0;
   padding: 0;
   margin: 0;
 }
 
 * body iframe.cert-preview-media {
-  /* object-fit doesn't apply to iframes, and the browser's native PDF
-     viewer (#view=Fit) letterboxes the page instead of filling the frame -
-     scale it up and re-center so the letterbox margin gets cropped by
-     .cert-popover's overflow:hidden instead of showing as padding */
   position: absolute;
   top: 50%;
   left: 50%;
   width: 145%;
   height: 145%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 * body .cert-preview-placeholder {
@@ -583,4 +523,4 @@
   justify-content: center;
   text-align: center;
   padding: 1rem;
-}
+}/*# sourceMappingURL=App.css.map */

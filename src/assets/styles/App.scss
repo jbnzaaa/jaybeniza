@@ -29,6 +29,20 @@
 
 * body {
   background: var(--main-bg);
+  position: relative;
+}
+
+* body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: .12;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 * body #onload-container {
@@ -176,9 +190,11 @@
   overflow: hidden;
 }
 
-* body .hero-word-container .hero-designerdev {
-  transition: 1s ease;
-}
+// no CSS transition on .hero-designerdev - GSAP drives this transform
+// directly every frame, and a competing CSS transition on the same
+// property fights it, which is most visible here because this element's
+// translate-y offset (65-135px) is far larger than any other reveal on
+// the site
 
 * body .about-container {
   position: relative;
