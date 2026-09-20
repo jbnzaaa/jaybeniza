@@ -10,6 +10,7 @@ import jbnza_about from '../../../../src/assets/files/images/portfolio/jbnza-lan
 import jbnza_project from '../../../../src/assets/files/images/portfolio/jbnza-landing-page-3.png'
 import jbnza_contact from '../../../../src/assets/files/images/portfolio/jbnza-landing-page-4.png'
 // GSAP
+<<<<<<< HEAD
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 // scroll reveal
@@ -29,6 +30,26 @@ function Jbnza() {
       y: 0,
       stagger: .05,
       ease: 'power1.in',
+=======
+import gsap from 'gsap' 
+import ScrollTrigger from 'gsap/ScrollTrigger'
+import Contact from '../Contact'
+gsap.registerPlugin(ScrollTrigger)
+
+function Jbnza() {
+  useEffect(() => {
+    // project content animation
+    gsap.to('#animate-dailydiscount', {
+      duration: 1,
+      y: 0,
+      stagger: .05,
+      ease: 'power1.in',
+      scrollTrigger: { 
+        trigger: '#animate-dailydiscount', 
+        // start: 'bottom 100%',
+        // markers: true
+      }
+>>>>>>> origin/master
     });
 
     gsap.to('#animate-screenshot', {
@@ -40,8 +61,11 @@ function Jbnza() {
     });
 
     window.scrollTo(0, 0)
+<<<<<<< HEAD
 
     return () => reveal.kill();
+=======
+>>>>>>> origin/master
   }, []);
 
   return (
@@ -123,11 +147,38 @@ function Jbnza() {
               laptop:text-[1rem] 
               laptop-lg:text-[1rem]
               desktop:text-[1.1rem] '>
+<<<<<<< HEAD
               {DESCRIPTION_WORDS.map((word, i) => (
                 <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]' key={i}>
                   <p className='project-p' id='animate-dailydiscount'>{word}</p>
                 </div>
               ))}
+=======
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>Jbnza</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>is</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>a</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>web-based</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>portfolio</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>designed</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>to</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>showcase</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>my</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>most</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>recent</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>projects,</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>programming</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>language</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>and</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>softwares</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>I</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>use</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>and</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>bit</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>of</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>information</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>about</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>myself.</p></div>
+>>>>>>> origin/master
             </div>
           </div>
           <div className='
@@ -236,7 +287,11 @@ function Jbnza() {
                 desktop:text-[1.1rem] '>
                 <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'>
                   <div className='project-link' id='animate-dailydiscount'>
+<<<<<<< HEAD
                     <a href='https://jbnza.vercel.app' target='_blank' rel='noreferrer'>
+=======
+                    <a href='https://jbnza.vercel.app' target='https://jbnza.vercel.app'>
+>>>>>>> origin/master
                       <span className='flex items-center
                         mobile:text-[.9rem]
                         tablet:text-[.9rem]

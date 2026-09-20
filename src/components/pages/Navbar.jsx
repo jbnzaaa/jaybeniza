@@ -29,6 +29,7 @@ function Navbar() {
       ease: 'power1.in',
       scrollTrigger: { trigger: '#animate-nav', }
     });
+<<<<<<< HEAD
   }, []);
 
   useEffect(() => {
@@ -46,11 +47,29 @@ function Navbar() {
       duration: 1,
       height: '106vh',
       ease: 'power1.in',
+=======
+
+    // mobile nav link animation
+    gsap.to('#mobile-nav-animate', { 
+      duration: 1, 
+      delay: 1, 
+      y: 0, 
+      stagger: .05,
+      ease: 'power1.in', 
+    });
+
+    // open menu animation
+    gsap.to(fxMenuOpenAnimation.current, { 
+      duration: 1, 
+      height: '106vh', 
+      ease: 'power1.in', 
+>>>>>>> origin/master
       padding: '12px 14.4px 12px 14.4px',
       scrollTrigger: { trigger: fxMenuOpenAnimation.current, }
     });
 
     // close menu animation
+<<<<<<< HEAD
     gsap.to(fxMenuCloseAnimation.current, {
       duration: 1,
       height: '0vh',
@@ -58,15 +77,32 @@ function Navbar() {
       scrollTrigger: { trigger: fxMenuCloseAnimation.current, }
     });
   }, [showMenu]);
+=======
+    gsap.to(fxMenuCloseAnimation.current, { 
+      duration: 1, 
+      height: '0vh', 
+      ease: 'power1.in',
+      scrollTrigger: { trigger: fxMenuCloseAnimation.current, }
+    });
+  });
+>>>>>>> origin/master
 
   return (
     <>
       {/* navbar container */}
+<<<<<<< HEAD
       { location.pathname === '/jaysonbeniza' ? showNav !== false :
         location.pathname === '/dailydiscount' ? showNav !== false :
         location.pathname === '/jbnza' ? showNav !== false :
         location.pathname === '/regain' ? showNav !== false :
         <div className='sticky top-0 z-20
+=======
+      { location.pathname === '/jaysonbeniza' ? showNav !== false : 
+        location.pathname === '/dailydiscount' ? showNav !== false : 
+        location.pathname === '/jbnza' ? showNav !== false :
+        location.pathname === '/regain' ? showNav !== false :
+        <div className='sticky top-0 z-10
+>>>>>>> origin/master
           mobile:px-[.9rem]
           tablet:px-[1rem]
           laptop:px-[2rem]
@@ -83,7 +119,11 @@ function Navbar() {
             <section className='col-span-3 col-start-1'>
               <div className='logo-container'>
                 <Link to='/#'>
+<<<<<<< HEAD
                   <h1 className='logo font-lexend font-medium cursor-pointer tracking-tighter
+=======
+                  <h1 className='logo font-lexend font-medium cursor-pointer tracking-tighter 
+>>>>>>> origin/master
                     mobile:text-[.9rem]
                     tablet:text-[.9rem]
                     laptop:text-[1.1rem]
@@ -96,9 +136,15 @@ function Navbar() {
               </div>
             </section>
             {/* Link */}
+<<<<<<< HEAD
             <section className="col-span-1 col-start-6
               mobile:hidden
               tablet:hidden
+=======
+            <section className="col-span-1 col-start-7
+              mobile:hidden 
+              tablet:hidden 
+>>>>>>> origin/master
               laptop:block
               laptop-lg:block
               desktop:block">
@@ -123,6 +169,7 @@ function Navbar() {
                         laptop:text-2xl
                         laptop-lg:text-2xl
                         desktop:text-2xl'/>
+<<<<<<< HEAD
                     </span>
                   </Link>
                 </div>
@@ -182,6 +229,9 @@ function Navbar() {
                         laptop-lg:text-2xl
                         desktop:text-2xl'/>
                     </span>
+=======
+                    </span> 
+>>>>>>> origin/master
                   </Link>
                 </div>
               </div>
@@ -207,14 +257,23 @@ function Navbar() {
                       laptop-lg:text-2xl
                       desktop:text-2xl'/>
                     </span>
+<<<<<<< HEAD
                   </Link>
+=======
+                  </Link> 
+>>>>>>> origin/master
                 </div>
               </div>
             </section>
             {/* Link */}
             <section className='col-span-1 col-start-8
+<<<<<<< HEAD
               mobile:hidden
               tablet:hidden
+=======
+              mobile:hidden 
+              tablet:hidden 
+>>>>>>> origin/master
               laptop:block
               laptop-lg:block
               desktop:block'>
@@ -239,7 +298,11 @@ function Navbar() {
                       laptop:text-2xl
                       laptop-lg:text-2xl
                       desktop:text-2xl'/>
+<<<<<<< HEAD
                     </span>
+=======
+                    </span> 
+>>>>>>> origin/master
                   </Link>
                 </div>
               </div>
@@ -250,7 +313,11 @@ function Navbar() {
                 laptop-lg:h-[32px]
                 desktop:h-[32px]'>
                 <div className='link' id='animate-nav'>
+<<<<<<< HEAD
                   <Link to={Resume} target='_blank' rel='noreferrer'>
+=======
+                  <Link to={Resume} target={Resume}>
+>>>>>>> origin/master
                     <span className='flex items-center
                       mobile:text-[.9rem]
                       tablet:text-[.9rem]
@@ -264,7 +331,11 @@ function Navbar() {
                       laptop:text-2xl
                       laptop-lg:text-2xl
                       desktop:text-2xl'/>
+<<<<<<< HEAD
                     </span>
+=======
+                    </span> 
+>>>>>>> origin/master
                   </Link>
                 </div>
               </div>
@@ -272,7 +343,11 @@ function Navbar() {
             {/* mobile, tablet menu */}
             <section className='col-start-7 col-span-2
               mobile:block
+<<<<<<< HEAD
               tablet:block
+=======
+              tablet:block 
+>>>>>>> origin/master
               laptop:hidden
               laptop-lg:hidden
               desktop:hidden'>
@@ -281,13 +356,21 @@ function Navbar() {
                 tablet:h-[23px]
                 laptop:h-[32px]
                 laptop-lg:h-[32px]
+<<<<<<< HEAD
                 desktop:h-[32px]'
+=======
+                desktop:h-[32px]' 
+>>>>>>> origin/master
                 id='animate-nav'>
                 <div className='link' id='animate-nav'>
                   <span className='font-lexend font-medium cursor-pointer tracking-tighter text-[.9rem]'
                     onClick={() => setShowMenu(true)}>
                     Menu
+<<<<<<< HEAD
                   </span>
+=======
+                  </span> 
+>>>>>>> origin/master
                 </div>
               </div>
               {/* menu container */}
@@ -302,7 +385,11 @@ function Navbar() {
                           <span className='font-lexend font-medium cursor-pointer tracking-tighter text-offwhite text-[.9rem]'
                             onClick={() => setShowMenu(false)} >
                             Close
+<<<<<<< HEAD
                           </span>
+=======
+                          </span> 
+>>>>>>> origin/master
                         </div>
                       </div>
                       {/* menu nav links */}
@@ -313,6 +400,7 @@ function Navbar() {
                               <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
                                 Intro
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
+<<<<<<< HEAD
                               </span>
                             </div>
                           </Link>
@@ -334,6 +422,9 @@ function Navbar() {
                                 Certificates
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
                               </span>
+=======
+                              </span> 
+>>>>>>> origin/master
                             </div>
                           </Link>
                         </div>
@@ -343,7 +434,11 @@ function Navbar() {
                               <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
                                 Project
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
+<<<<<<< HEAD
                               </span>
+=======
+                              </span> 
+>>>>>>> origin/master
                             </div>
                           </Link>
                         </div>
@@ -353,17 +448,29 @@ function Navbar() {
                               <span className='flex items-center text-[2.3rem] text-offwhite' onClick={() => setShowMenu(false)}>
                                 Contact
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
+<<<<<<< HEAD
                               </span>
+=======
+                              </span> 
+>>>>>>> origin/master
                             </div>
                           </Link>
                         </div>
                         <div className='page-link'>
+<<<<<<< HEAD
                           <Link to={Resume} target='_blank' rel='noreferrer'>
+=======
+                          <Link to={Resume} target={Resume}>
+>>>>>>> origin/master
                             <div className='link' id='mobile-nav-animate'>
                               <span className='flex items-center text-[2.3rem] text-offwhite'onClick={() => setShowMenu(false)}>
                                 Resume
                                 <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
+<<<<<<< HEAD
                               </span>
+=======
+                              </span> 
+>>>>>>> origin/master
                             </div>
                           </Link>
                         </div>
@@ -380,4 +487,8 @@ function Navbar() {
   )
 }
 
+<<<<<<< HEAD
 export default Navbar
+=======
+export default Navbar
+>>>>>>> origin/master

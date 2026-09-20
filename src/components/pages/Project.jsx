@@ -4,14 +4,20 @@ import ProjectCard from './ProjectCard'
 // icons
 import {RiArrowRightDownLine} from 'react-icons/ri'
 // GSAP
+<<<<<<< HEAD
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
+=======
+import gsap from 'gsap' 
+import ScrollTrigger from 'gsap/ScrollTrigger'
+>>>>>>> origin/master
 gsap.registerPlugin(ScrollTrigger)
 
 function Project() {
   useEffect(() => {
+<<<<<<< HEAD
     const reveals = [];
 
     // overflow visible
@@ -24,21 +30,55 @@ function Project() {
       ease: 'power1.in',
       scrollTrigger: {
         trigger: '#selected',
+=======
+    // overflow visible
+    gsap.to('#animate-project-header', {
+      overflow: 'visible',
+      scrollTrigger: {
+        trigger: '#animate-project-header',
+      }
+    });
+
+    gsap.to('#animate-project-header', {
+      overflow: 'visible',
+      scrollTrigger: {
+        trigger: '#animate-project-header',
+      }
+    });
+
+    // selected projects
+    gsap.to('#selected', {
+      duration: .5,
+      left: '30px',
+      ease: 'power1.in',
+      scrollTrigger: { 
+        trigger: '#selected', 
+>>>>>>> origin/master
         start: 'top 100%',
         scrub: true,
       }
     });
 
+<<<<<<< HEAD
     const projects = gsap.to('#projects', {
       duration: .5,
       right: '30px',
       ease: 'power1.in',
       scrollTrigger: {
         trigger: '#projects',
+=======
+    gsap.to('#projects', {
+      duration: .5,
+      right: '30px',
+      ease: 'power1.in',
+      scrollTrigger: { 
+        trigger: '#projects', 
+>>>>>>> origin/master
         start: 'top 150%',
         scrub: true,
       }
     });
+<<<<<<< HEAD
 
     // description
     reveals.push(scrollReveal('#animate-project', { y: 0, stagger: .05, ease: 'power1.in' }));
@@ -53,6 +93,34 @@ function Project() {
         tween.kill();
       });
     };
+=======
+    
+    // description
+    gsap.to('#animate-project', {
+      duration: 1,
+      // delay: 1.1,
+      y: 0,
+      stagger: .05,
+      ease: 'power1.in',
+      scrollTrigger: { 
+        trigger: '#animate-project', 
+        start: 'bottom 100%',
+      }
+    });
+
+    // behance link
+    gsap.to('#animate-link', {
+      duration: 1,
+      // delay: 1,
+      y: 0,
+      ease: 'power1.in',
+      scrollTrigger: {
+        trigger: '#animate-link',
+        start: 'top 100%',
+      }
+    });
+
+>>>>>>> origin/master
   }, []);
 
   return (
@@ -146,7 +214,11 @@ function Project() {
                   laptop:h-[50px]
                   laptop-lg:h-[50px]
                   desktop:h-[50px]'>
+<<<<<<< HEAD
                   <a href='https://www.behance.net/jbnza' target='_blank' rel='noreferrer'
+=======
+                  <a href='https://www.behance.net/jbnza' target='https://www.behance.net/jbnza' 
+>>>>>>> origin/master
                     className='behance-link flex items-center p-2.5
                     mobile:translate-y-[28px]
                     tablet:translate-y-[35px]

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //
 import React, { useEffect } from 'react'
 // scroll reveal
@@ -10,6 +11,28 @@ function WebDev() {
       { targets: '#animate-webdev', vars: { y: 0, stagger: .04, ease: 'power1.in' } },
     ], { trigger: '#web-dev-line' });
     return () => reveal.kill();
+=======
+// 
+import React, { useEffect } from 'react'
+// GSAP
+import gsap from 'gsap' 
+import ScrollTrigger from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
+
+function WebDev() {
+  useEffect(() => {
+    // line animation
+    gsap.to('#web-dev-line', {
+      duration: 1,
+      // delay: 3,
+      width: '100%',
+      ease: 'power1.in',
+      scrollTrigger: { 
+        trigger: '#web-dev-line', 
+        start: 'bottom 100%'
+      }
+    });
+>>>>>>> origin/master
   }, []);
 
   return (
@@ -34,7 +57,11 @@ function WebDev() {
             laptop:translate-y-[50px]
             laptop-lg:translate-y-[50px]
             desktop:translate-y-[50px]'
+<<<<<<< HEAD
             id='animate-webdev'>
+=======
+            id='animate-about'>
+>>>>>>> origin/master
             Web 
           </span>
           <span className='stack-context font-medium
@@ -43,7 +70,11 @@ function WebDev() {
             laptop:translate-y-[50px]
             laptop-lg:translate-y-[50px]
             desktop:translate-y-[50px]'
+<<<<<<< HEAD
             id='animate-webdev'>
+=======
+            id='animate-about'>
+>>>>>>> origin/master
             Development
           </span>
         </div>
@@ -61,8 +92,13 @@ function WebDev() {
               laptop:translate-y-[30px]
               laptop-lg:translate-y-[30px]
               desktop:translate-y-[30px]'  
+<<<<<<< HEAD
               id='animate-webdev'>
               HTML5
+=======
+              id='animate-about'>
+              HTML
+>>>>>>> origin/master
             </p>
           </li>
           <li className='stacks h-[30px]
@@ -77,7 +113,11 @@ function WebDev() {
               laptop:translate-y-[30px]
               laptop-lg:translate-y-[30px]
               desktop:translate-y-[30px]'  
+<<<<<<< HEAD
               id='animate-webdev'>
+=======
+              id='animate-about'>
+>>>>>>> origin/master
               CSS3
             </p>
           </li>
@@ -93,8 +133,13 @@ function WebDev() {
               laptop:translate-y-[30px]
               laptop-lg:translate-y-[30px]
               desktop:translate-y-[30px]'  
+<<<<<<< HEAD
               id='animate-webdev'>
               SASS/SCSS
+=======
+              id='animate-about'>
+              SASS
+>>>>>>> origin/master
             </p>
           </li>
           <li className='stacks h-[30px]
@@ -109,7 +154,11 @@ function WebDev() {
               laptop:translate-y-[30px]
               laptop-lg:translate-y-[30px]
               desktop:translate-y-[30px]'   
+<<<<<<< HEAD
               id='animate-webdev'>
+=======
+              id='animate-about'>
+>>>>>>> origin/master
               JavaScript
             </p>
           </li>
@@ -125,7 +174,11 @@ function WebDev() {
               laptop:translate-y-[30px]
               laptop-lg:translate-y-[30px]
               desktop:translate-y-[30px]' 
+<<<<<<< HEAD
               id='animate-webdev'>
+=======
+              id='animate-about'>
+>>>>>>> origin/master
               React JS
             </p>
           </li>

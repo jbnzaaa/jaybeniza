@@ -11,6 +11,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Unica+One&display=swap'); // Unica one
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Unica+One&display=swap'); // Lexend
 
+<<<<<<< HEAD
 :root {
   --main-bg: #E5E4E3;
   --main-color: #0F0E17;
@@ -18,12 +19,25 @@
 }
 
 * {
+=======
+:root{
+  // background
+  --main-bg: #E5E4E3;
+  // text color
+  --main-color: #0F0E17;
+  // pallete
+  --red: #CC2525;
+}
+
+*{
+>>>>>>> origin/master
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
   color: #0F0E17;
   text-transform: uppercase;
+<<<<<<< HEAD
   scroll-behavior: smooth;
 }
 
@@ -515,3 +529,571 @@
   text-align: center;
   padding: 1rem;
 }
+=======
+	// -webkit-overflow-scrolling: touch;
+	// overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  
+  body{
+    background: var(--main-bg);
+
+    // onload animation style
+    #onload-container{
+      position: relative;
+      // overflow: hidden;
+
+      #sticky{
+        position: absolute;
+        z-index: 100;
+        position: sticky;
+        top: 0px;
+
+        #main-container{
+          position: absolute;
+          top: 0px;
+        }
+      }
+    }
+
+    // navbar - logo
+    .logo-container{
+      height: auto;
+      position: relative;
+      overflow: hidden; 
+      
+      .logo{
+        transform: translateY(30px);
+        transition: 1s ease;
+      }
+    }
+
+    // navbar - links
+    .link-container{
+      position: relative;
+      overflow: hidden; 
+      
+      .link{
+        position: absolute;
+        transform: translateY(32px);
+        text-align: right;
+        transition: 1s ease;
+        
+        span{
+          position: relative;
+          letter-spacing: 0;
+          transition: .3s ease-in-out;
+
+          &:hover{
+            letter-spacing: 2px;
+          }
+
+          #icon{
+            transform: rotate(0deg);
+            transition: all .3s ease-in-out;
+            border-radius: 100%;
+          }
+  
+          &:hover{
+            #icon{
+              transform: rotate(-45deg);
+              transition: all .3s ease-in-out;
+              background: var(--main-color);
+              fill: var(--main-bg);
+              border-radius: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    .menu-link{
+      height: 20px;
+      position: relative;
+      overflow: hidden;
+
+      div{
+        transform: translateY(20px);
+        transition: 1s ease;
+
+        span{
+          position: relative;
+          letter-spacing: 0;
+          transition: .3s ease-in-out;
+
+          &:hover{
+            letter-spacing: 2px;
+          }
+        }
+      }
+    }
+
+    .page-link{
+      height: 60px;
+      position: relative;
+      overflow: hidden;
+
+      .link,
+      #mobileview-link{
+        transform: translateY(60px);
+        transition: 1s ease;
+        
+        span{
+          position: relative;
+          letter-spacing: 0;
+          transition: .3s ease-in-out;
+
+          &:hover{
+            letter-spacing: 2px;
+          }
+
+          #icon{
+            transform: rotate(0deg);
+            transition: all .3s ease-in-out;
+            border-radius: 100%;
+          }
+  
+          &:hover{
+            #icon{
+              transform: rotate(-45deg);
+              transition: all .3s ease-in-out;
+              background: var(--main-bg);
+              fill: var(--main-color);
+              border-radius: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    //hero section
+    .p-container{
+      position: relative;
+      overflow: hidden;
+      
+      .hero-p{
+        transform: translateY(30px);
+        margin-right: 5px; 
+        transition: 1s ease;
+      }
+    }
+    
+    .hero-container{
+      position: relative;
+      overflow: hidden;
+
+      .hero-aspiringweb{
+        margin-right: 10px;
+        transition: 1s ease;
+      }
+
+      .hero-designerdev{
+        position: absolute;
+        width: 100%;
+        transition: 1s ease;
+      }
+    }
+
+    // about section
+    .about-container{
+      position: relative;
+      overflow: hidden;
+
+      .about-greetings{
+        margin-right: 10px;
+        transition: 1s ease;
+      }
+
+      // #text{
+      //   position: absolute;
+      //   top: 95px;
+      //   width: 100%;
+      // }
+    }
+
+    .content-container{
+      position: relative;
+      overflow: hidden; 
+      height: auto;
+
+      .about-paragraph{
+        transition: 1s ease;
+      }
+    }
+
+    // #reveal{
+    //   #img{
+    //     width: 400px;
+    //     height: 500px;
+    //     position: absolute;
+    //     top: 1250px;
+    //     object-fit: cover;
+    //     transform-origin: left;
+    //   }
+    // }
+
+    #what-i-use-line,
+    #web-dev-line,
+    #framework-and-library-line,
+    #tools-and-tech-line{
+      border-top: 1px solid var(--main-color);
+      position: relative;
+      overflow: hidden;
+      width: 0px;
+    }
+
+    ul{
+      li{
+        margin-right: 15px;
+      }
+    }
+
+    .stack-container{
+      position: relative;
+      overflow: hidden;
+
+      .stack-context{
+        margin-right: 10px;
+        transition: 1s ease;
+      }
+    }
+
+    .stacks{
+      position: relative;
+      overflow: hidden;
+      height: auto;
+
+      .stack-context{
+        margin-right: 5px;
+        transition: 1s ease;
+      }
+    }
+
+    // selected projects
+    .description{
+      position: relative;
+      overflow: hidden;
+      height: auto;
+
+      .description-p{
+        transform: translateY(30px);
+        margin-right: 5px;
+        transition: 1s ease;
+      }
+    }
+
+    .selected-project-header{
+      position: relative;
+      overflow: hidden;
+    
+      #selected,
+      #projects{
+        position: absolute;
+        // transition: 1s ease;
+      }
+    }
+
+    .behance-link-container{
+      position: relative;
+      overflow: hidden;
+      height: 41px;
+
+      .behance-link{
+        position: relative;
+        letter-spacing: 0;
+        transition: .3s ease-in-out;
+
+        &:hover{
+          letter-spacing: 2px;
+        }
+      }
+
+      a{
+        transition: 1s ease;
+        #icon{
+          transform: rotate(0deg);
+          transition: all .3s ease-in-out;
+          border-radius: 100%;
+        }
+  
+        &:hover{
+          #icon{
+            transform: rotate(-45deg);
+            transition: all .3s ease-in-out;
+            background: var(--main-bg);
+            fill: var(--main-color);
+            border-radius: 100%;
+          }
+        }
+        
+        #icons{
+          transform: rotate(0deg);
+          transition: all .3s ease-in-out;
+          border-radius: 100%;
+        }
+  
+        &:hover{
+          #icons{
+            transform: rotate(-45deg);
+            transition: all .3s ease-in-out;
+            background: var(--main-bg);
+            fill: var(--main-color);
+            border-radius: 100%;
+          }
+        }
+      }
+    }
+
+    .project-card-container{
+      position: relative;
+      overflow: hidden;
+      transition: .5s ease-in-out;
+
+      .project-image{
+        transition: .5s ease-in-out;
+
+        &:hover{
+          transform: scale(1.05);
+          transition: .5s ease-in-out;
+        }
+      }
+    }
+
+    .project-container{
+      //daily discount section
+        .p-container{
+          position: relative;
+          overflow: hidden;
+          transition: 1s ease;
+          
+          .project-h1{
+            transition: 1s ease;
+          }
+
+          .project-p{
+            transform: translateY(30px);
+            margin-right: 5px; 
+            transition: 1s ease;
+          }
+          
+          .project-ps{
+            transform: translateY(30px);
+            margin-right: 15px; 
+            transition: 1s ease;
+          }
+
+          .project-link{
+          transform: translateY(30px);
+          transition: 1s ease;
+          
+          span{
+            position: relative;
+            letter-spacing: 0;
+            transition: .3s ease-in-out;
+
+            &:hover{
+              letter-spacing: 2px;
+            }
+
+            #icon{
+              transform: rotate(0deg);
+              transition: all .3s ease-in-out;
+              border-radius: 100%;
+            }
+    
+            &:hover{
+              #icon{
+                transform: rotate(-45deg);
+                transition: all .3s ease-in-out;
+                background: var(--main-color);
+                fill: var(--main-bg);
+                border-radius: 100%;
+              }
+            }
+          }
+        }
+      }
+
+      .screenshot-container{
+        position: relative;
+        overflow: hidden;
+        transition: 1s ease;
+
+        .screenshot-img{
+          transform: translateY(105%);
+          transition: 1s ease;
+        }
+      }
+    }
+
+    // .project-content{
+    //   div{
+    //     span{
+    //       margin-left: 10px;
+    //     }
+    //   }
+    // }
+
+    // #project-link{
+    //   a, button{
+    //     span,
+    //     #visit{
+    //       position: relative;
+    //       letter-spacing: 0;
+    //       transition: .3s ease-in-out;
+
+    //       &:hover{
+    //         letter-spacing: 2px;
+    //       }
+    //     }
+        
+    //     #icon{
+    //       transform: rotate(0deg);
+    //       transition: all .3s ease-in-out;
+    //       border-radius: 100%;
+    //     }
+  
+    //     &:hover{
+    //       #icon{
+    //         transform: rotate(-45deg);
+    //         transition: all .3s ease-in-out;
+    //         background: var(--main-color);
+    //         fill: var(--main-bg);
+    //         border-radius: 100%;
+    //       }
+    //     }
+        
+    //     #icons{
+    //       transform: rotate(0deg);
+    //       transition: all .3s ease-in-out;
+    //       border-radius: 100%;
+    //     }
+  
+    //     &:hover{
+    //       #icons{
+    //         transform: rotate(-45deg);
+    //         transition: all .3s ease-in-out;
+    //         background: var(--main-color);
+    //         fill: var(--main-bg);
+    //         border-radius: 100%;
+    //       }
+    //     }
+    //   }
+    // }
+
+    // #card-container{
+    //   position: relative;
+    //   overflow: hidden;
+    //   height: max-content;
+
+    //   // #project-card{
+    //   //   position: absolute;
+    //   //   transform: translateY(0px);
+    //   // }
+
+    //   #span-container{
+    //     position: relative;
+    //     overflow: hidden;
+    //     // height: auto;
+
+    //     #back{
+    //       transform: translateY(20px);
+    //       transition: 1s ease;
+    //     }
+
+    //     #project-p{
+    //       margin-right: 8px;
+    //     }
+    //   }
+
+    //   #title-container{
+    //     position: relative;
+    //     overflow: hidden;
+    //     height: auto;
+    //   }
+
+    //   #p-container{
+    //     position: relative;
+    //     overflow: hidden;
+    //     height: auto;
+
+    //     #project-p{
+    //       margin-right: 5px;
+    //       transform: translateY(20px);
+    //     }
+    //   }
+
+    //   #button-container{
+    //     position: relative;
+    //     overflow: hidden;
+    //     height: auto;
+
+    //     #visit{
+    //       transform: translateY(30px);
+    //     }
+    //   }
+
+    //   #img-container{
+    //     position: relative;
+    //     overflow: hidden;
+    //     height: auto;
+
+    //     #project-img{
+    //       transform: translateY(0px);
+    //       transform-origin: bottom;
+    //     }
+    //   }
+    // }
+
+    // contact
+    .drop-message-container{
+      position: relative;
+      overflow: hidden; 
+      height: auto;
+
+      .context{
+        margin-right: 20px;
+        transition: 1s ease;
+      }
+    }
+
+    .contact-description-container{
+      height: auto;
+      position: relative;
+      overflow: hidden; 
+
+      .context{
+        transform: translateY(35px);
+        margin-right: 5px;
+        transition: 1s ease;
+      }
+    }
+
+    .account-container{
+      position: relative;
+      overflow: hidden; 
+      height: auto;
+
+      .accounts{
+        transform: translateY(35px);
+        transition: 1s ease;
+      }
+    }
+
+    // footer
+    .footer-container{
+      position: relative;
+      overflow: hidden;
+
+      .footer{
+        transition: 1s ease;
+        transform: translateY(23px);
+        margin-right: 5px;
+      }
+
+      .footer-update-date{
+        margin-right: 5px;
+      }
+    }
+  }
+}
+>>>>>>> origin/master

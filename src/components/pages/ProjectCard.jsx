@@ -1,19 +1,119 @@
 //
 import React, { useEffect } from 'react'
+<<<<<<< HEAD
 //
 import { Link } from 'react-router-dom'
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
+=======
+// 
+import { Link } from 'react-router-dom'
+// GSAP
+import gsap from 'gsap' 
+import ScrollTrigger from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
+>>>>>>> origin/master
 
 function ProjectCard() {
   useEffect(() => {
     // card animation
+<<<<<<< HEAD
     const reveal = scrollReveal('#animate-project-card', {
       stagger: .05,
       y: 0,
       ease: 'power1.in',
     });
     return () => reveal.kill();
+=======
+    gsap.to('#animate-project-card', {
+      duration: 1,
+      stagger: .05,
+      y: 0,
+      ease: 'power1.in',
+      scrollTrigger: { 
+        trigger: '#animate-project-card', 
+        // start: 'top 100%',
+        // markers: true
+      }
+    });
+
+    // gsap.to(fxCard.current , {
+    //   duration: 1,
+    //   y: 0,
+    //   ease: 'power1.inOut',
+    //   scrollTrigger: {
+    //     trigger: fxCard.current,
+    //     // start: 'bottom 150%',
+    //   }
+    // });
+
+    // gsap.to(fxProjTitle.current , {
+    //   duration: 1,
+    //   delay: .8,
+    //   top: '0px',
+    //   ease: 'power1.inOut',
+    //   scrollTrigger: {
+    //     trigger: fxProjTitle.current,
+    //     // start: 'bottom 140%',
+    //     // toggleActions: "play none none reverse",
+    //   }
+    // });
+
+    // gsap.to(fxLink1.current, {
+    //   duration: 1, 
+    //   top: '0', 
+    //   ease: 'power1.inOut',
+    // });
+    
+    // // card animation
+    // gsap.to(fxCardAnim1.current , {
+    //   duration: 1,
+    //   delay: 1,
+    //   // marginTop: '0px',
+    //   ease: 'power1.inOut',
+    //   scrollTrigger: {
+    //     trigger: fxCardAnim1.current,
+    //     // start: 'bottom 150%',
+    //     toggleActions: "play none none reverse",
+    //   }
+    // });
+    
+    // gsap.to(fxCardAnim2.current , {
+    //   duration: 1,
+    //   delay: 1.1,
+    //   // marginTop: '0px',
+    //   ease: 'power1.inOut',
+    //   scrollTrigger: {
+    //     trigger: fxCardAnim2.current,
+    //     // start: 'bottom 150%',
+    //     toggleActions: "play none none reverse",
+    //   }
+    // });
+
+    // gsap.to(fxCardAnim3.current , {
+    //   duration: 1,
+    //   delay: 1.2,
+    //   // marginTop: '0px',
+    //   ease: 'power1.inOut',
+    //   scrollTrigger: {
+    //     trigger: fxCardAnim3.current,
+    //     // start: 'bottom 150%',
+    //     toggleActions: "play none none reverse",
+    //   }
+    // });
+    
+    // gsap.to(fxCardAnim4.current , {
+    //   duration: 1,
+    //   delay: 1.3,
+    //   marginTop: '0px',
+    //   ease: 'power1.inOut',
+    //   scrollTrigger: {
+    //     trigger: fxCardAnim4.current,
+    //     // start: 'bottom 150%',
+    //     toggleActions: "play none none reverse",
+    //   }
+    // });
+>>>>>>> origin/master
   },[]);
 
   return (

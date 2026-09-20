@@ -2,14 +2,22 @@
 import React, { useState, useEffect } from 'react'
 // React Router DOM
 import { useLocation } from 'react-router-dom'
+<<<<<<< HEAD
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
+=======
+// GSAP
+import gsap from 'gsap' 
+import ScrollTrigger from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
+>>>>>>> origin/master
 
 function Footer() {
   const [showFooter] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
+<<<<<<< HEAD
     // footer animation - 'top bottom' (earliest possible trigger point) since
     // the footer is the last element on the page: a later threshold like
     // 'top 85%' can require scrolling past the page's natural max scroll
@@ -20,6 +28,19 @@ function Footer() {
       ease: 'power1.in',
     }, { start: 'top bottom' });
     return () => reveal.kill();
+=======
+    // footer animation
+    gsap.to('#animate-footer', {
+      duration: 1,
+      y: 0,
+      stagger: .05,
+      ease: 'power1.in',
+      scrollTrigger: { 
+        trigger: '#animate-footer', 
+        start: 'bottom 120%',
+      }
+    });
+>>>>>>> origin/master
   }, []);
 
   return (
@@ -44,7 +65,11 @@ function Footer() {
               <p className='footer text-white' id='animate-footer'>&copy;</p>
             </div>
             <div className='footer-container'>
+<<<<<<< HEAD
               <p className='footer text-white' id='animate-footer'>{new Date().getFullYear()}</p>
+=======
+              <p className='footer text-white' id='animate-footer'>2022</p>
+>>>>>>> origin/master
             </div>
             <div className='footer-container'>
               <p className='footer text-white' id='animate-footer'>Jayson</p>
@@ -66,17 +91,28 @@ function Footer() {
               <p className='footer text-white' id='animate-footer'>Update</p>
             </div>
             <div className='footer-container'>
+<<<<<<< HEAD
               <p className='footer text-white' id='animate-footer'>September</p>
             </div>
             <div className='footer-container'>
               <p className='footer text-white' id='animate-footer'>2026</p>
+=======
+              <p className='footer text-white' id='animate-footer'>November</p>
+            </div>
+            <div className='footer-container'>
+              <p className='footer text-white' id='animate-footer'>2022</p>
+>>>>>>> origin/master
             </div>
           </section>
           <section className='flex flex-row
             mobile:col-span-8 mobile:col-start-1 mobile:justify-start mobile:h-[20px]
             tablet:col-span-8 tablet:col-start-1 tablet:justify-start tablet:h-[20px]
             laptop:col-span-2 laptop:col-start-7 laptop:justify-end laptop:h-[23px]
+<<<<<<< HEAD
             laptop-lg:col-span-2 laptop-lg:col-start-7 laptop-lg:justify-end laptop-lg:h-[23px]
+=======
+            laptop-lg:col-span-2 laptop:col-start-7 laptop-lg:justify-end l laptop-lg:h-[23px]
+>>>>>>> origin/master
             desktop:col-span-2 desktop:col-start-7 desktop:justify-end desktop:h-[23px]'>
             <div className='footer-container'>
               <p className='footer text-white' id='animate-footer'>Design</p>

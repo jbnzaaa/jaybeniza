@@ -13,6 +13,7 @@ import regain_ejournal from '../../../../src/assets/files/images/regain/student-
 import regain_message from '../../../../src/assets/files/images/regain/student-message-page.png'
 import regain_history from '../../../../src/assets/files/images/regain/student-history-page.png'
 // GSAP
+<<<<<<< HEAD
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 // scroll reveal
@@ -34,6 +35,28 @@ function Regain() {
       ease: 'power1.in',
     });
 
+=======
+import gsap from 'gsap' 
+import ScrollTrigger from 'gsap/ScrollTrigger'
+import Contact from '../Contact'
+gsap.registerPlugin(ScrollTrigger)
+
+function Regain() {
+  useEffect(() => {
+    // project content animation
+    gsap.to('#animate-dailydiscount', {
+      duration: 1,
+      y: 0,
+      stagger: .05,
+      ease: 'power1.in',
+      scrollTrigger: { 
+        trigger: '#animate-dailydiscount', 
+        // start: 'bottom 100%',
+        // markers: true
+      }
+    });
+    
+>>>>>>> origin/master
     gsap.to('#animate-screenshot', {
       delay: .8,
       duration: 1,
@@ -43,8 +66,11 @@ function Regain() {
     });
 
     window.scrollTo(0, 0)
+<<<<<<< HEAD
 
     return () => reveal.kill();
+=======
+>>>>>>> origin/master
   }, []);
 
   return (
@@ -126,11 +152,32 @@ function Regain() {
               laptop:text-[1rem] 
               laptop-lg:text-[1rem]
               desktop:text-[1.1rem] '>
+<<<<<<< HEAD
               {DESCRIPTION_WORDS.map((word, i) => (
                 <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]' key={i}>
                   <p className='project-p' id='animate-dailydiscount'>{word}</p>
                 </div>
               ))}
+=======
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>Regain</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>is</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>a</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>web-based</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>self-assessment</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>and</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>E-journal</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>system</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>with</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>chatbot</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>assistance</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>for</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>troubled</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>student</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>in</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>STI</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>College</p></div>
+              <div className='p-container h-[30px] mobile:h-[20px] tablet:h-[20px]'><p className='project-p' id='animate-dailydiscount'>Novaliches.</p></div>
+>>>>>>> origin/master
             </div>
           </div>
           <div className='
@@ -244,7 +291,11 @@ function Regain() {
                 desktop:text-[1.1rem] '>
                 <div className="p-container">
                   <div className='project-link' id='animate-dailydiscount'>
+<<<<<<< HEAD
                     <a href='https://regain-caps.web.app/' target='_blank' rel='noreferrer'>
+=======
+                    <a href='https://regain-caps.web.app/' target='https://regain-caps.web.app/'>
+>>>>>>> origin/master
                       <span className='flex items-center
                         mobile:text-[.9rem]
                         tablet:text-[.9rem]
