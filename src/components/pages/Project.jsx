@@ -18,7 +18,6 @@ const STEP_LENGTH = .8;
 
 function Project() {
   const fxSection = useRef();
-  const fxBackground = useRef();
   const fxHeading = useRef();
   const fxStage = useRef();
   const fxCursor = useRef();
@@ -43,8 +42,8 @@ function Project() {
 
     // heading letters - the page's standard per-letter rise. the heading
     // waits blown up in the centre of the section (see the pinned timeline
-    // below); its letters rise once the background is 80% in, and drop
-    // away again if the page is scrolled back above that point
+    // below); its letters rise as the section comes up the screen, and
+    // drop away again if the page is scrolled back above that point
     const rise = gsap.to('#animate-selected', { y: 0, duration: .6, stagger: .03, ease: 'power1.in', paused: true });
     let risen = false;
     const showHeading = (show) => {
@@ -54,20 +53,16 @@ function Project() {
       else rise.timeScale(2).reverse();
     };
 
-    // 1. entry - scroll-coupled, from the section's top reaching the bottom
-    // of the screen to it reaching the top. the black background rides up
-    // faster than the page (parallax)
-    const entry = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        trigger: section,
-        start: 'top bottom',
-        end: 'top top',
-        scrub,
-        onUpdate: (self) => showHeading(self.progress >= .8),
-      },
-    })
-      .fromTo(fxBackground.current, { yPercent: 60 }, { yPercent: 0, duration: 1 }, 0);
+    // 1. entry - from the section's top reaching the bottom of the screen
+    // to it reaching the top. nothing moves with it; it only times the
+    // heading's reveal to the section being well on its way in (early
+    // enough that the incoming section is not an empty stretch of page)
+    const entry = ScrollTrigger.create({
+      trigger: section,
+      start: 'top bottom',
+      end: 'top top',
+      onUpdate: (self) => showHeading(self.progress >= .4),
+    });
 
     // description and behance button - the same letter-by-letter reveal
     // every other button on the site uses (label first, arrow after it).
@@ -163,10 +158,9 @@ function Project() {
     stage.addEventListener('mouseout', onOut);
 
     return () => {
-      [entry, pinned].forEach((timeline) => {
-        timeline.scrollTrigger?.kill();
-        timeline.revert();
-      });
+      entry.kill();
+      pinned.scrollTrigger?.kill();
+      pinned.revert();
       details.revert();
       rise.revert();
       stage.removeEventListener('mousemove', onMove);
@@ -182,8 +176,6 @@ function Project() {
       <div id='project'>
         <div className='py-20'>
           <section className='relative h-screen-safe overflow-hidden' ref={fxSection}>
-            {/* black background - its own layer so it can ride up on entry */}
-            <div className='absolute inset-0 bg-black' ref={fxBackground}/>
             {/* content - top padding clears the fixed nav bar */}
             <div className='relative h-full grid grid-cols-8 gap-x-5 pt-[6rem] pb-[2rem]
               mobile:grid-rows-[auto_auto_minmax(0,1fr)] mobile:gap-y-5 mobile:px-[.9rem] mobile:pt-[5rem] mobile:pb-[calc(1.75rem+env(safe-area-inset-bottom))]
@@ -201,16 +193,16 @@ function Project() {
                 {/* one line. the last word's trailing gap is dropped so the
                   line is exactly as wide as its letters - it is centred by
                   measurement. sized to fit this column once it has settled */}
-                <h2 className='inline-block font-flexible font-medium leading-none whitespace-nowrap text-white [&_.split-word:last-child]:mr-0
-                  mobile:text-[15vw]
-                  tablet:text-[12vw]
-                  laptop:text-[7.4vw]
-                  laptop-lg:text-[7.4vw]
-                  desktop:text-[7.4vw]'
+                <h2 className='inline-block font-flexible font-medium leading-none whitespace-nowrap [&_.split-word:last-child]:mr-0
+                  mobile:text-[8vw]
+                  tablet:text-[6vw]
+                  laptop:text-[4vw]
+                  laptop-lg:text-[3.6vw]
+                  desktop:text-[3.6vw]'
                   ref={fxHeading}>
                   <SplitText text='Selected Projects' id='animate-selected' />
                 </h2>
-                <p className='flex flex-wrap text-white
+                <p className='flex flex-wrap
                   mobile:mt-4 mobile:text-[.8rem]
                   tablet:mt-4 tablet:text-[.9rem] tablet:max-w-[60%]
                   laptop:mt-6 laptop:text-[1rem]
@@ -240,17 +232,17 @@ function Project() {
                   ))}
                 </div>
                 <div className='selected-cursor' ref={fxCursor} aria-hidden='true'>
-                  <span className='leading-none
+                  <span className='leading-none text-offwhite
                     mobile:text-[.9rem]
                     tablet:text-[.9rem]
                     laptop:text-[1rem]
                     laptop-lg:text-[1rem]
                     desktop:text-[1.1rem]'>View</span>
-                  <RiArrowRightDownLine className='fill-black ml-1 text-2xl'/>
+                  <RiArrowRightDownLine className='fill-offwhite ml-1 text-2xl'/>
                 </div>
               </div>
-              {/* behance button - the menu links' markup, so it reveals and
-                hovers exactly like them. on a phone it sits directly under
+              {/* behance button - the buttons' markup for a light background,
+                so it reveals and hovers exactly like them. on a phone it sits directly under
                 the description, above the project stage; from tablet up it
                 is in the bottom left corner */}
               <div className='col-start-1 flex items-end
@@ -259,10 +251,10 @@ function Project() {
                 laptop:col-span-3 laptop:row-start-2
                 laptop-lg:col-span-3 laptop-lg:row-start-2
                 desktop:col-span-3 desktop:row-start-2'>
-                <div className='page-link selected-link'>
-                  <a href='https://www.behance.net/jbnza' target='_blank' rel='noreferrer'>
-                    <div className='link'>
-                      <span className='flex items-center text-offwhite
+                <div className='project-container'>
+                  <a href='https://www.behance.net/jbnza' target='_blank' rel='noreferrer' className='inline-block'>
+                    <div className='project-link'>
+                      <span className='flex items-center
                         mobile:text-[.9rem]
                         tablet:text-[.9rem]
                         laptop:text-[1rem]
@@ -271,7 +263,7 @@ function Project() {
                         <SplitText text='More UI design on Behance' id='animate-link' />
                         <span className='menu-icon-clip'>
                           <span className='menu-icon' id='animate-link'>
-                            <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-2xl'/>
+                            <RiArrowRightDownLine id='icon' className='fill-black ml-1 text-2xl'/>
                           </span>
                         </span>
                       </span>

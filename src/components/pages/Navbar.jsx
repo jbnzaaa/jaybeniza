@@ -6,8 +6,6 @@ import { useLocation } from 'react-router-dom'
 import { HashLink as Link} from 'react-router-hash-link'
 // page-to-page wipe
 import { TransitionLink } from '../common/PageTransition'
-// project pages
-import { PROJECTS } from './projects/projects'
 // icons
 import {RiArrowRightDownLine} from 'react-icons/ri'
 // Resume
@@ -20,19 +18,25 @@ import SplitText from '../common/SplitText'
 gsap.registerPlugin(ScrollTrigger)
 
 // every destination lives in the menu overlay - the bar itself only shows
-// the logo and the Menu button, at every breakpoint
+// the logo and the Menu button, at every breakpoint. two groups: the
+// site's own destinations, in the order the landing page runs (About
+// opens its own page - which is also where the work experience and
+// certificates live), then the links that leave the site
 const MENU_LINKS = [
   { label: 'Home', to: '/#' },
+  { label: 'About', to: '/about' },
   { label: 'Work', to: '/#project' },
-  { label: 'Experience', to: '/#work-experience' },
-  { label: 'Certificates', to: '/#certificates-awards' },
+  { label: 'Testimonials', to: '/#testimonials' },
   { label: 'Contact', to: '/#contact' },
-  { label: 'Resume', to: Resume, external: true },
+];
+const MENU_EXTERNAL = [
+  { label: 'Resume', href: Resume },
+  { label: 'Behance', href: 'https://www.behance.net/jbnza' },
+  { label: 'Linked In', href: 'https://www.linkedin.com/in/jaybeniza/' },
+  { label: 'Github', href: 'https://github.com/jbnzaaa' },
 ];
 
-const PROJECT_PATHS = Object.values(PROJECTS).map((project) => project.path);
-
-// the bar's right-hand button - Menu, or Return on a project page
+// the bar's right-hand button - Menu, or Return on any other page
 const NAV_BUTTON = `flex items-center font-flexible font-medium leading-none cursor-pointer tracking-tighter text-offwhite
   mobile:text-[1.6rem]
   tablet:text-[1.6rem]
@@ -47,8 +51,9 @@ function Navbar() {
 
   const [showMenu, setShowMenu] = useState(false);
   const { pathname } = useLocation();
-  // on a project page the Menu button's place is taken by Return
-  const onProject = PROJECT_PATHS.includes(pathname);
+  // on every page but the landing page (a project, the about page) the
+  // Menu button's place is taken by Return
+  const onProject = pathname !== '/';
 
   useEffect(() => {
     // the bar's letters rise in once, on mount (and again when the
@@ -76,7 +81,7 @@ function Navbar() {
         clipPath: 'inset(0% 0% 100% 0%)',
         ease: 'none',
         scrollTrigger: {
-          trigger: '#contact',
+          trigger: '[data-nav-cover]',
           start: () => `top ${bar.offsetHeight}px`,
           end: 'top top',
           scrub: true,
@@ -199,9 +204,9 @@ function Navbar() {
                         stacks the links at its bottom. their size is set on
                         .menu-row (App.scss) from the screen, so all six fit */}
                       <div className='flex flex-col flex-1 min-h-0 w-full justify-end pb-6'>
-                        {MENU_LINKS.map(({ label, to, external }) => (
+                        {MENU_LINKS.map(({ label, to }) => (
                           <div className='page-link menu-row' key={label}>
-                            <Link to={to} {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>
+                            <Link to={to}>
                               <div className='link'>
                                 <span className='flex items-center text-offwhite' onClick={closeMenu}>
                                   <SplitText text={label} id='mobile-nav-animate' />
@@ -215,6 +220,24 @@ function Navbar() {
                             </Link>
                           </div>
                         ))}
+                        {/* links that leave the site - a quieter row under
+                          the destinations */}
+                        <div className='menu-external flex flex-wrap gap-x-6 gap-y-1 mt-5 pt-4 font-monolisa
+                          mobile:text-[.9rem]
+                          tablet:text-[.9rem]
+                          laptop:text-[1rem]
+                          laptop-lg:text-[1rem]
+                          desktop:text-[1.1rem]'>
+                          {MENU_EXTERNAL.map(({ label, href }) => (
+                            <div className='account-container' key={label}>
+                              <div className='accounts'>
+                                <a href={href} target='_blank' rel='noreferrer' className='text-offwhite' onClick={closeMenu}>
+                                  <SplitText text={label} id='mobile-nav-animate' />
+                                </a>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>

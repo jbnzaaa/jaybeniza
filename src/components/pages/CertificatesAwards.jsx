@@ -1,7 +1,5 @@
 //
-import React, { useEffect, useRef, useState } from 'react'
-// GSAP
-import gsap from 'gsap'
+import React, { useEffect } from 'react'
 // scroll reveal
 import { scrollReveal, scrollRevealSequence } from '../../utils/scrollReveal'
 // per-letter text split
@@ -10,175 +8,85 @@ import SplitText from '../common/SplitText'
 import certDataAnalytics from '../../assets/certificates-and-awards/Data Analytics Level III Training Program.jpg'
 import certMsUxDesign from '../../assets/certificates-and-awards/Microsoft - UX Design.pdf'
 import certIbmGenAiFundamentals from '../../assets/certificates-and-awards/IBM - Generative AI Fundamentals.pdf'
-// small copy of the (5 MB) certificate photo, for the hover preview
-import previewDataAnalytics from '../../assets/certificates-and-awards/previews/data-analytics-level-iii.jpg'
 
-// `file` is what a click opens. `preview` is what the hover panel shows:
-// an image, or the pdf itself (desktop browsers can display one inline)
+// certificates first, then awards. `file` is what the row's link opens
 const ITEMS = [
-  { id: 'data-analytics', title: 'Data Analytics Level III Training Program', year: '2026', file: certDataAnalytics, preview: previewDataAnalytics, type: 'image' },
-  { id: 'ms-ux-design', title: 'Microsoft UX Design Professional Certificate', year: '2026', file: certMsUxDesign, preview: certMsUxDesign, type: 'pdf' },
-  { id: 'ibm-gen-ai-fundamentals', title: 'IBM Generative AI Fundamentals Specialization', year: '2025', file: certIbmGenAiFundamentals, preview: certIbmGenAiFundamentals, type: 'pdf' },
+  { id: 'data-analytics', title: 'Data Analytics Level III Training Program', year: '2026', file: certDataAnalytics },
+  { id: 'ms-ux-design', title: 'Microsoft UX Design Professional Certificate', year: '2026', file: certMsUxDesign },
+  { id: 'ibm-gen-ai-fundamentals', title: 'IBM Generative AI Fundamentals Specialization', year: '2025', file: certIbmGenAiFundamentals },
+  { id: 'agile-101-scrum', title: 'Agile 101: Scrum Framework Fundamentals', year: '2024', file: null },
+  { id: 'civil-service-eligibility', title: 'Civil Service Honor Graduate Eligibility', year: '2023', file: null },
   { id: 'award-innovation', title: 'Innovations in Action Award', year: '2025', file: null },
   { id: 'award-agility', title: 'Agility Award', year: '2025', file: null },
-  { id: 'agile-101-scrum', title: 'Agile 101: Scrum Framework Fundamentals', year: '2024', file: null },
 ];
 
-// gap between the pointer and the preview panel's corner
-const OFFSET = 24;
-
+/**
+ * Certificates and awards on the About page: one plain list. Each row is
+ * a title on the left and its year on the right, with a rule under it.
+ */
 function CertificatesAwards() {
-  const fxList = useRef();
-  const fxPreview = useRef();
-  // the item whose certificate the preview panel is showing. it stays set
-  // after the pointer leaves, so the panel still has its content while it
-  // wipes shut
-  const [shown, setShown] = useState(null);
-
   useEffect(() => {
     // section heading reveal
-    const heading = scrollReveal('#animate-cert-header', { y: 0, stagger: .02, ease: 'power1.in' });
+    const heading = scrollReveal('#animate-certificates-header', { y: 0, stagger: .02, ease: 'power1.in' });
 
-    // each item gets its OWN trigger, tied to its own position, so its line
-    // fully expands and then its title reveals as THAT row scrolls into
-    // view - not all at once when the section's top is first reached
-    const rows = ITEMS.map((item) => scrollRevealSequence([
-      { targets: `#cert-line-${item.id}`, vars: { width: '100%', ease: 'power1.in' } },
-      { targets: `#animate-cert-${item.id}`, vars: { y: 0, stagger: .02, ease: 'power1.in' } },
-    ], { trigger: `#cert-line-${item.id}` }));
+    // each row gets its OWN trigger: its text reveals letter by letter,
+    // then the rule under it draws across, as THAT row scrolls into view
+    const rows = ITEMS.map(({ id }) => scrollRevealSequence([
+      { targets: `#animate-cert-${id}`, vars: { y: 0, stagger: .02, ease: 'power1.in' } },
+      { targets: `#cert-line-${id}`, vars: { width: '100%', ease: 'power1.in' }, position: '<' },
+    ], { trigger: `#cert-row-${id}` }));
 
     return () => {
       heading.kill();
-      rows.forEach((r) => r.kill());
+      rows.forEach((row) => row.kill());
     };
   }, []);
-
-  useEffect(() => {
-    // hover preview - wherever any attached pointer can hover (a mouse or
-    // trackpad, including on a touchscreen laptop, whose primary input may
-    // be reported as touch). on a touch-only device there is no hover to
-    // follow, and a phone cannot show a pdf inline anyway: there a tap
-    // simply opens the certificate
-    if (!window.matchMedia('(any-hover: hover)').matches) return;
-
-    const list = fxList.current;
-    const preview = fxPreview.current;
-    // the panel follows the pointer, offset down and to the right. it never
-    // takes pointer events, so it cannot sit between the pointer and the
-    // rows underneath it. positioned inside the list (not fixed), because
-    // the smooth-scrolled content is transformed
-    const moveX = gsap.quickTo(preview, 'x', { duration: .4, ease: 'power3.out' });
-    const moveY = gsap.quickTo(preview, 'y', { duration: .4, ease: 'power3.out' });
-    const onMove = (e) => {
-      const rect = list.getBoundingClientRect();
-      // keep the panel inside the list's width
-      moveX(Math.min(e.clientX - rect.left + OFFSET, rect.width - preview.offsetWidth));
-      moveY(e.clientY - rect.top + OFFSET);
-    };
-    // over a row that has a certificate: show it. anywhere else: wipe shut
-    const onOver = (e) => {
-      const id = e.target.closest('[data-cert]')?.dataset.cert;
-      if (id) {
-        setShown(id);
-        gsap.to(preview, { clipPath: 'inset(0% 0% 0% 0%)', duration: .35, ease: 'power2.out' });
-      } else {
-        gsap.to(preview, { clipPath: 'inset(100% 0% 0% 0%)', duration: .25, ease: 'power2.in' });
-      }
-    };
-    const onLeave = () => gsap.to(preview, { clipPath: 'inset(100% 0% 0% 0%)', duration: .25, ease: 'power2.in' });
-
-    list.addEventListener('mousemove', onMove);
-    list.addEventListener('mouseover', onOver);
-    list.addEventListener('mouseleave', onLeave);
-    return () => {
-      list.removeEventListener('mousemove', onMove);
-      list.removeEventListener('mouseover', onOver);
-      list.removeEventListener('mouseleave', onLeave);
-      gsap.killTweensOf(preview);
-    };
-  }, []);
-
-  const shownItem = ITEMS.find((item) => item.id === shown);
 
   return (
     <>
       <div id='certificates-awards'>
-        <div className='grid grid-cols-8 gap-0
+        <div className='
           mobile:py-16 mobile:px-[.9rem]
           tablet:py-16 tablet:px-[1rem]
-          laptop:py-16 laptop:px-[2rem]
-          laptop-lg:py-16 laptop-lg:px-[3rem]
-          desktop:py-36 desktop:px-[3rem]'>
+          laptop:py-20 laptop:px-[2rem]
+          laptop-lg:py-24 laptop-lg:px-[3rem]
+          desktop:py-28 desktop:px-[3rem]'>
           {/* section header */}
-          <section className='col-span-8'>
-            <div className='section-header-container flex flex-wrap font-flexible font-medium leading-none tracking-tighter
-              mobile:min-h-[35px] mobile:mb-6 mobile:text-[13vw]
-              tablet:min-h-[60px] tablet:mb-8 tablet:text-[12vw]
-              laptop:min-h-[90px] laptop:mb-10 laptop:text-[11vw]
-              laptop-lg:min-h-[100px] laptop-lg:mb-10 laptop-lg:text-[11vw]
-              desktop:min-h-[110px] desktop:mb-12 desktop:text-[11vw]'>
-              <SplitText text='Certificates & Awards' id='animate-cert-header' />
-            </div>
-          </section>
-          {/* one row per item. a row with a certificate is a link to it,
-            and hovering it shows the preview panel. the rows themselves do
-            not animate on hover (data-no-hover-roll opts them out of the
-            buttons' letter roll) - the preview is the hover effect */}
-          <section className='col-span-8'>
-            <ul className='relative grid grid-cols-8' ref={fxList} data-no-hover-roll>
-              {ITEMS.map((item) => {
-                const title = (
+          <div className='section-header-container flex flex-wrap font-flexible font-medium leading-none
+            mobile:mb-2 mobile:text-[8vw]
+            tablet:mb-4 tablet:text-[6vw]
+            laptop:mb-4 laptop:text-[4vw]
+            laptop-lg:mb-4 laptop-lg:text-[3.6vw]
+            desktop:mb-6 desktop:text-[3.6vw]'>
+            <SplitText text='Certificates & Awards' id='animate-certificates-header' />
+          </div>
+          {/* rows - title, year, and a rule under each */}
+          <ul data-no-hover-roll>
+            {ITEMS.map((item) => (
+              <li className='m-0' id={`cert-row-${item.id}`} key={item.id}>
+                <div className='flex justify-between items-start gap-x-5
+                  mobile:py-4 mobile:text-[1rem]
+                  tablet:py-5 tablet:text-[1.3rem]
+                  laptop:py-6 laptop:text-[1.4rem]
+                  laptop-lg:py-6 laptop-lg:text-[1.4rem]
+                  desktop:py-7 desktop:text-[1.4rem]'>
                   <p className='entry-line font-medium'>
-                    <SplitText text={item.title} id={`animate-cert-${item.id}`} />
-                    {item.year && (
-                      <span className='text-[#7a7a7a]'>
-                        <SplitText text={`· ${item.year}`} id={`animate-cert-${item.id}`} />
-                      </span>
+                    {item.file ? (
+                      <a href={item.file} target='_blank' rel='noreferrer'>
+                        <SplitText text={item.title} id={`animate-cert-${item.id}`} by='word' />
+                      </a>
+                    ) : (
+                      <SplitText text={item.title} id={`animate-cert-${item.id}`} by='word' />
                     )}
                   </p>
-                );
-                return (
-                  <React.Fragment key={item.id}>
-                    <div className='col-span-8' id={`cert-line-${item.id}`} />
-                    <li className='cert-row col-span-8
-                      mobile:text-[1rem]
-                      tablet:text-[1.2rem]
-                      laptop:text-[1.4rem]
-                      laptop-lg:text-[1.5rem]
-                      desktop:text-[1.6rem]'>
-                      {item.file ? (
-                        <a href={item.file} target='_blank' rel='noreferrer' data-cert={item.id}
-                          className='block py-5'>
-                          {title}
-                        </a>
-                      ) : (
-                        <div className='py-5'>{title}</div>
-                      )}
-                    </li>
-                  </React.Fragment>
-                );
-              })}
-              {/* hover preview - one panel for the whole list */}
-              {/* sized at every breakpoint: a narrow desktop window falls in
-                the tablet or mobile range and still needs a width */}
-              <li className='cert-preview bg-black
-                aspect-[792/612]
-                mobile:w-[min(280px,80vw)]
-                tablet:w-[360px]
-                laptop:w-[420px]
-                laptop-lg:w-[480px]
-                desktop:w-[540px]'
-                ref={fxPreview} aria-hidden='true'>
-                {shownItem?.type === 'image' && (
-                  <img src={shownItem.preview} alt='' className='cert-preview-media' />
-                )}
-                {shownItem?.type === 'pdf' && (
-                  <iframe src={`${shownItem.preview}#view=Fit&toolbar=0&navpanes=0&scrollbar=0`} title={shownItem.title}
-                    className='cert-preview-media' tabIndex={-1} key={shownItem.id} />
-                )}
+                  <p className='entry-line text-muted shrink-0'>
+                    <SplitText text={item.year} id={`animate-cert-${item.id}`} />
+                  </p>
+                </div>
+                <div id={`cert-line-${item.id}`}/>
               </li>
-            </ul>
-          </section>
+            ))}
+          </ul>
         </div>
       </div>
     </>

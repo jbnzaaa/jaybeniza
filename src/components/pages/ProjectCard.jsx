@@ -60,7 +60,7 @@ export function ProjectCaption({ project }) {
     <div className='[grid-area:1/1] flex justify-between items-end
       mobile:flex-col mobile:items-start mobile:justify-start
       tablet:flex-col tablet:items-start tablet:justify-start'>
-      <span className='font-flexible font-medium leading-none text-white
+      <span className='font-flexible font-medium leading-none
         mobile:text-[2rem] mobile:mb-2
         tablet:text-[2.4rem] tablet:mb-2
         laptop:text-[2.4rem]
@@ -72,7 +72,7 @@ export function ProjectCaption({ project }) {
         mobile:text-[.7rem] mobile:justify-start mobile:gap-y-1
         tablet:text-[.75rem] tablet:justify-start tablet:gap-y-1'>
         {project.meta.map((item) => (
-          <span key={item} className='text-white/60 ml-[10px] mobile:ml-0 mobile:mr-2 tablet:ml-0 tablet:mr-2'>
+          <span key={item} className='text-muted ml-[10px] mobile:ml-0 mobile:mr-2 tablet:ml-0 tablet:mr-2'>
             <SplitText text={item} id={`animate-caption-${project.id}`} />
           </span>
         ))}

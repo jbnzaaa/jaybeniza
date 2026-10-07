@@ -1,10 +1,9 @@
-// 
+//
 import React from 'react'
 import Hero from './Hero'
 import About from './About'
-import WorkExperience from './WorkExperience'
-import CertificatesAwards from './CertificatesAwards'
 import Project from './Project';
+import Testimonials from './Testimonials';
 import Contact from './Contact';
 
 function Home() {
@@ -12,10 +11,9 @@ function Home() {
     <>
       <div className='overflow-hidden'>
         <Hero/>
-        <Project/>
         <About/>
-        <WorkExperience/>
-        <CertificatesAwards/>
+        <Project/>
+        <Testimonials/>
         <Contact/>
       </div>
     </>

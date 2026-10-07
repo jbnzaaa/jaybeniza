@@ -5,11 +5,11 @@ import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
 
-const HIGHLIGHT_TEXT = '3+ years designing web and mobile products — from wireframes and design systems to stakeholder-ready prototypes and shipped front-end.';
+const HIGHLIGHT_TEXT = 'I design user-centered digital products and bring them to life through front-end development, working from early concepts and user flows to polished, production-ready interfaces.';
 
 const PROFESSION_LINES = [
-  'UI/UX Designer.',
-  'Front-End Web Developer.',
+  'Designing the right experience.',
+  'Building the right interface.',
 ];
 
 function Hero() {
@@ -76,7 +76,7 @@ function Hero() {
           {PROFESSION_LINES.map((line) => (
             <section key={line} className='hero-container col-start-1 col-span-8 flex flex-wrap items-baseline'>
               <span className='hero-designerdev font-flexible font-bold leading-none tracking-tight
-                text-[14.5vw]'>
+                text-[12.4vw]'>
                 <SplitText text={line} id='animate-hero-profession' />
               </span>
             </section>

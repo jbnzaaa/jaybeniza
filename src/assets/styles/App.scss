@@ -22,7 +22,7 @@
   font-display: swap;
 }
 
-// Flexible draws its numerals, % and & as thin single-line shapes that do not
+// Flexible draws its numerals, %, & and + as thin single-line shapes that do not
 // match its heavy letters at any width. this second face shares the family
 // name but only covers those characters (unicode-range), so every heading
 // picks them up from League Gothic Condensed (SIL OFL - licence alongside)
@@ -36,7 +36,7 @@
   font-weight: 100 900;
   font-display: swap;
   size-adjust: 125%;
-  unicode-range: U+0025-0026, U+0030-0039;
+  unicode-range: U+0025-0026, U+002B, U+0030-0039;
 }
 
 @font-face {
@@ -360,8 +360,22 @@
   overflow: hidden;
 }
 
+// the hero tagline is two full sentences rather than a couple of words,
+// so its words sit closer together than the default heading gap
+* body .hero-designerdev .split-word {
+  margin-right: .15em;
+}
+
 * body .about-container {
   position: relative;
+}
+
+// the landing page's introduction text is on the page from the start,
+// faded right back - not dropped below its clip boxes like the text that
+// reveals. About.jsx brings each letter up to full strength on scroll
+* body .about-fill .split-letter-clip .split-letter {
+  transform: none;
+  opacity: .14;
 }
 
 * body #what-i-use-line,
@@ -370,7 +384,8 @@
 * body #framework-and-library-line,
 * body #tools-and-tech-line,
 * body [id^="work-line-"],
-* body [id^="cert-line-"] {
+* body [id^="cert-line-"],
+* body [id^="row-line-"] {
   border-top: 1px solid var(--main-color);
   position: relative;
   overflow: hidden;
@@ -409,7 +424,7 @@
   display: flex;
   align-items: center;
   padding: .55rem .9rem;
-  background: var(--main-bg);
+  background: var(--main-color);
   pointer-events: none;
   clip-path: inset(100% 0% 0% 0%);
 }
@@ -538,38 +553,94 @@
   height: auto;
 }
 
-* body .cert-row {
-  position: relative;
-}
-
-// hover preview panel (CertificatesAwards.jsx). it follows the pointer,
-// never takes pointer events itself, and opens with the same bottom-edge
-// wipe the cards use. hidden outright where there is no hover to drive it
-* body .cert-preview {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  margin: 0;
-  overflow: hidden;
-  pointer-events: none;
+// a bordered card that wipes up from its bottom edge as it scrolls in
+// (work experience, testimonials) - its start state
+* body .reveal-card {
   clip-path: inset(100% 0% 0% 0%);
 }
 
-@media not all and (any-hover: hover) {
-  * body .cert-preview {
-    display: none;
+// a row inside a certificates / awards card (CertificatesAwards.jsx) -
+// ruled off from the one above it
+* body .cert-row {
+  position: relative;
+  border-top: 1px solid rgba(15, 14, 23, .2);
+}
+
+// the moving rows on the about page (AboutPage.jsx). a track holds four
+// identical sets of chips end to end and slides by exactly one set's
+// width, so the loop has no seam; every second row runs the other way
+* body .marquee-row {
+  clip-path: inset(100% 0% 0% 0%);
+}
+
+* body .marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-right 40s linear infinite;
+}
+
+* body .marquee-track-reverse {
+  animation-name: marquee-left;
+}
+
+* body .marquee-set {
+  display: flex;
+  flex-shrink: 0;
+}
+
+* body .marquee-track .marquee-chip {
+  flex-shrink: 0;
+  margin-right: .75rem;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+@keyframes marquee-right {
+  from { transform: translateX(-25%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-25%); }
+}
+
+// the menu overlay's row of links that leave the site
+* body .menu-external {
+  border-top: 1px solid rgba(229, 228, 227, .2);
+}
+
+// the links in the about page's closing resume screen reuse the menu link
+// markup; they sit in the flow like the contact links, so each takes only
+// the height of its text, not the menu's fixed row height
+* body .resume-link {
+  height: auto;
+}
+
+// the landing page's introduction paragraph shares one pinned screen with
+// the facts under it, so from tablet width up its size also follows the
+// screen's height: on a short screen (a 1280x720 laptop) the fixed size ran
+// the paragraph down over the facts and pushed them out of the section
+@media (min-width: 768px) {
+  * body .about-paragraph {
+    font-size: min(2rem, 3.4vh);
   }
 }
 
-* body .cert-preview-media {
-  display: block;
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border: 0;
-  padding: 0;
-  margin: 0;
+@media (min-width: 1024px) {
+  * body .about-paragraph {
+    font-size: min(2.1rem, 4.4vh);
+  }
+}
+
+@media (min-width: 1280px) {
+  * body .about-paragraph {
+    font-size: min(2.5rem, 4.4vh);
+  }
+}
+
+@media (min-width: 1536px) {
+  * body .about-paragraph {
+    font-size: min(3rem, 4.6vh);
+  }
 }

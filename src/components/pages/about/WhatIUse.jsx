@@ -35,7 +35,7 @@ function WhatIUse() {
           laptop:min-h-[30px] laptop:text-[1.4rem]
           laptop-lg:min-h-[30px] laptop-lg:text-[1.4rem]
           desktop:min-h-[30px] desktop:text-[1.4em]'>
-          <SplitText text='Skills & Tools' id='animate-whatiuse' />
+          <SplitText text='Overview' id='animate-whatiuse' />
         </div>
         {/* description */}
         <div className='col-span-1 flex flex-wrap text-muted
