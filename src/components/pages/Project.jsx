@@ -186,8 +186,8 @@ function Project() {
             <div className='absolute inset-0 bg-black' ref={fxBackground}/>
             {/* content - top padding clears the fixed nav bar */}
             <div className='relative h-full grid grid-cols-8 gap-x-5 pt-[6rem] pb-[2rem]
-              mobile:grid-rows-[auto_auto_1fr] mobile:gap-y-5 mobile:px-[.9rem] mobile:pt-[5rem] mobile:pb-6
-              tablet:grid-rows-[auto_1fr_auto] tablet:gap-y-6 tablet:px-[1rem]
+              mobile:grid-rows-[auto_auto_minmax(0,1fr)] mobile:gap-y-5 mobile:px-[.9rem] mobile:pt-[5rem] mobile:pb-[calc(1.75rem+env(safe-area-inset-bottom))]
+              tablet:grid-rows-[auto_minmax(0,1fr)_auto] tablet:gap-y-6 tablet:px-[1rem]
               laptop:grid-rows-[1fr_auto] laptop:px-[2rem]
               laptop-lg:grid-rows-[1fr_auto] laptop-lg:px-[3rem]
               desktop:grid-rows-[1fr_auto] desktop:px-[3rem]'>

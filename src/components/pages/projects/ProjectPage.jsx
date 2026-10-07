@@ -52,7 +52,7 @@ const BODY = 'mobile:text-[.9rem] tablet:text-[.9rem] laptop:text-[1rem] laptop-
 const LABEL = 'font-semibold mobile:text-[.7rem] tablet:text-[.75rem] laptop:text-[.9rem] laptop-lg:text-[.9rem] desktop:text-[.9rem]';
 // a detail's value sits a step below its label
 const VALUE = `${BODY} text-muted`;
-const BLOCK = 'mobile:mb-2 tablet:mb-2 laptop:mb-5 laptop-lg:mb-5 desktop:mb-5';
+const BLOCK = 'last:mb-0 mobile:mb-4 tablet:mb-4 laptop:mb-5 laptop-lg:mb-5 desktop:mb-5';
 
 /**
  * A project page: a one-screen overview - the project's name top left,
@@ -96,7 +96,6 @@ function ProjectPage({ project }) {
     };
   }, [project]);
 
-  // rendered in one of two places depending on screen size (see below)
   const visitLink = (
     <div className='project-link'>
       <a href={project.link.href} target='_blank' rel='noreferrer' aria-label={`Visit the ${project.title} site`}
@@ -156,16 +155,12 @@ function ProjectPage({ project }) {
               desktop:col-span-2 desktop:col-start-7`}>
               <SplitText text={project.description} id='animate-project-page' />
             </p>
-            {/* visit site - on a phone it sits here, left-aligned under the
-              description, so it is on screen without scrolling however
-              tall the details below turn out */}
-            <div className='hidden mobile:block mobile:col-span-8 mobile:col-start-1'>
-              {visitLink}
-            </div>
           </div>
           {/* bottom - details in the left corner, the visit-site button in
-            the right (from tablet up) */}
-          <div className='flex justify-between items-end gap-x-5 gap-y-8'>
+            the right. on a phone they stack: the button sits under the
+            details, left-aligned */}
+          <div className='flex justify-between items-end gap-x-5
+            mobile:flex-col mobile:items-start mobile:gap-y-6'>
           {/* year, category, role, technology used */}
           <div className='
             mobile:w-full
@@ -214,8 +209,8 @@ function ProjectPage({ project }) {
               </div>
             </div>
           </div>
-          {/* visit site - bottom right, from tablet up */}
-          <div className='shrink-0 mobile:hidden'>
+          {/* visit site */}
+          <div className='shrink-0'>
             {visitLink}
           </div>
           </div>

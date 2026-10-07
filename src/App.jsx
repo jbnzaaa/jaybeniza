@@ -83,6 +83,31 @@ function App() {
   // letter-roll hover on every text link and button
   useEffect(() => enableHoverRoll(), []);
 
+  // the height of the screen that is actually visible, measured here and
+  // handed to the stylesheet as --screen-h (see .h-screen-safe). css's own
+  // units cannot be trusted for this on phones: 100vh includes the area
+  // behind the browser's address bar, and the newer 100svh is missing or
+  // wrong in older browsers and in the browsers built into apps. it is
+  // re-measured when the screen's width changes (rotation, window resize)
+  // but not on height-only changes, which on a phone are just the address
+  // bar sliding and would make every full-height section jump mid-scroll
+  useEffect(() => {
+    let width = 0;
+    const measure = () => {
+      if (window.innerWidth === width) return;
+      width = window.innerWidth;
+      document.documentElement.style.setProperty('--screen-h', `${window.innerHeight}px`);
+      ScrollTrigger.refresh();
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    window.addEventListener('orientationchange', measure);
+    return () => {
+      window.removeEventListener('resize', measure);
+      window.removeEventListener('orientationchange', measure);
+    };
+  }, []);
+
   // the content only exists once the loading screen leaves - re-measure
   // every trigger against its real height
   useEffect(() => {

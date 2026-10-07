@@ -234,17 +234,21 @@
 
 // one screen tall, measured the way that works on a phone. 100vh there is
 // the height with the browser's address bar hidden, so with the bar
-// showing the bottom of a 100vh block sits off screen; 100svh is the
-// height with the bar showing. a browser that does not know svh ignores
-// the second line and keeps the first
+// showing the bottom of a 100vh block sits off screen. each line below
+// overrides the one before it where the browser understands it: 100svh is
+// the height with the bar showing, and --screen-h is that same height
+// measured by the page itself (App.jsx), which also covers browsers where
+// svh is missing or wrong
 * body .h-screen-safe {
   height: 100vh;
   height: 100svh;
+  height: var(--screen-h, 100svh);
 }
 
 * body .min-h-screen-safe {
   min-height: 100vh;
   min-height: 100svh;
+  min-height: var(--screen-h, 100svh);
 }
 
 * body .logo-container {
