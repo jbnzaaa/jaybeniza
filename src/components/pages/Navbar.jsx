@@ -102,7 +102,7 @@ function Navbar() {
     // closing plays it backwards and only unmounts the overlay when the
     // reverse has finished
     const tl = gsap.timeline({ onReverseComplete: () => setShowMenu(false) });
-    tl.to(fxMenuOpenAnimation.current, { height: '106vh', duration: .7, ease: 'power2.inOut' })
+    tl.to(fxMenuOpenAnimation.current, { height: '100%', duration: .7, ease: 'power2.inOut' })
       .to('#mobile-nav-animate', { y: 0, duration: .6, stagger: .02, ease: 'power1.in' }, '-=.1');
     fxMenuTimeline.current = tl;
 
@@ -169,10 +169,16 @@ function Navbar() {
                 relative to ScrollSmoother's transformed content instead,
                 and open at the top of the page rather than over the screen */}
               {showMenu ? createPortal(
-                <div className='flex overflow-x-hidden overflow-y-auto fixed inset-0 h-screen z-40'>
-                  <div className='flex flex-col w-screen h-[0vh] bg-black fixed overflow-hidden'
+                <div className='fixed inset-0 overflow-hidden z-40'>
+                  {/* the panel grows to the height of the fixed box above,
+                    which is the part of the screen actually visible - not
+                    100vh, which on a phone includes the area behind the
+                    address bar and pushed the last link off the bottom */}
+                  <div className='absolute top-0 left-0 w-full h-0 bg-black overflow-hidden'
                     ref={fxMenuOpenAnimation}>
-                    <div className='h-[100vh]
+                    {/* full visible height from the start, so the links hold
+                      their place while the panel opens over them */}
+                    <div className='flex flex-col h-screen supports-[height:100svh]:h-[100svh]
                       mobile:px-[.9rem] mobile:py-3
                       tablet:px-[1rem] tablet:py-3
                       laptop:px-[2rem] laptop:py-4
@@ -189,16 +195,19 @@ function Navbar() {
                         </div>
                       </div>
                       {/* menu nav links */}
-                      <div className='flex flex-col w-full h-full justify-end pb-10'>
+                      {/* takes the height left under the close button and
+                        stacks the links at its bottom. their size is set on
+                        .menu-row (App.scss) from the screen, so all six fit */}
+                      <div className='flex flex-col flex-1 min-h-0 w-full justify-end pb-6'>
                         {MENU_LINKS.map(({ label, to, external }) => (
-                          <div className='page-link' key={label}>
+                          <div className='page-link menu-row' key={label}>
                             <Link to={to} {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>
                               <div className='link'>
-                                <span className='flex items-center text-[2.3rem] text-offwhite' onClick={closeMenu}>
+                                <span className='flex items-center text-offwhite' onClick={closeMenu}>
                                   <SplitText text={label} id='mobile-nav-animate' />
                                   <span className='menu-icon-clip'>
                                     <span className='menu-icon' id='mobile-nav-animate'>
-                                      <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[60px]'/>
+                                      <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-[1.5em]'/>
                                     </span>
                                   </span>
                                 </span>

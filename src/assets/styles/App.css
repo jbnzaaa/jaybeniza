@@ -7,25 +7,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* local fonts (src/assets/fonts). Flexible is a variable display face with */
-/* width + height axes and no weight axis; MonoLisa ships here as a single */
-/* Bold file. Each declares the whole weight range so the browser never */
-/* synthesises a bolder weight on top of the one real face */
 @font-face {
   font-family: "Flexible";
   src: url("../fonts/Flexible-Variable.ttf") format("truetype");
   font-weight: 100 900;
   font-display: swap;
 }
-
-/* Flexible draws its numerals, % and & as thin single-line shapes that do not */
-/* match its heavy letters at any width. this second face shares the family */
-/* name but only covers those characters (unicode-range), so every heading */
-/* picks them up from League Gothic Condensed (SIL OFL - licence alongside) */
-/* instead, with no markup changes. size-adjust scales it so its figures */
-/* stand as tall as Flexible's capitals at height 900. it is a static cut on */
-/* purpose: a variable one would have its own width axis overridden by the */
-/* headings' wdth setting */
 @font-face {
   font-family: "Flexible";
   src: url("../fonts/LeagueGothic-Condensed.woff2") format("woff2");
@@ -34,14 +21,12 @@
   size-adjust: 125%;
   unicode-range: U+0025-0026, U+0030-0039;
 }
-
 @font-face {
   font-family: "MonoLisa";
   src: url("../fonts/MonoLisa-Bold.otf") format("opentype");
   font-weight: 100 900;
   font-display: swap;
 }
-
 :root {
   --main-bg: #E5E4E3;
   --main-color: #0F0E17;
@@ -62,13 +47,8 @@
   position: relative;
 }
 
-/* film grain over everything on the page (it sits above the nav, menu, */
-/* loading screen and page wipe, so they all share it). a small tile of */
-/* monochrome noise, repeated; the layer is oversized and jumps between a */
-/* few offsets so the grain shimmers instead of sitting still like dirt */
-/* on the screen. transform-only, so the jump costs no repaint */
 * body::before {
-  content: '';
+  content: "";
   position: fixed;
   top: -50%;
   left: -50%;
@@ -76,27 +56,41 @@
   height: 200%;
   z-index: 50;
   pointer-events: none;
-  opacity: .28;
+  opacity: 0.28;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 240px 240px;
   animation: grain 1s steps(1) infinite;
 }
 
 @keyframes grain {
-  0% { transform: translate(0, 0); }
-  12% { transform: translate(-4%, -6%); }
-  25% { transform: translate(-9%, 3%); }
-  37% { transform: translate(5%, -11%); }
-  50% { transform: translate(-3%, 9%); }
-  62% { transform: translate(-11%, -2%); }
-  75% { transform: translate(8%, 6%); }
-  87% { transform: translate(2%, -8%); }
-  100% { transform: translate(0, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  12% {
+    transform: translate(-4%, -6%);
+  }
+  25% {
+    transform: translate(-9%, 3%);
+  }
+  37% {
+    transform: translate(5%, -11%);
+  }
+  50% {
+    transform: translate(-3%, 9%);
+  }
+  62% {
+    transform: translate(-11%, -2%);
+  }
+  75% {
+    transform: translate(8%, 6%);
+  }
+  87% {
+    transform: translate(2%, -8%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
-
-/* on touch screens and small screens the grain stays put, at the size of */
-/* the screen: an oversized layer jumping every frame is a lot for a phone */
-/* to composite while it is also scrolling, and it showed up as stutter */
 @media (hover: none), (max-width: 767px) {
   * body::before {
     top: 0;
@@ -106,7 +100,6 @@
     animation: none;
   }
 }
-
 * body #onload-container {
   position: relative;
 }
@@ -123,29 +116,12 @@
   top: 0px;
 }
 
-/* shared per-letter reveal building blocks (SplitText.jsx) - em-based so
-   the same rules work at any font-size without per-breakpoint tuning.
-   clip height (1.15em) is deliberately taller than the letter's travel
-   distance (1em via translateY) so there's no dead time before any
-   motion is visible, and .split-letter is explicitly inline-block since
-   transform has no effect on display:inline elements */
 * body .split-word {
   display: inline-block;
   font-family: inherit;
   white-space: nowrap;
-  margin-right: .28em;
-  /* text-indent is inherited, and every inline-block descendant below
-     this point establishes its own "first line" - without resetting it
-     here, a paragraph-level indent (About's first-line indent) re-applies
-     itself at every word/letter-clip/letter nesting level and compounds,
-     blowing up widths catastrophically. resetting it here confines the
-     indent to only the paragraph's actual first line, as intended */
+  margin-right: 0.28em;
   text-indent: 0;
-  /* the global `* { color: #0F0E17 }` reset matches every element
-     DIRECTLY, including these - since it's not inheritance being
-     overridden but a same-specificity-tier rule that also directly
-     targets this element, a color set on an ancestor (e.g. text-white on
-     a wrapping p/span) never reaches the letters without this */
   color: inherit;
 }
 
@@ -165,32 +141,22 @@
   transform: translateY(1em);
 }
 
-/* Flexible's capitals start higher in the line box than the body face's, */
-/* so the default 1em drop left their tops showing inside the 1.15em clip */
 * body .font-flexible .split-letter {
   transform: translateY(1.2em);
 }
 
-/* button arrows rise out of a clip box the same way the letters do. the */
-/* box is padded all round (and pulled back by the same negative margin, so */
-/* the layout does not move): the arrow is drawn corner to corner, and on */
-/* hover it turns 45 degrees, which swings its tip out past a box cut to */
-/* its exact size - that is what was shearing the arrow off */
 * body .menu-icon-clip {
   display: inline-flex;
   overflow: hidden;
-  padding: .4em;
-  margin: -.4em;
+  padding: 0.4em;
+  margin: -0.4em;
 }
 
-/* start below the box, clear of its padding as well */
 * body .menu-icon {
   display: inline-flex;
-  transform: translateY(calc(100% + .5em));
+  transform: translateY(calc(100% + 0.5em));
 }
 
-/* the hover rules on nav spans set a transition on every descendant span, */
-/* which drags behind GSAP's per-frame transforms during a reveal */
 * body .page-link .link .split-word,
 * body .page-link .link .split-letter-clip,
 * body .page-link .link .split-letter,
@@ -199,7 +165,6 @@
   transition: none;
 }
 
-/* same for the project pages' "visit site" link */
 * body .project-container .project-link .split-word,
 * body .project-container .project-link .split-letter-clip,
 * body .project-container .project-link .split-letter,
@@ -208,15 +173,11 @@
   transition: none;
 }
 
-/* heading face settings: height 900, width 200 */
 * body .font-flexible {
   font-variation-settings: "HGHT" 900, "wdth" 200;
   letter-spacing: 0;
 }
 
-/* SplitText's screen-reader copy. Tailwind's .sr-only relies on */
-/* position: absolute, which the span rules below (.link span and friends) */
-/* override - leaving the copy visible next to the animated letters */
 * body span.sr-only {
   position: absolute !important;
   display: block;
@@ -282,6 +243,16 @@
   position: relative;
 }
 
+* body .menu-row {
+  font-size: clamp(1.4rem, min(6.2vh, 8.2vw), 3.2rem);
+  height: 1.6em;
+}
+
+@supports (height: 100svh) {
+  * body .menu-row {
+    font-size: clamp(1.4rem, min(6.2svh, 8.2vw), 3.2rem);
+  }
+}
 * body .page-link .link span,
 * body .page-link #mobileview-link span {
   position: relative;
@@ -341,16 +312,10 @@
   margin-right: 5px;
 }
 
-/* selected projects section (Project.jsx) - start states, so nothing */
-/* shows for a frame before its scroll timeline takes over: each project */
-/* card clipped away to its bottom edge */
 * body .selected-card {
   clip-path: inset(100% 0% 0% 0%);
 }
 
-/* "View" cursor that follows the pointer over a project card - a flat, */
-/* square-cornered label set like the buttons (body face, same arrow), */
-/* hidden by the same bottom-edge clip the cards reveal with */
 * body .selected-cursor {
   position: absolute;
   top: 0;
@@ -358,7 +323,7 @@
   z-index: 5;
   display: flex;
   align-items: center;
-  padding: .55rem .9rem;
+  padding: 0.55rem 0.9rem;
   background: var(--main-bg);
   pointer-events: none;
   clip-path: inset(100% 0% 0% 0%);
@@ -419,8 +384,6 @@
   overflow: hidden;
 }
 
-/* card reveal start states (ProjectCard.jsx): image clipped away to its */
-/* bottom edge, text below it faded and dropped */
 * body .project-card-image {
   clip-path: inset(100% 0% 0% 0%);
 }
@@ -462,12 +425,9 @@
 * body .project-container .screenshot-container {
   position: relative;
   overflow: hidden;
-  /* reveal start state: clipped away to the bottom edge (see the project pages) */
   clip-path: inset(100% 0% 0% 0%);
 }
 
-/* the image starts slightly enlarged inside its frame and settles as the */
-/* frame wipes open */
 * body .project-container .screenshot-container .screenshot-img {
   display: block;
   width: 100%;
@@ -490,55 +450,46 @@
 
 * body .cert-row {
   position: relative;
-  cursor: pointer;
 }
 
-* body .cert-popover {
+* body .cert-link #icon {
+  transform: rotate(0deg);
+  transition: all 0.3s ease-in-out;
+  border-radius: 100%;
+}
+
+* body .cert-link:hover #icon {
+  transform: rotate(-45deg);
+  background: var(--main-color);
+  fill: var(--main-bg);
+}
+
+* body .cert-preview {
   position: absolute;
-  top: 50%;
-  right: 0;
+  top: 0;
+  left: 0;
   z-index: 10;
-  display: block;
+  margin: 0;
   overflow: hidden;
-  background: #f2f2f2;
-  padding: 0;
-  border: 0;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-50%) translateX(16px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
   pointer-events: none;
+  clip-path: inset(100% 0% 0% 0%);
 }
 
-* body .cert-row:hover .cert-popover,
-* body .cert-row:focus-within .cert-popover {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(-50%) translateX(0);
-  pointer-events: auto;
+@media not all and (hover: hover) and (pointer: fine) {
+  * body .cert-preview {
+    display: none;
+  }
 }
-
 * body .cert-preview-media {
   display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   border: 0;
   padding: 0;
   margin: 0;
 }
 
-* body iframe.cert-preview-media {
-  position: absolute;
-  inset: 0;
-}
-
-* body .cert-preview-placeholder {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 1rem;
-}/*# sourceMappingURL=App.css.map */
+/*# sourceMappingURL=App.css.map */

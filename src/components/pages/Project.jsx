@@ -1,6 +1,6 @@
 //
 import React, { useEffect, useRef } from 'react'
-import ProjectCard, { PROJECT_CARDS } from './ProjectCard'
+import ProjectCard, { ProjectCaption, PROJECT_CARDS } from './ProjectCard'
 // icons
 import {RiArrowRightDownLine} from 'react-icons/ri'
 // GSAP
@@ -109,6 +109,13 @@ function Project() {
       .fromTo(heading,
         { x: toCentreX, y: toCentreY, scale: fullScale },
         { x: 0, y: 0, scale: 1, ease: 'power2.inOut', duration: 1 }, 0);
+    // image and text move separately. the image wipes up over the one
+    // before it (its clip covers the image area only) while the picture
+    // eases up into position behind the wipe. the text changes underneath
+    // with the site's per-letter reveal: the previous project's title and
+    // details lift out letter by letter, then this project's rise in the
+    // same way, title first. the stagger is spread so each caption's
+    // letters, however many, take the same share of the scroll
     PROJECT_CARDS.forEach(({ id }, i) => {
       pinned
         .fromTo(`#selected-card-${id}`,
@@ -116,7 +123,15 @@ function Project() {
           { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .7 }, 1 + i)
         .fromTo(`#selected-card-${id} .selected-card-image`,
           { yPercent: 14, scale: 1.15 },
-          { yPercent: 0, scale: 1, ease: 'power2.out', duration: .7 }, 1 + i);
+          { yPercent: 0, scale: 1, ease: 'power2.out', duration: .7 }, 1 + i)
+        .to(`#animate-caption-${id}`,
+          { y: 0, ease: 'power1.in', duration: .22, stagger: { amount: .3 } }, 1 + i + .28);
+      const previous = PROJECT_CARDS[i - 1];
+      if (previous) {
+        pinned.fromTo(`#animate-caption-${previous.id}`,
+          { yPercent: 0 },
+          { yPercent: -130, ease: 'power1.in', duration: .14, stagger: { amount: .14 }, immediateRender: false }, 1 + i);
+      }
     });
     // hold the last card for the remainder of its step before releasing
     pinned.to({}, { duration: .3 }, STEPS - .3);
@@ -171,7 +186,7 @@ function Project() {
             <div className='absolute inset-0 bg-black' ref={fxBackground}/>
             {/* content - top padding clears the fixed nav bar */}
             <div className='relative h-full grid grid-cols-8 gap-x-5 pt-[6rem] pb-[2rem]
-              mobile:grid-rows-[auto_1fr_auto] mobile:gap-y-4 mobile:px-[.9rem]
+              mobile:grid-rows-[auto_auto_1fr] mobile:gap-y-1 mobile:px-[.9rem]
               tablet:grid-rows-[auto_1fr_auto] tablet:gap-y-6 tablet:px-[1rem]
               laptop:grid-rows-[1fr_auto] laptop:px-[2rem]
               laptop-lg:grid-rows-[1fr_auto] laptop-lg:px-[3rem]
@@ -204,16 +219,26 @@ function Project() {
                   <SplitText text='Selected work, from interface design in Figma to the shipped front-end — with the part I played in each.' id='animate-project' by='word' />
                 </p>
               </div>
-              {/* project stage - the cards stack here and reveal one at a time */}
-              <div ref={fxStage} className='relative min-h-0
-                mobile:col-span-8 mobile:col-start-1 mobile:row-start-2
+              {/* project stage - an image area with a text area under it;
+                each project's image and text reveal one at a time, separately */}
+              <div ref={fxStage} className='relative min-h-0 flex flex-col
+                mobile:col-span-8 mobile:col-start-1 mobile:row-start-3 mobile:mt-3
                 tablet:col-span-8 tablet:col-start-1 tablet:row-start-2
                 laptop:col-span-5 laptop:col-start-4 laptop:row-start-1 laptop:row-span-2
                 laptop-lg:col-span-5 laptop-lg:col-start-4 laptop-lg:row-start-1 laptop-lg:row-span-2
                 desktop:col-span-5 desktop:col-start-4 desktop:row-start-1 desktop:row-span-2'>
-                {PROJECT_CARDS.map((project) => (
-                  <ProjectCard project={project} key={project.id}/>
-                ))}
+                {/* image area - the images stack here, each exactly this size */}
+                <div className='relative flex-1 min-h-0'>
+                  {PROJECT_CARDS.map((project) => (
+                    <ProjectCard project={project} key={project.id}/>
+                  ))}
+                </div>
+                {/* text area - the captions stack here */}
+                <div className='grid pt-3'>
+                  {PROJECT_CARDS.map((project) => (
+                    <ProjectCaption project={project} key={project.id}/>
+                  ))}
+                </div>
                 <div className='selected-cursor' ref={fxCursor} aria-hidden='true'>
                   <span className='leading-none
                     mobile:text-[.9rem]
@@ -225,9 +250,11 @@ function Project() {
                 </div>
               </div>
               {/* behance button - the menu links' markup, so it reveals and
-                hovers exactly like them */}
+                hovers exactly like them. on a phone it sits directly under
+                the description, above the project stage; from tablet up it
+                is in the bottom left corner */}
               <div className='col-start-1 flex items-end
-                mobile:col-span-8 mobile:row-start-3
+                mobile:col-span-8 mobile:row-start-2
                 tablet:col-span-8 tablet:row-start-3
                 laptop:col-span-3 laptop:row-start-2
                 laptop-lg:col-span-3 laptop-lg:row-start-2

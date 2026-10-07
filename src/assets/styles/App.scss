@@ -287,6 +287,23 @@
   position: relative;
 }
 
+// a link in the menu overlay. sized from the screen so the six of them
+// always fit without scrolling: no taller than about 6% of the visible
+// height each (svh where supported - the height with a phone's address
+// bar showing), no wider than the longest label needs on a narrow screen,
+// and between 1.4rem and 3.2rem either way. the row is sized from the
+// text, so the two scale together
+* body .menu-row {
+  font-size: clamp(1.4rem, min(6.2vh, 8.2vw), 3.2rem);
+  height: 1.6em;
+}
+
+@supports (height: 100svh) {
+  * body .menu-row {
+    font-size: clamp(1.4rem, min(6.2svh, 8.2vw), 3.2rem);
+  }
+}
+
 * body .page-link .link span,
 * body .page-link #mobileview-link span {
   position: relative;
@@ -495,57 +512,50 @@
 
 * body .cert-row {
   position: relative;
-  cursor: pointer;
 }
 
-* body .cert-popover {
+// a row that links to its certificate: the arrow turns on hover, like the
+// buttons' arrows
+* body .cert-link #icon {
+  transform: rotate(0deg);
+  transition: all .3s ease-in-out;
+  border-radius: 100%;
+}
+
+* body .cert-link:hover #icon {
+  transform: rotate(-45deg);
+  background: var(--main-color);
+  fill: var(--main-bg);
+}
+
+// hover preview panel (CertificatesAwards.jsx). it follows the pointer,
+// never takes pointer events itself, and opens with the same bottom-edge
+// wipe the cards use. hidden outright where there is no hover to drive it
+* body .cert-preview {
   position: absolute;
-  top: 50%;
-  right: 0;
+  top: 0;
+  left: 0;
   z-index: 10;
-  display: block;
+  margin: 0;
   overflow: hidden;
-  background: #f2f2f2;
-  padding: 0;
-  border: 0;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-50%) translateX(16px);
-  transition: opacity .25s ease, transform .25s ease;
   pointer-events: none;
+  clip-path: inset(100% 0% 0% 0%);
 }
 
-* body .cert-row:hover .cert-popover,
-* body .cert-row:focus-within .cert-popover {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(-50%) translateX(0);
-  pointer-events: auto;
+@media not all and (hover: hover) and (pointer: fine) {
+  * body .cert-preview {
+    display: none;
+  }
 }
 
 * body .cert-preview-media {
   display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
   border: 0;
   padding: 0;
   margin: 0;
-}
-
-* body iframe.cert-preview-media {
-  // fill the popover exactly - the popover already has the certificate's
-  // own aspect ratio (US Letter landscape), so #view=Fit shows the whole
-  // page without scaling it up and cropping the edges off
-  position: absolute;
-  inset: 0;
-}
-
-* body .cert-preview-placeholder {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 1rem;
 }

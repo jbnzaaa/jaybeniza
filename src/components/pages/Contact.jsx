@@ -66,7 +66,7 @@ function Contact() {
             {/* contact description content */}
             <div className='
               mobile:col-span-8 mobile:col-start-1 mobile:row-span-1 mobile:row-start-2
-              tablet:col-span-5 tablet:col-start-4 tablet:row-span-1 tablet:row-start-2
+              tablet:col-span-8 tablet:col-start-1 tablet:row-span-1 tablet:row-start-2
               laptop:col-span-3 laptop:col-start-6 laptop:row-span-2 laptop:row-start-1
               laptop-lg:col-span-2 laptop-lg:col-start-7 laptop-lg:row-span-2 laptop-lg:row-start-1
               desktop:col-span-2 desktop:col-start-7 desktop:row-span-2 desktop:row-start-1'>

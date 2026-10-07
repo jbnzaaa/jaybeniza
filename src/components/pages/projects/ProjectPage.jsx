@@ -96,6 +96,28 @@ function ProjectPage({ project }) {
     };
   }, [project]);
 
+  // rendered in one of two places depending on screen size (see below)
+  const visitLink = (
+    <div className='project-link'>
+      <a href={project.link.href} target='_blank' rel='noreferrer' aria-label={`Visit the ${project.title} site`}
+        className='inline-block'>
+        <span className={`flex items-center ${BODY}`}>
+          <SplitText text='Visit site' id='animate-project-page' />
+          <span className='menu-icon-clip'>
+            <span className='menu-icon' id='animate-project-page'>
+              <RiArrowRightDownLine id='icon' className='fill-black ml-1
+                mobile:text-xl
+                tablet:text-1xl
+                laptop:text-2xl
+                laptop-lg:text-2xl
+                desktop:text-2xl'/>
+            </span>
+          </span>
+        </span>
+      </a>
+    </div>
+  );
+
   return (
     <>
       <section className='px-0 pb-16 h-full
@@ -134,11 +156,16 @@ function ProjectPage({ project }) {
               desktop:col-span-2 desktop:col-start-7`}>
               <SplitText text={project.description} id='animate-project-page' />
             </p>
+            {/* visit site - on a phone it sits here, left-aligned under the
+              description, so it is on screen without scrolling however
+              tall the details below turn out */}
+            <div className='hidden mobile:block mobile:col-span-8 mobile:col-start-1'>
+              {visitLink}
+            </div>
           </div>
           {/* bottom - details in the left corner, the visit-site button in
-            the right. on a phone they stack, the button still to the right */}
-          <div className='flex justify-between items-end gap-x-5 gap-y-8
-            mobile:flex-col mobile:items-stretch'>
+            the right (from tablet up) */}
+          <div className='flex justify-between items-end gap-x-5 gap-y-8'>
           {/* year, category, role, technology used */}
           <div className='
             mobile:w-full
@@ -187,23 +214,9 @@ function ProjectPage({ project }) {
               </div>
             </div>
           </div>
-          {/* visit site */}
-          <div className='project-link shrink-0 mobile:self-end'>
-            <a href={project.link.href} target='_blank' rel='noreferrer' aria-label={`Visit the ${project.title} site`}>
-              <span className={`flex items-center ${BODY}`}>
-                <SplitText text='Visit site' id='animate-project-page' />
-                <span className='menu-icon-clip'>
-                  <span className='menu-icon' id='animate-project-page'>
-                    <RiArrowRightDownLine id='icon' className='fill-black ml-1
-                      mobile:text-xl
-                      tablet:text-1xl
-                      laptop:text-2xl
-                      laptop-lg:text-2xl
-                      desktop:text-2xl'/>
-                  </span>
-                </span>
-              </span>
-            </a>
+          {/* visit site - bottom right, from tablet up */}
+          <div className='shrink-0 mobile:hidden'>
+            {visitLink}
           </div>
           </div>
         </div>
