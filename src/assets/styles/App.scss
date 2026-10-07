@@ -98,6 +98,19 @@
   100% { transform: translate(0, 0); }
 }
 
+// on touch screens and small screens the grain stays put, at the size of
+// the screen: an oversized layer jumping every frame is a lot for a phone
+// to composite while it is also scrolling, and it showed up as stutter
+@media (hover: none), (max-width: 767px) {
+  * body::before {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: none;
+  }
+}
+
 * body #onload-container {
   position: relative;
 }

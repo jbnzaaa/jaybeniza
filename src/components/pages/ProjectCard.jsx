@@ -55,7 +55,7 @@ function ProjectCard({ project }) {
           mobile:text-[.7rem] mobile:justify-start mobile:gap-y-1
           tablet:text-[.75rem] tablet:justify-start tablet:gap-y-1'>
           {project.meta.map((item) => (
-            <span key={item} className='text-white ml-[10px] mobile:ml-0 mobile:mr-2 tablet:ml-0 tablet:mr-2'>{item}</span>
+            <span key={item} className='text-white/60 ml-[10px] mobile:ml-0 mobile:mr-2 tablet:ml-0 tablet:mr-2'>{item}</span>
           ))}
         </div>
       </div>

@@ -117,7 +117,7 @@ function WorkExperience() {
                       desktop:text-[1.1rem]'>
                       {role.bullets.map((bullet, i) => (
                         <li key={i} className='entry-container mb-3'>
-                          <p className='entry-line'>
+                          <p className='entry-line text-muted'>
                             <SplitText text={bullet} id={`animate-work-${role.id}`} by='word' />
                           </p>
                         </li>

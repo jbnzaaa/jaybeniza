@@ -18,6 +18,9 @@ module.exports = {
         'black': '#0F0E17',
         'white': '#f2f2f2',
         'offwhite': '#E5E4E3',
+        // supporting text on the light background - descriptions, list
+        // items and values, one step below titles (5.6:1 on #E5E4E3)
+        'muted': '#5b5a61',
         'red': '#CC2525'
       },
       backgroundImage: {

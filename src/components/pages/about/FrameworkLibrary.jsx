@@ -37,7 +37,7 @@ function FrameworkLibrary() {
         {/* stacks */}
         <ul className='col-span-1 flex flex-wrap'>
           {SKILLS.map((skill, i) => (
-            <li className='stacks h-[30px]
+            <li className='stacks h-[30px] text-muted
               mobile:text-[.9rem]
               tablet:text-[.9rem]
               laptop:text-[1rem]

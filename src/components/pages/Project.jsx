@@ -26,6 +26,10 @@ function Project() {
   useEffect(() => {
     const section = fxSection.current;
     const heading = fxHeading.current;
+    // how tightly the scroll-coupled animation follows the scroll: exactly
+    // on desktop (the smoother already eases it), a beat behind on touch
+    // screens, where raw finger input is too jumpy to follow frame for frame
+    const scrub = ScrollTrigger.isTouch ? .5 : true;
 
     // where the heading sits while it is blown up: centred on the section,
     // as large as fits. measured from its resting place in the layout, so
@@ -59,7 +63,7 @@ function Project() {
         trigger: section,
         start: 'top bottom',
         end: 'top top',
-        scrub: true,
+        scrub,
         onUpdate: (self) => showHeading(self.progress >= .8),
       },
     })
@@ -95,7 +99,7 @@ function Project() {
         start: 'top top',
         end: `+=${STEPS * STEP_LENGTH * 100}%`,
         pin: true,
-        scrub: true,
+        scrub,
         anticipatePin: 1,
         refreshPriority: 1,
         invalidateOnRefresh: true,
@@ -162,7 +166,7 @@ function Project() {
       {/* project container */}
       <div id='project'>
         <div className='py-20'>
-          <section className='relative h-screen overflow-hidden' ref={fxSection}>
+          <section className='relative h-screen supports-[height:100svh]:h-[100svh] overflow-hidden' ref={fxSection}>
             {/* black background - its own layer so it can ride up on entry */}
             <div className='absolute inset-0 bg-black' ref={fxBackground}/>
             {/* content - top padding clears the fixed nav bar */}

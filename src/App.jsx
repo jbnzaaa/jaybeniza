@@ -59,7 +59,25 @@ function App() {
       speed: .65,
       effects: true,
     });
-    return () => smoother.kill();
+
+    // phones and tablets. a touch browser scrolls on its own thread and
+    // tells the page afterwards, so anything positioned from scroll (the
+    // pinned projects section, scroll-coupled animation) lands a frame
+    // late and shudders; and its address bar sliding in and out resizes
+    // the window mid-scroll, which re-measures every trigger and makes the
+    // page jump. normalizeScroll moves touch scrolling onto the page's own
+    // thread (it also keeps the address bar from resizing the page), and
+    // ignoreMobileResize skips the re-measure for whatever resizes remain
+    let normalizer;
+    if (ScrollTrigger.isTouch) {
+      ScrollTrigger.config({ ignoreMobileResize: true });
+      normalizer = ScrollTrigger.normalizeScroll({ type: 'touch', allowNestedScroll: true });
+    }
+
+    return () => {
+      normalizer?.kill();
+      smoother.kill();
+    };
   }, []);
 
   // letter-roll hover on every text link and button

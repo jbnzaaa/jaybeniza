@@ -50,6 +50,8 @@ const SHOT_LAYOUT = {
 // the shared type sizes of the page's body text and its small labels
 const BODY = 'mobile:text-[.9rem] tablet:text-[.9rem] laptop:text-[1rem] laptop-lg:text-[1rem] desktop:text-[1.1rem]';
 const LABEL = 'font-semibold mobile:text-[.7rem] tablet:text-[.75rem] laptop:text-[.9rem] laptop-lg:text-[.9rem] desktop:text-[.9rem]';
+// a detail's value sits a step below its label
+const VALUE = `${BODY} text-muted`;
 const BLOCK = 'mobile:mb-2 tablet:mb-2 laptop:mb-5 laptop-lg:mb-5 desktop:mb-5';
 
 /**
@@ -106,7 +108,7 @@ function ProjectPage({ project }) {
           title top left with the description top right, and the details
           pushed to the bottom left via justify-between. top padding clears
           the fixed nav bar */}
-        <div className='project-container flex flex-col justify-between min-h-screen gap-y-12 pt-24
+        <div className='project-container flex flex-col justify-between min-h-screen supports-[height:100svh]:min-h-[100svh] gap-y-12 pt-24
           mobile:pb-8
           tablet:pb-8
           laptop:pb-8
@@ -149,7 +151,7 @@ function ProjectPage({ project }) {
               <div className={LABEL}>
                 <SplitText text='Year' id='animate-project-page' />
               </div>
-              <div className={BODY}>
+              <div className={VALUE}>
                 <SplitText text={project.year} id='animate-project-page' />
               </div>
             </div>
@@ -158,7 +160,7 @@ function ProjectPage({ project }) {
               <div className={LABEL}>
                 <SplitText text='Category' id='animate-project-page' />
               </div>
-              <div className={BODY}>
+              <div className={VALUE}>
                 <SplitText text={project.category} id='animate-project-page' />
               </div>
             </div>
@@ -167,7 +169,7 @@ function ProjectPage({ project }) {
               <div className={LABEL}>
                 <SplitText text='Role' id='animate-project-page' />
               </div>
-              <div className={`flex flex-wrap ${BODY}`}>
+              <div className={`flex flex-wrap ${VALUE}`}>
                 {project.roles.map((role) => (
                   <SplitText text={role} id='animate-project-page' key={role} />
                 ))}
@@ -178,7 +180,7 @@ function ProjectPage({ project }) {
               <div className={LABEL}>
                 <SplitText text='Technology Used' id='animate-project-page' />
               </div>
-              <div className={`flex flex-wrap ${BODY}`}>
+              <div className={`flex flex-wrap ${VALUE}`}>
                 {project.technologies.map((technology) => (
                   <SplitText text={technology} id='animate-project-page' key={technology} />
                 ))}

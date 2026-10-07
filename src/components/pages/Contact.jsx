@@ -38,7 +38,7 @@ function Contact() {
       {/* contact container - with the footer inside it, the two fill
         exactly one screen: the contact block takes whatever height the
         footer leaves */}
-      <div id='contact' className='flex flex-col min-h-screen bg-black'>
+      <div id='contact' className='flex flex-col min-h-screen supports-[height:100svh]:min-h-[100svh] bg-black'>
         {/*  */}
         <div className='grid grid-cols-8 gap-0 flex-1'>
           <section className='col-span-8 bg-black grid grid-cols-8 grid-rows-[auto_1fr] gap-0

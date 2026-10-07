@@ -38,7 +38,7 @@ function WhatIUse() {
           <SplitText text='Skills & Tools' id='animate-whatiuse' />
         </div>
         {/* description */}
-        <div className='col-span-1 flex flex-wrap
+        <div className='col-span-1 flex flex-wrap text-muted
           mobile:text-[.9rem]
           tablet:text-[.9rem]
           laptop:text-[1rem]
