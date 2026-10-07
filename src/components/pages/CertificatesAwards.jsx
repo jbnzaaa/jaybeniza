@@ -9,15 +9,15 @@ import certDataAnalytics from '../../assets/certificates-and-awards/Data Analyti
 import certMsUxDesign from '../../assets/certificates-and-awards/Microsoft - UX Design.pdf'
 import certIbmGenAiFundamentals from '../../assets/certificates-and-awards/IBM - Generative AI Fundamentals.pdf'
 
-// certificates first, then awards. `file` is what the row's link opens
+// newest first. `file` is what the row's link opens
 const ITEMS = [
   { id: 'data-analytics', title: 'Data Analytics Level III Training Program', year: '2026', file: certDataAnalytics },
   { id: 'ms-ux-design', title: 'Microsoft UX Design Professional Certificate', year: '2026', file: certMsUxDesign },
   { id: 'ibm-gen-ai-fundamentals', title: 'IBM Generative AI Fundamentals Specialization', year: '2025', file: certIbmGenAiFundamentals },
-  { id: 'agile-101-scrum', title: 'Agile 101: Scrum Framework Fundamentals', year: '2024', file: null },
-  { id: 'civil-service-eligibility', title: 'Civil Service Honor Graduate Eligibility', year: '2023', file: null },
   { id: 'award-innovation', title: 'Innovations in Action Award', year: '2025', file: null },
   { id: 'award-agility', title: 'Agility Award', year: '2025', file: null },
+  { id: 'agile-101-scrum', title: 'Agile 101: Scrum Framework Fundamentals', year: '2024', file: null },
+  { id: 'civil-service-eligibility', title: 'Civil Service Honor Graduate Eligibility', year: '2023', file: null },
 ];
 
 /**
@@ -45,7 +45,7 @@ function CertificatesAwards() {
   return (
     <>
       <div id='certificates-awards'>
-        <div className='flex flex-col justify-between min-h-screen-safe
+        <div className='
           mobile:py-16 mobile:px-[.9rem]
           tablet:py-16 tablet:px-[1rem]
           laptop:py-20 laptop:px-[2rem]

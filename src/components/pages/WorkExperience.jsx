@@ -53,8 +53,8 @@ function WorkExperience() {
 
   return (
     <>
-      <div id='work-experience' data-section-reveal className='bg-black'>
-        <div className='flex flex-col justify-between min-h-screen-safe
+      <div id='work-experience' className='bg-black'>
+        <div className='
           mobile:py-16 mobile:px-[.9rem]
           tablet:py-16 tablet:px-[1rem]
           laptop:py-20 laptop:px-[2rem]

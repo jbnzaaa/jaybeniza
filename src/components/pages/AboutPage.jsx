@@ -12,10 +12,6 @@ import Resume from '../../assets/files/Jayson_Beniza.pdf'
 import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
-// GSAP
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-gsap.registerPlugin(ScrollTrigger)
 
 // the longer introduction. everything in it is drawn from the work
 // experience entries below it - nothing here that they do not back up
@@ -69,35 +65,9 @@ function AboutPage() {
     const rows = scrollReveal('.marquee-row', { clipPath: 'inset(0% 0% 0% 0%)', stagger: .15, ease: 'power2.inOut' },
       { trigger: '#capabilities-rows' });
 
-    // the black sections come up like a panel being raised - scroll-coupled.
-    // as one enters, its top edge starts well below where it belongs and
-    // climbs faster than the page scrolls, meeting its place by mid-screen.
-    // only the edge is clipped, so nothing inside moves or re-measures.
-    // not on phones or touch screens: there the page's height keeps
-    // changing under the triggers (address bar, late reflow), and a clip
-    // left part-way in cuts into the section's own content
-    const usePanels = window.innerWidth >= 768 && !ScrollTrigger.isTouch;
-    const panels = (usePanels ? gsap.utils.toArray('[data-section-reveal]') : []).map((panel) => gsap.fromTo(panel,
-      { clipPath: () => `inset(${Math.round(window.innerHeight * .45)}px 0px 0px 0px)` },
-      {
-        clipPath: 'inset(0px 0px 0px 0px)',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: panel,
-          start: 'top bottom',
-          end: 'top 45%',
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-      }));
-
     return () => {
       reveals.forEach((reveal) => reveal.kill());
       rows.kill();
-      panels.forEach((panel) => {
-        panel.scrollTrigger?.kill();
-        panel.revert();
-      });
     };
   }, []);
 
@@ -143,7 +113,7 @@ function AboutPage() {
       <WorkExperience/>
       {/* capabilities and tools - three rows that never stop moving, each
         the opposite way to the one above it */}
-      <section className='flex flex-col justify-center min-h-screen-safe overflow-hidden
+      <section className='overflow-hidden
         mobile:py-16
         tablet:py-16
         laptop:py-20
@@ -180,7 +150,7 @@ function AboutPage() {
       {/* download resume - this page's closing screen, laid out like the
         contact section (Contact.jsx) with the footer inside it. the top
         bar goes behind it the same way (data-nav-cover, Navbar.jsx) */}
-      <div id='resume' data-nav-cover data-section-reveal className='flex flex-col min-h-screen-safe bg-black'>
+      <div id='resume' data-nav-cover className='flex flex-col min-h-screen-safe bg-black'>
         <section className='flex-1 bg-black grid grid-cols-8 grid-rows-[auto_1fr] gap-0
           mobile:p-[.9rem] mobile:pb-10 mobile:gap-y-16 mobile:grid-flow-row
           tablet:p-[1rem] tablet:pb-12 tablet:gap-y-20 tablet:grid-flow-row
