@@ -109,9 +109,11 @@ export function scrollReveal(targets, vars, { trigger, start = 'top 85%' } = {})
  * @param {object} [opts]
  * @param {string|Element} [opts.trigger] - ScrollTrigger trigger (defaults to the first stage's targets)
  * @param {string} [opts.start] - ScrollTrigger start position (defaults to 'top 85%')
+ * @param {string} [opts.reverseStart] - where scrolling back up reverses the reveal, when that
+ *   should happen higher up the screen than `start` (defaults to `start`)
  * @returns {{kill: () => void}}
  */
-export function scrollRevealSequence(stages, { trigger, start = 'top 85%' } = {}) {
+export function scrollRevealSequence(stages, { trigger, start = 'top 85%', reverseStart } = {}) {
   // a stage with a stagger (text) is paced like scrollReveal: its whole
   // length scales with how many letters it covers, so a long row reads as
   // a ripple instead of landing at once and a short one is not rushed. a
@@ -149,8 +151,19 @@ export function scrollRevealSequence(stages, { trigger, start = 'top 85%' } = {}
     onEnterBack: (self) => tl.timeScale(rate(self.getVelocity())).play(),
     // scrolling back up past the start: text goes first, then the line -
     // the reveal in reverse, like the section titles
-    onLeaveBack: (self) => tl.timeScale(rate(self.getVelocity())).reverse(),
+    onLeaveBack: (self) => { if (!reverseStart) tl.timeScale(rate(self.getVelocity())).reverse(); },
   });
+
+  // a tall block (a card) that only reversed at `start` would be all but
+  // off the bottom of the screen by then, and its reversal never seen. with
+  // reverseStart it goes while most of it is still in view, and comes back
+  // at the same line if the page is scrolled down again
+  const back = reverseStart ? ScrollTrigger.create({
+    trigger: trigger || stages[0].targets,
+    start: reverseStart,
+    onEnter: (self) => tl.timeScale(rate(self.getVelocity())).play(),
+    onLeaveBack: (self) => tl.timeScale(rate(self.getVelocity())).reverse(),
+  }) : null;
 
   // safety net: see scrollReveal() above for why trig.refresh() is needed
   // before this check
@@ -162,6 +175,7 @@ export function scrollRevealSequence(stages, { trigger, start = 'top 85%' } = {}
     // comment on scrollReveal()'s kill() above for why this matters
     kill() {
       trig.kill();
+      back?.kill();
       tl.revert();
     },
   };
@@ -190,6 +204,9 @@ export function scrollRevealCards(cards, { group, rowFrom = 1024 } = {}) {
   // wipe its text begins
   const STEP = .15;
   const TEXT_DELAY = .28;
+  // scrolling back up, a card closes again once its top edge is this far
+  // down the screen - while most of it can still be seen closing
+  const REVERSE_AT = 'top 55%';
 
   const inner = (card) => `${card} .reveal-card-inner`;
   const inners = cards.map(({ card }) => inner(card));
@@ -201,12 +218,12 @@ export function scrollRevealCards(cards, { group, rowFrom = 1024 } = {}) {
       { targets: cards.map(({ card }) => card), vars: { ...frame, stagger: STEP } },
       { targets: inners, vars: { ...settle, stagger: STEP }, position: 0 },
       ...cards.map((item, i) => ({ targets: item.text, vars: text, position: i * STEP + TEXT_DELAY })),
-    ], { trigger: group })]
+    ], { trigger: group, reverseStart: REVERSE_AT })]
     : cards.map((item) => scrollRevealSequence([
       { targets: item.card, vars: frame },
       { targets: inner(item.card), vars: settle, position: '<' },
       { targets: item.text, vars: text, position: TEXT_DELAY },
-    ], { trigger: item.card }));
+    ], { trigger: item.card, reverseStart: REVERSE_AT }));
 
   return {
     kill() {

@@ -13,23 +13,14 @@ import { TransitionLink } from '../common/PageTransition'
 import SplitText from '../common/SplitText'
 gsap.registerPlugin(ScrollTrigger)
 
-// the strongest figures from the work experience entries (see
-// WorkExperience.jsx): time, an outcome, and scale. the paragraph above
-// them carries no figures of its own, so nothing is said twice
-const FACTS = [
-  { figure: '3+', label: 'Years designing web and mobile products' },
-  { figure: '70%', label: 'Fewer front-end implementation bugs before deployment' },
-  { figure: '15+', label: 'Reusable components in the design system I maintain' },
-];
-
 // share of the pinned scroll the text fill takes; the rest holds the
-// filled text in place while the facts and the link reveal
+// filled text in place while the link reveals
 const FILL_END = .7;
 
 /**
  * The landing page's introduction: a full-width black screen that pins
  * while its text fills in. Where the hero is a statement of what I do,
- * this is who I am - a small greeting, a career paragraph, three figures
+ * this is who I am - a small greeting, a career paragraph
  * and a link through to the full About page (AboutPage.jsx).
  */
 function About() {
@@ -38,12 +29,11 @@ function About() {
   useEffect(() => {
     const section = fxSection.current;
 
-    // facts and link - the page's letter-by-letter reveal. held back until
+    // the link - the page's letter-by-letter reveal. held back until
     // the paragraph has filled, and taken away again if the page is
     // scrolled back above that point
     const details = gsap.timeline({ paused: true })
-      .to('#animate-about-facts', { y: 0, duration: .5, stagger: .012, ease: 'power1.in' })
-      .to('#animate-about-link', { y: 0, duration: .5, stagger: .02, ease: 'power1.in' }, '<.2');
+      .to('#animate-about-link', { y: 0, duration: .5, stagger: .02, ease: 'power1.in' });
     let filled = false;
     const showDetails = (show) => {
       if (show === filled) return;
@@ -87,14 +77,14 @@ function About() {
       {/* about container - full width, one screen tall, black */}
       <div id='about'>
         <section className='flex flex-col justify-between h-screen-safe bg-black overflow-hidden pt-[6rem]
-          mobile:justify-start mobile:px-[.9rem] mobile:pb-8
+          mobile:px-[.9rem] mobile:pb-8
           tablet:px-[1rem] tablet:pb-10
           laptop:px-[2rem] laptop:pb-10
           laptop-lg:px-[3rem] laptop-lg:pb-12
           desktop:px-[3rem] desktop:pb-14'
           ref={fxSection}>
           {/* greeting + paragraph - the text that fills in */}
-          <div className='about-fill mobile:order-1'>
+          <div className='about-fill'>
             {/* greeting - a label for the paragraph, not a second headline */}
             <div className='flex flex-wrap
               mobile:mb-4 mobile:text-[8vw]
@@ -116,49 +106,12 @@ function About() {
               <AboutParagraph/>
             </div>
           </div>
-          {/* facts + link to the full about page. on a phone this wrapper
-            steps aside (contents) so the link can sit directly under the
-            paragraph - at the gap the selected projects section leaves
-            above its button - with the facts at the bottom of the screen */}
-          <div className='flex justify-between items-end gap-x-5
-            mobile:contents
-            tablet:flex-col tablet:items-start tablet:gap-y-6'>
-            <ul className='grid gap-x-5
-              mobile:grid-cols-1 mobile:gap-y-2 mobile:w-full mobile:order-3 mobile:mt-auto
-              tablet:grid-cols-3 tablet:w-full
-              laptop:grid-cols-3 laptop:w-[70%]
-              laptop-lg:grid-cols-3 laptop-lg:w-[66%]
-              desktop:grid-cols-3 desktop:w-[62%]'>
-              {FACTS.map(({ figure, label }) => (
-                <li className='flex
-                  mobile:flex-row mobile:items-center mobile:gap-x-3
-                  tablet:flex-col tablet:gap-y-2
-                  laptop:flex-col laptop:gap-y-2
-                  laptop-lg:flex-col laptop-lg:gap-y-3
-                  desktop:flex-col desktop:gap-y-3'
-                  key={label}>
-                  <span className='font-flexible font-medium leading-none text-offwhite shrink-0
-                    mobile:text-[9vw] mobile:w-[18vw]
-                    tablet:text-[8vw]
-                    laptop:text-[6vw]
-                    laptop-lg:text-[5.4vw]
-                    desktop:text-[5.4vw]'>
-                    <SplitText text={figure} id='animate-about-facts' />
-                  </span>
-                  <span className='flex flex-wrap text-offwhite/60
-                    mobile:text-[.8rem]
-                    tablet:text-[.85rem]
-                    laptop:text-[.9rem]
-                    laptop-lg:text-[.95rem]
-                    desktop:text-[1rem]'>
-                    <SplitText text={label} id='animate-about-facts' by='word' />
-                  </span>
-                </li>
-              ))}
-            </ul>
+          {/* link to the full about page - at the end of the section, on
+            the left */}
+          <div className='flex justify-start'>
             {/* the menu links' markup - their hover is the one made for a
               dark background */}
-            <div className='page-link selected-link shrink-0 mobile:order-2 mobile:mt-5'>
+            <div className='page-link selected-link shrink-0'>
               <TransitionLink to='/about' className='inline-block'>
                 <div className='link'>
                   <span className='flex items-center text-offwhite

@@ -12,8 +12,8 @@ const TESTIMONIALS = [
   {
     id: 'sergio-ramos',
     quote: [
-      'Jay is an invaluable asset to PCI. What began as design work has grown into developing robust systems and carrying greater responsibility, and he approaches all of it with quiet focus and an exceptional work ethic.',
-      'He is someone we depend on, and his results speak for themselves.',
+      'I’ve watched Jay grow from taking on design tasks to handling more complex systems and projects. He approaches his work with a lot of focus and care, and he doesn’t need to be the loudest person in the room to make an impact.',
+      'When Jay takes ownership of something, we know it will get done well.',
     ],
     name: 'Sergio Ramos III',
     role: 'President, PCI Innovations Tech Center',
@@ -21,8 +21,8 @@ const TESTIMONIALS = [
   {
     id: 'paula-malupa',
     quote: [
-      'Jay continues to grow with us, moving from his first design tasks to managing larger projects and building our core systems.',
-      'He brings a grounded, thoughtful approach to everything he takes on, and we can always rely on him to deliver.',
+      'Jay has always been someone the team can rely on. Over time, I’ve seen him take on bigger projects, build core systems, and continue to develop his skills.',
+      'What stands out most is how thoughtful and steady he is. He takes the time to do things right and always finds a way to move the work forward.',
     ],
     name: 'Paula Malupa',
     role: 'Executive Assistant, PCI Innovations Tech Center',
@@ -30,8 +30,8 @@ const TESTIMONIALS = [
   {
     id: 'richard-ordinario',
     quote: [
-      'I highly recommend Jay for any UI/UX role. He consistently delivers thoughtful, user-friendly designs and brings creativity and attention to detail to every project.',
-      'He’s also eager to learn and grow, making him a valuable and adaptable member of any team.',
+      'Working with Jay, you can see how much thought he puts into the experience behind a design. He’s creative, detail-oriented, and always thinking about how to make something easier for the user.',
+      'He’s also curious and open to learning, which makes him the kind of designer and collaborator you want on a project.',
     ],
     name: 'Richard Ordinario',
     role: 'Senior Full Stack Web Developer',

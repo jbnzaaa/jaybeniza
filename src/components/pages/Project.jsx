@@ -238,7 +238,6 @@ function Project() {
                     laptop:text-[1rem]
                     laptop-lg:text-[1rem]
                     desktop:text-[1.1rem]'>View</span>
-                  <RiArrowRightDownLine className='fill-offwhite ml-1 text-2xl'/>
                 </div>
               </div>
               {/* behance button - the buttons' markup for a light background,
