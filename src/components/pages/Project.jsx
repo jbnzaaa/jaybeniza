@@ -6,6 +6,8 @@ import {RiArrowRightDownLine} from 'react-icons/ri'
 // GSAP
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+// page-to-page wipe
+import { TransitionLink } from '../common/PageTransition'
 // per-letter text split
 import SplitText from '../common/SplitText'
 gsap.registerPlugin(ScrollTrigger)
@@ -240,16 +242,36 @@ function Project() {
                     desktop:text-[1.1rem]'>View</span>
                 </div>
               </div>
-              {/* behance button - the buttons' markup for a light background,
-                so it reveals and hovers exactly like them. on a phone it sits directly under
-                the description, above the project stage; from tablet up it
-                is in the bottom left corner */}
-              <div className='col-start-1 flex items-end
+              {/* more projects + behance buttons - the buttons' markup for a
+                light background, so they reveal and hover exactly like them.
+                on a phone they sit directly under the description, above the
+                project stage; from tablet up they are in the bottom left corner */}
+              <div className='col-start-1 flex flex-col justify-end gap-y-2
                 mobile:col-span-8 mobile:row-start-2
                 tablet:col-span-8 tablet:row-start-3
                 laptop:col-span-3 laptop:row-start-2
                 laptop-lg:col-span-3 laptop-lg:row-start-2
                 desktop:col-span-3 desktop:row-start-2'>
+                {/* every project, on its own page (ProjectsPage.jsx) */}
+                <div className='project-container'>
+                  <TransitionLink to='/projects' className='inline-block'>
+                    <div className='project-link'>
+                      <span className='flex items-center
+                        mobile:text-[.9rem]
+                        tablet:text-[.9rem]
+                        laptop:text-[1rem]
+                        laptop-lg:text-[1rem]
+                        desktop:text-[1.1rem]'>
+                        <SplitText text='More projects' id='animate-link' />
+                        <span className='menu-icon-clip'>
+                          <span className='menu-icon' id='animate-link'>
+                            <RiArrowRightDownLine id='icon' className='fill-black ml-1 text-2xl'/>
+                          </span>
+                        </span>
+                      </span>
+                    </div>
+                  </TransitionLink>
+                </div>
                 <div className='project-container'>
                   <a href='https://www.behance.net/jbnza' target='_blank' rel='noreferrer' className='inline-block'>
                     <div className='project-link'>

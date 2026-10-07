@@ -22,7 +22,13 @@ const ACCOUNTS = [
   ],
 ];
 
-function Contact() {
+/**
+ * @param {boolean} [page] - true when this is the whole page (ContactPage.jsx)
+ *   rather than a page's closing section: it then starts under the top bar
+ *   instead of sliding over it, so it leaves room for the bar and does not
+ *   ask the bar to hide (data-nav-cover, Navbar.jsx)
+ */
+function Contact({ page = false }) {
   useEffect(() => {
     // drop a message + contact description reveal
     const reveal = scrollReveal('#animate-contact', {
@@ -38,8 +44,9 @@ function Contact() {
       {/* contact container - with the footer inside it, the two fill
         exactly one screen: the contact block takes whatever height the
         footer leaves */}
-      <div id='contact' data-nav-cover className='flex flex-col min-h-screen-safe bg-black'>
-        {/*  */}
+      <div id='contact' {...(page ? {} : { 'data-nav-cover': '' })} className='flex flex-col min-h-screen-safe bg-black'>
+        {/* room for the fixed top bar when this is the page itself */}
+        {page && <div className='shrink-0 mobile:h-6 tablet:h-6 laptop:h-12 laptop-lg:h-10 desktop:h-10'/>}
         <div className='grid grid-cols-8 gap-0 flex-1'>
           <section className='col-span-8 bg-black grid grid-cols-8 grid-rows-[auto_1fr] gap-0
             mobile:p-[.9rem] mobile:pb-10 mobile:min-h-[80svh] mobile:gap-y-16 mobile:grid-flow-row

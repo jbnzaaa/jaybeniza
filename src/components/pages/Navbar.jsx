@@ -25,9 +25,8 @@ gsap.registerPlugin(ScrollTrigger)
 const MENU_LINKS = [
   { label: 'Home', to: '/#' },
   { label: 'About Me', to: '/about' },
-  { label: 'Selected Projects', to: '/#project' },
-  { label: 'Testimonials', to: '/#testimonials' },
-  { label: 'Drop a Message', to: '/#contact' },
+  { label: 'Projects', to: '/projects' },
+  { label: 'Drop a Message', to: '/contact' },
 ];
 const MENU_EXTERNAL = [
   { label: 'Resume', href: Resume },
@@ -75,6 +74,9 @@ function Navbar() {
     // it, so it cannot literally sit behind the section.) re-created per
     // page, since each page has its own contact block
     const bar = fxBar.current;
+    // a page with no such closing screen (the contact page, which is one)
+    // keeps the bar throughout
+    if (!document.querySelector('[data-nav-cover]')) return undefined;
     const cover = gsap.fromTo(bar,
       { clipPath: 'inset(0% 0% 0% 0%)' },
       {

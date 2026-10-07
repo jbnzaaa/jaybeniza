@@ -7,6 +7,8 @@ import './assets/styles/App.css';
 import Navbar from './components/pages/Navbar';
 import Home from './components/pages/Home';
 import AboutPage from './components/pages/AboutPage';
+import ProjectsPage from './components/pages/ProjectsPage';
+import ContactPage from './components/pages/ContactPage';
 import DailyDiscount from './components/pages/projects/DailyDiscount';
 import Jbnza from './components/pages/projects/Jbnza';
 import Jaysonbeniza from './components/pages/projects/Jaysonbeniza';
@@ -132,6 +134,8 @@ function App() {
               <Routes>
                 <Route path='/' element={<Home/>}/>
                 <Route path='/about' element={<AboutPage/>}/>
+                <Route path='/projects' element={<ProjectsPage/>}/>
+                <Route path='/contact' element={<ContactPage/>}/>
                 <Route path='/dailydiscount' element={<DailyDiscount/>}/>
                 <Route path='/jbnza' element={<Jbnza/>}/>
                 <Route path='/jaysonbeniza' element={<Jaysonbeniza/>}/>

@@ -76,7 +76,11 @@ function Hero() {
           {PROFESSION_LINES.map((line) => (
             <section key={line} className='hero-container col-start-1 col-span-8 flex flex-wrap items-baseline'>
               <span className='hero-designerdev font-flexible font-bold leading-none tracking-tight
-                text-[12.4vw]'>
+                mobile:text-[19vw]
+                tablet:text-[12.4vw]
+                laptop:text-[12.4vw]
+                laptop-lg:text-[12.4vw]
+                desktop:text-[12.4vw]'>
                 <SplitText text={line} id='animate-hero-profession' />
               </span>
             </section>
