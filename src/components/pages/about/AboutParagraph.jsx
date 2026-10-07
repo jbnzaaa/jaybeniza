@@ -3,7 +3,7 @@ import React from 'react'
 // per-letter text split
 import SplitText from '../../common/SplitText'
 
-const TEXT = "I design digital products people understand at first glance, then help build them. Based in the Philippines, I bring 3+ years of UI/UX design and front-end development to every project, from design systems to shipped web applications.";
+const TEXT = 'I design and build digital products with a focus on clarity, function, and user experience. Based in the Philippines, I bring 3+ years of UI/UX design and front-end development experience to every project, from user flows and design systems to responsive, production-ready interfaces.';
 
 // the landing page's introduction paragraph. its letters share the
 // greeting's id so About.jsx's scroll-coupled text fill runs through both
