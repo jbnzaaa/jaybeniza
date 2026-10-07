@@ -1,7 +1,7 @@
 //
 import React, { useEffect } from 'react'
 // scroll reveal
-import { scrollReveal, scrollRevealSequence } from '../../utils/scrollReveal'
+import { scrollReveal, scrollRevealCards } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
 
@@ -39,24 +39,22 @@ function WorkExperience() {
     // section heading reveal
     const heading = scrollReveal('#animate-work-header', { y: 0, stagger: .02, ease: 'power1.in' });
 
-    // each card gets its OWN trigger: its frame wipes up from the bottom
-    // edge, then its text reveals letter by letter, as THAT card scrolls
-    // into view
-    const cards = ROLES.map((role) => scrollRevealSequence([
-      { targets: `#work-card-${role.id}`, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },
-      { targets: `#animate-work-${role.id}`, vars: { y: 0, stagger: .02, ease: 'power1.in' } },
-    ], { trigger: `#work-card-${role.id}` }));
+    // the cards rise in one after another, each followed by its text
+    const cards = scrollRevealCards(ROLES.map((role) => ({
+      card: `#work-card-${role.id}`,
+      text: `#animate-work-${role.id}`,
+    })), { group: '#work-cards' });
 
     return () => {
       heading.kill();
-      cards.forEach((card) => card.kill());
+      cards.kill();
     };
   }, []);
 
   return (
     <>
       <div id='work-experience' data-section-reveal className='bg-black'>
-        <div className='
+        <div className='flex flex-col justify-between min-h-screen-safe
           mobile:py-16 mobile:px-[.9rem]
           tablet:py-16 tablet:px-[1rem]
           laptop:py-20 laptop:px-[2rem]
@@ -72,23 +70,24 @@ function WorkExperience() {
             <SplitText text='Work Experience' id='animate-work-header' />
           </div>
           {/* one card per role */}
-          <ul className='grid gap-5
+          <ul id='work-cards' className='grid gap-5
             mobile:grid-cols-1
             tablet:grid-cols-1
             laptop:grid-cols-2
             laptop-lg:grid-cols-2
             desktop:grid-cols-2'>
             {ROLES.map((role) => (
-              <li className='reveal-card flex flex-col border border-offwhite/20 m-0
-                mobile:p-5 mobile:gap-y-8
-                tablet:p-8 tablet:gap-y-10
-                laptop:p-8 laptop:gap-y-12
-                laptop-lg:p-10 laptop-lg:gap-y-14
-                desktop:p-12 desktop:gap-y-16'
+              <li className='reveal-card overflow-hidden bg-offwhite m-0'
                 id={`work-card-${role.id}`} key={role.id}>
+                <div className='reveal-card-inner h-full flex flex-col
+                  mobile:p-5 mobile:gap-y-8
+                  tablet:p-8 tablet:gap-y-10
+                  laptop:p-8 laptop:gap-y-12
+                  laptop-lg:p-10 laptop-lg:gap-y-14
+                  desktop:p-12 desktop:gap-y-16'>
                 {/* role meta */}
                 <div className='entry-container'>
-                  <p className='entry-line font-medium text-offwhite
+                  <p className='entry-line font-medium
                     mobile:text-[1.1rem]
                     tablet:text-[1.4rem]
                     laptop:text-[1.4rem]
@@ -96,7 +95,7 @@ function WorkExperience() {
                     desktop:text-[1.8rem]'>
                     <SplitText text={role.title} id={`animate-work-${role.id}`} />
                   </p>
-                  <p className='entry-line font-regular text-offwhite mt-1
+                  <p className='entry-line font-regular mt-1
                     mobile:text-[.9rem]
                     tablet:text-[.9rem]
                     laptop:text-[1rem]
@@ -104,7 +103,7 @@ function WorkExperience() {
                     desktop:text-[1rem]'>
                     <SplitText text={role.company} id={`animate-work-${role.id}`} />
                   </p>
-                  <p className='entry-line font-regular text-offwhite/50
+                  <p className='entry-line font-regular text-muted
                     mobile:text-[.8rem]
                     tablet:text-[.8rem]
                     laptop:text-[.9rem]
@@ -122,12 +121,13 @@ function WorkExperience() {
                   desktop:text-[1.1rem]'>
                   {role.bullets.map((bullet, i) => (
                     <li key={i} className='entry-container m-0'>
-                      <p className='entry-line text-offwhite/70'>
+                      <p className='entry-line text-muted'>
                         <SplitText text={bullet} id={`animate-work-${role.id}`} by='word' />
                       </p>
                     </li>
                   ))}
                 </ul>
+                </div>
               </li>
             ))}
           </ul>

@@ -1,7 +1,7 @@
 //
 import React, { useEffect } from 'react'
 // scroll reveal
-import { scrollReveal, scrollRevealSequence } from '../../utils/scrollReveal'
+import { scrollReveal, scrollRevealCards } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
 
@@ -67,16 +67,15 @@ function Testimonials() {
     // section heading reveal
     const heading = scrollReveal('#animate-testimonials-header', { y: 0, stagger: .02, ease: 'power1.in' });
 
-    // each card's frame wipes up from its bottom edge, then its text
-    // reveals, as THAT card scrolls into view
-    const cards = TESTIMONIALS.map(({ id }) => scrollRevealSequence([
-      { targets: `#testimonial-card-${id}`, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },
-      { targets: `#animate-testimonial-${id}`, vars: { y: 0, stagger: .02, ease: 'power1.in' } },
-    ], { trigger: `#testimonial-card-${id}` }));
+    // the cards rise in one after another, each followed by its text
+    const cards = scrollRevealCards(TESTIMONIALS.map(({ id }) => ({
+      card: `#testimonial-card-${id}`,
+      text: `#animate-testimonial-${id}`,
+    })), { group: '#testimonial-cards' });
 
     return () => {
       heading.kill();
-      cards.forEach((card) => card.kill());
+      cards.kill();
     };
   }, []);
 
@@ -101,24 +100,24 @@ function Testimonials() {
             <SplitText text='Testimonials' id='animate-testimonials-header' />
           </div>
           {/* one card per review */}
-          <ul className={`grid gap-5
+          <ul id='testimonial-cards' className={`grid gap-5
             mobile:grid-cols-1
             tablet:grid-cols-1
             ${COLUMNS[TESTIMONIALS.length] || COLUMNS_MANY}`}>
             {TESTIMONIALS.map(({ id, quote, name, role }) => (
-              <li className='reveal-card flex flex-col justify-between border border-black m-0
-                mobile:p-5 mobile:gap-y-10
-                tablet:p-8 tablet:gap-y-12
-                laptop:p-8 laptop:gap-y-16
-                laptop-lg:p-10 laptop-lg:gap-y-20
-                desktop:p-12 desktop:gap-y-24'
+              <li className='reveal-card overflow-hidden bg-black m-0'
                 id={`testimonial-card-${id}`} key={id}>
-                <figure className='contents'>
+                <figure className='reveal-card-inner h-full flex flex-col justify-between
+                  mobile:p-5 mobile:gap-y-10
+                  tablet:p-8 tablet:gap-y-12
+                  laptop:p-8 laptop:gap-y-16
+                  laptop-lg:p-10 laptop-lg:gap-y-20
+                  desktop:p-12 desktop:gap-y-24'>
                   {/* the review */}
                   <blockquote className={`entry-container flex flex-col gap-y-[1em] ${solo ? QUOTE_SOLO : QUOTE}
                     ${solo ? 'laptop:max-w-[85%] laptop-lg:max-w-[80%] desktop:max-w-[75%]' : ''}`}>
                     {/* one paragraph, in quotation marks */}
-                    <p className='entry-line font-medium'>
+                    <p className='entry-line font-medium text-offwhite'>
                       <SplitText text={`“${quote.join(' ')}”`} id={`animate-testimonial-${id}`} by='word' />
                     </p>
                   </blockquote>
@@ -129,10 +128,10 @@ function Testimonials() {
                     laptop:text-[1rem]
                     laptop-lg:text-[1rem]
                     desktop:text-[1.1rem]'>
-                    <p className='entry-line font-medium'>
+                    <p className='entry-line font-medium text-offwhite'>
                       <SplitText text={name} id={`animate-testimonial-${id}`} />
                     </p>
-                    <p className='entry-line text-muted'>
+                    <p className='entry-line text-offwhite/60'>
                       <SplitText text={role} id={`animate-testimonial-${id}`} />
                     </p>
                   </figcaption>

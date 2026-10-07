@@ -104,7 +104,7 @@ function AboutPage() {
   return (
     <>
       {/* intro - top padding clears the fixed nav bar */}
-      <section className={`grid grid-cols-8 gap-x-5 pt-24 ${GUTTER}
+      <section className={`grid grid-cols-8 grid-rows-[auto_1fr] gap-x-5 pt-24 min-h-screen-safe ${GUTTER}
         mobile:pb-16 mobile:gap-y-6
         tablet:pb-16 tablet:gap-y-8
         laptop:pb-20 laptop:gap-y-10
@@ -120,7 +120,7 @@ function AboutPage() {
             <SplitText text='About me' id='animate-about-page-title' />
           </h1>
         </div>
-        <div className='flex flex-col
+        <div className='flex flex-col self-end
           mobile:col-span-8 mobile:gap-y-5
           tablet:col-span-7 tablet:gap-y-6
           laptop:col-span-6 laptop:col-start-3 laptop:gap-y-8
@@ -143,7 +143,7 @@ function AboutPage() {
       <WorkExperience/>
       {/* capabilities and tools - three rows that never stop moving, each
         the opposite way to the one above it */}
-      <section className='overflow-hidden
+      <section className='flex flex-col justify-center min-h-screen-safe overflow-hidden
         mobile:py-16
         tablet:py-16
         laptop:py-20

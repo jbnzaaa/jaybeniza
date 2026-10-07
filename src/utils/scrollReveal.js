@@ -166,3 +166,52 @@ export function scrollRevealSequence(stages, { trigger, start = 'top 85%' } = {}
     },
   };
 }
+
+/**
+ * Reveal for cards (work experience, testimonials) - the project cards'
+ * reveal: the card's frame wipes open from its bottom edge while what is
+ * inside eases down from slightly enlarged and low to its real size and
+ * place, both at once, and the text then rises letter by letter. Where the
+ * cards sit side by side they share one trigger and open one after another,
+ * left to right; where they are stacked each waits for its own turn on
+ * screen. A card is `.reveal-card` with one `.reveal-card-inner` in it.
+ *
+ * @param {{card: string, text: string}[]} cards - selectors, in order
+ * @param {object} [opts]
+ * @param {string} [opts.group] - the cards' container, used as the shared trigger
+ * @param {number} [opts.rowFrom] - viewport width from which the cards are in a row
+ * @returns {{kill: () => void}}
+ */
+export function scrollRevealCards(cards, { group, rowFrom = 1024 } = {}) {
+  const frame = { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' };
+  const settle = { yPercent: 0, scale: 1, ease: 'power2.out' };
+  const text = { y: 0, stagger: .02, ease: 'power1.in' };
+  // how long after one card the next starts, and how far into a card's
+  // wipe its text begins
+  const STEP = .15;
+  const TEXT_DELAY = .28;
+
+  const inner = (card) => `${card} .reveal-card-inner`;
+  const inners = cards.map(({ card }) => inner(card));
+  gsap.set(inners, { yPercent: 14, scale: 1.15 });
+
+  const inRow = group && cards.length > 1 && window.innerWidth >= rowFrom;
+  const reveals = inRow
+    ? [scrollRevealSequence([
+      { targets: cards.map(({ card }) => card), vars: { ...frame, stagger: STEP } },
+      { targets: inners, vars: { ...settle, stagger: STEP }, position: 0 },
+      ...cards.map((item, i) => ({ targets: item.text, vars: text, position: i * STEP + TEXT_DELAY })),
+    ], { trigger: group })]
+    : cards.map((item) => scrollRevealSequence([
+      { targets: item.card, vars: frame },
+      { targets: inner(item.card), vars: settle, position: '<' },
+      { targets: item.text, vars: text, position: TEXT_DELAY },
+    ], { trigger: item.card }));
+
+  return {
+    kill() {
+      reveals.forEach((reveal) => reveal.kill());
+      gsap.set(inners, { clearProps: 'transform' });
+    },
+  };
+}

@@ -45,7 +45,7 @@ function CertificatesAwards() {
   return (
     <>
       <div id='certificates-awards'>
-        <div className='
+        <div className='flex flex-col justify-between min-h-screen-safe
           mobile:py-16 mobile:px-[.9rem]
           tablet:py-16 tablet:px-[1rem]
           laptop:py-20 laptop:px-[2rem]
