@@ -232,6 +232,21 @@
   white-space: nowrap;
 }
 
+// one screen tall, measured the way that works on a phone. 100vh there is
+// the height with the browser's address bar hidden, so with the bar
+// showing the bottom of a 100vh block sits off screen; 100svh is the
+// height with the bar showing. a browser that does not know svh ignores
+// the second line and keeps the first
+* body .h-screen-safe {
+  height: 100vh;
+  height: 100svh;
+}
+
+* body .min-h-screen-safe {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
 * body .logo-container {
   height: auto;
   position: relative;
@@ -293,6 +308,15 @@
 // bar showing), no wider than the longest label needs on a narrow screen,
 // and between 1.4rem and 3.2rem either way. the row is sized from the
 // text, so the two scale together
+// the behance button in the selected projects section reuses the menu
+// link markup; on a phone it sits in the flow under the description, so
+// it takes only the height of its text there, not the fixed row height
+@media (max-width: 767px) {
+  * body .selected-link {
+    height: auto;
+  }
+}
+
 * body .menu-row {
   font-size: clamp(1.4rem, min(6.2vh, 8.2vw), 3.2rem);
   height: 1.6em;

@@ -130,7 +130,7 @@ function ProjectPage({ project }) {
           title top left with the description top right, and the details
           pushed to the bottom left via justify-between. top padding clears
           the fixed nav bar */}
-        <div className='project-container flex flex-col justify-between min-h-screen supports-[height:100svh]:min-h-[100svh] gap-y-12 pt-24
+        <div className='project-container flex flex-col justify-between min-h-screen-safe gap-y-12 pt-24
           mobile:pb-8
           tablet:pb-8
           laptop:pb-8

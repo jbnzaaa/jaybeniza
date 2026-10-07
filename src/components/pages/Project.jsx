@@ -181,12 +181,12 @@ function Project() {
       {/* project container */}
       <div id='project'>
         <div className='py-20'>
-          <section className='relative h-screen supports-[height:100svh]:h-[100svh] overflow-hidden' ref={fxSection}>
+          <section className='relative h-screen-safe overflow-hidden' ref={fxSection}>
             {/* black background - its own layer so it can ride up on entry */}
             <div className='absolute inset-0 bg-black' ref={fxBackground}/>
             {/* content - top padding clears the fixed nav bar */}
             <div className='relative h-full grid grid-cols-8 gap-x-5 pt-[6rem] pb-[2rem]
-              mobile:grid-rows-[auto_auto_1fr] mobile:gap-y-1 mobile:px-[.9rem]
+              mobile:grid-rows-[auto_auto_1fr] mobile:gap-y-5 mobile:px-[.9rem] mobile:pt-[5rem] mobile:pb-6
               tablet:grid-rows-[auto_1fr_auto] tablet:gap-y-6 tablet:px-[1rem]
               laptop:grid-rows-[1fr_auto] laptop:px-[2rem]
               laptop-lg:grid-rows-[1fr_auto] laptop-lg:px-[3rem]
@@ -211,7 +211,7 @@ function Project() {
                   <SplitText text='Selected Projects' id='animate-selected' />
                 </h2>
                 <p className='flex flex-wrap text-white
-                  mobile:mt-3 mobile:text-[.8rem]
+                  mobile:mt-4 mobile:text-[.8rem]
                   tablet:mt-4 tablet:text-[.9rem] tablet:max-w-[60%]
                   laptop:mt-6 laptop:text-[1rem]
                   laptop-lg:mt-8 laptop-lg:text-[1rem] laptop-lg:max-w-[85%]
@@ -222,7 +222,7 @@ function Project() {
               {/* project stage - an image area with a text area under it;
                 each project's image and text reveal one at a time, separately */}
               <div ref={fxStage} className='relative min-h-0 flex flex-col
-                mobile:col-span-8 mobile:col-start-1 mobile:row-start-3 mobile:mt-3
+                mobile:col-span-8 mobile:col-start-1 mobile:row-start-3
                 tablet:col-span-8 tablet:col-start-1 tablet:row-start-2
                 laptop:col-span-5 laptop:col-start-4 laptop:row-start-1 laptop:row-span-2
                 laptop-lg:col-span-5 laptop-lg:col-start-4 laptop-lg:row-start-1 laptop-lg:row-span-2
@@ -234,7 +234,7 @@ function Project() {
                   ))}
                 </div>
                 {/* text area - the captions stack here */}
-                <div className='grid pt-3'>
+                <div className='grid shrink-0 pt-3 mobile:pt-4'>
                   {PROJECT_CARDS.map((project) => (
                     <ProjectCaption project={project} key={project.id}/>
                   ))}

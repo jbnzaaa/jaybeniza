@@ -58,8 +58,8 @@ function ProjectCard({ project }) {
 export function ProjectCaption({ project }) {
   return (
     <div className='[grid-area:1/1] flex justify-between items-end
-      mobile:flex-col mobile:items-start
-      tablet:flex-col tablet:items-start'>
+      mobile:flex-col mobile:items-start mobile:justify-start
+      tablet:flex-col tablet:items-start tablet:justify-start'>
       <span className='font-flexible font-medium leading-none text-white
         mobile:text-[2rem] mobile:mb-2
         tablet:text-[2.4rem] tablet:mb-2

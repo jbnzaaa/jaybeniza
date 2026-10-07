@@ -178,7 +178,7 @@ function Navbar() {
                     ref={fxMenuOpenAnimation}>
                     {/* full visible height from the start, so the links hold
                       their place while the panel opens over them */}
-                    <div className='flex flex-col h-screen supports-[height:100svh]:h-[100svh]
+                    <div className='flex flex-col h-screen-safe
                       mobile:px-[.9rem] mobile:py-3
                       tablet:px-[1rem] tablet:py-3
                       laptop:px-[2rem] laptop:py-4

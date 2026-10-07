@@ -188,6 +188,16 @@
   white-space: nowrap;
 }
 
+* body .h-screen-safe {
+  height: 100vh;
+  height: 100svh;
+}
+
+* body .min-h-screen-safe {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
 * body .logo-container {
   height: auto;
   position: relative;
@@ -243,6 +253,11 @@
   position: relative;
 }
 
+@media (max-width: 767px) {
+  * body .selected-link {
+    height: auto;
+  }
+}
 * body .menu-row {
   font-size: clamp(1.4rem, min(6.2vh, 8.2vw), 3.2rem);
   height: 1.6em;
