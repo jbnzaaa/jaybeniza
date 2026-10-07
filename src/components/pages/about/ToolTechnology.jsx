@@ -7,7 +7,7 @@ import SplitText from '../../common/SplitText'
 
 const TOOLS = [
   'Figma', 'Figma AI', 'Adobe Photoshop', 'Adobe Illustrator', 'Visual Studio Code',
-  'Git', 'Claude Code', 'Microsoft Office', 'NPM',
+  'Git', 'Claude Code', 'NPM',
 ];
 
 function ToolTechnology() {
@@ -26,15 +26,15 @@ function ToolTechnology() {
         mobile:grid-cols-1 mobile:h-full
         tablet:grid-cols-1 tablet:h-full
         laptop:grid-cols-2 laptop:h-full
-        laptop-lg:grid-cols-2 laptop-lg:h-[97px]
-        desktop:grid-cols-2 desktop:h-[97px]'>
+        laptop-lg:grid-cols-2 laptop-lg:h-full
+        desktop:grid-cols-2 desktop:h-full'>
         {/* title */}
         <div className='stack-container col-span-1 flex flex-wrap font-medium
-          mobile:h-[25px] mobile:mb-1 mobile:text-[1rem]
-          tablet:h-[30px] tablet:text-[1.1rem]
-          laptop:h-[40px] laptop:text-[1.4rem]
-          laptop-lg:h-[40px] laptop-lg:text-[1.4rem]
-          desktop:h-[50px] desktop:text-[1.4em]'>
+          mobile:min-h-[25px] mobile:mb-1 mobile:text-[1rem]
+          tablet:min-h-[30px] tablet:text-[1.1rem]
+          laptop:min-h-[40px] laptop:text-[1.4rem]
+          laptop-lg:min-h-[40px] laptop-lg:text-[1.4rem]
+          desktop:min-h-[50px] desktop:text-[1.4em]'>
           <SplitText text='Design & Development Tools' id='animate-tooltechnology' />
         </div>
         {/* stacks */}

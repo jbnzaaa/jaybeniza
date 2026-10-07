@@ -11,6 +11,8 @@ module.exports = {
         space: ["Space Mono", "monospace"],
         bigshoulder: ["Big Shoulders Text", "cursive"],
         lexend: ["Lexend", "sans-serif"],
+        flexible: ["Flexible", "Lexend", "sans-serif"],
+        monolisa: ["MonoLisa", "ui-monospace", "monospace"],
       },
       colors: {
         'black': '#0F0E17',
@@ -75,11 +77,11 @@ module.exports = {
         // 'mobile': {'min': '320px', 'max': '426px'},
         
         // example 2
-        'mobile': {'min': '320px', 'max': '767px'},
+        'mobile': {'min': '0px', 'max': '767px'},
         'tablet': {'min': '768px', 'max': '1023px'},
         'laptop': {'min': '1024px', 'max': '1279px'},
         'laptop-lg': {'min': '1280px', 'max': '1535px'},
-        'desktop': {'min': '1536px', 'max': '4000px'},
+        'desktop': {'min': '1536px', 'max': '99999px'},
       },
     },
   },

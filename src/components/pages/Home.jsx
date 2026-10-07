@@ -12,10 +12,10 @@ function Home() {
     <>
       <div className='overflow-hidden'>
         <Hero/>
+        <Project/>
         <About/>
         <WorkExperience/>
         <CertificatesAwards/>
-        <Project/>
         <Contact/>
       </div>
     </>

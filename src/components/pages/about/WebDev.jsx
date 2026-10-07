@@ -5,7 +5,7 @@ import { scrollRevealSequence } from '../../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../../common/SplitText'
 
-const SKILLS = ['HTML5', 'CSS3', 'SASS/SCSS', 'JavaScript', 'React JS'];
+const SKILLS = ['HTML5', 'CSS3', 'SASS/SCSS', 'JavaScript', 'React'];
 
 function WebDev() {
   useEffect(() => {
@@ -23,19 +23,19 @@ function WebDev() {
         mobile:grid-cols-1 mobile:h-full
         tablet:grid-cols-1 tablet:h-full
         laptop:grid-cols-2 laptop:h-full
-        laptop-lg:grid-cols-2 laptop-lg:h-[97px]
-        desktop:grid-cols-2 desktop:h-[97px]'>
+        laptop-lg:grid-cols-2 laptop-lg:h-full
+        desktop:grid-cols-2 desktop:h-full'>
         {/* title */}
         <div className='stack-container col-span-1 flex flex-wrap font-medium
-          mobile:h-[25px] mobile:mb-1 mobile:text-[1rem]
-          tablet:h-[30px] tablet:text-[1.3rem]
-          laptop:h-[30px] laptop:text-[1.4rem]
-          laptop-lg:h-[30px] laptop-lg:text-[1.4rem]
-          desktop:h-[30px] desktop:text-[1.4em]'>
+          mobile:min-h-[25px] mobile:mb-1 mobile:text-[1rem]
+          tablet:min-h-[30px] tablet:text-[1.3rem]
+          laptop:min-h-[30px] laptop:text-[1.4rem]
+          laptop-lg:min-h-[30px] laptop-lg:text-[1.4rem]
+          desktop:min-h-[30px] desktop:text-[1.4em]'>
           <SplitText text='Web Development' id='animate-webdev' />
         </div>
         {/* stacks */}
-        <ul className='col-span-1 flex flex-wrap h-[30px]'>
+        <ul className='col-span-1 flex flex-wrap'>
           {SKILLS.map((skill, i) => (
             <li className='stacks h-[30px]
               mobile:text-[.9rem]

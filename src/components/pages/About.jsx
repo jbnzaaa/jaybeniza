@@ -28,11 +28,11 @@ function About() {
     <>
       {/* about container */}
       <div className='flex flex-col justify-center
-        mobile:h-[130vh]
-        tablet:h-[150vh]
-        laptop:h-[180vh]
-        laptop-lg:h-[180vh]
-        desktop:h-[200vh]'>
+        mobile:min-h-[130vh]
+        tablet:min-h-[150vh]
+        laptop:min-h-[180vh]
+        laptop-lg:min-h-[180vh]
+        desktop:min-h-[200vh]'>
         {/* grid */}
         <div className='grid grid-cols-8 gap-0 
           mobile:py-16 mobile:px-[.9rem] 
@@ -43,13 +43,13 @@ function About() {
           {/* greeting */}
           <section className="col-span-8">
             <div className='about-container flex flex-wrap
-              mobile:h-[35px] mobile:mb-2 mobile:text-[2rem]
-              tablet:h-[60px] tablet:mb-2 tablet:text-[3rem]
-              laptop:h-[90px] laptop:mb-3 laptop:text-[5rem]
-              laptop-lg:h-[100px] laptop-lg:mb-3 laptop-lg:text-[5.3rem]
-              desktop:h-[110px] desktop:mb-3 desktop:text-[5.5rem]'>
-              <span className='about-greetings font-lexend font-medium leading-none tracking-tighter'>
-                <SplitText text="Hello, I'm Jayson" id='animate-about' />
+              mobile:min-h-[35px] mobile:mb-2 mobile:text-[13vw]
+              tablet:min-h-[60px] tablet:mb-2 tablet:text-[12vw]
+              laptop:min-h-[90px] laptop:mb-3 laptop:text-[11vw]
+              laptop-lg:min-h-[100px] laptop-lg:mb-3 laptop-lg:text-[11vw]
+              desktop:min-h-[110px] desktop:mb-3 desktop:text-[11vw]'>
+              <span className='about-greetings font-flexible font-medium leading-none tracking-tighter'>
+                <SplitText text="Hello, I'm Jay" id='animate-about' />
               </span>
               {/* <ul className='
                 mobile:left-[168px] mobile:h-[34px]
@@ -58,10 +58,10 @@ function About() {
                 laptop-lg:left-[490px] laptop-lg:h-[100px]
                 desktop:left-[520px] desktop:h-[110px]' 
                 id='about-container'>
-                <li className='font-lexend font-medium leading-none tracking-tighter
-                  mobile:text-[2rem]
-                  tablet:text-[3rem]
-                  laptop:text-[5rem]
+                <li className='font-flexible font-medium leading-none tracking-tighter
+                  mobile:text-[13vw]
+                  tablet:text-[12vw]
+                  laptop:text-[11vw]
                   laptop-lg:text-[6rem]
                   desktop:text-[6.3rem]'
                   id='text' ref={fxText}>

@@ -6,27 +6,16 @@ import { scrollReveal, scrollRevealSequence } from '../../utils/scrollReveal'
 import SplitText from '../common/SplitText'
 // certificate files
 import certDataAnalytics from '../../assets/certificates-and-awards/Data Analytics Level III Training Program.jpg'
-import certGoogleGenAiIntro from '../../assets/certificates-and-awards/Google - Introduction to Generative AI.pdf'
-import certIbmGenAiIntro from '../../assets/certificates-and-awards/IBM - Generative AI Introduction and Applications.pdf'
-import certIbmGenAiPrompt from '../../assets/certificates-and-awards/IBM Generative AI Prompt Engineering Basics.pdf'
-import certIbmGenAiFoundation from '../../assets/certificates-and-awards/IBM Generative AI Foundation Models and Platforms.pdf'
-import certIbmGenAiEthics from '../../assets/certificates-and-awards/IBM Generative AI Impact, Considerations, and Ethical Issues.pdf'
-import certIbmGenAiBusiness from '../../assets/certificates-and-awards/IBM Generative AI Business Transformation and Career Growth.pdf'
-import certMsUiUx from '../../assets/certificates-and-awards/Microsoft - Fundamentals of UI UX Design.pdf'
-import certMsUx from '../../assets/certificates-and-awards/Microsoft - Designing for User Experience.pdf'
+import certMsUxDesign from '../../assets/certificates-and-awards/Microsoft - UX Design.pdf'
+import certIbmGenAiFundamentals from '../../assets/certificates-and-awards/IBM - Generative AI Fundamentals.pdf'
 
 const ITEMS = [
   { id: 'data-analytics', title: 'Data Analytics Level III Training Program', year: '2026', file: certDataAnalytics, type: 'image' },
-  { id: 'gen-ai-intro-google', title: 'Introduction to Generative AI', year: '2024', file: certGoogleGenAiIntro, type: 'pdf' },
-  { id: 'gen-ai-intro-ibm', title: 'Generative AI: Introduction and Applications', year: '2025', file: certIbmGenAiIntro, type: 'pdf' },
-  { id: 'gen-ai-prompt', title: 'Generative AI: Prompt Engineering Basics', year: '2025', file: certIbmGenAiPrompt, type: 'pdf' },
-  { id: 'gen-ai-foundation', title: 'Generative AI: Foundation Models and Platforms', year: '2025', file: certIbmGenAiFoundation, type: 'pdf' },
-  { id: 'gen-ai-ethics', title: 'Generative AI: Impact, Considerations, and Ethical Issues', year: '2025', file: certIbmGenAiEthics, type: 'pdf' },
-  { id: 'gen-ai-business', title: 'Generative AI: Business Transformation and Career Growth', year: '2025', file: certIbmGenAiBusiness, type: 'pdf' },
-  { id: 'ms-uiux', title: 'Fundamentals of UI/UX Design', year: '2026', file: certMsUiUx, type: 'pdf' },
-  { id: 'ms-ux', title: 'Designing for User Experience', year: '2026', file: certMsUx, type: 'pdf' },
-  { id: 'award-innovation', title: 'Innovations in Action Award', year: '', file: null, type: null },
-  { id: 'award-agility', title: 'Agility Award', year: '', file: null, type: null },
+  { id: 'ms-ux-design', title: 'Microsoft UX Design Professional Certificate', year: '2026', file: certMsUxDesign, type: 'pdf' },
+  { id: 'ibm-gen-ai-fundamentals', title: 'IBM Generative AI Fundamentals Specialization', year: '2025', file: certIbmGenAiFundamentals, type: 'pdf' },
+  { id: 'award-innovation', title: 'Innovations in Action Award', year: '2025', file: null, type: null },
+  { id: 'award-agility', title: 'Agility Award', year: '2025', file: null, type: null },
+  { id: 'agile-101-scrum', title: 'Agile 101: Scrum Framework Fundamentals', year: '2024', file: null, type: null },
 ];
 
 function CertificatesAwards() {
@@ -59,12 +48,12 @@ function CertificatesAwards() {
           desktop:py-36 desktop:px-[3rem]'>
           {/* section header */}
           <section className='col-span-8'>
-            <div className='section-header-container flex flex-wrap font-lexend font-medium leading-none tracking-tighter
-              mobile:h-[35px] mobile:mb-6 mobile:text-[2rem]
-              tablet:h-[60px] tablet:mb-8 tablet:text-[3rem]
-              laptop:h-[90px] laptop:mb-10 laptop:text-[5rem]
-              laptop-lg:h-[100px] laptop-lg:mb-10 laptop-lg:text-[5.3rem]
-              desktop:h-[110px] desktop:mb-12 desktop:text-[5.5rem]'>
+            <div className='section-header-container flex flex-wrap font-flexible font-medium leading-none tracking-tighter
+              mobile:min-h-[35px] mobile:mb-6 mobile:text-[13vw]
+              tablet:min-h-[60px] tablet:mb-8 tablet:text-[12vw]
+              laptop:min-h-[90px] laptop:mb-10 laptop:text-[11vw]
+              laptop-lg:min-h-[100px] laptop-lg:mb-10 laptop-lg:text-[11vw]
+              desktop:min-h-[110px] desktop:mb-12 desktop:text-[11vw]'>
               <SplitText text='Certificates & Awards' id='animate-cert-header' />
             </div>
           </section>
@@ -96,18 +85,19 @@ function CertificatesAwards() {
                       target={item.file ? '_blank' : undefined}
                       rel='noreferrer'
                       className='cert-popover bg-black
-                        mobile:w-[170px] mobile:h-[120px]
-                        tablet:w-[210px] tablet:h-[148px]
-                        laptop:w-[250px] laptop:h-[176px]
-                        laptop-lg:w-[270px] laptop-lg:h-[190px]
-                        desktop:w-[300px] desktop:h-[212px]'
+                        aspect-[792/612]
+                        mobile:w-[min(280px,80vw)]
+                        tablet:w-[360px]
+                        laptop:w-[420px]
+                        laptop-lg:w-[480px]
+                        desktop:w-[540px]'
                       onClick={(e) => { if (!item.file) e.preventDefault(); }}
                     >
                       {item.type === 'image' && (
                         <img src={item.file} alt={item.title} className='cert-preview-media' />
                       )}
                       {item.type === 'pdf' && (
-                        <iframe src={`${item.file}#view=Fit&toolbar=0`} title={item.title} className='cert-preview-media' />
+                        <iframe src={`${item.file}#view=Fit&toolbar=0&navpanes=0&scrollbar=0`} title={item.title} className='cert-preview-media' />
                       )}
                       {!item.type && (
                         <p className='cert-preview-placeholder text-offwhite

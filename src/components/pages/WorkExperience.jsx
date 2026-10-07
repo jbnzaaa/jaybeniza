@@ -8,13 +8,13 @@ import SplitText from '../common/SplitText'
 const ROLES = [
   {
     id: 'mid',
-    title: 'Mid UI/UX Designer',
+    title: 'Mid-Level UI/UX Designer',
     company: 'PCI Innovations Tech Center',
     dates: 'May 2024 — Present',
     bullets: [
-      'Collaborated with product, development, and QA teams across 8 projects, presenting UX/UI solutions and design rationale to stakeholders.',
-      'Created and managed a project-wide design system of 15+ reusable UI components, ensuring visual consistency and scalable design.',
-      'Leveraged Claude Code and front-end technologies to develop 2 end-to-end web applications, shortening development cycles.',
+      'Designed across 8 projects alongside product, development, and QA teams, presenting solutions and design rationale to stakeholders.',
+      'Created and maintain a project-wide design system of 15+ reusable components that keeps interfaces consistent as products scale.',
+      'Built 2 end-to-end web applications with Claude Code and front-end technologies, shortening development cycles.',
     ],
   },
   {
@@ -23,9 +23,9 @@ const ROLES = [
     company: 'PCI Innovations Tech Center',
     dates: 'March 2023 — May 2024',
     bullets: [
-      'Developed wireframes, prototypes, and high-fidelity interfaces for 6 web and mobile projects.',
-      'Governed localized asset libraries of 15+ reusable UI components and structured version-controlled shared directories.',
-      'Improved layout consistency and cut front-end implementation bugs by 70% prior to deployment.',
+      'Produced wireframes, prototypes, and high-fidelity interfaces for 6 web and mobile projects.',
+      'Managed asset libraries of 15+ reusable components in structured, version-controlled shared directories.',
+      'Improved layout consistency, cutting front-end implementation bugs by 70% before deployment.',
     ],
   },
 ];
@@ -60,12 +60,12 @@ function WorkExperience() {
           desktop:py-36 desktop:px-[3rem]'>
           {/* section header */}
           <section className='col-span-8'>
-            <div className='section-header-container flex flex-wrap font-lexend font-medium leading-none tracking-tighter
-              mobile:h-[35px] mobile:mb-6 mobile:text-[2rem]
-              tablet:h-[60px] tablet:mb-8 tablet:text-[3rem]
-              laptop:h-[90px] laptop:mb-10 laptop:text-[5rem]
-              laptop-lg:h-[100px] laptop-lg:mb-10 laptop-lg:text-[5.3rem]
-              desktop:h-[110px] desktop:mb-12 desktop:text-[5.5rem]'>
+            <div className='section-header-container flex flex-wrap font-flexible font-medium leading-none tracking-tighter
+              mobile:min-h-[35px] mobile:mb-6 mobile:text-[13vw]
+              tablet:min-h-[60px] tablet:mb-8 tablet:text-[12vw]
+              laptop:min-h-[90px] laptop:mb-10 laptop:text-[11vw]
+              laptop-lg:min-h-[100px] laptop-lg:mb-10 laptop-lg:text-[11vw]
+              desktop:min-h-[110px] desktop:mb-12 desktop:text-[11vw]'>
               <SplitText text='Work Experience' id='animate-work-header' />
             </div>
           </section>
@@ -118,7 +118,7 @@ function WorkExperience() {
                       {role.bullets.map((bullet, i) => (
                         <li key={i} className='entry-container mb-3'>
                           <p className='entry-line'>
-                            <SplitText text={bullet} id={`animate-work-${role.id}`} />
+                            <SplitText text={bullet} id={`animate-work-${role.id}`} by='word' />
                           </p>
                         </li>
                       ))}

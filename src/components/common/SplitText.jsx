@@ -13,17 +13,30 @@ import React from 'react'
  * lands on every letter so scrollReveal()/scrollRevealSequence() can
  * target the whole block with one selector, same as the old per-word
  * pattern did.
+ *
+ * `by='word'` reveals whole words instead of letters - for body copy,
+ * where a per-letter stagger across a few hundred characters takes
+ * seconds to finish and holds the reader up. Headings keep the default.
+ *
+ * The split spans are hidden from assistive tech (a screen reader would
+ * otherwise announce them letter by letter) and the intact text is
+ * exposed once through a visually-hidden span instead.
  */
-function SplitText({ text, id }) {
-  return text.split(' ').filter(Boolean).map((word, wi) => (
-    <span className='split-word' key={wi}>
-      {word.split('').map((char, ci) => (
-        <span className='split-letter-clip' key={ci}>
-          <span className='split-letter' id={id}>{char}</span>
+function SplitText({ text, id, by = 'letter' }) {
+  return (
+    <>
+      <span className='sr-only'>{text}</span>
+      {text.split(' ').filter(Boolean).map((word, wi) => (
+        <span className='split-word' aria-hidden='true' key={wi}>
+          {(by === 'word' ? [word] : word.split('')).map((unit, ui) => (
+            <span className='split-letter-clip' key={ui}>
+              <span className='split-letter' id={id}>{unit}</span>
+            </span>
+          ))}
         </span>
       ))}
-    </span>
-  ));
+    </>
+  );
 }
 
 export default SplitText

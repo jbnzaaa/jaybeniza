@@ -30,12 +30,12 @@ function WhatIUse() {
         desktop:grid-cols-2 desktop:h-full'>
         {/* title */}
         <div className='stack-container col-span-1 flex flex-wrap font-medium
-          mobile:h-[25px] mobile:mb-1 mobile:text-[1rem]
-          tablet:h-[30px] tablet:text-[1.3rem]
-          laptop:h-[30px] laptop:text-[1.4rem]
-          laptop-lg:h-[30px] laptop-lg:text-[1.4rem]
-          desktop:h-[30px] desktop:text-[1.4em]'>
-          <SplitText text='What I Use?' id='animate-whatiuse' />
+          mobile:min-h-[25px] mobile:mb-1 mobile:text-[1rem]
+          tablet:min-h-[30px] tablet:text-[1.3rem]
+          laptop:min-h-[30px] laptop:text-[1.4rem]
+          laptop-lg:min-h-[30px] laptop-lg:text-[1.4rem]
+          desktop:min-h-[30px] desktop:text-[1.4em]'>
+          <SplitText text='Skills & Tools' id='animate-whatiuse' />
         </div>
         {/* description */}
         <div className='col-span-1 flex flex-wrap

@@ -11,6 +11,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Unica+One&display=swap'); // Unica one
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Unica+One&display=swap'); // Lexend
 
+// local fonts (src/assets/fonts). Flexible is a variable display face with
+// width + height axes and no weight axis; MonoLisa ships here as a single
+// Bold file. Each declares the whole weight range so the browser never
+// synthesises a bolder weight on top of the one real face
+@font-face {
+  font-family: 'Flexible';
+  src: url('../fonts/Flexible-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+// Flexible draws its numerals, % and & as thin single-line shapes that do not
+// match its heavy letters at any width. this second face shares the family
+// name but only covers those characters (unicode-range), so every heading
+// picks them up from League Gothic Condensed (SIL OFL - licence alongside)
+// instead, with no markup changes. size-adjust scales it so its figures
+// stand as tall as Flexible's capitals at height 900. it is a static cut on
+// purpose: a variable one would have its own width axis overridden by the
+// headings' wdth setting
+@font-face {
+  font-family: 'Flexible';
+  src: url('../fonts/LeagueGothic-Condensed.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  size-adjust: 125%;
+  unicode-range: U+0025-0026, U+0030-0039;
+}
+
+@font-face {
+  font-family: 'MonoLisa';
+  src: url('../fonts/MonoLisa-Bold.otf') format('opentype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 :root {
   --main-bg: #E5E4E3;
   --main-color: #0F0E17;
@@ -21,7 +56,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'MonoLisa', ui-monospace, monospace;
   color: #0F0E17;
   text-transform: uppercase;
 }
@@ -31,17 +66,36 @@
   position: relative;
 }
 
+// film grain over everything on the page (it sits above the nav, menu,
+// loading screen and page wipe, so they all share it). a small tile of
+// monochrome noise, repeated; the layer is oversized and jumps between a
+// few offsets so the grain shimmers instead of sitting still like dirt
+// on the screen. transform-only, so the jump costs no repaint
 * body::before {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
   z-index: 50;
   pointer-events: none;
-  opacity: .12;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: .28;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+  animation: grain 1s steps(1) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  12% { transform: translate(-4%, -6%); }
+  25% { transform: translate(-9%, 3%); }
+  37% { transform: translate(5%, -11%); }
+  50% { transform: translate(-3%, 9%); }
+  62% { transform: translate(-11%, -2%); }
+  75% { transform: translate(8%, 6%); }
+  87% { transform: translate(2%, -8%); }
+  100% { transform: translate(0, 0); }
 }
 
 * body #onload-container {
@@ -69,6 +123,7 @@
 // since transform has no effect on display:inline elements
 * body .split-word {
   display: inline-block;
+  font-family: inherit;
   white-space: nowrap;
   margin-right: .28em;
   // text-indent is inherited, and every inline-block descendant below
@@ -88,6 +143,7 @@
 
 * body .split-letter-clip {
   display: inline-block;
+  font-family: inherit;
   color: inherit;
   overflow: hidden;
   height: 1.15em;
@@ -96,8 +152,71 @@
 
 * body .split-letter {
   display: inline-block;
+  font-family: inherit;
   color: inherit;
   transform: translateY(1em);
+}
+
+// Flexible's capitals start higher in the line box than the body face's,
+// so the default 1em drop left their tops showing inside the 1.15em clip
+* body .font-flexible .split-letter {
+  transform: translateY(1.2em);
+}
+
+// button arrows rise out of a clip box the same way the letters do. the
+// box is padded all round (and pulled back by the same negative margin, so
+// the layout does not move): the arrow is drawn corner to corner, and on
+// hover it turns 45 degrees, which swings its tip out past a box cut to
+// its exact size - that is what was shearing the arrow off
+* body .menu-icon-clip {
+  display: inline-flex;
+  overflow: hidden;
+  padding: .4em;
+  margin: -.4em;
+}
+
+// start below the box, clear of its padding as well
+* body .menu-icon {
+  display: inline-flex;
+  transform: translateY(calc(100% + .5em));
+}
+
+// the hover rules on nav spans set a transition on every descendant span,
+// which drags behind GSAP's per-frame transforms during a reveal
+* body .page-link .link .split-word,
+* body .page-link .link .split-letter-clip,
+* body .page-link .link .split-letter,
+* body .page-link .link .menu-icon-clip,
+* body .page-link .link .menu-icon {
+  transition: none;
+}
+
+// same for the project pages' "visit site" link
+* body .project-container .project-link .split-word,
+* body .project-container .project-link .split-letter-clip,
+* body .project-container .project-link .split-letter,
+* body .project-container .project-link .menu-icon-clip,
+* body .project-container .project-link .menu-icon {
+  transition: none;
+}
+
+// heading face settings: height 900, width 200
+* body .font-flexible {
+  font-variation-settings: "HGHT" 900, "wdth" 200;
+  letter-spacing: 0;
+}
+
+// SplitText's screen-reader copy. Tailwind's .sr-only relies on
+// position: absolute, which the span rules below (.link span and friends)
+// override - leaving the copy visible next to the animated letters
+* body span.sr-only {
+  position: absolute !important;
+  display: block;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 * body .logo-container {
@@ -120,10 +239,6 @@
   transition: .3s ease-in-out;
 }
 
-* body .link-container .link span:hover {
-  letter-spacing: 2px;
-}
-
 * body .link-container .link span #icon {
   transform: rotate(0deg);
   transition: all .3s ease-in-out;
@@ -139,7 +254,7 @@
 }
 
 * body .menu-link {
-  height: 20px;
+  height: 32px;
   position: relative;
   overflow: hidden;
 }
@@ -154,10 +269,6 @@
   transition: .3s ease-in-out;
 }
 
-* body .menu-link div span:hover {
-  letter-spacing: 2px;
-}
-
 * body .page-link {
   height: 60px;
   position: relative;
@@ -168,11 +279,6 @@
   position: relative;
   letter-spacing: 0;
   transition: .3s ease-in-out;
-}
-
-* body .page-link .link span:hover,
-* body .page-link #mobileview-link span:hover {
-  letter-spacing: 2px;
 }
 
 * body .page-link .link span #icon,
@@ -227,6 +333,29 @@
   margin-right: 5px;
 }
 
+// selected projects section (Project.jsx) - start states, so nothing
+// shows for a frame before its scroll timeline takes over: each project
+// card clipped away to its bottom edge
+* body .selected-card {
+  clip-path: inset(100% 0% 0% 0%);
+}
+
+// "View" cursor that follows the pointer over a project card - a flat,
+// square-cornered label set like the buttons (body face, same arrow),
+// hidden by the same bottom-edge clip the cards reveal with
+* body .selected-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  padding: .55rem .9rem;
+  background: var(--main-bg);
+  pointer-events: none;
+  clip-path: inset(100% 0% 0% 0%);
+}
+
 * body .selected-project-header {
   position: relative;
   overflow: hidden;
@@ -247,10 +376,6 @@
   position: relative;
   letter-spacing: 0;
   transition: .3s ease-in-out;
-}
-
-* body .behance-link-container .behance-link:hover {
-  letter-spacing: 2px;
 }
 
 * body .behance-link-container a #icon {
@@ -284,7 +409,17 @@
 * body .project-card-container {
   position: relative;
   overflow: hidden;
-  transition: .5s ease-in-out;
+}
+
+// card reveal start states (ProjectCard.jsx): image clipped away to its
+// bottom edge, text below it faded and dropped
+* body .project-card-image {
+  clip-path: inset(100% 0% 0% 0%);
+}
+
+* body .project-card-content {
+  opacity: 0;
+  transform: translateY(24px);
 }
 
 * body .project-card-container .project-image {
@@ -300,10 +435,6 @@
   position: relative;
   letter-spacing: 0;
   transition: .3s ease-in-out;
-}
-
-* body .project-container .project-link span:hover {
-  letter-spacing: 2px;
 }
 
 * body .project-container .project-link span #icon {
@@ -323,12 +454,16 @@
 * body .project-container .screenshot-container {
   position: relative;
   overflow: hidden;
-  transition: 1s ease;
+  // reveal start state: clipped away to the bottom edge (see the project pages)
+  clip-path: inset(100% 0% 0% 0%);
 }
 
+// the image starts slightly enlarged inside its frame and settles as the
+// frame wipes open
 * body .project-container .screenshot-container .screenshot-img {
-  transform: translateY(105%);
-  transition: 1s ease;
+  display: block;
+  width: 100%;
+  transform: scale(1.15);
 }
 
 * body .account-container {
@@ -379,23 +514,18 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   border: 0;
   padding: 0;
   margin: 0;
 }
 
 * body iframe.cert-preview-media {
-  // object-fit doesn't apply to iframes, and the browser's native PDF
-  // viewer (#view=Fit) letterboxes the page instead of filling the frame -
-  // scale it up and re-center so the letterbox margin gets cropped by
-  // .cert-popover's overflow:hidden instead of showing as padding
+  // fill the popover exactly - the popover already has the certificate's
+  // own aspect ratio (US Letter landscape), so #view=Fit shows the whole
+  // page without scaling it up and cropping the edges off
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 145%;
-  height: 145%;
-  transform: translate(-50%, -50%);
+  inset: 0;
 }
 
 * body .cert-preview-placeholder {

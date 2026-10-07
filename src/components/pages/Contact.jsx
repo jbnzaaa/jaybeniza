@@ -4,6 +4,8 @@ import React, { useEffect } from 'react'
 import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// footer
+import Footer from './Footer'
 
 const DESCRIPTION = 'Do you have any ideas in mind? Feel free to message me, I’m willing to help you turn your web design ideas into reality.';
 
@@ -33,16 +35,18 @@ function Contact() {
 
   return (
     <>
-      {/* contact container */}
-      <div id='contact'>
+      {/* contact container - with the footer inside it, the two fill
+        exactly one screen: the contact block takes whatever height the
+        footer leaves */}
+      <div id='contact' className='flex flex-col min-h-screen bg-black'>
         {/*  */}
-        <div className='grid grid-cols-8 gap-0'>
-          <section className='col-span-8 bg-black grid grid-cols-8 grid-rows-2 gap-0
-            mobile:p-[.9rem] mobile:h-[80vh] mobile:grid-flow-row
-            tablet:p-[1rem] tablet:h-[90vh] tablet:grid-flow-row
-            laptop:p-[2rem] laptop:h-[60vh] laptop:grid-flow-col
-            laptop-lg:p-[3rem] laptop-lg:h-[60vh] laptop-lg:grid-flow-col
-            desktop:p-[3rem] desktop:h-[60vh] desktop:grid-flow-col'>
+        <div className='grid grid-cols-8 gap-0 flex-1'>
+          <section className='col-span-8 bg-black grid grid-cols-8 grid-rows-[auto_1fr] gap-0
+            mobile:p-[.9rem] mobile:pb-10 mobile:min-h-[80svh] mobile:gap-y-16 mobile:grid-flow-row
+            tablet:p-[1rem] tablet:pb-12 tablet:min-h-[70svh] tablet:gap-y-20 tablet:grid-flow-row
+            laptop:p-[2rem] laptop:min-h-[60vh] laptop:grid-flow-col
+            laptop-lg:p-[3rem] laptop-lg:min-h-[60vh] laptop-lg:grid-flow-col
+            desktop:p-[3rem] desktop:min-h-[60vh] desktop:grid-flow-col'>
             {/* drop a message */}
             <div className='
               mobile:col-span-8 mobile:row-span-1 mobile:row-start-1
@@ -50,12 +54,12 @@ function Contact() {
               laptop:col-span-5 laptop:row-span-1 laptop:row-start-1
               laptop-lg:col-span-5 laptop-lg:row-span-1 laptop-lg:row-start-1
               desktop:col-span-5 desktop:row-span-1 desktop:row-start-1'>
-              <div className='flex flex-wrap font-lexend font-semibold leading-none tracking-tight text-white
-                mobile:h-[100px] mobile:text-[4.5rem] mobile:mt-10
-                tablet:h-[100px] tablet:text-[6rem] tablet:mt-14
-                laptop:h-[150px] laptop:text-[7rem]
-                laptop-lg:h-[150px] laptop-lg:text-[10rem]
-                desktop:h-[150px] desktop:text-[10rem]'>
+              <div className='flex flex-wrap font-flexible font-semibold leading-none tracking-tight text-white
+                mobile:text-[24vw] mobile:mt-10
+                tablet:text-[24vw] tablet:mt-14
+                laptop:text-[15vw]
+                laptop-lg:text-[15vw]
+                desktop:text-[15vw]'>
                 <SplitText text='Drop a Message' id='animate-contact' />
               </div>
             </div>
@@ -67,16 +71,16 @@ function Contact() {
               laptop-lg:col-span-2 laptop-lg:col-start-7 laptop-lg:row-span-2 laptop-lg:row-start-1
               desktop:col-span-2 desktop:col-start-7 desktop:row-span-2 desktop:row-start-1'>
               {/* description content */}
-              <div className='flex flex-wrap font-montserrat font-regular text-white
+              <div className='flex flex-wrap font-monolisa font-regular text-white
                 mobile:text-[.9rem] mobile:mb-20
                 tablet:text-[.9rem] tablet:mb-20
                 laptop:text-[1rem] laptop:mb-28
                 laptop-lg:text-[1rem] laptop-lg:mb-24
                 desktop:text-[1.1rem] desktop:mb-28'>
-                <SplitText text={DESCRIPTION} id='animate-contact' />
+                <SplitText text={DESCRIPTION} id='animate-contact' by='word' />
               </div>
               {/* email accounts content */}
-              <div className='flex justify-between w-full font-montserrat h-[20px]
+              <div className='flex justify-between w-full font-monolisa
                 mobile:text-[.9rem]
                 tablet:text-[.9rem]
                 laptop:text-[1rem]
@@ -102,6 +106,7 @@ function Contact() {
             </div>
           </section>
         </div>
+        <Footer/>
       </div>
     </>
   )

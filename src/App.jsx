@@ -1,16 +1,20 @@
 // React
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 //
 import './assets/styles/App.css';
 // Pages
 import Navbar from './components/pages/Navbar';
 import Home from './components/pages/Home';
-import Footer from './components/pages/Footer';
 import DailyDiscount from './components/pages/projects/DailyDiscount';
 import Jbnza from './components/pages/projects/Jbnza';
 import Jaysonbeniza from './components/pages/projects/Jaysonbeniza';
 import Regain from './components/pages/projects/Regain';
+// loading screen + page-to-page wipe
+import Preloader from './components/common/Preloader';
+import { PageTransitionProvider } from './components/common/PageTransition';
+// button hover
+import { enableHoverRoll } from './utils/hoverRoll';
 // GSAP
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -35,35 +39,63 @@ function ScrollManager() {
 }
 
 function App() {
+  // the page mounts when the loading screen starts to leave, so its
+  // reveals play as the panel lifts instead of unseen behind it
+  const [entered, setEntered] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const handleExitStart = useCallback(() => setEntered(true), []);
+  const handleDone = useCallback(() => setLoading(false), []);
+
   useEffect(() => {
     // smooth: how many seconds the scroll position takes to catch up to
-    // the actual scroll input - higher is slower/more damped (default 1)
+    // the actual scroll input - higher is slower/more damped (default 1).
+    // speed: how far one notch of wheel or swipe travels (default 1) -
+    // below 1 covers less page per gesture, so sections pass slowly enough
+    // for their text reveals to play out while they are on screen
     const smoother = ScrollSmoother.create({
       wrapper: '#smooth-wrapper',
       content: '#smooth-content',
-      smooth: 1.8,
+      smooth: 1.6,
+      speed: .65,
       effects: true,
     });
     return () => smoother.kill();
   }, []);
 
+  // letter-roll hover on every text link and button
+  useEffect(() => enableHoverRoll(), []);
+
+  // the content only exists once the loading screen leaves - re-measure
+  // every trigger against its real height
+  useEffect(() => {
+    if (!entered) return;
+    const id = requestAnimationFrame(() => ScrollTrigger.refresh());
+    return () => cancelAnimationFrame(id);
+  }, [entered]);
+
   return (
     <>
       <Router>
+        <PageTransitionProvider>
         <ScrollManager/>
+        {loading && <Preloader onExitStart={handleExitStart} onDone={handleDone}/>}
+        {/* outside the smoother: its transformed content would make
+          position: fixed scroll away with the page */}
+        {entered && <Navbar/>}
         <div id='smooth-wrapper'>
           <div id='smooth-content'>
-            <Navbar/>
-            <Routes>
-              <Route path='/' element={<Home/>}/>
-              <Route path='/dailydiscount' element={<DailyDiscount/>}/>
-              <Route path='/jbnza' element={<Jbnza/>}/>
-              <Route path='/jaysonbeniza' element={<Jaysonbeniza/>}/>
-              <Route path='/regain' element={<Regain/>}/>
-            </Routes>
-            <Footer/>
+            {entered && (
+              <Routes>
+                <Route path='/' element={<Home/>}/>
+                <Route path='/dailydiscount' element={<DailyDiscount/>}/>
+                <Route path='/jbnza' element={<Jbnza/>}/>
+                <Route path='/jaysonbeniza' element={<Jaysonbeniza/>}/>
+                <Route path='/regain' element={<Regain/>}/>
+              </Routes>
+            )}
           </div>
         </div>
+        </PageTransitionProvider>
       </Router>
     </>
   );
