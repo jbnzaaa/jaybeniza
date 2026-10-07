@@ -1,75 +1,33 @@
 //
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 // Components
 import AboutParagraph from './about/AboutParagraph';
 // icons
 import {RiArrowRightDownLine} from 'react-icons/ri'
-// GSAP
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
+// scroll reveal
+import { scrollRevealSequence } from '../../utils/scrollReveal'
 // page-to-page wipe
 import { TransitionLink } from '../common/PageTransition'
 // per-letter text split
 import SplitText from '../common/SplitText'
-gsap.registerPlugin(ScrollTrigger)
-
-// share of the pinned scroll the text fill takes; the rest holds the
-// filled text in place while the link reveals
-const FILL_END = .7;
 
 /**
- * The landing page's introduction: a full-width black screen that pins
- * while its text fills in. Where the hero is a statement of what I do,
- * this is who I am - a small greeting, a career paragraph
- * and a link through to the full About page (AboutPage.jsx).
+ * The landing page's introduction: a full-width black screen. Where the
+ * hero is a statement of what I do, this is who I am - a small greeting,
+ * a career paragraph and a link through to the full About page
+ * (AboutPage.jsx).
  */
 function About() {
-  const fxSection = useRef();
-
   useEffect(() => {
-    const section = fxSection.current;
+    // the page's letter-by-letter reveal, as the section comes up the
+    // screen: greeting and paragraph first, the link once they have landed.
+    // scrolling back above that point takes them away again
+    const reveal = scrollRevealSequence([
+      { targets: '#animate-about', vars: { y: 0, stagger: .012, ease: 'power1.in' } },
+      { targets: '#animate-about-link', vars: { y: 0, stagger: .02, ease: 'power1.in' }, position: '-=.3' },
+    ], { trigger: '#about', start: 'top 60%' });
 
-    // the link - the page's letter-by-letter reveal. held back until
-    // the paragraph has filled, and taken away again if the page is
-    // scrolled back above that point
-    const details = gsap.timeline({ paused: true })
-      .to('#animate-about-link', { y: 0, duration: .5, stagger: .02, ease: 'power1.in' });
-    let filled = false;
-    const showDetails = (show) => {
-      if (show === filled) return;
-      filled = show;
-      if (show) details.timeScale(1).play();
-      else details.timeScale(2).reverse();
-    };
-
-    // text fill - scroll-coupled. the section pins at the top of the screen
-    // with its greeting and paragraph on the page but faded right back, and
-    // scrolling brings each letter up to full strength in reading order.
-    // refreshPriority puts this pin ahead of everything below it (it is
-    // also above the projects section's pin, which uses 1)
-    const fill = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: '+=130%',
-        pin: true,
-        scrub: ScrollTrigger.isTouch ? .5 : true,
-        anticipatePin: 1,
-        refreshPriority: 2,
-        onUpdate: (self) => showDetails(self.progress >= FILL_END),
-      },
-    })
-      .fromTo('#animate-about-fill',
-        { opacity: .14 },
-        { opacity: 1, duration: .06, stagger: { amount: FILL_END - .06 } }, 0)
-      .to({}, { duration: 1 - FILL_END }, FILL_END);
-
-    return () => {
-      fill.scrollTrigger?.kill();
-      fill.revert();
-      details.revert();
-    };
+    return () => reveal.kill();
   }, []);
 
   return (
@@ -81,10 +39,9 @@ function About() {
           tablet:px-[1rem] tablet:pb-10
           laptop:px-[2rem] laptop:pb-10
           laptop-lg:px-[3rem] laptop-lg:pb-12
-          desktop:px-[3rem] desktop:pb-14'
-          ref={fxSection}>
-          {/* greeting + paragraph - the text that fills in */}
-          <div className='about-fill'>
+          desktop:px-[3rem] desktop:pb-14'>
+          {/* greeting + paragraph */}
+          <div>
             {/* greeting - a label for the paragraph, not a second headline */}
             <div className='flex flex-wrap
               mobile:mb-4 mobile:text-[8vw]
@@ -93,7 +50,7 @@ function About() {
               laptop-lg:mb-6 laptop-lg:text-[3.6vw]
               desktop:mb-8 desktop:text-[3.6vw]'>
               <span className='font-flexible font-medium leading-none text-offwhite'>
-                <SplitText text="Hello, I'm Jay" id='animate-about-fill' />
+                <SplitText text="Hello, I'm Jay" id='animate-about' />
               </span>
             </div>
             {/* about me */}

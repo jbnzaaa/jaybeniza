@@ -370,14 +370,6 @@
   position: relative;
 }
 
-// the landing page's introduction text is on the page from the start,
-// faded right back - not dropped below its clip boxes like the text that
-// reveals. About.jsx brings each letter up to full strength on scroll
-* body .about-fill .split-letter-clip .split-letter {
-  transform: none;
-  opacity: .14;
-}
-
 * body #what-i-use-line,
 * body #ui-ux-design-line,
 * body #web-dev-line,

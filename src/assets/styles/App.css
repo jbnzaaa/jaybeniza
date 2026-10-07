@@ -306,11 +306,6 @@
   position: relative;
 }
 
-* body .about-fill .split-letter-clip .split-letter {
-  transform: none;
-  opacity: 0.14;
-}
-
 * body #what-i-use-line,
 * body #ui-ux-design-line,
 * body #web-dev-line,
