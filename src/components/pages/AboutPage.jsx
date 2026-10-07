@@ -72,8 +72,12 @@ function AboutPage() {
     // the black sections come up like a panel being raised - scroll-coupled.
     // as one enters, its top edge starts well below where it belongs and
     // climbs faster than the page scrolls, meeting its place by mid-screen.
-    // only the edge is clipped, so nothing inside moves or re-measures
-    const panels = gsap.utils.toArray('[data-section-reveal]').map((panel) => gsap.fromTo(panel,
+    // only the edge is clipped, so nothing inside moves or re-measures.
+    // not on phones or touch screens: there the page's height keeps
+    // changing under the triggers (address bar, late reflow), and a clip
+    // left part-way in cuts into the section's own content
+    const usePanels = window.innerWidth >= 768 && !ScrollTrigger.isTouch;
+    const panels = (usePanels ? gsap.utils.toArray('[data-section-reveal]') : []).map((panel) => gsap.fromTo(panel,
       { clipPath: () => `inset(${Math.round(window.innerHeight * .45)}px 0px 0px 0px)` },
       {
         clipPath: 'inset(0px 0px 0px 0px)',

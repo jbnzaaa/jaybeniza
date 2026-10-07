@@ -322,13 +322,13 @@
 }
 
 * body .menu-row {
-  font-size: clamp(1.4rem, min(6.2vh, 8.2vw), 3.2rem);
+  font-size: clamp(1.2rem, min(6.2vh, 7vw), 3.2rem);
   height: 1.6em;
 }
 
 @supports (height: 100svh) {
   * body .menu-row {
-    font-size: clamp(1.4rem, min(6.2svh, 8.2vw), 3.2rem);
+    font-size: clamp(1.2rem, min(6.2svh, 7vw), 3.2rem);
   }
 }
 

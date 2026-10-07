@@ -24,10 +24,10 @@ gsap.registerPlugin(ScrollTrigger)
 // certificates live), then the links that leave the site
 const MENU_LINKS = [
   { label: 'Home', to: '/#' },
-  { label: 'About', to: '/about' },
-  { label: 'Work', to: '/#project' },
+  { label: 'About Me', to: '/about' },
+  { label: 'Selected Projects', to: '/#project' },
   { label: 'Testimonials', to: '/#testimonials' },
-  { label: 'Contact', to: '/#contact' },
+  { label: 'Drop a Message', to: '/#contact' },
 ];
 const MENU_EXTERNAL = [
   { label: 'Resume', href: Resume },
