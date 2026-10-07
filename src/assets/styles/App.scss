@@ -542,20 +542,6 @@
   position: relative;
 }
 
-// a row that links to its certificate: the arrow turns on hover, like the
-// buttons' arrows
-* body .cert-link #icon {
-  transform: rotate(0deg);
-  transition: all .3s ease-in-out;
-  border-radius: 100%;
-}
-
-* body .cert-link:hover #icon {
-  transform: rotate(-45deg);
-  background: var(--main-color);
-  fill: var(--main-bg);
-}
-
 // hover preview panel (CertificatesAwards.jsx). it follows the pointer,
 // never takes pointer events itself, and opens with the same bottom-edge
 // wipe the cards use. hidden outright where there is no hover to drive it
@@ -570,7 +556,7 @@
   clip-path: inset(100% 0% 0% 0%);
 }
 
-@media not all and (hover: hover) and (pointer: fine) {
+@media not all and (any-hover: hover) {
   * body .cert-preview {
     display: none;
   }

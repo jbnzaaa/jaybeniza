@@ -1,7 +1,5 @@
 //
 import React, { useEffect, useRef, useState } from 'react'
-// icons
-import {RiArrowRightDownLine} from 'react-icons/ri'
 // GSAP
 import gsap from 'gsap'
 // scroll reveal
@@ -56,10 +54,12 @@ function CertificatesAwards() {
   }, []);
 
   useEffect(() => {
-    // hover preview - only where there is a pointer that can hover. on a
-    // touch screen there is no hover to follow, and a phone cannot show a
-    // pdf inline anyway: there a tap simply opens the certificate
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    // hover preview - wherever any attached pointer can hover (a mouse or
+    // trackpad, including on a touchscreen laptop, whose primary input may
+    // be reported as touch). on a touch-only device there is no hover to
+    // follow, and a phone cannot show a pdf inline anyway: there a tap
+    // simply opens the certificate
+    if (!window.matchMedia('(any-hover: hover)').matches) return;
 
     const list = fxList.current;
     const preview = fxPreview.current;
@@ -120,10 +120,12 @@ function CertificatesAwards() {
               <SplitText text='Certificates & Awards' id='animate-cert-header' />
             </div>
           </section>
-          {/* one row per item. a row with a certificate is a link to it
-            (with the buttons' arrow); hovering it shows the preview panel */}
+          {/* one row per item. a row with a certificate is a link to it,
+            and hovering it shows the preview panel. the rows themselves do
+            not animate on hover (data-no-hover-roll opts them out of the
+            buttons' letter roll) - the preview is the hover effect */}
           <section className='col-span-8'>
-            <ul className='relative grid grid-cols-8' ref={fxList}>
+            <ul className='relative grid grid-cols-8' ref={fxList} data-no-hover-roll>
               {ITEMS.map((item) => {
                 const title = (
                   <p className='entry-line font-medium'>
@@ -146,13 +148,8 @@ function CertificatesAwards() {
                       desktop:text-[1.6rem]'>
                       {item.file ? (
                         <a href={item.file} target='_blank' rel='noreferrer' data-cert={item.id}
-                          className='cert-link flex items-center justify-between gap-x-4 py-5'>
+                          className='block py-5'>
                           {title}
-                          <span className='menu-icon-clip shrink-0'>
-                            <span className='menu-icon' id={`animate-cert-${item.id}`}>
-                              <RiArrowRightDownLine id='icon' className='fill-black text-[1.2em]'/>
-                            </span>
-                          </span>
                         </a>
                       ) : (
                         <div className='py-5'>{title}</div>
@@ -162,8 +159,12 @@ function CertificatesAwards() {
                 );
               })}
               {/* hover preview - one panel for the whole list */}
+              {/* sized at every breakpoint: a narrow desktop window falls in
+                the tablet or mobile range and still needs a width */}
               <li className='cert-preview bg-black
                 aspect-[792/612]
+                mobile:w-[min(280px,80vw)]
+                tablet:w-[360px]
                 laptop:w-[420px]
                 laptop-lg:w-[480px]
                 desktop:w-[540px]'

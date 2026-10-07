@@ -19,6 +19,8 @@ export function enableHoverRoll() {
     const button = e.target.closest?.('a, button');
     // ignore moves between the button's own children
     if (!button || button.contains(e.relatedTarget) || rolling.has(button)) return;
+    // a container can opt its links out (the certificate rows do)
+    if (button.closest('[data-no-hover-roll]')) return;
 
     const letters = button.querySelectorAll('.split-letter');
     // nothing to roll, or the label has not been revealed yet
