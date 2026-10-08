@@ -53,7 +53,7 @@ const ITEMS = [
 // where each project sits on the six column grid, in turn: the column it
 // starts on and how many it spans. every project has a grid row to
 // itself, so no card reaches into another's. on a phone every project is
-// five columns wide and they step from side to side
+// the full width (.work-item, App.scss)
 const PLACES = [
   '1 / span 3',
   '4 / span 3',
@@ -65,7 +65,6 @@ const PLACES = [
 ];
 const place = (i) => ({
   '--col': PLACES[i % PLACES.length],
-  '--col-small': i % 2 ? '2 / span 5' : '1 / span 5',
   gridRow: i + 1,
 });
 
@@ -109,6 +108,28 @@ function ProjectsPage() {
       .to(item.querySelector('.work-cover'), { ...open, duration: .9 }, 0)
       .to(item.querySelector('.work-cover-image'), { ...settle, duration: 1.1 }, 0));
 
+    // a project's name and label rise out of their lines, letter by
+    // letter, while the pointer is on the project (or its link has the
+    // keyboard's focus), and drop back when it leaves. a touch screen has
+    // no pointer, so there they rise once the card has opened
+    const touch = window.matchMedia('(hover: none)').matches;
+    const items = gsap.utils.toArray('.work-item', section);
+    const texts = items.map((item) => gsap.to(item.querySelectorAll('.work-item-info .split-letter'),
+      { y: 0, duration: .45, stagger: { amount: .25 }, ease: 'power2.out', paused: true }));
+    const shows = texts.map((text) => () => text.play());
+    const hides = texts.map((text) => () => text.reverse());
+    const triggers = [];
+    items.forEach((item, i) => {
+      if (touch) {
+        triggers.push(ScrollTrigger.create({ trigger: item, start: 'top 70%', onEnter: shows[i], onLeaveBack: hides[i] }));
+        return;
+      }
+      item.addEventListener('mouseenter', shows[i]);
+      item.addEventListener('focusin', shows[i]);
+      item.addEventListener('mouseleave', hides[i]);
+      item.addEventListener('focusout', hides[i]);
+    });
+
     return () => {
       intro.kill();
       reveals.forEach((reveal) => {
@@ -116,6 +137,14 @@ function ProjectsPage() {
         reveal.revert();
       });
       covers.revert();
+      triggers.forEach((trigger) => trigger.kill());
+      items.forEach((item, i) => {
+        item.removeEventListener('mouseenter', shows[i]);
+        item.removeEventListener('focusin', shows[i]);
+        item.removeEventListener('mouseleave', hides[i]);
+        item.removeEventListener('focusout', hides[i]);
+      });
+      texts.forEach((text) => text.revert());
     };
   }, []);
 
@@ -132,11 +161,7 @@ function ProjectsPage() {
         <h1>
           {HEADLINE_LINES.map((line) => (
             <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.92] tracking-tight
-              mobile:text-[19vw]
-              tablet:text-[12vw]
-              laptop:text-[10vw]
-              laptop-lg:text-[10vw]
-              desktop:text-[10vw]'>
+              text-hero'>
               <SplitText text={line} id='animate-projects-page' />
             </span>
           ))}
@@ -175,11 +200,15 @@ function ProjectsPage() {
                       </div>
                     )}
                 </div>
-                {/* under the card, outside it: name and label - shown on
-                  hover (.work-item-info, App.scss) */}
+                {/* under the card, outside it: name and label - they rise
+                  on hover (the effect above) */}
                 <div className='work-item-info pt-4'>
-                  <h2 className='font-flexible font-medium leading-none text-heading [word-spacing:.2em]'>{title}</h2>
-                  <p className='text-caption text-muted mt-2'>{text}</p>
+                  <h2 className='flex flex-wrap font-flexible font-medium leading-none text-heading'>
+                    <SplitText text={title} id={`animate-work-${key}`} />
+                  </h2>
+                  <p className='flex flex-wrap text-caption text-muted mt-2'>
+                    <SplitText text={text} id={`animate-work-${key}`} by='word' />
+                  </p>
                 </div>
               </>
             );

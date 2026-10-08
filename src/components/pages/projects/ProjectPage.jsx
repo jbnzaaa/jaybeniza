@@ -8,6 +8,8 @@ import { TransitionLink } from '../../common/PageTransition'
 // the site's button and section label
 import Button from '../../common/Button'
 import Tag from '../../common/Tag'
+// icons
+import { RiArrowRightUpLine } from 'react-icons/ri'
 // scroll reveal
 import { scrollReveal, scrollRevealSequence } from '../../../utils/scrollReveal'
 // per-letter text split
@@ -104,6 +106,9 @@ const SECTION = `
 // the space under a block inside a section
 const BELOW = 'mobile:mb-8 tablet:mb-10 laptop:mb-12 laptop-lg:mb-12 desktop:mb-16';
 
+// the space over a full width run under a section's text
+const ABOVE = 'mobile:mt-2 tablet:mt-2 laptop:mt-4 laptop-lg:mt-6 desktop:mt-6';
+
 // the right-hand columns every section's content sits in
 const CONTENT = `
   mobile:col-span-8
@@ -123,10 +128,11 @@ const CARD = `theme-dark bg-card m-0
 /**
  * One numbered section of the case study: its boxed label (number and
  * name) in the left columns, its content in the right - stacked below
- * laptop width. `wide` is for runs of images, which go under the label at
- * full width; everything written stays in the right-hand columns.
+ * laptop width. `wide` puts the content under the label at full width
+ * instead; `below` is a full width run (of images, say) under a section
+ * that keeps its text beside the label.
  */
-function CaseSection({ id, number, title, theme, wide = false, children }) {
+function CaseSection({ id, number, title, theme, wide = false, below, children }) {
   return (
     <section className={`${theme} grid grid-cols-8 gap-x-6 ${SECTION}
       mobile:gap-y-6
@@ -146,6 +152,7 @@ function CaseSection({ id, number, title, theme, wide = false, children }) {
       <div className={wide ? 'col-span-8' : CONTENT}>
         {children}
       </div>
+      {below && <div className={`col-span-8 ${ABOVE}`}>{below}</div>}
     </section>
   )
 }
@@ -156,17 +163,6 @@ function Copy({ id, text, className = '' }) {
     <p className={`flex flex-wrap text-subtitle leading-snug ${className}`}>
       <SplitText text={text} id={`animate-case-${id}`} by='word' />
     </p>
-  )
-}
-
-// the right-hand columns of a wide section, for its opening paragraph
-function Lead({ children }) {
-  return (
-    <div className='grid grid-cols-8 gap-x-6'>
-      <div className={`${CONTENT} ${BELOW}`}>
-        {children}
-      </div>
-    </div>
   )
 }
 
@@ -273,11 +269,11 @@ function ProjectPage({ project }) {
           desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16`}>
           <div className='grid grid-cols-8 gap-x-6 gap-y-8'>
             <h1 className='project-h1 hero-designerdev flex flex-wrap content-start font-flexible font-bold leading-[.92] tracking-tight
-              mobile:col-span-8 mobile:text-[19vw]
-              tablet:col-span-8 tablet:text-[14vw]
-              laptop:col-span-5 laptop:text-[12vw]
-              laptop-lg:col-span-5 laptop-lg:text-[12vw]
-              desktop:col-span-5 desktop:text-[12vw]'>
+              mobile:col-span-8 text-case
+              tablet:col-span-8
+              laptop:col-span-5
+              laptop-lg:col-span-5
+              desktop:col-span-5'>
               <SplitText text={project.title} id='animate-case-hero' />
             </h1>
             {/* summary - upper right */}
@@ -293,20 +289,27 @@ function ProjectPage({ project }) {
           <div className='flex justify-between items-end gap-x-6 gap-y-8
             mobile:flex-col mobile:items-start
             tablet:flex-col tablet:items-start'>
-            {/* the facts: year first, then role and category */}
-            <dl className='grid gap-x-6 gap-y-6
-              mobile:w-full mobile:grid-cols-2
-              tablet:w-full tablet:grid-cols-3
-              laptop:w-[50%] laptop:grid-cols-3
-              laptop-lg:w-[50%] laptop-lg:grid-cols-3
-              desktop:w-[50%] desktop:grid-cols-3'>
+            {/* the facts, one under the other: year, then role, then
+              category - each a ruled row, its name beside its value */}
+            <dl className='flex flex-col
+              mobile:w-full
+              tablet:w-[70%]
+              laptop:w-[42%]
+              laptop-lg:w-[38%]
+              desktop:w-[34%]'>
               {[
                 ['Year', project.year],
                 ['Role', project.roles.join(', ')],
                 ['Category', project.category],
               ].map(([label, value]) => (
-                <div key={label}>
-                  <dt className='text-caption text-muted mb-2'>
+                <div className='grid grid-cols-[6rem_1fr] gap-x-6 border-t border-rule
+                  mobile:py-4
+                  tablet:py-4
+                  laptop:py-4
+                  laptop-lg:py-6
+                  desktop:py-6'
+                  key={label}>
+                  <dt className='text-caption text-muted'>
                     <SplitText text={label} id='animate-case-hero' />
                   </dt>
                   <dd className='flex flex-wrap text-caption'>
@@ -320,12 +323,16 @@ function ProjectPage({ project }) {
             </div>
           </div>
         </section>
-        {/* hero visual, on the dark surface. it drifts inside its frame as
-          the page scrolls (.parallax-layer, moved by the effect above) */}
-        <section className={`${DARK} ${SECTION}`}>
-          <div className='screenshot-container aspect-[16/9]' id='case-visual'>
+        {/* hero visual - the whole section, edge to edge; a full screen
+          from laptop width up (.case-visual, App.scss). it drifts inside its frame as the page
+          scrolls (.parallax-layer, moved by the effect above) */}
+        <section className={DARK}>
+          <div className='case-visual screenshot-container
+            mobile:aspect-[4/3]
+            tablet:aspect-[16/10]'
+            id='case-visual'>
             <div className='parallax-layer' style={{ height: `${PARALLAX * 100}%` }}>
-              <img src={hero.src} alt={hero.alt} className='screenshot-img h-full object-cover object-top' onLoad={remeasure}/>
+              <img src={hero.src} alt={hero.alt} className='screenshot-img w-full h-full object-cover object-top' onLoad={remeasure}/>
             </div>
           </div>
         </section>
@@ -361,51 +368,51 @@ function ProjectPage({ project }) {
         </CaseSection>
 
         {/* 07 design process - wireframes, iterations, final, as a list:
-          each stage a row with its note and its picture */}
+          each stage a ruled row - its number, its name, its note */}
         <CaseSection id='process' number='07' title='Design Process' theme={DARK}>
           <Copy id='process' text={study.process} className={BELOW} />
           <ol className='flex flex-col'>
             {study.stages.map((stage, i) => (
-              <li className='grid gap-x-6 gap-y-4 border-t border-rule m-0
-                mobile:grid-cols-1 mobile:py-6
-                tablet:grid-cols-2 tablet:py-8
-                laptop:grid-cols-2 laptop:py-8
-                laptop-lg:grid-cols-2 laptop-lg:py-10
-                desktop:grid-cols-2 desktop:py-10'
+              <li className='grid items-baseline gap-x-6 gap-y-4 border-t border-rule last:border-b m-0
+                mobile:grid-cols-[2.5rem_1fr] mobile:py-6
+                tablet:grid-cols-[3rem_1fr_1fr] tablet:py-8
+                laptop:grid-cols-[3rem_1fr_1fr] laptop:py-8
+                laptop-lg:grid-cols-[4rem_1fr_1fr] laptop-lg:py-10
+                desktop:grid-cols-[4rem_1fr_1fr] desktop:py-10'
                 key={stage.title}>
-                <div className='flex flex-col gap-y-4'>
-                  <p className='text-caption text-muted'>
-                    <SplitText text={String(i + 1).padStart(2, '0')} id='animate-case-process' />
-                  </p>
-                  <h3 className='flex flex-wrap font-flexible font-medium leading-none text-heading'>
-                    <SplitText text={stage.title} id='animate-case-process' />
-                  </h3>
-                  <p className='flex flex-wrap text-caption text-muted'>
-                    <SplitText text={stage.text} id='animate-case-process' by='word' />
-                  </p>
-                </div>
-                <Panel label={stage.title} className='aspect-[4/3]' />
+                <p className='text-caption text-muted'>
+                  <SplitText text={String(i + 1).padStart(2, '0')} id='animate-case-process' />
+                </p>
+                <h3 className='flex flex-wrap font-flexible font-medium leading-none text-heading'>
+                  <SplitText text={stage.title} id='animate-case-process' />
+                </h3>
+                <p className='flex flex-wrap text-caption text-muted
+                  mobile:col-start-2'>
+                  <SplitText text={stage.text} id='animate-case-process' by='word' />
+                </p>
               </li>
             ))}
           </ol>
         </CaseSection>
 
-        {/* 08 key design decisions - three cards, in the same columns */}
-        <CaseSection id='decisions' number='08' title='Key Design Decisions' theme={LIGHT}>
-          <ol className='flex flex-col gap-y-4'>
+        {/* 08 key design decisions - three cards side by side under the
+          label, each: its number at the top, the decision at the bottom */}
+        <CaseSection id='decisions' number='08' title='Key Design Decisions' theme={LIGHT} wide>
+          <ol className='grid gap-4
+            mobile:grid-cols-1
+            tablet:grid-cols-1
+            laptop:grid-cols-3
+            laptop-lg:grid-cols-3
+            desktop:grid-cols-3'>
             {study.decisions.map((decision, i) => (
-              <li className={`${CARD} grid gap-x-6 gap-y-6
-                mobile:grid-cols-1
-                tablet:grid-cols-[auto_1fr]
-                laptop:grid-cols-[auto_1fr]
-                laptop-lg:grid-cols-[auto_1fr]
-                desktop:grid-cols-[auto_1fr]`}
+              <li className={`${CARD} flex flex-col justify-between
+                mobile:gap-y-12
+                tablet:gap-y-12
+                laptop:gap-y-24
+                laptop-lg:gap-y-32
+                desktop:gap-y-40`}
                 key={decision.title}>
-                <p className='text-caption text-muted
-                  tablet:w-16
-                  laptop:w-16
-                  laptop-lg:w-20
-                  desktop:w-24'>
+                <p className='text-caption text-muted'>
                   <SplitText text={String(i + 1).padStart(2, '0')} id='animate-case-decisions' />
                 </p>
                 <div>
@@ -422,10 +429,7 @@ function ProjectPage({ project }) {
         </CaseSection>
 
         {/* 09 final product - major features, polished UI */}
-        <CaseSection id='final' number='09' title='Final Product' theme={DARK} wide>
-          <Lead>
-            <Copy id='final' text={study.final} />
-          </Lead>
+        <CaseSection id='final' number='09' title='Final Product' theme={DARK} below={(
           <div className='grid grid-cols-8 gap-x-6
             mobile:gap-y-6
             tablet:gap-y-10
@@ -438,6 +442,8 @@ function ProjectPage({ project }) {
               </div>
             ))}
           </div>
+        )}>
+          <Copy id='final' text={study.final} />
         </CaseSection>
 
         {/* 10 design system - components, visual language */}
@@ -488,19 +494,21 @@ function ProjectPage({ project }) {
           <Copy id='reflection' text={study.reflection} />
         </CaseSection>
 
-        {/* 13 cta - next project, its name in the right-hand columns, then
-          the contact section */}
+        {/* 13 cta - next project, its name against the right edge, then
+          the contact section. under the pointer a rule draws in under the
+          name and an arrow comes up beside it (.next-link, App.scss) */}
         <CaseSection id='next' number='13' title='Next project' theme={DARK}>
-          <TransitionLink to={next.path} className='inline-block' aria-label={`Next project: ${next.title}`} data-no-hover-roll>
-            <span className='flex flex-wrap font-flexible font-medium leading-[.92] tracking-tight
-              mobile:text-[17vw]
-              tablet:text-[14vw]
-              laptop:text-[9vw]
-              laptop-lg:text-[9vw]
-              desktop:text-[9vw]'>
+          <div className='flex justify-end'>
+          <TransitionLink to={next.path} className='next-link' aria-label={`Next project: ${next.title}`} data-no-hover-roll>
+            <span className='next-link-arrow' aria-hidden='true'>
+              <RiArrowRightUpLine/>
+            </span>
+            <span className='flex flex-wrap justify-end font-flexible font-medium leading-[.92] tracking-tight
+              text-next'>
               <SplitText text={next.title} id='animate-case-next' />
             </span>
           </TransitionLink>
+          </div>
         </CaseSection>
       </article>
       <Contact/>

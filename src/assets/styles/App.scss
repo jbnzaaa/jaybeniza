@@ -314,6 +314,18 @@
   will-change: transform;
 }
 
+// on a phone the stack runs top to bottom: full width cards, each a step
+// lower than the one before it
+@media (max-width: 767px) {
+  * body .testimonial-card {
+    width: 100%;
+    margin-left: 0;
+    margin-top: calc(var(--i) * 1rem);
+    border-left: 0;
+    border-top: 1px solid var(--paper);
+  }
+}
+
 // a reviewer's picture - revealed with their card, wiping up from its
 // bottom edge
 * body .testimonial-avatar {
@@ -345,6 +357,79 @@
 
 * body .nav-action .cta-button {
   border-color: #444141;
+}
+
+// the phone's Menu button - the site's button as a real button. it is
+// not revealed by a script, so it is not clipped away to start with
+* body .nav-menu-button {
+  clip-path: none;
+  cursor: pointer;
+}
+
+// the phone's menu: a panel over the page that wipes down from the top
+// edge. hidden outright once it has closed
+* body .nav-menu {
+  visibility: hidden;
+  clip-path: inset(0% 0% 100% 0%);
+  transition: clip-path .6s cubic-bezier(.65, 0, .35, 1), visibility 0s .6s;
+}
+
+* body .nav-menu.nav-menu-open {
+  visibility: visible;
+  clip-path: inset(0% 0% 0% 0%);
+  transition: clip-path .6s cubic-bezier(.65, 0, .35, 1);
+}
+
+// "next project" at the foot of a case study (ProjectPage.jsx): under the
+// pointer a rule draws in under the name from the left, and an arrow
+// comes up beside it
+* body .next-link {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+* body .next-link::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background: var(--text);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .5s cubic-bezier(.65, 0, .35, 1);
+}
+
+* body .next-link-arrow {
+  font-size: clamp(2rem, 5vw, 5rem);
+  line-height: 1;
+  clip-path: inset(100% 0% 0% 0%);
+  transform: translate(-25%, 25%);
+  transition: clip-path .45s cubic-bezier(.65, 0, .35, 1), transform .45s cubic-bezier(.65, 0, .35, 1);
+}
+
+* body .next-link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+* body .next-link:focus-visible .next-link-arrow {
+  clip-path: inset(0% 0% 0% 0%);
+  transform: none;
+}
+
+@media (any-hover: hover) {
+  * body .next-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  * body .next-link:hover .next-link-arrow {
+    clip-path: inset(0% 0% 0% 0%);
+    transform: none;
+  }
 }
 
 // pictures that trail the pointer (AboutPage.jsx) - a layer over the
@@ -925,7 +1010,7 @@
 
 @media (max-width: 767px) {
   * body .about-paragraph {
-    font-size: clamp(1.125rem, .6rem + 2vw, 3rem);
+    font-size: clamp(1.25rem, .6rem + 2vw, 3rem);
   }
 }
 
@@ -971,7 +1056,7 @@
 
 // the work page's projects (ProjectsPage.jsx): six columns, every project
 // in a grid row of its own, placed across it by its --col (start /
-// span). on a phone the projects are five columns wide (--col-small)
+// span). on a phone every project is the full width
 * body .work-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -981,7 +1066,7 @@
 }
 
 * body .work-item {
-  grid-column: var(--col-small);
+  grid-column: 1 / -1;
 }
 
 @media (min-width: 768px) {
@@ -1008,31 +1093,18 @@
   transition: scale .6s cubic-bezier(.14, 1, .34, 1);
 }
 
-// a project's name and label, under its card: its place is always kept,
-// the text wipes down into it while the pointer is on the project, or
-// when its link is reached by keyboard
-* body .work-item-info {
-  clip-path: inset(0% 0% 100% 0%);
-  transition: clip-path .45s cubic-bezier(.65, 0, .35, 1);
-}
-
-* body .work-item a:focus-visible .work-item-info {
-  clip-path: inset(0% 0% 0% 0%);
-}
-
 @media (any-hover: hover) {
-  * body .work-item:hover .work-item-info {
-    clip-path: inset(0% 0% 0% 0%);
-  }
-
   * body .work-item a:hover .work-cover-image {
     scale: 1.05;
   }
 }
 
-// a touch screen has no pointer to show them with - always there
-@media (hover: none) {
-  * body .work-item-info {
-    clip-path: none;
+// a case study's hero visual (ProjectPage.jsx) - a full screen from
+// laptop width up
+@media (min-width: 1024px) {
+  * body .case-visual {
+    height: 100vh;
+    height: 100svh;
+    height: var(--screen-h, 100svh);
   }
 }

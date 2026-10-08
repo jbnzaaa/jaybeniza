@@ -153,11 +153,11 @@ function AboutPage() {
           desktop:px-[3rem] desktop:pt-24 desktop:pb-16'>
           {/* heading - left, its top level with the text on the right */}
           <h2 className='self-start flex flex-wrap font-flexible font-semibold leading-[.92] tracking-tight
-            mobile:col-span-8 mobile:row-start-1 mobile:text-[24vw]
-            tablet:col-span-8 tablet:row-start-1 tablet:text-[22vw]
-            laptop:col-span-5 laptop:row-start-1 laptop:text-[15vw]
-            laptop-lg:col-span-5 laptop-lg:row-start-1 laptop-lg:text-[15vw]
-            desktop:col-span-5 desktop:row-start-1 desktop:text-[15vw]'>
+            mobile:col-span-8 mobile:row-start-1 text-closing
+            tablet:col-span-8 tablet:row-start-1
+            laptop:col-span-5 laptop:row-start-1
+            laptop-lg:col-span-5 laptop-lg:row-start-1
+            desktop:col-span-5 desktop:row-start-1'>
             <SplitText text='Grab My Resume' id='animate-about-page-resume' />
           </h2>
           {/* description + links - right */}

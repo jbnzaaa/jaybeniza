@@ -44,11 +44,7 @@ function WhatIDoPage() {
         <h1>
           {HEADLINE_LINES.map((line) => (
             <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.92] tracking-tight
-              mobile:text-[19vw]
-              tablet:text-[12vw]
-              laptop:text-[10vw]
-              laptop-lg:text-[10vw]
-              desktop:text-[10vw]'>
+              text-hero'>
               <SplitText text={line} id='animate-services-page' />
             </span>
           ))}

@@ -12,11 +12,20 @@ module.exports = {
       // quiet text against large headings. the hero and contact headlines
       // sit above this scale, sized to the screen's width where they are set
       fontSize: {
-        caption: 'clamp(.75rem, .7rem + .15vw, .875rem)',
-        body: 'clamp(.875rem, .8rem + .25vw, 1.125rem)',
-        subtitle: 'clamp(1.0625rem, .9rem + .6vw, 1.75rem)',
-        heading: 'clamp(2rem, 1.5rem + 1.6vw, 3.5rem)',
-        title: 'clamp(2rem, 1.4rem + 2.4vw, 4.5rem)',
+        caption: 'clamp(.8125rem, .7rem + .15vw, .875rem)',
+        body: 'clamp(.9375rem, .8rem + .25vw, 1.125rem)',
+        subtitle: 'clamp(1.125rem, .9rem + .6vw, 1.75rem)',
+        heading: 'clamp(2.25rem, 1.5rem + 1.6vw, 3.5rem)',
+        title: 'clamp(2.75rem, 1.4rem + 2.4vw, 4.5rem)',
+        // the display sizes - headlines set against the screen's width.
+        // each is one line from a phone to a wide screen, so it grows
+        // evenly as the window does, with no step at a breakpoint
+        logo: 'clamp(1.4rem, 1.25rem + .6vw, 1.8rem)',
+        hero: 'calc(3rem + 6.67vw)',
+        project: 'calc(2rem + 8.76vw)',
+        case: 'calc(2.3rem + 9.43vw)',
+        next: 'calc(2.625rem + 6.1vw)',
+        closing: 'calc(3rem + 11.6vw)',
       },
       fontFamily: {
         teko: ["Teko", "sans-serif"],

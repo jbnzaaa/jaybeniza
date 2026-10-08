@@ -83,11 +83,7 @@ function Project() {
                   {/* name left, year and role right */}
                   <span className='flex justify-between items-end gap-x-6'>
                     <span className='project-name font-flexible font-medium leading-[.92] tracking-tight
-                      mobile:text-[17vw]
-                      tablet:text-[14vw]
-                      laptop:text-[11vw]
-                      laptop-lg:text-[11vw]
-                      desktop:text-[11vw]'>
+                      text-project'>
                       <SplitText text={project.title} id={`animate-project-${project.id}`} />
                     </span>
                     <span className='project-label flex flex-wrap justify-end text-right text-caption text-muted

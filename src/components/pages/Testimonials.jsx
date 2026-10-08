@@ -52,6 +52,8 @@ const SHOWING = .3;
  * to the left gutter, then each next one slides in over the one before it
  * and stops a step further right, so the last card's right edge lands on
  * the right gutter and every earlier card stays part in view behind it.
+ * On a phone the same happens top to bottom: the cards are full width,
+ * come up from below, and each stops a step lower than the one before.
  */
 function Testimonials() {
   const fxSection = useRef();
@@ -82,16 +84,24 @@ function Testimonials() {
     // so the moment its left edge still has a given distance to go is
     // t = 1 - sqrt(distance / width of screen). measured before the
     // timeline moves anything
-    const screen = window.innerWidth;
+    // (on a phone the cards travel up the screen's height instead, and
+    // it is a card's height that comes on screen)
+    const vertical = window.matchMedia('(max-width: 767px)').matches;
+    const screen = vertical ? window.innerHeight : window.innerWidth;
+    const top = section.getBoundingClientRect().top;
     const starts = cards.map((card) => {
       const rect = card.getBoundingClientRect();
-      const distance = Math.max(0, screen - rect.left - rect.width * SHOWING);
+      const distance = Math.max(0, vertical
+        ? screen - (rect.top - top) - rect.height * SHOWING
+        : screen - rect.left - rect.width * SHOWING);
       return 1 - Math.sqrt(Math.min(distance / screen, 1));
     });
+    const away = vertical ? { y: () => window.innerHeight } : { x: () => window.innerWidth };
+    const home = vertical ? { y: 0 } : { x: 0 };
     cards.forEach((card, i) => {
       const from = i + starts[i];
       stack
-        .fromTo(card, { x: () => window.innerWidth }, { x: 0, ease: 'power2.out', duration: 1 }, i)
+        .fromTo(card, away, { ...home, ease: 'power2.out', duration: 1 }, i)
         .to(card.querySelectorAll('.split-letter'), { y: 0, ease: 'power1.in', duration: .25, stagger: { amount: .35 } }, from)
         // their picture wipes open from its bottom edge, the way the cards do
         .to(card.querySelector('.testimonial-avatar'), { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .35 }, from + .15);
@@ -141,7 +151,12 @@ function Testimonials() {
                 desktop:p-12 desktop:gap-y-20'>
                 {/* the review - one paragraph, in quotation marks */}
                 <blockquote>
-                  <p className='flex flex-wrap font-medium text-subtitle leading-snug'>
+                  <p className='flex flex-wrap font-medium leading-snug
+                    mobile:text-body
+                    tablet:text-subtitle
+                    laptop:text-subtitle
+                    laptop-lg:text-subtitle
+                    desktop:text-subtitle'>
                     <SplitText text={`“${quote.join(' ')}”`} id={`animate-testimonial-${id}`} by='word' />
                   </p>
                 </blockquote>
