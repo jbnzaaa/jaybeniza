@@ -194,15 +194,16 @@ export function scrollRevealSequence(stages, { trigger, start = 'top 85%', rever
  * @param {object} [opts]
  * @param {string} [opts.group] - the cards' container, used as the shared trigger
  * @param {number} [opts.rowFrom] - viewport width from which the cards are in a row
+ * @param {boolean} [opts.scrub] - open the cards with the scroll instead of on a trigger
  * @returns {{kill: () => void}}
  */
-export function scrollRevealCards(cards, { group, rowFrom = 1024 } = {}) {
+export function scrollRevealCards(cards, { group, rowFrom = 1024, scrub = false } = {}) {
   const frame = { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' };
   const settle = { yPercent: 0, scale: 1, ease: 'power2.out' };
   const text = { y: 0, stagger: .02, ease: 'power1.in' };
   // how long after one card the next starts, and how far into a card's
   // wipe its text begins
-  const STEP = .15;
+  const STEP = .25;
   const TEXT_DELAY = .28;
   // scrolling back up, a card closes again once its top edge is this far
   // down the screen - while most of it can still be seen closing
@@ -213,17 +214,42 @@ export function scrollRevealCards(cards, { group, rowFrom = 1024 } = {}) {
   gsap.set(inners, { yPercent: 14, scale: 1.15 });
 
   const inRow = group && cards.length > 1 && window.innerWidth >= rowFrom;
-  const reveals = inRow
-    ? [scrollRevealSequence([
-      { targets: cards.map(({ card }) => card), vars: { ...frame, stagger: STEP } },
-      { targets: inners, vars: { ...settle, stagger: STEP }, position: 0 },
-      ...cards.map((item, i) => ({ targets: item.text, vars: text, position: i * STEP + TEXT_DELAY })),
-    ], { trigger: group, reverseStart: REVERSE_AT })]
-    : cards.map((item) => scrollRevealSequence([
-      { targets: item.card, vars: frame },
-      { targets: inner(item.card), vars: settle, position: '<' },
-      { targets: item.text, vars: text, position: TEXT_DELAY },
-    ], { trigger: item.card, reverseStart: REVERSE_AT }));
+
+  // `scrub` ties the reveal to the scroll itself, the way the selected
+  // projects' cards open: each card's frame wipes up and its content
+  // settles over one step of the scroll, its text rising through the
+  // second half of that step, and scrolling back runs it in reverse
+  const scrubbed = (group_, start, end, list) => {
+    const tl = gsap.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: { trigger: group_, start, end, scrub: ScrollTrigger.isTouch ? .5 : true },
+    });
+    list.forEach((item, i) => {
+      tl.to(item.card, { ...frame, duration: .7 }, i)
+        .to(inner(item.card), { ...settle, duration: .7 }, i)
+        .to(item.text, { y: 0, ease: 'power1.in', duration: .2, stagger: { amount: .4 } }, i + .3);
+    });
+    return { kill() { tl.scrollTrigger?.kill(); tl.revert(); } };
+  };
+
+  let reveals;
+  if (scrub) {
+    reveals = inRow
+      ? [scrubbed(group, 'top 85%', 'top 15%', cards)]
+      : cards.map((item) => scrubbed(item.card, 'top 90%', 'top 45%', [item]));
+  } else {
+    reveals = inRow
+      ? [scrollRevealSequence([
+        { targets: cards.map(({ card }) => card), vars: { ...frame, stagger: STEP } },
+        { targets: inners, vars: { ...settle, stagger: STEP }, position: 0 },
+        ...cards.map((item, i) => ({ targets: item.text, vars: text, position: i * STEP + TEXT_DELAY })),
+      ], { trigger: group, reverseStart: REVERSE_AT })]
+      : cards.map((item) => scrollRevealSequence([
+        { targets: item.card, vars: frame },
+        { targets: inner(item.card), vars: settle, position: '<' },
+        { targets: item.text, vars: text, position: TEXT_DELAY },
+      ], { trigger: item.card, reverseStart: REVERSE_AT }));
+  }
 
   return {
     kill() {

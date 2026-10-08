@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useRef } from 'react'
+import React, { createContext, forwardRef, useCallback, useContext, useRef } from 'react'
 // React Router DOM
 import { Link, useNavigate } from 'react-router-dom'
 // GSAP
@@ -41,9 +41,10 @@ export function PageTransitionProvider({ children }) {
 
 /**
  * A router Link that plays the panel wipe before changing page. Modified
- * clicks (new tab, new window) are left to the browser.
+ * clicks (new tab, new window) are left to the browser. A ref lands on the
+ * link itself.
  */
-export function TransitionLink({ to, onClick, children, ...rest }) {
+export const TransitionLink = forwardRef(function TransitionLink({ to, onClick, children, ...rest }, ref) {
   const go = useContext(PageTransitionContext);
 
   const handleClick = (e) => {
@@ -53,5 +54,5 @@ export function TransitionLink({ to, onClick, children, ...rest }) {
     go(to);
   };
 
-  return <Link to={to} onClick={handleClick} {...rest}>{children}</Link>
-}
+  return <Link to={to} onClick={handleClick} ref={ref} {...rest}>{children}</Link>
+})

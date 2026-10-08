@@ -18,16 +18,20 @@ import React from 'react'
  * where a per-letter stagger across a few hundred characters takes
  * seconds to finish and holds the reader up. Headings keep the default.
  *
+ * `sentence` sets the text as written instead of in the site's capitals -
+ * for anything read as a sentence (descriptions, paragraphs, quotes), so
+ * capitals are left to headings, labels and buttons.
+ *
  * The split spans are hidden from assistive tech (a screen reader would
  * otherwise announce them letter by letter) and the intact text is
  * exposed once through a visually-hidden span instead.
  */
-function SplitText({ text, id, by = 'letter' }) {
+function SplitText({ text, id, by = 'letter', sentence = false }) {
   return (
     <>
       <span className='sr-only'>{text}</span>
       {text.split(' ').filter(Boolean).map((word, wi) => (
-        <span className='split-word' aria-hidden='true' key={wi}>
+        <span className={sentence ? 'split-word split-sentence' : 'split-word'} aria-hidden='true' key={wi}>
           {(by === 'word' ? [word] : word.split('')).map((unit, ui) => (
             <span className='split-letter-clip' key={ui}>
               <span className='split-letter' id={id}>{unit}</span>

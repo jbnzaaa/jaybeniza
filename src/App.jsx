@@ -1,6 +1,6 @@
 // React
 import React, { useEffect, useState, useCallback } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 //
 import './assets/styles/App.css';
 // Pages
@@ -9,6 +9,7 @@ import Home from './components/pages/Home';
 import AboutPage from './components/pages/AboutPage';
 import ProjectsPage from './components/pages/ProjectsPage';
 import ContactPage from './components/pages/ContactPage';
+import WhatIDoPage from './components/pages/WhatIDoPage';
 import DailyDiscount from './components/pages/projects/DailyDiscount';
 import Jbnza from './components/pages/projects/Jbnza';
 import Jaysonbeniza from './components/pages/projects/Jaysonbeniza';
@@ -59,6 +60,9 @@ function App() {
       wrapper: '#smooth-wrapper',
       content: '#smooth-content',
       smooth: 1.6,
+      // touch screens get a light version of the same easing (off by
+      // default there) - short, so the page still follows the finger
+      smoothTouch: .1,
       speed: .65,
       effects: true,
     });
@@ -134,8 +138,12 @@ function App() {
               <Routes>
                 <Route path='/' element={<Home/>}/>
                 <Route path='/about' element={<AboutPage/>}/>
-                <Route path='/projects' element={<ProjectsPage/>}/>
-                <Route path='/contact' element={<ContactPage/>}/>
+                <Route path='/work' element={<ProjectsPage/>}/>
+                <Route path='/get-in-touch' element={<ContactPage/>}/>
+                {/* the routes' earlier names */}
+                <Route path='/projects' element={<Navigate to='/work' replace/>}/>
+                <Route path='/contact' element={<Navigate to='/get-in-touch' replace/>}/>
+                <Route path='/what-i-do' element={<WhatIDoPage/>}/>
                 <Route path='/dailydiscount' element={<DailyDiscount/>}/>
                 <Route path='/jbnza' element={<Jbnza/>}/>
                 <Route path='/jaysonbeniza' element={<Jaysonbeniza/>}/>

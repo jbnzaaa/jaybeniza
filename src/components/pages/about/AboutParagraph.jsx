@@ -3,7 +3,7 @@ import React from 'react'
 // per-letter text split
 import SplitText from '../../common/SplitText'
 
-const TEXT = 'I design and build digital products with a focus on clarity, function, and user experience. Based in the Philippines, I bring 3+ years of UI/UX design and front-end development experience to every project, from user flows and design systems to responsive, production-ready interfaces.';
+const TEXT = "I'm a UI/UX designer from the Philippines. For 3+ years I've designed web and mobile products, from user flows and wireframes to polished interfaces and the design systems behind them. I also write front-end code, so my designs are made to be built.";
 
 // the landing page's introduction paragraph. its letters share the
 // greeting's id so About.jsx's reveal runs through both
@@ -11,12 +11,13 @@ function AboutParagraph() {
   return (
     <>
       <div>
+        {/* size: .about-paragraph (App.scss) */}
         <p className='about-paragraph flex flex-wrap text-offwhite
-          mobile:text-[1.05rem] mobile:leading-snug
-          tablet:text-[1.6rem] tablet:leading-tight
-          laptop:text-[2.1rem] laptop:leading-tight
-          laptop-lg:text-[2.5rem] laptop-lg:leading-tight
-          desktop:text-[3rem] desktop:leading-tight'>
+          mobile:leading-snug
+          tablet:leading-tight
+          laptop:leading-tight
+          laptop-lg:leading-tight
+          desktop:leading-tight'>
           <SplitText text={TEXT} id='animate-about' />
         </p>
       </div>

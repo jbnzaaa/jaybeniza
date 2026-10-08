@@ -41,11 +41,8 @@ function ToolTechnology() {
         <ul className='col-span-1 flex flex-wrap'>
           {TOOLS.map((tool, i) => (
             <li className='stacks h-[30px] text-muted
-              mobile:text-[.9rem]
-              tablet:text-[.9rem]
-              laptop:text-[1rem]
-              laptop-lg:text-[1rem]
-              desktop:text-[1.1rem]'
+              text-body
+              '
               key={i}>
               <SplitText text={tool} id='animate-tooltechnology' />
             </li>

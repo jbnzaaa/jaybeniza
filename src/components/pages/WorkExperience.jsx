@@ -1,7 +1,9 @@
 //
 import React, { useEffect } from 'react'
 // scroll reveal
-import { scrollReveal, scrollRevealCards } from '../../utils/scrollReveal'
+import { scrollRevealCards } from '../../utils/scrollReveal'
+// section label
+import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
 
@@ -36,8 +38,6 @@ const ROLES = [
  */
 function WorkExperience() {
   useEffect(() => {
-    // section heading reveal
-    const heading = scrollReveal('#animate-work-header', { y: 0, stagger: .02, ease: 'power1.in' });
 
     // the cards rise in one after another, each followed by its text
     const cards = scrollRevealCards(ROLES.map((role) => ({
@@ -46,83 +46,64 @@ function WorkExperience() {
     })), { group: '#work-cards' });
 
     return () => {
-      heading.kill();
       cards.kill();
     };
   }, []);
 
   return (
     <>
-      <div id='work-experience' className='bg-black'>
+      <div id='work-experience' className='theme-light'>
         <div className='
-          mobile:py-16 mobile:px-[.9rem]
+          mobile:py-16 mobile:px-[1rem]
           tablet:py-16 tablet:px-[1rem]
           laptop:py-20 laptop:px-[2rem]
           laptop-lg:py-24 laptop-lg:px-[3rem]
           desktop:py-28 desktop:px-[3rem]'>
-          {/* section header */}
-          <div className='section-header-container flex flex-wrap font-flexible font-medium leading-none text-offwhite
-            mobile:mb-6 mobile:text-[8vw]
-            tablet:mb-8 tablet:text-[6vw]
-            laptop:mb-10 laptop:text-[4vw]
-            laptop-lg:mb-10 laptop-lg:text-[3.6vw]
-            desktop:mb-12 desktop:text-[3.6vw]'>
-            <SplitText text='Work Experience' id='animate-work-header' />
+          <div className='mobile:mb-6 tablet:mb-8 laptop:mb-8 laptop-lg:mb-10 desktop:mb-10'>
+            <Tag label='Experience' id='animate-work-tag' />
           </div>
           {/* one card per role */}
-          <ul id='work-cards' className='grid gap-5
+          <ul id='work-cards' className='grid gap-6
             mobile:grid-cols-1
             tablet:grid-cols-1
             laptop:grid-cols-2
             laptop-lg:grid-cols-2
             desktop:grid-cols-2'>
             {ROLES.map((role) => (
-              <li className='reveal-card overflow-hidden bg-offwhite m-0'
+              <li className='reveal-card theme-dark overflow-hidden bg-card m-0'
                 id={`work-card-${role.id}`} key={role.id}>
                 <div className='reveal-card-inner h-full flex flex-col
-                  mobile:p-5 mobile:gap-y-8
+                  mobile:p-6 mobile:gap-y-8
                   tablet:p-8 tablet:gap-y-10
                   laptop:p-8 laptop:gap-y-12
-                  laptop-lg:p-10 laptop-lg:gap-y-14
+                  laptop-lg:p-10 laptop-lg:gap-y-12
                   desktop:p-12 desktop:gap-y-16'>
                 {/* role meta */}
                 <div className='entry-container'>
                   <p className='entry-line font-medium
-                    mobile:text-[1.1rem]
-                    tablet:text-[1.4rem]
-                    laptop:text-[1.4rem]
-                    laptop-lg:text-[1.6rem]
-                    desktop:text-[1.8rem]'>
+                    text-subtitle
+                    '>
                     <SplitText text={role.title} id={`animate-work-${role.id}`} />
                   </p>
                   <p className='entry-line font-regular mt-1
-                    mobile:text-[.9rem]
-                    tablet:text-[.9rem]
-                    laptop:text-[1rem]
-                    laptop-lg:text-[1rem]
-                    desktop:text-[1rem]'>
+                    text-body
+                    '>
                     <SplitText text={role.company} id={`animate-work-${role.id}`} />
                   </p>
                   <p className='entry-line font-regular text-muted
-                    mobile:text-[.8rem]
-                    tablet:text-[.8rem]
-                    laptop:text-[.9rem]
-                    laptop-lg:text-[.9rem]
-                    desktop:text-[.9rem]'>
+                    text-caption
+                    '>
                     <SplitText text={role.dates} id={`animate-work-${role.id}`} />
                   </p>
                 </div>
                 {/* bullets */}
                 <ul className='flex flex-col gap-y-4
-                  mobile:text-[.9rem]
-                  tablet:text-[.9rem]
-                  laptop:text-[1rem]
-                  laptop-lg:text-[1rem]
-                  desktop:text-[1.1rem]'>
+                  text-body
+                  '>
                   {role.bullets.map((bullet, i) => (
                     <li key={i} className='entry-container m-0'>
                       <p className='entry-line text-muted'>
-                        <SplitText text={bullet} id={`animate-work-${role.id}`} by='word' />
+                        <SplitText text={bullet} id={`animate-work-${role.id}`} by='word' sentence />
                       </p>
                     </li>
                   ))}

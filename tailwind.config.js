@@ -6,6 +6,18 @@ module.exports = {
   ],
   theme: {
     extend: {
+      // the type scale. every step is fluid - it grows with the screen's
+      // width between a floor and a ceiling, so there are no jumps between
+      // breakpoints - and each step is clearly apart from the next: small
+      // quiet text against large headings. the hero and contact headlines
+      // sit above this scale, sized to the screen's width where they are set
+      fontSize: {
+        caption: 'clamp(.75rem, .7rem + .15vw, .875rem)',
+        body: 'clamp(.875rem, .8rem + .25vw, 1.125rem)',
+        subtitle: 'clamp(1.0625rem, .9rem + .6vw, 1.75rem)',
+        heading: 'clamp(2rem, 1.5rem + 1.6vw, 3.5rem)',
+        title: 'clamp(2rem, 1.4rem + 2.4vw, 4.5rem)',
+      },
       fontFamily: {
         teko: ["Teko", "sans-serif"],
         space: ["Space Mono", "monospace"],
@@ -15,13 +27,26 @@ module.exports = {
         monolisa: ["MonoLisa", "ui-monospace", "monospace"],
       },
       colors: {
-        'black': '#0F0E17',
+        // the palette, on the 60/30/10 rule.
+        // 60 - the base: the page's background
+        'black': '#1B1A1A',
+        // 30 - the secondary: alternate sections, cards and overlays
+        // (surface) and the rules and borders between things (line)
+        'surface': '#2A2828',
+        'line': '#444141',
+        // (no accent colours: the site is black, white and the greys between)
+        // text. light on every background above; muted is the same light
+        // at 60%, for supporting text one step below titles
         'white': '#f2f2f2',
         'offwhite': '#E5E4E3',
-        // supporting text on the light background - descriptions, list
-        // items and values, one step below titles (5.6:1 on #E5E4E3)
-        'muted': '#5b5a61',
-        'red': '#CC2525'
+        // muted and rule follow the section's theme (App.scss): supporting
+        // text and hairlines, light on the dark sections, dark on the light
+        'muted': 'var(--muted)',
+        'rule': 'var(--rule)',
+        // a card or panel: one shade up from the section it sits on
+        'card': 'var(--card)',
+        // the light sections' background
+        'paper': '#F1F1F1'
       },
       backgroundImage: {
         // // regain

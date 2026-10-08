@@ -48,11 +48,8 @@ function ListRow({ id, title, items }) {
         <ul className='col-span-1 flex flex-wrap'>
           {items.map((item) => (
             <li className='stacks h-[30px] text-muted
-              mobile:text-[.9rem]
-              tablet:text-[.9rem]
-              laptop:text-[1rem]
-              laptop-lg:text-[1rem]
-              desktop:text-[1.1rem]'
+              text-body
+              '
               key={item}>
               <SplitText text={item} id={`animate-row-${id}`} />
             </li>

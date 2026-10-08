@@ -1,92 +1,86 @@
 //
-import React, { useEffect } from 'react'
-// Components
-import AboutParagraph from './about/AboutParagraph';
-// icons
-import {RiArrowRightDownLine} from 'react-icons/ri'
-// scroll reveal
-import { scrollRevealSequence } from '../../utils/scrollReveal'
-// page-to-page wipe
-import { TransitionLink } from '../common/PageTransition'
+import React, { useEffect, useRef } from 'react'
+// GSAP
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+// the site's button and section label
+import Button, { BUTTON_PARTS } from '../common/Button'
+import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
+gsap.registerPlugin(ScrollTrigger)
+
+const PARAGRAPH = 'I design and build digital products with a focus on clarity, function, and user experience. Based in the Philippines, I bring 3+ years of UI/UX design and front-end development experience to every project, from user flows and design systems to responsive, production-ready interfaces.';
+
+// share of the pinned scroll the text fill takes; the rest opens the
+// button and holds the finished screen
+const FILL_END = .7;
 
 /**
- * The landing page's introduction: a full-width black screen. Where the
- * hero is a statement of what I do, this is who I am - a small greeting,
- * a career paragraph and a link through to the full About page
- * (AboutPage.jsx).
+ * The designer, on the light theme: one large paragraph that fills in as
+ * the page scrolls. The section pins while its text - on the page from the
+ * start, but faded right back - comes up to full strength in reading
+ * order; then the button to the full About page (AboutPage.jsx) opens.
  */
 function About() {
-  useEffect(() => {
-    // the page's letter-by-letter reveal, as the section comes up the
-    // screen: greeting and paragraph first, the link once they have landed.
-    // scrolling back above that point takes them away again
-    const reveal = scrollRevealSequence([
-      { targets: '#animate-about', vars: { y: 0, stagger: .012, ease: 'power1.in' } },
-      { targets: '#animate-about-link', vars: { y: 0, stagger: .02, ease: 'power1.in' }, position: '-=.3' },
-    ], { trigger: '#about', start: 'top 60%' });
+  const fxSection = useRef();
 
-    return () => reveal.kill();
+  useEffect(() => {
+    const section = fxSection.current;
+
+    // scroll-coupled. the only pinned section on the page, so it needs no
+    // refresh priority
+    const fill = gsap.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: '+=120%',
+        pin: true,
+        scrub: ScrollTrigger.isTouch ? .5 : true,
+        anticipatePin: 1,
+      },
+    })
+      .fromTo('#animate-about',
+        { opacity: .25 },
+        { opacity: 1, duration: .06, stagger: { amount: FILL_END - .06 } }, 0)
+      .to('#about-cta', { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .1 }, FILL_END)
+      .to(`#about-cta :is(${BUTTON_PARTS})`, { y: 0, ease: 'power1.in', duration: .06, stagger: { amount: .08 } }, FILL_END + .04)
+      .to({}, { duration: .1 });
+
+    return () => {
+      fill.scrollTrigger?.kill();
+      fill.revert();
+    };
   }, []);
 
   return (
     <>
-      {/* about container - full width, one screen tall, black */}
+      {/* about container - full width, one screen tall */}
       <div id='about'>
-        <section className='flex flex-col justify-between h-screen-safe bg-black overflow-hidden pt-[6rem]
-          mobile:px-[.9rem] mobile:pb-8
-          tablet:px-[1rem] tablet:pb-10
-          laptop:px-[2rem] laptop:pb-10
-          laptop-lg:px-[3rem] laptop-lg:pb-12
-          desktop:px-[3rem] desktop:pb-14'>
-          {/* greeting + paragraph */}
+        <section className='theme-light flex flex-col justify-between h-screen-safe overflow-hidden
+          mobile:px-[1rem] mobile:py-16 mobile:gap-y-10
+          tablet:px-[1rem] tablet:py-16 tablet:gap-y-12
+          laptop:px-[2rem] laptop:py-20 laptop:gap-y-12
+          laptop-lg:px-[3rem] laptop-lg:py-24 laptop-lg:gap-y-12
+          desktop:px-[3rem] desktop:py-28 desktop:gap-y-16'
+          ref={fxSection}>
           <div>
-            {/* greeting - a label for the paragraph, not a second headline */}
-            <div className='flex flex-wrap
-              mobile:mb-4 mobile:text-[8vw]
-              tablet:mb-5 tablet:text-[6vw]
-              laptop:mb-6 laptop:text-[4vw]
-              laptop-lg:mb-6 laptop-lg:text-[3.6vw]
-              desktop:mb-8 desktop:text-[3.6vw]'>
-              <span className='font-flexible font-medium leading-none text-offwhite'>
-                <SplitText text="Hello, I'm Jay" id='animate-about' />
-              </span>
-            </div>
-            {/* about me */}
-            <div className='
-              mobile:w-full
-              tablet:w-[92%]
-              laptop:w-[88%]
-              laptop-lg:w-[86%]
-              desktop:w-[82%]'>
-              <AboutParagraph/>
-            </div>
+            <Tag label='The Designer' id='animate-about-tag' />
+            {/* paragraph - body face, at the lead step of the type scale
+              (size: .about-paragraph; start state: .fill-text, App.scss) */}
+            <p className='about-paragraph fill-text flex flex-wrap font-monolisa
+              mobile:mt-6 mobile:w-full mobile:leading-snug
+              tablet:mt-8 tablet:w-[94%] tablet:leading-tight
+              laptop:mt-8 laptop:w-[90%] laptop:leading-tight
+              laptop-lg:mt-10 laptop-lg:w-[88%] laptop-lg:leading-tight
+              desktop:mt-10 desktop:w-[84%] desktop:leading-tight'>
+              <SplitText text={PARAGRAPH} id='animate-about' />
+            </p>
           </div>
-          {/* link to the full about page - at the end of the section, on
-            the left */}
-          <div className='flex justify-start'>
-            {/* the menu links' markup - their hover is the one made for a
-              dark background */}
-            <div className='page-link selected-link shrink-0'>
-              <TransitionLink to='/about' className='inline-block'>
-                <div className='link'>
-                  <span className='flex items-center text-offwhite
-                    mobile:text-[.9rem]
-                    tablet:text-[.9rem]
-                    laptop:text-[1rem]
-                    laptop-lg:text-[1rem]
-                    desktop:text-[1.1rem]'>
-                    <SplitText text='More about me' id='animate-about-link' />
-                    <span className='menu-icon-clip'>
-                      <span className='menu-icon' id='animate-about-link'>
-                        <RiArrowRightDownLine id='icon' className='fill-offwhite ml-1 text-2xl'/>
-                      </span>
-                    </span>
-                  </span>
-                </div>
-              </TransitionLink>
-            </div>
+          {/* button to the full about page - opened by the timeline above */}
+          <div className='flex justify-start shrink-0'>
+            <Button label='More about me' to='/about' reveal='manual' id='about-cta' />
           </div>
         </section>
       </div>

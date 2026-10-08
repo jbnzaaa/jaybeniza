@@ -95,7 +95,7 @@ function Preloader({ onExitStart, onDone }) {
   return (
     <div className='fixed top-0 left-0 w-full h-screen-safe z-[45] bg-black overflow-hidden' ref={fxPanel}>
       <div className='flex items-end h-screen-safe
-        mobile:px-[.9rem] mobile:pb-[.9rem]
+        mobile:px-[1rem] mobile:pb-[1rem]
         tablet:px-[1rem] tablet:pb-[1rem]
         laptop:px-[2rem] laptop:pb-20
         laptop-lg:px-[3rem] laptop-lg:pb-20

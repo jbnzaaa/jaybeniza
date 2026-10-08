@@ -1,130 +1,193 @@
 //
-import React, { useCallback, useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 // Components
 import Contact from './Contact';
 // project content
 import { PROJECTS } from './projects/projects'
 // GSAP
+import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 // page-to-page wipe
 import { TransitionLink } from '../common/PageTransition'
 // scroll reveal
-import { scrollReveal, scrollRevealSequence } from '../../utils/scrollReveal'
+import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
+gsap.registerPlugin(ScrollTrigger)
 
-// every project, in the order shown - the landing page's three first
-const ORDER = ['dailydiscount', 'regain', 'jaysonbeniza', 'jbnza'];
+// each project's cover - the mock-up picture of the project (a background
+// class, see backgroundImage in tailwind.config.js)
+const COVERS = {
+  dailydiscount: 'bg-dailydiscount',
+  jaysonbeniza: 'bg-jaysonbeniza',
+  jbnza: 'bg-jbnza',
+  regain: 'bg-regain',
+};
 
-const DESCRIPTION = 'Everything I have designed and built, from interface design in Figma to the shipped front-end. Open a project for the details and the part I played in it.';
+// the projects, newest year first (projects of one year keep this order)
+const BY_YEAR = Object.keys(COVERS)
+  .sort((a, b) => Number(PROJECTS[b].year) - Number(PROJECTS[a].year));
+
+// case studies still being written - empty cards, marked as such, after
+// the finished projects
+const UPCOMING = 3;
+
+// a project's one supporting label: year / role / category
+const label = ({ year, roles, category }) => [year, roles.join(', '), category.replace(' / ', ', ')].join(' / ');
+
+const ITEMS = [
+  ...BY_YEAR.map((id) => ({
+    key: id,
+    title: PROJECTS[id].title,
+    label: label(PROJECTS[id]),
+    to: PROJECTS[id].path,
+    cover: COVERS[id],
+  })),
+  ...Array.from({ length: UPCOMING }, (_, i) => ({
+    key: `upcoming-${i}`,
+    title: `Case study 0${i + 1}`,
+    label: 'Soon / Case study in progress',
+  })),
+];
+
+// where each project sits on the six column grid, in turn: the column it
+// starts on and how many it spans. every project has a grid row to
+// itself, so no card reaches into another's. on a phone every project is
+// five columns wide and they step from side to side
+const PLACES = [
+  '1 / span 3',
+  '4 / span 3',
+  '2 / span 3',
+  '1 / span 2',
+  '3 / span 3',
+  '5 / span 2',
+  '2 / span 3',
+];
+const place = (i) => ({
+  '--col': PLACES[i % PLACES.length],
+  '--col-small': i % 2 ? '2 / span 5' : '1 / span 5',
+  gridRow: i + 1,
+});
+
+const HEADLINE_LINES = [
+  'Every project.',
+  'Start to finish.',
+];
+
+const DESCRIPTION = 'Every project so far, from first sketch to live product. Pick one to see the screens and the part I played.';
 
 /**
- * The projects page (route /projects): every project as a card - its
- * first screenshot, name, year and my role - each opening the project's
- * own page. Reached from the "More projects" button in the landing page's
- * selected projects section. Return sits in the top bar (Navbar.jsx).
+ * The work page (route /work), in the landing page's layout: a first
+ * screen with the headline and, in its lower right, a short description,
+ * then every project on a six column grid, newest year first - each in a
+ * row of its own and in a different place across it. A project is its
+ * card - the cover; its name and its label (year / role / category) come
+ * up under the card, outside it, only while the pointer is on the card
+ * (and are always there on a touch screen, which has no pointer).
  */
 function ProjectsPage() {
-  // the images have no size until they load, so re-measure the scroll
-  // triggers once the loads settle - one refresh for a burst of images
-  const remeasure = useCallback(() => {
-    clearTimeout(remeasure.timer);
-    remeasure.timer = setTimeout(() => ScrollTrigger.refresh(), 150);
-  }, []);
+  const fxGrid = useRef();
 
   useEffect(() => {
-    // title and description - the landing page's per-letter reveal
-    const intro = scrollReveal('#animate-projects-page', { y: 0, stagger: .02, ease: 'power1.in' });
+    const section = fxGrid.current;
+    const open = { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' };
+    // a cover's picture settling into its frame as the frame opens
+    const settle = { yPercent: 0, scale: 1, ease: 'power2.out' };
+    // the pictures start slightly large and low in their frames
+    const covers = gsap.set(gsap.utils.toArray('.work-cover-image', section), { yPercent: 14, scale: 1.15 });
 
-    // each card reveals as it scrolls into view, the way the project
-    // pages' screenshots do: the frame wipes up from its bottom edge while
-    // the image inside eases down to its real size, then its text rises
-    const cards = ORDER.map((id) => scrollRevealSequence([
-      { targets: `#projects-card-${id}`, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },
-      { targets: `#projects-card-${id} .screenshot-img`, vars: { scale: 1, ease: 'power2.out' }, position: '<' },
-      { targets: `#animate-projects-${id}`, vars: { y: 0, stagger: .02, ease: 'power1.in' }, position: '<.28' },
-    ], { trigger: `#projects-card-${id}` }));
+    // the first screen is in view at load, so its reveal is triggered off
+    // the section itself
+    const intro = scrollReveal('#animate-projects-page', { y: 0, stagger: .02, ease: 'power1.in' },
+      { trigger: '#projects-hero', start: 'top bottom' });
+
+    // each project as it comes up the screen: the card wipes open from
+    // its bottom edge, the picture easing down to size inside it
+    const reveals = gsap.utils.toArray('.work-item', section).map((item) => gsap.timeline({
+      scrollTrigger: { trigger: item, start: 'top 88%', toggleActions: 'play none none reverse' },
+    })
+      .to(item.querySelector('.work-cover'), { ...open, duration: .9 }, 0)
+      .to(item.querySelector('.work-cover-image'), { ...settle, duration: 1.1 }, 0));
 
     return () => {
       intro.kill();
-      cards.forEach((card) => card.kill());
+      reveals.forEach((reveal) => {
+        reveal.scrollTrigger?.kill();
+        reveal.revert();
+      });
+      covers.revert();
     };
   }, []);
 
   return (
     <>
-      {/* top padding clears the fixed nav bar */}
-      <section className='pt-24
-        mobile:px-[.9rem] mobile:pb-16
-        tablet:px-[1rem] tablet:pb-16
-        laptop:px-[2rem] laptop:pb-20
-        laptop-lg:px-[3rem] laptop-lg:pb-24
-        desktop:px-[3rem] desktop:pb-28'>
-        {/* title left, description right */}
-        <div className='grid grid-cols-8 gap-x-5 gap-y-4
-          mobile:mb-10
-          tablet:mb-12
-          laptop:mb-16
-          laptop-lg:mb-20
-          desktop:mb-24'>
-          <h1 className='col-start-1 flex flex-wrap font-flexible font-medium leading-none
-            mobile:col-span-8 mobile:text-[8vw]
-            tablet:col-span-8 tablet:text-[6vw]
-            laptop:col-span-4 laptop:text-[4vw]
-            laptop-lg:col-span-4 laptop-lg:text-[3.6vw]
-            desktop:col-span-4 desktop:text-[3.6vw]'>
-            <SplitText text='Projects' id='animate-projects-page' />
-          </h1>
-          <p className='flex flex-wrap content-start
-            mobile:col-span-8 mobile:col-start-1 mobile:text-[.9rem]
-            tablet:col-span-6 tablet:col-start-1 tablet:text-[.9rem]
-            laptop:col-span-3 laptop:col-start-6 laptop:text-[1rem]
-            laptop-lg:col-span-3 laptop-lg:col-start-6 laptop-lg:text-[1rem]
-            desktop:col-span-3 desktop:col-start-6 desktop:text-[1.1rem]'>
-            <SplitText text={DESCRIPTION} id='animate-projects-page' by='word' />
-          </p>
-        </div>
-        {/* one card per project */}
-        <ul className='project-container grid gap-x-5
-          mobile:grid-cols-1 mobile:gap-y-10
-          tablet:grid-cols-2 tablet:gap-y-12
-          laptop:grid-cols-2 laptop:gap-y-16
-          laptop-lg:grid-cols-2 laptop-lg:gap-y-20
-          desktop:grid-cols-2 desktop:gap-y-24'>
-          {ORDER.map((id) => {
-            const project = PROJECTS[id];
+      {/* first screen - headline at the top, description in the lower
+        right. top padding clears the nav bar */}
+      <section id='projects-hero' className='theme-light flex flex-col justify-between min-h-screen-safe
+        mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-16
+        tablet:px-[1rem] tablet:pt-20 tablet:pb-8 tablet:gap-y-16
+        laptop:px-[2rem] laptop:pt-24 laptop:pb-10 laptop:gap-y-16
+        laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-16
+        desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'>
+        <h1>
+          {HEADLINE_LINES.map((line) => (
+            <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.92] tracking-tight
+              mobile:text-[19vw]
+              tablet:text-[12vw]
+              laptop:text-[10vw]
+              laptop-lg:text-[10vw]
+              desktop:text-[10vw]'>
+              <SplitText text={line} id='animate-projects-page' />
+            </span>
+          ))}
+        </h1>
+        <p className='flex flex-wrap self-end text-caption
+          mobile:w-[78%]
+          tablet:w-[52%]
+          laptop:w-[34%]
+          laptop-lg:w-[30%]
+          desktop:w-[28%]'>
+          <SplitText text={DESCRIPTION} id='animate-projects-page' by='word' />
+        </p>
+      </section>
+      {/* the projects - six columns; each one's place on them is in
+        PLACES above (.work-grid, App.scss) */}
+      <section className='theme-light
+        mobile:px-[1rem] mobile:pt-8 mobile:pb-16
+        tablet:px-[1rem] tablet:pt-8 tablet:pb-16
+        laptop:px-[2rem] laptop:pt-8 laptop:pb-20
+        laptop-lg:px-[3rem] laptop-lg:pt-8 laptop-lg:pb-24
+        desktop:px-[3rem] desktop:pt-8 desktop:pb-28'
+        ref={fxGrid}>
+        <ul className='work-grid'>
+          {ITEMS.map(({ key, title, label: text, to, cover }, i) => {
+            const item = (
+              <>
+                {/* the card - the cover. wipes open on scroll (start
+                  state: .work-cover, App.scss) */}
+                <div className='work-cover overflow-hidden aspect-[4/3]'>
+                  {cover
+                    ? <div className={`work-cover-image w-full h-full bg-cover bg-center ${cover}`}/>
+                    // nothing to show yet - says so
+                    : (
+                      <div className='work-cover-image theme-dark flex justify-center items-center w-full h-full bg-card'>
+                        <p className='text-caption text-muted'>Coming soon</p>
+                      </div>
+                    )}
+                </div>
+                {/* under the card, outside it: name and label - shown on
+                  hover (.work-item-info, App.scss) */}
+                <div className='work-item-info pt-4'>
+                  <h2 className='font-flexible font-medium leading-none text-heading [word-spacing:.2em]'>{title}</h2>
+                  <p className='text-caption text-muted mt-2'>{text}</p>
+                </div>
+              </>
+            );
             return (
-              <li className='m-0' key={id}>
-                <TransitionLink to={project.path} aria-label={`${project.title} case study`} className='block'>
-                  {/* image - the project's first screenshot, cropped to one shape */}
-                  <div className='screenshot-container aspect-[16/10] border border-black/[.14]' id={`projects-card-${id}`}>
-                    <img src={project.screenshots[0].src} alt={project.screenshots[0].alt}
-                      className='screenshot-img h-full object-cover object-left-top' onLoad={remeasure}/>
-                  </div>
-                  {/* name left, year and role right - stacked where a card
-                    is too narrow to hold both on one line */}
-                  <div className='flex justify-between items-end gap-x-5 pt-3
-                    mobile:flex-col mobile:items-start mobile:gap-y-1
-                    tablet:flex-col tablet:items-start tablet:gap-y-1
-                    laptop:flex-col laptop:items-start laptop:gap-y-1'>
-                    <span className='font-flexible font-medium leading-none
-                      mobile:text-[2rem]
-                      tablet:text-[2rem]
-                      laptop:text-[2.4rem]
-                      laptop-lg:text-[2.8rem]
-                      desktop:text-[3.4rem]'>
-                      <SplitText text={project.title} id={`animate-projects-${id}`} />
-                    </span>
-                    <span className='flex flex-wrap text-muted
-                      mobile:text-[.7rem]
-                      tablet:text-[.75rem]
-                      laptop:text-[.8rem]
-                      laptop-lg:text-[.8rem] laptop-lg:justify-end
-                      desktop:text-[.8rem] desktop:justify-end'>
-                      <SplitText text={`${project.year} / ${project.roles.join(', ')}`} id={`animate-projects-${id}`} by='word' />
-                    </span>
-                  </div>
-                </TransitionLink>
+              <li className='work-item m-0' style={place(i)} key={key}>
+                {to
+                  ? <TransitionLink to={to} className='block' data-no-hover-roll>{item}</TransitionLink>
+                  : item}
               </li>
             );
           })}
