@@ -49,12 +49,12 @@ const BAR = `
  * section's edge up through the bar as the page scrolls. The contact
  * button is part of that too: a filled box that inverts with the logo.
  *
- * On a phone the links and the contact button give way to one Menu
- * button, which opens a panel over the page with all four in it.
+ * On a phone the links and the contact button give way to the word
+ * "Menu" in the bar, which opens a panel over the page with all four in
+ * it and reads "Close" while it is open.
  */
 function Navbar() {
   const fxBar = useRef();
-  const fxAction = useRef();
   const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -80,7 +80,7 @@ function Navbar() {
     // a page with no such closing screen (the contact page, which is one)
     // keeps the bar throughout
     if (!document.querySelector('[data-nav-cover]')) return undefined;
-    const cover = gsap.fromTo([bar, fxAction.current],
+    const cover = gsap.fromTo(bar,
       { clipPath: 'inset(0% 0% 0% 0%)' },
       {
         clipPath: 'inset(0% 0% 100% 0%)',
@@ -123,7 +123,7 @@ function Navbar() {
   return (
     <>
       {/* navbar container */}
-      <div className='nav-blend fixed top-0 left-0 w-full z-20 mix-blend-difference' ref={fxBar}>
+      <div className='nav-blend fixed top-0 left-0 w-full z-[22] mix-blend-difference' ref={fxBar}>
         <nav aria-label='Main' className={`grid grid-cols-[1fr_auto_1fr] items-center gap-x-4 ${BAR}`}>
           {/* logo - left */}
           <div className='logo-container justify-self-start'>
@@ -154,20 +154,24 @@ function Navbar() {
           {/* right - the way to the contact page: filled, and blended
             like the logo, so it inverts with the section under it
             (.nav-blend, App.scss). revealed on mount. on a phone its
-            place is taken by the Menu button in the layer below; an
-            unseen copy of that keeps the bar's height */}
+            place is taken by the word "Menu" */}
           <div className='col-start-3 justify-self-end'>
             <div className={FROM_TABLET}>
               <Button label='Get in touch' to={CONTACT} onClick={toTopIfHere(CONTACT)} small reveal='mount' />
             </div>
-            <div className={`invisible ${PHONE_ONLY}`} aria-hidden='true'>
-              <span className='cta-button cta-button-small text-caption'>Menu</span>
-            </div>
+            {/* on a phone: the word alone, no box, blended like the rest
+              of the bar */}
+            <button type='button' className={`nav-menu-text font-monolisa text-caption leading-none uppercase py-2 ${PHONE_ONLY}`}
+              aria-expanded={menuOpen} aria-controls='nav-menu'
+              onClick={() => setMenuOpen((open) => !open)}>
+              {menuOpen ? 'Close' : 'Menu'}
+            </button>
           </div>
         </nav>
       </div>
       {/* the phone's menu - a black panel that wipes down over the page
-        (.nav-menu, App.scss), under the Menu button that opens it */}
+        (.nav-menu, App.scss), under the bar - whose "Menu" opened it and
+        now reads "Close" */}
       <div className={`nav-menu ${menuOpen ? 'nav-menu-open' : ''} fixed inset-0 z-[21] flex flex-col justify-end bg-black px-[1rem] pt-20 pb-8 ${PHONE_ONLY}`}
         id='nav-menu' inert={menuOpen ? undefined : ''}>
         <ul className='flex flex-col'>
@@ -181,15 +185,6 @@ function Navbar() {
             </li>
           ))}
         </ul>
-      </div>
-      {/* the phone's Menu button - black on every section (.nav-action,
-        App.scss) and over its own panel, so outside the blended bar */}
-      <div className={`nav-action fixed top-0 right-0 z-[22] ${BAR} ${PHONE_ONLY}`} ref={fxAction}>
-        <button type='button' className='nav-menu-button cta-button cta-button-small text-caption font-monolisa uppercase'
-          aria-expanded={menuOpen} aria-controls='nav-menu'
-          onClick={() => setMenuOpen((open) => !open)}>
-          {menuOpen ? 'Close' : 'Menu'}
-        </button>
       </div>
     </>
   )

@@ -302,6 +302,12 @@
   border-color: #444141;
 }
 
+* body .nav-menu-text {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
 * body .nav-menu-button {
   clip-path: none;
   cursor: pointer;
@@ -1023,6 +1029,98 @@
 * body .project-form option {
   background: var(--ground);
   text-transform: none;
+}
+
+* body .form-select {
+  position: relative;
+}
+
+* body .form-select-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--muted);
+  background: transparent;
+  line-height: 1.6;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.3s ease-in-out;
+}
+
+* body .form-select-button:is(:hover, :focus-visible),
+* body .form-select-open .form-select-button {
+  border-color: var(--text);
+}
+
+* body .form-select-button:focus-visible {
+  outline: 1px solid var(--text);
+  outline-offset: 2px;
+}
+
+* body .form-select-arrow {
+  flex-shrink: 0;
+  font-size: 1rem;
+  fill: var(--text);
+  transition: transform 0.3s ease-in-out;
+}
+
+* body .form-select-open .form-select-arrow {
+  transform: rotate(180deg);
+}
+
+* body .form-select-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 6;
+  margin: -1px 0 0;
+  border: 1px solid var(--text);
+  background: var(--ground);
+  visibility: hidden;
+  clip-path: inset(0% 0% 100% 0%);
+  transition: clip-path 0.3s cubic-bezier(0.65, 0, 0.35, 1), visibility 0s 0.3s;
+}
+
+* body .form-select-open .form-select-list {
+  visibility: visible;
+  clip-path: inset(0% 0% 0% 0%);
+  transition: clip-path 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+* body .form-select-option {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+* body .form-select-option::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--text);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+* body .form-select-option span {
+  transition: color 0.25s ease-in-out;
+}
+
+* body .form-select-option-on::before {
+  transform: scaleY(1);
+}
+
+* body .form-select-option-on span {
+  color: var(--ground);
 }
 
 * body .form-checks {

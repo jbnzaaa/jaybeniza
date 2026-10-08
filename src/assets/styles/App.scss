@@ -418,6 +418,13 @@
   border-color: #444141;
 }
 
+// the phone's "Menu" / "Close" in the bar: a word, no box
+* body .nav-menu-text {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
 // the phone's Menu button - the site's button as a real button. it is
 // not revealed by a script, so it is not clipped away to start with
 * body .nav-menu-button {
@@ -1274,6 +1281,103 @@
 * body .project-form option {
   background: var(--ground);
   text-transform: none;
+}
+
+// the site's own dropdown (Select, ProjectRequest.jsx): a box like the
+// other fields showing the choice, and a list under it that wipes open
+// from its top edge
+* body .form-select {
+  position: relative;
+}
+
+* body .form-select-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: .5rem 1rem;
+  border: 1px solid var(--muted);
+  background: transparent;
+  line-height: 1.6;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .3s ease-in-out;
+}
+
+* body .form-select-button:is(:hover, :focus-visible),
+* body .form-select-open .form-select-button {
+  border-color: var(--text);
+}
+
+* body .form-select-button:focus-visible {
+  outline: 1px solid var(--text);
+  outline-offset: 2px;
+}
+
+// the chevron turns over while the list is open
+* body .form-select-arrow {
+  flex-shrink: 0;
+  font-size: 1rem;
+  fill: var(--text);
+  transition: transform .3s ease-in-out;
+}
+
+* body .form-select-open .form-select-arrow {
+  transform: rotate(180deg);
+}
+
+* body .form-select-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 6;
+  margin: -1px 0 0;
+  border: 1px solid var(--text);
+  background: var(--ground);
+  visibility: hidden;
+  clip-path: inset(0% 0% 100% 0%);
+  transition: clip-path .3s cubic-bezier(.65, 0, .35, 1), visibility 0s .3s;
+}
+
+* body .form-select-open .form-select-list {
+  visibility: visible;
+  clip-path: inset(0% 0% 0% 0%);
+  transition: clip-path .3s cubic-bezier(.65, 0, .35, 1);
+}
+
+// an option: the site's fill from below under the pointer or the keys
+* body .form-select-option {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: 0;
+  padding: .5rem 1rem;
+  cursor: pointer;
+}
+
+* body .form-select-option::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--text);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform .25s cubic-bezier(.65, 0, .35, 1);
+}
+
+* body .form-select-option span {
+  transition: color .25s ease-in-out;
+}
+
+* body .form-select-option-on::before {
+  transform: scaleY(1);
+}
+
+* body .form-select-option-on span {
+  color: var(--ground);
 }
 
 * body .form-checks {

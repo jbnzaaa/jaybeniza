@@ -38,8 +38,23 @@ function ScrollManager() {
   const location = useLocation();
 
   useEffect(() => {
-    ScrollSmoother.get()?.scrollTo(0, true);
-    const id = requestAnimationFrame(() => ScrollTrigger.refresh());
+    // the phone's menu pauses the smoother while it is open, and a paused
+    // smoother takes the new position without moving the page to it: the
+    // new page then opened part way down, and jumped to the top at the
+    // first touch. so it is un-paused first, sent to the top, and sent
+    // again once the new page has been measured
+    const smoother = ScrollSmoother.get();
+    const toTop = () => {
+      smoother?.paused(false);
+      smoother?.scrollTo(0, true);
+      smoother?.scrollTop(0);
+      window.scrollTo(0, 0);
+    };
+    toTop();
+    const id = requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+      toTop();
+    });
     return () => cancelAnimationFrame(id);
   }, [location.pathname]);
 

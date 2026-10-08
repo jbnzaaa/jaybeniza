@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 // the site's button and section label
-import Button, { BUTTON_PARTS } from '../common/Button'
+import Button from '../common/Button'
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
@@ -12,51 +12,45 @@ gsap.registerPlugin(ScrollTrigger)
 
 const PARAGRAPH = 'I design and build digital products with a focus on clarity, function, and user experience. Based in the Philippines, I bring 3+ years of UI/UX design and front-end development experience to every project, from user flows and design systems to responsive, production-ready interfaces.';
 
-// share of the pinned scroll the text's reveal takes; the rest opens the
-// button and holds the finished screen
-const FILL_END = .7;
+// how far up the screen the section's top has to come before its text
+// starts to rise: 80% down from the top of the screen
+const START = 'top 80%';
 
 /**
- * The designer, on the light theme: one large paragraph revealed as the
- * page scrolls. The section pins while its text rises out of its lines,
- * letter by letter in reading order - the site's text reveal, tied to the
- * scroll; then the button to the full About page (AboutPage.jsx) opens.
+ * The designer, on the light theme: one large paragraph and the button to
+ * the full About page (AboutPage.jsx). The section scrolls with the page -
+ * it is not pinned. When its top reaches 80% of the way down the screen
+ * the paragraph rises out of its lines, letter by letter in reading order
+ * - the site's text reveal - and drops back if the page is scrolled back
+ * above that point. The button reveals itself as it comes into view.
  */
 function About() {
   const fxSection = useRef();
 
   useEffect(() => {
-    const section = fxSection.current;
-
-    // scroll-coupled. the only pinned section on the page, so it needs no
-    // refresh priority
-    const fill = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: '+=120%',
-        pin: true,
-        scrub: ScrollTrigger.isTouch ? .5 : true,
-        anticipatePin: 1,
-      },
-    })
-      .to('#animate-about', { y: 0, ease: 'power1.out', duration: .06, stagger: { amount: FILL_END - .06 } }, 0)
-      .to('#about-cta', { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .1 }, FILL_END)
-      .to(`#about-cta :is(${BUTTON_PARTS})`, { y: 0, ease: 'power1.in', duration: .06, stagger: { amount: .08 } }, FILL_END + .04)
-      .to({}, { duration: .1 });
+    // the letters rise across a set time rather than a fixed step each,
+    // so a long paragraph's last line is not seconds behind its first
+    const reveal = gsap.to('#animate-about', {
+      y: 0, duration: .6, ease: 'power2.out', stagger: { amount: 1.6 }, paused: true,
+    });
+    const trigger = ScrollTrigger.create({
+      trigger: fxSection.current,
+      start: START,
+      onEnter: () => reveal.play(),
+      onLeaveBack: () => reveal.reverse(),
+    });
 
     return () => {
-      fill.scrollTrigger?.kill();
-      fill.revert();
+      trigger.kill();
+      reveal.revert();
     };
   }, []);
 
   return (
     <>
-      {/* about container - full width, one screen tall */}
+      {/* about container - full width, at least one screen tall */}
       <div id='about'>
-        <section className='theme-light flex flex-col justify-between h-screen-safe overflow-hidden
+        <section className='theme-light flex flex-col justify-between min-h-screen-safe
           mobile:px-[1rem] mobile:py-16 mobile:gap-y-10
           tablet:px-[1rem] tablet:py-16 tablet:gap-y-12
           laptop:px-[2rem] laptop:py-20 laptop:gap-y-12
@@ -77,9 +71,9 @@ function About() {
               <SplitText text={PARAGRAPH} id='animate-about' />
             </p>
           </div>
-          {/* button to the full about page - opened by the timeline above */}
+          {/* button to the full about page */}
           <div className='flex justify-start shrink-0'>
-            <Button label='More about me' to='/about' reveal='manual' id='about-cta' />
+            <Button label='More about me' to='/about' />
           </div>
         </section>
       </div>

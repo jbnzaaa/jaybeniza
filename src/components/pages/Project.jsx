@@ -23,9 +23,9 @@ const DESCRIPTION = 'Products I designed and built. Open one to see my exact rol
  * large, one per line, each with its year and my part in it against the
  * right edge. Pointing at a row brings up that project's image level
  * with it, between the name and the label, and steps the other rows back.
- * Below laptop width (usually no pointer) each project's image sits under
- * its name instead, and opens as it scrolls into view the way the work
- * page's cards do.
+ * Below laptop width (usually no pointer) each project is the work
+ * page's card instead: its cover, opening as it scrolls into view, with
+ * its name and label under it.
  */
 function Project() {
   const fxList = useRef();
@@ -98,8 +98,8 @@ function Project() {
           ref={fxList}>
           <ul className='project-list' onMouseLeave={hide} data-no-hover-roll>
             {PROJECT_CARDS.map((project) => (
-              <li className='m-0' id={`project-row-${project.id}`} key={project.id} onMouseEnter={show(project)}>
-                <TransitionLink to={project.to} className='project-row block' aria-label={`${project.title}, ${project.meta}`}>
+              <li className='m-0 mobile:mb-10 tablet:mb-12' id={`project-row-${project.id}`} key={project.id} onMouseEnter={show(project)}>
+                <TransitionLink to={project.to} className='project-row block mobile:flex mobile:flex-col tablet:flex tablet:flex-col' aria-label={`${project.title}, ${project.meta}`}>
                   {/* name left, year and role right. on a phone the label
                     goes under the name, which then has the row to itself
                     and stays on one line */}
@@ -110,7 +110,7 @@ function Project() {
                     laptop-lg:items-end
                     desktop:items-end'>
                     <span className='project-name font-flexible font-medium leading-[.92] tracking-tight whitespace-nowrap
-                      text-project'>
+                      text-project mobile:text-heading tablet:text-heading'>
                       <SplitText text={project.title} id={`animate-project-${project.id}`} />
                     </span>
                     <span className='project-label flex flex-wrap text-caption text-muted
@@ -127,11 +127,12 @@ function Project() {
                       <SplitText text={project.meta} id={`animate-project-${project.id}`} />
                     </span>
                   </span>
-                  {/* below laptop width: the image under the name, in a
-                    frame that wipes open on scroll (start state:
+                  {/* below laptop width: the cover, first in the card, in
+                    a frame that wipes open on scroll (start state:
                     .project-cover, App.scss) */}
-                  <span className='project-cover block overflow-hidden mt-2 mb-6
-                    mobile:aspect-[16/9] tablet:aspect-[21/9]
+                  <span className='project-cover block overflow-hidden mb-4
+                    mobile:order-first tablet:order-first
+                    mobile:aspect-[4/3] tablet:aspect-[16/9]
                     laptop:hidden laptop-lg:hidden desktop:hidden'>
                     <span className={`project-cover-image block w-full h-full bg-cover ${project.picture ? 'bg-left-top' : `bg-center ${project.image || 'project-placeholder'}`}`}
                       style={project.picture ? { backgroundImage: `url(${project.picture})` } : undefined}/>

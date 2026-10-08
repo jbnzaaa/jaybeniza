@@ -1,7 +1,7 @@
 //
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 // icons
-import { RiArrowRightDownLine, RiInformationLine } from 'react-icons/ri'
+import { RiArrowDownSLine, RiArrowRightDownLine, RiInformationLine } from 'react-icons/ri'
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
@@ -28,10 +28,14 @@ const EMPTY = {
 // one labelled field: its label over whatever is put in it. a `hint` -
 // what to write there - is kept in a tooltip: an info mark beside the
 // label, which shows it under the pointer or when reached by keyboard
-function Field({ label, hint, required = false, wide = false, children }) {
+// (`group` is for a field that is not one input - a dropdown: it is then a
+// plain block whose label has an id for the dropdown to be named by, not
+// a <label>, which would pass a press on any option back to the button)
+function Field({ label, hint, required = false, wide = false, group, children }) {
+  const Box = group ? 'div' : 'label';
   return (
-    <label className={wide ? 'form-field form-field-wide' : 'form-field'}>
-      <span className='form-label text-caption text-muted'>
+    <Box className={wide ? 'form-field form-field-wide' : 'form-field'}>
+      <span className='form-label text-caption text-muted' id={group}>
         {label}{required ? ' *' : ''}
         {hint && (
           <span className='form-tip' tabIndex={0} aria-label={hint}>
@@ -41,7 +45,62 @@ function Field({ label, hint, required = false, wide = false, children }) {
         )}
       </span>
       {children}
-    </label>
+    </Box>
+  )
+}
+
+/**
+ * A dropdown in the site's own shapes, in place of the browser's: a box
+ * like the other fields that shows the choice, and under it a list that
+ * wipes open, each option filling under the pointer. Works from the
+ * keyboard as a select does - up and down move, Enter or Space picks,
+ * Escape closes - and closes on a press anywhere else.
+ *
+ * @param {string} labelId - the id of the label that names it
+ */
+function Select({ labelId, options, value, onChange }) {
+  const [open, setOpen] = useState(false);
+  // the option the keyboard or pointer is on, while the list is open
+  const [active, setActive] = useState(0);
+  const fxBox = useRef();
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const outside = (e) => { if (!fxBox.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('pointerdown', outside);
+    return () => document.removeEventListener('pointerdown', outside);
+  }, [open]);
+
+  const show = () => { setActive(Math.max(0, options.indexOf(value))); setOpen(true); };
+  const pick = (option) => { onChange(option); setOpen(false); };
+  const onKey = (e) => {
+    if (e.key === 'Escape') { setOpen(false); return; }
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (!open) { show(); return; }
+      setActive((i) => (i + (e.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length);
+      return;
+    }
+    if ((e.key === 'Enter' || e.key === ' ') && open) { e.preventDefault(); pick(options[active]); }
+  };
+
+  return (
+    <div className={open ? 'form-select form-select-open' : 'form-select'} ref={fxBox}>
+      <button type='button' className='form-select-button text-caption' aria-haspopup='listbox' aria-expanded={open}
+        aria-labelledby={labelId} onClick={() => (open ? setOpen(false) : show())} onKeyDown={onKey}>
+        <span>{value}</span>
+        <RiArrowDownSLine className='form-select-arrow' aria-hidden='true'/>
+      </button>
+      <ul className='form-select-list' role='listbox' aria-labelledby={labelId}>
+        {options.map((option, i) => (
+          <li className={i === active ? 'form-select-option form-select-option-on text-caption' : 'form-select-option text-caption'}
+            role='option' aria-selected={option === value} key={option}
+            onClick={() => pick(option)} onMouseEnter={() => setActive(i)}>
+            <span>{option}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
@@ -69,6 +128,8 @@ function ProjectRequest() {
   }, []);
 
   const set = (key) => (e) => setForm((now) => ({ ...now, [key]: e.target.value }));
+  // (a dropdown hands over the choice itself, not an event)
+  const choose = (key) => (choice) => setForm((now) => ({ ...now, [key]: choice }));
   const toggle = (service) => () => setForm((now) => ({
     ...now,
     services: now.services.includes(service) ? now.services.filter((s) => s !== service) : [...now.services, service],
@@ -139,10 +200,8 @@ function ProjectRequest() {
             <Field label='Company or organisation'>
               <input type='text' name='company' autoComplete='organization' value={form.company} onChange={set('company')} />
             </Field>
-            <Field label='Project type' required>
-              <select name='type' value={form.type} onChange={set('type')}>
-                {TYPES.map((type) => <option key={type}>{type}</option>)}
-              </select>
+            <Field label='Project type' required group='request-type'>
+              <Select labelId='request-type' options={TYPES} value={form.type} onChange={choose('type')} />
             </Field>
             {/* what is wanted from me - a group of its own, not one field */}
             <fieldset className='form-field form-field-wide'>
@@ -168,15 +227,11 @@ function ProjectRequest() {
             <Field label='Existing materials' wide hint='Links to a current site or app, brand guide, designs, or references you like.'>
               <textarea name='materials' rows='2' value={form.materials} onChange={set('materials')} />
             </Field>
-            <Field label='Timeline'>
-              <select name='timeline' value={form.timeline} onChange={set('timeline')}>
-                {TIMELINES.map((timeline) => <option key={timeline}>{timeline}</option>)}
-              </select>
+            <Field label='Timeline' group='request-timeline'>
+              <Select labelId='request-timeline' options={TIMELINES} value={form.timeline} onChange={choose('timeline')} />
             </Field>
-            <Field label='Budget'>
-              <select name='budget' value={form.budget} onChange={set('budget')}>
-                {BUDGETS.map((budget) => <option key={budget}>{budget}</option>)}
-              </select>
+            <Field label='Budget' group='request-budget'>
+              <Select labelId='request-budget' options={BUDGETS} value={form.budget} onChange={choose('budget')} />
             </Field>
             <div className='form-field form-field-wide form-foot'>
               {/* the site's button, as a real button */}

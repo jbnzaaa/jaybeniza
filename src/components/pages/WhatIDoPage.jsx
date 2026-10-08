@@ -4,10 +4,17 @@ import React, { useEffect } from 'react'
 import Services from './Services';
 import Process from './Process';
 import Contact from './Contact';
+// GSAP
+import gsap from 'gsap'
+import ScrollSmoother from 'gsap/ScrollSmoother'
+// the site's button
+import Button from '../common/Button'
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
+
+gsap.registerPlugin(ScrollSmoother)
 
 const HEADLINE_LINES = [
   'One hire.',
@@ -18,8 +25,8 @@ const DESCRIPTION = 'What I can own on your team from day one: product design, t
 
 /**
  * The What I Do page (route /what-i-do), in the landing page's layout: a
- * light first screen with the headline and, in its lower right, a short
- * description, the three services (Services.jsx, the landing page's own
+ * light first screen with the headline and, along its foot, a short
+ * description (lower left) and an arrow on to the services (lower right), the three services (Services.jsx, the landing page's own
  * section, here with each service set out in full), how I work
  * (Process.jsx), then the contact section.
  */
@@ -31,6 +38,12 @@ function WhatIDoPage() {
       { trigger: '#services-hero', start: 'top bottom' });
     return () => intro.kill();
   }, []);
+
+  // the arrow scrolls on to the services
+  const toServices = (e) => {
+    e.preventDefault();
+    ScrollSmoother.get()?.scrollTo('#what-i-do', true);
+  };
 
   return (
     <>
@@ -50,14 +63,21 @@ function WhatIDoPage() {
             </span>
           ))}
         </h1>
-        <p className='flex flex-wrap self-end text-caption
-          mobile:w-[78%]
-          tablet:w-[52%]
-          laptop:w-[34%]
-          laptop-lg:w-[30%]
-          desktop:w-[28%]'>
-          <SplitText text={DESCRIPTION} id='animate-services-page' by='word' />
-        </p>
+        {/* along the foot: description lower left, the landing hero's
+          arrow on to the services lower right */}
+        <div className='flex justify-between items-end gap-x-6'>
+          <p className='flex flex-wrap text-caption
+            mobile:w-[78%]
+            tablet:w-[52%]
+            laptop:w-[34%]
+            laptop-lg:w-[30%]
+            desktop:w-[28%]'>
+            <SplitText text={DESCRIPTION} id='animate-services-page' by='word' />
+          </p>
+          <div className='shrink-0'>
+            <Button label='See what I do' href='#what-i-do' onClick={toServices} iconOnly outline />
+          </div>
+        </div>
       </section>
       {/* the three services, in full */}
       <Services detailed/>
