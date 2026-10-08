@@ -17,6 +17,8 @@ import Regain from './components/pages/projects/Regain';
 // loading screen + page-to-page wipe
 import Preloader from './components/common/Preloader';
 import { PageTransitionProvider } from './components/common/PageTransition';
+// the square cursor
+import Cursor from './components/common/Cursor';
 // button hover
 import { enableHoverRoll } from './utils/hoverRoll';
 // GSAP
@@ -128,6 +130,7 @@ function App() {
       <Router>
         <PageTransitionProvider>
         <ScrollManager/>
+        <Cursor/>
         {loading && <Preloader onExitStart={handleExitStart} onDone={handleDone}/>}
         {/* outside the smoother: its transformed content would make
           position: fixed scroll away with the page */}

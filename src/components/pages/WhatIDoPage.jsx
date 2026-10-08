@@ -18,8 +18,9 @@ const DESCRIPTION = 'Three things I can take on for you: designing the product, 
 
 /**
  * The What I Do page (route /what-i-do), in the landing page's layout: a
- * light first screen with the headline and a short description, the three
- * services (Services.jsx, the landing page's own section), how I work
+ * light first screen with the headline and, in its lower right, a short
+ * description, the three services (Services.jsx, the landing page's own
+ * section, here with each service set out in full), how I work
  * (Process.jsx), then the contact section.
  */
 function WhatIDoPage() {
@@ -33,8 +34,8 @@ function WhatIDoPage() {
 
   return (
     <>
-      {/* first screen - the landing hero's layout: headline at the top,
-        description along the bottom. top padding clears the nav bar */}
+      {/* first screen - headline at the top, description in the lower
+        right. top padding clears the nav bar */}
       <section id='services-hero' className='theme-light flex flex-col justify-between min-h-screen-safe
         mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-16
         tablet:px-[1rem] tablet:pt-20 tablet:pb-8 tablet:gap-y-16
@@ -49,7 +50,7 @@ function WhatIDoPage() {
             </span>
           ))}
         </h1>
-        <p className='flex flex-wrap text-caption
+        <p className='flex flex-wrap self-end text-caption
           mobile:w-[78%]
           tablet:w-[52%]
           laptop:w-[34%]
@@ -58,8 +59,8 @@ function WhatIDoPage() {
           <SplitText text={DESCRIPTION} id='animate-services-page' by='word' />
         </p>
       </section>
-      {/* the three services */}
-      <Services/>
+      {/* the three services, in full */}
+      <Services detailed/>
       {/* how I work */}
       <Process light/>
       <Contact/>

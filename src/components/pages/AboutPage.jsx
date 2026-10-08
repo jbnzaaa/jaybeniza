@@ -31,8 +31,13 @@ const TRAIL = ['dailydiscount', 'jaysonbeniza', 'regain', 'jbnza']
   .flatMap((key) => PROJECTS[key].screenshots.slice(0, 2).map(({ src }) => src));
 // how far the pointer travels before the next picture is laid down
 const TRAIL_STEP = 120;
-// how far down and right of the pointer a picture's corner sits
-const TRAIL_OFFSET = 16;
+// how far down and right of the pointer the stack's corner sits
+const TRAIL_OFFSET = 24;
+// how many pictures the stack holds, how far each sits from the one on
+// top of it, and how long (seconds) the pointer rests before it is put away
+const STACK_SIZE = 4;
+const STACK_STEP = 12;
+const STACK_IDLE = 1.2;
 
 const RESUME_DESCRIPTION = "Want the full story? It's all in my resume: experience, skills, certificates, and awards. Have a read, and say hello if I sound like a fit.";
 const RESUME_LINKS = [
@@ -51,35 +56,61 @@ function AboutPage() {
   const fxHero = useRef();
 
   useEffect(() => {
-    // image trail - only where there is a pointer. every TRAIL_STEP the
-    // pointer moves, the next picture is laid down at its lower right, on
-    // top of the ones before, grows to size and fades away again shortly after
+    // image stack - only where there is a pointer. a stack of pictures
+    // follows the pointer at its lower right; every TRAIL_STEP the pointer
+    // moves, the next picture is laid on top of it and the ones under
+    // step back. when the pointer stops, the stack is put away
     if (!window.matchMedia('(any-hover: hover)').matches) return undefined;
     const hero = fxHero.current;
+    const holder = hero.querySelector('.image-trail-stack');
     const pictures = gsap.utils.toArray('.image-trail-item', hero);
-    // (each is placed by its top left corner, TRAIL_OFFSET down and right
-    // of the pointer)
+    // the stack itself follows the pointer, its top left corner
+    // TRAIL_OFFSET down and right of it
+    const toX = gsap.quickTo(holder, 'x', { duration: .5, ease: 'power3.out' });
+    const toY = gsap.quickTo(holder, 'y', { duration: .5, ease: 'power3.out' });
+    // the pictures in the stack, newest first
+    let stack = [];
     let last = null;
     let next = 0;
     let layer = 1;
+    // each picture sits a step up and left of the one laid on it, and a
+    // little smaller, so the edges of the ones under it show
+    const settle = () => stack.forEach((picture, age) => {
+      gsap.to(picture, { x: -age * STACK_STEP, y: -age * STACK_STEP, scale: 1 - age * .04, duration: .5, ease: 'power3.out', overwrite: 'auto' });
+    });
+    // the pointer has stopped: the stack is put away
+    const clear = gsap.delayedCall(STACK_IDLE, () => {
+      gsap.to(stack, { opacity: 0, duration: .4, ease: 'power2.in', overwrite: 'auto' });
+      stack = [];
+      last = null;
+    }).pause();
     const onMove = (e) => {
       const rect = hero.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
+      if (!last) gsap.set(holder, { x: x + TRAIL_OFFSET, y: y + TRAIL_OFFSET });
+      toX(x + TRAIL_OFFSET);
+      toY(y + TRAIL_OFFSET);
+      clear.restart(true);
       if (last && Math.hypot(x - last.x, y - last.y) < TRAIL_STEP) return;
       last = { x, y };
       const picture = pictures[next % pictures.length];
       next += 1;
       layer += 1;
+      // the next picture wipes open on top of the stack, from its bottom edge
       gsap.killTweensOf(picture);
-      gsap.set(picture, { x: x + TRAIL_OFFSET, y: y + TRAIL_OFFSET, zIndex: layer, opacity: 1, scale: .6, transformOrigin: 'left top' });
-      gsap.to(picture, { scale: 1, duration: .5, ease: 'power3.out' });
-      gsap.to(picture, { opacity: 0, scale: .9, duration: .4, ease: 'power2.in', delay: .8 });
+      gsap.set(picture, { x: 0, y: 0, scale: 1, zIndex: layer, opacity: 1, clipPath: 'inset(100% 0% 0% 0%)', transformOrigin: 'left top' });
+      gsap.to(picture, { clipPath: 'inset(0% 0% 0% 0%)', duration: .5, ease: 'power2.inOut' });
+      stack = [picture, ...stack.filter((other) => other !== picture)];
+      // the stack holds so many; the oldest leaves from under it
+      stack.splice(STACK_SIZE).forEach((old) => gsap.to(old, { opacity: 0, duration: .3, ease: 'power2.in', overwrite: 'auto' }));
+      settle();
     };
     hero.addEventListener('mousemove', onMove);
     return () => {
       hero.removeEventListener('mousemove', onMove);
-      gsap.killTweensOf(pictures);
+      clear.kill();
+      gsap.killTweensOf([holder, ...pictures]);
     };
   }, []);
 
@@ -110,9 +141,11 @@ function AboutPage() {
         {/* pictures that follow the pointer, stacking one on another, in
           front of the text */}
         <div className='image-trail' aria-hidden='true'>
-          {TRAIL.map((src) => (
-            <img className='image-trail-item' src={src} alt='' key={src}/>
-          ))}
+          <div className='image-trail-stack'>
+            {TRAIL.map((src) => (
+              <img className='image-trail-item' src={src} alt='' key={src}/>
+            ))}
+          </div>
         </div>
         {/* the label and the introduction, centred on the screen */}
         <div className='relative z-10 flex flex-col items-center text-center

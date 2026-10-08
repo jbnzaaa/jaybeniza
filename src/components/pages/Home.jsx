@@ -17,7 +17,7 @@ function Home() {
         <Hero/>
         <Project/>
         <About/>
-        <Services/>
+        <Services detailed/>
         <Testimonials/>
         <Contact/>
       </div>

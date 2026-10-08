@@ -238,14 +238,6 @@
   clip-path: inset(100% 0% 0% 0%);
 }
 
-// the landing introduction's paragraph is on the page from the start,
-// faded back - not dropped below its clip boxes like text that reveals.
-// About.jsx brings each letter up to full strength on scroll
-* body .fill-text .split-letter-clip .split-letter {
-  transform: none;
-  opacity: .25;
-}
-
 // selected projects (Project.jsx). pointing at one name steps the others back
 * body .project-row {
   transition: opacity .3s ease-in-out;
@@ -340,11 +332,19 @@
   clip-path: inset(100% 0% 0% 0%);
 }
 
-// what I do (Services.jsx) - the line drawing fills most of its panel
-* body .service-art svg {
-  width: 72%;
-  max-width: 26rem;
-  height: auto;
+// what I do (Services.jsx) - the figure (Hairline.jsx) fills most of its
+// panel, and is drawn in the site's own greys: plates in the panel's
+// colour, the bright stroke in the text colour
+* body .service-art {
+  --hairline-plate: #1B1A1A;
+  --hairline-hi: #E5E4E3;
+  --hairline-edge: #8C8987;
+  --hairline-mid: #5E5B59;
+  --hairline-lo: #444141;
+}
+
+* body .service-art [data-hairline] {
+  width: min(92%, 38rem);
 }
 
 // the top bar (Navbar.jsx) is blended with the page by difference, so it
@@ -449,11 +449,20 @@
   pointer-events: none;
 }
 
+// the stack that follows the pointer - a point; the pictures hang from it
+* body .image-trail-stack {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 * body .image-trail-item {
   position: absolute;
   top: 0;
   left: 0;
   width: clamp(10rem, 18vw, 18rem);
+  // (the stack is a point with no width of its own to be held to)
+  max-width: none;
   aspect-ratio: 16 / 10;
   object-fit: cover;
   object-position: left top;
@@ -1115,4 +1124,29 @@
     height: 100svh;
     height: var(--screen-h, 100svh);
   }
+}
+
+// the site's cursor (Cursor.jsx): a small square in place of the
+// browser's arrow, blended with the page by difference so it reads on
+// light and dark alike. over everything, the page wipe included, and
+// never in the pointer's way. hidden until the pointer first moves
+* body .cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: .75rem;
+  height: .75rem;
+  background: #E5E4E3;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  will-change: transform;
+}
+
+// the browser's own cursor steps aside wherever the square is in use
+html.has-cursor,
+html.has-cursor * {
+  cursor: none;
 }

@@ -177,11 +177,6 @@
   clip-path: inset(100% 0% 0% 0%);
 }
 
-* body .fill-text .split-letter-clip .split-letter {
-  transform: none;
-  opacity: 0.25;
-}
-
 * body .project-row {
   transition: opacity 0.3s ease-in-out;
 }
@@ -253,10 +248,16 @@
   clip-path: inset(100% 0% 0% 0%);
 }
 
-* body .service-art svg {
-  width: 72%;
-  max-width: 26rem;
-  height: auto;
+* body .service-art {
+  --hairline-plate: #1B1A1A;
+  --hairline-hi: #E5E4E3;
+  --hairline-edge: #8C8987;
+  --hairline-mid: #5E5B59;
+  --hairline-lo: #444141;
+}
+
+* body .service-art [data-hairline] {
+  width: min(92%, 38rem);
 }
 
 * body .nav-blend {
@@ -345,11 +346,18 @@
   pointer-events: none;
 }
 
+* body .image-trail-stack {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 * body .image-trail-item {
   position: absolute;
   top: 0;
   left: 0;
   width: clamp(10rem, 18vw, 18rem);
+  max-width: none;
   aspect-ratio: 16/10;
   object-fit: cover;
   object-position: left top;
@@ -910,6 +918,25 @@
     height: 100svh;
     height: var(--screen-h, 100svh);
   }
+}
+* body .cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: 0.75rem;
+  height: 0.75rem;
+  background: #E5E4E3;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  will-change: transform;
+}
+
+html.has-cursor,
+html.has-cursor * {
+  cursor: none;
 }
 
 /*# sourceMappingURL=App.css.map */

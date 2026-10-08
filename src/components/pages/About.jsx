@@ -12,15 +12,15 @@ gsap.registerPlugin(ScrollTrigger)
 
 const PARAGRAPH = 'I design and build digital products with a focus on clarity, function, and user experience. Based in the Philippines, I bring 3+ years of UI/UX design and front-end development experience to every project, from user flows and design systems to responsive, production-ready interfaces.';
 
-// share of the pinned scroll the text fill takes; the rest opens the
+// share of the pinned scroll the text's reveal takes; the rest opens the
 // button and holds the finished screen
 const FILL_END = .7;
 
 /**
- * The designer, on the light theme: one large paragraph that fills in as
- * the page scrolls. The section pins while its text - on the page from the
- * start, but faded right back - comes up to full strength in reading
- * order; then the button to the full About page (AboutPage.jsx) opens.
+ * The designer, on the light theme: one large paragraph revealed as the
+ * page scrolls. The section pins while its text rises out of its lines,
+ * letter by letter in reading order - the site's text reveal, tied to the
+ * scroll; then the button to the full About page (AboutPage.jsx) opens.
  */
 function About() {
   const fxSection = useRef();
@@ -41,9 +41,7 @@ function About() {
         anticipatePin: 1,
       },
     })
-      .fromTo('#animate-about',
-        { opacity: .25 },
-        { opacity: 1, duration: .06, stagger: { amount: FILL_END - .06 } }, 0)
+      .to('#animate-about', { y: 0, ease: 'power1.out', duration: .06, stagger: { amount: FILL_END - .06 } }, 0)
       .to('#about-cta', { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .1 }, FILL_END)
       .to(`#about-cta :is(${BUTTON_PARTS})`, { y: 0, ease: 'power1.in', duration: .06, stagger: { amount: .08 } }, FILL_END + .04)
       .to({}, { duration: .1 });
@@ -68,8 +66,9 @@ function About() {
           <div>
             <Tag label='The Designer' id='animate-about-tag' />
             {/* paragraph - body face, at the lead step of the type scale
-              (size: .about-paragraph; start state: .fill-text, App.scss) */}
-            <p className='about-paragraph fill-text flex flex-wrap font-monolisa
+              (size: .about-paragraph, App.scss). its letters start below
+              their lines, like all text that reveals */}
+            <p className='about-paragraph flex flex-wrap font-monolisa
               mobile:mt-6 mobile:w-full mobile:leading-snug
               tablet:mt-8 tablet:w-[94%] tablet:leading-tight
               laptop:mt-8 laptop:w-[90%] laptop:leading-tight
