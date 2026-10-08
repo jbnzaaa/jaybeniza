@@ -94,12 +94,14 @@ function Preloader({ onExitStart, onDone }) {
 
   return (
     <div className='fixed top-0 left-0 w-full h-screen-safe z-[45] bg-black overflow-hidden' ref={fxPanel}>
+      {/* the figure sits the same distance from the foot of the screen as
+        from its side */}
       <div className='flex items-end h-screen-safe
         mobile:px-[1rem] mobile:pb-[1rem]
         tablet:px-[1rem] tablet:pb-[1rem]
-        laptop:px-[2rem] laptop:pb-20
-        laptop-lg:px-[3rem] laptop-lg:pb-20
-        desktop:px-[3rem] desktop:pb-28'>
+        laptop:px-[2rem] laptop:pb-[2rem]
+        laptop-lg:px-[3rem] laptop-lg:pb-[3rem]
+        desktop:px-[3rem] desktop:pb-[3rem]'>
         <div className='overflow-hidden' role='status' aria-label='Loading'>
           <span className='inline-block font-flexible font-bold leading-none text-offwhite text-[14.5vw]'
             ref={fxFigure}>

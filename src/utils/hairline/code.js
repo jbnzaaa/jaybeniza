@@ -47,7 +47,7 @@ function mount({ stage, svg, read }, value) {
     const dot = flatDot(g, C, 0.9, "dot off");
     place(dot, P(9.5, y + BH / 2, 0));
     const [ring, inner] = rings(x, y, x + len, y + BH, 2.5, 0.9);
-    return { j, cx: x + len / 2, cy: y + BH / 2, half: len / 2, ring, inner, dot, sp: spring(REST[j], { eps: 0.04 }), el: null, drawn: NaN };
+    return { j, cx: x + len / 2, cy: y + BH / 2, half: len / 2, ring, inner, dot, sp: spring(REST[j], { k: 40, c: 13, eps: 0.04 }), el: null, drawn: NaN };
   });
   lines.forEach((l) => { l.el = solid(g); });
   const peak = lines.reduce((a, b) => (REST[b.j] > REST[a.j] ? b : a));

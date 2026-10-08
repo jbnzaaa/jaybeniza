@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { PROJECT_CARDS } from './ProjectCard'
 // GSAP
 import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
 // page-to-page wipe
 import { TransitionLink } from '../common/PageTransition'
 // scroll reveal
@@ -13,6 +14,8 @@ import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
 
+gsap.registerPlugin(ScrollTrigger)
+
 const DESCRIPTION = 'A few projects I am proud of, with the part I played in each.';
 
 /**
@@ -21,7 +24,8 @@ const DESCRIPTION = 'A few projects I am proud of, with the part I played in eac
  * right edge. Pointing at a row brings up that project's image level
  * with it, between the name and the label, and steps the other rows back.
  * Below laptop width (usually no pointer) each project's image sits under
- * its name instead.
+ * its name instead, and opens as it scrolls into view the way the work
+ * page's cards do.
  */
 function Project() {
   const fxList = useRef();
@@ -39,9 +43,25 @@ function Project() {
     // the preview is placed across the row by its centre (left, App.scss)
     gsap.set(fxPreview.current, { xPercent: -50 });
 
+    // below laptop width, each row's cover as it comes up the screen: its
+    // frame wipes open from its bottom edge while the picture inside,
+    // which starts slightly large and low, eases down to size - the work
+    // page's card reveal
+    const pictures = gsap.set(gsap.utils.toArray('.project-cover-image', fxList.current), { yPercent: 14, scale: 1.15 });
+    const covers = gsap.utils.toArray('.project-cover', fxList.current).map((cover) => gsap.timeline({
+      scrollTrigger: { trigger: cover, start: 'top 88%', toggleActions: 'play none none reverse' },
+    })
+      .to(cover, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .9 }, 0)
+      .to(cover.firstElementChild, { yPercent: 0, scale: 1, ease: 'power2.out', duration: 1.1 }, 0));
+
     return () => {
       rows.forEach((row) => row.kill());
       description.kill();
+      covers.forEach((cover) => {
+        cover.scrollTrigger?.kill();
+        cover.revert();
+      });
+      pictures.revert();
     };
   }, []);
 
@@ -107,11 +127,14 @@ function Project() {
                       <SplitText text={project.meta} id={`animate-project-${project.id}`} />
                     </span>
                   </span>
-                  {/* below laptop width: the image under the name */}
-                  <span className={`block bg-cover bg-center mt-2 mb-6
+                  {/* below laptop width: the image under the name, in a
+                    frame that wipes open on scroll (start state:
+                    .project-cover, App.scss) */}
+                  <span className='project-cover block overflow-hidden mt-2 mb-6
                     mobile:aspect-[16/9] tablet:aspect-[21/9]
-                    laptop:hidden laptop-lg:hidden desktop:hidden
-                    ${project.image || 'project-placeholder'}`}/>
+                    laptop:hidden laptop-lg:hidden desktop:hidden'>
+                    <span className={`project-cover-image block w-full h-full bg-cover bg-center ${project.image || 'project-placeholder'}`}/>
+                  </span>
                 </TransitionLink>
               </li>
             ))}

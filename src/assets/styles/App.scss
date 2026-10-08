@@ -49,6 +49,18 @@
 // the palette, on the 60/30/10 rule (the same values as tailwind.config.js):
 // 60 the base background, 30 the surfaces and lines, 10 the light text.
 // --main-color is the text colour, light on all of them
+// very wide screens (a large monitor, or the browser zoomed out): past
+// 1536px the whole page is scaled up with the window instead of being
+// given more room, so it looks exactly as it does at 1536px - same
+// layout, same proportions, only larger. everything on the site is sized
+// in rem, vw or %, so scaling the root's font size carries all of it:
+// 16px at 1536px wide, and in step with the width from there
+@media (min-width: 1536px) {
+  html {
+    font-size: calc(100vw / 96);
+  }
+}
+
 :root {
   --main-bg: #1B1A1A;
   --surface: #2A2828;
@@ -306,11 +318,11 @@
   will-change: transform;
 }
 
-// on a phone the stack runs top to bottom: full width cards, each a step
-// lower than the one before it. the stack fills the room under the
+// on a phone or a tablet (below laptop width) the stack runs top to
+// bottom: full width cards, each a step lower than the one before it. the stack fills the room under the
 // label, and every card is the same fixed height - that room, less the
 // steps
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   * body .testimonial-stack {
     align-self: stretch;
     grid-template-rows: minmax(0, 1fr);
@@ -324,6 +336,40 @@
     border-left: 0;
     border-top: 1px solid var(--paper);
   }
+}
+
+// a review's text, from laptop width up: held to the screen's height as
+// well as its width, so on a low screen the card still fits under the
+// section's label with room between them
+@media (min-width: 1024px) {
+  * body .testimonial-quote {
+    font-size: min(clamp(1.125rem, .9rem + .6vw, 1.75rem), 2.9vh);
+  }
+}
+
+// on a tablet the card is the full width and as tall as the room under
+// the label, so the review is set larger to fill it - still held to the
+// screen's height
+@media (min-width: 768px) and (max-width: 1023px) {
+  * body .testimonial-quote {
+    font-size: min(clamp(1.5rem, 1rem + 2vw, 2.25rem), 3.4vh);
+  }
+}
+
+// the same on a phone, where the card is as tall as the room under the
+// label: on a short phone the longest review is set a little smaller so
+// it still fits its card
+@media (max-width: 767px) {
+  * body .testimonial-quote {
+    font-size: min(clamp(.9375rem, .8rem + .25vw, 1.125rem), 2.1vh);
+  }
+}
+
+// who said it, beside their picture: nudged down a touch, optically - the
+// heading face sits high in its line
+* body .testimonial-who {
+  position: relative;
+  top: .125rem;
 }
 
 // a reviewer's picture - revealed with their card, wiping up from its
@@ -353,6 +399,11 @@
   --ground: #1B1A1A;
   --muted: rgb(229 228 227 / .6);
   --text: #E5E4E3;
+  // its button: a light box with a black label. blended, the box inverts
+  // against the section under it, like the logo, and the label - black,
+  // which difference leaves alone - shows that section through
+  --button-bg: #E5E4E3;
+  --button-text: #000;
 }
 
 // the top bar's button: black with a light label on every section, in a
@@ -388,85 +439,39 @@
   transition: clip-path .6s cubic-bezier(.65, 0, .35, 1);
 }
 
-// "next project" at the foot of a case study (ProjectPage.jsx): under the
-// pointer a rule draws in under the name from the left, and an arrow
-// comes up beside it
-* body .next-link {
-  position: relative;
+
+// my name in the About page's introduction (AboutPage.jsx): underlined,
+// to say it can be pointed at - it shows my picture
+* body .about-name {
   display: inline-flex;
-  align-items: flex-end;
-  gap: 1rem;
-  padding-bottom: 1rem;
+  border-bottom: .125rem solid var(--text);
+  cursor: pointer;
 }
 
-* body .next-link::after {
-  content: '';
+// the underline stops at the name's last letter, and the comma after the
+// name sits tight against it (a word's gap is a margin on its right)
+* body .about-name .split-word:last-of-type {
+  margin-right: 0;
+}
+
+// my picture - over the section's text, at the pointer. start state:
+// clipped away to its bottom edge
+* body .about-portrait {
   position: absolute;
-  inset: auto 0 0 0;
-  height: 2px;
-  background: var(--text);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform .5s cubic-bezier(.65, 0, .35, 1);
-}
-
-* body .next-link-arrow {
-  font-size: clamp(2rem, 5vw, 5rem);
-  line-height: 1;
-  clip-path: inset(100% 0% 0% 0%);
-  transform: translate(-25%, 25%);
-  transition: clip-path .45s cubic-bezier(.65, 0, .35, 1), transform .45s cubic-bezier(.65, 0, .35, 1);
-}
-
-* body .next-link:focus-visible::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-* body .next-link:focus-visible .next-link-arrow {
-  clip-path: inset(0% 0% 0% 0%);
-  transform: none;
-}
-
-@media (any-hover: hover) {
-  * body .next-link:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
-
-  * body .next-link:hover .next-link-arrow {
-    clip-path: inset(0% 0% 0% 0%);
-    transform: none;
-  }
-}
-
-// pictures that trail the pointer (AboutPage.jsx) - a layer over the
-// section's text. each picture is invisible until it is laid down
-* body .image-trail {
-  position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   z-index: 20;
+  width: clamp(11rem, 20vw, 20rem);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  clip-path: inset(100% 0% 0% 0%);
   pointer-events: none;
 }
 
-// the stack that follows the pointer - a point; the pictures hang from it
-* body .image-trail-stack {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-* body .image-trail-item {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: clamp(10rem, 18vw, 18rem);
-  // (the stack is a point with no width of its own to be held to)
-  max-width: none;
-  aspect-ratio: 16 / 10;
+* body .about-portrait img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  object-position: left top;
-  opacity: 0;
 }
 
 // selected text inverts
@@ -489,9 +494,10 @@
   height: 200%;
   z-index: 50;
   pointer-events: none;
-  opacity: .14;
+  // strong enough to read as grain on the light sections as well as the dark
+  opacity: .22;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 240px 240px;
+  background-size: 15rem 15rem;
 }
 
 @keyframes grain {
@@ -710,7 +716,7 @@
 }
 
 * body .page-link {
-  height: 60px;
+  height: 3.75rem;
   position: relative;
 }
 
@@ -793,7 +799,7 @@
 }
 
 * body ul li {
-  margin-right: 16px;
+  margin-right: 1rem;
 }
 
 * body .stack-container {
@@ -803,7 +809,7 @@
 * body .stacks {
   position: relative;
   height: auto;
-  margin-right: 8px;
+  margin-right: .5rem;
 }
 
 // selected projects section (Project.jsx) - start states, so nothing
@@ -892,7 +898,7 @@
 
 * body .project-card-content {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(1.5rem);
 }
 
 * body .project-card-container .project-image {
@@ -1098,8 +1104,10 @@
 }
 
 // a project's card, its cover - start state: clipped away to its bottom
-// edge. the scroll reveal opens it
-* body .work-cover {
+// edge. the scroll reveal opens it. the same for the cover under a name
+// in the landing page's selected projects, below laptop width
+* body .work-cover,
+* body .project-cover {
   clip-path: inset(100% 0% 0% 0%);
 }
 
@@ -1143,6 +1151,29 @@
   visibility: hidden;
   opacity: 0;
   will-change: transform;
+  // the label it can open into (below) sits in its middle, clipped to it
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: background-color .2s ease-in-out;
+}
+
+// open as a label (over an element with a data-cursor): a solid black box
+// with light text, like the site's buttons - not blended, so its words
+// read over a picture
+* body .cursor.cursor-labelled {
+  background: #1B1A1A;
+  mix-blend-mode: normal;
+}
+
+* body .cursor-label {
+  flex-shrink: 0;
+  padding: .5rem 1rem;
+  color: #E5E4E3;
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
 }
 
 // the browser's own cursor steps aside wherever the square is in use

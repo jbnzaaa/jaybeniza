@@ -8,8 +8,6 @@ import CertificatesAwards from './CertificatesAwards';
 import Footer from './Footer';
 // GSAP
 import gsap from 'gsap'
-// project content - its screenshots are the pictures that trail the pointer
-import { PROJECTS } from './projects/projects'
 // Resume
 import Resume from '../../assets/files/Jayson_Beniza_ReadOnly.pdf'
 // scroll reveal
@@ -26,18 +24,16 @@ const INTRO = [
   "Three years and many products later, that is still the job. I design web and mobile apps from the first user flow to the final pixel, build the design systems that hold them together, and still write front-end code, so nothing gets lost between the idea and what ships.",
 ];
 
-// the pictures that follow the pointer over the first screen
-const TRAIL = ['dailydiscount', 'jaysonbeniza', 'regain', 'jbnza']
-  .flatMap((key) => PROJECTS[key].screenshots.slice(0, 2).map(({ src }) => src));
-// how far the pointer travels before the next picture is laid down
-const TRAIL_STEP = 120;
-// how far down and right of the pointer the stack's corner sits
-const TRAIL_OFFSET = 24;
-// how many pictures the stack holds, how far each sits from the one on
-// top of it, and how long (seconds) the pointer rests before it is put away
-const STACK_SIZE = 4;
-const STACK_STEP = 12;
-const STACK_IDLE = 1.2;
+// the introduction opens on my name: the words before it, the name (which
+// shows my picture under the pointer), and everything after
+const NAME = 'Jay Beniza';
+// (the comma after the name is set on its own, outside the underline)
+const [BEFORE, AFTER] = INTRO.join(' ').split(NAME + ',').map((part) => part.trim());
+// my picture (public/images)
+const PORTRAIT = `${process.env.PUBLIC_URL}/images/profile.JPG`;
+// how far down and right of the pointer its corner sits, px at the page's
+// usual scale
+const PORTRAIT_OFFSET = 24;
 
 const RESUME_DESCRIPTION = "Want the full story? It's all in my resume: experience, skills, certificates, and awards. Have a read, and say hello if I sound like a fit.";
 const RESUME_LINKS = [
@@ -56,61 +52,72 @@ function AboutPage() {
   const fxHero = useRef();
 
   useEffect(() => {
-    // image stack - only where there is a pointer. a stack of pictures
-    // follows the pointer at its lower right; every TRAIL_STEP the pointer
-    // moves, the next picture is laid on top of it and the ones under
-    // step back. when the pointer stops, the stack is put away
-    if (!window.matchMedia('(any-hover: hover)').matches) return undefined;
+    // my picture, shown while the pointer is on my name: it wipes open
+    // from its bottom edge at the pointer's lower right and follows the
+    // pointer; it closes when the pointer leaves. on a touch screen, or
+    // from the keyboard, the name is pressed instead and the picture
+    // opens under it
     const hero = fxHero.current;
-    const holder = hero.querySelector('.image-trail-stack');
-    const pictures = gsap.utils.toArray('.image-trail-item', hero);
-    // the stack itself follows the pointer, its top left corner
-    // TRAIL_OFFSET down and right of it
-    const toX = gsap.quickTo(holder, 'x', { duration: .5, ease: 'power3.out' });
-    const toY = gsap.quickTo(holder, 'y', { duration: .5, ease: 'power3.out' });
-    // the pictures in the stack, newest first
-    let stack = [];
-    let last = null;
-    let next = 0;
-    let layer = 1;
-    // each picture sits a step up and left of the one laid on it, and a
-    // little smaller, so the edges of the ones under it show
-    const settle = () => stack.forEach((picture, age) => {
-      gsap.to(picture, { x: -age * STACK_STEP, y: -age * STACK_STEP, scale: 1 - age * .04, duration: .5, ease: 'power3.out', overwrite: 'auto' });
-    });
-    // the pointer has stopped: the stack is put away
-    const clear = gsap.delayedCall(STACK_IDLE, () => {
-      gsap.to(stack, { opacity: 0, duration: .4, ease: 'power2.in', overwrite: 'auto' });
-      stack = [];
-      last = null;
-    }).pause();
-    const onMove = (e) => {
+    const name = hero.querySelector('.about-name');
+    const portrait = hero.querySelector('.about-portrait');
+    const picture = portrait.firstElementChild;
+    // (the page is scaled up on a very wide screen - html's font size,
+    // App.scss - and the offset goes with it)
+    const offset = () => PORTRAIT_OFFSET * parseFloat(getComputedStyle(document.documentElement).fontSize) / 16;
+    const toX = gsap.quickTo(portrait, 'x', { duration: .4, ease: 'power3.out' });
+    const toY = gsap.quickTo(portrait, 'y', { duration: .4, ease: 'power3.out' });
+    let open = false;
+
+    // where it goes: down and right of a point of the screen, kept inside
+    // the section
+    const place = (clientX, clientY, jump) => {
       const rect = hero.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      if (!last) gsap.set(holder, { x: x + TRAIL_OFFSET, y: y + TRAIL_OFFSET });
-      toX(x + TRAIL_OFFSET);
-      toY(y + TRAIL_OFFSET);
-      clear.restart(true);
-      if (last && Math.hypot(x - last.x, y - last.y) < TRAIL_STEP) return;
-      last = { x, y };
-      const picture = pictures[next % pictures.length];
-      next += 1;
-      layer += 1;
-      // the next picture wipes open on top of the stack, from its bottom edge
-      gsap.killTweensOf(picture);
-      gsap.set(picture, { x: 0, y: 0, scale: 1, zIndex: layer, opacity: 1, clipPath: 'inset(100% 0% 0% 0%)', transformOrigin: 'left top' });
-      gsap.to(picture, { clipPath: 'inset(0% 0% 0% 0%)', duration: .5, ease: 'power2.inOut' });
-      stack = [picture, ...stack.filter((other) => other !== picture)];
-      // the stack holds so many; the oldest leaves from under it
-      stack.splice(STACK_SIZE).forEach((old) => gsap.to(old, { opacity: 0, duration: .3, ease: 'power2.in', overwrite: 'auto' }));
-      settle();
+      const x = Math.min(clientX - rect.left + offset(), rect.width - portrait.offsetWidth - offset());
+      const y = Math.min(clientY - rect.top + offset(), rect.height - portrait.offsetHeight - offset());
+      if (jump) gsap.set(portrait, { x, y });
+      toX(x);
+      toY(y);
     };
-    hero.addEventListener('mousemove', onMove);
+    const show = (clientX, clientY) => {
+      if (open) return;
+      open = true;
+      place(clientX, clientY, true);
+      gsap.to(portrait, { clipPath: 'inset(0% 0% 0% 0%)', duration: .5, ease: 'power2.inOut', overwrite: 'auto' });
+      gsap.fromTo(picture, { scale: 1.15 }, { scale: 1, duration: .7, ease: 'power2.out', overwrite: 'auto' });
+    };
+    const hide = () => {
+      if (!open) return;
+      open = false;
+      gsap.to(portrait, { clipPath: 'inset(100% 0% 0% 0%)', duration: .4, ease: 'power2.in', overwrite: 'auto' });
+    };
+    const under = () => {
+      const rect = name.getBoundingClientRect();
+      return [rect.left, rect.bottom];
+    };
+
+    const onEnter = (e) => { if (e.pointerType === 'mouse') show(e.clientX, e.clientY); };
+    const onMove = (e) => { if (open && e.pointerType === 'mouse') place(e.clientX, e.clientY, false); };
+    const onLeave = (e) => { if (e.pointerType === 'mouse') hide(); };
+    const onClick = () => (open ? hide() : show(...under()));
+    const onKey = (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      onClick();
+    };
+    name.addEventListener('pointerenter', onEnter);
+    name.addEventListener('pointermove', onMove);
+    name.addEventListener('pointerleave', onLeave);
+    name.addEventListener('click', onClick);
+    name.addEventListener('keydown', onKey);
+    name.addEventListener('blur', hide);
     return () => {
-      hero.removeEventListener('mousemove', onMove);
-      clear.kill();
-      gsap.killTweensOf([holder, ...pictures]);
+      name.removeEventListener('pointerenter', onEnter);
+      name.removeEventListener('pointermove', onMove);
+      name.removeEventListener('pointerleave', onLeave);
+      name.removeEventListener('click', onClick);
+      name.removeEventListener('keydown', onKey);
+      name.removeEventListener('blur', hide);
+      gsap.killTweensOf([portrait, picture]);
     };
   }, []);
 
@@ -138,14 +145,10 @@ function AboutPage() {
         laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-16
         desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'
         ref={fxHero}>
-        {/* pictures that follow the pointer, stacking one on another, in
-          front of the text */}
-        <div className='image-trail' aria-hidden='true'>
-          <div className='image-trail-stack'>
-            {TRAIL.map((src) => (
-              <img className='image-trail-item' src={src} alt='' key={src}/>
-            ))}
-          </div>
+        {/* my picture - opened by my name in the introduction (the effect
+          above; start state: .about-portrait, App.scss) */}
+        <div className='about-portrait' aria-hidden='true'>
+          <img src={PORTRAIT} alt='' loading='lazy'/>
         </div>
         {/* the label and the introduction, centred on the screen */}
         <div className='relative z-10 flex flex-col items-center text-center
@@ -162,7 +165,13 @@ function AboutPage() {
             laptop:w-[90%] laptop:leading-tight
             laptop-lg:w-[88%] laptop-lg:leading-tight
             desktop:w-[84%] desktop:leading-tight'>
-            <SplitText text={INTRO.join(' ')} id='animate-about-page' by='word' />
+            <SplitText text={BEFORE} id='animate-about-page' by='word' />
+            {/* my name - point at it (or press it) to see my picture */}
+            <span className='about-name' role='button' tabIndex={0} aria-label='Jay Beniza - show my picture'>
+              <SplitText text={NAME} id='animate-about-page' by='word' />
+            </span>
+            <SplitText text=',' id='animate-about-page' by='word' />
+            <SplitText text={AFTER} id='animate-about-page' by='word' />
           </p>
         </div>
       </section>

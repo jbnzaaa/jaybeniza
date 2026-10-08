@@ -62,7 +62,9 @@ function mount({ stage, svg, read }, value) {
     plates.push({ el, face: mk("path", { class: "nf lo" }, el.g) });
   }
 
-  const gap = spring(REST);
+  // softer than the engine's default spring (k 100, c 18): the plates
+  // drift apart and settle without a snap
+  const gap = spring(REST, { k: 40, c: 13 });
   let act = -1, drawn = NaN;
 
   function draw() {

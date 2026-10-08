@@ -54,10 +54,10 @@ function Process({ light = false }) {
               <li className='reveal-card theme-dark overflow-hidden bg-card m-0' id={`process-step-${step.id}`} key={step.id}>
                 <div className='reveal-card-inner h-full flex flex-col justify-between
                   mobile:p-6 mobile:gap-y-12
-                  tablet:p-8 tablet:gap-y-16
-                  laptop:p-8 laptop:gap-y-24
-                  laptop-lg:p-10 laptop-lg:gap-y-28
-                  desktop:p-12 desktop:gap-y-32'>
+                  tablet:p-6 tablet:gap-y-16
+                  laptop:p-6 laptop:gap-y-24
+                  laptop-lg:p-6 laptop-lg:gap-y-28
+                  desktop:p-6 desktop:gap-y-32'>
                   <p className='text-caption text-muted'>
                     <SplitText text={step.number} id={`animate-process-${step.id}`} />
                   </p>

@@ -8,8 +8,6 @@ import { TransitionLink } from '../../common/PageTransition'
 // the site's button and section label
 import Button from '../../common/Button'
 import Tag from '../../common/Tag'
-// icons
-import { RiArrowRightUpLine } from 'react-icons/ri'
 // scroll reveal
 import { scrollReveal, scrollRevealSequence } from '../../../utils/scrollReveal'
 // per-letter text split
@@ -75,6 +73,7 @@ const PLACEHOLDER = {
     { title: 'Iterations', text: 'Placeholder. Describe what changed between rounds, and why.' },
     { title: 'Final', text: 'Placeholder. Describe the finished screens and what settled the design.' },
   ],
+  decisionsIntro: 'Placeholder. Describe the decisions that shaped the design most, and what was at stake in each.',
   decisions: [
     { title: 'Decision one', text: 'Placeholder. Describe the decision, the options you weighed, and why this one won.' },
     { title: 'Decision two', text: 'Placeholder. Describe the decision, the options you weighed, and why this one won.' },
@@ -120,19 +119,19 @@ const CONTENT = `
 // a card inside a section: one shade up from it, with the dark theme's text
 const CARD = `theme-dark bg-card m-0
   mobile:p-6
-  tablet:p-8
-  laptop:p-8
-  laptop-lg:p-10
-  desktop:p-12`;
+  tablet:p-6
+  laptop:p-6
+  laptop-lg:p-6
+  desktop:p-6`;
 
 /**
- * One numbered section of the case study: its boxed label (number and
- * name) in the left columns, its content in the right - stacked below
+ * One section of the case study: its boxed label in the left columns,
+ * its content in the right - stacked below
  * laptop width. `wide` puts the content under the label at full width
  * instead; `below` is a full width run (of images, say) under a section
  * that keeps its text beside the label.
  */
-function CaseSection({ id, number, title, theme, wide = false, below, children }) {
+function CaseSection({ id, title, theme, wide = false, below, children }) {
   return (
     <section className={`${theme} grid grid-cols-8 gap-x-6 ${SECTION}
       mobile:gap-y-6
@@ -147,7 +146,7 @@ function CaseSection({ id, number, title, theme, wide = false, below, children }
         laptop:col-span-3
         laptop-lg:col-span-3
         desktop:col-span-3`}>
-        <Tag label={`${number} / ${title}`} id={`animate-case-tag-${id}`} />
+        <Tag label={title} id={`animate-case-tag-${id}`} />
       </div>
       <div className={wide ? 'col-span-8' : CONTENT}>
         {children}
@@ -181,6 +180,43 @@ function Points({ id, label, items, className = '' }) {
         ))}
       </ul>
     </div>
+  )
+}
+
+// a list of named notes as cards - the site's own card, as in "How I
+// work" (Process.jsx): its number at the top, its name and note at the
+// bottom, three to a row (one under another on a phone)
+function Cards({ id, items }) {
+  return (
+    <ol className='grid gap-4
+      mobile:grid-cols-1
+      tablet:grid-cols-3
+      laptop:grid-cols-3
+      laptop-lg:grid-cols-3
+      desktop:grid-cols-3'>
+      {items.map((item, i) => (
+        <li className='theme-dark bg-card m-0' key={item.title}>
+          <div className='h-full flex flex-col justify-between
+            mobile:p-6 mobile:gap-y-12
+            tablet:p-6 tablet:gap-y-16
+            laptop:p-6 laptop:gap-y-24
+            laptop-lg:p-6 laptop-lg:gap-y-28
+            desktop:p-6 desktop:gap-y-32'>
+            <p className='text-caption text-muted'>
+              <SplitText text={String(i + 1).padStart(2, '0')} id={`animate-case-${id}`} />
+            </p>
+            <div>
+              <h3 className='flex flex-wrap font-flexible font-medium leading-none text-heading mb-4'>
+                <SplitText text={item.title} id={`animate-case-${id}`} />
+              </h3>
+              <p className='flex flex-wrap text-caption text-muted'>
+                <SplitText text={item.text} id={`animate-case-${id}`} by='word' />
+              </p>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
   )
 }
 
@@ -237,21 +273,8 @@ function ProjectPage({ project }) {
     const panels = gsap.utils.toArray('.case-panel').map((panel) => scrollReveal(
       panel, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' }));
 
-    // the hero visual drifts inside its frame as the page scrolls past it -
-    // scroll-coupled. the picture is taller than the frame, and slides
-    // from its top edge showing to its bottom edge showing
-    const parallax = gsap.fromTo('#case-visual .parallax-layer',
-      { yPercent: 0 },
-      {
-        yPercent: -100 * (1 - 1 / PARALLAX),
-        ease: 'none',
-        scrollTrigger: { trigger: '#case-visual', start: 'top bottom', end: 'bottom top', scrub: true },
-      });
-
     return () => {
       [...sections, ...images, ...panels].forEach((reveal) => reveal.kill());
-      parallax.scrollTrigger?.kill();
-      parallax.revert();
     };
   }, [project]);
 
@@ -290,26 +313,15 @@ function ProjectPage({ project }) {
             mobile:flex-col mobile:items-start
             tablet:flex-col tablet:items-start'>
             {/* the facts, one under the other: year, then role, then
-              category - each a ruled row, its name beside its value */}
-            <dl className='flex flex-col
-              mobile:w-full
-              tablet:w-[70%]
-              laptop:w-[42%]
-              laptop-lg:w-[38%]
-              desktop:w-[34%]'>
+              category - each a small label with its value under it */}
+            <dl className='flex flex-col gap-y-6'>
               {[
                 ['Year', project.year],
                 ['Role', project.roles.join(', ')],
                 ['Category', project.category],
               ].map(([label, value]) => (
-                <div className='grid grid-cols-[6rem_1fr] gap-x-6 border-t border-rule
-                  mobile:py-4
-                  tablet:py-4
-                  laptop:py-4
-                  laptop-lg:py-6
-                  desktop:py-6'
-                  key={label}>
-                  <dt className='text-caption text-muted'>
+                <div key={label}>
+                  <dt className='text-caption text-muted mb-2'>
                     <SplitText text={label} id='animate-case-hero' />
                   </dt>
                   <dd className='flex flex-wrap text-caption'>
@@ -324,112 +336,62 @@ function ProjectPage({ project }) {
           </div>
         </section>
         {/* hero visual - the whole section, edge to edge; a full screen
-          from laptop width up (.case-visual, App.scss). it drifts inside its frame as the page
-          scrolls (.parallax-layer, moved by the effect above) */}
+          from laptop width up (.case-visual, App.scss) */}
         <section className={DARK}>
           <div className='case-visual screenshot-container
             mobile:aspect-[4/3]
             tablet:aspect-[16/10]'
             id='case-visual'>
-            <div className='parallax-layer' style={{ height: `${PARALLAX * 100}%` }}>
-              <img src={hero.src} alt={hero.alt} className='screenshot-img w-full h-full object-cover object-top' onLoad={remeasure}/>
-            </div>
+            <img src={hero.src} alt={hero.alt} className='screenshot-img w-full h-full object-cover object-top' onLoad={remeasure}/>
           </div>
         </section>
 
         {/* 02 challenge - problem, context */}
-        <CaseSection id='challenge' number='02' title='Challenge' theme={LIGHT}>
+        <CaseSection id='challenge' title='Challenge' theme={LIGHT}>
           <Copy id='challenge' text={study.challenge} />
         </CaseSection>
 
         {/* 03 my role - responsibilities, contribution. the two lists one
           under the other, like discovery's */}
-        <CaseSection id='role' number='03' title='My Role' theme={DARK}>
+        <CaseSection id='role' title='My Role' theme={DARK}>
           <Copy id='role' text={study.role} className={BELOW} />
           <Points id='role' label='Responsibilities' items={study.responsibilities} className={BELOW} />
           <Points id='role' label='Tools' items={project.technologies} />
         </CaseSection>
 
         {/* 04 discovery - research, pain points */}
-        <CaseSection id='discovery' number='04' title='Discovery' theme={LIGHT}>
+        <CaseSection id='discovery' title='Discovery' theme={LIGHT}>
           <Copy id='discovery' text={study.discovery} className={BELOW} />
           <Points id='discovery' label='Pain points' items={study.painPoints} />
         </CaseSection>
 
         {/* 05 key insight - the one thing, in the same columns as the rest */}
-        <CaseSection id='insight' number='05' title='Key Insight' theme={DARK}>
+        <CaseSection id='insight' title='Key Insight' theme={DARK}>
           <Copy id='insight' text={study.insight} />
         </CaseSection>
 
         {/* 06 approach - user flow / information architecture */}
-        <CaseSection id='approach' number='06' title='Approach' theme={LIGHT}>
+        <CaseSection id='approach' title='Approach' theme={LIGHT}>
           <Copy id='approach' text={study.approach} className={BELOW} />
           <Panel label='User flow / IA' className='aspect-[16/9]' />
         </CaseSection>
 
-        {/* 07 design process - wireframes, iterations, final, as a list:
-          each stage a ruled row - its number, its name, its note */}
-        <CaseSection id='process' number='07' title='Design Process' theme={DARK}>
+        {/* 07 design process - wireframes, iterations, final: a card
+          each, side by side */}
+        <CaseSection id='process' title='Design Process' theme={DARK}>
           <Copy id='process' text={study.process} className={BELOW} />
-          <ol className='flex flex-col'>
-            {study.stages.map((stage, i) => (
-              <li className='grid items-baseline gap-x-6 gap-y-4 border-t border-rule last:border-b m-0
-                mobile:grid-cols-[2.5rem_1fr] mobile:py-6
-                tablet:grid-cols-[3rem_1fr_1fr] tablet:py-8
-                laptop:grid-cols-[3rem_1fr_1fr] laptop:py-8
-                laptop-lg:grid-cols-[4rem_1fr_1fr] laptop-lg:py-10
-                desktop:grid-cols-[4rem_1fr_1fr] desktop:py-10'
-                key={stage.title}>
-                <p className='text-caption text-muted'>
-                  <SplitText text={String(i + 1).padStart(2, '0')} id='animate-case-process' />
-                </p>
-                <h3 className='flex flex-wrap font-flexible font-medium leading-none text-heading'>
-                  <SplitText text={stage.title} id='animate-case-process' />
-                </h3>
-                <p className='flex flex-wrap text-caption text-muted
-                  mobile:col-start-2'>
-                  <SplitText text={stage.text} id='animate-case-process' by='word' />
-                </p>
-              </li>
-            ))}
-          </ol>
+          <Cards id='process' items={study.stages} />
         </CaseSection>
 
-        {/* 08 key design decisions - three cards side by side under the
-          label, each: its number at the top, the decision at the bottom */}
-        <CaseSection id='decisions' number='08' title='Key Design Decisions' theme={LIGHT} wide>
-          <ol className='grid gap-4
-            mobile:grid-cols-1
-            tablet:grid-cols-1
-            laptop:grid-cols-3
-            laptop-lg:grid-cols-3
-            desktop:grid-cols-3'>
-            {study.decisions.map((decision, i) => (
-              <li className={`${CARD} flex flex-col justify-between
-                mobile:gap-y-12
-                tablet:gap-y-12
-                laptop:gap-y-24
-                laptop-lg:gap-y-32
-                desktop:gap-y-40`}
-                key={decision.title}>
-                <p className='text-caption text-muted'>
-                  <SplitText text={String(i + 1).padStart(2, '0')} id='animate-case-decisions' />
-                </p>
-                <div>
-                  <h3 className='flex flex-wrap font-flexible font-medium leading-none text-heading mb-4'>
-                    <SplitText text={decision.title} id='animate-case-decisions' />
-                  </h3>
-                  <p className='flex flex-wrap text-caption text-muted'>
-                    <SplitText text={decision.text} id='animate-case-decisions' by='word' />
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
+        {/* 08 key design decisions - an opening paragraph, then a card
+          for each decision, side by side */}
+        <CaseSection id='decisions' title='Key Design Decisions' theme={LIGHT}>
+          <Copy id='decisions' text={study.decisionsIntro} className={BELOW} />
+          <Cards id='decisions' items={study.decisions} />
         </CaseSection>
 
         {/* 09 final product - major features, polished UI */}
-        <CaseSection id='final' number='09' title='Final Product' theme={DARK} below={(
+        <CaseSection id='final' title='Final Product' theme={DARK} below={(
           <div className='grid grid-cols-8 gap-x-6
             mobile:gap-y-6
             tablet:gap-y-10
@@ -446,8 +408,9 @@ function ProjectPage({ project }) {
           <Copy id='final' text={study.final} />
         </CaseSection>
 
-        {/* 10 design system - components, visual language */}
-        <CaseSection id='system' number='10' title='Design System' theme={LIGHT}>
+        {/* 10 design system - components, visual language. its three
+          parts as three cards, side by side */}
+        <CaseSection id='system' title='Design System' theme={LIGHT}>
           <Copy id='system' text={study.system} className={BELOW} />
           <div className='grid gap-4
             mobile:grid-cols-1
@@ -462,7 +425,7 @@ function ProjectPage({ project }) {
         </CaseSection>
 
         {/* 11 outcome - impact, results. one card per figure */}
-        <CaseSection id='outcome' number='11' title='Outcome' theme={DARK}>
+        <CaseSection id='outcome' title='Outcome' theme={DARK}>
           <Copy id='outcome' text={study.outcome} className={BELOW} />
           <ul className='grid gap-4
             mobile:grid-cols-1
@@ -490,24 +453,21 @@ function ProjectPage({ project }) {
         </CaseSection>
 
         {/* 12 reflection - what I learned */}
-        <CaseSection id='reflection' number='12' title='Reflection' theme={LIGHT}>
+        <CaseSection id='reflection' title='Reflection' theme={LIGHT}>
           <Copy id='reflection' text={study.reflection} />
         </CaseSection>
 
-        {/* 13 cta - next project, its name against the right edge, then
-          the contact section. under the pointer a rule draws in under the
-          name and an arrow comes up beside it (.next-link, App.scss) */}
-        <CaseSection id='next' number='13' title='Next project' theme={DARK}>
+        {/* 13 cta - next project: its name against the right edge, a
+          link to it with the site's text hover (its letters roll), then
+          the contact section */}
+        <CaseSection id='next' title='Next project' theme={DARK}>
           <div className='flex justify-end'>
-          <TransitionLink to={next.path} className='next-link' aria-label={`Next project: ${next.title}`} data-no-hover-roll>
-            <span className='next-link-arrow' aria-hidden='true'>
-              <RiArrowRightUpLine/>
-            </span>
-            <span className='flex flex-wrap justify-end font-flexible font-medium leading-[.92] tracking-tight
-              text-next'>
-              <SplitText text={next.title} id='animate-case-next' />
-            </span>
-          </TransitionLink>
+            <TransitionLink to={next.path} aria-label={`Next project: ${next.title}`}>
+              <span className='flex flex-wrap justify-end font-flexible font-medium leading-[.92] tracking-tight
+                text-next'>
+                <SplitText text={next.title} id='animate-case-next' />
+              </span>
+            </TransitionLink>
           </div>
         </CaseSection>
       </article>
@@ -515,9 +475,5 @@ function ProjectPage({ project }) {
     </>
   )
 }
-
-// how much taller than its frame the hero visual is - the extra is what
-// it has to drift through
-const PARALLAX = 1.25;
 
 export default ProjectPage

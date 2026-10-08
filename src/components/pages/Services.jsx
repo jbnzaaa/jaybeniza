@@ -91,10 +91,10 @@ function Services({ detailed = false }) {
                 {/* name + description */}
                 <div className='flex flex-col justify-between
                   mobile:p-6 mobile:gap-y-8
-                  tablet:p-8 tablet:gap-y-10
-                  laptop:p-8 laptop:gap-y-16
-                  laptop-lg:p-10 laptop-lg:gap-y-20
-                  desktop:p-12 desktop:gap-y-24'>
+                  tablet:p-6 tablet:gap-y-10
+                  laptop:p-6 laptop:gap-y-16
+                  laptop-lg:p-6 laptop-lg:gap-y-20
+                  desktop:p-6 desktop:gap-y-24'>
                   <h3 className='flex flex-wrap font-flexible font-medium leading-none text-heading'>
                     <SplitText text={title} id={`animate-service-${id}`} />
                   </h3>

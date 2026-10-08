@@ -10,8 +10,6 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 import ScrollSmoother from 'gsap/ScrollSmoother'
 // the site's button
 import Button from '../common/Button'
-// icons
-import { RiArrowRightDownLine } from 'react-icons/ri'
 // per-letter text split
 import SplitText from '../common/SplitText'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
@@ -48,9 +46,8 @@ const BAR = `
  * over light and dark sections alike, so it is drawn in one light colour
  * and blended with the page by difference: over a dark section it stays
  * light, over a light one it turns dark, and the change follows a
- * section's edge up through the bar as the page scrolls. The button is
- * not part of that: it is always black, so it sits in a layer of its
- * own, over the bar and not blended.
+ * section's edge up through the bar as the page scrolls. The contact
+ * button is part of that too: a filled box that inverts with the logo.
  *
  * On a phone the links and the contact button give way to one Menu
  * button, which opens a panel over the page with all four in it.
@@ -154,16 +151,18 @@ function Navbar() {
               </li>
             ))}
           </ul>
-          {/* right - the button's place: an unseen copy of it, which
-            gives the bar its height and keeps the links clear of the
-            real button in the layer below */}
-          <div className='col-start-3 justify-self-end invisible' aria-hidden='true'>
-            <span className='cta-button cta-button-small text-caption'>
-              Get in touch
-              <span className='menu-icon-clip'>
-                <RiArrowRightDownLine className='ml-2 text-base'/>
-              </span>
-            </span>
+          {/* right - the way to the contact page: filled, and blended
+            like the logo, so it inverts with the section under it
+            (.nav-blend, App.scss). revealed on mount. on a phone its
+            place is taken by the Menu button in the layer below; an
+            unseen copy of that keeps the bar's height */}
+          <div className='col-start-3 justify-self-end'>
+            <div className={FROM_TABLET}>
+              <Button label='Get in touch' to={CONTACT} onClick={toTopIfHere(CONTACT)} small reveal='mount' />
+            </div>
+            <div className={`invisible ${PHONE_ONLY}`} aria-hidden='true'>
+              <span className='cta-button cta-button-small text-caption'>Menu</span>
+            </div>
           </div>
         </nav>
       </div>
@@ -183,20 +182,14 @@ function Navbar() {
           ))}
         </ul>
       </div>
-      {/* right - black on every section (.nav-action, App.scss), so
-        outside the blended bar: the way to the contact page, or on a
-        phone the Menu button. revealed on mount */}
-      <div className={`nav-action fixed top-0 right-0 z-[22] ${BAR}`} ref={fxAction}>
-        <div className={FROM_TABLET}>
-          <Button label='Get in touch' to={CONTACT} onClick={toTopIfHere(CONTACT)} small reveal='mount' />
-        </div>
-        <div className={PHONE_ONLY}>
+      {/* the phone's Menu button - black on every section (.nav-action,
+        App.scss) and over its own panel, so outside the blended bar */}
+      <div className={`nav-action fixed top-0 right-0 z-[22] ${BAR} ${PHONE_ONLY}`} ref={fxAction}>
         <button type='button' className='nav-menu-button cta-button cta-button-small text-caption font-monolisa uppercase'
           aria-expanded={menuOpen} aria-controls='nav-menu'
           onClick={() => setMenuOpen((open) => !open)}>
           {menuOpen ? 'Close' : 'Menu'}
         </button>
-        </div>
       </div>
     </>
   )

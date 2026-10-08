@@ -23,7 +23,18 @@ function Hairline({ figure }) {
     const read = { textContent: '' };
     // mounted at the middle of its range, as the figure's own page does
     const handle = figure.mount({ stage, svg, read }, figure.range[1]);
+    // the engine lands every spring and tween at once when the system
+    // asks for less motion (Windows: Animation effects off), which showed
+    // as a figure snapping back the moment the pointer left it. the rest
+    // of the site animates whatever that setting is, so the figures do
+    // too - said again whenever the setting changes, after the engine's
+    // own listener has read it
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const keepMoving = () => HL.setReducedMotion(false);
+    keepMoving();
+    motion.addEventListener('change', keepMoving);
     return () => {
+      motion.removeEventListener('change', keepMoving);
       handle.destroy();
       svg.remove();
     };

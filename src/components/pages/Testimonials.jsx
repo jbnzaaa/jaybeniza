@@ -52,7 +52,7 @@ const SHOWING = .3;
  * to the left gutter, then each next one slides in over the one before it
  * and stops a step further right, so the last card's right edge lands on
  * the right gutter and every earlier card stays part in view behind it.
- * On a phone the same happens top to bottom: the cards are full width,
+ * Below laptop width the same happens top to bottom: the cards are full width,
  * come up from below, and each stops a step lower than the one before.
  */
 function Testimonials() {
@@ -86,7 +86,7 @@ function Testimonials() {
     // timeline moves anything
     // (on a phone the cards travel up the screen's height instead, and
     // it is a card's height that comes on screen)
-    const vertical = window.matchMedia('(max-width: 767px)').matches;
+    const vertical = window.matchMedia('(max-width: 1023px)').matches;
     const screen = vertical ? window.innerHeight : window.innerWidth;
     const top = section.getBoundingClientRect().top;
     const starts = cards.map((card) => {
@@ -120,14 +120,16 @@ function Testimonials() {
     <>
       <section id='testimonials' className='theme-light flex flex-col h-screen-safe overflow-hidden
         mobile:px-[1rem] mobile:pt-16 mobile:pb-4
-        tablet:px-[1rem] tablet:py-16
-        laptop:px-[2rem] laptop:py-20
-        laptop-lg:px-[3rem] laptop-lg:py-24
-        desktop:px-[3rem] desktop:py-28'
+        tablet:px-[1rem] tablet:pt-16 tablet:pb-8
+        laptop:px-[2rem] laptop:pt-20 laptop:pb-10
+        laptop-lg:px-[3rem] laptop-lg:pt-20 laptop-lg:pb-12
+        desktop:px-[3rem] desktop:pt-20 desktop:pb-12'
         ref={fxSection}>
         <div className='shrink-0'>
           <Tag label='Words from my team' id='animate-testimonials-tag' />
         </div>
+        {/* (the section's padding is kept short, top and bottom, so that on
+          a low screen the cards still clear the label above them) */}
         {/* the stack, centred in the room under the label - on a phone it
           fills that room instead, and every card is the one fixed height
           (.testimonial-stack, App.scss). every card sits
@@ -147,13 +149,13 @@ function Testimonials() {
               id={`testimonial-card-${id}`} key={id}>
               <figure className='h-full flex flex-col justify-between
                 mobile:p-6 mobile:gap-y-8
-                tablet:p-8 tablet:gap-y-12
-                laptop:p-8 laptop:gap-y-12
-                laptop-lg:p-10 laptop-lg:gap-y-16
-                desktop:p-12 desktop:gap-y-20'>
+                tablet:p-6 tablet:gap-y-12
+                laptop:p-6 laptop:gap-y-10
+                laptop-lg:p-6 laptop-lg:gap-y-10
+                desktop:p-6 desktop:gap-y-12'>
                 {/* the review - one paragraph, in quotation marks */}
                 <blockquote>
-                  <p className='flex flex-wrap font-medium leading-snug
+                  <p className='testimonial-quote flex flex-wrap font-medium leading-snug
                     mobile:text-body
                     tablet:text-subtitle
                     laptop:text-subtitle
@@ -167,11 +169,14 @@ function Testimonials() {
                   the card (start state: .testimonial-avatar, App.scss) */}
                 <figcaption className='flex items-center gap-x-4'>
                   <span className='testimonial-avatar project-placeholder shrink-0 w-12 h-12' aria-hidden='true'/>
-                  <span className='flex flex-col gap-y-1'>
+                  {/* centred on the picture. the nudge down is optical: the
+                    heading face sits high in its line, which left the
+                    pair looking above the picture's middle */}
+                  <span className='testimonial-who flex flex-col justify-center gap-y-1'>
                     <span className='font-flexible font-medium leading-none text-subtitle'>
                       <SplitText text={name} id={`animate-testimonial-${id}`} />
                     </span>
-                    <span className='flex flex-wrap text-caption text-muted'>
+                    <span className='flex flex-wrap text-caption leading-tight text-muted'>
                       <SplitText text={role} id={`animate-testimonial-${id}`} />
                     </span>
                   </span>

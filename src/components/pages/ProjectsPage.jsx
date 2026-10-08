@@ -7,13 +7,16 @@ import { PROJECTS } from './projects/projects'
 // GSAP
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+import ScrollSmoother from 'gsap/ScrollSmoother'
+// the site's button
+import Button from '../common/Button'
 // page-to-page wipe
 import { TransitionLink } from '../common/PageTransition'
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 // each project's cover - the mock-up picture of the project (a background
 // class, see backgroundImage in tailwind.config.js)
@@ -77,7 +80,8 @@ const DESCRIPTION = 'Every project so far, from first sketch to live product. Pi
 
 /**
  * The work page (route /work), in the landing page's layout: a first
- * screen with the headline and, in its lower right, a short description,
+ * screen with the headline and, along its foot, an arrow on to the
+ * projects (lower left) and a short description (lower right),
  * then every project on a six column grid, newest year first - each in a
  * row of its own and in a different place across it. A project is its
  * card - the cover; its name and its label (year / role / category) come
@@ -148,9 +152,16 @@ function ProjectsPage() {
     };
   }, []);
 
+  // the arrow scrolls on to the projects
+  const toProjects = (e) => {
+    e.preventDefault();
+    ScrollSmoother.get()?.scrollTo('#work-projects', true);
+  };
+
   return (
     <>
-      {/* first screen - headline at the top, description in the lower
+      {/* first screen - headline at the top; along the foot, the arrow on
+        to the projects in the lower left and the description in the lower
         right. top padding clears the nav bar */}
       <section id='projects-hero' className='theme-light flex flex-col justify-between min-h-screen-safe
         mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-16
@@ -166,18 +177,27 @@ function ProjectsPage() {
             </span>
           ))}
         </h1>
-        <p className='flex flex-wrap self-end text-caption
-          mobile:w-[78%]
-          tablet:w-[52%]
-          laptop:w-[34%]
-          laptop-lg:w-[30%]
-          desktop:w-[28%]'>
-          <SplitText text={DESCRIPTION} id='animate-projects-page' by='word' />
-        </p>
+        <div className='flex justify-between items-end gap-x-6'>
+          {/* the landing hero's arrow */}
+          <div className='shrink-0'>
+            <Button label='See the projects' href='#work-projects' onClick={toProjects} iconOnly outline />
+          </div>
+          <p className='flex flex-wrap text-caption
+            mobile:w-[78%]
+            tablet:w-[52%]
+            laptop:w-[34%]
+            laptop-lg:w-[30%]
+            desktop:w-[28%]'>
+            <SplitText text={DESCRIPTION} id='animate-projects-page' by='word' />
+          </p>
+        </div>
       </section>
       {/* the projects - six columns; each one's place on them is in
         PLACES above (.work-grid, App.scss) */}
-      <section className='theme-light
+      {/* (pulled up a pixel over the first screen: the two are one light
+        ground, and a sub-pixel gap between them let the dark page show
+        through as a hairline) */}
+      <section id='work-projects' className='theme-light relative -mt-px
         mobile:px-[1rem] mobile:pt-8 mobile:pb-16
         tablet:px-[1rem] tablet:pt-8 tablet:pb-16
         laptop:px-[2rem] laptop:pt-8 laptop:pb-20
@@ -215,7 +235,8 @@ function ProjectsPage() {
             return (
               <li className='work-item m-0' style={place(i)} key={key}>
                 {to
-                  ? <TransitionLink to={to} className='block' data-no-hover-roll>{item}</TransitionLink>
+                  // over a project the cursor says what pressing it does (Cursor.jsx)
+                  ? <TransitionLink to={to} className='block' data-cursor='View project' data-no-hover-roll>{item}</TransitionLink>
                   : item}
               </li>
             );
