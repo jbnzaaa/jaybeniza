@@ -20,8 +20,8 @@ import SplitText from '../common/SplitText'
 // the longer introduction. everything in it is drawn from the work
 // experience entries below it - nothing here that they do not back up
 const INTRO = [
-  "I'm Jay Beniza, a UI/UX designer from the Philippines. I started out writing code for the web, and kept getting pulled toward the part that comes first: working out what people actually need, and why a screen feels easy or doesn't.",
-  "Three years and many products later, that is still the job. I design web and mobile apps from the first user flow to the final pixel, build the design systems that hold them together, and still write front-end code, so nothing gets lost between the idea and what ships.",
+  "I'm Jay Beniza, a UI/UX designer from the Philippines with 3+ years of experience. I started in web design, then moved into UI/UX.",
+  "I design web and mobile apps, from research and user flows to interfaces and design systems. I also write some code, and build most of my projects with modern technologies.",
 ];
 
 // the introduction opens on my name: the words before it, the name (which
@@ -124,8 +124,11 @@ function AboutPage() {
   useEffect(() => {
     // the first screen is in view at load, so its reveals are triggered
     // off the section itself; the resume screen reveals as it scrolls in
+    // (the introduction is long: its letters rise in reading order across
+    // a set time, rather than a fixed step each, so the last line is not
+    // seconds behind the first)
     const intro = ['#animate-about-page'].map((target) => scrollReveal(
-      target, { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: '#about-hero', start: 'top bottom' }));
+      target, { y: 0, duration: .6, stagger: { amount: 1.6 }, ease: 'power2.out' }, { trigger: '#about-hero', start: 'top bottom' }));
     const resume = scrollReveal('#animate-about-page-resume', { y: 0, stagger: .02, ease: 'power1.in' },
       { trigger: '#resume', start: 'top 60%' });
 
@@ -165,13 +168,13 @@ function AboutPage() {
             laptop:w-[90%] laptop:leading-tight
             laptop-lg:w-[88%] laptop-lg:leading-tight
             desktop:w-[84%] desktop:leading-tight'>
-            <SplitText text={BEFORE} id='animate-about-page' by='word' />
+            <SplitText text={BEFORE} id='animate-about-page' />
             {/* my name - point at it (or press it) to see my picture */}
             <span className='about-name' role='button' tabIndex={0} aria-label='Jay Beniza - show my picture'>
-              <SplitText text={NAME} id='animate-about-page' by='word' />
+              <SplitText text={NAME} id='animate-about-page' />
             </span>
-            <SplitText text=',' id='animate-about-page' by='word' />
-            <SplitText text={AFTER} id='animate-about-page' by='word' />
+            <SplitText text=',' id='animate-about-page' />
+            <SplitText text={AFTER} id='animate-about-page' />
           </p>
         </div>
       </section>

@@ -3,6 +3,7 @@ import React, { useCallback, useEffect } from 'react'
 // GSAP
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+import ScrollSmoother from 'gsap/ScrollSmoother'
 // page-to-page wipe
 import { TransitionLink } from '../../common/PageTransition'
 // the site's button and section label
@@ -16,10 +17,10 @@ import SplitText from '../../common/SplitText'
 import { PROJECTS } from './projects'
 // contact section - same block the landing page ends on
 import Contact from '../Contact'
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 // the order the projects run in, for "next project"
-const ORDER = ['dailydiscount', 'regain', 'jaysonbeniza', 'jbnza'];
+const ORDER = ['portfoliov3', 'tingi', 'stocknear', 'dailydiscount', 'regain', 'jaysonbeniza', 'jbnza'];
 
 // grid placement of a screenshot by its `start` (see projects.js)
 const SHOT_LAYOUT = {
@@ -231,7 +232,18 @@ function Panel({ label, className = '' }) {
 }
 
 /**
- * A project page, laid out as a case study in thirteen parts - hero,
+ * A project page, in one of three layouts.
+ *
+ * A case study in progress - a project with `inProgress` - is its hero,
+ * its cover, and a note that the write-up is to come.
+ *
+ * A build - a project with no `caseStudy` in projects.js, which is every
+ * web development project - is shown as what it is: the hero, the cover,
+ * an overview of my role and what it was built with, then its screens,
+ * and the link to the next project. No research or process sections it
+ * has nothing to put in.
+ *
+ * A case study - a project that has a `caseStudy` - is laid out in thirteen parts - hero,
  * challenge, my role, discovery, key insight, approach, design process,
  * key design decisions, final product, design system, outcome, reflection
  * and a closing link to the next project and the contact section - in the
@@ -243,8 +255,12 @@ function Panel({ label, className = '' }) {
  * PLACEHOLDER above until it has one.
  */
 function ProjectPage({ project }) {
+  // which of the two layouts: a case study, or a build
+  const isStudy = !!project.caseStudy;
+  const isDraft = !!project.inProgress;
   const study = { ...PLACEHOLDER, ...(project.caseStudy || {}) };
-  const [hero, ...shots] = project.screenshots;
+  // (a project may have no screenshots yet: panels stand in for them)
+  const [hero, ...shots] = project.screenshots || [];
   const here = ORDER.findIndex((key) => PROJECTS[key] === project);
   const next = PROJECTS[ORDER[(here + 1) % ORDER.length]];
 
@@ -277,6 +293,12 @@ function ProjectPage({ project }) {
       [...sections, ...images, ...panels].forEach((reveal) => reveal.kill());
     };
   }, [project]);
+
+  // the hero's arrow scrolls on to the cover
+  const toCover = (e) => {
+    e.preventDefault();
+    ScrollSmoother.get()?.scrollTo('#case-visual', true);
+  };
 
   return (
     <>
@@ -330,8 +352,15 @@ function ProjectPage({ project }) {
                 </div>
               ))}
             </dl>
-            <div className='shrink-0'>
-              <Button label='Visit site' href={project.link.href} external />
+            {/* lower right: the link to the live site, where there is one,
+              and the landing hero's arrow, on to the cover. below laptop
+              width the row is the full width, the arrow still at its
+              right end */}
+            <div className='shrink-0 flex items-center gap-x-4
+              mobile:w-full mobile:justify-between
+              tablet:w-full tablet:justify-between'>
+              {project.link ? <Button label='Visit site' href={project.link.href} external /> : <span/>}
+              <Button label='See the project' href='#case-visual' onClick={toCover} iconOnly outline />
             </div>
           </div>
         </section>
@@ -342,10 +371,22 @@ function ProjectPage({ project }) {
             mobile:aspect-[4/3]
             tablet:aspect-[16/10]'
             id='case-visual'>
-            <img src={hero.src} alt={hero.alt} className='screenshot-img w-full h-full object-cover object-top' onLoad={remeasure}/>
+            {hero
+              ? <img src={hero.src} alt={hero.alt} className='screenshot-img w-full h-full object-cover object-top' onLoad={remeasure}/>
+              : <Panel label='Cover' className='w-full h-full' />}
           </div>
         </section>
 
+        {isDraft ? (
+        <>
+        {/* a case study in progress: what is to come, and nothing made up
+          in its place */}
+        <CaseSection id='status' title='In progress' theme={LIGHT}>
+          <Copy id='status' text={project.inProgress} />
+        </CaseSection>
+        </>
+        ) : isStudy ? (
+        <>
         {/* 02 challenge - problem, context */}
         <CaseSection id='challenge' title='Challenge' theme={LIGHT}>
           <Copy id='challenge' text={study.challenge} />
@@ -356,7 +397,8 @@ function ProjectPage({ project }) {
         <CaseSection id='role' title='My Role' theme={DARK}>
           <Copy id='role' text={study.role} className={BELOW} />
           <Points id='role' label='Responsibilities' items={study.responsibilities} className={BELOW} />
-          <Points id='role' label='Tools' items={project.technologies} />
+          {/* (the tools list only once there are tools to list) */}
+          {project.technologies.length > 0 && <Points id='role' label='Tools' items={project.technologies} />}
         </CaseSection>
 
         {/* 04 discovery - research, pain points */}
@@ -402,6 +444,9 @@ function ProjectPage({ project }) {
               <div className={`screenshot-container ${SHOT_LAYOUT[start]}`} key={alt}>
                 <img src={src} alt={alt} className='screenshot-img' onLoad={remeasure}/>
               </div>
+            ))}
+            {!shots.length && [['Screen one', 1], ['Screen two', 4], ['Screen three', 2]].map(([name, start]) => (
+              <Panel label={name} className={`aspect-[16/10] ${SHOT_LAYOUT[start]}`} key={name} />
             ))}
           </div>
         )}>
@@ -457,10 +502,37 @@ function ProjectPage({ project }) {
           <Copy id='reflection' text={study.reflection} />
         </CaseSection>
 
+        </>
+        ) : (
+        <>
+        {/* a build. overview - my role on it, and what it was built with */}
+        <CaseSection id='overview' title='Overview' theme={LIGHT}>
+          <Points id='overview' label='My role' items={project.roles} className={BELOW} />
+          <Points id='overview' label='Built with' items={project.technologies} />
+        </CaseSection>
+
+        {/* its screens, under the label at full width */}
+        <CaseSection id='screens' title='Screens' theme={DARK} wide>
+          <div className='grid grid-cols-8 gap-x-6
+            mobile:gap-y-6
+            tablet:gap-y-10
+            laptop:gap-y-12
+            laptop-lg:gap-y-20
+            desktop:gap-y-20'>
+            {shots.map(({ src, alt, start }) => (
+              <div className={`screenshot-container ${SHOT_LAYOUT[start]}`} key={alt}>
+                <img src={src} alt={alt} className='screenshot-img' onLoad={remeasure}/>
+              </div>
+            ))}
+          </div>
+        </CaseSection>
+        </>
+        )}
+
         {/* 13 cta - next project: its name against the right edge, a
           link to it with the site's text hover (its letters roll), then
           the contact section */}
-        <CaseSection id='next' title='Next project' theme={DARK}>
+        <CaseSection id='next' title='Next project' theme={isStudy || isDraft ? DARK : LIGHT}>
           <div className='flex justify-end'>
             <TransitionLink to={next.path} aria-label={`Next project: ${next.title}`}>
               <span className='flex flex-wrap justify-end font-flexible font-medium leading-[.92] tracking-tight

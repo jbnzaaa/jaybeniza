@@ -30,7 +30,9 @@ function mount({ stage, svg, read }, value) {
   let R = value * PITCH, over = null;
 
   const C = Cam(45, 0.5, 1.6);
-  fit(C, [[0, 0, -PB], [WX, WY, -PB], [WX, 0, -PB], [0, WY, -PB], [0, 0, HMAX], [WX, WY, HMAX], [WX, 0, HMAX], [0, WY, HMAX]], 200, 166);
+  // (as much room allowed under the window as over it, so the window at
+  // rest sits in the middle of its frame)
+  fit(C, [[0, 0, -HMAX], [WX, WY, -HMAX], [WX, 0, -HMAX], [0, WY, -HMAX], [0, 0, HMAX], [WX, WY, HMAX], [WX, 0, HMAX], [0, WY, HMAX]], 200, 156.5);
   const P = proj(C), front = facing(C);
 
   // the window: a slab, the rule under its title bar, and the gutter's rule

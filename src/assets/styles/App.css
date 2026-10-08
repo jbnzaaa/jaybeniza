@@ -903,6 +903,201 @@
     height: var(--screen-h, 100svh);
   }
 }
+* body .project-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem 1rem;
+}
+
+@media (min-width: 768px) {
+  * body .project-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  * body .form-field-wide {
+    grid-column: 1/-1;
+  }
+}
+* body .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+* body .form-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+}
+
+* body .form-tip {
+  position: relative;
+  display: inline-flex;
+  font-size: 1rem;
+  cursor: help;
+}
+
+* body .form-tip svg {
+  fill: var(--muted);
+  transition: fill 0.3s ease-in-out;
+}
+
+* body .form-tip:is(:hover, :focus-visible) svg {
+  fill: var(--text);
+}
+
+* body .form-tip-box {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  left: 0;
+  z-index: 5;
+  width: max-content;
+  max-width: min(18rem, 70vw);
+  padding: 0.5rem 0.75rem;
+  background: var(--text);
+  color: var(--ground);
+  line-height: 1.5;
+  clip-path: inset(100% 0% 0% 0%);
+  pointer-events: none;
+  transition: clip-path 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+* body .form-tip:is(:hover, :focus-visible) .form-tip-box {
+  clip-path: inset(0% 0% 0% 0%);
+}
+
+* body .form-tip:focus-visible {
+  outline: 1px solid var(--text);
+  outline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+  * body .form-label {
+    position: relative;
+  }
+  * body .form-tip {
+    position: static;
+  }
+  * body .form-tip-box {
+    max-width: 100%;
+  }
+}
+* body .project-form :is(input:not([type=checkbox]), select, textarea) {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--muted);
+  border-radius: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: clamp(0.8125rem, 0.7rem + 0.15vw, 0.875rem);
+  line-height: 1.6;
+  text-transform: none;
+  outline: none;
+  appearance: none;
+  resize: vertical;
+  transition: border-color 0.3s ease-in-out;
+}
+
+* body .project-form :is(input:not([type=checkbox]), select, textarea):is(:hover, :focus) {
+  border-color: var(--text);
+}
+
+* body .project-form :is(input, select, textarea):focus-visible {
+  outline: 1px solid var(--text);
+  outline-offset: 2px;
+}
+
+* body .project-form select:not([multiple]) {
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%231B1A1A' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.75rem 0.5rem;
+  cursor: pointer;
+}
+
+* body .project-form option {
+  background: var(--ground);
+  text-transform: none;
+}
+
+* body .form-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+* body .form-check {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--muted);
+  cursor: pointer;
+  transition: border-color 0.3s ease-in-out;
+}
+
+* body .form-check::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--text);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+* body .form-check span {
+  transition: color 0.35s ease-in-out;
+}
+
+* body .form-check:hover {
+  border-color: var(--text);
+}
+
+* body .form-check-on {
+  border-color: var(--text);
+}
+
+* body .form-check-on::before {
+  transform: scaleY(1);
+}
+
+* body .form-check-on span {
+  color: var(--ground);
+}
+
+* body .form-check input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  appearance: none;
+}
+
+* body .form-check:focus-within {
+  outline: 1px solid var(--text);
+  outline-offset: 2px;
+}
+
+* body .form-foot {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+}
+
+* body .form-submit {
+  clip-path: none;
+  cursor: pointer;
+}
+
 * body .cursor {
   position: fixed;
   top: 0;
@@ -930,7 +1125,9 @@
 
 * body .cursor-label {
   flex-shrink: 0;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.6875rem;
+  line-height: 1.2;
   color: #E5E4E3;
   white-space: nowrap;
   visibility: hidden;

@@ -21,24 +21,24 @@ const SERVICES = [
   {
     id: 'product-design',
     title: 'Product Design',
-    text: 'I design web and mobile apps from the first user flow to the final screen. That covers UI/UX design for web apps, mobile app design, and prototypes tested with real users before anything is built.',
-    detail: 'I start with who the product is for and what they need to get done, map the flow, then wireframe, prototype, and test before drawing the final screens. What you get is an interface real users have already tried.',
+    text: 'I take a product from user flow to tested prototype to final screens. Real users try it before a developer writes a line.',
+    detail: 'I start with who the product is for and what they need to get done, then map the flow, wireframe, and prototype it for web or mobile before the final screens are drawn.',
     includes: ['User flows', 'Wireframes', 'High-fidelity UI', 'Interactive prototypes', 'Usability testing'],
     figure: layers,
   },
   {
     id: 'design-systems',
     title: 'Design Systems',
-    text: 'I create design systems that keep products consistent as they grow, and I prepare clear handoff files so developers build exactly what was designed.',
-    detail: 'I build the component library and the rules around it: colour, type, spacing, and states, documented in Figma. Every new screen starts from the same parts, and developers get specs they can build from without guessing.',
+    text: 'I build the component library your team designs and ships from. One source, consistent screens, no guessing at handoff.',
+    detail: 'That covers the rules around the components too: colour, type, spacing, and states, documented in Figma. Every new screen starts from the same parts, and developers build exactly what was designed.',
     includes: ['Component libraries', 'Colour and type styles', 'Responsive layouts', 'Documentation', 'Developer handoff'],
     figure: tray,
   },
   {
     id: 'development',
     title: 'Development',
-    text: 'I write front-end code in React, Tailwind, HTML, CSS, and JavaScript, from full interfaces to landing pages and portfolio sites.',
-    detail: 'I turn designs into responsive, production-ready front-end, with the motion and the small details kept intact. Because I design as well, what ships matches what was designed.',
+    text: 'I write production front-end in React, Tailwind, and JavaScript. You get a designer whose designs are buildable, because I build them.',
+    detail: 'I turn designs into responsive, production-ready interfaces, with the motion and the small details kept intact, so what ships matches what was designed.',
     includes: ['React', 'Tailwind CSS', 'HTML5, CSS3, SASS', 'JavaScript', 'GSAP animation'],
     figure: code,
   },
@@ -81,7 +81,7 @@ function Services({ detailed = false }) {
           laptop-lg:mt-10
           desktop:mt-10'>
           {SERVICES.map(({ id, title, text, detail, includes, figure }) => (
-            <li className='reveal-card overflow-hidden bg-card m-0' id={`service-card-${id}`} key={id}>
+            <li className='reveal-card overflow-hidden bg-black m-0' id={`service-card-${id}`} key={id}>
               <div className='reveal-card-inner grid
                 mobile:grid-cols-1
                 tablet:grid-cols-1

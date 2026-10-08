@@ -8,6 +8,8 @@ import { scrollReveal } from '../../utils/scrollReveal'
 import SplitText from '../common/SplitText'
 // footer
 import Footer from './Footer'
+// page-to-page wipe
+import { TransitionLink } from '../common/PageTransition'
 
 const EMAIL = 'mailto:jaysonbeniza@gmail.com';
 
@@ -16,11 +18,22 @@ const SUPPORT = "Let's create something useful, and make it feel great to use.";
 
 // the ways through
 const LINKS = [
-  { label: "Let's talk", href: EMAIL },
   { label: 'Linked In', href: 'https://www.linkedin.com/in/jaybeniza/' },
   { label: 'Behance', href: 'https://www.behance.net/jbnza' },
   { label: 'Email', href: EMAIL },
   { label: 'Resume', href: Resume },
+];
+
+// the section's other face, on the contact page - which is itself the way
+// to get in touch, so it closes on the work instead: `to` is a route
+const PROJECTS_HEADING = 'View My Projects';
+const PROJECTS_TEXT = 'Not ready to send a request? See what I have designed and built first.';
+const PROJECTS_LINKS = [
+  { label: 'All work', to: '/work' },
+  { label: 'Portfolio v3', to: '/portfolio-v3' },
+  { label: 'Tingi', to: '/tingi' },
+  { label: 'StockNear', to: '/stocknear' },
+  { label: 'ReGain', to: '/regain' },
 ];
 
 /**
@@ -28,12 +41,18 @@ const LINKS = [
  * two fill exactly one screen: "Drop a Message" very large on the left, and on the right a short invitation
  * over the links a recruiter looks for.
  *
- * @param {boolean} [page] - true when this is the whole page (ContactPage.jsx)
+ * @param {boolean} [projects] - the same screen as "View My Projects":
+ *   the heading, the text and the links are to the work (ContactPage.jsx)
+ * @param {boolean} [page] - true when this is the whole page
  *   rather than a page's closing section: it then starts under the top bar
  *   instead of sliding over it, so it leaves room for the bar and does not
  *   ask the bar to hide (data-nav-cover, Navbar.jsx)
  */
-function Contact({ page = false }) {
+function Contact({ page = false, projects = false }) {
+  const heading = projects ? PROJECTS_HEADING : 'Drop a Message';
+  const text = projects ? PROJECTS_TEXT : `${QUESTION} ${SUPPORT}`;
+  const links = projects ? PROJECTS_LINKS : LINKS;
+
   useEffect(() => {
     // headline, text and links rise letter by letter
     const reveal = scrollReveal('#animate-contact', { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: '#contact', start: 'top 60%' });
@@ -58,7 +77,7 @@ function Contact({ page = false }) {
             laptop:col-span-5 laptop:row-start-1
             laptop-lg:col-span-5 laptop-lg:row-start-1
             desktop:col-span-5 desktop:row-start-1'>
-            <SplitText text='Drop a Message' id='animate-contact' />
+            <SplitText text={heading} id='animate-contact' />
           </h2>
           {/* invitation + links - right */}
           <div className='text-caption
@@ -68,15 +87,21 @@ function Contact({ page = false }) {
             laptop-lg:col-span-2 laptop-lg:col-start-7 laptop-lg:row-start-1
             desktop:col-span-2 desktop:col-start-7 desktop:row-start-1'>
             <p className='flex flex-wrap mb-8'>
-              <SplitText text={`${QUESTION} ${SUPPORT}`} id='animate-contact' by='word' />
+              <SplitText text={text} id='animate-contact' by='word' />
             </p>
             <ul className='flex flex-col gap-y-2'>
-              {LINKS.map(({ label, href }) => (
+              {links.map(({ label, href, to }) => (
                 <li className='account-container m-0' key={label}>
                   <div className='accounts'>
-                    <a href={href} {...(href.startsWith('mailto') ? {} : { target: '_blank', rel: 'noreferrer' })}>
-                      <SplitText text={label} id='animate-contact' />
-                    </a>
+                    {to ? (
+                      <TransitionLink to={to}>
+                        <SplitText text={label} id='animate-contact' />
+                      </TransitionLink>
+                    ) : (
+                      <a href={href} {...(href.startsWith('mailto') ? {} : { target: '_blank', rel: 'noreferrer' })}>
+                        <SplitText text={label} id='animate-contact' />
+                      </a>
+                    )}
                   </div>
                 </li>
               ))}

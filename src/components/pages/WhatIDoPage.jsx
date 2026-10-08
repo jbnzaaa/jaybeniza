@@ -10,11 +10,11 @@ import { scrollReveal } from '../../utils/scrollReveal'
 import SplitText from '../common/SplitText'
 
 const HEADLINE_LINES = [
-  'What I do.',
-  'How I can help.',
+  'One hire.',
+  'Design through front-end.',
 ];
 
-const DESCRIPTION = 'Three things I can take on for you: designing the product, building the system behind it, and writing the front-end that ships it.';
+const DESCRIPTION = 'What I can own on your team from day one: product design, the design system, and the front-end that ships it.';
 
 /**
  * The What I Do page (route /what-i-do), in the landing page's layout: a

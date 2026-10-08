@@ -27,16 +27,19 @@ const COVERS = {
   regain: 'bg-regain',
 };
 
-// the projects, newest year first (projects of one year keep this order)
-const BY_YEAR = Object.keys(COVERS)
+// the projects shown, newest year first (projects of one year keep this
+// order). a project with no cover class shows its own `cover` picture, or its first screenshot; one
+// with neither (the example case study) shows a plain panel that says so
+const SHOWN = ['portfoliov3', 'tingi', 'stocknear', 'jaysonbeniza', 'jbnza', 'regain'];
+const BY_YEAR = SHOWN.slice()
   .sort((a, b) => Number(PROJECTS[b].year) - Number(PROJECTS[a].year));
 
-// case studies still being written - empty cards, marked as such, after
-// the finished projects
-const UPCOMING = 3;
+// unnamed cards for work still to come, after the projects (none now: the
+// case studies in progress have pages of their own)
+const UPCOMING = 0;
 
-// a project's one supporting label: year / role / category
-const label = ({ year, roles, category }) => [year, roles.join(', '), category.replace(' / ', ', ')].join(' / ');
+// a project's supporting label: year / category
+const label = ({ year, category }) => [year, category.replace(' / ', ', ')].join(' / ');
 
 const ITEMS = [
   ...BY_YEAR.map((id) => ({
@@ -45,11 +48,16 @@ const ITEMS = [
     label: label(PROJECTS[id]),
     to: PROJECTS[id].path,
     cover: COVERS[id],
+    picture: COVERS[id] ? null : (PROJECTS[id].cover || PROJECTS[id].screenshots?.[0]?.src),
+    note: PROJECTS[id].caseStudy ? 'Case study' : 'Project',
+    // what the cursor says over the card: what pressing it opens
+    action: PROJECTS[id].caseStudy || PROJECTS[id].inProgress ? 'View case study' : 'View project',
   })),
   ...Array.from({ length: UPCOMING }, (_, i) => ({
     key: `upcoming-${i}`,
     title: `Case study 0${i + 1}`,
     label: 'Soon / Case study in progress',
+    note: 'Coming soon',
   })),
 ];
 
@@ -76,15 +84,15 @@ const HEADLINE_LINES = [
   'Start to finish.',
 ];
 
-const DESCRIPTION = 'Every project so far, from first sketch to live product. Pick one to see the screens and the part I played.';
+const DESCRIPTION = 'Every project shows the problem, the decisions I made, and what shipped.';
 
 /**
  * The work page (route /work), in the landing page's layout: a first
- * screen with the headline and, along its foot, an arrow on to the
- * projects (lower left) and a short description (lower right),
+ * screen with the headline and, along its foot, a short description
+ * (lower left) and an arrow on to the projects (lower right),
  * then every project on a six column grid, newest year first - each in a
  * row of its own and in a different place across it. A project is its
- * card - the cover; its name and its label (year / role / category) come
+ * card - the cover; its name and its label (year / category) come
  * up under the card, outside it, only while the pointer is on the card
  * (and are always there on a touch screen, which has no pointer).
  */
@@ -160,9 +168,10 @@ function ProjectsPage() {
 
   return (
     <>
-      {/* first screen - headline at the top; along the foot, the arrow on
-        to the projects in the lower left and the description in the lower
-        right. top padding clears the nav bar */}
+      {/* first screen - headline at the top; along the foot, the
+        description in the lower left and the arrow on to the projects in
+        the lower right, as on the landing page. top padding clears the
+        nav bar */}
       <section id='projects-hero' className='theme-light flex flex-col justify-between min-h-screen-safe
         mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-16
         tablet:px-[1rem] tablet:pt-20 tablet:pb-8 tablet:gap-y-16
@@ -178,8 +187,8 @@ function ProjectsPage() {
           ))}
         </h1>
         <div className='flex justify-between items-end gap-x-6'>
-          {/* the landing hero's arrow */}
-          <div className='shrink-0'>
+          {/* the landing hero's arrow - after the description */}
+          <div className='shrink-0 order-2'>
             <Button label='See the projects' href='#work-projects' onClick={toProjects} iconOnly outline />
           </div>
           <p className='flex flex-wrap text-caption
@@ -205,20 +214,20 @@ function ProjectsPage() {
         desktop:px-[3rem] desktop:pt-8 desktop:pb-28'
         ref={fxGrid}>
         <ul className='work-grid'>
-          {ITEMS.map(({ key, title, label: text, to, cover }, i) => {
+          {ITEMS.map(({ key, title, label: text, to, cover, picture, note, action }, i) => {
             const item = (
               <>
                 {/* the card - the cover. wipes open on scroll (start
                   state: .work-cover, App.scss) */}
                 <div className='work-cover overflow-hidden aspect-[4/3]'>
-                  {cover
-                    ? <div className={`work-cover-image w-full h-full bg-cover bg-center ${cover}`}/>
-                    // nothing to show yet - says so
-                    : (
-                      <div className='work-cover-image theme-dark flex justify-center items-center w-full h-full bg-card'>
-                        <p className='text-caption text-muted'>Coming soon</p>
-                      </div>
-                    )}
+                  {cover && <div className={`work-cover-image w-full h-full bg-cover bg-center ${cover}`}/>}
+                  {!cover && picture && <div className='work-cover-image w-full h-full bg-cover bg-left-top' style={{ backgroundImage: `url(${picture})` }}/>}
+                  {/* nothing to show yet - says so */}
+                  {!cover && !picture && (
+                    <div className='work-cover-image theme-dark flex justify-center items-center w-full h-full bg-card'>
+                      <p className='text-caption text-muted'>{note}</p>
+                    </div>
+                  )}
                 </div>
                 {/* under the card, outside it: name and label - they rise
                   on hover (the effect above) */}
@@ -236,7 +245,7 @@ function ProjectsPage() {
               <li className='work-item m-0' style={place(i)} key={key}>
                 {to
                   // over a project the cursor says what pressing it does (Cursor.jsx)
-                  ? <TransitionLink to={to} className='block' data-cursor='View project' data-no-hover-roll>{item}</TransitionLink>
+                  ? <TransitionLink to={to} className='block' data-cursor={action} data-no-hover-roll>{item}</TransitionLink>
                   : item}
               </li>
             );

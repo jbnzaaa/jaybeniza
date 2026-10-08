@@ -48,7 +48,10 @@ function mount({ stage, svg, read }, value) {
   // fitted to the phone at its widest gap, so nothing leaves the frame
   const C = Cam(45, 0.5, 1.55);
   const ZT = T.reduce((a, b) => a + b, 0) + (N - 1) * GTOP;
-  fit(C, [[0, 0, 0], [W, L, 0], [W, 0, 0], [0, L, 0], [0, 0, ZT], [W, L, ZT], [W, 0, ZT], [0, L, ZT]], 200, 166);
+  // the plates part about the middle of the stack, up and down alike, so
+  // the phone at rest sits in the middle of its frame and stays there
+  const HZ = ZT / 2;
+  fit(C, [[0, 0, -HZ], [W, L, -HZ], [W, 0, -HZ], [0, L, -HZ], [0, 0, HZ], [W, L, HZ], [W, 0, HZ], [0, L, HZ]], 200, 160);
   const P = proj(C), front = facing(C);
   const [ring, inner] = rings(0, 0, W, L, RAD, 1.6);
   const [eL, eR] = extremes(P, ring);
@@ -71,14 +74,16 @@ function mount({ stage, svg, read }, value) {
     const gp = gap.x;
     if (gp === drawn) return;
     drawn = gp;
-    let z = 0, top = 0;
+    // from half the stack's height below the middle
+    const z0 = -(T.reduce((a, b) => a + b, 0) + (N - 1) * gp) / 2;
+    let z = z0, top = z0;
     plates.forEach((p, k) => {
       put(p.el, prism(P, front, ring, inner, z, z + T[k]));
       p.face.setAttribute("d", marks(P, k, z + T[k]));
       top = z;
       z += T[k] + gp;
     });
-    guide.setAttribute("d", seg(P(eL.u, eL.v, T[0]), P(eL.u, eL.v, top)) + seg(P(eR.u, eR.v, T[0]), P(eR.u, eR.v, top)));
+    guide.setAttribute("d", seg(P(eL.u, eL.v, z0 + T[0]), P(eL.u, eL.v, top)) + seg(P(eR.u, eR.v, z0 + T[0]), P(eR.u, eR.v, top)));
   }
 
   /** The bright edge: the plate picked, or the glass at rest. */

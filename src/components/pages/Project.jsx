@@ -16,7 +16,7 @@ import SplitText from '../common/SplitText'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const DESCRIPTION = 'A few projects I am proud of, with the part I played in each.';
+const DESCRIPTION = 'Products I designed and built. Open one to see my exact role, the decisions behind it, and what shipped.';
 
 /**
  * Selected projects, on the dark surface: a list of project names set very
@@ -133,14 +133,17 @@ function Project() {
                   <span className='project-cover block overflow-hidden mt-2 mb-6
                     mobile:aspect-[16/9] tablet:aspect-[21/9]
                     laptop:hidden laptop-lg:hidden desktop:hidden'>
-                    <span className={`project-cover-image block w-full h-full bg-cover bg-center ${project.image || 'project-placeholder'}`}/>
+                    <span className={`project-cover-image block w-full h-full bg-cover ${project.picture ? 'bg-left-top' : `bg-center ${project.image || 'project-placeholder'}`}`}
+                      style={project.picture ? { backgroundImage: `url(${project.picture})` } : undefined}/>
                   </span>
                 </TransitionLink>
               </li>
             ))}
           </ul>
           {/* hover preview, from laptop width up */}
-          <div className={`project-preview bg-cover bg-center ${shown?.image || 'project-placeholder'}`} ref={fxPreview} aria-hidden='true'/>
+          <div className={`project-preview bg-cover ${shown?.picture ? 'bg-left-top' : `bg-center ${shown?.image || 'project-placeholder'}`}`}
+            style={shown?.picture ? { backgroundImage: `url(${shown.picture})` } : undefined}
+            ref={fxPreview} aria-hidden='true'/>
         </div>
         {/* description + the way to every project */}
         <div className='flex flex-col items-start gap-y-6
@@ -157,7 +160,7 @@ function Project() {
             desktop:w-[28%]'>
             <SplitText text={DESCRIPTION} id='animate-project' by='word' />
           </p>
-          <Button label='See more projects' to='/work' />
+          <Button label='See all work' to='/work' />
         </div>
       </section>
     </>

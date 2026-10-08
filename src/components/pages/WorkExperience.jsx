@@ -12,11 +12,11 @@ const ROLES = [
     id: 'mid',
     title: 'Mid-Level UI/UX Designer',
     company: 'PCI Innovations Tech Center',
-    dates: 'May 2024 — Present',
+    dates: 'May 2024 — October 2026',
     bullets: [
-      'Designed across 8 projects alongside product, development, and QA teams, presenting solutions and design rationale to stakeholders.',
-      'Created and maintain a project-wide design system of 15+ reusable components that keeps interfaces consistent as products scale.',
-      'Built 2 end-to-end web applications with Claude Code and front-end technologies, shortening development cycles.',
+      'Led design on 8 products with product, development, and QA teams, and presented each solution and its rationale to stakeholders.',
+      'Built and maintained the project-wide design system: 15+ reusable components that kept every interface consistent as the products scaled.',
+      'Designed and shipped 2 web applications end to end with Claude Code and front-end technologies, shortening development cycles.',
     ],
   },
   {
@@ -25,9 +25,9 @@ const ROLES = [
     company: 'PCI Innovations Tech Center',
     dates: 'March 2023 — May 2024',
     bullets: [
-      'Produced wireframes, prototypes, and high-fidelity interfaces for 6 web and mobile projects.',
-      'Managed asset libraries of 15+ reusable components in structured, version-controlled shared directories.',
-      'Improved layout consistency, cutting front-end implementation bugs by 70% before deployment.',
+      'Cut front-end implementation bugs by 70% before deployment by tightening layout consistency across screens.',
+      'Took 6 web and mobile projects from wireframe to prototype to high-fidelity interface.',
+      'Organised 15+ reusable components into structured, version-controlled shared libraries the whole team worked from.',
     ],
   },
 ];

@@ -13,6 +13,11 @@ import jbnza_hero from '../../../assets/files/images/portfolio/jbnza-landing-pag
 import jbnza_about from '../../../assets/files/images/portfolio/jbnza-landing-page-2.png'
 import jbnza_project from '../../../assets/files/images/portfolio/jbnza-landing-page-3.png'
 import jbnza_contact from '../../../assets/files/images/portfolio/jbnza-landing-page-4.png'
+import v3_home from '../../../assets/files/images/portfolio/portfolio-v3-1.jpg'
+import v3_services from '../../../assets/files/images/portfolio/portfolio-v3-2.jpg'
+import v3_about from '../../../assets/files/images/portfolio/portfolio-v3-3.jpg'
+import v3_work from '../../../assets/files/images/portfolio/portfolio-v3-4.jpg'
+import v3_contact from '../../../assets/files/images/portfolio/portfolio-v3-5.jpg'
 import regain_landingpage from '../../../assets/files/images/regain/regain-landing-page.png'
 import regain_login from '../../../assets/files/images/regain/student-login-page.png'
 import regain_dashboard from '../../../assets/files/images/regain/student-dashboard-page.png'
@@ -25,13 +30,73 @@ import regain_history from '../../../assets/files/images/regain/student-history-
 // the grid column it begins on from laptop width up, where it spans five
 // of the eight columns; 'full' spans all eight. below laptop every
 // screenshot is full width
+// `category` is always 'what it is / the setting it was made in', from one
+// short list: UX Case Study, Web Application, Portfolio Website; Mobile
+// App, Team Project, Personal Project.
+// a project with a `caseStudy` is laid out as a case study; one without
+// is laid out as a build (ProjectPage.jsx). one with `inProgress` - a case
+// study not written up yet - shows its summary and that note, and nothing
+// it has no content for. `link` and `screenshots` may
+// be left out. `short` is the project in a few words, the last part of
+// its label on the work page. `cover` is the picture for its card on the work page, where
+// it has no cover class there (ProjectsPage.jsx)
 export const PROJECTS = {
+  // this site
+  portfoliov3: {
+    path: '/portfolio-v3',
+    title: 'Portfolio v3',
+    short: 'Personal portfolio, designed and developed end to end',
+    year: '2026',
+    description: 'Portfolio v3 is this site: my third portfolio, designed and built to show my UI/UX and front-end work, with scroll-driven motion and line figures that answer the pointer.',
+    category: 'Portfolio Website / Personal Project',
+    roles: ['UI/UX Designer', 'Front-End Developer'],
+    technologies: ['React', 'Tailwind CSS', 'SASS', 'GSAP (ScrollTrigger, ScrollSmoother)', 'Hairline', 'Figma', 'Claude Code'],
+    // its card on the work page: a dark screen, which stands out on the
+    // page's light ground where the light landing screen would not
+    cover: v3_services,
+    screenshots: [
+      { src: v3_home, alt: 'Portfolio v3 landing page', start: 'full' },
+      { src: v3_services, alt: 'Portfolio v3 what I do section', start: 2 },
+      { src: v3_about, alt: 'Portfolio v3 about page', start: 4 },
+      { src: v3_work, alt: 'Portfolio v3 work page', start: 1 },
+      { src: v3_contact, alt: 'Portfolio v3 contact page', start: 3 },
+    ],
+  },
+  // case studies still to be written up: the summary is real; every
+  // section under it shows its PLACEHOLDER (ProjectPage.jsx) until the
+  // project's own text is put in `caseStudy`, key by key
+  tingi: {
+    path: '/tingi',
+    title: 'Tingi',
+    short: 'Grocery ordering tailored to dietary needs',
+    year: '2026',
+    description: 'Tingi is a grocery shopping app designed to help busy individuals conveniently purchase everyday groceries based on their dietary needs and preferences. It simplifies the shopping experience by making it easier to discover, select, and order food that fits their lifestyle.',
+    category: 'UX Case Study / Mobile App',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    caseStudy: {},
+  },
+  stocknear: {
+    path: '/stocknear',
+    title: 'StockNear',
+    short: 'Local store inventory, searchable by shoppers',
+    year: '2026',
+    description: 'StockNear is a mobile application that connects shoppers with nearby sari-sari and convenience stores. Users can quickly find products in stock nearby, while store owners manage inventory and attract more local customers.',
+    category: 'UX Case Study / Mobile App',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    caseStudy: {
+      // what is planned next, in the one section it belongs to
+      reflection: 'Placeholder. Describe what you learned on this project and what you would do differently next time. Next, I plan to build a mobile app version of this design with Claude Code.',
+    },
+  },
   dailydiscount: {
     path: '/dailydiscount',
     title: 'DailyDiscount',
+    short: 'E-commerce web app for discounted game credits',
     year: '2022',
     description: 'DailyDiscount is a web app that helps small online businesses sell discounted game credits.',
-    category: 'Team / Ongoing Web Development',
+    category: 'Web Application / Team Project',
     roles: ['UI Designer', 'Front-End Web Developer'],
     technologies: ['React JS', 'Tailwind CSS', 'SASS', 'Figma', 'Vercel App'],
     link: { href: 'https://daily-discount.vercel.app/' },
@@ -47,9 +112,10 @@ export const PROJECTS = {
   jaysonbeniza: {
     path: '/jaysonbeniza',
     title: 'Portfolio v2',
+    short: 'Second-generation portfolio site',
     year: '2022',
     description: 'Portfolio v2 is my second portfolio site, showing my UI and web design projects along with the languages, frameworks, and software I use.',
-    category: 'Personal / Web Development',
+    category: 'Portfolio Website / Personal Project',
     roles: ['UI Designer', 'Web Developer'],
     technologies: ['React JS', 'Tailwind CSS', 'SASS', 'GSAP', 'Figma', 'Vercel App'],
     link: { href: 'https://jaysonbeniza.vercel.app' },
@@ -63,9 +129,10 @@ export const PROJECTS = {
   jbnza: {
     path: '/jbnza',
     title: 'Portfolio v1',
+    short: 'First portfolio site',
     year: '2022',
     description: 'Portfolio v1 is my first portfolio site, built to show my early projects, the languages and software I use, and a bit about me.',
-    category: 'Personal / Web Development',
+    category: 'Portfolio Website / Personal Project',
     roles: ['UI Designer', 'Web Developer'],
     technologies: ['React JS', 'Material UI', 'SASS', 'Figma', 'Vercel App'],
     link: { href: 'https://jbnza.vercel.app' },
@@ -79,9 +146,10 @@ export const PROJECTS = {
   regain: {
     path: '/regain',
     title: 'ReGain',
+    short: 'Student self-assessment and e-journal platform',
     year: '2021',
     description: 'ReGain is a web-based self-assessment and e-journal system with chatbot assistance, built to support students of STI College Novaliches.',
-    category: 'Team / Web Development',
+    category: 'Web Application / Team Project',
     roles: ['Lead Programmer'],
     technologies: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Bootstrap', 'NodeJS', 'Dialogflow', 'Firebase Realtime Database', 'Cloud Firestore', 'Firebase Admin', 'Google Cloud Storage'],
     link: { href: 'https://regain-caps.web.app/' },

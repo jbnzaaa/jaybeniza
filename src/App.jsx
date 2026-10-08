@@ -14,6 +14,8 @@ import DailyDiscount from './components/pages/projects/DailyDiscount';
 import Jbnza from './components/pages/projects/Jbnza';
 import Jaysonbeniza from './components/pages/projects/Jaysonbeniza';
 import Regain from './components/pages/projects/Regain';
+import ProjectPage from './components/pages/projects/ProjectPage';
+import { PROJECTS } from './components/pages/projects/projects';
 // loading screen + page-to-page wipe
 import Preloader from './components/common/Preloader';
 import { PageTransitionProvider } from './components/common/PageTransition';
@@ -151,6 +153,10 @@ function App() {
                 <Route path='/jbnza' element={<Jbnza/>}/>
                 <Route path='/jaysonbeniza' element={<Jaysonbeniza/>}/>
                 <Route path='/regain' element={<Regain/>}/>
+                <Route path='/portfolio-v3' element={<ProjectPage project={PROJECTS.portfoliov3}/>}/>
+                {/* case studies in progress */}
+                <Route path='/tingi' element={<ProjectPage project={PROJECTS.tingi}/>}/>
+                <Route path='/stocknear' element={<ProjectPage project={PROJECTS.stocknear}/>}/>
               </Routes>
             )}
           </div>

@@ -41,7 +41,9 @@ function mount({ stage, svg, read }, value) {
   // fitted to the tray with a part at the slider's highest lift
   const C = Cam(45, 0.5, 1.78);
   const X1 = NX * CW + M, Y1 = NY * CH + M, ZT = 26 + 8;
-  fit(C, [[-M, -M, -TB], [X1, Y1, -TB], [X1, -M, -TB], [-M, Y1, -TB], [-M, -M, ZT], [X1, Y1, ZT], [X1, -M, ZT], [-M, Y1, ZT]], 200, 166);
+  // (as much room allowed under the tray as over it, so the tray at rest
+  // sits in the middle of its frame)
+  fit(C, [[-M, -M, -ZT], [X1, Y1, -ZT], [X1, -M, -ZT], [-M, Y1, -ZT], [-M, -M, ZT], [X1, Y1, ZT], [X1, -M, ZT], [-M, Y1, ZT]], 200, 155.9);
   const P = proj(C), front = facing(C);
 
   // the tray, then its wells drawn on its top

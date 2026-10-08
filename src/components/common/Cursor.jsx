@@ -4,6 +4,13 @@ import gsap from 'gsap'
 
 // the site's button: the square goes into it
 const BUTTON = '.cta-button';
+// a text link or button: the square goes into it too, when it is the
+// size of a line of text - not a whole card or row that happens to be a
+// link, where it would vanish over a large area
+const LINK = 'a, button, [role="button"]';
+const LINE = 80;
+// how large the square grows over anything else that can be pressed
+const GROW = 1.6;
 // what turns the square into a label: an element that says what pressing
 // it does, as data-cursor='View project'
 const LABELLED = '[data-cursor]';
@@ -14,7 +21,7 @@ const PRESSABLE = 'a, button, [role="button"], [data-hairline]';
  * The site's cursor: a small square that follows the pointer in place of
  * the browser's arrow, and grows over anything that can be pressed.
  *
- * Over one of the site's buttons it snaps into the button instead: from
+ * Over one of the site's buttons, or a text link, it snaps into it instead: from
  * where the pointer is, it travels to the button's middle, shrinking away
  * to nothing as it goes, and leaves the button's own hover to stand for
  * it; it comes back at the pointer when the pointer leaves.
@@ -78,7 +85,12 @@ function Cursor() {
         gsap.set(cursor, { x: e.clientX, y: e.clientY });
         gsap.to(cursor, { autoAlpha: 1, duration: .2, overwrite: 'auto' });
       }
-      const button = e.target.closest?.(BUTTON);
+      // a button, or a link the size of a line of text
+      let button = e.target.closest?.(BUTTON);
+      if (!button && !e.target.closest?.(LABELLED)) {
+        const link = e.target.closest?.(LINK);
+        if (link && link.getBoundingClientRect().height <= LINE * side() / 12) button = link;
+      }
       if (button) {
         if (button === snapped) return;
         // into the button: to its middle, and away
@@ -95,7 +107,7 @@ function Cursor() {
       toY(e.clientY);
       const labelled = e.target.closest?.(LABELLED);
       setLabel(labelled ? labelled.dataset.cursor : null);
-      size(!labelled && e.target.closest?.(PRESSABLE) ? 2.5 : 1);
+      size(!labelled && e.target.closest?.(PRESSABLE) ? GROW : 1);
     };
     const leave = () => {
       shown = false;

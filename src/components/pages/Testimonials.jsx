@@ -47,7 +47,7 @@ const STEP_LENGTH = .7;
 const SHOWING = .3;
 
 /**
- * Words from my team, on the light theme: dark cards that stack as the
+ * What my team says, on the light theme: dark cards that stack as the
  * page scrolls. The section pins; the first card slides in from the right
  * to the left gutter, then each next one slides in over the one before it
  * and stops a step further right, so the last card's right edge lands on
@@ -126,7 +126,7 @@ function Testimonials() {
         desktop:px-[3rem] desktop:pt-20 desktop:pb-12'
         ref={fxSection}>
         <div className='shrink-0'>
-          <Tag label='Words from my team' id='animate-testimonials-tag' />
+          <Tag label='What my team says' id='animate-testimonials-tag' />
         </div>
         {/* (the section's padding is kept short, top and bottom, so that on
           a low screen the cards still clear the label above them) */}
