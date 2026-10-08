@@ -22,7 +22,7 @@ module.exports = {
         // evenly as the window does, with no step at a breakpoint
         logo: 'clamp(1.4rem, 1.25rem + .6vw, 1.8rem)',
         hero: 'calc(3rem + 6.67vw)',
-        project: 'calc(2rem + 8.76vw)',
+        project: 'calc(1.25rem + 9.9vw)',
         case: 'calc(2.3rem + 9.43vw)',
         next: 'calc(2.625rem + 6.1vw)',
         closing: 'calc(3rem + 11.6vw)',

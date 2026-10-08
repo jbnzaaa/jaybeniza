@@ -80,13 +80,25 @@ function Project() {
             {PROJECT_CARDS.map((project) => (
               <li className='m-0' id={`project-row-${project.id}`} key={project.id} onMouseEnter={show(project)}>
                 <TransitionLink to={project.to} className='project-row block' aria-label={`${project.title}, ${project.meta}`}>
-                  {/* name left, year and role right */}
-                  <span className='flex justify-between items-end gap-x-6'>
-                    <span className='project-name font-flexible font-medium leading-[.92] tracking-tight
+                  {/* name left, year and role right. on a phone the label
+                    goes under the name, which then has the row to itself
+                    and stays on one line */}
+                  <span className='flex justify-between gap-x-6
+                    mobile:flex-col mobile:items-start mobile:gap-y-2
+                    tablet:items-end
+                    laptop:items-end
+                    laptop-lg:items-end
+                    desktop:items-end'>
+                    <span className='project-name font-flexible font-medium leading-[.92] tracking-tight whitespace-nowrap
                       text-project'>
                       <SplitText text={project.title} id={`animate-project-${project.id}`} />
                     </span>
-                    <span className='project-label flex flex-wrap justify-end text-right text-caption text-muted
+                    <span className='project-label flex flex-wrap text-caption text-muted
+                      mobile:justify-start mobile:text-left
+                      tablet:justify-end tablet:text-right
+                      laptop:justify-end laptop:text-right
+                      laptop-lg:justify-end laptop-lg:text-right
+                      desktop:justify-end desktop:text-right
                       mobile:pb-2
                       tablet:pb-3
                       laptop:pb-4

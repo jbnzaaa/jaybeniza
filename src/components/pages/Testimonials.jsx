@@ -119,7 +119,7 @@ function Testimonials() {
   return (
     <>
       <section id='testimonials' className='theme-light flex flex-col h-screen-safe overflow-hidden
-        mobile:px-[1rem] mobile:py-16
+        mobile:px-[1rem] mobile:pt-16 mobile:pb-4
         tablet:px-[1rem] tablet:py-16
         laptop:px-[2rem] laptop:py-20
         laptop-lg:px-[3rem] laptop-lg:py-24
@@ -128,7 +128,9 @@ function Testimonials() {
         <div className='shrink-0'>
           <Tag label='Words from my team' id='animate-testimonials-tag' />
         </div>
-        {/* the stack, centred in the room under the label. every card sits
+        {/* the stack, centred in the room under the label - on a phone it
+          fills that room instead, and every card is the one fixed height
+          (.testimonial-stack, App.scss). every card sits
           in the one grid cell, so they are all as tall as the tallest;
           each is pushed right by its share of the
           room left over (--i / --last, App.scss), the last one all the way */}

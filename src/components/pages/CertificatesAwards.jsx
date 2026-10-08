@@ -86,11 +86,17 @@ function CertificatesAwards() {
           </div>
           {/* the list - and, over its middle, the preview */}
           <div className='relative' ref={fxList}>
-            {/* rows - title, year, and a rule under each */}
+            {/* rows - title, year, and a rule under each. on a phone the
+              year goes under its title */}
             <ul className='project-list' onMouseLeave={hide} data-no-hover-roll>
               {ITEMS.map((item) => (
                 <li className='project-row m-0' id={`cert-row-${item.id}`} key={item.id} onMouseEnter={show(item)}>
-                  <div className='flex justify-between items-start gap-x-6 text-subtitle
+                  <div className='flex gap-x-6 text-subtitle
+                  mobile:flex-col mobile:gap-y-2
+                  tablet:justify-between tablet:items-start
+                  laptop:justify-between laptop:items-start
+                  laptop-lg:justify-between laptop-lg:items-start
+                  desktop:justify-between desktop:items-start
                     mobile:py-4
                     tablet:py-6
                     laptop:py-6

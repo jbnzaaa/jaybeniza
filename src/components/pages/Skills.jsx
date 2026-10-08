@@ -50,11 +50,17 @@ function Skills() {
             <Tag label='Skills & Tools' id='animate-skills-tag' />
           </div>
           {/* rows - category, its skills, and a rule under each (the rule's
-            start state is the cert-line rule in App.scss) */}
+            start state is the cert-line rule in App.scss). on a phone the
+            skills go under their category, both from the left edge */}
           <ul data-no-hover-roll>
             {GROUPS.map((group) => (
               <li className='m-0' id={`skill-row-${group.id}`} key={group.id}>
-                <div className='flex justify-between items-start gap-x-6 text-subtitle
+                <div className='flex gap-x-6 text-subtitle
+                  mobile:flex-col mobile:gap-y-2
+                  tablet:justify-between tablet:items-start
+                  laptop:justify-between laptop:items-start
+                  laptop-lg:justify-between laptop-lg:items-start
+                  desktop:justify-between desktop:items-start
                   mobile:py-4
                   tablet:py-6
                   laptop:py-6
@@ -63,7 +69,11 @@ function Skills() {
                   <p className='entry-line font-medium shrink-0'>
                     <SplitText text={group.title} id={`animate-skill-${group.id}`} />
                   </p>
-                  <p className='entry-line flex flex-wrap justify-end text-right text-muted'>
+                  <p className='entry-line flex flex-wrap text-muted
+                    tablet:justify-end tablet:text-right
+                    laptop:justify-end laptop:text-right
+                    laptop-lg:justify-end laptop-lg:text-right
+                    desktop:justify-end desktop:text-right'>
                     <SplitText text={group.items.join(', ')} id={`animate-skill-${group.id}`} by='word' />
                   </p>
                 </div>
