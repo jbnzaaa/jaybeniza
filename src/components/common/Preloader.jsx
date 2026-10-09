@@ -1,6 +1,8 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
 // GSAP
 import gsap from 'gsap'
+// the page's reveals wait behind this screen
+import { holdReveals, releaseReveals, releaseWhenLifted } from '../../utils/scrollReveal'
 
 // the local faces the page is set in, each with sample text. they are
 // requested explicitly because the browser only fetches a font once
@@ -52,12 +54,16 @@ function Preloader({ onExitStart, onDone }) {
     const leave = () => {
       if (exiting) return;
       exiting = true;
+      // the page mounts under the panel now, but its reveals wait: they
+      // start when only a fifth of the panel is still on screen
+      // (COVER_LEFT, scrollReveal.js)
+      holdReveals();
       onExitStart();
       // a fast load can finish while the figure is still rising
       gsap.killTweensOf(figure);
-      exit = gsap.timeline({ onComplete: onDone })
+      exit = gsap.timeline({ onComplete: () => { releaseReveals(); onDone(); } })
         .to(figure, { yPercent: 110, duration: .6, ease: 'power1.in' })
-        .to(panel, { height: 0, duration: .7, ease: 'power2.inOut' }, '-=.1');
+        .to(panel, { height: 0, duration: .7, ease: 'power2.inOut', onUpdate: () => releaseWhenLifted(panel) }, '-=.1');
     };
 
     // the figure eases toward the real share of fonts loaded, and the

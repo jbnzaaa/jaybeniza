@@ -123,6 +123,43 @@ function advance(q) {
   while (q.waiting.length && !q.current) begin(q.waiting.shift());
 }
 
+// ---- held behind a cover
+// while a full-screen panel is over the page (the loading screen, the
+// wipe between pages) the page's reveals are held: they would play out
+// unseen behind it. the panel lets them go once it has lifted far enough
+// that only COVER_LEFT of it is still on screen
+export const COVER_LEFT = .2;
+let held = false;
+let release = null;
+const due = [];
+
+/** Holds every reveal that is asked to play from now on. */
+export function holdReveals() {
+  held = true;
+  release?.kill();
+  // (never for long: a cover that fails to lift does not leave the page blank)
+  release = gsap.delayedCall(4, releaseReveals);
+}
+
+/** Lets the held reveals go, in the order they were asked for. */
+export function releaseReveals() {
+  if (!held) return;
+  held = false;
+  release?.kill();
+  release = null;
+  due.splice(0).forEach(({ turn, rate }) => turn.play(rate));
+}
+
+/**
+ * For a cover's own lift: call it as the panel's height changes, and the
+ * reveals are let go once the panel is down to COVER_LEFT of the screen.
+ *
+ * @param {Element} panel
+ */
+export function releaseWhenLifted(panel) {
+  if (held && panel.getBoundingClientRect().height <= window.innerHeight * COVER_LEFT) releaseReveals();
+}
+
 /**
  * Puts a paused reveal in its section's queue: `play` starts it when
  * every reveal triggered before it there has finished, `reverse` takes it back
@@ -137,12 +174,15 @@ export function inTurn(anim, el) {
   const q = queueOf(item.el);
   item.q = q;
   anim.eventCallback('onComplete', () => { if (q.current === item) advance(q); });
-  const drop = () => {
-    const i = q.waiting.indexOf(item);
-    if (i >= 0) q.waiting.splice(i, 1);
-  };
-  return {
+  const turn = {
     play(rate = 1) {
+      // behind a cover: kept for when it has lifted
+      if (held) {
+        const waitingFor = due.find((entry) => entry.turn === turn);
+        if (waitingFor) waitingFor.rate = rate;
+        else due.push({ turn, rate });
+        return;
+      }
       item.rate = rate;
       if (q.current === item) { pace(q); return; }
       if (q.waiting.includes(item) || (anim.progress() === 1 && !anim.reversed())) return;
@@ -158,6 +198,14 @@ export function inTurn(anim, el) {
       if (q.current === item) advance(q);
     },
   };
+  // (dropped from the queue, and from what a cover is holding)
+  const drop = () => {
+    const i = q.waiting.indexOf(item);
+    if (i >= 0) q.waiting.splice(i, 1);
+    const j = due.findIndex((entry) => entry.turn === turn);
+    if (j >= 0) due.splice(j, 1);
+  };
+  return turn;
 }
 
 /**

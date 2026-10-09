@@ -3,6 +3,8 @@ import React, { createContext, forwardRef, useCallback, useContext, useRef } fro
 import { Link, useNavigate } from 'react-router-dom'
 // GSAP
 import gsap from 'gsap'
+// the new page's reveals wait behind the panel
+import { holdReveals, releaseReveals, releaseWhenLifted } from '../../utils/scrollReveal'
 
 const PageTransitionContext = createContext(null);
 
@@ -68,6 +70,9 @@ export function PageTransitionProvider({ children }) {
     // the panel comes in
     const cover = against(groundAt(window.innerHeight - 8));
     await rise(first, cover, .6);
+    // the new page's reveals wait behind the panel: they start when only
+    // a fifth of it is still on screen (COVER_LEFT, scrollReveal.js)
+    holdReveals();
     navigate(to);
     await settled();
 
@@ -82,7 +87,8 @@ export function PageTransitionProvider({ children }) {
       panel = second;
     }
     gsap.set(panel, { top: 0, bottom: 'auto' });
-    await gsap.to(panel, { height: 0, duration: .7, ease: 'power2.inOut', delay: .1 });
+    await gsap.to(panel, { height: 0, duration: .7, ease: 'power2.inOut', delay: .1, onUpdate: () => releaseWhenLifted(panel) });
+    releaseReveals();
     busy.current = false;
   }, [navigate]);
 
