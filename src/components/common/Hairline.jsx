@@ -21,12 +21,14 @@ const SPREAD = .3;
  * colours from the --hairline-* variables of whatever it sits in.
  *
  * @param {object} figure - a figure module's default export
+ * @param {boolean} [reveal] - draw the figure in, line by line, when it
+ *   comes up the screen (the default); unset, it is simply there
  * @param {boolean} [play] - move the figure as a pointer would, with none
  *   on it: for as long as this is set, a point travels over the drawing -
  *   from part to part, or a slow figure of eight - and the figure
  *   answers it
  */
-function Hairline({ figure, play = false }) {
+function Hairline({ figure, play = false, reveal = true }) {
   const fxStage = useRef();
   // what the mounted figure handed back
   const fxHandle = useRef();
@@ -61,11 +63,17 @@ function Hairline({ figure, play = false }) {
     // figure redraws its lines as it moves, and their lengths change)
     let drawing = null;
     let wait = null;
-    gsap.set(stage, { autoAlpha: 0 });
+    if (reveal) gsap.set(stage, { autoAlpha: 0 });
     const draw = () => {
       const lines = [...svg.querySelectorAll('path')].filter((line) => !line.classList.contains('dash') && line.getAttribute('d'));
+      // the engine's strokes do not scale with the drawing, so their
+      // dashes are measured on screen, not in the drawing's own units: a
+      // line's length is scaled to the size the figure is shown at (and a
+      // little over). without this a line was drawn only part of the way
+      // and jumped to its full length when the dashes came off
+      const scale = (svg.getBoundingClientRect().width / 400 || 1) * 1.05;
       lines.forEach((line) => {
-        const length = line.getTotalLength();
+        const length = line.getTotalLength() * scale;
         gsap.set(line, { strokeDasharray: length, strokeDashoffset: length });
       });
       gsap.set(stage, { autoAlpha: 1 });
@@ -73,12 +81,13 @@ function Hairline({ figure, play = false }) {
       drawing = gsap.to(lines, {
         strokeDashoffset: 0,
         duration: DRAW,
-        ease: 'power2.out',
+        ease: 'none',
         stagger: { amount: SPREAD },
         onComplete: () => gsap.set(lines, { clearProps: 'strokeDasharray,strokeDashoffset' }),
       });
     };
-    if (stage.getBoundingClientRect().top < window.innerHeight * .7) draw();
+    if (!reveal) fxReady.current = 0;
+    else if (stage.getBoundingClientRect().top < window.innerHeight * .85) draw();
     else wait = ScrollTrigger.create({ trigger: stage, start: REVEAL_AT, once: true, onEnter: draw });
 
     return () => {
@@ -88,6 +97,9 @@ function Hairline({ figure, play = false }) {
       handle.destroy();
       svg.remove();
     };
+    // (reveal is read once, as the figure mounts: it is what this figure
+    // does on arriving, not something to redo if it changes later)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [figure]);
 
   useEffect(() => {

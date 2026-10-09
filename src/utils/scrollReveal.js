@@ -3,8 +3,8 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 // reveal-speed bounds, in seconds
-const MIN_DURATION = 0.4;  // fast flick down the page -> quick reveal
-const MAX_DURATION = 0.8;  // slow, deliberate scroll -> gentle reveal
+const MIN_DURATION = 0.35;  // fast flick down the page -> quick reveal
+const MAX_DURATION = 0.6;  // slow, deliberate scroll -> gentle reveal
 // scroll speeds (px/s) at or beyond this are treated as "fastest"
 const VELOCITY_RANGE = 3000;
 
@@ -19,8 +19,8 @@ function durationForVelocity(velocity) {
 // few hundred letters into the same fraction of a second as a heading's
 // dozen - they all landed at once and the per-letter stagger was lost.
 // scaling the total to the amount of text keeps the ripple visible
-const MIN_TOTAL = 0.6;
-const MAX_TOTAL = 2.6;
+const MIN_TOTAL = 0.45;
+const MAX_TOTAL = 1.4;
 // a fast flick plays a reveal in this share of its slow-scroll time
 const FASTEST = 0.5;
 // one letter's own rise, in seconds, before any pacing (gsap's default)
@@ -33,10 +33,15 @@ function totalForVelocity(natural, velocity) {
 }
 
 // when a reveal starts, everywhere on the site: once the thing has come
-// 30% of the way up the screen - its top 70% of the way down. (the
-// exceptions set a start of their own: what is on a page's first screen,
-// and the footer, which is too near the page's end to come that high)
-export const REVEAL_AT = 'top 70%';
+// 15% of the way up the screen - its top 85% of the way down. (it was
+// 70%: with the smoothed scroll behind it, a component was a third of
+// the way up the screen and still blank. the exceptions set a start of
+// their own: what is on a page's first screen, and the footer, which is
+// too near the page's end to come that high)
+export const REVEAL_AT = 'top 85%';
+// every reveal runs at an even pace, start to finish: an ease that
+// starts slowly reads as one more wait before anything shows
+const EASE = 'none';
 
 // ---- one reveal at a time, within a section
 // a reveal that is triggered while another in its section is still
@@ -57,7 +62,7 @@ const queueOf = (el) => {
 // the next in line has meanwhile been scrolled this far up the screen
 // (a share of its height, from the top), the one playing is all but
 // finished on the spot - what is well in view is never left blank
-const OVERDUE = .45;
+const OVERDUE = .6;
 const RUSH = 8;
 const busy = new Set();
 
@@ -160,7 +165,7 @@ export function inTurn(anim, el) {
  * @returns {{kill: () => void}}
  */
 export function scrollReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
-  const tween = gsap.to(targets, { ...vars, paused: true });
+  const tween = gsap.to(targets, { ...vars, ease: EASE, paused: true });
   // the reveal's own length at its authored stagger - grows with the text
   const natural = tween.duration();
   // it takes its turn among the page's reveals (inTurn, above)
@@ -242,13 +247,13 @@ export function scrollRevealSequence(stages, { trigger, start = REVEAL_AT, rever
   const tl = gsap.timeline({ paused: true });
   stages.forEach(({ targets, vars, position }) => {
     if (!vars.stagger) {
-      tl.to(targets, { ...vars, duration: durationForVelocity(0) }, position);
+      tl.to(targets, { ...vars, ease: EASE, duration: durationForVelocity(0) }, position);
       return;
     }
     const count = gsap.utils.toArray(targets).length;
     const natural = LETTER_DURATION + vars.stagger * Math.max(count - 1, 0);
     const pace = totalForVelocity(natural, 0) / natural;
-    tl.to(targets, { ...vars, duration: LETTER_DURATION * pace, stagger: vars.stagger * pace }, position);
+    tl.to(targets, { ...vars, ease: EASE, duration: LETTER_DURATION * pace, stagger: vars.stagger * pace }, position);
   });
 
   // playback rate for a scroll speed: 1 at a slow scroll, rising to

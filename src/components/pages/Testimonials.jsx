@@ -84,7 +84,7 @@ function Testimonials() {
     const vertical = window.matchMedia('(max-width: 1023px)').matches;
     const away = vertical ? { y: () => window.innerHeight } : { x: () => window.innerWidth };
     const home = vertical ? { y: 0 } : { x: 0 };
-    const frame = { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' };
+    const frame = { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none' };
 
     // a card's arrival, on its own time: it slides to its place, its
     // text rises, and its picture wipes open from its bottom edge. each
@@ -92,9 +92,9 @@ function Testimonials() {
     // one never starts while the one before is still coming in
     const arrivals = cards.map((card) => {
       const arrival = gsap.timeline({ paused: true })
-        .fromTo(card, away, { ...home, ease: 'power2.out', duration: .9 }, 0)
-        .to(card.querySelectorAll('.split-letter'), { y: 0, ease: 'power1.in', duration: .5, stagger: { amount: .5 } }, .3)
-        .to(card.querySelector('.testimonial-avatar'), { ...frame, duration: .5 }, .5);
+        .fromTo(card, away, { ...home, ease: 'none', duration: .7 }, 0)
+        .to(card.querySelectorAll('.split-letter'), { y: 0, ease: 'none', duration: .4, stagger: { amount: .4 } }, .25)
+        .to(card.querySelector('.testimonial-avatar'), { ...frame, duration: .4 }, .4);
       return { arrival, turn: inTurn(arrival, section.querySelector('.testimonial-stack')), shown: false };
     });
     const show = (item, on) => {

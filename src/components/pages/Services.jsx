@@ -87,8 +87,13 @@ function ServiceCard({ id, title, text, includes, detailed }) {
   // whether that drawing is being played: while its row is pointed at or
   // focused, it moves by itself, as it would under a pointer
   const [playing, setPlaying] = useState(false);
+  // whether the drawing has been changed for another. the first one is
+  // drawn in, line by line, as the card is revealed; one that takes its
+  // place afterwards is simply there
+  const [swapped, setSwapped] = useState(false);
   const { figure } = includes[shown];
   const show = (i) => {
+    if (i !== shown) setSwapped(true);
     setShown(i);
     setPlaying(true);
   };
@@ -136,15 +141,15 @@ function ServiceCard({ id, title, text, includes, detailed }) {
           </div>
         </div>
         {/* the figure - on the dark base, in the site's greys
-          (.service-art, App.scss). keyed, so each drawing is drawn in,
-          line by line, as it takes the last one's place */}
+          (.service-art, App.scss). the first is drawn in, line by line,
+          with the card; keyed, so another takes its place whole */}
         <div className='service-art bg-black flex items-center justify-center
           mobile:py-4
           tablet:py-6
           laptop:py-8
           laptop-lg:py-10
           desktop:py-12'>
-          <Hairline figure={figure} play={playing} key={figure.name} />
+          <Hairline figure={figure} play={playing} reveal={!swapped} key={figure.name} />
         </div>
       </div>
     </li>

@@ -78,11 +78,17 @@ function App() {
     const smoother = ScrollSmoother.create({
       wrapper: '#smooth-wrapper',
       content: '#smooth-content',
-      smooth: 1.6,
+      // how long the page takes to catch up with the wheel, in seconds.
+      // (it was 1.6: everything on the page, and every reveal's trigger,
+      // ran that far behind the scroll)
+      smooth: 1,
       // touch screens get a light version of the same easing (off by
       // default there) - short, so the page still follows the finger
       smoothTouch: .1,
-      speed: .65,
+      // how far the page moves for a turn of the wheel, against the
+      // browser's own distance. (it was .65: a third more scrolling to
+      // reach anything)
+      speed: .85,
       effects: true,
     });
 
