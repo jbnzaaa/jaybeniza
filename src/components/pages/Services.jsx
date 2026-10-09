@@ -1,7 +1,7 @@
 //
 import React, { useEffect, useState } from 'react'
 // scroll reveal
-import { scrollRevealCards } from '../../utils/scrollReveal'
+import { scrollRevealCards, CARD_AT } from '../../utils/scrollReveal'
 // section label
 import Tag from '../common/Tag'
 // per-letter text split
@@ -167,12 +167,12 @@ function ServiceCard({ id, title, text, includes, detailed }) {
  */
 function Services({ detailed = false }) {
   useEffect(() => {
-    // each card gets its own turn: its frame wipes open as it scrolls
-    // into view, then its text rises
+    // each card gets its own turn: its frame wipes open once 30% of the
+    // card is on screen - not as its top edge shows - then its text rises
     const cards = scrollRevealCards(SERVICES.map(({ id }) => ({
       card: `#service-card-${id}`,
       text: `#animate-service-${id}`,
-    })));
+    })), { start: CARD_AT });
     return () => cards.kill();
   }, []);
 

@@ -51,6 +51,9 @@ function startFor(el, start) {
   probe.kill();
   return first ? 'top bottom' : start;
 }
+// a tall card opened at the default start is opening with only its top
+// edge on screen. this start waits for 30% of the card's own height
+export const CARD_AT = '30% bottom';
 // every reveal runs at an even pace, start to finish: an ease that
 // starts slowly reads as one more wait before anything shows
 const EASE = 'none';
@@ -69,20 +72,22 @@ const queueOf = (el) => {
   return queues.get(key);
 };
 
-// nothing is kept waiting long. once a reveal has others behind it, it
-// plays at three times its speed, and faster for each one more; and if
-// the next in line has meanwhile been scrolled this far up the screen
-// (a share of its height, from the top), the one playing is all but
-// finished on the spot - what is well in view is never left blank
+// nothing is kept waiting long, and nothing is rushed: once a reveal has
+// others behind it, it plays half as fast again; and if the next in line
+// has meanwhile been scrolled this far up the screen (a share of its
+// height, from the top), the one playing goes three times as fast - what
+// is well in view is never left blank. (these were 3x and more, and 8x:
+// a reveal with anything behind it was over before it could be watched)
 const OVERDUE = .6;
-const RUSH = 8;
+const HURRY = 1.5;
+const RUSH = 3;
 const busy = new Set();
 
 function pace(q) {
   if (!q.current) return;
-  let speed = q.waiting.length ? 2 + q.waiting.length : 1;
+  let speed = q.waiting.length ? HURRY : 1;
   const next = q.waiting[0]?.el?.getBoundingClientRect?.();
-  if (next && next.top < window.innerHeight * OVERDUE) speed = Math.max(speed, RUSH);
+  if (next && next.top < window.innerHeight * OVERDUE) speed = RUSH;
   q.current.anim.timeScale(q.current.rate * speed);
 }
 
@@ -129,6 +134,9 @@ function advance(q) {
 // unseen behind it. the panel lets them go once it has lifted far enough
 // that only COVER_LEFT of it is still on screen
 export const COVER_LEFT = .2;
+// what it lets go does not queue: each starts this long after the one
+// before, at its own speed, so a first screen comes in as one movement
+const OVERLAP = .15;
 let held = false;
 let release = null;
 const due = [];
@@ -147,7 +155,7 @@ export function releaseReveals() {
   held = false;
   release?.kill();
   release = null;
-  due.splice(0).forEach(({ turn, rate }) => turn.play(rate));
+  due.splice(0).forEach(({ turn, rate }, i) => turn.start(rate, i * OVERLAP));
 }
 
 /**
@@ -188,6 +196,11 @@ export function inTurn(anim, el) {
       if (q.waiting.includes(item) || (anim.progress() === 1 && !anim.reversed())) return;
       if (q.current) { q.waiting.push(item); pace(q); hold(q); } else begin(item);
     },
+    // played outside the queue, after a delay: for what a cover lets go
+    start(rate = 1, delay = 0) {
+      later?.kill();
+      later = gsap.delayedCall(delay, () => anim.timeScale(rate).play());
+    },
     reverse(rate = 1) {
       drop();
       anim.timeScale(rate).reverse();
@@ -198,8 +211,10 @@ export function inTurn(anim, el) {
       if (q.current === item) advance(q);
     },
   };
-  // (dropped from the queue, and from what a cover is holding)
+  let later = null;
+  // (dropped from the queue, from what a cover is holding, and from what it let go)
   const drop = () => {
+    later?.kill();
     const i = q.waiting.indexOf(item);
     if (i >= 0) q.waiting.splice(i, 1);
     const j = due.findIndex((entry) => entry.turn === turn);
@@ -378,9 +393,10 @@ export function scrollRevealSequence(stages, { trigger, start = REVEAL_AT, rever
  * @param {string} [opts.group] - the cards' container, used as the shared trigger
  * @param {number} [opts.rowFrom] - viewport width from which the cards are in a row
  * @param {boolean} [opts.scrub] - open the cards with the scroll instead of on a trigger
+ * @param {string} [opts.start] - where a card opens, when not at the default start (stacked cards only)
  * @returns {{kill: () => void}}
  */
-export function scrollRevealCards(cards, { group, rowFrom = 1024, scrub = false } = {}) {
+export function scrollRevealCards(cards, { group, rowFrom = 1024, scrub = false, start } = {}) {
   const frame = { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' };
   const settle = { yPercent: 0, scale: 1, ease: 'power2.out' };
   const text = { y: 0, stagger: .02, ease: 'power1.in' };
@@ -431,7 +447,7 @@ export function scrollRevealCards(cards, { group, rowFrom = 1024, scrub = false 
         { targets: item.card, vars: frame },
         { targets: inner(item.card), vars: settle, position: '<' },
         { targets: item.text, vars: text, position: TEXT_DELAY },
-      ], { trigger: item.card, reverseStart: REVERSE_AT }));
+      ], { trigger: item.card, start, reverseStart: REVERSE_AT }));
   }
 
   return {

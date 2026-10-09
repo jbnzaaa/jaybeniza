@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 // when a reveal starts
-import { REVEAL_AT } from '../../utils/scrollReveal'
+import { REVEAL_AT, CARD_AT } from '../../utils/scrollReveal'
 // the Hairline engine
 import HL from '../../utils/hairline/kernel'
 gsap.registerPlugin(ScrollTrigger)
@@ -121,9 +121,12 @@ function Hairline({ figure, play = false, reveal = true }) {
       // before it is revealed; undone where its card closes again on the
       // way back up (scrollRevealCards, scrollReveal.js), and drawn again
       // from there if the page is scrolled back down
-      wait = ScrollTrigger.create({ trigger: stage, start: REVEAL_AT, onEnter: draw });
-      back = ScrollTrigger.create({ trigger: stage.closest('.reveal-card') || stage, start: 'top 55%', onEnter: draw, onLeaveBack: undraw });
-      if (stage.getBoundingClientRect().top < window.innerHeight * .85) draw();
+      // (in a card, it goes by the card: drawn as the card opens)
+      const card = stage.closest('.reveal-card');
+      wait = ScrollTrigger.create({ trigger: card || stage, start: card ? CARD_AT : REVEAL_AT, onEnter: draw });
+      back = ScrollTrigger.create({ trigger: card || stage, start: 'top 55%', onEnter: draw, onLeaveBack: undraw });
+      const box = (card || stage).getBoundingClientRect();
+      if ((card ? box.top + box.height * .3 : box.top + window.innerHeight * .15) < window.innerHeight) draw();
     }
 
     return () => {
