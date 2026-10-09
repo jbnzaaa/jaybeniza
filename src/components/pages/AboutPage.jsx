@@ -31,9 +31,6 @@ const NAME = 'Jay Beniza';
 const [BEFORE, AFTER] = INTRO.join(' ').split(NAME + ',').map((part) => part.trim());
 // my picture (public/images)
 const PORTRAIT = `${process.env.PUBLIC_URL}/images/profile.JPG`;
-// how far down and right of the pointer its corner sits, px at the page's
-// usual scale
-const PORTRAIT_OFFSET = 24;
 
 const RESUME_DESCRIPTION = "Want the full story? It's all in my resume: experience, skills, certificates, and awards. Have a read, and say hello if I sound like a fit.";
 const RESUME_LINKS = [
@@ -52,28 +49,27 @@ function AboutPage() {
   const fxHero = useRef();
 
   useEffect(() => {
-    // my picture, shown while the pointer is on my name: it wipes open
-    // from its bottom edge at the pointer's lower right and follows the
-    // pointer; it closes when the pointer leaves. on a touch screen, or
-    // from the keyboard, the name is pressed instead and the picture
-    // opens under it
+    // my picture, shown while the pointer is on my name, centred on the
+    // pointer and following it. it opens with the site's image reveal -
+    // the frame wipes open from its bottom edge while the picture inside
+    // eases down from slightly large - and wipes shut the same way when
+    // the pointer leaves. on a touch screen, or from the keyboard, the
+    // name is pressed instead and the picture opens under it
     const hero = fxHero.current;
     const name = hero.querySelector('.about-name');
     const portrait = hero.querySelector('.about-portrait');
     const picture = portrait.firstElementChild;
-    // (the page is scaled up on a very wide screen - html's font size,
-    // App.scss - and the offset goes with it)
-    const offset = () => PORTRAIT_OFFSET * parseFloat(getComputedStyle(document.documentElement).fontSize) / 16;
-    const toX = gsap.quickTo(portrait, 'x', { duration: .4, ease: 'power3.out' });
-    const toY = gsap.quickTo(portrait, 'y', { duration: .4, ease: 'power3.out' });
+    // it trails the pointer a touch, like the cursor
+    const toX = gsap.quickTo(portrait, 'x', { duration: .35, ease: 'power3.out' });
+    const toY = gsap.quickTo(portrait, 'y', { duration: .35, ease: 'power3.out' });
     let open = false;
 
-    // where it goes: down and right of a point of the screen, kept inside
-    // the section
+    // its middle on a point of the screen (`jump`: there at once, for
+    // when it opens)
     const place = (clientX, clientY, jump) => {
       const rect = hero.getBoundingClientRect();
-      const x = Math.min(clientX - rect.left + offset(), rect.width - portrait.offsetWidth - offset());
-      const y = Math.min(clientY - rect.top + offset(), rect.height - portrait.offsetHeight - offset());
+      const x = clientX - rect.left - portrait.offsetWidth / 2;
+      const y = clientY - rect.top - portrait.offsetHeight / 2;
       if (jump) gsap.set(portrait, { x, y });
       toX(x);
       toY(y);
@@ -90,9 +86,10 @@ function AboutPage() {
       open = false;
       gsap.to(portrait, { clipPath: 'inset(100% 0% 0% 0%)', duration: .4, ease: 'power2.in', overwrite: 'auto' });
     };
+    // (pressed rather than pointed at: under the name, clear of it)
     const under = () => {
       const rect = name.getBoundingClientRect();
-      return [rect.left, rect.bottom];
+      return [rect.left + rect.width / 2, rect.bottom + portrait.offsetHeight / 2 + 8];
     };
 
     const onEnter = (e) => { if (e.pointerType === 'mouse') show(e.clientX, e.clientY); };

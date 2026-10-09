@@ -529,14 +529,26 @@ function ProjectPage({ project }) {
         </>
         )}
 
-        {/* 13 cta - next project: its name against the right edge, a
-          link to it with the site's text hover (its letters roll), then
-          the contact section */}
+        {/* 13 cta - next project: its name, a link to it that behaves like
+          the top bar's links - its letters roll under the pointer
+          (hoverRoll.js) and the cursor's square goes into it (Cursor.jsx)
+          - in the full text colour, then the contact section. from laptop width up
+          the name is against the right edge, beside the label; below
+          that the two are one under the other, both from the left */}
         <CaseSection id='next' title='Next project' theme={isStudy || isDraft ? DARK : LIGHT}>
-          <div className='flex justify-end'>
-            <TransitionLink to={next.path} aria-label={`Next project: ${next.title}`}>
-              <span className='flex flex-wrap justify-end font-flexible font-medium leading-[.92] tracking-tight
-                text-next'>
+          <div className='flex
+            mobile:justify-start
+            tablet:justify-start
+            laptop:justify-end
+            laptop-lg:justify-end
+            desktop:justify-end'>
+            <TransitionLink to={next.path} className='nav-item' aria-label={`Next project: ${next.title}`} data-cursor-snap>
+              <span className='flex flex-wrap font-flexible font-medium leading-[.92] tracking-tight text-next [color:inherit]
+                mobile:justify-start
+                tablet:justify-start
+                laptop:justify-end
+                laptop-lg:justify-end
+                desktop:justify-end'>
                 <SplitText text={next.title} id='animate-case-next' />
               </span>
             </TransitionLink>

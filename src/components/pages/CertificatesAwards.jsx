@@ -12,15 +12,20 @@ import SplitText from '../common/SplitText'
 import certDataAnalytics from '../../assets/certificates-and-awards/Data Analytics Level III Training Program.jpg'
 import certMsUxDesign from '../../assets/certificates-and-awards/Microsoft - UX Design.pdf'
 import certIbmGenAiFundamentals from '../../assets/certificates-and-awards/IBM - Generative AI Fundamentals.pdf'
-// small copy of the (5 MB) certificate photo, for the hover preview
+// pictures for the hover preview: a small copy of the (5 MB) certificate
+// photo, and the first page of each PDF as an image - a PDF shown in the
+// preview itself brought the browser's viewer with it, and its dark
+// margins round the page
 import previewDataAnalytics from '../../assets/certificates-and-awards/previews/data-analytics-level-iii.jpg'
+import previewMsUxDesign from '../../assets/certificates-and-awards/previews/microsoft-ux-design.jpg'
+import previewIbmGenAi from '../../assets/certificates-and-awards/previews/ibm-generative-ai-fundamentals.jpg'
 
 // newest first. `file` is what the row's link opens and, with `preview`
 // (an image to show in its place), what the hover preview shows
 const ITEMS = [
   { id: 'data-analytics', title: 'Data Analytics Level III Training Program', year: '2026', file: certDataAnalytics, preview: previewDataAnalytics },
-  { id: 'ms-ux-design', title: 'Microsoft UX Design Professional Certificate', year: '2026', file: certMsUxDesign },
-  { id: 'ibm-gen-ai-fundamentals', title: 'IBM Generative AI Fundamentals Specialization', year: '2025', file: certIbmGenAiFundamentals },
+  { id: 'ms-ux-design', title: 'Microsoft UX Design Professional Certificate', year: '2026', file: certMsUxDesign, preview: previewMsUxDesign },
+  { id: 'ibm-gen-ai-fundamentals', title: 'IBM Generative AI Fundamentals Specialization', year: '2025', file: certIbmGenAiFundamentals, preview: previewIbmGenAi },
   { id: 'award-innovation', title: 'Innovations in Action Award', year: '2025', file: null },
   { id: 'award-agility', title: 'Agility Award', year: '2025', file: null },
   { id: 'agile-101-scrum', title: 'Agile 101: Scrum Framework Fundamentals', year: '2024', file: null },
@@ -119,9 +124,9 @@ function CertificatesAwards() {
                 </li>
               ))}
             </ul>
-            {/* hover preview - an image, or the PDF's first page */}
+            {/* hover preview - the certificate's picture, filling the frame */}
             <figure className='cert-preview' ref={fxPreview} aria-hidden='true'>
-              {shown && (isPdf(shown.file) ? (
+              {shown && (!shown.preview && isPdf(shown.file) ? (
                 <iframe className='cert-preview-media' title={`${shown.title} preview`} tabIndex={-1} key={shown.id}
                   src={`${shown.file}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}/>
               ) : (

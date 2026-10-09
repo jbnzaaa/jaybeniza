@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from 'react'
 // GSAP
 import gsap from 'gsap'
 
-// the site's button: the square goes into it
-const BUTTON = '.cta-button';
+// the site's button: the square goes into it. so it does into anything
+// marked data-cursor-snap - a link too large to be taken for a line of
+// text (below) that should still take the square in
+const BUTTON = '.cta-button, [data-cursor-snap]';
 // a text link or button: the square goes into it too, when it is the
 // size of a line of text - not a whole card or row that happens to be a
 // link, where it would vanish over a large area
@@ -27,11 +29,13 @@ const PRESSABLE = 'a, button, [role="button"], [data-hairline]';
  * it; it comes back at the pointer when the pointer leaves.
  *
  * Over an element with a `data-cursor` it opens into a small label with
- * that text (a project card's is "View project"), and closes back to the
+ * that text (a project card's is "View project") while the pointer is
+ * inside the card's picture, moving with it, and closes back to the
  * square on the way out.
  *
  * The square is blended with the page by difference, like the top bar, so
- * it reads on light and dark sections alike; the label is a solid box.
+ * it reads on light and dark sections alike; so is the label, a light box
+ * with a black word, which inverts like the top bar's button.
  * Only where there is a pointer that hovers - a touch screen keeps its own
  * behaviour (.cursor, App.scss).
  */
@@ -105,7 +109,14 @@ function Cursor() {
       snapped = null;
       toX(e.clientX);
       toY(e.clientY);
-      const labelled = e.target.closest?.(LABELLED);
+      // the label belongs to the picture it speaks for (the part marked
+      // data-cursor-anchor): it is open, and moves with the pointer, while
+      // the pointer is inside that picture; over the rest of the element
+      // the square is a square again. (an element with no such part is
+      // labelled all over)
+      let labelled = e.target.closest?.(LABELLED);
+      const anchor = labelled?.querySelector('[data-cursor-anchor]')?.getBoundingClientRect();
+      if (anchor && (e.clientX < anchor.left || e.clientX > anchor.right || e.clientY < anchor.top || e.clientY > anchor.bottom)) labelled = null;
       setLabel(labelled ? labelled.dataset.cursor : null);
       size(!labelled && e.target.closest?.(PRESSABLE) ? GROW : 1);
     };

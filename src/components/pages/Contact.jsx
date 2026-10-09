@@ -30,7 +30,7 @@ const PROJECTS_HEADING = 'View My Projects';
 const PROJECTS_TEXT = 'Not ready to send a request? See what I have designed and built first.';
 const PROJECTS_LINKS = [
   { label: 'All work', to: '/work' },
-  { label: 'Portfolio v3', to: '/portfolio-v3' },
+  { label: 'Portfolio 2026', to: '/portfolio-2026' },
   { label: 'Tingi', to: '/tingi' },
   { label: 'StockNear', to: '/stocknear' },
   { label: 'ReGain', to: '/regain' },

@@ -168,7 +168,7 @@ function App() {
                 <Route path='/jbnza' element={<Jbnza/>}/>
                 <Route path='/jaysonbeniza' element={<Jaysonbeniza/>}/>
                 <Route path='/regain' element={<Regain/>}/>
-                <Route path='/portfolio-v3' element={<ProjectPage project={PROJECTS.portfoliov3}/>}/>
+                <Route path='/portfolio-2026' element={<ProjectPage project={PROJECTS.portfoliov3}/>}/>
                 {/* case studies in progress */}
                 <Route path='/tingi' element={<ProjectPage project={PROJECTS.tingi}/>}/>
                 <Route path='/stocknear' element={<ProjectPage project={PROJECTS.stocknear}/>}/>

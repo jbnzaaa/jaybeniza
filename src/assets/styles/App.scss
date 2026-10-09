@@ -462,13 +462,13 @@
 }
 
 // my picture - over the section's text, at the pointer. start state:
-// clipped away to its bottom edge
+// clipped away to its bottom edge; the name's hover wipes it open
 * body .about-portrait {
   position: absolute;
   top: 0;
   left: 0;
   z-index: 20;
-  width: clamp(11rem, 20vw, 20rem);
+  width: clamp(7rem, 11vw, 11rem);
   aspect-ratio: 4 / 5;
   overflow: hidden;
   clip-path: inset(100% 0% 0% 0%);
@@ -1010,7 +1010,9 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  // fills the frame edge to edge: a certificate a little wider or taller
+  // than the frame loses a sliver of its margin, not the frame its corners
+  object-fit: cover;
   border: 0;
   padding: 0;
   margin: 0;
@@ -1483,21 +1485,17 @@
   transition: background-color .2s ease-in-out;
 }
 
-// open as a label (over an element with a data-cursor): a solid black box
-// with light text, like the site's buttons - not blended, so its words
-// read over a picture
-* body .cursor.cursor-labelled {
-  background: #1B1A1A;
-  mix-blend-mode: normal;
-}
+// open as a label (over an element with a data-cursor) it stays as the
+// square is - a light box blended by difference - with a black word in
+// it, which difference leaves alone: the box inverts against what is
+// under it and the word shows that through, as the top bar's button does
 
 * body .cursor-label {
   flex-shrink: 0;
-  // a small tag at the pointer, not a button: tight padding, small type
-  padding: .25rem .5rem;
-  font-size: .6875rem;
-  line-height: 1.2;
-  color: #E5E4E3;
+  // the size of the top bar's button: its padding, and the caption size
+  // the label's own class gives it
+  padding: .5rem 1rem;
+  color: #000;
   white-space: nowrap;
   visibility: hidden;
   opacity: 0;

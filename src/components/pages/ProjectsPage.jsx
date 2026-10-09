@@ -219,7 +219,7 @@ function ProjectsPage() {
               <>
                 {/* the card - the cover. wipes open on scroll (start
                   state: .work-cover, App.scss) */}
-                <div className='work-cover overflow-hidden aspect-[4/3]'>
+                <div className='work-cover overflow-hidden aspect-[4/3]' data-cursor-anchor>
                   {cover && <div className={`work-cover-image w-full h-full bg-cover bg-center ${cover}`}/>}
                   {!cover && picture && <div className='work-cover-image w-full h-full bg-cover bg-left-top' style={{ backgroundImage: `url(${picture})` }}/>}
                   {/* nothing to show yet - says so */}

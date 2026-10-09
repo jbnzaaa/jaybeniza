@@ -13,13 +13,14 @@ gsap.registerPlugin(ScrollTrigger)
 const PARAGRAPH = 'I design and build digital products with a focus on clarity, function, and user experience. Based in the Philippines, I bring 3+ years of UI/UX design and front-end development experience to every project, from user flows and design systems to responsive, production-ready interfaces.';
 
 // how far up the screen the section's top has to come before its text
-// starts to rise: 80% down from the top of the screen
-const START = 'top 80%';
+// starts to rise: half way - the section is about a screen tall, so that
+// is when half of it is showing
+const START = 'top 50%';
 
 /**
  * The designer, on the light theme: one large paragraph and the button to
  * the full About page (AboutPage.jsx). The section scrolls with the page -
- * it is not pinned. When its top reaches 80% of the way down the screen
+ * it is not pinned. When half of it is showing (its top half way up the screen)
  * the paragraph rises out of its lines, letter by letter in reading order
  * - the site's text reveal - and drops back if the page is scrolled back
  * above that point. The button reveals itself as it comes into view.

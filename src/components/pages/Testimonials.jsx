@@ -7,6 +7,10 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// their pictures - small square crops of the photographs in /reference
+import sergio from '../../assets/files/images/team/sergio-ramos-iii.jpg'
+import paula from '../../assets/files/images/team/paula-malupa.jpg'
+import richard from '../../assets/files/images/team/richard-ordinario.jpg'
 gsap.registerPlugin(ScrollTrigger)
 
 // reviews from the people I work with, in their own words. `quote` is one
@@ -19,6 +23,7 @@ const TESTIMONIALS = [
       'When Jay takes ownership of something, we know it will get done well.',
     ],
     name: 'Sergio Ramos III',
+    avatar: sergio,
     role: 'President, PCI Innovations Tech Center',
   },
   {
@@ -28,6 +33,7 @@ const TESTIMONIALS = [
       'What stands out most is how thoughtful and steady he is. He takes the time to do things right and always finds a way to move the work forward.',
     ],
     name: 'Paula Malupa',
+    avatar: paula,
     role: 'Executive Assistant, PCI Innovations Tech Center',
   },
   {
@@ -37,21 +43,28 @@ const TESTIMONIALS = [
       'He’s also curious and open to learning, which makes him the kind of designer and collaborator you want on a project.',
     ],
     name: 'Richard Ordinario',
+    avatar: richard,
     role: 'Senior Full Stack Web Developer, PCI Innovations Tech Center',
   },
 ];
 
-// how much pinned scroll (in screen heights) each card takes to arrive
-const STEP_LENGTH = .7;
-// how much of a card's width is on screen when its text starts to rise
-const SHOWING = .3;
+// when the cards come in, by how much of the stack of cards itself is on
+// screen - not of the section, whose label and padding come up the screen
+// well before the cards do: the first with 30% of the stack's height
+// above the bottom of the screen, the second with 60% - and the last
+// straight after the second
+const FIRST_AT = '30% bottom';
+const SECOND_AT = '60% bottom';
+// how long after a card the next one in the same group starts, seconds
+const FOLLOW = .5;
 
 /**
  * What my team says, on the light theme: dark cards that stack as the
- * page scrolls. The section pins; the first card slides in from the right
- * to the left gutter, then each next one slides in over the one before it
- * and stops a step further right, so the last card's right edge lands on
- * the right gutter and every earlier card stays part in view behind it.
+ * page scrolls. The section is not pinned: as it comes up the screen the
+ * first card slides in from the right to the left gutter, then the second
+ * slides in over it and stops a step further right, and the last follows
+ * the second, its right edge landing on the right gutter - every earlier
+ * card stays part in view behind the next.
  * Below laptop width the same happens top to bottom: the cards are full width,
  * come up from below, and each stops a step lower than the one before.
  */
@@ -62,55 +75,39 @@ function Testimonials() {
     const section = fxSection.current;
     const cards = gsap.utils.toArray('.testimonial-card', section);
 
-    // scroll-coupled. each card takes one step of the pinned scroll: it
-    // travels in from beyond the right edge while its text rises, and the
-    // last stretch holds the full stack before the page moves on.
-    // the about section above pins too and is created first, so this is
-    // measured after it
-    const stack = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: `+=${cards.length * STEP_LENGTH * 100}%`,
-        pin: true,
-        scrub: ScrollTrigger.isTouch ? .5 : true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
-    });
-    // where in a card's step SHOWING of its width has come on screen. the
-    // card travels the screen's width on a power2.out ease (1 - (1 - t)^2),
-    // so the moment its left edge still has a given distance to go is
-    // t = 1 - sqrt(distance / width of screen). measured before the
-    // timeline moves anything
-    // (on a phone the cards travel up the screen's height instead, and
-    // it is a card's height that comes on screen)
+    // (below laptop width the cards travel up the screen instead)
     const vertical = window.matchMedia('(max-width: 1023px)').matches;
-    const screen = vertical ? window.innerHeight : window.innerWidth;
-    const top = section.getBoundingClientRect().top;
-    const starts = cards.map((card) => {
-      const rect = card.getBoundingClientRect();
-      const distance = Math.max(0, vertical
-        ? screen - (rect.top - top) - rect.height * SHOWING
-        : screen - rect.left - rect.width * SHOWING);
-      return 1 - Math.sqrt(Math.min(distance / screen, 1));
-    });
     const away = vertical ? { y: () => window.innerHeight } : { x: () => window.innerWidth };
     const home = vertical ? { y: 0 } : { x: 0 };
-    cards.forEach((card, i) => {
-      const from = i + starts[i];
-      stack
-        .fromTo(card, away, { ...home, ease: 'power2.out', duration: 1 }, i)
-        .to(card.querySelectorAll('.split-letter'), { y: 0, ease: 'power1.in', duration: .25, stagger: { amount: .35 } }, from)
-        // their picture wipes open from its bottom edge, the way the cards do
-        .to(card.querySelector('.testimonial-avatar'), { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .35 }, from + .15);
-    });
-    stack.to({}, { duration: .4 });
+
+    // one card coming in, on its own time: it slides to its place, its
+    // text rises, and its picture wipes open from its bottom edge, the way
+    // the cards do
+    const enter = (timeline, card, at) => timeline
+      .fromTo(card, away, { ...home, ease: 'power2.out', duration: .9 }, at)
+      .to(card.querySelectorAll('.split-letter'), { y: 0, ease: 'power1.in', duration: .5, stagger: { amount: .5 } }, at + .3)
+      .to(card.querySelector('.testimonial-avatar'), { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .5 }, at + .5);
+
+    // the first card by itself; then the second, with every card after it
+    // following in turn. each group plays when the stack has come far
+    // enough up the screen, and goes back if the page is scrolled back
+    const first = enter(gsap.timeline({ paused: true }), cards[0], 0);
+    const rest = gsap.timeline({ paused: true });
+    cards.slice(1).forEach((card, i) => enter(rest, card, i * FOLLOW));
+
+    // (the stack keeps its place: only the cards in it move)
+    const stack = section.querySelector('.testimonial-stack');
+    const triggers = [[first, FIRST_AT], [rest, SECOND_AT]].map(([timeline, start]) => ScrollTrigger.create({
+      trigger: stack,
+      start,
+      onEnter: () => timeline.play(),
+      onLeaveBack: () => timeline.reverse(),
+    }));
 
     return () => {
-      stack.scrollTrigger?.kill();
-      stack.revert();
+      triggers.forEach((trigger) => trigger.kill());
+      first.revert();
+      rest.revert();
     };
   }, []);
 
@@ -143,7 +140,7 @@ function Testimonials() {
           laptop-lg:mt-10
           desktop:mt-10'>
         <ul className='testimonial-stack grid w-full'>
-          {TESTIMONIALS.map(({ id, quote, name, role }, i) => (
+          {TESTIMONIALS.map(({ id, quote, name, role, avatar }, i) => (
             <li className='testimonial-card theme-dark [grid-area:1/1] bg-card m-0'
               style={{ '--i': i, '--last': Math.max(last, 1) }}
               id={`testimonial-card-${id}`} key={id}>
@@ -164,11 +161,10 @@ function Testimonials() {
                     <SplitText text={`“${quote.join(' ')}”`} id={`animate-testimonial-${id}`} by='word' />
                   </p>
                 </blockquote>
-                {/* who said it. the square is their profile picture - a
-                  PLACEHOLDER panel until there is one. it is revealed with
+                {/* who said it. the square is their profile picture. it is revealed with
                   the card (start state: .testimonial-avatar, App.scss) */}
                 <figcaption className='flex items-center gap-x-4'>
-                  <span className='testimonial-avatar project-placeholder shrink-0 w-12 h-12' aria-hidden='true'/>
+                  <img className='testimonial-avatar shrink-0 w-12 h-12 object-cover' src={avatar} alt='' loading='lazy'/>
                   {/* centred on the picture. the nudge down is optical: the
                     heading face sits high in its line, which left the
                     pair looking above the picture's middle */}

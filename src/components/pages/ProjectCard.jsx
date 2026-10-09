@@ -6,14 +6,14 @@
 // an imported `picture` instead.
 //
 // a slot with no `image` previews as a plain panel
-// Portfolio v3's preview: a screen of this site
+// Portfolio 2026's preview: a screen of this site
 import v3_services from '../../assets/files/images/portfolio/portfolio-v3-2.jpg'
 
 export const PROJECT_CARDS = [
   {
     id: 'portfoliov3',
-    title: 'Portfolio v3',
-    to: '/portfolio-v3',
+    title: 'Portfolio 2026',
+    to: '/portfolio-2026',
     image: null,
     picture: v3_services,
     category: 'Portfolio Website / Personal Project',
