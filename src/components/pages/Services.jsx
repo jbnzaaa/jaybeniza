@@ -19,10 +19,10 @@ import ramp from '../../utils/hairline/ramp'
 import reflow from '../../utils/hairline/reflow'
 import pages from '../../utils/hairline/pages'
 import dock from '../../utils/hairline/dock'
-import nest from '../../utils/hairline/nest'
-import pegs from '../../utils/hairline/pegs'
+import atom from '../../utils/hairline/atom'
+import waves from '../../utils/hairline/waves'
 import markup from '../../utils/hairline/markup'
-import switches from '../../utils/hairline/switches'
+import key from '../../utils/hairline/key'
 import ease from '../../utils/hairline/ease'
 
 // what I do, in three parts: a service's name, what I do in it, and
@@ -31,8 +31,9 @@ import ease from '../../utils/hairline/ease'
 // on a board, a screen in bare blocks, a finished phone, two linked
 // screens, a test script; a board of components, a ramp of chips over
 // type, a page at every width, a booklet, a design meeting its build;
-// components nested in one another, a board of utility pegs, a page in
-// three plates, a row of switches, a puck on an ease curve
+// and the front-end stack as itself - React's orbits, Tailwind's waves,
+// a page in HTML, CSS and Sass, the JavaScript square, a puck on one of
+// GSAP's ease curves
 const SERVICES = [
   {
     id: 'product-design',
@@ -63,10 +64,10 @@ const SERVICES = [
     title: 'Front-End Development',
     text: 'I bring designs to life with responsive, production-ready code. Working with React, Tailwind CSS, and JavaScript, I bridge the gap between design and development while preserving the details that make each interface feel polished.',
     includes: [
-      { label: 'React', figure: nest },
-      { label: 'Tailwind CSS', figure: pegs },
+      { label: 'React', figure: atom },
+      { label: 'Tailwind CSS', figure: waves },
       { label: 'HTML5, CSS3, and Sass', figure: markup },
-      { label: 'JavaScript', figure: switches },
+      { label: 'JavaScript', figure: key },
       { label: 'GSAP animations', figure: ease },
     ],
   },
@@ -124,7 +125,9 @@ function ServiceCard({ id, title, text, includes, detailed }) {
                     <button className='flex flex-wrap w-full py-3 text-left text-caption' type='button' aria-pressed={i === shown}
                       onMouseEnter={() => show(i)} onFocus={() => show(i)} onClick={() => show(i)}
                       onMouseLeave={() => setPlaying(false)} onBlur={() => setPlaying(false)}>
-                      <SplitText text={label} id={`animate-service-${id}`} by='word' />
+                      {/* by the letter, so the label rolls on hover like every
+                        other text button (hoverRoll.js) */}
+                      <SplitText text={label} id={`animate-service-${id}`} />
                     </button>
                   </li>
                 ))}

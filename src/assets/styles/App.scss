@@ -414,12 +414,13 @@
   opacity: 1;
 }
 
+// (no cursor of its own: where the site's square cursor is in use the
+// browser's is hidden, and this would bring the hand back)
 * body .service-item button {
   background: none;
   border: 0;
   padding-left: 0;
   padding-right: 0;
-  cursor: pointer;
 }
 
 // the top bar (Navbar.jsx) is blended with the page by difference, so it

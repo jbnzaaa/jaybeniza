@@ -9,7 +9,7 @@ import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
 // when a reveal starts
-import { REVEAL_AT } from '../../utils/scrollReveal'
+import { REVEAL_AT, inTurn } from '../../utils/scrollReveal'
 gsap.registerPlugin(ScrollTrigger)
 
 const PARAGRAPH = 'I\'m a UI/UX designer with 3+ years of experience designing intuitive digital products, backed by a background in front-end development. From mapping user flows to building consistent design systems and responsive interfaces, I focus on creating meaningful experiences that balance usability, visual clarity, and functionality.';
@@ -34,15 +34,18 @@ function About() {
     const reveal = gsap.to('#animate-about', {
       y: 0, duration: .6, ease: 'power2.out', stagger: { amount: 1.6 }, paused: true,
     });
+    // in its turn among the page's reveals (scrollReveal.js)
+    const turn = inTurn(reveal, fxSection.current);
     const trigger = ScrollTrigger.create({
       trigger: fxSection.current,
       start: REVEAL_AT,
-      onEnter: () => reveal.play(),
-      onLeaveBack: () => reveal.reverse(),
+      onEnter: () => turn.play(),
+      onLeaveBack: () => turn.reverse(),
     });
 
     return () => {
       trigger.kill();
+      turn.kill();
       reveal.revert();
     };
   }, []);

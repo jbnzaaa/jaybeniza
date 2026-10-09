@@ -7,6 +7,8 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// the page's one queue of reveals
+import { inTurn } from '../../utils/scrollReveal'
 // their pictures - small square crops of the photographs in /reference
 import sergio from '../../assets/files/images/team/sergio-ramos-iii.jpg'
 import paula from '../../assets/files/images/team/paula-malupa.jpg'
@@ -93,11 +95,13 @@ function Testimonials() {
       .fromTo(cards[0], away, { ...home, ease: 'power2.out', duration: .9 }, 0)
       .to(cards[0].querySelectorAll('.split-letter'), { y: 0, ease: 'power1.in', duration: .5, stagger: { amount: .5 } }, .3)
       .to(cards[0].querySelector('.testimonial-avatar'), { ...frame, duration: .5 }, .5);
+    // (in its turn among the page's reveals - scrollReveal.js)
+    const turn = inTurn(first, section.querySelector('.testimonial-stack'));
     const arrive = ScrollTrigger.create({
       trigger: section.querySelector('.testimonial-stack'),
       start: FIRST_AT,
-      onEnter: () => first.play(),
-      onLeaveBack: () => first.reverse(),
+      onEnter: () => turn.play(),
+      onLeaveBack: () => turn.reverse(),
     });
 
     // where in a later card's step SHOWING of it has come on screen. the
@@ -142,6 +146,7 @@ function Testimonials() {
 
     return () => {
       arrive.kill();
+      turn.kill();
       first.revert();
       stack.scrollTrigger?.kill();
       stack.revert();

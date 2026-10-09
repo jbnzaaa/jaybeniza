@@ -7,7 +7,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 // page-to-page wipe
 import { TransitionLink } from '../common/PageTransition'
 // scroll reveal
-import { scrollReveal, REVEAL_AT } from '../../utils/scrollReveal'
+import { scrollReveal, REVEAL_AT, inTurn } from '../../utils/scrollReveal'
 // the site's button and section label
 import Button from '../common/Button'
 import Tag from '../common/Tag'
@@ -48,18 +48,23 @@ function Project() {
     // which starts slightly large and low, eases down to size - the work
     // page's card reveal
     const pictures = gsap.set(gsap.utils.toArray('.project-cover-image', fxList.current), { yPercent: 14, scale: 1.15 });
-    const covers = gsap.utils.toArray('.project-cover', fxList.current).map((cover) => gsap.timeline({
-      scrollTrigger: { trigger: cover, start: REVEAL_AT, toggleActions: 'play none none reverse' },
-    })
-      .to(cover, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .9 }, 0)
-      .to(cover.firstElementChild, { yPercent: 0, scale: 1, ease: 'power2.out', duration: 1.1 }, 0));
+    // (each in its turn among the page's reveals - scrollReveal.js)
+    const covers = gsap.utils.toArray('.project-cover', fxList.current).map((cover) => {
+      const open = gsap.timeline({ paused: true })
+        .to(cover, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .9 }, 0)
+        .to(cover.firstElementChild, { yPercent: 0, scale: 1, ease: 'power2.out', duration: 1.1 }, 0);
+      const turn = inTurn(open, cover);
+      const trigger = ScrollTrigger.create({ trigger: cover, start: REVEAL_AT, onEnter: () => turn.play(), onLeaveBack: () => turn.reverse() });
+      return { open, turn, trigger };
+    });
 
     return () => {
       rows.forEach((row) => row.kill());
       description.kill();
-      covers.forEach((cover) => {
-        cover.scrollTrigger?.kill();
-        cover.revert();
+      covers.forEach(({ open, turn, trigger }) => {
+        trigger.kill();
+        turn.kill();
+        open.revert();
       });
       pictures.revert();
     };

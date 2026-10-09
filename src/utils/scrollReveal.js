@@ -38,6 +38,78 @@ function totalForVelocity(natural, velocity) {
 // and the footer, which is too near the page's end to come that high)
 export const REVEAL_AT = 'top 70%';
 
+// ---- one reveal at a time, across the whole page
+// a reveal that is triggered while another is still playing waits for it
+// to finish, so no two components are ever part way in together. they go
+// in the order they were triggered - down the page, as it is scrolled
+const waiting = [];
+let current = null;
+let guard = null;
+// the reveal that is playing runs this much faster for each one waiting
+// behind it, so a quick scroll does not leave a screen of blanks
+const HURRY = .75;
+
+function pace() {
+  if (current) current.anim.timeScale(current.rate * (1 + waiting.length * HURRY));
+}
+
+function begin(item) {
+  // not there to be watched - scrolled off the top before its turn came,
+  // or not drawn at this width: it is simply shown
+  const box = item.el?.getBoundingClientRect?.();
+  if (box && (box.bottom < 0 || (!box.width && !box.height))) {
+    item.anim.timeScale(1).progress(1);
+    return;
+  }
+  current = item;
+  pace();
+  item.anim.play();
+  // never left waiting on a reveal that was cut short
+  guard = gsap.delayedCall(item.anim.duration() / item.anim.timeScale() + .4, () => { if (current === item) advance(); });
+}
+
+function advance() {
+  guard?.kill();
+  guard = null;
+  current = null;
+  while (waiting.length && !current) begin(waiting.shift());
+}
+
+/**
+ * Puts a paused reveal in the page's one queue: `play` starts it when
+ * every reveal triggered before it has finished, `reverse` takes it back
+ * at once (and out of the queue, if it was still waiting).
+ *
+ * @param {gsap.core.Animation} anim - a paused tween or timeline
+ * @param {string|Element|Element[]} [el] - what it reveals (its first element is checked for being on screen)
+ * @returns {{play: (rate?: number) => void, reverse: (rate?: number) => void, kill: () => void}}
+ */
+export function inTurn(anim, el) {
+  const item = { anim, el: el ? gsap.utils.toArray(el)[0] : null, rate: 1 };
+  anim.eventCallback('onComplete', () => { if (current === item) advance(); });
+  const drop = () => {
+    const i = waiting.indexOf(item);
+    if (i >= 0) waiting.splice(i, 1);
+  };
+  return {
+    play(rate = 1) {
+      item.rate = rate;
+      if (current === item) { pace(); return; }
+      if (waiting.includes(item) || (anim.progress() === 1 && !anim.reversed())) return;
+      if (current) { waiting.push(item); pace(); } else begin(item);
+    },
+    reverse(rate = 1) {
+      drop();
+      anim.timeScale(rate).reverse();
+      if (current === item) advance();
+    },
+    kill() {
+      drop();
+      if (current === item) advance();
+    },
+  };
+}
+
 /**
  * A scroll-driven reveal whose playback speed matches how fast the visitor
  * is scrolling: a quick flick plays the reveal fast, a slow scroll plays it
@@ -58,21 +130,23 @@ export function scrollReveal(targets, vars, { trigger, start = REVEAL_AT } = {})
   const tween = gsap.to(targets, { ...vars, paused: true });
   // the reveal's own length at its authored stagger - grows with the text
   const natural = tween.duration();
+  // it takes its turn among the page's reveals (inTurn, above)
+  const turn = inTurn(tween, trigger || targets);
 
   const trig = ScrollTrigger.create({
     trigger: trigger || targets,
     start,
     onEnter: (self) => {
       tween.duration(totalForVelocity(natural, self.getVelocity()));
-      tween.play();
+      turn.play();
     },
     onEnterBack: (self) => {
       tween.duration(totalForVelocity(natural, self.getVelocity()));
-      tween.play();
+      turn.play();
     },
     onLeaveBack: (self) => {
       tween.duration(totalForVelocity(natural, self.getVelocity()));
-      tween.reverse();
+      turn.reverse();
     },
   });
 
@@ -87,7 +161,7 @@ export function scrollReveal(targets, vars, { trigger, start = REVEAL_AT } = {})
   trig.refresh();
   if (trig.isActive) {
     tween.duration(totalForVelocity(natural, 0));
-    tween.play();
+    turn.play();
   }
 
   return {
@@ -97,6 +171,7 @@ export function scrollReveal(targets, vars, { trigger, start = REVEAL_AT } = {})
     // from the previous mount, making the reveal look like it never played
     kill() {
       trig.kill();
+      turn.kill();
       tween.revert();
     },
   };
@@ -150,14 +225,17 @@ export function scrollRevealSequence(stages, { trigger, start = REVEAL_AT, rever
     return 1 / (1 - (v / VELOCITY_RANGE) * (1 - FASTEST));
   };
 
+  // it takes its turn among the page's reveals (inTurn, above)
+  const turn = inTurn(tl, trigger || stages[0].targets);
+
   const trig = ScrollTrigger.create({
     trigger: trigger || stages[0].targets,
     start,
-    onEnter: (self) => tl.timeScale(rate(self.getVelocity())).play(),
-    onEnterBack: (self) => tl.timeScale(rate(self.getVelocity())).play(),
+    onEnter: (self) => turn.play(rate(self.getVelocity())),
+    onEnterBack: (self) => turn.play(rate(self.getVelocity())),
     // scrolling back up past the start: text goes first, then the line -
     // the reveal in reverse, like the section titles
-    onLeaveBack: (self) => { if (!reverseStart) tl.timeScale(rate(self.getVelocity())).reverse(); },
+    onLeaveBack: (self) => { if (!reverseStart) turn.reverse(rate(self.getVelocity())); },
   });
 
   // a tall block (a card) that only reversed at `start` would be all but
@@ -167,14 +245,14 @@ export function scrollRevealSequence(stages, { trigger, start = REVEAL_AT, rever
   const back = reverseStart ? ScrollTrigger.create({
     trigger: trigger || stages[0].targets,
     start: reverseStart,
-    onEnter: (self) => tl.timeScale(rate(self.getVelocity())).play(),
-    onLeaveBack: (self) => tl.timeScale(rate(self.getVelocity())).reverse(),
+    onEnter: (self) => turn.play(rate(self.getVelocity())),
+    onLeaveBack: (self) => turn.reverse(rate(self.getVelocity())),
   }) : null;
 
   // safety net: see scrollReveal() above for why trig.refresh() is needed
   // before this check
   trig.refresh();
-  if (trig.isActive) tl.timeScale(1).play();
+  if (trig.isActive) turn.play();
 
   return {
     // revert (not just kill) so GSAP's inline styles get cleared - see the
@@ -182,6 +260,7 @@ export function scrollRevealSequence(stages, { trigger, start = REVEAL_AT, rever
     kill() {
       trig.kill();
       back?.kill();
+      turn.kill();
       tl.revert();
     },
   };

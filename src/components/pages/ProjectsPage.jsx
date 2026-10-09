@@ -13,7 +13,7 @@ import Button from '../common/Button'
 // page-to-page wipe
 import { TransitionLink } from '../common/PageTransition'
 // scroll reveal
-import { scrollReveal, REVEAL_AT } from '../../utils/scrollReveal'
+import { scrollReveal, REVEAL_AT, inTurn } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
@@ -113,11 +113,15 @@ function ProjectsPage() {
 
     // each project as it comes up the screen: the card wipes open from
     // its bottom edge, the picture easing down to size inside it
-    const reveals = gsap.utils.toArray('.work-item', section).map((item) => gsap.timeline({
-      scrollTrigger: { trigger: item, start: REVEAL_AT, toggleActions: 'play none none reverse' },
-    })
-      .to(item.querySelector('.work-cover'), { ...open, duration: .9 }, 0)
-      .to(item.querySelector('.work-cover-image'), { ...settle, duration: 1.1 }, 0));
+    // (each in its turn among the page's reveals - scrollReveal.js)
+    const reveals = gsap.utils.toArray('.work-item', section).map((item) => {
+      const wipe = gsap.timeline({ paused: true })
+        .to(item.querySelector('.work-cover'), { ...open, duration: .9 }, 0)
+        .to(item.querySelector('.work-cover-image'), { ...settle, duration: 1.1 }, 0);
+      const turn = inTurn(wipe, item);
+      const trigger = ScrollTrigger.create({ trigger: item, start: REVEAL_AT, onEnter: () => turn.play(), onLeaveBack: () => turn.reverse() });
+      return { wipe, turn, trigger };
+    });
 
     // its name and label rise on a trigger of their own: when they have
     // come on screen themselves - by which time the whole cover over them
@@ -125,19 +129,22 @@ function ProjectsPage() {
     // edge, a screen before anyone had scrolled down to them)
     const texts = gsap.utils.toArray('.work-item-info', section).map((info) => {
       const rise = gsap.to(info.querySelectorAll('.split-letter'), { y: 0, duration: .5, stagger: { amount: .3 }, ease: 'power1.in', paused: true });
-      const trigger = ScrollTrigger.create({ trigger: info, start: 'top 92%', onEnter: () => rise.play(), onLeaveBack: () => rise.reverse() });
-      return { rise, trigger };
+      const turn = inTurn(rise, info);
+      const trigger = ScrollTrigger.create({ trigger: info, start: 'top 92%', onEnter: () => turn.play(), onLeaveBack: () => turn.reverse() });
+      return { rise, turn, trigger };
     });
 
     return () => {
       intro.kill();
-      reveals.forEach((reveal) => {
-        reveal.scrollTrigger?.kill();
-        reveal.revert();
+      reveals.forEach(({ wipe, turn, trigger }) => {
+        trigger.kill();
+        turn.kill();
+        wipe.revert();
       });
       covers.revert();
-      texts.forEach(({ rise, trigger }) => {
+      texts.forEach(({ rise, turn, trigger }) => {
         trigger.kill();
+        turn.kill();
         rise.revert();
       });
     };
