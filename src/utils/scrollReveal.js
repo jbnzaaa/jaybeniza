@@ -3,8 +3,8 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 // reveal-speed bounds, in seconds
-const MIN_DURATION = 0.35;  // fast flick down the page -> quick reveal
-const MAX_DURATION = 0.6;  // slow, deliberate scroll -> gentle reveal
+const MIN_DURATION = 0.8;  // fast flick down the page -> quick reveal
+const MAX_DURATION = 1;  // slow, deliberate scroll -> gentle reveal
 // scroll speeds (px/s) at or beyond this are treated as "fastest"
 const VELOCITY_RANGE = 3000;
 
@@ -19,12 +19,16 @@ function durationForVelocity(velocity) {
 // few hundred letters into the same fraction of a second as a heading's
 // dozen - they all landed at once and the per-letter stagger was lost.
 // scaling the total to the amount of text keeps the ripple visible
-const MIN_TOTAL = 0.45;
-const MAX_TOTAL = 1.4;
+// (the floor is one letter's own rise, so a short label is never
+// stretched: only a very long text is squeezed, to the ceiling)
+const MIN_TOTAL = 0.7;
+const MAX_TOTAL = 3;
 // a fast flick plays a reveal in this share of its slow-scroll time
-const FASTEST = 0.5;
+// (1: how fast the page is scrolled no longer changes a reveal's speed -
+// it made the same kind of text rise at different speeds)
+const FASTEST = 1;
 // one letter's own rise, in seconds, before any pacing (gsap's default)
-const LETTER_DURATION = 0.5;
+const LETTER_DURATION = 0.7;
 
 function totalForVelocity(natural, velocity) {
   const v = Math.min(Math.abs(velocity || 0), VELOCITY_RANGE);
@@ -54,9 +58,10 @@ function startFor(el, start) {
 // a tall card opened at the default start is opening with only its top
 // edge on screen. this start waits for 30% of the card's own height
 export const CARD_AT = '30% bottom';
-// every reveal runs at an even pace, start to finish: an ease that
-// starts slowly reads as one more wait before anything shows
-const EASE = 'none';
+// every reveal starts at once and slows into place. (an ease that starts
+// slowly reads as one more wait before anything shows; one at an even
+// pace, start to finish, stops dead and reads as hurried)
+const EASE = 'power2.out';
 
 // ---- one reveal at a time, within a section
 // a reveal that is triggered while another in its section is still
@@ -72,15 +77,14 @@ const queueOf = (el) => {
   return queues.get(key);
 };
 
-// nothing is kept waiting long, and nothing is rushed: once a reveal has
-// others behind it, it plays half as fast again; and if the next in line
-// has meanwhile been scrolled this far up the screen (a share of its
-// height, from the top), the one playing goes three times as fast - what
-// is well in view is never left blank. (these were 3x and more, and 8x:
-// a reveal with anything behind it was over before it could be watched)
+// a reveal plays at its own speed whether or not others are waiting
+// behind it (HURRY is 1) - text of one kind always rises at one speed.
+// only if the next in line has meanwhile been scrolled this far up the
+// screen (a share of its height, from the top) does the one playing go
+// twice as fast, so what is well in view is never left blank
 const OVERDUE = .6;
-const HURRY = 1.5;
-const RUSH = 3;
+const HURRY = 1;
+const RUSH = 2;
 const busy = new Set();
 
 function pace(q) {
@@ -240,7 +244,8 @@ export function inTurn(anim, el) {
  * @returns {{kill: () => void}}
  */
 export function scrollReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
-  const tween = gsap.to(targets, { ...vars, ease: EASE, paused: true });
+  // every letter rises over the same time here as in a sequence
+  const tween = gsap.to(targets, { duration: LETTER_DURATION, ...vars, ease: EASE, paused: true });
   // the reveal's own length at its authored stagger - grows with the text
   const natural = tween.duration();
   // it takes its turn among the page's reveals (inTurn, above)

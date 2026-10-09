@@ -100,9 +100,9 @@ function ProjectsPage() {
 
   useEffect(() => {
     const section = fxGrid.current;
-    const open = { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none' };
+    const open = { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.out' };
     // a cover's picture settling into its frame as the frame opens
-    const settle = { yPercent: 0, scale: 1, ease: 'none' };
+    const settle = { yPercent: 0, scale: 1, ease: 'power2.out' };
     // the pictures start slightly large and low in their frames
     const covers = gsap.set(gsap.utils.toArray('.work-cover-image', section), { yPercent: 14, scale: 1.15 });
 
@@ -116,8 +116,8 @@ function ProjectsPage() {
     // (each in its turn among the page's reveals - scrollReveal.js)
     const reveals = gsap.utils.toArray('.work-item', section).map((item) => {
       const wipe = gsap.timeline({ paused: true })
-        .to(item.querySelector('.work-cover'), { ...open, duration: .7 }, 0)
-        .to(item.querySelector('.work-cover-image'), { ...settle, duration: .7 }, 0);
+        .to(item.querySelector('.work-cover'), { ...open, duration: 1 }, 0)
+        .to(item.querySelector('.work-cover-image'), { ...settle, duration: 1.2 }, 0);
       const turn = inTurn(wipe, item);
       const trigger = ScrollTrigger.create({ trigger: item, start: REVEAL_AT, onEnter: () => turn.play(), onLeaveBack: () => turn.reverse() });
       return { wipe, turn, trigger };
@@ -128,7 +128,7 @@ function ProjectsPage() {
     // is showing. (on the card's trigger they rose with the cover's first
     // edge, a screen before anyone had scrolled down to them)
     const texts = gsap.utils.toArray('.work-item-info', section).map((info) => {
-      const rise = gsap.to(info.querySelectorAll('.split-letter'), { y: 0, duration: .4, stagger: { amount: .3 }, ease: 'none', paused: true });
+      const rise = gsap.to(info.querySelectorAll('.split-letter'), { y: 0, duration: .7, stagger: { amount: .35 }, ease: 'power2.out', paused: true });
       const turn = inTurn(rise, info);
       const trigger = ScrollTrigger.create({ trigger: info, start: 'top 92%', onEnter: () => turn.play(), onLeaveBack: () => turn.reverse() });
       return { rise, turn, trigger };

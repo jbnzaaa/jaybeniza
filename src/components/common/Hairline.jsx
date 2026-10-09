@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 // a figure's reveal: every line of it drawn along its length, in seconds
 // each, the first to the last starting across SPREAD
-const DRAW = .7;
+const DRAW = 1;
 const SPREAD = .3;
 
 /**
@@ -90,7 +90,7 @@ function Hairline({ figure, play = false, reveal = true }) {
       drawing = gsap.to(lines.map(({ line }) => line), {
         strokeDashoffset: 0,
         duration: DRAW,
-        ease: 'none',
+        ease: 'power2.out',
         stagger: { amount: SPREAD },
         onComplete: () => gsap.set(lines.map(({ line }) => line), { clearProps: 'strokeDasharray,strokeDashoffset' }),
       });

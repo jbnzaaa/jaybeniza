@@ -51,8 +51,8 @@ function Project() {
     // (each in its turn among the page's reveals - scrollReveal.js)
     const covers = gsap.utils.toArray('.project-cover', fxList.current).map((cover) => {
       const open = gsap.timeline({ paused: true })
-        .to(cover, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', duration: .7 }, 0)
-        .to(cover.firstElementChild, { yPercent: 0, scale: 1, ease: 'none', duration: .7 }, 0);
+        .to(cover, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.out', duration: 1 }, 0)
+        .to(cover.firstElementChild, { yPercent: 0, scale: 1, ease: 'power2.out', duration: 1.2 }, 0);
       const turn = inTurn(open, cover);
       const trigger = ScrollTrigger.create({ trigger: cover, start: REVEAL_AT, onEnter: () => turn.play(), onLeaveBack: () => turn.reverse() });
       return { open, turn, trigger };

@@ -78,17 +78,20 @@ function App() {
     const smoother = ScrollSmoother.create({
       wrapper: '#smooth-wrapper',
       content: '#smooth-content',
-      // how long the page takes to catch up with the wheel, in seconds.
-      // (it was 1.6: everything on the page, and every reveal's trigger,
-      // ran that far behind the scroll)
-      smooth: 1,
+      // how long the page takes to catch up with the wheel, in seconds:
+      // long enough that the steps of a mouse wheel run together into
+      // one glide. (at 1 each step could be felt, and the page arrived
+      // abruptly; the reveals no longer need it short - they start
+      // earlier on the screen now, scrollReveal.js)
+      smooth: 1.2,
       // touch screens get a light version of the same easing (off by
       // default there) - short, so the page still follows the finger
       smoothTouch: .1,
       // how far the page moves for a turn of the wheel, against the
-      // browser's own distance. (it was .65: a third more scrolling to
-      // reach anything)
-      speed: .85,
+      // browser's own distance: under it, so the page is drawn past
+      // rather than thrown. (at .85 a turn of the wheel went too far too
+      // quickly)
+      speed: .8,
       effects: true,
     });
 
@@ -100,6 +103,42 @@ function App() {
     // page jump. normalizeScroll moves touch scrolling onto the page's own
     // thread (it also keeps the address bar from resizing the page), and
     // ignoreMobileResize skips the re-measure for whatever resizes remain
+    // the wheel has a top speed. however hard it is spun, the page is
+    // asked to move no faster than WHEEL_MAX (px a second, before the
+    // smoother's own speed is applied): what the wheel asks for is kept
+    // as a distance still to go, and paid out at that rate, so a flick
+    // carries on at the top speed instead of jumping down the page.
+    // (not while the menu holds the page still, not for a pinch or
+    // ctrl + wheel, which zoom, and not over something that scrolls by
+    // itself - a long text box, an open list - which keeps the wheel)
+    const WHEEL_MAX = 2400;
+    let owed = 0;
+    const scrollsItself = (el) => {
+      for (let node = el; node && node !== document.body; node = node.parentElement) {
+        if (node.scrollHeight > node.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(node).overflowY)) return true;
+      }
+      return false;
+    };
+    const onWheel = (e) => {
+      if (e.ctrlKey || smoother.paused() || scrollsItself(e.target)) return;
+      e.preventDefault();
+      // lines and pages, as some mice report the wheel, in px
+      const unit = e.deltaMode === 1 ? 16 * 2.5 : e.deltaMode === 2 ? window.innerHeight : 1;
+      owed += e.deltaY * unit;
+      // (no more than a screen and a half in hand: a long spin stops soon after the wheel does)
+      owed = gsap.utils.clamp(-window.innerHeight * 1.5, window.innerHeight * 1.5, owed);
+    };
+    const pay = (_time, delta) => {
+      if (!owed) return;
+      const most = WHEEL_MAX * delta / 1000;
+      const step = gsap.utils.clamp(-most, most, owed);
+      owed -= step;
+      if (Math.abs(owed) < .5) owed = 0;
+      window.scrollBy(0, step);
+    };
+    window.addEventListener('wheel', onWheel, { passive: false });
+    gsap.ticker.add(pay);
+
     let normalizer;
     if (ScrollTrigger.isTouch) {
       ScrollTrigger.config({ ignoreMobileResize: true });
@@ -107,6 +146,8 @@ function App() {
     }
 
     return () => {
+      window.removeEventListener('wheel', onWheel);
+      gsap.ticker.remove(pay);
       normalizer?.kill();
       smoother.kill();
     };

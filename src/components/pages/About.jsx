@@ -32,7 +32,7 @@ function About() {
     // the letters rise across a set time rather than a fixed step each,
     // so a long paragraph's last line is not seconds behind its first
     const reveal = gsap.to('#animate-about', {
-      y: 0, duration: .45, ease: 'none', stagger: { amount: .9 }, paused: true,
+      y: 0, duration: .7, ease: 'power2.out', stagger: { amount: 1.2 }, paused: true,
     });
     // in its turn among the section's reveals (scrollReveal.js). its
     // trigger is the paragraph itself, which is under the tag: the tag
