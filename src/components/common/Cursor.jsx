@@ -91,7 +91,9 @@ function Cursor() {
       }
       // a button, or a link the size of a line of text
       let button = e.target.closest?.(BUTTON);
-      if (!button && !e.target.closest?.(LABELLED)) {
+      // (not inside anything marked data-cursor-free, which keeps the
+      // square on the pointer)
+      if (!button && !e.target.closest?.(LABELLED) && !e.target.closest?.('[data-cursor-free]')) {
         const link = e.target.closest?.(LINK);
         if (link && link.getBoundingClientRect().height <= LINE * side() / 12) button = link;
       }

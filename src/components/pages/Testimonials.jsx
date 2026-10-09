@@ -54,21 +54,20 @@ const TESTIMONIALS = [
 // screen: with 30% of its height above the bottom of the screen - so it
 // is in, and can be read, by the time the section pins
 const FIRST_AT = '30% bottom';
-// the pinned scroll, in steps: a card takes one step to arrive. the
-// first card is fully in before the section pins, so the rest start as
-// soon as it does, one straight after another; READ is how long the
-// finished stack is held before the page moves on
-const READ = .4;
-// how much pinned scroll (in screen heights) one step is
-const STEP_LENGTH = .7;
-// how much of a card is on screen when its text starts to rise
-const SHOWING = .3;
+// the section is then held, pinned, while the page is scrolled this far
+// (in screen heights). that scroll is cut into equal steps - one before
+// each later card, and one after the last - so every card is read for
+// the same short scroll before the next comes, and the finished stack
+// for as long again before the page moves on
+const HOLD = .75;
 
 /**
  * What my team says, on the light theme: dark cards that stack as the
  * page scrolls. The first card comes in by itself as the section comes up
- * the screen, so it is fully there when the section pins. Pinned, each
- * next card slides in over it
+ * the screen, so it is there to read when the section pins. Pinned, the
+ * page has to be scrolled on a way before the next card comes - time to
+ * read the one showing - and then it comes in on its own time, in one
+ * movement, not dragged by the scroll: it slides in over the card before
  * and stops a step further right, the last one's right edge landing on
  * the right gutter, every earlier card part in view behind the next.
  * Below laptop width the same happens top to bottom: the cards are full width,
@@ -87,69 +86,54 @@ function Testimonials() {
     const home = vertical ? { y: 0 } : { x: 0 };
     const frame = { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' };
 
-    // the first card, on its own time: it slides to its place, its text
-    // rises, and its picture wipes open from its bottom edge. it plays
-    // when the stack has come far enough up the screen, and goes back if
-    // the page is scrolled back above that
-    const first = gsap.timeline({ paused: true })
-      .fromTo(cards[0], away, { ...home, ease: 'power2.out', duration: .9 }, 0)
-      .to(cards[0].querySelectorAll('.split-letter'), { y: 0, ease: 'power1.in', duration: .5, stagger: { amount: .5 } }, .3)
-      .to(cards[0].querySelector('.testimonial-avatar'), { ...frame, duration: .5 }, .5);
-    // (in its turn among the page's reveals - scrollReveal.js)
-    const turn = inTurn(first, section.querySelector('.testimonial-stack'));
+    // a card's arrival, on its own time: it slides to its place, its
+    // text rises, and its picture wipes open from its bottom edge. each
+    // takes its turn among the section's reveals (scrollReveal.js), so
+    // one never starts while the one before is still coming in
+    const arrivals = cards.map((card) => {
+      const arrival = gsap.timeline({ paused: true })
+        .fromTo(card, away, { ...home, ease: 'power2.out', duration: .9 }, 0)
+        .to(card.querySelectorAll('.split-letter'), { y: 0, ease: 'power1.in', duration: .5, stagger: { amount: .5 } }, .3)
+        .to(card.querySelector('.testimonial-avatar'), { ...frame, duration: .5 }, .5);
+      return { arrival, turn: inTurn(arrival, section.querySelector('.testimonial-stack')), shown: false };
+    });
+    const show = (item, on) => {
+      if (item.shown === on) return;
+      item.shown = on;
+      if (on) item.turn.play();
+      else item.turn.reverse();
+    };
+
+    // the first card: when the stack has come far enough up the screen,
+    // and back if the page is scrolled back above that
     const arrive = ScrollTrigger.create({
       trigger: section.querySelector('.testimonial-stack'),
       start: FIRST_AT,
-      onEnter: () => turn.play(),
-      onLeaveBack: () => turn.reverse(),
+      onEnter: () => show(arrivals[0], true),
+      onLeaveBack: () => show(arrivals[0], false),
     });
 
-    // where in a later card's step SHOWING of it has come on screen. the
-    // card travels the screen on a power2.out ease (1 - (1 - t)^2), so the
-    // moment its leading edge still has a given distance to go is
-    // t = 1 - sqrt(distance / screen). measured before anything moves
-    const screen = vertical ? window.innerHeight : window.innerWidth;
-    const top = section.getBoundingClientRect().top;
-    const starts = cards.map((card) => {
-      const rect = card.getBoundingClientRect();
-      const distance = Math.max(0, vertical
-        ? screen - (rect.top - top) - rect.height * SHOWING
-        : screen - rect.left - rect.width * SHOWING);
-      return 1 - Math.sqrt(Math.min(distance / screen, 1));
+    // the rest, while the section is pinned: each comes in at its step of
+    // the pinned scroll - so the page has to be scrolled on a little,
+    // past the card that is showing, before the next one arrives.
+    // scrolled back above that point, it leaves
+    const later = arrivals.slice(1);
+    const hold = ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: `+=${HOLD * 100}%`,
+      pin: true,
+      anticipatePin: 1,
+      onUpdate: (self) => later.forEach((item, i) => show(item, self.progress >= (i + 1) / (later.length + 1))),
     });
-
-    // the rest, scroll-coupled, while the section is pinned: a step each,
-    // from the moment it pins
-    const later = cards.slice(1);
-    const stack = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: `+=${(later.length + READ) * STEP_LENGTH * 100}%`,
-        pin: true,
-        scrub: ScrollTrigger.isTouch ? .5 : true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
-    });
-    later.forEach((card, i) => {
-      const at = i;
-      const from = at + starts[i + 1];
-      stack
-        .fromTo(card, away, { ...home, ease: 'power2.out', duration: 1 }, at)
-        .to(card.querySelectorAll('.split-letter'), { y: 0, ease: 'power1.in', duration: .25, stagger: { amount: .35 } }, from)
-        .to(card.querySelector('.testimonial-avatar'), { ...frame, duration: .35 }, from + .15);
-    });
-    // the finished stack is held a moment before the page moves on
-    stack.to({}, { duration: READ });
 
     return () => {
       arrive.kill();
-      turn.kill();
-      first.revert();
-      stack.scrollTrigger?.kill();
-      stack.revert();
+      hold.kill();
+      arrivals.forEach(({ arrival, turn }) => {
+        turn.kill();
+        arrival.revert();
+      });
     };
   }, []);
 

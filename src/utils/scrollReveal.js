@@ -38,22 +38,53 @@ function totalForVelocity(natural, velocity) {
 // and the footer, which is too near the page's end to come that high)
 export const REVEAL_AT = 'top 70%';
 
-// ---- one reveal at a time, across the whole page
-// a reveal that is triggered while another is still playing waits for it
-// to finish, so no two components are ever part way in together. they go
-// in the order they were triggered - down the page, as it is scrolled
-const waiting = [];
-let current = null;
-let guard = null;
-// the reveal that is playing runs this much faster for each one waiting
-// behind it, so a quick scroll does not leave a screen of blanks
-const HURRY = .75;
+// ---- one reveal at a time, within a section
+// a reveal that is triggered while another in its section is still
+// playing waits for it to finish, so no two of a section's components are
+// ever part way in together. they go in the order they were triggered -
+// down the section, as it is scrolled. sections do not wait for each other
+const queues = new WeakMap();
+const queueOf = (el) => {
+  // its section - or, where a part of a page is not marked up as one, the
+  // nearest block around it that has a name
+  const key = el?.closest?.('section') || el?.parentElement?.closest?.('[id]') || document.body;
+  if (!queues.has(key)) queues.set(key, { waiting: [], current: null, guard: null });
+  return queues.get(key);
+};
 
-function pace() {
-  if (current) current.anim.timeScale(current.rate * (1 + waiting.length * HURRY));
+// nothing is kept waiting long. once a reveal has others behind it, it
+// plays at three times its speed, and faster for each one more; and if
+// the next in line has meanwhile been scrolled this far up the screen
+// (a share of its height, from the top), the one playing is all but
+// finished on the spot - what is well in view is never left blank
+const OVERDUE = .45;
+const RUSH = 8;
+const busy = new Set();
+
+function pace(q) {
+  if (!q.current) return;
+  let speed = q.waiting.length ? 2 + q.waiting.length : 1;
+  const next = q.waiting[0]?.el?.getBoundingClientRect?.();
+  if (next && next.top < window.innerHeight * OVERDUE) speed = Math.max(speed, RUSH);
+  q.current.anim.timeScale(q.current.rate * speed);
+}
+
+// while anything is waiting, its place on screen is watched as the page scrolls
+function watch() {
+  busy.forEach((q) => {
+    if (!q.waiting.length) busy.delete(q);
+    else pace(q);
+  });
+  if (!busy.size) gsap.ticker.remove(watch);
+}
+
+function hold(q) {
+  if (!busy.size) gsap.ticker.add(watch);
+  busy.add(q);
 }
 
 function begin(item) {
+  const q = item.q;
   // not there to be watched - scrolled off the top before its turn came,
   // or not drawn at this width: it is simply shown
   const box = item.el?.getBoundingClientRect?.();
@@ -61,23 +92,23 @@ function begin(item) {
     item.anim.timeScale(1).progress(1);
     return;
   }
-  current = item;
-  pace();
+  q.current = item;
+  pace(q);
   item.anim.play();
   // never left waiting on a reveal that was cut short
-  guard = gsap.delayedCall(item.anim.duration() / item.anim.timeScale() + .4, () => { if (current === item) advance(); });
+  q.guard = gsap.delayedCall(item.anim.duration() / item.anim.timeScale() + .15, () => { if (q.current === item) advance(q); });
 }
 
-function advance() {
-  guard?.kill();
-  guard = null;
-  current = null;
-  while (waiting.length && !current) begin(waiting.shift());
+function advance(q) {
+  q.guard?.kill();
+  q.guard = null;
+  q.current = null;
+  while (q.waiting.length && !q.current) begin(q.waiting.shift());
 }
 
 /**
- * Puts a paused reveal in the page's one queue: `play` starts it when
- * every reveal triggered before it has finished, `reverse` takes it back
+ * Puts a paused reveal in its section's queue: `play` starts it when
+ * every reveal triggered before it there has finished, `reverse` takes it back
  * at once (and out of the queue, if it was still waiting).
  *
  * @param {gsap.core.Animation} anim - a paused tween or timeline
@@ -86,26 +117,28 @@ function advance() {
  */
 export function inTurn(anim, el) {
   const item = { anim, el: el ? gsap.utils.toArray(el)[0] : null, rate: 1 };
-  anim.eventCallback('onComplete', () => { if (current === item) advance(); });
+  const q = queueOf(item.el);
+  item.q = q;
+  anim.eventCallback('onComplete', () => { if (q.current === item) advance(q); });
   const drop = () => {
-    const i = waiting.indexOf(item);
-    if (i >= 0) waiting.splice(i, 1);
+    const i = q.waiting.indexOf(item);
+    if (i >= 0) q.waiting.splice(i, 1);
   };
   return {
     play(rate = 1) {
       item.rate = rate;
-      if (current === item) { pace(); return; }
-      if (waiting.includes(item) || (anim.progress() === 1 && !anim.reversed())) return;
-      if (current) { waiting.push(item); pace(); } else begin(item);
+      if (q.current === item) { pace(q); return; }
+      if (q.waiting.includes(item) || (anim.progress() === 1 && !anim.reversed())) return;
+      if (q.current) { q.waiting.push(item); pace(q); hold(q); } else begin(item);
     },
     reverse(rate = 1) {
       drop();
       anim.timeScale(rate).reverse();
-      if (current === item) advance();
+      if (q.current === item) advance(q);
     },
     kill() {
       drop();
-      if (current === item) advance();
+      if (q.current === item) advance(q);
     },
   };
 }

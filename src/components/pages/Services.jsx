@@ -122,7 +122,7 @@ function ServiceCard({ id, title, text, includes, detailed }) {
               <ul className='flex flex-col mt-4'>
                 {includes.map(({ label }, i) => (
                   <li className={`service-item border-t border-white/20 m-0 ${i === shown ? 'service-item-on' : ''}`} key={label}>
-                    <button className='flex flex-wrap w-full py-3 text-left text-caption' type='button' aria-pressed={i === shown}
+                    <button className='flex flex-wrap w-full py-3 text-left text-caption' type='button' aria-pressed={i === shown} data-cursor-free
                       onMouseEnter={() => show(i)} onFocus={() => show(i)} onClick={() => show(i)}
                       onMouseLeave={() => setPlaying(false)} onBlur={() => setPlaying(false)}>
                       {/* by the letter, so the label rolls on hover like every
@@ -136,8 +136,8 @@ function ServiceCard({ id, title, text, includes, detailed }) {
           </div>
         </div>
         {/* the figure - on the dark base, in the site's greys
-          (.service-art, App.scss). keyed, so each drawing fades in as it
-          takes the last one's place */}
+          (.service-art, App.scss). keyed, so each drawing is drawn in,
+          line by line, as it takes the last one's place */}
         <div className='service-art bg-black flex items-center justify-center
           mobile:py-4
           tablet:py-6

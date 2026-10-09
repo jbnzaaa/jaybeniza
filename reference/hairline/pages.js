@@ -103,9 +103,22 @@ function mount({ stage, svg, read }, value) {
   bag.add(pointer(stage, { move: (pt) => setActive(hit(pt)), leave: () => setActive(null) }));
   bag.add(() => svg.replaceChildren());
 
+  // for each page, a point of its resting face that is its own to the
+  // pointer - not covered by a page standing in front of it
+  const spots = pages.map((pg) => {
+    const F = at(pg.rest);
+    for (let v = L - 3; v > 0; v -= 5) for (let u = W - 4; u > 0; u -= 8) {
+      const point = F(u, v, T);
+      if (hit(point) === pg) return point;
+    }
+    return F(W / 2, L / 2, T);
+  });
+
   return {
     set: (v) => { open = v; },
     destroy: bag.dispose,
+    // where a pointer goes to pick each page in turn
+    spots,
   };
 }
 

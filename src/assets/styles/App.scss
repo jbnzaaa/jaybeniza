@@ -393,13 +393,6 @@
 
 * body .service-art [data-hairline] {
   width: min(92%, 38rem);
-  // each drawing fades in as it takes the last one's place
-  animation: service-figure-in .45s ease both;
-}
-
-@keyframes service-figure-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
 
 // what a service covers: a list of rows, each a button that puts its own

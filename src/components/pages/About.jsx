@@ -34,10 +34,13 @@ function About() {
     const reveal = gsap.to('#animate-about', {
       y: 0, duration: .6, ease: 'power2.out', stagger: { amount: 1.6 }, paused: true,
     });
-    // in its turn among the page's reveals (scrollReveal.js)
-    const turn = inTurn(reveal, fxSection.current);
+    // in its turn among the section's reveals (scrollReveal.js). its
+    // trigger is the paragraph itself, which is under the tag: the tag
+    // has come far enough up the screen first, so it is revealed first
+    const paragraph = fxSection.current.querySelector('.about-paragraph');
+    const turn = inTurn(reveal, paragraph);
     const trigger = ScrollTrigger.create({
-      trigger: fxSection.current,
+      trigger: paragraph,
       start: REVEAL_AT,
       onEnter: () => turn.play(),
       onLeaveBack: () => turn.reverse(),

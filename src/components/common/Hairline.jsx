@@ -1,8 +1,17 @@
 import React, { useEffect, useRef } from 'react'
 // GSAP
 import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+// when a reveal starts
+import { REVEAL_AT } from '../../utils/scrollReveal'
 // the Hairline engine
 import HL from '../../utils/hairline/kernel'
+gsap.registerPlugin(ScrollTrigger)
+
+// a figure's reveal: every line of it drawn along its length, in seconds
+// each, the first to the last starting across SPREAD
+const DRAW = .7;
+const SPREAD = .3;
 
 /**
  * One Hairline figure: an isometric line drawing that answers the pointer
@@ -21,6 +30,8 @@ function Hairline({ figure, play = false }) {
   const fxStage = useRef();
   // what the mounted figure handed back
   const fxHandle = useRef();
+  // when its reveal will have finished (ms, performance.now's clock)
+  const fxReady = useRef(0);
 
   useEffect(() => {
     const stage = fxStage.current;
@@ -42,7 +53,37 @@ function Hairline({ figure, play = false }) {
     const keepMoving = () => HL.setReducedMotion(false);
     keepMoving();
     motion.addEventListener('change', keepMoving);
+
+    // its reveal - the site's line reveal: nothing of it shows until it
+    // has come up the screen as far as anything else does before it is
+    // revealed, then each of its lines is drawn along its own length.
+    // (the dashes this is done with are taken off again at the end: the
+    // figure redraws its lines as it moves, and their lengths change)
+    let drawing = null;
+    let wait = null;
+    gsap.set(stage, { autoAlpha: 0 });
+    const draw = () => {
+      const lines = [...svg.querySelectorAll('path')].filter((line) => !line.classList.contains('dash') && line.getAttribute('d'));
+      lines.forEach((line) => {
+        const length = line.getTotalLength();
+        gsap.set(line, { strokeDasharray: length, strokeDashoffset: length });
+      });
+      gsap.set(stage, { autoAlpha: 1 });
+      fxReady.current = performance.now() + (DRAW + SPREAD) * 1000;
+      drawing = gsap.to(lines, {
+        strokeDashoffset: 0,
+        duration: DRAW,
+        ease: 'power2.out',
+        stagger: { amount: SPREAD },
+        onComplete: () => gsap.set(lines, { clearProps: 'strokeDasharray,strokeDashoffset' }),
+      });
+    };
+    if (stage.getBoundingClientRect().top < window.innerHeight * .7) draw();
+    else wait = ScrollTrigger.create({ trigger: stage, start: REVEAL_AT, once: true, onEnter: draw });
+
     return () => {
+      wait?.kill();
+      drawing?.kill();
       motion.removeEventListener('change', keepMoving);
       handle.destroy();
       svg.remove();
@@ -64,12 +105,14 @@ function Hairline({ figure, play = false }) {
       }));
     };
     const spots = fxHandle.current?.spots;
+    // not before the figure has been drawn in
+    const delay = Math.max(0, (fxReady.current - performance.now()) / 1000);
     let path;
     if (spots) {
       // a figure of parts: the point goes from part to part, in their
       // order, and stops on each long enough for it to answer
       const at = { x: spots[0][0], y: spots[0][1] };
-      path = gsap.timeline({ repeat: -1, onUpdate: () => tell('pointermove', at.x, at.y) });
+      path = gsap.timeline({ delay, repeat: -1, onUpdate: () => tell('pointermove', at.x, at.y) });
       spots.forEach(([x, y], i) => path.to(at, { x, y, duration: i ? .45 : .01, ease: 'power2.inOut' }).to(at, { duration: .75 }));
     } else {
       // any other: a slow figure of eight, wide enough to run a figure
@@ -78,6 +121,7 @@ function Hairline({ figure, play = false }) {
       path = gsap.to(at, {
         turn: Math.PI * 2,
         duration: 7,
+        delay,
         ease: 'none',
         repeat: -1,
         onUpdate: () => tell('pointermove', 200 + 135 * Math.sin(at.turn), 160 + 55 * Math.sin(at.turn * 2)),
