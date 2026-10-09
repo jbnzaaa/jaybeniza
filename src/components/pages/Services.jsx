@@ -172,7 +172,9 @@ function Services({ detailed = false }) {
     const cards = scrollRevealCards(SERVICES.map(({ id }) => ({
       card: `#service-card-${id}`,
       text: `#animate-service-${id}`,
-    })), { start: CARD_AT });
+      // and it opens slowly: these are the page's largest cards, and at
+      // the usual second the wipe was over before it could be followed
+    })), { start: CARD_AT, wipe: 1.8 });
     return () => cards.kill();
   }, []);
 

@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 // a figure's reveal: every line of it drawn along its length, in seconds
 // each, the first to the last starting across SPREAD
-const DRAW = 1;
+const DRAW = 1.5;
 const SPREAD = .3;
 
 /**

@@ -327,7 +327,7 @@ export function scrollRevealSequence(stages, { trigger, start = REVEAL_AT, rever
   const tl = gsap.timeline({ paused: true });
   stages.forEach(({ targets, vars, position }) => {
     if (!vars.stagger) {
-      tl.to(targets, { ...vars, ease: EASE, duration: durationForVelocity(0) }, position);
+      tl.to(targets, { ...vars, ease: EASE, duration: vars.duration ?? durationForVelocity(0) }, position);
       return;
     }
     const count = gsap.utils.toArray(targets).length;
@@ -399,9 +399,10 @@ export function scrollRevealSequence(stages, { trigger, start = REVEAL_AT, rever
  * @param {number} [opts.rowFrom] - viewport width from which the cards are in a row
  * @param {boolean} [opts.scrub] - open the cards with the scroll instead of on a trigger
  * @param {string} [opts.start] - where a card opens, when not at the default start (stacked cards only)
+ * @param {number} [opts.wipe] - how long a card takes to open, in seconds, when not the usual time (stacked cards only)
  * @returns {{kill: () => void}}
  */
-export function scrollRevealCards(cards, { group, rowFrom = 1024, scrub = false, start } = {}) {
+export function scrollRevealCards(cards, { group, rowFrom = 1024, scrub = false, start, wipe } = {}) {
   const frame = { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' };
   const settle = { yPercent: 0, scale: 1, ease: 'power2.out' };
   const text = { y: 0, stagger: .02, ease: 'power1.in' };
@@ -448,10 +449,11 @@ export function scrollRevealCards(cards, { group, rowFrom = 1024, scrub = false,
         { targets: inners, vars: { ...settle, stagger: STEP }, position: 0 },
         ...cards.map((item, i) => ({ targets: item.text, vars: text, position: i * STEP + TEXT_DELAY })),
       ], { trigger: group, reverseStart: REVERSE_AT })]
+      // (a slower wipe keeps its text the same share of the way behind it)
       : cards.map((item) => scrollRevealSequence([
-        { targets: item.card, vars: frame },
-        { targets: inner(item.card), vars: settle, position: '<' },
-        { targets: item.text, vars: text, position: TEXT_DELAY },
+        { targets: item.card, vars: wipe ? { ...frame, duration: wipe } : frame },
+        { targets: inner(item.card), vars: wipe ? { ...settle, duration: wipe } : settle, position: '<' },
+        { targets: item.text, vars: text, position: wipe ? wipe * .35 : TEXT_DELAY },
       ], { trigger: item.card, start, reverseStart: REVERSE_AT }));
   }
 
