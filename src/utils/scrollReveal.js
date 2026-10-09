@@ -39,6 +39,18 @@ function totalForVelocity(natural, velocity) {
 // their own: what is on a page's first screen, and the footer, which is
 // too near the page's end to come that high)
 export const REVEAL_AT = 'top 85%';
+// where a reveal on the default start really starts. something that is
+// on a page's first screen when the page opens - an arrow button at the
+// foot of a hero, say - is under that line, and would stay hidden until
+// the page was scrolled; it starts as soon as it is on screen instead,
+// which at the top of the page is at once
+function startFor(el, start) {
+  if (start !== REVEAL_AT) return start;
+  const probe = ScrollTrigger.create({ trigger: el, start: 'top bottom' });
+  const first = probe.start <= 0;
+  probe.kill();
+  return first ? 'top bottom' : start;
+}
 // every reveal runs at an even pace, start to finish: an ease that
 // starts slowly reads as one more wait before anything shows
 const EASE = 'none';
@@ -173,7 +185,7 @@ export function scrollReveal(targets, vars, { trigger, start = REVEAL_AT } = {})
 
   const trig = ScrollTrigger.create({
     trigger: trigger || targets,
-    start,
+    start: startFor(trigger || targets, start),
     onEnter: (self) => {
       tween.duration(totalForVelocity(natural, self.getVelocity()));
       turn.play();
@@ -268,7 +280,7 @@ export function scrollRevealSequence(stages, { trigger, start = REVEAL_AT, rever
 
   const trig = ScrollTrigger.create({
     trigger: trigger || stages[0].targets,
-    start,
+    start: startFor(trigger || stages[0].targets, start),
     onEnter: (self) => turn.play(rate(self.getVelocity())),
     onEnterBack: (self) => turn.play(rate(self.getVelocity())),
     // scrolling back up past the start: text goes first, then the line -

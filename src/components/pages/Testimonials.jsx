@@ -92,9 +92,11 @@ function Testimonials() {
     // one never starts while the one before is still coming in
     const arrivals = cards.map((card) => {
       const arrival = gsap.timeline({ paused: true })
-        .fromTo(card, away, { ...home, ease: 'none', duration: .7 }, 0)
-        .to(card.querySelectorAll('.split-letter'), { y: 0, ease: 'none', duration: .4, stagger: { amount: .4 } }, .25)
-        .to(card.querySelector('.testimonial-avatar'), { ...frame, duration: .4 }, .4);
+        // (it crosses the screen, so it is given time and slows into its
+        // place - at an even pace it arrived in a rush and stopped dead)
+        .fromTo(card, away, { ...home, ease: 'power3.out', duration: 1.4 }, 0)
+        .to(card.querySelectorAll('.split-letter'), { y: 0, ease: 'none', duration: .45, stagger: { amount: .45 } }, .55)
+        .to(card.querySelector('.testimonial-avatar'), { ...frame, duration: .45 }, .7);
       return { arrival, turn: inTurn(arrival, section.querySelector('.testimonial-stack')), shown: false };
     });
     const show = (item, on) => {

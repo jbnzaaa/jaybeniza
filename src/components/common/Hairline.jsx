@@ -22,7 +22,8 @@ const SPREAD = .3;
  *
  * @param {object} figure - a figure module's default export
  * @param {boolean} [reveal] - draw the figure in, line by line, when it
- *   comes up the screen (the default); unset, it is simply there
+ *   comes up the screen, and take the lines up again when the page is
+ *   scrolled back above it (the default); unset, it is simply there
  * @param {boolean} [play] - move the figure as a pointer would, with none
  *   on it: for as long as this is set, a point travels over the drawing -
  *   from part to part, or a slow figure of eight - and the figure
@@ -63,35 +64,71 @@ function Hairline({ figure, play = false, reveal = true }) {
     // figure redraws its lines as it moves, and their lengths change)
     let drawing = null;
     let wait = null;
+    let back = null;
+    let shown = !reveal;
     if (reveal) gsap.set(stage, { autoAlpha: 0 });
-    const draw = () => {
-      const lines = [...svg.querySelectorAll('path')].filter((line) => !line.classList.contains('dash') && line.getAttribute('d'));
-      // the engine's strokes do not scale with the drawing, so their
-      // dashes are measured on screen, not in the drawing's own units: a
-      // line's length is scaled to the size the figure is shown at (and a
-      // little over). without this a line was drawn only part of the way
-      // and jumped to its full length when the dashes came off
+    // its lines, each with its length as a dash. the engine's strokes do
+    // not scale with the drawing, so their dashes are measured on screen,
+    // not in the drawing's own units: a line's length is scaled to the
+    // size the figure is shown at (and a little over). without this a
+    // line was drawn only part of the way and jumped to its full length
+    // when the dashes came off
+    const measure = () => {
       const scale = (svg.getBoundingClientRect().width / 400 || 1) * 1.05;
-      lines.forEach((line) => {
-        const length = line.getTotalLength() * scale;
-        gsap.set(line, { strokeDasharray: length, strokeDashoffset: length });
-      });
+      return [...svg.querySelectorAll('path')]
+        .filter((line) => !line.classList.contains('dash') && line.getAttribute('d'))
+        .map((line) => ({ line, length: line.getTotalLength() * scale }));
+    };
+    const draw = () => {
+      if (shown) return;
+      shown = true;
+      drawing?.kill();
+      const lines = measure();
+      lines.forEach(({ line, length }) => gsap.set(line, { strokeDasharray: length, strokeDashoffset: length }));
       gsap.set(stage, { autoAlpha: 1 });
       fxReady.current = performance.now() + (DRAW + SPREAD) * 1000;
-      drawing = gsap.to(lines, {
+      drawing = gsap.to(lines.map(({ line }) => line), {
         strokeDashoffset: 0,
         duration: DRAW,
         ease: 'none',
         stagger: { amount: SPREAD },
-        onComplete: () => gsap.set(lines, { clearProps: 'strokeDasharray,strokeDashoffset' }),
+        onComplete: () => gsap.set(lines.map(({ line }) => line), { clearProps: 'strokeDasharray,strokeDashoffset' }),
+      });
+    };
+    // and back: the lines are taken up again, last drawn first, and the
+    // figure is gone - as the card it is in closes
+    const undraw = () => {
+      if (!shown) return;
+      shown = false;
+      drawing?.kill();
+      const lines = measure();
+      lines.forEach(({ line, length }) => {
+        // (a line caught part way through being drawn goes back from there)
+        if (line.style.strokeDasharray) gsap.set(line, { strokeDasharray: length });
+        else gsap.set(line, { strokeDasharray: length, strokeDashoffset: 0 });
+      });
+      drawing = gsap.to(lines.map(({ line }) => line), {
+        strokeDashoffset: (i) => lines[i].length,
+        duration: DRAW * .7,
+        ease: 'none',
+        stagger: { amount: SPREAD, from: 'end' },
+        onComplete: () => gsap.set(stage, { autoAlpha: 0 }),
       });
     };
     if (!reveal) fxReady.current = 0;
-    else if (stage.getBoundingClientRect().top < window.innerHeight * .85) draw();
-    else wait = ScrollTrigger.create({ trigger: stage, start: REVEAL_AT, once: true, onEnter: draw });
+    else {
+      // drawn when it has come up the screen as far as anything does
+      // before it is revealed; undone where its card closes again on the
+      // way back up (scrollRevealCards, scrollReveal.js), and drawn again
+      // from there if the page is scrolled back down
+      wait = ScrollTrigger.create({ trigger: stage, start: REVEAL_AT, onEnter: draw });
+      back = ScrollTrigger.create({ trigger: stage.closest('.reveal-card') || stage, start: 'top 55%', onEnter: draw, onLeaveBack: undraw });
+      if (stage.getBoundingClientRect().top < window.innerHeight * .85) draw();
+    }
 
     return () => {
       wait?.kill();
+      back?.kill();
       drawing?.kill();
       motion.removeEventListener('change', keepMoving);
       handle.destroy();
