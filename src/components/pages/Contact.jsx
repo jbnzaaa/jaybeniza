@@ -55,7 +55,7 @@ function Contact({ page = false, projects = false }) {
 
   useEffect(() => {
     // headline, text and links rise letter by letter
-    const reveal = scrollReveal('#animate-contact', { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: '#contact', start: 'top 60%' });
+    const reveal = scrollReveal('#animate-contact', { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: '#contact' });
     return () => reveal.kill();
   },[]);
 

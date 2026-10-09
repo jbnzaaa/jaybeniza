@@ -13,7 +13,7 @@ import Button from '../common/Button'
 // page-to-page wipe
 import { TransitionLink } from '../common/PageTransition'
 // scroll reveal
-import { scrollReveal } from '../../utils/scrollReveal'
+import { scrollReveal, REVEAL_AT } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
@@ -92,9 +92,8 @@ const DESCRIPTION = 'Every project shows the problem, the decisions I made, and 
  * (lower left) and an arrow on to the projects (lower right),
  * then every project on a six column grid, newest year first - each in a
  * row of its own and in a different place across it. A project is its
- * card - the cover; its name and its label (year / category) come
- * up under the card, outside it, only while the pointer is on the card
- * (and are always there on a touch screen, which has no pointer).
+ * card - the cover - with its name and its label (year / category)
+ * under it, outside the card; they rise as the card scrolls into view.
  */
 function ProjectsPage() {
   const fxGrid = useRef();
@@ -115,31 +114,19 @@ function ProjectsPage() {
     // each project as it comes up the screen: the card wipes open from
     // its bottom edge, the picture easing down to size inside it
     const reveals = gsap.utils.toArray('.work-item', section).map((item) => gsap.timeline({
-      scrollTrigger: { trigger: item, start: 'top 88%', toggleActions: 'play none none reverse' },
+      scrollTrigger: { trigger: item, start: REVEAL_AT, toggleActions: 'play none none reverse' },
     })
       .to(item.querySelector('.work-cover'), { ...open, duration: .9 }, 0)
       .to(item.querySelector('.work-cover-image'), { ...settle, duration: 1.1 }, 0));
 
-    // a project's name and label rise out of their lines, letter by
-    // letter, while the pointer is on the project (or its link has the
-    // keyboard's focus), and drop back when it leaves. a touch screen has
-    // no pointer, so there they rise once the card has opened
-    const touch = window.matchMedia('(hover: none)').matches;
-    const items = gsap.utils.toArray('.work-item', section);
-    const texts = items.map((item) => gsap.to(item.querySelectorAll('.work-item-info .split-letter'),
-      { y: 0, duration: .45, stagger: { amount: .25 }, ease: 'power2.out', paused: true }));
-    const shows = texts.map((text) => () => text.play());
-    const hides = texts.map((text) => () => text.reverse());
-    const triggers = [];
-    items.forEach((item, i) => {
-      if (touch) {
-        triggers.push(ScrollTrigger.create({ trigger: item, start: 'top 70%', onEnter: shows[i], onLeaveBack: hides[i] }));
-        return;
-      }
-      item.addEventListener('mouseenter', shows[i]);
-      item.addEventListener('focusin', shows[i]);
-      item.addEventListener('mouseleave', hides[i]);
-      item.addEventListener('focusout', hides[i]);
+    // its name and label rise on a trigger of their own: when they have
+    // come on screen themselves - by which time the whole cover over them
+    // is showing. (on the card's trigger they rose with the cover's first
+    // edge, a screen before anyone had scrolled down to them)
+    const texts = gsap.utils.toArray('.work-item-info', section).map((info) => {
+      const rise = gsap.to(info.querySelectorAll('.split-letter'), { y: 0, duration: .5, stagger: { amount: .3 }, ease: 'power1.in', paused: true });
+      const trigger = ScrollTrigger.create({ trigger: info, start: 'top 92%', onEnter: () => rise.play(), onLeaveBack: () => rise.reverse() });
+      return { rise, trigger };
     });
 
     return () => {
@@ -149,14 +136,10 @@ function ProjectsPage() {
         reveal.revert();
       });
       covers.revert();
-      triggers.forEach((trigger) => trigger.kill());
-      items.forEach((item, i) => {
-        item.removeEventListener('mouseenter', shows[i]);
-        item.removeEventListener('focusin', shows[i]);
-        item.removeEventListener('mouseleave', hides[i]);
-        item.removeEventListener('focusout', hides[i]);
+      texts.forEach(({ rise, trigger }) => {
+        trigger.kill();
+        rise.revert();
       });
-      texts.forEach((text) => text.revert());
     };
   }, []);
 
@@ -230,7 +213,8 @@ function ProjectsPage() {
                   )}
                 </div>
                 {/* under the card, outside it: name and label - they rise
-                  on hover (the effect above) */}
+                  once they are on screen themselves, the whole cover
+                  showing over them (the effect above) */}
                 <div className='work-item-info pt-4'>
                   <h2 className='flex flex-wrap font-flexible font-medium leading-none text-heading'>
                     <SplitText text={title} id={`animate-work-${key}`} />

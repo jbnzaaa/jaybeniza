@@ -59,7 +59,7 @@ function Button({ label, to, href, external = false, download, small = false, ic
     const sequence = scrollRevealSequence([
       { targets: button, vars: frame },
       { targets: parts, vars: rise, position: '<.2' },
-    ], { trigger: button, start: 'top 95%' });
+    ], { trigger: button });
     return () => sequence.kill();
   }, [reveal]);
 

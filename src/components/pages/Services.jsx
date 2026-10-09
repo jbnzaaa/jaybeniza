@@ -1,58 +1,161 @@
 //
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 // scroll reveal
 import { scrollRevealCards } from '../../utils/scrollReveal'
 // section label
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
-// the drawing beside each service, and the three figures drawn for them
+// the drawing beside each service, and the figures drawn for them - one
+// for each thing a service covers
 import Hairline from '../common/Hairline'
-import layers from '../../utils/hairline/layers'
-import tray from '../../utils/hairline/tray'
-import code from '../../utils/hairline/code'
+import route from '../../utils/hairline/route'
+import wire from '../../utils/hairline/wire'
+import finish from '../../utils/hairline/finish'
+import proto from '../../utils/hairline/proto'
+import tasks from '../../utils/hairline/tasks'
+import rack from '../../utils/hairline/rack'
+import ramp from '../../utils/hairline/ramp'
+import reflow from '../../utils/hairline/reflow'
+import pages from '../../utils/hairline/pages'
+import dock from '../../utils/hairline/dock'
+import nest from '../../utils/hairline/nest'
+import pegs from '../../utils/hairline/pegs'
+import markup from '../../utils/hairline/markup'
+import switches from '../../utils/hairline/switches'
+import ease from '../../utils/hairline/ease'
 
-// what I do, in three parts. `detail` and `includes` are the longer
-// account of a service - how it goes and what it covers. `figure` is the service's drawing: an
-// isometric line figure that answers the pointer -
-// a phone taken apart into its layers, a tray of interface parts, a
-// browser window of code lines
+// what I do, in three parts: a service's name, what I do in it, and
+// `includes` - what it covers. Each thing it covers has a drawing of its
+// own, an isometric line figure that answers the pointer: a flow as tiles
+// on a board, a screen in bare blocks, a finished phone, two linked
+// screens, a test script; a board of components, a ramp of chips over
+// type, a page at every width, a booklet, a design meeting its build;
+// components nested in one another, a board of utility pegs, a page in
+// three plates, a row of switches, a puck on an ease curve
 const SERVICES = [
   {
     id: 'product-design',
-    title: 'Product Design',
-    text: 'I take a product from user flow to tested prototype to final screens. Real users try it before a developer writes a line.',
-    detail: 'I start with who the product is for and what they need to get done, then map the flow, wireframe, and prototype it for web or mobile before the final screens are drawn.',
-    includes: ['User flows', 'Wireframes', 'High-fidelity UI', 'Interactive prototypes', 'Usability testing'],
-    figure: layers,
+    title: 'UI/UX Design',
+    text: 'I turn user needs into clear, intuitive digital experiences. From mapping user flows to building interactive prototypes, I validate ideas and refine the experience before moving to final UI.',
+    includes: [
+      { label: 'User flows', figure: route },
+      { label: 'Wireframing', figure: wire },
+      { label: 'High-fidelity UI', figure: finish },
+      { label: 'Interactive prototyping', figure: proto },
+      { label: 'Usability testing', figure: tasks },
+    ],
   },
   {
     id: 'design-systems',
     title: 'Design Systems',
-    text: 'I build the component library your team designs and ships from. One source, consistent screens, no guessing at handoff.',
-    detail: 'That covers the rules around the components too: colour, type, spacing, and states, documented in Figma. Every new screen starts from the same parts, and developers build exactly what was designed.',
-    includes: ['Component libraries', 'Colour and type styles', 'Responsive layouts', 'Documentation', 'Developer handoff'],
-    figure: tray,
+    text: 'I build scalable design systems that keep interfaces consistent and make collaboration easier. From reusable components to clear documentation, I create a shared foundation that helps designers and developers work more efficiently.',
+    includes: [
+      { label: 'Component libraries', figure: rack },
+      { label: 'Color and typography styles', figure: ramp },
+      { label: 'Responsive layouts', figure: reflow },
+      { label: 'Design documentation', figure: pages },
+      { label: 'Developer handoff', figure: dock },
+    ],
   },
   {
     id: 'development',
-    title: 'Development',
-    text: 'I write production front-end in React, Tailwind, and JavaScript. You get a designer whose designs are buildable, because I build them.',
-    detail: 'I turn designs into responsive, production-ready interfaces, with the motion and the small details kept intact, so what ships matches what was designed.',
-    includes: ['React', 'Tailwind CSS', 'HTML5, CSS3, SASS', 'JavaScript', 'GSAP animation'],
-    figure: code,
+    title: 'Front-End Development',
+    text: 'I bring designs to life with responsive, production-ready code. Working with React, Tailwind CSS, and JavaScript, I bridge the gap between design and development while preserving the details that make each interface feel polished.',
+    includes: [
+      { label: 'React', figure: nest },
+      { label: 'Tailwind CSS', figure: pegs },
+      { label: 'HTML5, CSS3, and Sass', figure: markup },
+      { label: 'JavaScript', figure: switches },
+      { label: 'GSAP animations', figure: ease },
+    ],
   },
 ];
 
 /**
- * What I do, on the dark surface: one wide card per service - its name and
- * a short description on the left half, a line figure of the work on the
- * right, which moves under the pointer. Stacked (figure under text) below
- * laptop width. The figure sets the card's height.
+ * One service: its name and a short description on the left half, a line
+ * figure on the right, which moves under the pointer. The figure is the
+ * drawing of one of the things the service covers - the first, until
+ * another row of the list is pointed at, focused or pressed, which shows
+ * that row's drawing in its place and plays it for as long as the row is
+ * pointed at.
+ */
+function ServiceCard({ id, title, text, includes, detailed }) {
+  // which of the things it covers is drawn
+  const [shown, setShown] = useState(0);
+  // whether that drawing is being played: while its row is pointed at or
+  // focused, it moves by itself, as it would under a pointer
+  const [playing, setPlaying] = useState(false);
+  const { figure } = includes[shown];
+  const show = (i) => {
+    setShown(i);
+    setPlaying(true);
+  };
+
+  return (
+    <li className='reveal-card overflow-hidden bg-black m-0' id={`service-card-${id}`}>
+      <div className='reveal-card-inner grid
+        mobile:grid-cols-1
+        tablet:grid-cols-1
+        laptop:grid-cols-2
+        laptop-lg:grid-cols-2
+        desktop:grid-cols-2'>
+        {/* name + description */}
+        <div className='flex flex-col justify-between
+          mobile:p-6 mobile:gap-y-8
+          tablet:p-6 tablet:gap-y-10
+          laptop:p-6 laptop:gap-y-16
+          laptop-lg:p-6 laptop-lg:gap-y-20
+          desktop:p-6 desktop:gap-y-24'>
+          <h3 className='flex flex-wrap font-flexible font-medium leading-none text-heading'>
+            <SplitText text={title} id={`animate-service-${id}`} />
+          </h3>
+          <div className='flex flex-col gap-y-4'>
+            <p className='flex flex-wrap text-caption'>
+              <SplitText text={text} id={`animate-service-${id}`} by='word' />
+            </p>
+            {detailed && (
+              /* what it covers - ruled rows, each a button that shows its
+                drawing; the row whose drawing is up is the one at full
+                strength (.service-item, App.scss) */
+              <ul className='flex flex-col mt-4'>
+                {includes.map(({ label }, i) => (
+                  <li className={`service-item border-t border-white/20 m-0 ${i === shown ? 'service-item-on' : ''}`} key={label}>
+                    <button className='flex flex-wrap w-full py-3 text-left text-caption' type='button' aria-pressed={i === shown}
+                      onMouseEnter={() => show(i)} onFocus={() => show(i)} onClick={() => show(i)}
+                      onMouseLeave={() => setPlaying(false)} onBlur={() => setPlaying(false)}>
+                      <SplitText text={label} id={`animate-service-${id}`} by='word' />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+        {/* the figure - on the dark base, in the site's greys
+          (.service-art, App.scss). keyed, so each drawing fades in as it
+          takes the last one's place */}
+        <div className='service-art bg-black flex items-center justify-center
+          mobile:py-4
+          tablet:py-6
+          laptop:py-8
+          laptop-lg:py-10
+          desktop:py-12'>
+          <Hairline figure={figure} play={playing} key={figure.name} />
+        </div>
+      </div>
+    </li>
+  )
+}
+
+/**
+ * What I do, on the dark surface: one wide card per service (ServiceCard).
+ * Stacked (figure under text) below laptop width. The figure sets the
+ * card's height.
  *
- * @param {boolean} [detailed] - each service in full: a second paragraph
- *   on how it goes, and a list of what it covers (the landing page and
- *   the What I Do page both ask for it)
+ * @param {boolean} [detailed] - each service in full: with the list of
+ *   what it covers (the landing page and the What I Do page both ask
+ *   for it)
  */
 function Services({ detailed = false }) {
   useEffect(() => {
@@ -80,57 +183,8 @@ function Services({ detailed = false }) {
           laptop:mt-8
           laptop-lg:mt-10
           desktop:mt-10'>
-          {SERVICES.map(({ id, title, text, detail, includes, figure }) => (
-            <li className='reveal-card overflow-hidden bg-black m-0' id={`service-card-${id}`} key={id}>
-              <div className='reveal-card-inner grid
-                mobile:grid-cols-1
-                tablet:grid-cols-1
-                laptop:grid-cols-2
-                laptop-lg:grid-cols-2
-                desktop:grid-cols-2'>
-                {/* name + description */}
-                <div className='flex flex-col justify-between
-                  mobile:p-6 mobile:gap-y-8
-                  tablet:p-6 tablet:gap-y-10
-                  laptop:p-6 laptop:gap-y-16
-                  laptop-lg:p-6 laptop-lg:gap-y-20
-                  desktop:p-6 desktop:gap-y-24'>
-                  <h3 className='flex flex-wrap font-flexible font-medium leading-none text-heading'>
-                    <SplitText text={title} id={`animate-service-${id}`} />
-                  </h3>
-                  <div className='flex flex-col gap-y-4'>
-                    <p className='flex flex-wrap text-caption'>
-                      <SplitText text={text} id={`animate-service-${id}`} by='word' />
-                    </p>
-                    {detailed && (
-                      <>
-                        <p className='flex flex-wrap text-caption text-muted'>
-                          <SplitText text={detail} id={`animate-service-${id}`} by='word' />
-                        </p>
-                        {/* what it covers - ruled rows */}
-                        <ul className='flex flex-col mt-4'>
-                          {includes.map((item) => (
-                            <li className='flex flex-wrap border-t border-white/20 py-3 m-0 text-caption' key={item}>
-                              <SplitText text={item} id={`animate-service-${id}`} by='word' />
-                            </li>
-                          ))}
-                        </ul>
-                      </>
-                    )}
-                  </div>
-                </div>
-                {/* the figure - on the dark base, in the site's greys
-                  (.service-art, App.scss) */}
-                <div className='service-art bg-black flex items-center justify-center
-                  mobile:py-4
-                  tablet:py-6
-                  laptop:py-8
-                  laptop-lg:py-10
-                  desktop:py-12'>
-                  <Hairline figure={figure} />
-                </div>
-              </div>
-            </li>
+          {SERVICES.map((service) => (
+            <ServiceCard {...service} detailed={detailed} key={service.id} />
           ))}
         </ul>
       </section>

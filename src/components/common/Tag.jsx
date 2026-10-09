@@ -23,7 +23,7 @@ function Tag({ label, id, as: Element = 'p' }) {
     const reveal = scrollRevealSequence([
       { targets: tag, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },
       { targets: tag.querySelectorAll('.split-letter'), vars: { y: 0, stagger: .02, ease: 'power1.in' }, position: '<.2' },
-    ], { trigger: tag, start: 'top 92%' });
+    ], { trigger: tag });
     return () => reveal.kill();
   }, []);
 

@@ -32,6 +32,12 @@ function totalForVelocity(natural, velocity) {
   return base * (1 - (v / VELOCITY_RANGE) * (1 - FASTEST));
 }
 
+// when a reveal starts, everywhere on the site: once the thing has come
+// 30% of the way up the screen - its top 70% of the way down. (the
+// exceptions set a start of their own: what is on a page's first screen,
+// and the footer, which is too near the page's end to come that high)
+export const REVEAL_AT = 'top 70%';
+
 /**
  * A scroll-driven reveal whose playback speed matches how fast the visitor
  * is scrolling: a quick flick plays the reveal fast, a slow scroll plays it
@@ -45,10 +51,10 @@ function totalForVelocity(natural, velocity) {
  * @param {object} vars - gsap tween vars describing the revealed state
  * @param {object} [opts]
  * @param {string|Element} [opts.trigger] - ScrollTrigger trigger (defaults to `targets`)
- * @param {string} [opts.start] - ScrollTrigger start position (defaults to 'top 85%')
+ * @param {string} [opts.start] - ScrollTrigger start position (defaults to REVEAL_AT)
  * @returns {{kill: () => void}}
  */
-export function scrollReveal(targets, vars, { trigger, start = 'top 85%' } = {}) {
+export function scrollReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
   const tween = gsap.to(targets, { ...vars, paused: true });
   // the reveal's own length at its authored stagger - grows with the text
   const natural = tween.duration();
@@ -108,12 +114,12 @@ export function scrollReveal(targets, vars, { trigger, start = 'top 85%' } = {})
  *   stage before it instead of after)
  * @param {object} [opts]
  * @param {string|Element} [opts.trigger] - ScrollTrigger trigger (defaults to the first stage's targets)
- * @param {string} [opts.start] - ScrollTrigger start position (defaults to 'top 85%')
+ * @param {string} [opts.start] - ScrollTrigger start position (defaults to REVEAL_AT)
  * @param {string} [opts.reverseStart] - where scrolling back up reverses the reveal, when that
  *   should happen higher up the screen than `start` (defaults to `start`)
  * @returns {{kill: () => void}}
  */
-export function scrollRevealSequence(stages, { trigger, start = 'top 85%', reverseStart } = {}) {
+export function scrollRevealSequence(stages, { trigger, start = REVEAL_AT, reverseStart } = {}) {
   // a stage with a stagger (text) is paced like scrollReveal: its whole
   // length scales with how many letters it covers, so a long row reads as
   // a ripple instead of landing at once and a short one is not rushed. a
@@ -235,8 +241,8 @@ export function scrollRevealCards(cards, { group, rowFrom = 1024, scrub = false 
   let reveals;
   if (scrub) {
     reveals = inRow
-      ? [scrubbed(group, 'top 85%', 'top 15%', cards)]
-      : cards.map((item) => scrubbed(item.card, 'top 90%', 'top 45%', [item]));
+      ? [scrubbed(group, REVEAL_AT, 'top 15%', cards)]
+      : cards.map((item) => scrubbed(item.card, REVEAL_AT, 'top 30%', [item]));
   } else {
     reveals = inRow
       ? [scrollRevealSequence([

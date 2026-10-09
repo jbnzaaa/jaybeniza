@@ -276,7 +276,7 @@ function ProjectPage({ project }) {
     // every section's text - the landing page's per-letter reveal, each
     // section on its own trigger
     const sections = gsap.utils.toArray('[id^="case-"]').map((section) => scrollReveal(
-      `#animate-${section.id}`, { y: 0, stagger: .012, ease: 'power1.in' }, { trigger: section, start: 'top 80%' }));
+      `#animate-${section.id}`, { y: 0, stagger: .012, ease: 'power1.in' }, { trigger: section }));
 
     // each screenshot reveals as it scrolls into view: the frame wipes up
     // from its bottom edge while the image inside eases down to its real size

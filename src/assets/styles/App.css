@@ -271,6 +271,7 @@
 
 * body .testimonial-avatar {
   clip-path: inset(100% 0% 0% 0%);
+  filter: grayscale(1);
 }
 
 * body .service-art {
@@ -283,6 +284,32 @@
 
 * body .service-art [data-hairline] {
   width: min(92%, 38rem);
+  animation: service-figure-in 0.45s ease both;
+}
+
+@keyframes service-figure-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+* body .service-item {
+  opacity: 0.45;
+  transition: opacity 0.3s ease;
+}
+
+* body .service-item-on {
+  opacity: 1;
+}
+
+* body .service-item button {
+  background: none;
+  border: 0;
+  padding-left: 0;
+  padding-right: 0;
+  cursor: pointer;
 }
 
 * body .nav-blend {

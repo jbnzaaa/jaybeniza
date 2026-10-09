@@ -7,7 +7,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 // page-to-page wipe
 import { TransitionLink } from '../common/PageTransition'
 // scroll reveal
-import { scrollReveal } from '../../utils/scrollReveal'
+import { scrollReveal, REVEAL_AT } from '../../utils/scrollReveal'
 // the site's button and section label
 import Button from '../common/Button'
 import Tag from '../common/Tag'
@@ -37,7 +37,7 @@ function Project() {
     // each name and its details rise letter by letter as that row scrolls
     // into view; the description after the list does the same
     const rows = PROJECT_CARDS.map(({ id }) => scrollReveal(`#animate-project-${id}`,
-      { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: `#project-row-${id}`, start: 'top 88%' }));
+      { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: `#project-row-${id}` }));
     const description = scrollReveal('#animate-project', { y: 0, stagger: .02, ease: 'power1.in' });
 
     // the preview is placed across the row by its centre (left, App.scss)
@@ -49,7 +49,7 @@ function Project() {
     // page's card reveal
     const pictures = gsap.set(gsap.utils.toArray('.project-cover-image', fxList.current), { yPercent: 14, scale: 1.15 });
     const covers = gsap.utils.toArray('.project-cover', fxList.current).map((cover) => gsap.timeline({
-      scrollTrigger: { trigger: cover, start: 'top 88%', toggleActions: 'play none none reverse' },
+      scrollTrigger: { trigger: cover, start: REVEAL_AT, toggleActions: 'play none none reverse' },
     })
       .to(cover, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .9 }, 0)
       .to(cover.firstElementChild, { yPercent: 0, scale: 1, ease: 'power2.out', duration: 1.1 }, 0));

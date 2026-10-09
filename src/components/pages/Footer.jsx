@@ -10,8 +10,8 @@ import SplitText from '../common/SplitText'
 function Footer() {
 
   useEffect(() => {
-    // 'top bottom' (most lenient) instead of the shared 85% default: the
-    // footer is the last, short element on the page, so 'top 85%' can
+    // 'top bottom' (most lenient) instead of the shared default: the
+    // footer is the last, short element on the page, so the default can
     // require scrolling past the page's actual max scroll extent to be
     // satisfied - letters stuck at their hidden offset, onEnter never firing
     const reveal = scrollReveal('#animate-footer', {

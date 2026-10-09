@@ -20,15 +20,16 @@ import SplitText from '../common/SplitText'
 // the longer introduction. everything in it is drawn from the work
 // experience entries below it - nothing here that they do not back up
 const INTRO = [
-  "I'm Jay Beniza, a UI/UX designer from the Philippines with 3+ years of experience. I started in web design, then moved into UI/UX.",
-  "I design web and mobile apps, from research and user flows to interfaces and design systems. I also write some code, and build most of my projects with modern technologies.",
+  "I'm Jay Beniza, a UI/UX designer from the Philippines with 3+ years of experience designing digital products and web applications. I started in web design and grew into UI/UX, driven by my interest in creating interfaces that are not only visually appealing but also intuitive and easy to use.",
+  "Today, I combine design thinking with front-end development to turn ideas into practical, well-crafted digital experiences. I'm passionate about solving design challenges, refining the details, and creating products that work well for both the people using them and the teams building them.",
 ];
 
-// the introduction opens on my name: the words before it, the name (which
-// shows my picture under the pointer), and everything after
+// the introduction's first paragraph opens on my name: the words before
+// it, the name (which shows my picture under the pointer), and the rest
+// of that paragraph. the paragraphs after it are set whole
 const NAME = 'Jay Beniza';
 // (the comma after the name is set on its own, outside the underline)
-const [BEFORE, AFTER] = INTRO.join(' ').split(NAME + ',').map((part) => part.trim());
+const [BEFORE, AFTER] = INTRO[0].split(NAME + ',').map((part) => part.trim());
 // my picture (public/images)
 const PORTRAIT = `${process.env.PUBLIC_URL}/images/profile.JPG`;
 
@@ -127,7 +128,7 @@ function AboutPage() {
     const intro = ['#animate-about-page'].map((target) => scrollReveal(
       target, { y: 0, duration: .6, stagger: { amount: 1.6 }, ease: 'power2.out' }, { trigger: '#about-hero', start: 'top bottom' }));
     const resume = scrollReveal('#animate-about-page-resume', { y: 0, stagger: .02, ease: 'power1.in' },
-      { trigger: '#resume', start: 'top 60%' });
+      { trigger: '#resume' });
 
     return () => {
       intro.forEach((reveal) => reveal.kill());
@@ -137,13 +138,16 @@ function AboutPage() {
 
   return (
     <>
-      {/* first screen. top padding clears the nav bar */}
+      {/* first screen. top padding clears the nav bar, and the bottom
+        padding matches it: when the introduction is taller than the
+        screen the section grows, and the text keeps the same room under
+        it as over it */}
       <section id='about-hero' className='theme-light relative flex flex-col justify-center min-h-screen-safe overflow-hidden
-        mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-16
-        tablet:px-[1rem] tablet:pt-20 tablet:pb-8 tablet:gap-y-16
-        laptop:px-[2rem] laptop:pt-24 laptop:pb-10 laptop:gap-y-16
-        laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-16
-        desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'
+        mobile:px-[1rem] mobile:py-20 mobile:gap-y-16
+        tablet:px-[1rem] tablet:py-20 tablet:gap-y-16
+        laptop:px-[2rem] laptop:py-24 laptop:gap-y-16
+        laptop-lg:px-[3rem] laptop-lg:py-24 laptop-lg:gap-y-16
+        desktop:px-[3rem] desktop:py-28 desktop:gap-y-16'
         ref={fxHero}>
         {/* my picture - opened by my name in the introduction (the effect
           above; start state: .about-portrait, App.scss) */}
@@ -158,21 +162,40 @@ function AboutPage() {
           laptop-lg:gap-y-10
           desktop:gap-y-10'>
           <Tag label='Meet the designer' id='animate-about-page-title' as='h1' />
-          {/* at the lead step of the type scale (size: .about-paragraph, App.scss) */}
-          <p className='about-paragraph flex flex-wrap justify-center
-            mobile:w-full mobile:leading-snug
-            tablet:w-[94%] tablet:leading-tight
-            laptop:w-[90%] laptop:leading-tight
-            laptop-lg:w-[88%] laptop-lg:leading-tight
-            desktop:w-[84%] desktop:leading-tight'>
-            <SplitText text={BEFORE} id='animate-about-page' />
-            {/* my name - point at it (or press it) to see my picture */}
-            <span className='about-name' role='button' tabIndex={0} aria-label='Jay Beniza - show my picture'>
-              <SplitText text={NAME} id='animate-about-page' />
-            </span>
-            <SplitText text=',' id='animate-about-page' />
-            <SplitText text={AFTER} id='animate-about-page' />
-          </p>
+          {/* the introduction, a paragraph to each of its parts, at the
+            lead step of the type scale (size: .about-paragraph, App.scss) */}
+          <div className='flex flex-col
+            mobile:w-full mobile:gap-y-6
+            tablet:w-[94%] tablet:gap-y-8
+            laptop:w-[90%] laptop:gap-y-8
+            laptop-lg:w-[88%] laptop-lg:gap-y-10
+            desktop:w-[84%] desktop:gap-y-10'>
+            <p className='about-paragraph flex flex-wrap justify-center
+              mobile:leading-snug
+              tablet:leading-tight
+              laptop:leading-tight
+              laptop-lg:leading-tight
+              desktop:leading-tight'>
+              <SplitText text={BEFORE} id='animate-about-page' />
+              {/* my name - point at it (or press it) to see my picture */}
+              <span className='about-name' role='button' tabIndex={0} aria-label='Jay Beniza - show my picture'>
+                <SplitText text={NAME} id='animate-about-page' />
+              </span>
+              <SplitText text=',' id='animate-about-page' />
+              <SplitText text={AFTER} id='animate-about-page' />
+            </p>
+            {INTRO.slice(1).map((paragraph) => (
+              <p className='about-paragraph flex flex-wrap justify-center
+                mobile:leading-snug
+                tablet:leading-tight
+                laptop:leading-tight
+                laptop-lg:leading-tight
+                desktop:leading-tight'
+                key={paragraph}>
+                <SplitText text={paragraph} id='animate-about-page' />
+              </p>
+            ))}
+          </div>
         </div>
       </section>
       {/* how I work */}

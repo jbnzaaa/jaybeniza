@@ -8,19 +8,19 @@ import Button from '../common/Button'
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// when a reveal starts
+import { REVEAL_AT } from '../../utils/scrollReveal'
 gsap.registerPlugin(ScrollTrigger)
 
-const PARAGRAPH = 'I design and build digital products with a focus on clarity, function, and user experience. Based in the Philippines, I bring 3+ years of UI/UX design and front-end development experience to every project, from user flows and design systems to responsive, production-ready interfaces.';
+const PARAGRAPH = 'I\'m a UI/UX designer with 3+ years of experience designing intuitive digital products, backed by a background in front-end development. From mapping user flows to building consistent design systems and responsive interfaces, I focus on creating meaningful experiences that balance usability, visual clarity, and functionality.';
 
-// how far up the screen the section's top has to come before its text
-// starts to rise: half way - the section is about a screen tall, so that
-// is when half of it is showing
-const START = 'top 50%';
+// when its text starts to rise: the site's one rule (scrollReveal.js) -
+// with 30% of the section on screen
 
 /**
  * The designer, on the light theme: one large paragraph and the button to
  * the full About page (AboutPage.jsx). The section scrolls with the page -
- * it is not pinned. When half of it is showing (its top half way up the screen)
+ * it is not pinned. When 30% of it is showing
  * the paragraph rises out of its lines, letter by letter in reading order
  * - the site's text reveal - and drops back if the page is scrolled back
  * above that point. The button reveals itself as it comes into view.
@@ -36,7 +36,7 @@ function About() {
     });
     const trigger = ScrollTrigger.create({
       trigger: fxSection.current,
-      start: START,
+      start: REVEAL_AT,
       onEnter: () => reveal.play(),
       onLeaveBack: () => reveal.reverse(),
     });
