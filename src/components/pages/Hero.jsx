@@ -9,11 +9,11 @@ import Button from '../common/Button'
 // per-letter text split
 import SplitText from '../common/SplitText'
 
-const HIGHLIGHT_TEXT = 'UI/UX designer with 3+ years shipping web and mobile apps, from first user flow to live front-end. Open to full-time roles.';
+const HIGHLIGHT_TEXT = 'I am a UI/UX designer with 3+ years of experience creating clear, usable interfaces for web and mobile. Currently open to full-time UI/UX roles.';
 
 const PROFESSION_LINES = [
-  'Designing the right experience.',
-  'Building the right interface.',
+  'Designing user-centered',
+  'digital products.',
 ];
 
 /**

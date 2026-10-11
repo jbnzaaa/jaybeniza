@@ -28,12 +28,12 @@ const HEADLINE_LINES = [
 ];
 
 // what the page holds, under the headline - one line, as on the other pages
-const DESCRIPTION = 'Three years of turning messy problems into interfaces people do not have to think about. Scroll on to meet the designer behind them.';
+const DESCRIPTION = '3+ years of turning messy problems into interfaces people do not have to think about. Scroll on to meet the designer behind them.';
 
 // the introduction, in the section under the first screen
 const INTRO = [
-  "I'm Jay Beniza, a UI/UX designer based in the Philippines with over three years of experience designing web and mobile products. I began in web design and moved into UI/UX to focus on interfaces that are clear, usable, and consistent.",
-  'I pair user-centered design with front-end development, so my work is grounded in what can be built. I care about sound decisions, precise details, and products that serve both the people who use them and the teams who build them.',
+  "I'm Jay Beniza, a UI/UX designer based in the Philippines with 3+ years of experience designing web and mobile products. I began in web design and moved into UI/UX to focus on interfaces that are clear, usable, and consistent.",
+  'I work from research to final interface, and I stay close to developers through handoff so the design survives the build. I care about sound decisions, precise details, and products that serve both the people who use them and the teams who build them.',
 ];
 
 // the introduction's first paragraph opens on my name: the words before

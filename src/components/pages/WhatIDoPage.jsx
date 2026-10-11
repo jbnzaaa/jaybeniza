@@ -17,11 +17,11 @@ import SplitText from '../common/SplitText'
 gsap.registerPlugin(ScrollSmoother)
 
 const HEADLINE_LINES = [
-  'I design it.',
-  'Then I build it.',
+  'Design that starts',
+  'with the user.',
 ];
 
-const DESCRIPTION = 'What I can own on your team from day one: product design, the design system, and the front-end that ships it.';
+const DESCRIPTION = 'Day to day I work across UI/UX design, design systems, and the front-end knowledge that keeps both practical.';
 
 /**
  * The What I Do page (route /what-i-do), in the landing page's layout: a

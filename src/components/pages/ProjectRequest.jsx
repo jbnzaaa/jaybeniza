@@ -11,7 +11,9 @@ import SplitText from '../common/SplitText'
 const EMAIL = 'jaysonbeniza@gmail.com';
 
 const HEADLINE = "Let's Work Together";
-const INTRO = 'Tell me what you are building. These are the things I need to know to scope, design, and build a project.';
+// for the visitor who is hiring, not commissioning: the form is not for them
+const HIRING = 'Hiring for a UI/UX role? Email me at jaysonbeniza@gmail.com, or download my CV from the About page.';
+const INTRO = 'Have a project instead? Tell me what you are building. These are the things I need to know to scope and design it.';
 
 // what the project is
 const TYPES = ['Website', 'Web application', 'Mobile app', 'Design system', 'UX audit or redesign', 'Something else'];
@@ -188,6 +190,9 @@ function ProjectRequest() {
           laptop:col-span-4 laptop:col-start-5
           laptop-lg:col-span-4 laptop-lg:col-start-5
           desktop:col-span-4 desktop:col-start-5'>
+          <p className='flex flex-wrap text-caption mb-4'>
+            <SplitText text={HIRING} id='animate-request' by='word' />
+          </p>
           <p className='flex flex-wrap text-caption mb-8'>
             <SplitText text={INTRO} id='animate-request' by='word' />
           </p>
@@ -198,7 +203,7 @@ function ProjectRequest() {
             <Field label='Email' required>
               <input type='email' name='email' autoComplete='email' required value={form.email} onChange={set('email')} />
             </Field>
-            <Field label='Company or organisation'>
+            <Field label='Company or organization'>
               <input type='text' name='company' autoComplete='organization' value={form.company} onChange={set('company')} />
             </Field>
             <Field label='Project type' required group='request-type'>

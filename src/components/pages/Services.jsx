@@ -38,19 +38,19 @@ const SERVICES = [
   {
     id: 'product-design',
     title: 'UI/UX Design',
-    text: 'I turn user needs into clear, intuitive digital experiences. From mapping user flows to building interactive prototypes, I validate ideas and refine the experience before moving to final UI.',
+    text: 'I design web and mobile products from research to final interface. I map the user flows, wireframe and prototype the key screens, and test them with users, so problems are found before the UI is finalized and development begins.',
     includes: [
       { label: 'User flows', figure: route },
-      { label: 'Wireframing', figure: wire },
+      { label: 'Wireframes', figure: wire },
       { label: 'High-fidelity UI', figure: finish },
-      { label: 'Interactive prototyping', figure: proto },
-      { label: 'Usability testing', figure: tasks },
+      { label: 'Interactive prototypes', figure: proto },
+      { label: 'Usability tests', figure: tasks },
     ],
   },
   {
     id: 'design-systems',
     title: 'Design Systems',
-    text: 'I build scalable design systems that keep interfaces consistent and make collaboration easier. From reusable components to clear documentation, I create a shared foundation that helps designers and developers work more efficiently.',
+    text: 'I build and maintain design systems that teams actually use. That means component libraries with clear states and rules, documented color and type styles, and handoff files developers can build from without guessing.',
     includes: [
       { label: 'Component libraries', figure: rack },
       { label: 'Color and typography styles', figure: ramp },
@@ -62,7 +62,7 @@ const SERVICES = [
   {
     id: 'development',
     title: 'Front-End Development',
-    text: 'I bring designs to life with responsive, production-ready code. Working with React, Tailwind CSS, and JavaScript, I bridge the gap between design and development while preserving the details that make each interface feel polished.',
+    text: 'I can build what I design. Working in React, Tailwind CSS, and JavaScript keeps my designs realistic, speeds up handoff, and lets me prototype an interaction in the browser when a static mockup is not enough.',
     includes: [
       { label: 'React', figure: atom },
       { label: 'Tailwind CSS', figure: waves },

@@ -19,8 +19,11 @@ import { PROJECTS } from './projects'
 import Contact from '../Contact'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
-// the order the projects run in, for "next project"
-const ORDER = ['portfoliov3', 'tingi', 'stocknear', 'dailydiscount', 'regain', 'jaysonbeniza', 'jbnza'];
+// the order the projects run in, for "next project": the work page's own
+// list, in its order (ProjectsPage.jsx) - newest first, and back to the
+// first after the last. a project that is not on that list (DailyDiscount)
+// is never offered as the next one, and leads on to the first
+const ORDER = ['portfoliov3', 'tingi', 'stocknear', 'jaysonbeniza', 'jbnza', 'regain'];
 
 // grid placement of a screenshot by its `start` (see projects.js)
 const SHOT_LAYOUT = {
@@ -483,7 +486,7 @@ function ProjectPage({ project }) {
             laptop:grid-cols-3
             laptop-lg:grid-cols-3
             desktop:grid-cols-3'>
-            {['Colour', 'Typography', 'Components'].map((part) => (
+            {['Color', 'Typography', 'Components'].map((part) => (
               <Panel label={part} className='aspect-[4/3]' key={part} />
             ))}
           </div>

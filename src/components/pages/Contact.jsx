@@ -13,12 +13,12 @@ import { TransitionLink } from '../common/PageTransition'
 
 const EMAIL = 'mailto:jaysonbeniza@gmail.com';
 
-const QUESTION = 'Have a product that needs better design?';
-const SUPPORT = "Let's create something useful, and make it feel great to use.";
+const QUESTION = 'Hiring a UI/UX designer, or have a product that needs one?';
+const SUPPORT = 'Send me a message.';
 
 // the ways through
 const LINKS = [
-  { label: 'Linked In', href: 'https://www.linkedin.com/in/jaybeniza/' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/jaybeniza/' },
   { label: 'Behance', href: 'https://www.behance.net/jbnza' },
   { label: 'Email', href: EMAIL },
   { label: 'Download CV', href: Resume, download: 'Jay-Beniza-CV.pdf' },
@@ -49,7 +49,7 @@ const PROJECTS_LINKS = [
  *   ask the bar to hide (data-nav-cover, Navbar.jsx)
  */
 function Contact({ page = false, projects = false }) {
-  const heading = projects ? PROJECTS_HEADING : 'Drop a Message';
+  const heading = projects ? PROJECTS_HEADING : "Let's Work Together";
   const text = projects ? PROJECTS_TEXT : `${QUESTION} ${SUPPORT}`;
   const links = projects ? PROJECTS_LINKS : LINKS;
 

@@ -12,7 +12,7 @@ import SplitText from '../common/SplitText'
 import { REVEAL_AT, inTurn } from '../../utils/scrollReveal'
 gsap.registerPlugin(ScrollTrigger)
 
-const PARAGRAPH = 'I am a UI/UX designer with over three years of experience designing web and mobile products. I combine user-centered design with front-end development to deliver interfaces that are clear, consistent, and ready to build.';
+const PARAGRAPH = 'For 3+ years I have designed web and mobile products end to end. I map the flows, build the design system, and work with developers until the interface ships as intended. What I care about most is making the complicated parts feel obvious.';
 
 // when its text starts to rise: the site's one rule (scrollReveal.js) -
 // with 30% of the section on screen

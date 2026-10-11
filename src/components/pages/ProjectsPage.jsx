@@ -38,8 +38,9 @@ const BY_YEAR = SHOWN.slice()
 // case studies in progress have pages of their own)
 const UPCOMING = 0;
 
-// a project's supporting label: year / category
-const label = ({ year, category }) => [year, category.replace(' / ', ', ')].join(' / ');
+// a project's supporting label, as on the landing page: year / type / role
+// (the type is the first part of its category, the role the first it lists)
+const label = ({ year, category, roles }) => [year, category.split(' / ')[0], roles[0]].join(' / ');
 
 const ITEMS = [
   ...BY_YEAR.map((id) => ({
@@ -80,11 +81,11 @@ const place = (i) => ({
 });
 
 const HEADLINE_LINES = [
-  'Work that shipped.',
-  'And the thinking behind it.',
+  'Design work,',
+  'from brief to build.',
 ];
 
-const DESCRIPTION = 'Every project shows the problem, the decisions I made, and what shipped.';
+const DESCRIPTION = 'A mix of UX case studies and shipped web projects. Each one sets out the brief, my role, and how the design took shape.';
 
 /**
  * The work page (route /work), in the landing page's layout: a first

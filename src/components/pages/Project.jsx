@@ -16,7 +16,7 @@ import SplitText from '../common/SplitText'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const DESCRIPTION = 'Products I designed and built. Open one to see my exact role, the decisions behind it, and what shipped.';
+const DESCRIPTION = 'Selected work. Open a project to see my role, my process, and the result.';
 
 /**
  * Selected projects, on the dark surface: a list of project names set very

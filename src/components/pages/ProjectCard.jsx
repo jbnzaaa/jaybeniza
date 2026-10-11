@@ -17,7 +17,7 @@ export const PROJECT_CARDS = [
     image: null,
     picture: v3_services,
     category: 'Portfolio Website / Personal Project',
-    meta: '2026 / Portfolio Website, Design & Development',
+    meta: '2026 / Portfolio Website / UI/UX Designer',
   },
   {
     id: 'tingi',
@@ -25,7 +25,7 @@ export const PROJECT_CARDS = [
     to: '/bitewise',
     image: null,
     category: 'UX Case Study / Mobile App',
-    meta: '2026 / UX Case Study, Mobile App',
+    meta: '2026 / UX Case Study / UI/UX Designer',
   },
   {
     id: 'stocknear',
@@ -33,7 +33,7 @@ export const PROJECT_CARDS = [
     to: '/stocknear',
     image: null,
     category: 'UX Case Study / Mobile App',
-    meta: '2026 / UX Case Study, Mobile App',
+    meta: '2026 / UX Case Study / UI/UX Designer',
   },
   {
     id: 'regain',
@@ -41,6 +41,6 @@ export const PROJECT_CARDS = [
     to: '/regain',
     image: 'bg-regain',
     category: 'Web Application / Team Project',
-    meta: '2021 / Web Application, Lead Developer',
+    meta: '2021 / Web Application / Lead Developer',
   },
 ];
