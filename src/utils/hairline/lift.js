@@ -5,6 +5,12 @@ const {
   tdone, tset, tval, tween, disposer, mk, pointer, put, register, solid,
 } = HL;
 
+// the site's corners are square, and so are the figures': whatever radius
+// a figure asks for is cut to this (its own data keeps the radius it was
+// drawn with, so this is the one number to raise to round them again)
+const CORNER = 0;
+const sharp = (r) => Math.min(r, CORNER);
+
 /**
  * One of many: a figure of parts on a base, where the pointer picks a part
  * and it moves - lifts, unless `move` says otherwise - while the parts
@@ -31,11 +37,11 @@ export default function lifted(def) {
     fit(C, [[bx0, by0, -zt], [bx1, by1, -zt], [bx1, by0, -zt], [bx0, by1, -zt], [bx0, by0, zt], [bx1, by1, zt], [bx1, by0, zt], [bx0, by1, zt]], 200, 160);
     const P = proj(C), front = facing(C);
     const at = (q, o) => {
-      const [ring, inner] = rings(q[0] + o[0], q[1] + o[1], q[2] + o[0], q[3] + o[1], q[4], q[5]);
+      const [ring, inner] = rings(q[0] + o[0], q[1] + o[1], q[2] + o[0], q[3] + o[1], sharp(q[4]), q[5]);
       return prism(P, front, ring, inner, q[6] + o[2], q[7] + o[2]);
     };
     const ink = ([u0, v0, u1, v1, r], z, o) => (r
-      ? poly(ringAt(P, rrect(u0 + o[0], v0 + o[1], u1 + o[0], v1 + o[1], r, 4), z))
+      ? poly(ringAt(P, rrect(u0 + o[0], v0 + o[1], u1 + o[0], v1 + o[1], sharp(r), 4), z))
       : seg(P(u0 + o[0], v0 + o[1], z), P(u1 + o[0], v1 + o[1], z)));
 
     // the base, what is drawn on it, then the parts from the far corner to

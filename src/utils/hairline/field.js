@@ -5,6 +5,12 @@ const {
   spring, stepS, disposer, mk, pointer, put, register, solid,
 } = HL;
 
+// the site's corners are square, and so are the figures': whatever radius
+// a figure asks for is cut to this (its own data keeps the radius it was
+// drawn with, so this is the one number to raise to round them again)
+const CORNER = 0;
+const sharp = (r) => Math.min(r, CORNER);
+
 /**
  * A field: a figure of blocks standing on a base, each as tall as the
  * pointer is near - tallest under it, less with distance, down to a floor
@@ -32,13 +38,13 @@ export default function field(def) {
     // appending is painting back to front
     const g = mk("g", {}, svg);
     (def.base || []).forEach((q) => {
-      const [ring, inner] = rings(q[0], q[1], q[2], q[3], q[4], q[5]);
+      const [ring, inner] = rings(q[0], q[1], q[2], q[3], sharp(q[4]), q[5]);
       put(solid(g), prism(P, front, ring, inner, q[6], q[7]));
     });
     const parts = def.parts.map((p, id) => ({ ...p, id })).sort((a, b) => a.s[0] + a.s[1] - (b.s[0] + b.s[1])).map((p) => {
       const el = solid(g), [x0, y0, x1, y1, r, b] = p.s;
       return {
-        ...p, el, rg: rings(x0, y0, x1, y1, r, b), cx: (x0 + x1) / 2, cy: (y0 + y1) / 2,
+        ...p, el, rg: rings(x0, y0, x1, y1, sharp(r), b), cx: (x0 + x1) / 2, cy: (y0 + y1) / 2,
         face: p.m ? mk("path", { class: "nf lo" }, el.g) : null,
         // softer than the engine's default spring, as the site's other figures are
         sp: spring(p.h, { k: 40, c: 13 }), drawn: NaN,
@@ -52,7 +58,7 @@ export default function field(def) {
       put(p.el, prism(P, front, p.rg[0], p.rg[1], 0, h));
       if (p.face) {
         p.face.setAttribute("d", p.m.map(([u0, v0, u1, v1, r]) => (r
-          ? poly(ringAt(P, rrect(u0, v0, u1, v1, r, 4), h))
+          ? poly(ringAt(P, rrect(u0, v0, u1, v1, sharp(r), 4), h))
           : seg(P(u0, v0, h), P(u1, v1, h)))).join(""));
       }
     }

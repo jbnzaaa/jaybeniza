@@ -9,17 +9,27 @@ import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
 // when a reveal starts
-import { REVEAL_AT, inTurn } from '../../utils/scrollReveal'
+import { REVEAL_AT, inTurn, scrollReveal } from '../../utils/scrollReveal'
 gsap.registerPlugin(ScrollTrigger)
 
-const PARAGRAPH = 'For 3+ years I have designed web and mobile products end to end. I map the flows, build the design system, and work with developers until the interface ships as intended. What I care about most is making the complicated parts feel obvious.';
+// what to take away about me, set large
+const PARAGRAPH = 'I design interfaces people understand the first time, and stay with them until they are built that way. I work from research to final interface, and I care about sound decisions and precise details that serve both the people who use a product and the team who builds it.';
+
+// what someone deciding whether to get in touch looks for, each under a small label
+const FACTS = [
+  ['Based in', 'The Philippines'],
+  ['Experience', '3+ years in UI/UX'],
+  ['Status', 'Open to full-time roles'],
+];
 
 // when its text starts to rise: the site's one rule (scrollReveal.js) -
 // with 30% of the section on screen
 
 /**
- * The designer, on the light theme: one large paragraph and the button to
- * the full About page (AboutPage.jsx). The section scrolls with the page -
+ * The designer, on the light theme: one large statement, and along the
+ * foot three facts - where I am, how long I have
+ * done this, whether I am available - and the button to the full About
+ * page (AboutPage.jsx). The section scrolls with the page -
  * it is not pinned. When 30% of it is showing
  * the paragraph rises out of its lines, letter by letter in reading order
  * - the site's text reveal - and drops back if the page is scrolled back
@@ -46,10 +56,14 @@ function About() {
       onLeaveBack: () => turn.reverse(),
     });
 
+    // the facts rise as they come up the screen
+    const facts = scrollReveal('#animate-about-facts', { y: 0, stagger: .02 }, { trigger: '#about-facts' });
+
     return () => {
       trigger.kill();
       turn.kill();
       reveal.revert();
+      facts.kill();
     };
   }, []);
 
@@ -66,7 +80,7 @@ function About() {
           ref={fxSection}>
           <div>
             <Tag label='About the Designer' id='animate-about-tag' />
-            {/* paragraph - body face, at the lead step of the type scale
+            {/* the statement - body face, at the lead step of the type scale
               (size: .about-paragraph, App.scss). its letters start below
               their lines, like all text that reveals */}
             <p className='about-paragraph flex flex-wrap font-monolisa
@@ -78,8 +92,26 @@ function About() {
               <SplitText text={PARAGRAPH} id='animate-about' />
             </p>
           </div>
-          {/* button to the full about page */}
-          <div className='flex justify-start shrink-0'>
+          {/* along the foot: the facts on the left, the button to the full
+            about page on the right (under them on a phone) */}
+          <div className='flex justify-between gap-x-6 shrink-0
+            mobile:flex-col mobile:items-start mobile:gap-y-8
+            tablet:items-end
+            laptop:items-end
+            laptop-lg:items-end
+            desktop:items-end'>
+            <dl className='flex flex-wrap gap-x-12 gap-y-4' id='about-facts'>
+              {FACTS.map(([label, value]) => (
+                <div key={label}>
+                  <dt className='flex flex-wrap text-caption text-muted mb-1'>
+                    <SplitText text={label} id='animate-about-facts' />
+                  </dt>
+                  <dd className='flex flex-wrap text-body m-0'>
+                    <SplitText text={value} id='animate-about-facts' />
+                  </dd>
+                </div>
+              ))}
+            </dl>
             <Button label='More about me' to='/about' />
           </div>
         </section>

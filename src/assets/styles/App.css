@@ -304,6 +304,11 @@
   --hairline-lo: #444141;
 }
 
+* body .service-art [data-hairline] svg :is(path, polygon, line) {
+  stroke-linejoin: miter;
+  stroke-linecap: butt;
+}
+
 * body .service-art [data-hairline] {
   width: min(92%, 38rem);
 }

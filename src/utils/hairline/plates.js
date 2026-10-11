@@ -5,6 +5,12 @@ const {
   spring, stepS, disposer, mk, pointer, put, register, solid,
 } = HL;
 
+// the site's corners are square, and so are the figures': whatever radius
+// a figure asks for is cut to this (its own data keeps the radius it was
+// drawn with, so this is the one number to raise to round them again)
+const CORNER = 0;
+const sharp = (r) => Math.min(r, CORNER);
+
 /**
  * Scrub and pick: one flat object taken apart into plates, each carrying
  * what is drawn at that layer. The pointer's x scrubs the gap between the
@@ -31,7 +37,7 @@ export default function plated(def) {
     const TS = T.reduce((a, b) => a + b, 0), HZ = (TS + (N - 1) * def.GTOP) / 2;
     fit(C, [[0, 0, -HZ], [W, L, -HZ], [W, 0, -HZ], [0, L, -HZ], [0, 0, HZ], [W, L, HZ], [W, 0, HZ], [0, L, HZ]], 200, 160);
     const P = proj(C), front = facing(C);
-    const [ring, inner] = rings(0, 0, W, L, def.RAD, 1.6);
+    const [ring, inner] = rings(0, 0, W, L, sharp(def.RAD), 1.6);
     const [eL, eR] = extremes(P, ring);
 
     // the guides first, so every plate is painted over them; then the plates, bottom to top
@@ -58,7 +64,7 @@ export default function plated(def) {
         put(p.el, prism(P, front, ring, inner, z, zt));
         p.face.setAttribute("d", def.marks(
           k,
-          (u0, v0, u1, v1, r) => poly(ringAt(P, rrect(u0, v0, u1, v1, r, 4), zt)),
+          (u0, v0, u1, v1, r) => poly(ringAt(P, rrect(u0, v0, u1, v1, sharp(r), 4), zt)),
           (u0, v0, u1, v1) => seg(P(u0, v0, zt), P(u1, v1, zt)),
           (points) => open(points.map(([u, v]) => P(u, v, zt))),
         ));

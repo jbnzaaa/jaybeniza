@@ -19,13 +19,14 @@ const {
 } = HL;
 
 const W = 76, L = 56, T = 1.2, N = 4, FAN = [8, 20, 32, 44], STAG = 45;
-const OUT = rrect(0, 0, W, L, 3, 4), IN = rrect(1.2, 1.2, W - 1.2, L - 1.2, 2, 4);
+// (square-cornered, like the site and its other figures)
+const OUT = rrect(0, 0, W, L, 0, 4), IN = rrect(1.2, 1.2, W - 1.2, L - 1.2, 0, 4);
 
 /** What a page carries, drawn through F(u, v), a point of its face: a heading, three lines, a figure. */
 function marks(F) {
   const ln = (u0, v0, u1, v1) => seg(F(u0, v0), F(u1, v1));
   return ln(8, 47, 34, 47) + ln(8, 38, 40, 38) + ln(8, 32, 40, 32) + ln(8, 26, 30, 26) + ln(8, 14, 40, 14) + ln(8, 8, 28, 8)
-    + poly(rrect(46, 8, 68, 40, 2, 4).map((q) => F(q.u, q.v)));
+    + poly(rrect(46, 8, 68, 40, 0, 4).map((q) => F(q.u, q.v)));
 }
 
 function mount({ stage, svg, read }, value) {
@@ -48,7 +49,7 @@ function mount({ stage, svg, read }, value) {
   // the back cover, then the pages from the flattest to the steepest - the
   // steeper a page, the nearer it stands - so appending is painting back to front
   const g = mk("g", {}, svg);
-  const [cr, ci] = rings(-4, -3, W + 4, L + 3, 5, 1.6);
+  const [cr, ci] = rings(-4, -3, W + 4, L + 3, 0, 1.6);
   put(solid(g), prism(P, front, cr, ci, -3, 0));
   const pages = FAN.map((rest, id) => {
     const el = solid(g), F = at(rest);

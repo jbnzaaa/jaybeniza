@@ -5,6 +5,12 @@ const {
   spring, stepS, disposer, mk, pointer, put, register, solid,
 } = HL;
 
+// the site's corners are square, and so are the figures': whatever radius
+// a figure asks for is cut to this (its own data keeps the radius it was
+// drawn with, so this is the one number to raise to round them again)
+const CORNER = 0;
+const sharp = (r) => Math.min(r, CORNER);
+
 /**
  * A scrub: a figure with one number, 0 to 1, that the pointer's x sets on
  * one spring - a gap closing, a page widening, a puck along its track. The
@@ -34,7 +40,7 @@ export default function scrubbed(def) {
       slab() {
         const el = solid(g);
         const set = (x0, y0, x1, y1, r, b, z0, z1) => {
-          const [ring, inner] = rings(x0, y0, x1, y1, r, b);
+          const [ring, inner] = rings(x0, y0, x1, y1, sharp(r), b);
           put(el, prism(P, front, ring, inner, z0, z1));
         };
         set.el = el;
@@ -47,7 +53,7 @@ export default function scrubbed(def) {
         const el = mk("path", { class: cls || "nf lo" }, g);
         return (d) => el.setAttribute("d", d);
       },
-      box: (u0, v0, u1, v1, r, z) => poly(ringAt(P, rrect(u0, v0, u1, v1, r, 4), z)),
+      box: (u0, v0, u1, v1, r, z) => poly(ringAt(P, rrect(u0, v0, u1, v1, sharp(r), 4), z)),
       ln: (u0, v0, u1, v1, z) => seg(P(u0, v0, z), P(u1, v1, z)),
       path: (points) => open(points.map(([x, y, z]) => P(x, y, z))),
       // a closed outline through world points, and the outline round them all

@@ -423,6 +423,12 @@
   --hairline-lo: #444141;
 }
 
+// the figures' lines meet in sharp corners (the engine rounds its joins)
+* body .service-art [data-hairline] svg :is(path, polygon, line) {
+  stroke-linejoin: miter;
+  stroke-linecap: butt;
+}
+
 * body .service-art [data-hairline] {
   width: min(92%, 38rem);
 }
@@ -1094,6 +1100,7 @@
 * body .about-paragraph {
   font-size: min(clamp(1.125rem, .6rem + 2vw, 3rem), 4.6vh);
 }
+
 
 @media (max-width: 767px) {
   * body .about-paragraph {
