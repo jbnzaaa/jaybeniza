@@ -8,20 +8,32 @@ import CertificatesAwards from './CertificatesAwards';
 import Footer from './Footer';
 // GSAP
 import gsap from 'gsap'
+import ScrollSmoother from 'gsap/ScrollSmoother'
 // Resume
 import Resume from '../../assets/files/Jayson_Beniza_ReadOnly.pdf'
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
-// section label
+// the site's button and section label
+import Button from '../common/Button'
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
 
 // the longer introduction. everything in it is drawn from the work
 // experience entries below it - nothing here that they do not back up
+// the first screen's headline, as on the other pages
+const HEADLINE_LINES = [
+  'Designing with purpose.',
+  'Refining with care.',
+];
+
+// what the page holds, under the headline - one line, as on the other pages
+const DESCRIPTION = 'Three years of turning messy problems into interfaces people do not have to think about. Scroll on to meet the designer behind them.';
+
+// the introduction, in the section under the first screen
 const INTRO = [
-  "I'm Jay Beniza, a UI/UX designer from the Philippines with 3+ years of experience designing digital products and web applications. I started in web design and grew into UI/UX, driven by my interest in creating interfaces that are not only visually appealing but also intuitive and easy to use.",
-  "Today, I combine design thinking with front-end development to turn ideas into practical, well-crafted digital experiences. I'm passionate about solving design challenges, refining the details, and creating products that work well for both the people using them and the teams building them.",
+  "I'm Jay Beniza, a UI/UX designer based in the Philippines with over three years of experience designing web and mobile products. I began in web design and moved into UI/UX to focus on interfaces that are clear, usable, and consistent.",
+  'I pair user-centered design with front-end development, so my work is grounded in what can be built. I care about sound decisions, precise details, and products that serve both the people who use them and the teams who build them.',
 ];
 
 // the introduction's first paragraph opens on my name: the words before
@@ -126,73 +138,106 @@ function AboutPage() {
     // a set time, rather than a fixed step each, so the last line is not
     // seconds behind the first)
     const intro = ['#animate-about-page'].map((target) => scrollReveal(
-      target, { y: 0, duration: .6, stagger: { amount: 1.6 }, ease: 'power2.out' }, { trigger: '#about-hero', start: 'top bottom' }));
+      target, { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: '#about-hero', start: 'top bottom' }));
+    const about = scrollReveal('#animate-about-intro', { y: 0, stagger: .012, ease: 'power1.in' }, { trigger: '#about-intro-text' });
     const resume = scrollReveal('#animate-about-page-resume', { y: 0, stagger: .02, ease: 'power1.in' },
       { trigger: '#resume' });
 
     return () => {
       intro.forEach((reveal) => reveal.kill());
+      about.kill();
       resume.kill();
     };
   }, []);
 
+  // the arrow scrolls on to the introduction
+  const toIntro = (e) => {
+    e.preventDefault();
+    ScrollSmoother.get()?.scrollTo('#about-intro', true);
+  };
+
   return (
     <>
-      {/* first screen. top padding clears the nav bar, and the bottom
-        padding matches it: when the introduction is taller than the
-        screen the section grows, and the text keeps the same room under
-        it as over it */}
-      <section id='about-hero' className='theme-light relative flex flex-col justify-center min-h-screen-safe overflow-hidden
-        mobile:px-[1rem] mobile:py-20 mobile:gap-y-16
-        tablet:px-[1rem] tablet:py-20 tablet:gap-y-16
-        laptop:px-[2rem] laptop:py-24 laptop:gap-y-16
-        laptop-lg:px-[3rem] laptop-lg:py-24 laptop-lg:gap-y-16
-        desktop:px-[3rem] desktop:py-28 desktop:gap-y-16'
+      {/* first screen, laid out like every other page's: headline at the
+        top, and along the foot a line on what the page holds (lower
+        left) and an arrow on to the introduction (lower right). top
+        padding clears the nav bar */}
+      <section id='about-hero' className='theme-light flex flex-col justify-between min-h-screen-safe
+        mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-16
+        tablet:px-[1rem] tablet:pt-20 tablet:pb-8 tablet:gap-y-16
+        laptop:px-[2rem] laptop:pt-24 laptop:pb-10 laptop:gap-y-16
+        laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-16
+        desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'>
+        <h1>
+          {HEADLINE_LINES.map((line) => (
+            <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.92] tracking-tight
+              text-hero'>
+              <SplitText text={line} id='animate-about-page' />
+            </span>
+          ))}
+        </h1>
+        <div className='flex justify-between items-end gap-x-6'>
+          <p className='flex flex-wrap text-caption
+            mobile:w-[78%]
+            tablet:w-[52%]
+            laptop:w-[34%]
+            laptop-lg:w-[30%]
+            desktop:w-[28%]'>
+            <SplitText text={DESCRIPTION} id='animate-about-page' by='word' />
+          </p>
+          <div className='shrink-0'>
+            <Button label='More about me' href='#about-intro' onClick={toIntro} iconOnly outline />
+          </div>
+        </div>
+      </section>
+      {/* the introduction - a section of its own under the first screen,
+        on the same light ground: its label, then the two paragraphs at the
+        lead step of the type scale (size: .about-paragraph, App.scss),
+        from the left edge */}
+      <section id='about-intro' className='theme-light relative overflow-hidden
+        mobile:px-[1rem] mobile:py-16
+        tablet:px-[1rem] tablet:py-16
+        laptop:px-[2rem] laptop:py-20
+        laptop-lg:px-[3rem] laptop-lg:py-24
+        desktop:px-[3rem] desktop:py-28'
         ref={fxHero}>
         {/* my picture - opened by my name in the introduction (the effect
           above; start state: .about-portrait, App.scss) */}
         <div className='about-portrait' aria-hidden='true'>
           <img src={PORTRAIT} alt='' loading='lazy'/>
         </div>
-        {/* the label and the introduction, centred on the screen */}
-        <div className='relative z-10 flex flex-col items-center text-center
-          mobile:gap-y-6
-          tablet:gap-y-8
-          laptop:gap-y-8
-          laptop-lg:gap-y-10
-          desktop:gap-y-10'>
-          <Tag label='About Me' id='animate-about-page-title' as='h1' />
-          {/* the introduction, a paragraph to each of its parts, at the
-            lead step of the type scale (size: .about-paragraph, App.scss) */}
+        <div className='relative z-10'>
+          <Tag label='Meet the Designer' id='animate-about-intro-tag' />
           <div className='flex flex-col
-            mobile:w-full mobile:gap-y-6
-            tablet:w-[94%] tablet:gap-y-8
-            laptop:w-[90%] laptop:gap-y-8
-            laptop-lg:w-[88%] laptop-lg:gap-y-10
-            desktop:w-[84%] desktop:gap-y-10'>
-            <p className='about-paragraph flex flex-wrap justify-center
+            mobile:mt-6 mobile:w-full mobile:gap-y-6
+            tablet:mt-8 tablet:w-[94%] tablet:gap-y-8
+            laptop:mt-8 laptop:w-[90%] laptop:gap-y-8
+            laptop-lg:mt-10 laptop-lg:w-[88%] laptop-lg:gap-y-10
+            desktop:mt-10 desktop:w-[84%] desktop:gap-y-10'
+            id='about-intro-text'>
+            <p className='about-paragraph flex flex-wrap
               mobile:leading-snug
               tablet:leading-tight
               laptop:leading-tight
               laptop-lg:leading-tight
               desktop:leading-tight'>
-              <SplitText text={BEFORE} id='animate-about-page' />
+              <SplitText text={BEFORE} id='animate-about-intro' />
               {/* my name - point at it (or press it) to see my picture */}
               <span className='about-name' role='button' tabIndex={0} aria-label='Jay Beniza - show my picture'>
-                <SplitText text={NAME} id='animate-about-page' />
+                <SplitText text={NAME} id='animate-about-intro' />
               </span>
-              <SplitText text=',' id='animate-about-page' />
-              <SplitText text={AFTER} id='animate-about-page' />
+              <SplitText text=',' id='animate-about-intro' />
+              <SplitText text={AFTER} id='animate-about-intro' />
             </p>
             {INTRO.slice(1).map((paragraph) => (
-              <p className='about-paragraph flex flex-wrap justify-center
+              <p className='about-paragraph flex flex-wrap
                 mobile:leading-snug
                 tablet:leading-tight
                 laptop:leading-tight
                 laptop-lg:leading-tight
                 desktop:leading-tight'
                 key={paragraph}>
-                <SplitText text={paragraph} id='animate-about-page' />
+                <SplitText text={paragraph} id='animate-about-intro' />
               </p>
             ))}
           </div>
