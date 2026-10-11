@@ -56,40 +56,51 @@ const SHOT_LAYOUT = {
     desktop:col-span-5 desktop:col-start-4`,
 };
 
-// PLACEHOLDERS - what each section of the case study shows until a project
+// ONGOING - what each section of the case study shows until a project
 // supplies its own under `caseStudy` in projects.js, with the same keys
 // (see the shape of each below). nothing here is a claim about a project:
-// every line says it is a placeholder and what belongs in its place
+// every line says that part of the write-up is still being worked on
 const PLACEHOLDER = {
-  challenge: 'Placeholder. Describe the problem this project set out to solve and the context around it: who had the problem, and why it mattered.',
-  role: 'Placeholder. Describe what you were responsible for on this project and what you contributed to the team.',
-  responsibilities: ['Placeholder responsibility one', 'Placeholder responsibility two', 'Placeholder responsibility three'],
-  discovery: 'Placeholder. Describe how you researched the problem: who you talked to, what you looked at, and what you learned.',
-  painPoints: ['Placeholder pain point one', 'Placeholder pain point two', 'Placeholder pain point three'],
-  insight: 'Placeholder. State the one thing you discovered that shaped the whole design.',
-  approach: 'Placeholder. Describe how you structured the product: the user flow and the information architecture behind it.',
-  process: 'Placeholder. Describe how the design moved from wireframes, through iterations, to the final screens.',
+  challenge: 'Ongoing. The problem this project set out to solve, and the context around it, is being written up.',
+  role: 'Ongoing. What I was responsible for on this project is being written up.',
+  responsibilities: ['Responsibilities to be added'],
+  discovery: 'Ongoing. The research behind this project is being written up.',
+  painPoints: ['Pain points to be added'],
+  insight: 'Ongoing. The key insight will be added once the research is written up.',
+  approach: 'Ongoing. The user flow and information architecture are being prepared.',
+  process: 'Ongoing. The design process, from wireframes to final screens, is being documented.',
   stages: [
-    { title: 'Wireframes', text: 'Placeholder. Describe the first layouts and what they were meant to test.' },
-    { title: 'Iterations', text: 'Placeholder. Describe what changed between rounds, and why.' },
-    { title: 'Final', text: 'Placeholder. Describe the finished screens and what settled the design.' },
+    { title: 'Wireframes', text: 'Ongoing.' },
+    { title: 'Iterations', text: 'Ongoing.' },
+    { title: 'Final', text: 'Ongoing.' },
   ],
-  decisionsIntro: 'Placeholder. Describe the decisions that shaped the design most, and what was at stake in each.',
+  decisionsIntro: 'Ongoing. The decisions that shaped the design are being written up.',
   decisions: [
-    { title: 'Decision one', text: 'Placeholder. Describe the decision, the options you weighed, and why this one won.' },
-    { title: 'Decision two', text: 'Placeholder. Describe the decision, the options you weighed, and why this one won.' },
-    { title: 'Decision three', text: 'Placeholder. Describe the decision, the options you weighed, and why this one won.' },
+    { title: 'Decision one', text: 'Ongoing.' },
+    { title: 'Decision two', text: 'Ongoing.' },
+    { title: 'Decision three', text: 'Ongoing.' },
   ],
-  final: 'Placeholder. Describe the major features of the finished product and what makes the interface work.',
-  system: 'Placeholder. Describe the design system behind the product: its components and its visual language.',
-  outcome: 'Placeholder. Describe the impact of the work: what changed for users and for the business.',
+  final: 'Ongoing. The final screens are being prepared.',
+  system: 'Ongoing. The design system behind the product is being documented.',
+  outcome: 'Ongoing. Results will be added when the project is complete.',
   metrics: [
-    { value: '00', label: 'Placeholder metric one' },
-    { value: '00', label: 'Placeholder metric two' },
-    { value: '00', label: 'Placeholder metric three' },
+    { value: '--', label: 'Result to be added' },
+    { value: '--', label: 'Result to be added ' },
+    { value: '--', label: 'Result to be added  ' },
   ],
-  reflection: 'Placeholder. Describe what you learned on this project and what you would do differently next time.',
+  reflection: 'Ongoing. What I learned on this project will be added when it is complete.',
 };
+
+// what a case study that is still being written will cover, once it is:
+// the parts of the finished layout, in order
+const COMING = [
+  'Challenge and my role',
+  'Discovery and key insight',
+  'User flow and design process',
+  'Key design decisions',
+  'Final product and design system',
+  'Outcome and reflection',
+];
 
 // the two section themes the page alternates between, as on the landing page
 const LIGHT = 'theme-light';
@@ -221,11 +232,13 @@ function Cards({ id, items }) {
   )
 }
 
-// where an image will go: a pale panel that says what belongs in it
+// where an image will go: the site's image placeholder - a pale panel
+// crossed corner to corner, as a picture box is drawn in a wireframe
+// (.project-placeholder, App.scss) - that says what belongs in it
 function Panel({ label, className = '' }) {
   return (
     <div className={`case-panel theme-light project-placeholder flex flex-col justify-between p-6 ${className}`}>
-      <span className='text-caption text-muted'>Placeholder</span>
+      <span className='text-caption text-muted'>Image in progress</span>
       <span className='font-flexible font-medium leading-none text-heading text-muted'>{label}</span>
     </div>
   )
@@ -294,10 +307,14 @@ function ProjectPage({ project }) {
     };
   }, [project]);
 
-  // the hero's arrow scrolls on to the cover
+  // a case study still being written has no cover yet, and shows none
+  const hasCover = !!hero || !isDraft;
+  // the hero's arrow scrolls on to the cover - or, without one, to the
+  // section that says where the write-up stands
+  const onward = hasCover ? '#case-visual' : '#case-status';
   const toCover = (e) => {
     e.preventDefault();
-    ScrollSmoother.get()?.scrollTo('#case-visual', true);
+    ScrollSmoother.get()?.scrollTo(onward, true);
   };
 
   return (
@@ -360,12 +377,13 @@ function ProjectPage({ project }) {
               mobile:w-full mobile:justify-between
               tablet:w-full tablet:justify-between'>
               {project.link ? <Button label='Visit site' href={project.link.href} external /> : <span/>}
-              <Button label='See the project' href='#case-visual' onClick={toCover} iconOnly outline />
+              <Button label='See the project' href={onward} onClick={toCover} iconOnly outline />
             </div>
           </div>
         </section>
         {/* hero visual - the whole section, edge to edge; a full screen
           from laptop width up (.case-visual, App.scss) */}
+        {hasCover && (
         <section className={DARK}>
           <div className='case-visual screenshot-container
             mobile:aspect-[4/3]
@@ -373,22 +391,24 @@ function ProjectPage({ project }) {
             id='case-visual'>
             {hero
               ? <img src={hero.src} alt={hero.alt} className='screenshot-img w-full h-full object-cover object-top' onLoad={remeasure}/>
-              : <Panel label='Cover' className='w-full h-full' />}
+              : <Panel label='Cover' className='w-full h-full pt-24' />}
           </div>
         </section>
+        )}
 
         {isDraft ? (
         <>
         {/* a case study in progress: what is to come, and nothing made up
           in its place */}
-        <CaseSection id='status' title='In progress' theme={LIGHT}>
-          <Copy id='status' text={project.inProgress} />
+        <CaseSection id='status' title='Case Study in Progress' theme={LIGHT}>
+          <Copy id='status' text={project.inProgress} className={BELOW} />
+          <Points id='status' label='Coming in this case study' items={COMING} />
         </CaseSection>
         </>
         ) : isStudy ? (
         <>
         {/* 02 challenge - problem, context */}
-        <CaseSection id='challenge' title='Challenge' theme={LIGHT}>
+        <CaseSection id='challenge' title='The Challenge' theme={LIGHT}>
           <Copy id='challenge' text={study.challenge} />
         </CaseSection>
 
@@ -402,7 +422,7 @@ function ProjectPage({ project }) {
         </CaseSection>
 
         {/* 04 discovery - research, pain points */}
-        <CaseSection id='discovery' title='Discovery' theme={LIGHT}>
+        <CaseSection id='discovery' title='Research & Discovery' theme={LIGHT}>
           <Copy id='discovery' text={study.discovery} className={BELOW} />
           <Points id='discovery' label='Pain points' items={study.painPoints} />
         </CaseSection>
@@ -413,7 +433,7 @@ function ProjectPage({ project }) {
         </CaseSection>
 
         {/* 06 approach - user flow / information architecture */}
-        <CaseSection id='approach' title='Approach' theme={LIGHT}>
+        <CaseSection id='approach' title='User Flow & Structure' theme={LIGHT}>
           <Copy id='approach' text={study.approach} className={BELOW} />
           <Panel label='User flow / IA' className='aspect-[16/9]' />
         </CaseSection>
@@ -433,7 +453,7 @@ function ProjectPage({ project }) {
         </CaseSection>
 
         {/* 09 final product - major features, polished UI */}
-        <CaseSection id='final' title='Final Product' theme={DARK} below={(
+        <CaseSection id='final' title='Final Design' theme={DARK} below={(
           <div className='grid grid-cols-8 gap-x-6
             mobile:gap-y-6
             tablet:gap-y-10
@@ -470,7 +490,7 @@ function ProjectPage({ project }) {
         </CaseSection>
 
         {/* 11 outcome - impact, results. one card per figure */}
-        <CaseSection id='outcome' title='Outcome' theme={DARK}>
+        <CaseSection id='outcome' title='Results & Impact' theme={DARK}>
           <Copy id='outcome' text={study.outcome} className={BELOW} />
           <ul className='grid gap-4
             mobile:grid-cols-1
@@ -498,7 +518,7 @@ function ProjectPage({ project }) {
         </CaseSection>
 
         {/* 12 reflection - what I learned */}
-        <CaseSection id='reflection' title='Reflection' theme={LIGHT}>
+        <CaseSection id='reflection' title='Reflection & Learnings' theme={LIGHT}>
           <Copy id='reflection' text={study.reflection} />
         </CaseSection>
 
@@ -506,13 +526,13 @@ function ProjectPage({ project }) {
         ) : (
         <>
         {/* a build. overview - my role on it, and what it was built with */}
-        <CaseSection id='overview' title='Overview' theme={LIGHT}>
+        <CaseSection id='overview' title='Role & Tech Stack' theme={LIGHT}>
           <Points id='overview' label='My role' items={project.roles} className={BELOW} />
           <Points id='overview' label='Built with' items={project.technologies} />
         </CaseSection>
 
         {/* its screens, under the label at full width */}
-        <CaseSection id='screens' title='Screens' theme={DARK} wide>
+        <CaseSection id='screens' title='Project Screens' theme={DARK} wide>
           <div className='grid grid-cols-8 gap-x-6
             mobile:gap-y-6
             tablet:gap-y-10
@@ -535,7 +555,7 @@ function ProjectPage({ project }) {
           - in the full text colour, then the contact section. from laptop width up
           the name is against the right edge, beside the label; below
           that the two are one under the other, both from the left */}
-        <CaseSection id='next' title='Next project' theme={isStudy || isDraft ? DARK : LIGHT}>
+        <CaseSection id='next' title='Next Project' theme={isStudy || isDraft ? DARK : LIGHT}>
           <div className='flex
             mobile:justify-start
             tablet:justify-start

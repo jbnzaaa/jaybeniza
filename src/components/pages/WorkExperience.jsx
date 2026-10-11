@@ -60,7 +60,7 @@ function WorkExperience() {
           laptop-lg:py-24 laptop-lg:px-[3rem]
           desktop:py-28 desktop:px-[3rem]'>
           <div className='mobile:mb-6 tablet:mb-8 laptop:mb-8 laptop-lg:mb-10 desktop:mb-10'>
-            <Tag label='Experience' id='animate-work-tag' />
+            <Tag label='Work Experience' id='animate-work-tag' />
           </div>
           {/* one card per role */}
           <ul id='work-cards' className='grid gap-6

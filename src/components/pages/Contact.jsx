@@ -21,7 +21,7 @@ const LINKS = [
   { label: 'Linked In', href: 'https://www.linkedin.com/in/jaybeniza/' },
   { label: 'Behance', href: 'https://www.behance.net/jbnza' },
   { label: 'Email', href: EMAIL },
-  { label: 'Resume', href: Resume },
+  { label: 'Download CV', href: Resume, download: 'Jay-Beniza-CV.pdf' },
 ];
 
 // the section's other face, on the contact page - which is itself the way
@@ -31,7 +31,7 @@ const PROJECTS_TEXT = 'Not ready to send a request? See what I have designed and
 const PROJECTS_LINKS = [
   { label: 'All work', to: '/work' },
   { label: 'Portfolio 2026', to: '/portfolio-2026' },
-  { label: 'Tingi', to: '/tingi' },
+  { label: 'BiteWise', to: '/bitewise' },
   { label: 'StockNear', to: '/stocknear' },
   { label: 'ReGain', to: '/regain' },
 ];
@@ -90,7 +90,7 @@ function Contact({ page = false, projects = false }) {
               <SplitText text={text} id='animate-contact' by='word' />
             </p>
             <ul className='flex flex-col gap-y-2'>
-              {links.map(({ label, href, to }) => (
+              {links.map(({ label, href, to, download }) => (
                 <li className='account-container m-0' key={label}>
                   <div className='accounts'>
                     {to ? (
@@ -98,7 +98,7 @@ function Contact({ page = false, projects = false }) {
                         <SplitText text={label} id='animate-contact' />
                       </TransitionLink>
                     ) : (
-                      <a href={href} {...(href.startsWith('mailto') ? {} : { target: '_blank', rel: 'noreferrer' })}>
+                      <a href={href} {...(download ? { download } : href.startsWith('mailto') ? {} : { target: '_blank', rel: 'noreferrer' })}>
                         <SplitText text={label} id='animate-contact' />
                       </a>
                     )}

@@ -92,7 +92,7 @@ function Project() {
         laptop:px-[2rem] laptop:py-20
         laptop-lg:px-[3rem] laptop-lg:py-24
         desktop:px-[3rem] desktop:py-28'>
-        <Tag label='Selected Projects' id='animate-project-tag' />
+        <Tag label='Featured Work' id='animate-project-tag' />
         {/* the list - and, over its middle, the preview */}
         <div className='relative
           mobile:mt-6
@@ -139,17 +139,34 @@ function Project() {
                     mobile:order-first tablet:order-first
                     mobile:aspect-[4/3] tablet:aspect-[16/9]
                     laptop:hidden laptop-lg:hidden desktop:hidden'>
-                    <span className={`project-cover-image block w-full h-full bg-cover ${project.picture ? 'bg-left-top' : `bg-center ${project.image || 'project-placeholder'}`}`}
-                      style={project.picture ? { backgroundImage: `url(${project.picture})` } : undefined}/>
+                    {project.picture || project.image ? (
+                      <span className={`project-cover-image block w-full h-full bg-cover ${project.picture ? 'bg-left-top' : `bg-center ${project.image}`}`}
+                        style={project.picture ? { backgroundImage: `url(${project.picture})` } : undefined}/>
+                    ) : (
+                      /* nothing to picture yet: the empty card (.project-empty, App.scss) */
+                      <span className='project-cover-image project-empty w-full h-full'>
+                        <span className='text-caption'>Ongoing project</span>
+                        <span className='text-caption text-muted'>Case study in progress</span>
+                      </span>
+                    )}
                   </span>
                 </TransitionLink>
               </li>
             ))}
           </ul>
           {/* hover preview, from laptop width up */}
-          <div className={`project-preview bg-cover ${shown?.picture ? 'bg-left-top' : `bg-center ${shown?.image || 'project-placeholder'}`}`}
+          <div className={`project-preview bg-cover ${shown?.picture ? 'bg-left-top' : shown?.image ? `bg-center ${shown.image}` : 'project-empty'}`}
             style={shown?.picture ? { backgroundImage: `url(${shown.picture})` } : undefined}
-            ref={fxPreview} aria-hidden='true'/>
+            ref={fxPreview} aria-hidden='true'>
+            {/* a project with nothing to picture yet previews as the empty
+              card, which says so */}
+            {shown && !shown.picture && !shown.image && (
+              <>
+                <span className='text-caption'>Ongoing project</span>
+                <span className='text-caption text-muted'>Case study in progress</span>
+              </>
+            )}
+          </div>
         </div>
         {/* description + the way to every project */}
         <div className='flex flex-col items-start gap-y-6

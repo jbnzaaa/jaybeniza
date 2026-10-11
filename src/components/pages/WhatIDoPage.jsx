@@ -17,8 +17,8 @@ import SplitText from '../common/SplitText'
 gsap.registerPlugin(ScrollSmoother)
 
 const HEADLINE_LINES = [
-  'One hire.',
-  'Design through front-end.',
+  'I design it.',
+  'Then I build it.',
 ];
 
 const DESCRIPTION = 'What I can own on your team from day one: product design, the design system, and the front-end that ships it.';

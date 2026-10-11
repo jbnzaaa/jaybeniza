@@ -167,14 +167,14 @@ function ServiceCard({ id, title, text, includes, detailed }) {
  */
 function Services({ detailed = false }) {
   useEffect(() => {
-    // each card gets its own turn: its frame wipes open once 30% of the
+    // each card gets its own turn: its frame wipes open once 60% of the
     // card is on screen - not as its top edge shows - then its text rises
     const cards = scrollRevealCards(SERVICES.map(({ id }) => ({
       card: `#service-card-${id}`,
       text: `#animate-service-${id}`,
       // and it opens slowly: these are the page's largest cards, and at
       // the usual second the wipe was over before it could be followed
-    })), { start: CARD_AT, wipe: 1.8 });
+    })), { start: CARD_AT, wipe: 1.1 });
     return () => cards.kill();
   }, []);
 
@@ -186,7 +186,7 @@ function Services({ detailed = false }) {
         laptop:px-[2rem] laptop:py-20
         laptop-lg:px-[3rem] laptop-lg:py-24
         desktop:px-[3rem] desktop:py-28'>
-        <Tag label='What I Do' id='animate-services-tag' />
+        <Tag label='Areas of Expertise' id='animate-services-tag' />
         <ul className='flex flex-col gap-y-4
           mobile:mt-6
           tablet:mt-8

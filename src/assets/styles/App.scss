@@ -286,9 +286,41 @@
   }
 }
 
-// where an image is still to come
+// a project with nothing to picture yet: an empty card - the site's dark
+// card, ruled round, with what it is at the top and what is coming at
+// the foot. (a project's own state, said in words; not a stand-in for a
+// picture, as .project-placeholder below is)
+* body .project-empty {
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem;
+  background: #1B1A1A;
+  border: 1px solid rgb(229 228 227 / .18);
+  --text: #E5E4E3;
+  --muted: rgb(229 228 227 / .6);
+}
+
+* body .project-empty:not(.project-preview) {
+  display: flex;
+}
+
+// (the hover preview is only there from laptop width up, where there is
+// a pointer - whatever it shows)
+@media (min-width: 1024px) and (any-hover: hover) {
+  * body .project-preview.project-empty {
+    display: flex;
+  }
+}
+
+// where a picture is still to come: a pale panel crossed corner to
+// corner, the way a picture box is drawn in a wireframe
 * body .project-placeholder {
-  background: #D9D9D9;
+  background-color: #D9D9D9;
+  background-image:
+    linear-gradient(to top right, transparent calc(50% - .5px), rgb(0 0 0 / .22) calc(50% - .5px), rgb(0 0 0 / .22) calc(50% + .5px), transparent calc(50% + .5px)),
+    linear-gradient(to bottom right, transparent calc(50% - .5px), rgb(0 0 0 / .22) calc(50% - .5px), rgb(0 0 0 / .22) calc(50% + .5px), transparent calc(50% + .5px));
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 // words from my team (Testimonials.jsx) - the cards stack. each is pushed

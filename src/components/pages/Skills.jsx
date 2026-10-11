@@ -13,7 +13,7 @@ const GROUPS = [
   { id: 'ui-design', title: 'UI Design', items: ['High-Fidelity UI', 'Design Systems', 'Responsive Design', 'Design Handoff'] },
   { id: 'design-tools', title: 'Design Tools', items: ['Figma', 'Figma AI', 'Adobe Photoshop', 'Adobe Illustrator'] },
   { id: 'development', title: 'Development', items: ['HTML5', 'CSS3', 'SASS/SCSS', 'JavaScript', 'React', 'Tailwind CSS', 'Bootstrap', 'GSAP'] },
-  { id: 'development-tools', title: 'Development Tools', items: ['Visual Studio Code', 'Git', 'Claude Code', 'NPM'] },
+  { id: 'development-tools', title: 'Development Tools', items: ['Visual Studio Code', 'Git', 'NPM', 'XAMPP', 'Vercel', 'Claude Code', 'ChatGPT'] },
 ];
 
 /**

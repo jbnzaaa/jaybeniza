@@ -59,11 +59,14 @@ const FIRST_AT = '30% bottom';
 // heights) one step is; READ is how long, in steps, the page is scrolled
 // before a card starts - the card showing is left alone for that long -
 // and how long the finished stack is held before the page moves on
-const STEP_LENGTH = .27;
-const READ = .3;
+const STEP_LENGTH = .36;
+const READ = .2;
 // how closely a card follows the scroll: the seconds it takes to catch
-// up, so the wheel's steps run together instead of jerking it along
-const FOLLOW = .6;
+// up. a card crosses the whole screen in a third of a screen of scroll,
+// so one step of the wheel is a long way for it: followed closely it
+// jumped there and stopped. given this long it glides on after each
+// step of the wheel and the steps run together
+const FOLLOW = 1.3;
 
 /**
  * What my team says, on the light theme: dark cards that stack as the
@@ -129,7 +132,7 @@ function Testimonials() {
     later.forEach((card, i) => {
       const at = READ + i * (READ + 1);
       stack
-        .fromTo(card, away, { ...home, ease: 'power1.out', duration: 1 }, at)
+        .fromTo(card, away, { ...home, ease: 'none', duration: 1 }, at)
         .to(card.querySelectorAll('.split-letter'), { y: 0, duration: .3, stagger: { amount: .25 } }, at + .45)
         .to(card.querySelector('.testimonial-avatar'), { ...frame, ease: 'none', duration: .4 }, at + .55);
     });
@@ -157,7 +160,7 @@ function Testimonials() {
         desktop:px-[3rem] desktop:pt-20 desktop:pb-12'
         ref={fxSection}>
         <div className='shrink-0'>
-          <Tag label='What my team says' id='animate-testimonials-tag' />
+          <Tag label='Team Testimonials' id='animate-testimonials-tag' />
         </div>
         {/* (the section's padding is kept short, top and bottom, so that on
           a low screen the cards still clear the label above them) */}

@@ -49,7 +49,7 @@ const ITEMS = [
     to: PROJECTS[id].path,
     cover: COVERS[id],
     picture: COVERS[id] ? null : (PROJECTS[id].cover || PROJECTS[id].screenshots?.[0]?.src),
-    note: PROJECTS[id].caseStudy ? 'Case study' : 'Project',
+    note: PROJECTS[id].caseStudy || PROJECTS[id].inProgress ? 'Case study' : 'Project',
     // what the cursor says over the card: what pressing it opens
     action: PROJECTS[id].caseStudy || PROJECTS[id].inProgress ? 'View case study' : 'View project',
   })),
@@ -80,8 +80,8 @@ const place = (i) => ({
 });
 
 const HEADLINE_LINES = [
-  'Every project.',
-  'Start to finish.',
+  'Work that shipped.',
+  'And the thinking behind it.',
 ];
 
 const DESCRIPTION = 'Every project shows the problem, the decisions I made, and what shipped.';
@@ -214,8 +214,9 @@ function ProjectsPage() {
                   {!cover && picture && <div className='work-cover-image w-full h-full bg-cover bg-left-top' style={{ backgroundImage: `url(${picture})` }}/>}
                   {/* nothing to show yet - says so */}
                   {!cover && !picture && (
-                    <div className='work-cover-image theme-dark flex justify-center items-center w-full h-full bg-card'>
-                      <p className='text-caption text-muted'>{note}</p>
+                    <div className='work-cover-image theme-dark project-empty w-full h-full'>
+                      <p className='text-caption'>Ongoing project</p>
+                      <p className='text-caption text-muted'>{note} in progress</p>
                     </div>
                   )}
                 </div>

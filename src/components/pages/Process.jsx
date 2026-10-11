@@ -41,7 +41,7 @@ function Process({ light = false }) {
           laptop-lg:py-24 laptop-lg:px-[3rem]
           desktop:py-28 desktop:px-[3rem]'>
           <div className='mobile:mb-6 tablet:mb-8 laptop:mb-8 laptop-lg:mb-10 desktop:mb-10'>
-            <Tag label='How I work' id='animate-process-tag' />
+            <Tag label='My Design Process' id='animate-process-tag' />
           </div>
           {/* the steps */}
           <ol id='process-steps' className='grid gap-4

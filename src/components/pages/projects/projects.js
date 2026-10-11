@@ -62,19 +62,21 @@ export const PROJECTS = {
       { src: v3_contact, alt: 'Portfolio 2026 contact page', start: 3 },
     ],
   },
-  // case studies still to be written up: the summary is real; every
-  // section under it shows its PLACEHOLDER (ProjectPage.jsx) until the
+  // case studies still being written up: the summary is real, and under
+  // it the page has one section saying the write-up is ongoing and what
+  // it will cover (`inProgress`, ProjectPage.jsx). to publish one, replace
+  // `inProgress` with `caseStudy`: every section then shows until the
   // project's own text is put in `caseStudy`, key by key
   tingi: {
-    path: '/tingi',
-    title: 'Tingi',
+    path: '/bitewise',
+    title: 'BiteWise',
     short: 'Grocery ordering tailored to dietary needs',
     year: '2026',
-    description: 'Tingi is a grocery shopping app designed to help busy individuals conveniently purchase everyday groceries based on their dietary needs and preferences. It simplifies the shopping experience by making it easier to discover, select, and order food that fits their lifestyle.',
+    description: 'BiteWise is a grocery shopping app designed to help busy individuals conveniently purchase everyday groceries based on their dietary needs and preferences. It simplifies the shopping experience by making it easier to discover, select, and order food that fits their lifestyle.',
     category: 'UX Case Study / Mobile App',
     roles: ['UI/UX Designer'],
     technologies: [],
-    caseStudy: {},
+    inProgress: 'This case study is ongoing. I am documenting the research, the design decisions, and the final screens, and the full write-up will be published here.',
   },
   stocknear: {
     path: '/stocknear',
@@ -85,10 +87,7 @@ export const PROJECTS = {
     category: 'UX Case Study / Mobile App',
     roles: ['UI/UX Designer'],
     technologies: [],
-    caseStudy: {
-      // what is planned next, in the one section it belongs to
-      reflection: 'Placeholder. Describe what you learned on this project and what you would do differently next time. Next, I plan to build a mobile app version of this design with Claude Code.',
-    },
+    inProgress: 'This case study is ongoing. I am documenting the research, the design decisions, and the final screens, and the full write-up will be published here. Next, I plan to build a mobile app version of this design with Claude Code.',
   },
   dailydiscount: {
     path: '/dailydiscount',

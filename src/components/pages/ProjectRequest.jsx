@@ -10,6 +10,7 @@ import SplitText from '../common/SplitText'
 // where a request is sent
 const EMAIL = 'jaysonbeniza@gmail.com';
 
+const HEADLINE = "Let's Work Together";
 const INTRO = 'Tell me what you are building. These are the things I need to know to scope, design, and build a project.';
 
 // what the project is
@@ -178,7 +179,7 @@ function ProjectRequest() {
           laptop:col-span-4
           laptop-lg:col-span-4
           desktop:col-span-4'>
-          <SplitText text='Start a Project' id='animate-request' />
+          <SplitText text={HEADLINE} id='animate-request' />
         </h1>
         {/* introduction + the form - right */}
         <div className='

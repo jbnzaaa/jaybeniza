@@ -21,8 +21,8 @@ export const PROJECT_CARDS = [
   },
   {
     id: 'tingi',
-    title: 'Tingi',
-    to: '/tingi',
+    title: 'BiteWise',
+    to: '/bitewise',
     image: null,
     category: 'UX Case Study / Mobile App',
     meta: '2026 / UX Case Study, Mobile App',

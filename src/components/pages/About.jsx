@@ -12,7 +12,7 @@ import SplitText from '../common/SplitText'
 import { REVEAL_AT, inTurn } from '../../utils/scrollReveal'
 gsap.registerPlugin(ScrollTrigger)
 
-const PARAGRAPH = 'I\'m a UI/UX designer with 3+ years of experience designing intuitive digital products, backed by a background in front-end development. From mapping user flows to building consistent design systems and responsive interfaces, I focus on creating meaningful experiences that balance usability, visual clarity, and functionality.';
+const PARAGRAPH = 'I design digital products people understand the first time they use them. With 3+ years in UI/UX and a front-end background, I take an idea from user flow to working interface.';
 
 // when its text starts to rise: the site's one rule (scrollReveal.js) -
 // with 30% of the section on screen
@@ -32,7 +32,7 @@ function About() {
     // the letters rise across a set time rather than a fixed step each,
     // so a long paragraph's last line is not seconds behind its first
     const reveal = gsap.to('#animate-about', {
-      y: 0, duration: .7, ease: 'power2.out', stagger: { amount: 1.2 }, paused: true,
+      y: 0, duration: .5, ease: 'power2.out', stagger: { amount: .8 }, paused: true,
     });
     // in its turn among the section's reveals (scrollReveal.js). its
     // trigger is the paragraph itself, which is under the tag: the tag
@@ -65,7 +65,7 @@ function About() {
           desktop:px-[3rem] desktop:py-28 desktop:gap-y-16'
           ref={fxSection}>
           <div>
-            <Tag label='The Designer' id='animate-about-tag' />
+            <Tag label='About the Designer' id='animate-about-tag' />
             {/* paragraph - body face, at the lead step of the type scale
               (size: .about-paragraph, App.scss). its letters start below
               their lines, like all text that reveals */}

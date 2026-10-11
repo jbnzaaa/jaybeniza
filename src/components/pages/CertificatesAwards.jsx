@@ -23,13 +23,13 @@ import previewIbmGenAi from '../../assets/certificates-and-awards/previews/ibm-g
 // newest first. `file` is what the row's link opens and, with `preview`
 // (an image to show in its place), what the hover preview shows
 const ITEMS = [
-  { id: 'data-analytics', title: 'Data Analytics Level III Training Program', year: '2026', file: certDataAnalytics, preview: previewDataAnalytics },
-  { id: 'ms-ux-design', title: 'Microsoft UX Design Professional Certificate', year: '2026', file: certMsUxDesign, preview: previewMsUxDesign },
-  { id: 'ibm-gen-ai-fundamentals', title: 'IBM Generative AI Fundamentals Specialization', year: '2025', file: certIbmGenAiFundamentals, preview: previewIbmGenAi },
-  { id: 'award-innovation', title: 'Innovations in Action Award', year: '2025', file: null },
-  { id: 'award-agility', title: 'Agility Award', year: '2025', file: null },
-  { id: 'agile-101-scrum', title: 'Agile 101: Scrum Framework Fundamentals', year: '2024', file: null },
-  { id: 'civil-service-eligibility', title: 'Civil Service Honor Graduate Eligibility', year: '2023', file: null },
+  { id: 'data-analytics', title: 'Data Analytics Level III Training Program', kind: 'Completion', year: '2026', file: certDataAnalytics, preview: previewDataAnalytics },
+  { id: 'ms-ux-design', title: 'Microsoft UX Design Professional Certificate', kind: 'Professional Certificate', year: '2026', file: certMsUxDesign, preview: previewMsUxDesign },
+  { id: 'ibm-gen-ai-fundamentals', title: 'IBM Generative AI Fundamentals Specialization', kind: 'Specialization', year: '2025', file: certIbmGenAiFundamentals, preview: previewIbmGenAi },
+  { id: 'award-innovation', title: 'Innovations in Action Award', kind: 'Award', year: '2025', file: null },
+  { id: 'award-agility', title: 'Agility Award', kind: 'Award', year: '2025', file: null },
+  { id: 'agile-101-scrum', title: 'Agile 101: Scrum Framework Fundamentals', kind: 'Completion', year: '2024', file: null },
+  { id: 'civil-service-eligibility', title: 'Civil Service Honor Graduate Eligibility', kind: 'Credential', year: '2023', file: null },
 ];
 
 const isPdf = (file) => /\.pdf($|\?)/i.test(file);
@@ -87,7 +87,7 @@ function CertificatesAwards() {
           laptop-lg:py-24 laptop-lg:px-[3rem]
           desktop:py-28 desktop:px-[3rem]'>
           <div className='mobile:mb-6 tablet:mb-8 laptop:mb-8 laptop-lg:mb-10 desktop:mb-10'>
-            <Tag label='Recognition' id='animate-certificates-tag' />
+            <Tag label='Certificates & Awards' id='animate-certificates-tag' />
           </div>
           {/* the list - and, over its middle, the preview */}
           <div className='relative' ref={fxList}>
@@ -117,7 +117,9 @@ function CertificatesAwards() {
                       )}
                     </p>
                     <p className='entry-line text-muted shrink-0'>
-                      <SplitText text={item.year} id={`animate-cert-${item.id}`} />
+                      {/* its year and what kind of recognition it is, as a
+                        project's label reads: year / kind */}
+                      <SplitText text={`${item.year} / ${item.kind}`} id={`animate-cert-${item.id}`} />
                     </p>
                   </div>
                   <div id={`cert-line-${item.id}`}/>

@@ -91,7 +91,7 @@ function App() {
       // browser's own distance: under it, so the page is drawn past
       // rather than thrown. (at .85 a turn of the wheel went too far too
       // quickly)
-      speed: .8,
+      speed: .55,
       effects: true,
     });
 
@@ -111,7 +111,7 @@ function App() {
     // (not while the menu holds the page still, not for a pinch or
     // ctrl + wheel, which zoom, and not over something that scrolls by
     // itself - a long text box, an open list - which keeps the wheel)
-    const WHEEL_MAX = 2400;
+    const WHEEL_MAX = 1800;
     let owed = 0;
     const scrollsItself = (el) => {
       for (let node = el; node && node !== document.body; node = node.parentElement) {
@@ -128,10 +128,14 @@ function App() {
       // (no more than a screen and a half in hand: a long spin stops soon after the wheel does)
       owed = gsap.utils.clamp(-window.innerHeight * 1.5, window.innerHeight * 1.5, owed);
     };
+    // (what is owed is paid a share at a time - most of it within a
+    // quarter of a second - so one light turn of the wheel starts gently
+    // and tails off, instead of arriving all in the next frame)
+    const SHARE = 6;
     const pay = (_time, delta) => {
       if (!owed) return;
       const most = WHEEL_MAX * delta / 1000;
-      const step = gsap.utils.clamp(-most, most, owed);
+      const step = gsap.utils.clamp(-most, most, owed * (1 - Math.exp(-SHARE * delta / 1000)));
       owed -= step;
       if (Math.abs(owed) < .5) owed = 0;
       window.scrollBy(0, step);
@@ -217,7 +221,10 @@ function App() {
                 <Route path='/regain' element={<Regain/>}/>
                 <Route path='/portfolio-2026' element={<ProjectPage project={PROJECTS.portfoliov3}/>}/>
                 {/* case studies in progress */}
-                <Route path='/tingi' element={<ProjectPage project={PROJECTS.tingi}/>}/>
+                {/* (the project's key is still its first name, tingi; so is
+                  its old address, which is sent on) */}
+                <Route path='/bitewise' element={<ProjectPage project={PROJECTS.tingi}/>}/>
+                <Route path='/tingi' element={<Navigate to='/bitewise' replace/>}/>
                 <Route path='/stocknear' element={<ProjectPage project={PROJECTS.stocknear}/>}/>
               </Routes>
             )}

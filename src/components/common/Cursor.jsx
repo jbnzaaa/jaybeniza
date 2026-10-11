@@ -50,8 +50,8 @@ function Cursor() {
     document.documentElement.classList.add('has-cursor');
     gsap.set(cursor, { xPercent: -50, yPercent: -50 });
     // it trails the pointer a touch, so it reads as a thing and not a dot
-    const toX = gsap.quickTo(cursor, 'x', { duration: .25, ease: 'power3.out' });
-    const toY = gsap.quickTo(cursor, 'y', { duration: .25, ease: 'power3.out' });
+    const toX = gsap.quickTo(cursor, 'x', { duration: .6, ease: 'power3.out' });
+    const toY = gsap.quickTo(cursor, 'y', { duration: .6, ease: 'power3.out' });
     // its size: 1 at rest, larger over something pressable, nothing once
     // it has gone into a button
     const size = (scale) => gsap.to(cursor, { scale, duration: .3, ease: 'power2.out', overwrite: 'auto' });

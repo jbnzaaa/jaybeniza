@@ -3,8 +3,8 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 // reveal-speed bounds, in seconds
-const MIN_DURATION = 0.8;  // fast flick down the page -> quick reveal
-const MAX_DURATION = 1;  // slow, deliberate scroll -> gentle reveal
+const MIN_DURATION = 0.55;  // fast flick down the page -> quick reveal
+const MAX_DURATION = 0.7;  // slow, deliberate scroll -> gentle reveal
 // scroll speeds (px/s) at or beyond this are treated as "fastest"
 const VELOCITY_RANGE = 3000;
 
@@ -21,14 +21,14 @@ function durationForVelocity(velocity) {
 // scaling the total to the amount of text keeps the ripple visible
 // (the floor is one letter's own rise, so a short label is never
 // stretched: only a very long text is squeezed, to the ceiling)
-const MIN_TOTAL = 0.7;
-const MAX_TOTAL = 3;
+const MIN_TOTAL = 0.5;
+const MAX_TOTAL = 1.6;
 // a fast flick plays a reveal in this share of its slow-scroll time
 // (1: how fast the page is scrolled no longer changes a reveal's speed -
 // it made the same kind of text rise at different speeds)
 const FASTEST = 1;
 // one letter's own rise, in seconds, before any pacing (gsap's default)
-const LETTER_DURATION = 0.7;
+const LETTER_DURATION = 0.5;
 
 function totalForVelocity(natural, velocity) {
   const v = Math.min(Math.abs(velocity || 0), VELOCITY_RANGE);
@@ -56,8 +56,12 @@ function startFor(el, start) {
   return first ? 'top bottom' : start;
 }
 // a tall card opened at the default start is opening with only its top
-// edge on screen. this start waits for 30% of the card's own height
-export const CARD_AT = '30% bottom';
+// edge on screen. this start waits until 60% of the card's own height is
+// above the foot of the screen - or, for a card taller than the screen
+// (stacked, on a phone), 60% of the screen's, since more of it than that
+// can be a long scroll away
+export const CARD_SHARE = .6;
+export const CARD_AT = (self) => `top+=${Math.round(Math.min(self.trigger.offsetHeight, window.innerHeight) * CARD_SHARE)} bottom`;
 // every reveal starts at once and slows into place. (an ease that starts
 // slowly reads as one more wait before anything shows; one at an even
 // pace, start to finish, stops dead and reads as hurried)
@@ -84,21 +88,37 @@ const queueOf = (el) => {
 // twice as fast, so what is well in view is never left blank
 const OVERDUE = .6;
 const HURRY = 1;
-const RUSH = 2;
+const RUSH = 3;
 const busy = new Set();
+
+// and a reveal catches up with a fast scroll. the page can be scrolled
+// faster than a reveal plays: by the time it is half done its component
+// is at the top of the screen. so how fast one plays goes by where its
+// component is - its own speed while that is still in the lower part of
+// the screen, rising to CATCH_UP times that by the time it is near the
+// top - and it is finished before the component is scrolled past
+const LATE = .55;
+const TOP = .15;
+const CATCH_UP = 3.5;
+const behind = (el) => {
+  const box = el?.getBoundingClientRect?.();
+  if (!box || (!box.width && !box.height)) return 1;
+  const up = gsap.utils.clamp(0, 1, (LATE - box.top / window.innerHeight) / (LATE - TOP));
+  return 1 + (CATCH_UP - 1) * up;
+};
 
 function pace(q) {
   if (!q.current) return;
-  let speed = q.waiting.length ? HURRY : 1;
+  let speed = Math.max(q.waiting.length ? HURRY : 1, behind(q.current.el));
   const next = q.waiting[0]?.el?.getBoundingClientRect?.();
-  if (next && next.top < window.innerHeight * OVERDUE) speed = RUSH;
+  if (next && next.top < window.innerHeight * OVERDUE) speed = Math.max(speed, RUSH);
   q.current.anim.timeScale(q.current.rate * speed);
 }
 
-// while anything is waiting, its place on screen is watched as the page scrolls
+// while anything is playing or waiting, its place on screen is watched as the page scrolls
 function watch() {
   busy.forEach((q) => {
-    if (!q.waiting.length) busy.delete(q);
+    if (!q.current && !q.waiting.length) busy.delete(q);
     else pace(q);
   });
   if (!busy.size) gsap.ticker.remove(watch);
@@ -120,6 +140,7 @@ function begin(item) {
   }
   q.current = item;
   pace(q);
+  hold(q);
   item.anim.play();
   // never left waiting on a reveal that was cut short
   q.guard = gsap.delayedCall(item.anim.duration() / item.anim.timeScale() + .15, () => { if (q.current === item) advance(q); });
@@ -398,7 +419,7 @@ export function scrollRevealSequence(stages, { trigger, start = REVEAL_AT, rever
  * @param {string} [opts.group] - the cards' container, used as the shared trigger
  * @param {number} [opts.rowFrom] - viewport width from which the cards are in a row
  * @param {boolean} [opts.scrub] - open the cards with the scroll instead of on a trigger
- * @param {string} [opts.start] - where a card opens, when not at the default start (stacked cards only)
+ * @param {string|Function} [opts.start] - where a card opens, when not at the default start (stacked cards only)
  * @param {number} [opts.wipe] - how long a card takes to open, in seconds, when not the usual time (stacked cards only)
  * @returns {{kill: () => void}}
  */

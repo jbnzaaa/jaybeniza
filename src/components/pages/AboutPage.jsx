@@ -33,10 +33,10 @@ const [BEFORE, AFTER] = INTRO[0].split(NAME + ',').map((part) => part.trim());
 // my picture (public/images)
 const PORTRAIT = `${process.env.PUBLIC_URL}/images/profile.JPG`;
 
-const RESUME_DESCRIPTION = "Want the full story? It's all in my resume: experience, skills, certificates, and awards. Have a read, and say hello if I sound like a fit.";
+const RESUME_DESCRIPTION = 'My CV covers my experience, skills, certifications, and awards in full. Download a copy, or email me to discuss a role on your team.';
 const RESUME_LINKS = [
-  { label: 'Download resume', href: Resume, download: 'Jay-Beniza-Resume.pdf' },
-  { label: 'Or email me', href: 'mailto:jaysonbeniza@gmail.com' },
+  { label: 'Download CV', href: Resume, download: 'Jay-Beniza-CV.pdf' },
+  { label: 'Email me', href: 'mailto:jaysonbeniza@gmail.com' },
 ];
 
 /**
@@ -161,7 +161,7 @@ function AboutPage() {
           laptop:gap-y-8
           laptop-lg:gap-y-10
           desktop:gap-y-10'>
-          <Tag label='Meet the designer' id='animate-about-page-title' as='h1' />
+          <Tag label='About Me' id='animate-about-page-title' as='h1' />
           {/* the introduction, a paragraph to each of its parts, at the
             lead step of the type scale (size: .about-paragraph, App.scss) */}
           <div className='flex flex-col
@@ -223,7 +223,7 @@ function AboutPage() {
             laptop:col-span-5 laptop:row-start-1
             laptop-lg:col-span-5 laptop-lg:row-start-1
             desktop:col-span-5 desktop:row-start-1'>
-            <SplitText text='Grab My Resume' id='animate-about-page-resume' />
+            <SplitText text='See My Full Experience' id='animate-about-page-resume' />
           </h2>
           {/* description + links - right */}
           <div className='text-caption
