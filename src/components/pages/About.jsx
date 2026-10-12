@@ -13,7 +13,10 @@ import { REVEAL_AT, inTurn, scrollReveal } from '../../utils/scrollReveal'
 gsap.registerPlugin(ScrollTrigger)
 
 // what to take away about me, set large
-const PARAGRAPH = 'I design interfaces people understand the first time, and stay with them until they are built that way. I work from research to final interface, and I care about sound decisions and precise details that serve both the people who use a product and the team who builds it.';
+// (one paragraph; the list is kept so another can be added under it)
+const PARAGRAPHS = [
+  'I solve the right problems before I design the screens. I bring clarity to complexity, align user needs with business goals, and turn that thinking into digital products that make sense, work hard, and feel effortless.',
+];
 
 // what someone deciding whether to get in touch looks for, each under a small label
 const FACTS = [
@@ -80,17 +83,27 @@ function About() {
           ref={fxSection}>
           <div>
             <Tag label='About the Designer' id='animate-about-tag' />
-            {/* the statement - body face, at the lead step of the type scale
+            {/* the statement, in its two paragraphs - body face, at the lead step of the type scale
               (size: .about-paragraph, App.scss). its letters start below
               their lines, like all text that reveals */}
-            <p className='about-paragraph flex flex-wrap font-monolisa
-              mobile:mt-6 mobile:w-full mobile:leading-snug
-              tablet:mt-8 tablet:w-[94%] tablet:leading-tight
-              laptop:mt-8 laptop:w-[90%] laptop:leading-tight
-              laptop-lg:mt-10 laptop-lg:w-[88%] laptop-lg:leading-tight
-              desktop:mt-10 desktop:w-[84%] desktop:leading-tight'>
-              <SplitText text={PARAGRAPH} id='animate-about' />
-            </p>
+            <div className='flex flex-col
+              mobile:mt-6 mobile:w-full mobile:gap-y-6
+              tablet:mt-8 tablet:w-[94%] tablet:gap-y-8
+              laptop:mt-8 laptop:w-[90%] laptop:gap-y-8
+              laptop-lg:mt-10 laptop-lg:w-[88%] laptop-lg:gap-y-10
+              desktop:mt-10 desktop:w-[84%] desktop:gap-y-10'>
+              {PARAGRAPHS.map((paragraph) => (
+                <p className='about-paragraph flex flex-wrap font-monolisa
+                  mobile:leading-snug
+                  tablet:leading-tight
+                  laptop:leading-tight
+                  laptop-lg:leading-tight
+                  desktop:leading-tight'
+                  key={paragraph}>
+                  <SplitText text={paragraph} id='animate-about' />
+                </p>
+              ))}
+            </div>
           </div>
           {/* along the foot: the facts on the left, the button to the full
             about page on the right (under them on a phone) */}

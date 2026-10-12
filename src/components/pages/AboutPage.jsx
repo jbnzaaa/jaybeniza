@@ -21,16 +21,7 @@ import SplitText from '../common/SplitText'
 
 // the longer introduction. everything in it is drawn from the work
 // experience entries below it - nothing here that they do not back up
-// the first screen's headline, as on the other pages
-const HEADLINE_LINES = [
-  'Designing with purpose.',
-  'Refining with care.',
-];
-
-// what the page holds, under the headline - one line, as on the other pages
-const DESCRIPTION = '3+ years of turning messy problems into interfaces people do not have to think about. Scroll on to meet the designer behind them.';
-
-// the introduction, in the section under the first screen
+// the introduction: the page's first screen
 const INTRO = [
   "I'm Jay Beniza, a UI/UX designer based in the Philippines with 3+ years of experience designing web and mobile products. I began in web design and moved into UI/UX to focus on interfaces that are clear, usable, and consistent.",
   'I work from research to final interface, and I stay close to developers through handoff so the design survives the build. I care about sound decisions, precise details, and products that serve both the people who use them and the teams who build them.',
@@ -137,69 +128,37 @@ function AboutPage() {
     // (the introduction is long: its letters rise in reading order across
     // a set time, rather than a fixed step each, so the last line is not
     // seconds behind the first)
-    const intro = ['#animate-about-page'].map((target) => scrollReveal(
-      target, { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: '#about-hero', start: 'top bottom' }));
-    const about = scrollReveal('#animate-about-intro', { y: 0, stagger: .012, ease: 'power1.in' }, { trigger: '#about-intro-text' });
+    const intro = scrollReveal('#animate-about-intro', { y: 0, stagger: .012, ease: 'power1.in' },
+      { trigger: '#about-hero', start: 'top bottom' });
     const resume = scrollReveal('#animate-about-page-resume', { y: 0, stagger: .02, ease: 'power1.in' },
       { trigger: '#resume' });
 
     return () => {
-      intro.forEach((reveal) => reveal.kill());
-      about.kill();
+      intro.kill();
       resume.kill();
     };
   }, []);
 
-  // the arrow scrolls on to the introduction
-  const toIntro = (e) => {
+  // the arrow scrolls on to how I work
+  const toProcess = (e) => {
     e.preventDefault();
-    ScrollSmoother.get()?.scrollTo('#about-intro', true);
+    ScrollSmoother.get()?.scrollTo('#process', true);
   };
 
   return (
     <>
-      {/* first screen, laid out like every other page's: headline at the
-        top, and along the foot a line on what the page holds (lower
-        left) and an arrow on to the introduction (lower right). top
-        padding clears the nav bar */}
-      <section id='about-hero' className='theme-light flex flex-col justify-between min-h-screen-safe
-        mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-16
-        tablet:px-[1rem] tablet:pt-20 tablet:pb-8 tablet:gap-y-16
-        laptop:px-[2rem] laptop:pt-24 laptop:pb-10 laptop:gap-y-16
-        laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-16
-        desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'>
-        <h1>
-          {HEADLINE_LINES.map((line) => (
-            <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.92] tracking-tight
-              text-hero'>
-              <SplitText text={line} id='animate-about-page' />
-            </span>
-          ))}
-        </h1>
-        <div className='flex justify-between items-end gap-x-6'>
-          <p className='flex flex-wrap text-caption
-            mobile:w-[78%]
-            tablet:w-[52%]
-            laptop:w-[34%]
-            laptop-lg:w-[30%]
-            desktop:w-[28%]'>
-            <SplitText text={DESCRIPTION} id='animate-about-page' by='word' />
-          </p>
-          <div className='shrink-0'>
-            <Button label='More about me' href='#about-intro' onClick={toIntro} iconOnly outline />
-          </div>
-        </div>
-      </section>
-      {/* the introduction - a section of its own under the first screen,
-        on the same light ground: its label, then the two paragraphs at the
-        lead step of the type scale (size: .about-paragraph, App.scss),
-        from the left edge */}
-      <section id='about-intro' className='theme-light relative overflow-hidden
-        mobile:px-[1rem] mobile:py-16
-        tablet:px-[1rem] tablet:py-16
-        laptop:px-[2rem] laptop:py-20
-        laptop-lg:px-[3rem] laptop-lg:py-24
-        desktop:px-[3rem] desktop:py-28'
+      {/* first screen - the introduction itself, with no headline over it:
+        its label, then the two paragraphs at the lead step of the type
+        scale (size: .about-paragraph, App.scss), from the left edge, and
+        along the foot the arrow on to the rest of the page (lower right),
+        as on every other page's first screen. top padding clears the nav
+        bar */}
+      <section id='about-hero' className='theme-light relative flex flex-col justify-between min-h-screen-safe overflow-hidden
+        mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-12
+        tablet:px-[1rem] tablet:pt-20 tablet:pb-8 tablet:gap-y-12
+        laptop:px-[2rem] laptop:pt-24 laptop:pb-10 laptop:gap-y-12
+        laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-12
+        desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'
         ref={fxHero}>
         {/* my picture - opened by my name in the introduction (the effect
           above; start state: .about-portrait, App.scss) */}
@@ -207,7 +166,7 @@ function AboutPage() {
           <img src={PORTRAIT} alt='' loading='lazy'/>
         </div>
         <div className='relative z-10'>
-          <Tag label='Meet the Designer' id='animate-about-intro-tag' />
+          <Tag label='Meet the Designer' id='animate-about-intro-tag' as='h1' />
           <div className='flex flex-col
             mobile:mt-6 mobile:w-full mobile:gap-y-6
             tablet:mt-8 tablet:w-[94%] tablet:gap-y-8
@@ -241,6 +200,10 @@ function AboutPage() {
               </p>
             ))}
           </div>
+        </div>
+        {/* the arrow on to how I work, lower right */}
+        <div className='relative z-10 flex justify-end'>
+          <Button label='More about me' href='#process' onClick={toProcess} iconOnly outline />
         </div>
       </section>
       {/* how I work */}

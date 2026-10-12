@@ -226,6 +226,8 @@ function App() {
                 <Route path='/bitewise' element={<ProjectPage project={PROJECTS.tingi}/>}/>
                 <Route path='/tingi' element={<Navigate to='/bitewise' replace/>}/>
                 <Route path='/stocknear' element={<ProjectPage project={PROJECTS.stocknear}/>}/>
+                {/* anything else: back to the landing page */}
+                <Route path='*' element={<Navigate to='/' replace/>}/>
               </Routes>
             )}
           </div>

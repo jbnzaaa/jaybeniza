@@ -291,7 +291,9 @@ function ProjectPage({ project }) {
   useEffect(() => {
     // every section's text - the landing page's per-letter reveal, each
     // section on its own trigger
-    const sections = gsap.utils.toArray('[id^="case-"]').map((section) => scrollReveal(
+    // (only the sections that have text: the cover and the screens are
+    // pictures, and asking for their letters found none)
+    const sections = gsap.utils.toArray('[id^="case-"]').filter((section) => document.querySelector(`#animate-${section.id}`)).map((section) => scrollReveal(
       `#animate-${section.id}`, { y: 0, stagger: .012, ease: 'power1.in' }, { trigger: section }));
 
     // each screenshot reveals as it scrolls into view: the frame wipes up
