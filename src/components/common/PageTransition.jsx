@@ -17,9 +17,9 @@ const against = (ground) => (ground === 'light' ? DARK : LIGHT);
 // top), read from what is actually there - the fixed layers over the page
 // (the bar, the panels, the cursor) are looked past. the phone's open menu
 // is a dark screen of its own
-const groundAt = (y) => {
+const groundAt = (y, x = window.innerWidth / 2) => {
   if (document.querySelector('.nav-menu-open')) return 'dark';
-  const under = document.elementsFromPoint(window.innerWidth / 2, y).find((el) => el.closest('#smooth-content'));
+  const under = document.elementsFromPoint(x, y).find((el) => el.closest('#smooth-content'));
   return under?.closest('.theme-light') ? 'light' : 'dark';
 };
 
@@ -56,19 +56,40 @@ export function PageTransitionProvider({ children }) {
   const fxSecond = useRef();
   const busy = useRef(false);
 
-  const go = useCallback(async (to) => {
+  const go = useCallback(async (to, from) => {
     if (busy.current) return;
     busy.current = true;
     const first = fxPanel.current;
     const second = fxSecond.current;
+    // where the wipe starts: the middle of whatever was pressed. the
+    // panel opens out from that point - a box growing from it to the
+    // edges of the screen, all four reached together - so the page is
+    // covered from the link that was chosen, not from a fixed edge.
+    // (asked for from nowhere in particular, it rises from the foot of
+    // the screen, as it always did)
+    const box = from?.getBoundingClientRect?.();
+    const origin = box && box.width ? [box.left + box.width / 2, box.top + box.height / 2] : null;
     const rise = (panel, colour, duration) => {
-      gsap.set(panel, { top: 'auto', bottom: 0, height: 0, backgroundColor: colour });
-      return gsap.to(panel, { height: '100vh', duration, ease: 'power2.inOut' });
+      if (!origin) {
+        gsap.set(panel, { top: 'auto', bottom: 0, height: 0, clipPath: 'none', backgroundColor: colour });
+        return gsap.to(panel, { height: '100vh', duration, ease: 'power2.inOut' });
+      }
+      const [x, y] = origin, w = window.innerWidth, h = window.innerHeight;
+      gsap.set(panel, {
+        top: 0, bottom: 'auto', height: '100vh', backgroundColor: colour,
+        clipPath: `inset(${y}px ${w - x}px ${h - y}px ${x}px)`,
+      });
+      return gsap.to(panel, { clipPath: 'inset(0px 0px 0px 0px)', duration, ease: 'power2.inOut' });
     };
 
-    // cover the page, in the colour that shows against its foot - where
-    // the panel comes in
-    const cover = against(groundAt(window.innerHeight - 8));
+    // cover the page. opened from a link, the panel is always the dark
+    // one - the loading screen's own - wherever on the site the link is:
+    // one wipe for every link. (it used to take the colour that showed
+    // against the ground it started on, so a link in a dark section got a
+    // light panel and then a dark one over it, where the same link in the
+    // top bar got the dark one alone.) rising from the foot of the screen,
+    // with no link to start from, it still goes by what is there
+    const cover = origin ? DARK : against(groundAt(window.innerHeight - 8));
     await rise(first, cover, .6);
     // the new page's reveals wait behind the panel: they start when only
     // a fifth of it is still on screen (COVER_LEFT, scrollReveal.js)
@@ -86,6 +107,8 @@ export function PageTransitionProvider({ children }) {
       gsap.set(first, { height: 0 });
       panel = second;
     }
+    // (it leaves by its height, upward; whatever it opened through is taken off)
+    gsap.set([first, second], { clipPath: 'none' });
     gsap.set(panel, { top: 0, bottom: 'auto' });
     await gsap.to(panel, { height: 0, duration: .7, ease: 'power2.inOut', delay: .1, onUpdate: () => releaseWhenLifted(panel) });
     releaseReveals();
@@ -113,7 +136,8 @@ export const TransitionLink = forwardRef(function TransitionLink({ to, onClick, 
     onClick?.(e);
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     e.preventDefault();
-    go(to);
+    // (the link itself is handed on: the wipe opens from its middle)
+    go(to, e.currentTarget);
   };
 
   return <Link to={to} onClick={handleClick} ref={ref} {...rest}>{children}</Link>

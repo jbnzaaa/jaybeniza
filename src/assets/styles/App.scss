@@ -1118,8 +1118,20 @@
   transition: transform .3s ease-in-out;
 }
 
+// a button's arrow does not turn on hover: it carries on the way it
+// points - out through the lower right of its box - and comes back in
+// from the upper left (the box, .menu-icon-clip, cuts it off at its
+// edge). the same on every button: the top bar's, the filled ones, and
+// the outlined arrow buttons at the foot of each first screen
 * body .cta-button:hover .button-arrow {
-  transform: rotate(-45deg);
+  animation: arrow-through .5s ease-in-out;
+}
+
+@keyframes arrow-through {
+  0% { transform: translate(0, 0); }
+  45% { transform: translate(140%, 140%); }
+  45.01% { transform: translate(-140%, -140%); }
+  100% { transform: translate(0, 0); }
 }
 
 // a case study's placeholder panel (ProjectPage.jsx) - starts clipped away

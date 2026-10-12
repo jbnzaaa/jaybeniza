@@ -890,9 +890,23 @@
 }
 
 * body .cta-button:hover .button-arrow {
-  transform: rotate(-45deg);
+  animation: arrow-through 0.5s ease-in-out;
 }
 
+@keyframes arrow-through {
+  0% {
+    transform: translate(0, 0);
+  }
+  45% {
+    transform: translate(140%, 140%);
+  }
+  45.01% {
+    transform: translate(-140%, -140%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
 * body .case-panel {
   clip-path: inset(100% 0% 0% 0%);
 }

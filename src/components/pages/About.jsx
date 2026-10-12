@@ -19,7 +19,7 @@ const PARAGRAPH = 'I design interfaces people understand the first time, and sta
 const FACTS = [
   ['Based in', 'The Philippines'],
   ['Experience', '3+ years in UI/UX'],
-  ['Status', 'Open to full-time roles'],
+  ['Status', 'Open to freelance and full-time roles'],
 ];
 
 // when its text starts to rise: the site's one rule (scrollReveal.js) -
@@ -100,7 +100,13 @@ function About() {
             laptop:items-end
             laptop-lg:items-end
             desktop:items-end'>
-            <dl className='flex flex-wrap gap-x-12 gap-y-4' id='about-facts'>
+            {/* (on a phone: a list, one fact to a row) */}
+            <dl className='flex gap-x-12 gap-y-4
+              mobile:flex-col mobile:w-full
+              tablet:flex-wrap
+              laptop:flex-wrap
+              laptop-lg:flex-wrap
+              desktop:flex-wrap' id='about-facts'>
               {FACTS.map(([label, value]) => (
                 <div key={label}>
                   <dt className='flex flex-wrap text-caption text-muted mb-1'>

@@ -9,11 +9,12 @@ import Button from '../common/Button'
 // per-letter text split
 import SplitText from '../common/SplitText'
 
-const HIGHLIGHT_TEXT = 'I am a UI/UX designer with 3+ years of experience creating clear, usable interfaces for web and mobile. Currently open to full-time UI/UX roles.';
+// (what the headline does not say: how long, what kind of work, and that I am available)
+const HIGHLIGHT_TEXT = 'With 3+ years in UI/UX, I turn user needs into clear, usable interfaces for web and mobile. Currently open to freelance and full-time roles.';
 
 const PROFESSION_LINES = [
-  'Designing user-centered',
-  'digital products.',
+  'I craft digital experiences',
+  'that make complex things simple.',
 ];
 
 /**
