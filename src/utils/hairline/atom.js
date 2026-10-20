@@ -9,8 +9,13 @@ import scrubbed from './scrub'
  * degrees.
  */
 const DEG = Math.PI / 180, K = Math.SQRT1_2, TURN = Math.PI * 2;
+// how far the whole figure is raised: the camera is fitted to a box even
+// above and below z = 0, but the base hangs further under the core than
+// the orbits reach over it, so unraised the drawing sat low in its frame
+// and its base was cut off at the bottom
+const LIFT = 18;
 // a point of the mark's own plane, which stands facing the viewer: a across it, b up it
-const at = (a, b) => [a * K, -a * K, b];
+const at = (a, b) => [a * K, -a * K, b + LIFT];
 // a point of orbit i, the orbits turned by spin degrees: th round an ellipse of half-axes a and b
 const on = (i, spin, th, a, b) => {
   const f = (spin + i * 60) * DEG, x = a * Math.cos(th), y = b * Math.sin(th);
@@ -27,9 +32,9 @@ const mount = scrubbed({
       for (let k = 0; k < n; k++) points.push([c[0] + r * K * Math.cos(k / n * TURN), c[1] - r * K * Math.cos(k / n * TURN), c[2] + r * Math.sin(k / n * TURN)]);
       return shape(points);
     };
-    base(-34, -34, 34, 34, 12, 2, -62, -56);
-    drop(path([[0, 0, -56], [0, 0, -9]]));
-    core(round([0, 0, 0], 8, 28));
+    base(-34, -34, 34, 34, 12, 2, -62 + LIFT, -56 + LIFT);
+    drop(path([[0, 0, -56 + LIFT], [0, 0, -9 + LIFT]]));
+    core(round([0, 0, LIFT], 8, 28));
     return {
       draw(t, v) {
         const spin = lerp(-v, v, t);

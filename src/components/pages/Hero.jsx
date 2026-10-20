@@ -12,9 +12,11 @@ import SplitText from '../common/SplitText'
 // (what the headline does not say: how long, what kind of work, and that I am available)
 const HIGHLIGHT_TEXT = 'A UI/UX designer with 3.5+ years of focused work on web and mobile products. Open to freelance and full-time roles.';
 
+// one sentence, left to wrap where the screen ends it - set as two fixed
+// lines, a narrow screen pushed "what" onto a line of its own and the
+// second line still started fresh under it
 const PROFESSION_LINES = [
-  'I pay attention to what',
-  'others might overlook.',
+  'I pay attention to what others might overlook.',
 ];
 
 /**
