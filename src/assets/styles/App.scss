@@ -863,30 +863,6 @@
 * body .hero-designerdev .split-word {
   margin-right: .15em;
 }
-
-// the landing page's headline (Hero.jsx). its two lines are short, so it
-// is sized from the screen instead of the shared text-hero step: the
-// longer line (about 5.5em wide) spans most of the width inside the
-// section's side padding, and the two lines never take more of the
-// screen's height than leaves room for the bar above and the description
-// under them
-* body .hero-headline {
-  --hero-pad: 1rem;
-  font-size: max(2.5rem, min(calc((100vw - 2 * var(--hero-pad)) / 5.8), calc((100svh - 18rem) / 1.84)));
-}
-
-@media (min-width: 1024px) {
-  * body .hero-headline {
-    --hero-pad: 2rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  * body .hero-headline {
-    --hero-pad: 3rem;
-  }
-}
-
 * body .about-container {
   position: relative;
 }

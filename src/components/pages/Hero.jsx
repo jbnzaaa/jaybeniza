@@ -57,7 +57,8 @@ function Hero() {
         {/* headline */}
         <h1>
           {PROFESSION_LINES.map((line) => (
-            <span key={line} className='hero-designerdev hero-headline flex flex-wrap font-flexible font-bold leading-[.92] tracking-tight'>
+            <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.92] tracking-tight
+              text-hero'>
               <SplitText text={line} id='animate-hero-profession' />
             </span>
           ))}
