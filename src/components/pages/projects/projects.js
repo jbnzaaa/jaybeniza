@@ -31,8 +31,8 @@ import regain_history from '../../../assets/files/images/regain/student-history-
 // of the eight columns; 'full' spans all eight. below laptop every
 // screenshot is full width
 // `category` is always 'what it is / the setting it was made in', from one
-// short list: UX Case Study, Web Application, Portfolio Website; Mobile
-// App, Team Project, Personal Project.
+// short list: UX Case Study, Web Application, Portfolio Website, Web Platform, Web/Mobile Platform; Mobile
+// App, Team Project, Personal Project, Client Project.
 // a project with a `caseStudy` is laid out as a case study; one without
 // is laid out as a build (ProjectPage.jsx). one with `inProgress` - a case
 // study not written up yet - shows its summary and that note, and nothing
@@ -88,6 +88,89 @@ export const PROJECTS = {
     roles: ['UI/UX Designer'],
     technologies: [],
     inProgress: 'This case study is ongoing. I am documenting the research, the design decisions, and the final screens, and the full write-up will be published here. Next, I plan to build a mobile app version of this design with Claude Code.',
+  },
+  // work from my time as a designer at a company, shown with permission.
+  // the screenshots, live links and results are still to come: until
+  // then the page's own panels stand in for the screens, and each `link`
+  // is a placeholder to replace with the live site (GuRover, still in
+  // development when I left, has none). each is laid out as a platform:
+  // its `platform` holds the written parts, and any it leaves out show as
+  // still to be added
+  gurover: {
+    path: '/gurover',
+    title: 'GuRover',
+    short: 'AI-powered, offline-first teacher operating system',
+    year: '2025',
+    description: 'GuRover is an AI-powered, offline-first operating system for teachers, built for Philippine educators from public school classrooms to college lecture halls.',
+    category: 'Web/Mobile Platform / Team Project',
+    roles: ['Web Developer', 'UI Designer'],
+    technologies: [],
+    platform: {
+      overview: 'GuRover gives Philippine educators one place to plan and run their teaching, built to work offline first and assisted by AI. A fuller overview is to be added.',
+      users: ['Public school teachers', 'College instructors'],
+      role: 'I worked on GuRover as its web developer, building the platform with AI-assisted development, and designed its user interface.',
+      outcome: 'GuRover was still in development when I left the company. Its results are to be added.',
+    },
+  },
+  comelec: {
+    path: '/comelec-acm',
+    title: 'COMELEC Gamified 3D for ACM',
+    short: 'Gamified 3D experience for the Automated Counting Machine',
+    year: '2025',
+    description: 'A gamified 3D platform for the Commission on Elections (COMELEC) that brings the Automated Counting Machine (ACM) used in Philippine elections to life through interactive 3D.',
+    category: 'Web Platform / Client Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    platform: {
+      role: 'I worked on this platform as a UI/UX designer. A fuller breakdown of what I was responsible for is to be added.',
+      outcome: 'The platform is live and in production. Its results are to be added.',
+    },
+    link: { href: '#' },
+  },
+  psgs: {
+    path: '/psgs',
+    title: 'PSGS',
+    short: 'Professional society of general surgeons in the Philippines',
+    year: '2024',
+    description: 'A platform for PSGS, the leading professional organization of general surgeons in the Philippines. Founded in 1999, the Society works to advance surgical education, practice, and research for the benefit of Filipino patients and communities.',
+    category: 'Web Platform / Client Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    platform: {
+      role: 'I worked on this platform as a UI/UX designer. A fuller breakdown of what I was responsible for is to be added.',
+      outcome: 'The platform is live and in production. Its results are to be added.',
+    },
+    link: { href: '#' },
+  },
+  aaccup: {
+    path: '/aaccup',
+    title: 'AACCUP',
+    short: 'Accreditation of academic programs in state universities and colleges',
+    year: '2023',
+    description: 'A platform for AACCUP, a non-profit, private accrediting body that evaluates and certifies the quality of academic programs offered by state universities and colleges (SUCs) across the Philippines.',
+    category: 'Web Platform / Client Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    platform: {
+      role: 'I worked on this platform as a UI/UX designer. A fuller breakdown of what I was responsible for is to be added.',
+      outcome: 'The platform is live and in production. Its results are to be added.',
+    },
+    link: { href: '#' },
+  },
+  arise: {
+    path: '/dost-arise',
+    title: 'DOST ARISE',
+    short: 'STEM learning ecosystem supporting the K to 12 curriculum',
+    year: '2023',
+    description: 'A platform for DOST ARISE, a program that builds a 21st-century learning ecosystem of learning environments, ICT resources, and innovations. It supports the K to 12 curriculum of the Department of Education (DepEd) by improving learning environments and strengthening STEM education.',
+    category: 'Web Platform / Client Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    platform: {
+      role: 'I worked on this platform as a UI/UX designer. A fuller breakdown of what I was responsible for is to be added.',
+      outcome: 'The platform is live and in production. Its results are to be added.',
+    },
+    link: { href: '#' },
   },
   dailydiscount: {
     path: '/dailydiscount',

@@ -220,6 +220,12 @@ function App() {
                 <Route path='/jaysonbeniza' element={<Jaysonbeniza/>}/>
                 <Route path='/regain' element={<Regain/>}/>
                 <Route path='/portfolio-2026' element={<ProjectPage project={PROJECTS.portfoliov3}/>}/>
+                {/* work shown with permission (projects.js) */}
+                <Route path='/gurover' element={<ProjectPage project={PROJECTS.gurover}/>}/>
+                <Route path='/comelec-acm' element={<ProjectPage project={PROJECTS.comelec}/>}/>
+                <Route path='/psgs' element={<ProjectPage project={PROJECTS.psgs}/>}/>
+                <Route path='/aaccup' element={<ProjectPage project={PROJECTS.aaccup}/>}/>
+                <Route path='/dost-arise' element={<ProjectPage project={PROJECTS.arise}/>}/>
                 {/* case studies in progress */}
                 {/* (the project's key is still its first name, tingi; so is
                   its old address, which is sent on) */}

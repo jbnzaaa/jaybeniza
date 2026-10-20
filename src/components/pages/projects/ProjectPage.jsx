@@ -23,7 +23,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 // list, in its order (ProjectsPage.jsx) - newest first, and back to the
 // first after the last. a project that is not on that list (DailyDiscount)
 // is never offered as the next one, and leads on to the first
-const ORDER = ['portfoliov3', 'tingi', 'stocknear', 'jaysonbeniza', 'jbnza', 'regain'];
+const ORDER = ['portfoliov3', 'tingi', 'stocknear', 'gurover', 'comelec', 'psgs', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
 
 // grid placement of a screenshot by its `start` (see projects.js)
 const SHOT_LAYOUT = {
@@ -92,6 +92,31 @@ const PLACEHOLDER = {
     { value: '--', label: 'Result to be added  ' },
   ],
   reflection: 'Ongoing. What I learned on this project will be added when it is complete.',
+};
+
+// what each section of a platform page shows until a project supplies its
+// own under `platform` in projects.js, with the same keys. these are
+// projects already made, so nothing here calls them ongoing: each line
+// only says that part of the page is still to be written
+const PLATFORM_PLACEHOLDER = {
+  overview: 'An overview of the platform, who it was made for and the need it meets, is to be added.',
+  users: ['Users to be added'],
+  role: 'What I was responsible for on this platform is to be added.',
+  contributions: ['Contributions to be added'],
+  featuresIntro: 'The main features of the platform are to be added.',
+  features: [
+    { title: 'Feature one', text: 'To be added.' },
+    { title: 'Feature two', text: 'To be added.' },
+    { title: 'Feature three', text: 'To be added.' },
+  ],
+  approach: 'How the platform was designed, from its structure and user flows to the final interface, is to be added.',
+  system: 'The components and visual language the platform is built on are to be added.',
+  outcome: 'Where the platform stands and the difference it made are to be added.',
+  metrics: [
+    { value: '--', label: 'Result to be added' },
+    { value: '--', label: 'Result to be added ' },
+    { value: '--', label: 'Result to be added  ' },
+  ],
 };
 
 // what a case study that is still being written will cover, once it is:
@@ -248,7 +273,14 @@ function Panel({ label, className = '' }) {
 }
 
 /**
- * A project page, in one of three layouts.
+ * A project page, in one of four layouts.
+ *
+ * A platform - a project with `platform` in projects.js, a product made
+ * for a client or company - is its hero, its cover, then an overview of
+ * the platform and who it serves, my role and contributions, its key
+ * features, the design approach, its screens, the design system, and
+ * where it stands and what it achieved. Its written parts come from its
+ * `platform` and fall back to PLATFORM_PLACEHOLDER above.
  *
  * A case study in progress - a project with `inProgress` - is its hero,
  * its cover, and a note that the write-up is to come.
@@ -271,10 +303,12 @@ function Panel({ label, className = '' }) {
  * PLACEHOLDER above until it has one.
  */
 function ProjectPage({ project }) {
-  // which of the two layouts: a case study, or a build
+  // which layout: a case study, a platform, or a build
   const isStudy = !!project.caseStudy;
   const isDraft = !!project.inProgress;
+  const isPlatform = !!project.platform;
   const study = { ...PLACEHOLDER, ...(project.caseStudy || {}) };
+  const platform = { ...PLATFORM_PLACEHOLDER, ...(project.platform || {}) };
   // (a project may have no screenshots yet: panels stand in for them)
   const [hero, ...shots] = project.screenshots || [];
   const here = ORDER.findIndex((key) => PROJECTS[key] === project);
@@ -528,6 +562,95 @@ function ProjectPage({ project }) {
         </CaseSection>
 
         </>
+        ) : isPlatform ? (
+        <>
+        {/* a platform. overview - what it is, and who it serves */}
+        <CaseSection id='overview' title='Project Overview' theme={LIGHT}>
+          <Copy id='overview' text={platform.overview} className={BELOW} />
+          <Points id='overview' label='Who it serves' items={platform.users} />
+        </CaseSection>
+
+        {/* my role - what I owned, and the tools, once there are any */}
+        <CaseSection id='role' title='My Role & Contributions' theme={DARK}>
+          <Copy id='role' text={platform.role} className={BELOW} />
+          <Points id='role' label='Contributions' items={platform.contributions} className={project.technologies.length > 0 ? BELOW : ''} />
+          {project.technologies.length > 0 && <Points id='role' label='Tools' items={project.technologies} />}
+        </CaseSection>
+
+        {/* key features - a card each, side by side */}
+        <CaseSection id='features' title='Key Features' theme={LIGHT}>
+          <Copy id='features' text={platform.featuresIntro} className={BELOW} />
+          <Cards id='features' items={platform.features} />
+        </CaseSection>
+
+        {/* design approach - structure and user flows */}
+        <CaseSection id='approach' title='Design Approach' theme={DARK}>
+          <Copy id='approach' text={platform.approach} className={BELOW} />
+          <Panel label='User flow / Sitemap' className='aspect-[16/9]' />
+        </CaseSection>
+
+        {/* its screens, under the label at full width */}
+        <CaseSection id='screens' title='Platform Screens' theme={LIGHT} wide>
+          <div className='grid grid-cols-8 gap-x-6
+            mobile:gap-y-6
+            tablet:gap-y-10
+            laptop:gap-y-12
+            laptop-lg:gap-y-20
+            desktop:gap-y-20'>
+            {shots.map(({ src, alt, start }) => (
+              <div className={`screenshot-container ${SHOT_LAYOUT[start]}`} key={alt}>
+                <img src={src} alt={alt} className='screenshot-img' onLoad={remeasure}/>
+              </div>
+            ))}
+            {!shots.length && [['Screen one', 1], ['Screen two', 4], ['Screen three', 2]].map(([name, start]) => (
+              <Panel label={name} className={`aspect-[16/10] ${SHOT_LAYOUT[start]}`} key={name} />
+            ))}
+          </div>
+        </CaseSection>
+
+        {/* design system - its three parts as three panels, side by side */}
+        <CaseSection id='system' title='Design System' theme={DARK}>
+          <Copy id='system' text={platform.system} className={BELOW} />
+          <div className='grid gap-4
+            mobile:grid-cols-1
+            tablet:grid-cols-3
+            laptop:grid-cols-3
+            laptop-lg:grid-cols-3
+            desktop:grid-cols-3'>
+            {['Color', 'Typography', 'Components'].map((part) => (
+              <Panel label={part} className='aspect-[4/3]' key={part} />
+            ))}
+          </div>
+        </CaseSection>
+
+        {/* status and impact - where it stands, then one card per figure */}
+        <CaseSection id='outcome' title='Status & Impact' theme={LIGHT}>
+          <Copy id='outcome' text={platform.outcome} className={BELOW} />
+          <ul className='grid gap-4
+            mobile:grid-cols-1
+            tablet:grid-cols-3
+            laptop:grid-cols-3
+            laptop-lg:grid-cols-3
+            desktop:grid-cols-3'>
+            {platform.metrics.map((metric) => (
+              <li className={`${CARD} flex flex-col justify-between
+                mobile:gap-y-8
+                tablet:gap-y-12
+                laptop:gap-y-16
+                laptop-lg:gap-y-20
+                desktop:gap-y-24`}
+                key={metric.label}>
+                <p className='font-flexible font-medium leading-none text-title'>
+                  <SplitText text={metric.value} id='animate-case-outcome' />
+                </p>
+                <p className='flex flex-wrap text-caption text-muted'>
+                  <SplitText text={metric.label} id='animate-case-outcome' by='word' />
+                </p>
+              </li>
+            ))}
+          </ul>
+        </CaseSection>
+        </>
         ) : (
         <>
         {/* a build. overview - my role on it, and what it was built with */}
@@ -549,6 +672,9 @@ function ProjectPage({ project }) {
                 <img src={src} alt={alt} className='screenshot-img' onLoad={remeasure}/>
               </div>
             ))}
+            {!shots.length && [['Screen one', 1], ['Screen two', 4], ['Screen three', 2]].map(([name, start]) => (
+              <Panel label={name} className={`aspect-[16/10] ${SHOT_LAYOUT[start]}`} key={name} />
+            ))}
           </div>
         </CaseSection>
         </>
@@ -560,7 +686,7 @@ function ProjectPage({ project }) {
           - in the full text colour, then the contact section. from laptop width up
           the name is against the right edge, beside the label; below
           that the two are one under the other, both from the left */}
-        <CaseSection id='next' title='Next Project' theme={isStudy || isDraft ? DARK : LIGHT}>
+        <CaseSection id='next' title='Next Project' theme={isStudy || isDraft || isPlatform ? DARK : LIGHT}>
           <div className='flex
             mobile:justify-start
             tablet:justify-start

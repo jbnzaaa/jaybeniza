@@ -11,15 +11,6 @@ import v3_services from '../../assets/files/images/portfolio/portfolio-v3-2.jpg'
 
 export const PROJECT_CARDS = [
   {
-    id: 'portfoliov3',
-    title: 'Portfolio 2026',
-    to: '/portfolio-2026',
-    image: null,
-    picture: v3_services,
-    category: 'Portfolio Website / Personal Project',
-    meta: '2026 / Portfolio Website / UI/UX Designer',
-  },
-  {
     id: 'tingi',
     title: 'BiteWise',
     to: '/bitewise',
@@ -36,11 +27,20 @@ export const PROJECT_CARDS = [
     meta: '2026 / UX Case Study / UI/UX Designer',
   },
   {
-    id: 'regain',
-    title: 'ReGain',
-    to: '/regain',
-    image: 'bg-regain',
-    category: 'Web Application / Team Project',
-    meta: '2021 / Web Application / Lead Developer',
+    id: 'portfoliov3',
+    title: 'Portfolio 2026',
+    to: '/portfolio-2026',
+    image: null,
+    picture: v3_services,
+    category: 'Portfolio Website / Personal Project',
+    meta: '2026 / Portfolio Website / UI/UX Designer',
+  },
+  {
+    id: 'gurover',
+    title: 'GuRover',
+    to: '/gurover',
+    image: null,
+    category: 'Web/Mobile Platform / Team Project',
+    meta: '2025 / Web/Mobile Platform / Web Developer',
   },
 ];

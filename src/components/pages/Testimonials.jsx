@@ -13,6 +13,7 @@ import { inTurn } from '../../utils/scrollReveal'
 import sergio from '../../assets/files/images/team/sergio-ramos-iii.jpg'
 import paula from '../../assets/files/images/team/paula-malupa.jpg'
 import richard from '../../assets/files/images/team/richard-ordinario.jpg'
+import prince from '../../assets/files/images/team/prince-bernard-diana.png'
 gsap.registerPlugin(ScrollTrigger)
 
 // reviews from the people I work with, in their own words. `quote` is one
@@ -26,7 +27,7 @@ const TESTIMONIALS = [
     ],
     name: 'Sergio Ramos III',
     avatar: sergio,
-    role: 'President, PCI Innovations Tech Center',
+    role: 'President, PCI Tech Center',
   },
   {
     id: 'paula-malupa',
@@ -36,7 +37,7 @@ const TESTIMONIALS = [
     ],
     name: 'Paula Malupa',
     avatar: paula,
-    role: 'Executive Assistant, PCI Innovations Tech Center',
+    role: 'Executive Assistant, PCI Tech Center',
   },
   {
     id: 'richard-ordinario',
@@ -46,7 +47,16 @@ const TESTIMONIALS = [
     ],
     name: 'Richard Ordinario',
     avatar: richard,
-    role: 'Senior Full Stack Web Developer, PCI Innovations Tech Center',
+    role: 'Senior Full Stack Developer, PCI Tech Center',
+  },
+  {
+    id: 'prince-bernard-diana',
+    quote: [
+      'Jay quickly translates design requests and client feedback into updated web layouts, consistently delivering revisions within a day or two and preparing them for developer implementation.',
+    ],
+    name: 'Prince Bernard Diana',
+    avatar: prince,
+    role: 'Department Manager, PCI Tech Center',
   },
 ];
 

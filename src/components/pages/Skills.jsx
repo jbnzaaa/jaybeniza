@@ -9,11 +9,10 @@ import SplitText from '../common/SplitText'
 
 // everything I work with, grouped by the kind of work - design first
 const GROUPS = [
-  { id: 'product-design', title: 'Product Design', items: ['UX Design', 'User Flows', 'Wireframing', 'Prototyping', 'Usability Testing'] },
-  { id: 'ui-design', title: 'UI Design', items: ['High-Fidelity UI', 'Design Systems', 'Responsive Design', 'Design Handoff'] },
-  { id: 'design-tools', title: 'Design Tools', items: ['Figma', 'Figma AI', 'Adobe Photoshop', 'Adobe Illustrator'] },
-  { id: 'development', title: 'Development', items: ['HTML5', 'CSS3', 'Sass', 'JavaScript', 'React', 'Tailwind CSS', 'Bootstrap', 'GSAP'] },
-  { id: 'development-tools', title: 'Development Tools', items: ['Visual Studio Code', 'Git', 'NPM', 'XAMPP', 'Vercel', 'Claude Code', 'ChatGPT'] },
+  { id: 'product-design', title: 'Product Design', items: ['User Flows', 'Information Architecture', 'Interaction Design', 'Wireframing', 'Prototyping', 'High-Fidelity UI', 'Responsive Design', 'Design Systems', 'Design Handoff', 'Usability Testing'] },
+  { id: 'front-end-development', title: 'Front-End Development', items: ['HTML5', 'CSS3', 'SASS/SCSS', 'JavaScript', 'React.js', 'Bootstrap', 'Tailwind CSS'] },
+  { id: 'tools', title: 'Design & Development Tools', items: ['Figma', 'Figma AI', 'Claude Code', 'Jira', 'Adobe Photoshop', 'Adobe Illustrator', 'VS Code', 'Git'] },
+  { id: 'ways-of-working', title: 'Ways of Working', items: ['Agile/Scrum', 'Cross-Functional Collaboration'] },
 ];
 
 /**

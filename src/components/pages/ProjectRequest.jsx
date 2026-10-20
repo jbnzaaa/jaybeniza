@@ -2,6 +2,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 // icons
 import { RiArrowDownSLine, RiArrowRightDownLine, RiInformationLine } from 'react-icons/ri'
+// GSAP
+import gsap from 'gsap'
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
@@ -125,7 +127,17 @@ function ProjectRequest() {
   useEffect(() => {
     // heading and introduction rise letter by letter, like every section's
     const reveal = scrollReveal('#animate-request', { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: '#project-request', start: 'top bottom' });
-    return () => reveal.kill();
+    // then the form, one field at a time as each comes up the screen: it
+    // rises a little into place as it fades in, after the text above it
+    // (each in its turn among the section's reveals - scrollReveal.js)
+    const fields = gsap.utils.toArray('.project-form > .form-field');
+    const lowered = gsap.set(fields, { y: 24, autoAlpha: 0 });
+    const rises = fields.map((field) => scrollReveal(field, { y: 0, autoAlpha: 1 }));
+    return () => {
+      reveal.kill();
+      rises.forEach((rise) => rise.kill());
+      lowered.revert();
+    };
   }, []);
 
   const set = (key) => (e) => setForm((now) => ({ ...now, [key]: e.target.value }));

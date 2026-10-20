@@ -10,7 +10,7 @@ import Footer from './Footer';
 import gsap from 'gsap'
 import ScrollSmoother from 'gsap/ScrollSmoother'
 // Resume
-import Resume from '../../assets/files/Jayson_Beniza_ReadOnly.pdf'
+import Resume from '../../assets/files/Jayson_Beniza.pdf'
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
 // the site's button and section label
@@ -23,7 +23,7 @@ import SplitText from '../common/SplitText'
 // experience entries below it - nothing here that they do not back up
 // the introduction: the page's first screen
 const INTRO = [
-  "I'm Jay Beniza, a UI/UX designer based in the Philippines with 3+ years of experience designing web and mobile products. I began in web design and moved into UI/UX to focus on interfaces that are clear, usable, and consistent.",
+  "I'm Jay Beniza, a UI/UX designer based in the Philippines with 3.5+ years of experience designing web and mobile products. I began in web design and moved into UI/UX to focus on interfaces that are clear, usable, and consistent.",
   'I work from research to final interface, and I stay close to developers through handoff so the design survives the build. I care about sound decisions, precise details, and products that serve both the people who use them and the teams who build them.',
 ];
 

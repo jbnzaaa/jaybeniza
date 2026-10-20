@@ -3,7 +3,7 @@ import React from 'react'
 // per-letter text split
 import SplitText from '../../common/SplitText'
 
-const TEXT = "I'm a UI/UX designer from the Philippines. For 3+ years I've designed web and mobile products, from user flows and wireframes to polished interfaces and the design systems behind them. I also write front-end code, so my designs are made to be built.";
+const TEXT = "I'm a UI/UX designer from the Philippines. For 3.5+ years I've designed web and mobile products, from user flows and wireframes to polished interfaces and the design systems behind them. I also write front-end code, so my designs are made to be built.";
 
 // the landing page's introduction paragraph. its letters share the
 // greeting's id so About.jsx's reveal runs through both

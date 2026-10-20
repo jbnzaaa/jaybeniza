@@ -21,7 +21,7 @@ const PARAGRAPHS = [
 // what someone deciding whether to get in touch looks for, each under a small label
 const FACTS = [
   ['Based in', 'The Philippines'],
-  ['Experience', '3+ years in UI/UX'],
+  ['Experience', '3.5+ years in UI/UX'],
   ['Status', 'Open to freelance and full-time roles'],
 ];
 

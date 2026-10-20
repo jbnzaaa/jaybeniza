@@ -1,7 +1,7 @@
 //
 import React, { useEffect } from 'react'
 // Resume
-import Resume from '../../assets/files/Jayson_Beniza_ReadOnly.pdf'
+import Resume from '../../assets/files/Jayson_Beniza.pdf'
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split

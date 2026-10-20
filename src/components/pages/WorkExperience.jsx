@@ -10,24 +10,24 @@ import SplitText from '../common/SplitText'
 const ROLES = [
   {
     id: 'mid',
-    title: 'Mid-Level UI/UX Designer',
-    company: 'PCI Innovations Tech Center',
+    title: 'Mid UI/UX Designer',
+    company: 'PCI Tech Center',
     dates: 'May 2024 - October 2026',
     bullets: [
-      'Led design on 8 products with product, development, and QA teams, and presented each solution and its rationale to stakeholders.',
-      'Grew the team\'s shared component library into a project-wide design system that kept every interface consistent as the products scaled.',
-      'Designed and shipped 2 web applications end to end, shortening development cycles.',
+      'Led UI/UX design for 7 web and mobile projects, owning everything from requirements to high-fidelity design, and secured client approval within 2 revision rounds on tracked projects with 1-2 day revision turnaround.',
+      'Designed and built 3 end-to-end web and mobile apps with Claude Code, owning the full process from user feedback to front-end delivery, and cut feature development time by about 50% while simplifying core user flows.',
+      'Initiated centralized Figma component libraries and design systems after identifying inconsistent component use, owning 40+ reusable components that standardized UI patterns across projects and the team.',
     ],
   },
   {
     id: 'junior',
     title: 'Junior UI/UX Designer',
-    company: 'PCI Innovations Tech Center',
+    company: 'PCI Tech Center',
     dates: 'March 2023 - May 2024',
     bullets: [
-      'Cut front-end implementation bugs by 70% before deployment by tightening layout consistency across screens.',
-      'Took 6 web and mobile projects from wireframe to prototype to high-fidelity interface.',
-      'Organized 15+ reusable components into structured, version-controlled shared libraries the whole team worked from.',
+      'Designed wireframes, prototypes, and high-fidelity UI for 7 projects (5 web, 2 mobile), responsible for 75+ screens and 25 user flows, with 3 platforms launched to production.',
+      'Delivered developer-ready handoffs within 1-2 days of each request, accountable for specs and design files, giving engineers 2-3 days to review feasibility before development and reducing rework.',
+      'Owned design deliverables within Agile sprints across government and education projects, supporting on-time delivery, including a team that reached 100% sprint completion.',
     ],
   },
 ];

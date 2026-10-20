@@ -30,7 +30,7 @@ const COVERS = {
 // the projects shown, newest year first (projects of one year keep this
 // order). a project with no cover class shows its own `cover` picture, or its first screenshot; one
 // with neither (the example case study) shows a plain panel that says so
-const SHOWN = ['portfoliov3', 'tingi', 'stocknear', 'jaysonbeniza', 'jbnza', 'regain'];
+const SHOWN = ['portfoliov3', 'tingi', 'stocknear', 'gurover', 'comelec', 'psgs', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
 const BY_YEAR = SHOWN.slice()
   .sort((a, b) => Number(PROJECTS[b].year) - Number(PROJECTS[a].year));
 
@@ -51,6 +51,8 @@ const ITEMS = [
     cover: COVERS[id],
     picture: COVERS[id] ? null : (PROJECTS[id].cover || PROJECTS[id].screenshots?.[0]?.src),
     note: PROJECTS[id].caseStudy || PROJECTS[id].inProgress ? 'Case study' : 'Project',
+    // still being worked on: a case study not written up yet
+    ongoing: !!PROJECTS[id].inProgress,
     // what the cursor says over the card: what pressing it opens
     action: PROJECTS[id].caseStudy || PROJECTS[id].inProgress ? 'View case study' : 'View project',
   })),
@@ -205,7 +207,7 @@ function ProjectsPage() {
         desktop:px-[3rem] desktop:pt-8 desktop:pb-28'
         ref={fxGrid}>
         <ul className='work-grid'>
-          {ITEMS.map(({ key, title, label: text, to, cover, picture, note, action }, i) => {
+          {ITEMS.map(({ key, title, label: text, to, cover, picture, note, ongoing, action }, i) => {
             const item = (
               <>
                 {/* the card - the cover. wipes open on scroll (start
@@ -216,8 +218,8 @@ function ProjectsPage() {
                   {/* nothing to show yet - says so */}
                   {!cover && !picture && (
                     <div className='work-cover-image theme-dark project-empty w-full h-full'>
-                      <p className='text-caption'>Ongoing project</p>
-                      <p className='text-caption text-muted'>{note} in progress</p>
+                      <p className='text-caption'>{ongoing ? 'Ongoing project' : title}</p>
+                      <p className='text-caption text-muted'>{ongoing ? `${note} in progress` : 'Preview coming soon'}</p>
                     </div>
                   )}
                 </div>
