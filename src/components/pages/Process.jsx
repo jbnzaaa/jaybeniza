@@ -9,10 +9,10 @@ import SplitText from '../common/SplitText'
 
 // how a project runs with me, start to finish
 const STEPS = [
-  { id: 'understand', number: '01', title: 'Understand', text: 'I start with the people and the problem. I find out who it is for, what they need, and what the business wants out of it.' },
-  { id: 'explore', number: '02', title: 'Explore', text: 'I map user flows and sketch wireframes, trying several directions quickly before committing to one.' },
+  { id: 'understand', number: '01', title: 'Understand', text: 'I start by listening. I learn who the product is for, what they need, and what the business wants from it.' },
+  { id: 'explore', number: '02', title: 'Explore', text: 'I map user flows and sketch wireframes, trying a few directions before settling on one.' },
   { id: 'design', number: '03', title: 'Design', text: 'I turn the strongest direction into high-fidelity screens and a prototype, built on a consistent design system.' },
-  { id: 'build', number: '04', title: 'Refine', text: 'I work with developers through handoff and build, test with users, and keep refining until it works as well as it looks.' },
+  { id: 'build', number: '04', title: 'Refine', text: 'I stay close to developers through handoff, test with users, and keep refining until it works as well as it looks.' },
 ];
 
 /**

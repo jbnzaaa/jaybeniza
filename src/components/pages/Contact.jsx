@@ -13,8 +13,8 @@ import { TransitionLink } from '../common/PageTransition'
 
 const EMAIL = 'mailto:jaysonbeniza@gmail.com';
 
-const QUESTION = 'Hiring a UI/UX designer, or have a product that needs one?';
-const SUPPORT = 'Send me a message.';
+const QUESTION = 'Have a product or a role in mind?';
+const SUPPORT = "Tell me about it, and I'll reply by email.";
 
 // the ways through
 const LINKS = [
@@ -27,12 +27,12 @@ const LINKS = [
 // the section's other face, on the contact page - which is itself the way
 // to get in touch, so it closes on the work instead: `to` is a route
 const PROJECTS_HEADING = 'View My Projects';
-const PROJECTS_TEXT = 'Not ready to send a request? See what I have designed and built first.';
+const PROJECTS_TEXT = 'Not sure yet? Take your time with the work first.';
 const PROJECTS_LINKS = [
   { label: 'All work', to: '/work' },
-  { label: 'Portfolio 2026', to: '/portfolio-2026' },
   { label: 'BiteWise', to: '/bitewise' },
   { label: 'StockNear', to: '/stocknear' },
+  { label: 'Portfolio 2026', to: '/portfolio-2026' },
   { label: 'ReGain', to: '/regain' },
 ];
 
@@ -49,7 +49,7 @@ const PROJECTS_LINKS = [
  *   ask the bar to hide (data-nav-cover, Navbar.jsx)
  */
 function Contact({ page = false, projects = false }) {
-  const heading = projects ? PROJECTS_HEADING : "Let's Work Together";
+  const heading = projects ? PROJECTS_HEADING : 'Send Me a Message';
   const text = projects ? PROJECTS_TEXT : `${QUESTION} ${SUPPORT}`;
   const links = projects ? PROJECTS_LINKS : LINKS;
 

@@ -30,7 +30,7 @@ const COVERS = {
 // the projects shown, newest year first (projects of one year keep this
 // order). a project with no cover class shows its own `cover` picture, or its first screenshot; one
 // with neither (the example case study) shows a plain panel that says so
-const SHOWN = ['portfoliov3', 'tingi', 'stocknear', 'gurover', 'comelec', 'psgs', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
+const SHOWN = ['tingi', 'stocknear', 'portfoliov3', 'gurover', 'comelec', 'psgs', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
 const BY_YEAR = SHOWN.slice()
   .sort((a, b) => Number(PROJECTS[b].year) - Number(PROJECTS[a].year));
 
@@ -87,7 +87,7 @@ const HEADLINE_LINES = [
   'from brief to build.',
 ];
 
-const DESCRIPTION = 'A mix of UX case studies and shipped web projects. Each one sets out the brief, my role, and how the design took shape.';
+const DESCRIPTION = 'UX case studies and shipped web projects. Each one shows the brief, my role, and how the design took shape.';
 
 /**
  * The work page (route /work), in the landing page's layout: a first

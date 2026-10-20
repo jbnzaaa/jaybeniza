@@ -38,7 +38,7 @@ const SERVICES = [
   {
     id: 'product-design',
     title: 'UI/UX Design',
-    text: 'I design web and mobile products from research to final interface. I map the user flows, wireframe and prototype the key screens, and test them with users, so problems are found before the UI is finalized and development begins.',
+    text: 'I design web and mobile products from research to final interface. I map the user flows, prototype the key screens, and test them with users, so problems surface before development begins.',
     includes: [
       { label: 'User flows', figure: route },
       { label: 'Wireframes', figure: wire },
@@ -50,7 +50,7 @@ const SERVICES = [
   {
     id: 'design-systems',
     title: 'Design Systems',
-    text: 'I build and maintain design systems that teams actually use. That means component libraries with clear states and rules, documented color and type styles, and handoff files developers can build from without guessing.',
+    text: 'I build design systems that teams actually use: component libraries with clear states and rules, documented color and type styles, and handoff files developers can build from without guessing.',
     includes: [
       { label: 'Component libraries', figure: rack },
       { label: 'Color and typography styles', figure: ramp },
@@ -62,7 +62,7 @@ const SERVICES = [
   {
     id: 'development',
     title: 'Front-End Development',
-    text: 'I can build what I design. Working in React, Tailwind CSS, and JavaScript keeps my designs realistic, speeds up handoff, and lets me prototype an interaction in the browser when a static mockup is not enough.',
+    text: 'I build what I design. Working in React, Tailwind CSS, and JavaScript keeps my designs realistic and lets me test an interaction in the browser when a static mockup is not enough.',
     includes: [
       { label: 'React', figure: atom },
       { label: 'Tailwind CSS', figure: waves },

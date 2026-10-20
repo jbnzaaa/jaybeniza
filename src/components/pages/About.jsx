@@ -13,9 +13,9 @@ import { REVEAL_AT, inTurn, scrollReveal } from '../../utils/scrollReveal'
 gsap.registerPlugin(ScrollTrigger)
 
 // what to take away about me, set large
-// (one paragraph; the list is kept so another can be added under it)
+// (one paragraph per entry, each set under the one before)
 const PARAGRAPHS = [
-  'I solve the right problems before I design the screens. I bring clarity to complexity, align user needs with business goals, and turn that thinking into digital products that make sense, work hard, and feel effortless.',
+  'I listen more than I talk, and that shapes how I work. I watch how people use a product, find the real problem, and design the simplest interface that solves it. I also build what I design, so the small details make it into the final product.',
 ];
 
 // what someone deciding whether to get in touch looks for, each under a small label

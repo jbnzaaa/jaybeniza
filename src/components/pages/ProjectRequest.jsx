@@ -12,8 +12,8 @@ import SplitText from '../common/SplitText'
 // where a request is sent
 const EMAIL = 'jaysonbeniza@gmail.com';
 
-const HEADLINE = "Let's Work Together";
-const INTRO = 'Tell me what you are building. These are the things I need to know to scope and design it.';
+const HEADLINE = 'Start a Project';
+const INTRO = 'What are you building? The details below help me understand it before we talk.';
 
 // what the project is
 const TYPES = ['Website', 'Web application', 'Mobile app', 'Design system', 'UX audit or redesign', 'Something else'];

@@ -23,7 +23,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 // list, in its order (ProjectsPage.jsx) - newest first, and back to the
 // first after the last. a project that is not on that list (DailyDiscount)
 // is never offered as the next one, and leads on to the first
-const ORDER = ['portfoliov3', 'tingi', 'stocknear', 'gurover', 'comelec', 'psgs', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
+const ORDER = ['tingi', 'stocknear', 'portfoliov3', 'gurover', 'comelec', 'psgs', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
 
 // grid placement of a screenshot by its `start` (see projects.js)
 const SHOT_LAYOUT = {

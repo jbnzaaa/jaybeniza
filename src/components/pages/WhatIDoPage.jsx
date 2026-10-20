@@ -18,10 +18,10 @@ gsap.registerPlugin(ScrollSmoother)
 
 const HEADLINE_LINES = [
   'Design that starts',
-  'with the user.',
+  'with listening.',
 ];
 
-const DESCRIPTION = 'Day to day I work across UI/UX design, design systems, and the front-end knowledge that keeps both practical.';
+const DESCRIPTION = 'I work across UI/UX design, design systems, and front-end development. Most of it is quiet, focused work that keeps the details right.';
 
 /**
  * The What I Do page (route /what-i-do), in the landing page's layout: a

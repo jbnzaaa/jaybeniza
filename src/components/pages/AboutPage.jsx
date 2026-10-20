@@ -12,7 +12,7 @@ import ScrollSmoother from 'gsap/ScrollSmoother'
 // Resume
 import Resume from '../../assets/files/Jayson_Beniza.pdf'
 // scroll reveal
-import { scrollReveal } from '../../utils/scrollReveal'
+import { scrollReveal, scrollRevealSequence } from '../../utils/scrollReveal'
 // the site's button and section label
 import Button from '../common/Button'
 import Tag from '../common/Tag'
@@ -23,8 +23,8 @@ import SplitText from '../common/SplitText'
 // experience entries below it - nothing here that they do not back up
 // the introduction: the page's first screen
 const INTRO = [
-  "I'm Jay Beniza, a UI/UX designer based in the Philippines with 3.5+ years of experience designing web and mobile products. I began in web design and moved into UI/UX to focus on interfaces that are clear, usable, and consistent.",
-  'I work from research to final interface, and I stay close to developers through handoff so the design survives the build. I care about sound decisions, precise details, and products that serve both the people who use them and the teams who build them.',
+  "I'm Jay Beniza, a UI/UX designer based in the Philippines with 3.5+ years of experience designing web and mobile products. I'm quiet by nature, so I listen closely and notice the details others pass over.",
+  'I work from research to final interface and stay close to developers through handoff, so the design survives the build. I prefer careful decisions to loud ones, and products that serve both the people who use them and the teams who build them.',
 ];
 
 // the introduction's first paragraph opens on my name: the words before
@@ -36,7 +36,7 @@ const [BEFORE, AFTER] = INTRO[0].split(NAME + ',').map((part) => part.trim());
 // my picture (public/images)
 const PORTRAIT = `${process.env.PUBLIC_URL}/images/profile.JPG`;
 
-const RESUME_DESCRIPTION = 'My CV covers my experience, skills, certifications, and awards in full. Download a copy, or email me to discuss a role on your team.';
+const RESUME_DESCRIPTION = 'My CV covers my experience, skills, certificates, and awards in full. Download a copy, or email me about a role on your team.';
 const RESUME_LINKS = [
   { label: 'Download CV', href: Resume, download: 'Jay-Beniza-CV.pdf' },
   { label: 'Email me', href: 'mailto:jaysonbeniza@gmail.com' },
@@ -128,8 +128,13 @@ function AboutPage() {
     // (the introduction is long: its letters rise in reading order across
     // a set time, rather than a fixed step each, so the last line is not
     // seconds behind the first)
-    const intro = scrollReveal('#animate-about-intro', { y: 0, stagger: .012, ease: 'power1.in' },
-      { trigger: '#about-hero', start: 'top bottom' });
+    // the words up to my name rise first, then the line under my name draws
+    // across while the rest of the introduction rises after it
+    const intro = scrollRevealSequence([
+      { targets: '#animate-about-intro-lead', vars: { y: 0, stagger: .012, ease: 'power1.in' } },
+      { targets: '#about-hero .about-name', vars: { '--name-line': 1 } },
+      { targets: '#animate-about-intro', vars: { y: 0, stagger: .012, ease: 'power1.in' }, position: '<' },
+    ], { trigger: '#about-hero', start: 'top bottom' });
     const resume = scrollReveal('#animate-about-page-resume', { y: 0, stagger: .02, ease: 'power1.in' },
       { trigger: '#resume' });
 
@@ -180,10 +185,10 @@ function AboutPage() {
               laptop:leading-tight
               laptop-lg:leading-tight
               desktop:leading-tight'>
-              <SplitText text={BEFORE} id='animate-about-intro' />
+              <SplitText text={BEFORE} id='animate-about-intro-lead' />
               {/* my name - point at it (or press it) to see my picture */}
               <span className='about-name' role='button' tabIndex={0} aria-label='Jay Beniza - show my picture'>
-                <SplitText text={NAME} id='animate-about-intro' />
+                <SplitText text={NAME} id='animate-about-intro-lead' />
               </span>
               <SplitText text=',' id='animate-about-intro' />
               <SplitText text={AFTER} id='animate-about-intro' />

@@ -10,11 +10,11 @@ import Button from '../common/Button'
 import SplitText from '../common/SplitText'
 
 // (what the headline does not say: how long, what kind of work, and that I am available)
-const HIGHLIGHT_TEXT = 'With 3.5+ years in UI/UX, I turn user needs into clear, usable interfaces for web and mobile. Currently open to freelance and full-time roles.';
+const HIGHLIGHT_TEXT = 'A UI/UX designer with 3.5+ years of focused work on web and mobile products. Open to freelance and full-time roles.';
 
 const PROFESSION_LINES = [
-  'I craft digital experiences',
-  'that make complex things simple.',
+  'I pay attention to what',
+  'others might overlook.',
 ];
 
 /**
@@ -57,8 +57,7 @@ function Hero() {
         {/* headline */}
         <h1>
           {PROFESSION_LINES.map((line) => (
-            <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.92] tracking-tight
-              text-hero'>
+            <span key={line} className='hero-designerdev hero-headline flex flex-wrap font-flexible font-bold leading-[.92] tracking-tight'>
               <SplitText text={line} id='animate-hero-profession' />
             </span>
           ))}
