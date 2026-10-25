@@ -9,7 +9,6 @@ import Home from './components/pages/Home';
 import AboutPage from './components/pages/AboutPage';
 import ProjectsPage from './components/pages/ProjectsPage';
 import ContactPage from './components/pages/ContactPage';
-import WhatIDoPage from './components/pages/WhatIDoPage';
 import DailyDiscount from './components/pages/projects/DailyDiscount';
 import Jaysonbeniza from './components/pages/projects/Jaysonbeniza';
 import Jbnza from './components/pages/projects/Jbnza';
@@ -214,7 +213,8 @@ function App() {
                 {/* the routes' earlier names */}
                 <Route path='/projects' element={<Navigate to='/work' replace/>}/>
                 <Route path='/contact' element={<Navigate to='/get-in-touch' replace/>}/>
-                <Route path='/what-i-do' element={<WhatIDoPage/>}/>
+                {/* the What I Do page is gone: its services are on the landing page */}
+                <Route path='/what-i-do' element={<Navigate to='/' replace/>}/>
                 <Route path='/dailydiscount' element={<DailyDiscount/>}/>
                 <Route path='/jbnza' element={<Jbnza/>}/>
                 <Route path='/jaysonbeniza' element={<Jaysonbeniza/>}/>

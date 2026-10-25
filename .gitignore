@@ -21,3 +21,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# design source files - the site uses resized copies in src/assets/files/images
+/src/assets/work_mockups
+
+# crash dumps
+*.stackdump

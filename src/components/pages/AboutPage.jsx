@@ -10,7 +10,7 @@ import Footer from './Footer';
 import gsap from 'gsap'
 import ScrollSmoother from 'gsap/ScrollSmoother'
 // Resume
-import Resume from '../../assets/files/Jayson_Beniza.pdf'
+import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 // scroll reveal
 import { scrollReveal, scrollRevealSequence } from '../../utils/scrollReveal'
 // the site's button and section label
@@ -128,12 +128,13 @@ function AboutPage() {
     // (the introduction is long: its letters rise in reading order across
     // a set time, rather than a fixed step each, so the last line is not
     // seconds behind the first)
-    // the words up to my name rise first, then the line under my name draws
-    // across while the rest of the introduction rises after it
+    // the words up to my name rise first; as the name's last letters land,
+    // the line under it draws across from the left, at the letters' own
+    // pace and ease, while the rest of the introduction rises after it
     const intro = scrollRevealSequence([
       { targets: '#animate-about-intro-lead', vars: { y: 0, stagger: .012, ease: 'power1.in' } },
-      { targets: '#about-hero .about-name', vars: { '--name-line': 1 } },
-      { targets: '#animate-about-intro', vars: { y: 0, stagger: .012, ease: 'power1.in' }, position: '<' },
+      { targets: '#about-hero .about-name-line', vars: { scaleX: 1, duration: .6 }, position: '-=.3' },
+      { targets: '#animate-about-intro', vars: { y: 0, stagger: .012, ease: 'power1.in' }, position: '<.15' },
     ], { trigger: '#about-hero', start: 'top bottom' });
     const resume = scrollReveal('#animate-about-page-resume', { y: 0, stagger: .02, ease: 'power1.in' },
       { trigger: '#resume' });
@@ -189,6 +190,8 @@ function AboutPage() {
               {/* my name - point at it (or press it) to see my picture */}
               <span className='about-name' role='button' tabIndex={0} aria-label='Jay Beniza - show my picture'>
                 <SplitText text={NAME} id='animate-about-intro-lead' />
+                {/* the underline, drawn in by the introduction's reveal */}
+                <span className='about-name-line' aria-hidden='true'/>
               </span>
               <SplitText text=',' id='animate-about-intro' />
               <SplitText text={AFTER} id='animate-about-intro' />

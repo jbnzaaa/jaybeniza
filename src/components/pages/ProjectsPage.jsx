@@ -87,7 +87,7 @@ const HEADLINE_LINES = [
   'from brief to build.',
 ];
 
-const DESCRIPTION = 'UX case studies and shipped web projects. Each one shows the brief, my role, and how the design took shape.';
+const DESCRIPTION = 'UX case studies and shipped products, each showing how I move from research to design to code.';
 
 /**
  * The work page (route /work), in the landing page's layout: a first

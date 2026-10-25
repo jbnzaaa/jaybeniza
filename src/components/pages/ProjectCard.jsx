@@ -8,6 +8,9 @@
 // a slot with no `image` previews as a plain panel
 // Portfolio 2026's preview: a screen of this site
 import v3_services from '../../assets/files/images/portfolio/portfolio-v3-2.jpg'
+// the mock-ups of the others
+import bitewise_cover from '../../assets/files/images/bitewise/mockup-cover.webp'
+import gurover_cover from '../../assets/files/images/gurover/mockup-cover.webp'
 
 export const PROJECT_CARDS = [
   {
@@ -15,7 +18,8 @@ export const PROJECT_CARDS = [
     title: 'BiteWise',
     to: '/bitewise',
     image: null,
-    category: 'UX Case Study / Mobile App',
+    picture: bitewise_cover,
+    category: 'UX Case Study / Personal Concept',
     meta: '2026 / UX Case Study / UI/UX Designer',
   },
   {
@@ -24,7 +28,7 @@ export const PROJECT_CARDS = [
     to: '/stocknear',
     image: null,
     category: 'UX Case Study / Mobile App',
-    meta: '2026 / UX Case Study / UI/UX Designer',
+    meta: '2026 / UX Case Study / Product Designer',
   },
   {
     id: 'portfoliov3',
@@ -40,7 +44,8 @@ export const PROJECT_CARDS = [
     title: 'GuRover',
     to: '/gurover',
     image: null,
+    picture: gurover_cover,
     category: 'Web/Mobile Platform / Team Project',
-    meta: '2025 / Web/Mobile Platform / Web Developer',
+    meta: '2026 / Web/Mobile Platform / UI/UX Designer',
   },
 ];

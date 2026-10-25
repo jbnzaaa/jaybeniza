@@ -11,7 +11,6 @@ import SplitText from '../common/SplitText'
 import Hairline from '../common/Hairline'
 import route from '../../utils/hairline/route'
 import wire from '../../utils/hairline/wire'
-import finish from '../../utils/hairline/finish'
 import proto from '../../utils/hairline/proto'
 import tasks from '../../utils/hairline/tasks'
 import rack from '../../utils/hairline/rack'
@@ -28,7 +27,7 @@ import ease from '../../utils/hairline/ease'
 // what I do, in three parts: a service's name, what I do in it, and
 // `includes` - what it covers. Each thing it covers has a drawing of its
 // own, an isometric line figure that answers the pointer: a flow as tiles
-// on a board, a screen in bare blocks, a finished phone, two linked
+// on a board, a screen in bare blocks, two linked
 // screens, a test script; a board of components, a ramp of chips over
 // type, a page at every width, a booklet, a design meeting its build;
 // and the front-end stack as itself - React's orbits, Tailwind's waves,
@@ -38,19 +37,18 @@ const SERVICES = [
   {
     id: 'product-design',
     title: 'UI/UX Design',
-    text: 'I design web and mobile products from research to final interface. I map the user flows, prototype the key screens, and test them with users, so problems surface before development begins.',
+    text: 'I design web and mobile products from research to final interface. Mapping the user flows, prototyping the key screens, and testing them with users, so problems surface before development begins.',
     includes: [
       { label: 'User flows', figure: route },
-      { label: 'Wireframes', figure: wire },
-      { label: 'High-fidelity UI', figure: finish },
+      { label: 'Low to high-fidelity UI wireframes', figure: wire },
       { label: 'Interactive prototypes', figure: proto },
-      { label: 'Usability tests', figure: tasks },
+      { label: 'Usability testing', figure: tasks },
     ],
   },
   {
     id: 'design-systems',
     title: 'Design Systems',
-    text: 'I build design systems that teams actually use: component libraries with clear states and rules, documented color and type styles, and handoff files developers can build from without guessing.',
+    text: 'I build design systems that teams can actually use: component libraries with clear states and rules, documented color and type styles, and handoff files developers can build from without guessing.',
     includes: [
       { label: 'Component libraries', figure: rack },
       { label: 'Color and typography styles', figure: ramp },
@@ -62,12 +60,12 @@ const SERVICES = [
   {
     id: 'development',
     title: 'Front-End Development',
-    text: 'I build what I design. Working in React, Tailwind CSS, and JavaScript keeps my designs realistic and lets me test an interaction in the browser when a static mockup is not enough.',
+    text: 'I build what I design. This keeps my designs realistic and lets me test and interact in the browser when a static mockup is not enough.',
     includes: [
-      { label: 'React', figure: atom },
-      { label: 'Tailwind CSS', figure: waves },
-      { label: 'HTML5, CSS3, and Sass', figure: markup },
+      { label: 'HTML5 and CSS3', figure: markup },
+      { label: 'Tailwind CSS and SASS', figure: waves },
       { label: 'JavaScript', figure: key },
+      { label: 'React JS', figure: atom },
       { label: 'GSAP animations', figure: ease },
     ],
   },
@@ -162,8 +160,7 @@ function ServiceCard({ id, title, text, includes, detailed }) {
  * card's height.
  *
  * @param {boolean} [detailed] - each service in full: with the list of
- *   what it covers (the landing page and the What I Do page both ask
- *   for it)
+ *   what it covers (the landing page asks for it)
  */
 function Services({ detailed = false }) {
   useEffect(() => {

@@ -4,8 +4,6 @@ import React, { useCallback, useEffect } from 'react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import ScrollSmoother from 'gsap/ScrollSmoother'
-// page-to-page wipe
-import { TransitionLink } from '../../common/PageTransition'
 // the site's button and section label
 import Button from '../../common/Button'
 import Tag from '../../common/Tag'
@@ -15,7 +13,8 @@ import { scrollReveal, scrollRevealSequence } from '../../../utils/scrollReveal'
 import SplitText from '../../common/SplitText'
 // every project's content - for the link to the next one
 import { PROJECTS } from './projects'
-// contact section - same block the landing page ends on
+// the closing section - the landing page's contact block, here leading
+// on to the next project
 import Contact from '../Contact'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
@@ -59,48 +58,13 @@ const SHOT_LAYOUT = {
     desktop:col-span-5 desktop:col-start-4`,
 };
 
-// ONGOING - what each section of the case study shows until a project
-// supplies its own under `caseStudy` in projects.js, with the same keys
-// (see the shape of each below). nothing here is a claim about a project:
-// every line says that part of the write-up is still being worked on
-const PLACEHOLDER = {
-  challenge: 'Ongoing. The problem this project set out to solve, and the context around it, is being written up.',
-  role: 'Ongoing. What I was responsible for on this project is being written up.',
-  responsibilities: ['Responsibilities to be added'],
-  discovery: 'Ongoing. The research behind this project is being written up.',
-  painPoints: ['Pain points to be added'],
-  insight: 'Ongoing. The key insight will be added once the research is written up.',
-  approach: 'Ongoing. The user flow and information architecture are being prepared.',
-  process: 'Ongoing. The design process, from wireframes to final screens, is being documented.',
-  stages: [
-    { title: 'Wireframes', text: 'Ongoing.' },
-    { title: 'Iterations', text: 'Ongoing.' },
-    { title: 'Final', text: 'Ongoing.' },
-  ],
-  decisionsIntro: 'Ongoing. The decisions that shaped the design are being written up.',
-  decisions: [
-    { title: 'Decision one', text: 'Ongoing.' },
-    { title: 'Decision two', text: 'Ongoing.' },
-    { title: 'Decision three', text: 'Ongoing.' },
-  ],
-  final: 'Ongoing. The final screens are being prepared.',
-  system: 'Ongoing. The design system behind the product is being documented.',
-  outcome: 'Ongoing. Results will be added when the project is complete.',
-  metrics: [
-    { value: '--', label: 'Result to be added' },
-    { value: '--', label: 'Result to be added ' },
-    { value: '--', label: 'Result to be added  ' },
-  ],
-  reflection: 'Ongoing. What I learned on this project will be added when it is complete.',
-};
-
 // what each section of a platform page shows until a project supplies its
-// own under `platform` in projects.js, with the same keys. these are
+// own under `platform` in projects.js, with the same keys (one it sets to
+// null is left off the page). these are
 // projects already made, so nothing here calls them ongoing: each line
 // only says that part of the page is still to be written
 const PLATFORM_PLACEHOLDER = {
-  overview: 'An overview of the platform, who it was made for and the need it meets, is to be added.',
-  users: ['Users to be added'],
+  overview: 'An overview of the platform and the need it meets is to be added.',
   role: 'What I was responsible for on this platform is to be added.',
   contributions: ['Contributions to be added'],
   featuresIntro: 'The main features of the platform are to be added.',
@@ -226,37 +190,93 @@ function Points({ id, label, items, className = '' }) {
 // a list of named notes as cards - the site's own card, as in "How I
 // work" (Process.jsx): its number at the top, its name and note at the
 // bottom, three to a row (one under another on a phone)
-function Cards({ id, items }) {
+// (`rows`: one card to a row, each a band - number, then name and note)
+// (each card opens as it comes up the screen, then its own text rises -
+// .case-card, revealed in ProjectPage below; `id` is no longer needed by
+// the text, which is the card's own)
+// eslint-disable-next-line no-unused-vars
+function Cards({ id, items, rows = false }) {
   return (
-    <ol className='grid gap-4
+    <ol className={rows ? 'grid grid-cols-1 gap-4' : `grid gap-4
       mobile:grid-cols-1
       tablet:grid-cols-3
       laptop:grid-cols-3
       laptop-lg:grid-cols-3
-      desktop:grid-cols-3'>
+      desktop:grid-cols-3`}>
       {items.map((item, i) => (
-        <li className='theme-dark bg-card m-0' key={item.title}>
-          <div className='h-full flex flex-col justify-between
+        <li className='case-card theme-dark bg-card m-0' key={item.title}>
+          <div className={rows ? 'h-full flex flex-col justify-between p-6 gap-y-8' : `h-full flex flex-col justify-between
             mobile:p-6 mobile:gap-y-12
             tablet:p-6 tablet:gap-y-16
             laptop:p-6 laptop:gap-y-24
             laptop-lg:p-6 laptop-lg:gap-y-28
-            desktop:p-6 desktop:gap-y-32'>
+            desktop:p-6 desktop:gap-y-32`}>
             <p className='text-caption text-muted'>
-              <SplitText text={String(i + 1).padStart(2, '0')} id={`animate-case-${id}`} />
+              <SplitText text={String(i + 1).padStart(2, '0')} id='animate-card' />
             </p>
             <div>
               <h3 className='flex flex-wrap font-flexible font-medium leading-none text-heading mb-4'>
-                <SplitText text={item.title} id={`animate-case-${id}`} />
+                <SplitText text={item.title} id='animate-card' />
               </h3>
               <p className='flex flex-wrap text-caption text-muted'>
-                <SplitText text={item.text} id={`animate-case-${id}`} by='word' />
+                <SplitText text={item.text} id='animate-card' by='word' />
               </p>
             </div>
           </div>
         </li>
       ))}
     </ol>
+  )
+}
+
+// a case study's lead - the one line a section turns on, set large
+function Lead({ id, text, className = '' }) {
+  return (
+    <h2 className={`flex flex-wrap font-flexible font-medium leading-[.95] tracking-tight text-heading ${className}`}>
+      <SplitText text={text} id={`animate-case-${id}`} />
+    </h2>
+  )
+}
+
+// notes under small labels, one under another: a decision's challenge,
+// solution and rationale
+function Notes({ id, items, className = '' }) {
+  return (
+    <dl className={`flex flex-col ${className}`}>
+      {items.map(({ label, text }) => (
+        <div className='border-t border-rule py-4' key={label}>
+          <dt className='text-caption text-muted mb-2'>
+            <SplitText text={label} id={`animate-case-${id}`} />
+          </dt>
+          <dd className='flex flex-wrap text-body m-0'>
+            <SplitText text={text} id={`animate-case-${id}`} by='word' />
+          </dd>
+        </div>
+      ))}
+    </dl>
+  )
+}
+
+// a section's screens, full width under it, tops level: three, four or
+// two to a row (`layout`) from tablet width up, two on a phone - kept in
+// rows so the result is seen without a long scroll. the screens are drawn
+// at 402px wide, so each row is held to the width that shows them at that
+// size or under, never stretched past it. each screen opens with the
+// screenshots' reveal (ProjectPage, below)
+const SHOTS = {
+  trio: 'grid items-start gap-4 mx-auto max-w-[1238px] mobile:grid-cols-2 tablet:grid-cols-3 laptop:grid-cols-3 laptop-lg:grid-cols-3 desktop:grid-cols-3',
+  quad: 'grid items-start gap-4 mx-auto max-w-[1656px] mobile:grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-4 laptop-lg:grid-cols-4 desktop:grid-cols-4',
+  pair: 'grid items-start gap-4 mx-auto max-w-[820px] grid-cols-2',
+};
+function Shots({ items, layout = 'trio', onLoad }) {
+  return (
+    <div className={SHOTS[layout]}>
+      {items.map(({ src, alt }) => (
+        <div className='screenshot-container' key={alt}>
+          <img src={src} alt={alt} className='screenshot-img' onLoad={onLoad}/>
+        </div>
+      ))}
+    </div>
   )
 }
 
@@ -277,8 +297,9 @@ function Panel({ label, className = '' }) {
  *
  * A platform - a project with `platform` in projects.js, a product made
  * for a client or company - is its hero, its cover, then an overview of
- * the platform and who it serves, my role and contributions, its key
- * features, the design approach, its screens, the design system, and
+ * the platform, my role and contributions, its key
+ * features, the design approach, its screens, the design system (unless
+ * it is left out), and
  * where it stands and what it achieved. Its written parts come from its
  * `platform` and fall back to PLATFORM_PLACEHOLDER above.
  *
@@ -291,24 +312,25 @@ function Panel({ label, className = '' }) {
  * and the link to the next project. No research or process sections it
  * has nothing to put in.
  *
- * A case study - a project that has a `caseStudy` - is laid out in thirteen parts - hero,
- * challenge, my role, discovery, key insight, approach, design process,
- * key design decisions, final product, design system, outcome, reflection
- * and a closing link to the next project and the contact section - in the
- * landing page's design: light and dark sections in turn, each under a
- * small boxed label, with the written content of every section in the
- * same right-hand columns. One layout for every project. The hero, role
- * details and screenshots come from the project's entry in projects.js;
- * the written parts come from its `caseStudy` and fall back to
- * PLACEHOLDER above until it has one.
+ * A case study - a project that has a `caseStudy` - is its hero, its
+ * cover, then its own sections in the order it gives them, and the link to
+ * the next project - in the landing page's design: light and dark
+ * sections in turn, each under a small boxed label, with its written
+ * content in the same right-hand columns and its screens full width under
+ * it. A section (projects.js) has a `title` for its label and any of: a
+ * `lead` line set large, `text` (a paragraph, or a list of them),
+ * `notes` (labelled paragraphs), `cards` (`cardRows`: one to a row), `points` (a labelled list) and
+ * `shots` (its screens, and their `layout`).
  */
 function ProjectPage({ project }) {
   // which layout: a case study, a platform, or a build
   const isStudy = !!project.caseStudy;
   const isDraft = !!project.inProgress;
   const isPlatform = !!project.platform;
-  const study = { ...PLACEHOLDER, ...(project.caseStudy || {}) };
   const platform = { ...PLATFORM_PLACEHOLDER, ...(project.platform || {}) };
+  // a platform page that leaves out its design system has one section
+  // fewer, so the sections after it keep turning light and dark
+  const afterScreens = platform.system ? LIGHT : DARK;
   // (a project may have no screenshots yet: panels stand in for them)
   const [hero, ...shots] = project.screenshots || [];
   const here = ORDER.findIndex((key) => PROJECTS[key] === project);
@@ -338,11 +360,19 @@ function ProjectPage({ project }) {
     ], { trigger: card }));
 
     // placeholder panels wipe up the same way
+    // each card - the case study's, a platform's features and results - is
+    // a component of its own: its frame wipes up from its bottom edge, then
+    // its number, name and note rise, as that card comes up the screen
+    const cards = gsap.utils.toArray('.case-card').map((card) => scrollRevealSequence([
+      { targets: card, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },
+      { targets: card.querySelectorAll('.split-letter'), vars: { y: 0, stagger: .012, ease: 'power1.in' }, position: '<.3' },
+    ], { trigger: card }));
+
     const panels = gsap.utils.toArray('.case-panel').map((panel) => scrollReveal(
       panel, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' }));
 
     return () => {
-      [...sections, ...images, ...panels].forEach((reveal) => reveal.kill());
+      [...sections, ...images, ...cards, ...panels].forEach((reveal) => reveal.kill());
     };
   }, [project]);
 
@@ -397,6 +427,8 @@ function ProjectPage({ project }) {
                 ['Year', project.year],
                 ['Role', project.roles.join(', ')],
                 ['Category', project.category],
+                ...(project.status ? [['Status', project.status]] : []),
+                ...(project.details || []),
               ].map(([label, value]) => (
                 <div key={label}>
                   <dt className='text-caption text-muted mb-2'>
@@ -429,7 +461,7 @@ function ProjectPage({ project }) {
             tablet:aspect-[16/10]'
             id='case-visual'>
             {hero
-              ? <img src={hero.src} alt={hero.alt} className='screenshot-img w-full h-full object-cover object-top' onLoad={remeasure}/>
+              ? <img src={hero.src} alt={hero.alt} className='screenshot-img w-full h-full object-cover object-center' onLoad={remeasure}/>
               : <Panel label='Cover' className='w-full h-full pt-24' />}
           </div>
         </section>
@@ -446,128 +478,28 @@ function ProjectPage({ project }) {
         </>
         ) : isStudy ? (
         <>
-        {/* 02 challenge - problem, context */}
-        <CaseSection id='challenge' title='The Challenge' theme={LIGHT}>
-          <Copy id='challenge' text={study.challenge} />
-        </CaseSection>
-
-        {/* 03 my role - responsibilities, contribution. the two lists one
-          under the other, like discovery's */}
-        <CaseSection id='role' title='My Role' theme={DARK}>
-          <Copy id='role' text={study.role} className={BELOW} />
-          <Points id='role' label='Responsibilities' items={study.responsibilities} className={BELOW} />
-          {/* (the tools list only once there are tools to list) */}
-          {project.technologies.length > 0 && <Points id='role' label='Tools' items={project.technologies} />}
-        </CaseSection>
-
-        {/* 04 discovery - research, pain points */}
-        <CaseSection id='discovery' title='Research & Discovery' theme={LIGHT}>
-          <Copy id='discovery' text={study.discovery} className={BELOW} />
-          <Points id='discovery' label='Pain points' items={study.painPoints} />
-        </CaseSection>
-
-        {/* 05 key insight - the one thing, in the same columns as the rest */}
-        <CaseSection id='insight' title='Key Insight' theme={DARK}>
-          <Copy id='insight' text={study.insight} />
-        </CaseSection>
-
-        {/* 06 approach - user flow / information architecture */}
-        <CaseSection id='approach' title='User Flow & Structure' theme={LIGHT}>
-          <Copy id='approach' text={study.approach} className={BELOW} />
-          <Panel label='User flow / IA' className='aspect-[16/9]' />
-        </CaseSection>
-
-        {/* 07 design process - wireframes, iterations, final: a card
-          each, side by side */}
-        <CaseSection id='process' title='Design Process' theme={DARK}>
-          <Copy id='process' text={study.process} className={BELOW} />
-          <Cards id='process' items={study.stages} />
-        </CaseSection>
-
-        {/* 08 key design decisions - an opening paragraph, then a card
-          for each decision, side by side */}
-        <CaseSection id='decisions' title='Key Design Decisions' theme={LIGHT}>
-          <Copy id='decisions' text={study.decisionsIntro} className={BELOW} />
-          <Cards id='decisions' items={study.decisions} />
-        </CaseSection>
-
-        {/* 09 final product - major features, polished UI */}
-        <CaseSection id='final' title='Final Design' theme={DARK} below={(
-          <div className='grid grid-cols-8 gap-x-6
-            mobile:gap-y-6
-            tablet:gap-y-10
-            laptop:gap-y-12
-            laptop-lg:gap-y-20
-            desktop:gap-y-20'>
-            {shots.map(({ src, alt, start }) => (
-              <div className={`screenshot-container ${SHOT_LAYOUT[start]}`} key={alt}>
-                <img src={src} alt={alt} className='screenshot-img' onLoad={remeasure}/>
-              </div>
+        {/* a case study: its own sections, light and dark in turn */}
+        {project.caseStudy.map((part, i) => (
+          <CaseSection id={part.id} title={part.title} theme={i % 2 ? DARK : LIGHT} key={part.id}
+            below={part.shots && <Shots {...part.shots} onLoad={remeasure} />}>
+            {part.lead && <Lead id={part.id} text={part.lead} className={part.text || part.notes || part.cards || part.points ? BELOW : ''} />}
+            {[].concat(part.text || []).map((paragraph, j, all) => (
+              <Copy id={part.id} text={paragraph} key={paragraph}
+                className={j < all.length - 1 || part.notes || part.cards || part.points ? BELOW : ''} />
             ))}
-            {!shots.length && [['Screen one', 1], ['Screen two', 4], ['Screen three', 2]].map(([name, start]) => (
-              <Panel label={name} className={`aspect-[16/10] ${SHOT_LAYOUT[start]}`} key={name} />
-            ))}
-          </div>
-        )}>
-          <Copy id='final' text={study.final} />
-        </CaseSection>
-
-        {/* 10 design system - components, visual language. its three
-          parts as three cards, side by side */}
-        <CaseSection id='system' title='Design System' theme={LIGHT}>
-          <Copy id='system' text={study.system} className={BELOW} />
-          <div className='grid gap-4
-            mobile:grid-cols-1
-            tablet:grid-cols-3
-            laptop:grid-cols-3
-            laptop-lg:grid-cols-3
-            desktop:grid-cols-3'>
-            {['Color', 'Typography', 'Components'].map((part) => (
-              <Panel label={part} className='aspect-[4/3]' key={part} />
-            ))}
-          </div>
-        </CaseSection>
-
-        {/* 11 outcome - impact, results. one card per figure */}
-        <CaseSection id='outcome' title='Results & Impact' theme={DARK}>
-          <Copy id='outcome' text={study.outcome} className={BELOW} />
-          <ul className='grid gap-4
-            mobile:grid-cols-1
-            tablet:grid-cols-3
-            laptop:grid-cols-3
-            laptop-lg:grid-cols-3
-            desktop:grid-cols-3'>
-            {study.metrics.map((metric) => (
-              <li className={`${CARD} flex flex-col justify-between
-                mobile:gap-y-8
-                tablet:gap-y-12
-                laptop:gap-y-16
-                laptop-lg:gap-y-20
-                desktop:gap-y-24`}
-                key={metric.label}>
-                <p className='font-flexible font-medium leading-none text-title'>
-                  <SplitText text={metric.value} id='animate-case-outcome' />
-                </p>
-                <p className='flex flex-wrap text-caption text-muted'>
-                  <SplitText text={metric.label} id='animate-case-outcome' by='word' />
-                </p>
-              </li>
-            ))}
-          </ul>
-        </CaseSection>
-
-        {/* 12 reflection - what I learned */}
-        <CaseSection id='reflection' title='Reflection & Learnings' theme={LIGHT}>
-          <Copy id='reflection' text={study.reflection} />
-        </CaseSection>
-
+            {part.notes && <Notes id={part.id} items={part.notes} className={part.cards || part.points ? BELOW : ''} />}
+            {part.cards && <Cards id={part.id} items={part.cards} rows={part.cardRows} />}
+            {part.points && <Points id={part.id} label={part.points.label} items={part.points.items} className={part.cards ? 'mt-8' : ''} />}
+          </CaseSection>
+        ))}
         </>
         ) : isPlatform ? (
         <>
-        {/* a platform. overview - what it is, and who it serves */}
+        {/* a platform. overview - what it is, a paragraph to each entry */}
         <CaseSection id='overview' title='Project Overview' theme={LIGHT}>
-          <Copy id='overview' text={platform.overview} className={BELOW} />
-          <Points id='overview' label='Who it serves' items={platform.users} />
+          {[].concat(platform.overview).map((paragraph, i, all) => (
+            <Copy id='overview' text={paragraph} className={i < all.length - 1 ? BELOW : ''} key={paragraph} />
+          ))}
         </CaseSection>
 
         {/* my role - what I owned, and the tools, once there are any */}
@@ -609,6 +541,7 @@ function ProjectPage({ project }) {
         </CaseSection>
 
         {/* design system - its three parts as three panels, side by side */}
+        {platform.system && (
         <CaseSection id='system' title='Design System' theme={DARK}>
           <Copy id='system' text={platform.system} className={BELOW} />
           <div className='grid gap-4
@@ -622,10 +555,12 @@ function ProjectPage({ project }) {
             ))}
           </div>
         </CaseSection>
+        )}
 
         {/* status and impact - where it stands, then one card per figure */}
-        <CaseSection id='outcome' title='Status & Impact' theme={LIGHT}>
-          <Copy id='outcome' text={platform.outcome} className={BELOW} />
+        <CaseSection id='outcome' title='Status & Impact' theme={afterScreens}>
+          <Copy id='outcome' text={platform.outcome} className={platform.metrics ? BELOW : ''} />
+          {platform.metrics && (
           <ul className='grid gap-4
             mobile:grid-cols-1
             tablet:grid-cols-3
@@ -633,7 +568,7 @@ function ProjectPage({ project }) {
             laptop-lg:grid-cols-3
             desktop:grid-cols-3'>
             {platform.metrics.map((metric) => (
-              <li className={`${CARD} flex flex-col justify-between
+              <li className={`case-card ${CARD} flex flex-col justify-between
                 mobile:gap-y-8
                 tablet:gap-y-12
                 laptop:gap-y-16
@@ -641,14 +576,15 @@ function ProjectPage({ project }) {
                 desktop:gap-y-24`}
                 key={metric.label}>
                 <p className='font-flexible font-medium leading-none text-title'>
-                  <SplitText text={metric.value} id='animate-case-outcome' />
+                  <SplitText text={metric.value} id='animate-card' />
                 </p>
                 <p className='flex flex-wrap text-caption text-muted'>
-                  <SplitText text={metric.label} id='animate-case-outcome' by='word' />
+                  <SplitText text={metric.label} id='animate-card' by='word' />
                 </p>
               </li>
             ))}
           </ul>
+          )}
         </CaseSection>
         </>
         ) : (
@@ -680,33 +616,9 @@ function ProjectPage({ project }) {
         </>
         )}
 
-        {/* 13 cta - next project: its name, a link to it that behaves like
-          the top bar's links - its letters roll under the pointer
-          (hoverRoll.js) and the cursor's square goes into it (Cursor.jsx)
-          - in the full text colour, then the contact section. from laptop width up
-          the name is against the right edge, beside the label; below
-          that the two are one under the other, both from the left */}
-        <CaseSection id='next' title='Next Project' theme={isStudy || isDraft || isPlatform ? DARK : LIGHT}>
-          <div className='flex
-            mobile:justify-start
-            tablet:justify-start
-            laptop:justify-end
-            laptop-lg:justify-end
-            desktop:justify-end'>
-            <TransitionLink to={next.path} className='nav-item' aria-label={`Next project: ${next.title}`} data-cursor-snap>
-              <span className='flex flex-wrap font-flexible font-medium leading-[.92] tracking-tight text-next [color:inherit]
-                mobile:justify-start
-                tablet:justify-start
-                laptop:justify-end
-                laptop-lg:justify-end
-                desktop:justify-end'>
-                <SplitText text={next.title} id='animate-case-next' />
-              </span>
-            </TransitionLink>
-          </div>
-        </CaseSection>
       </article>
-      <Contact/>
+      {/* the close: the next project, in the contact section's layout */}
+      <Contact next={next}/>
     </>
   )
 }

@@ -10,14 +10,17 @@ import Button from '../common/Button'
 import SplitText from '../common/SplitText'
 
 // (what the headline does not say: how long, what kind of work, and that I am available)
-const HIGHLIGHT_TEXT = 'A UI/UX designer with 3.5+ years of focused work on web and mobile products. Open to freelance and full-time roles.';
+const HIGHLIGHT_TEXT = 'A UI/UX designer with 3.5+ years of experience crafting digital experiences for web and mobile products. Open to freelance and full-time roles.';
 
-// one sentence, left to wrap where the screen ends it - set as two fixed
-// lines, a narrow screen pushed "what" onto a line of its own and the
+// the headline, broken into two set lines from tablet width up. on a
+// phone it is one sentence left to wrap where the screen ends it: set as
+// the two lines there, "what" was pushed onto a line of its own and the
 // second line still started fresh under it
 const PROFESSION_LINES = [
-  'I pay attention to what others might overlook.',
+  'I pay attention to what',
+  'others might overlook.',
 ];
+const PROFESSION = PROFESSION_LINES.join(' ');
 
 /**
  * The landing page's first screen, on the light theme: the headline at the
@@ -56,14 +59,18 @@ function Hero() {
         laptop:px-[2rem] laptop:pt-24 laptop:pb-10 laptop:gap-y-16
         laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-16
         desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'>
-        {/* headline */}
-        <h1>
+        {/* headline - the two lines, or on a phone the one sentence */}
+        <h1 aria-label={PROFESSION}>
           {PROFESSION_LINES.map((line) => (
-            <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.92] tracking-tight
-              text-hero'>
+            <span key={line} aria-hidden='true' className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.92] tracking-tight
+              text-hero mobile:hidden'>
               <SplitText text={line} id='animate-hero-profession' />
             </span>
           ))}
+          <span aria-hidden='true' className='hero-designerdev hidden mobile:flex flex-wrap font-flexible font-bold leading-[.92] tracking-tight
+            text-hero'>
+            <SplitText text={PROFESSION} id='animate-hero-profession' />
+          </span>
         </h1>
         {/* description left, arrow on to the projects right */}
         <div className='flex justify-between items-end gap-x-6'>

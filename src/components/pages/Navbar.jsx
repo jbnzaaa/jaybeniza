@@ -4,6 +4,8 @@ import React, { useRef, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 // page-to-page wipe
 import { TransitionLink } from '../common/PageTransition'
+// the CV the bar's Download CV link downloads
+import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 // GSAP
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -16,11 +18,12 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 // every destination. from tablet width up they are all in the bar itself;
 // on a phone, where there is no room for them, they are in the menu. the
-// logo is the way home, and each route is named after its link
+// logo is the way home, and each route is named after its link. Download
+// CV is not a page: it downloads my CV (`href`, `download`)
 const NAV_LINKS = [
   { label: 'Work', to: '/work' },
   { label: 'About', to: '/about' },
-  { label: 'What I Do', to: '/what-i-do' },
+  { label: 'Download CV', href: Resume, download: 'Jay-Beniza-CV.pdf' },
 ];
 const CONTACT = '/get-in-touch';
 const MENU_LINKS = [...NAV_LINKS, { label: 'Get in touch', to: CONTACT }];
@@ -141,13 +144,19 @@ function Navbar() {
             laptop:gap-x-10
             laptop-lg:gap-x-12
             desktop:gap-x-12`}>
-            {NAV_LINKS.map(({ label, to }) => (
+            {NAV_LINKS.map(({ label, to, href, download }) => (
               <li className='m-0' key={label}>
+                {href ? (
+                  <a href={href} download={download} className={NAV_ITEM_IDLE} aria-label='Download my CV (PDF)'>
+                    <SplitText text={label} id='animate-nav' />
+                  </a>
+                ) : (
                 <TransitionLink to={to} onClick={toTopIfHere(to)}
                   className={pathname === to ? NAV_ITEM : NAV_ITEM_IDLE}
                   aria-current={pathname === to ? 'page' : undefined}>
                   <SplitText text={label} id='animate-nav' />
                 </TransitionLink>
+                )}
               </li>
             ))}
           </ul>
@@ -175,13 +184,20 @@ function Navbar() {
       <div className={`nav-menu ${menuOpen ? 'nav-menu-open' : ''} fixed inset-0 z-[21] flex flex-col justify-end bg-black px-[1rem] pt-20 pb-8 ${PHONE_ONLY}`}
         id='nav-menu' inert={menuOpen ? undefined : ''}>
         <ul className='flex flex-col'>
-          {MENU_LINKS.map(({ label, to }) => (
+          {MENU_LINKS.map(({ label, to, href, download }) => (
             <li className='border-t border-rule m-0' key={label}>
+              {href ? (
+                <a href={href} download={download} className='block py-4 font-flexible font-medium leading-none text-[15vw] text-muted'
+                  aria-label='Download my CV (PDF)' data-no-hover-roll>
+                  {label}
+                </a>
+              ) : (
               <TransitionLink to={to} onClick={toTopIfHere(to)}
                 className={`block py-4 font-flexible font-medium leading-none text-[15vw] ${pathname === to ? '' : 'text-muted'}`}
                 aria-current={pathname === to ? 'page' : undefined} data-no-hover-roll>
                 {label}
               </TransitionLink>
+              )}
             </li>
           ))}
         </ul>

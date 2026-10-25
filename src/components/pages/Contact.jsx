@@ -1,7 +1,7 @@
 //
 import React, { useEffect } from 'react'
 // Resume
-import Resume from '../../assets/files/Jayson_Beniza.pdf'
+import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
@@ -36,6 +36,15 @@ const PROJECTS_LINKS = [
   { label: 'ReGain', to: '/regain' },
 ];
 
+// its third face, closing a project page: the next project, by name - the
+// heading itself is the way to it - over a line on what it is and the ways
+// on from here
+const nextLinks = (next) => [
+  { label: 'View project', to: next.path },
+  { label: 'All work', to: '/work' },
+  { label: 'Get in touch', to: '/get-in-touch' },
+];
+
 /**
  * The closing screen, on the base colour, with the footer inside it so the
  * two fill exactly one screen: "Drop a Message" very large on the left, and on the right a short invitation
@@ -43,21 +52,24 @@ const PROJECTS_LINKS = [
  *
  * @param {boolean} [projects] - the same screen as "View My Projects":
  *   the heading, the text and the links are to the work (ContactPage.jsx)
+ * @param {object} [next] - the same screen leading on to this project
+ *   (its entry in projects.js): its name as the heading, and a link to it
+ *   (ProjectPage.jsx)
  * @param {boolean} [page] - true when this is the whole page
  *   rather than a page's closing section: it then starts under the top bar
  *   instead of sliding over it, so it leaves room for the bar and does not
  *   ask the bar to hide (data-nav-cover, Navbar.jsx)
  */
-function Contact({ page = false, projects = false }) {
-  const heading = projects ? PROJECTS_HEADING : 'Send Me a Message';
-  const text = projects ? PROJECTS_TEXT : `${QUESTION} ${SUPPORT}`;
-  const links = projects ? PROJECTS_LINKS : LINKS;
+function Contact({ page = false, projects = false, next }) {
+  const heading = next ? next.title : projects ? PROJECTS_HEADING : 'Send Me a Message';
+  const text = next ? `Next project: ${next.short}.` : projects ? PROJECTS_TEXT : `${QUESTION} ${SUPPORT}`;
+  const links = next ? nextLinks(next) : projects ? PROJECTS_LINKS : LINKS;
 
   useEffect(() => {
     // headline, text and links rise letter by letter
     const reveal = scrollReveal('#animate-contact', { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: '#contact' });
     return () => reveal.kill();
-  },[]);
+  },[next]);
 
   return (
     <>
@@ -77,7 +89,14 @@ function Contact({ page = false, projects = false }) {
             laptop:col-span-5 laptop:row-start-1
             laptop-lg:col-span-5 laptop-lg:row-start-1
             desktop:col-span-5 desktop:row-start-1'>
-            <SplitText text={heading} id='animate-contact' />
+            {/* (leading on to a project, the heading is the link to it:
+              its letters roll under the pointer and the cursor's square
+              goes into it, like the top bar's links) */}
+            {next ? (
+              <TransitionLink to={next.path} className='nav-item flex flex-wrap font-flexible font-semibold [color:inherit]' aria-label={`Next project: ${next.title}`} data-cursor-snap>
+                <SplitText text={heading} id='animate-contact' />
+              </TransitionLink>
+            ) : <SplitText text={heading} id='animate-contact' />}
           </h2>
           {/* invitation + links - right */}
           <div className='text-caption

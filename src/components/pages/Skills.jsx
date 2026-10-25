@@ -68,7 +68,10 @@ function Skills() {
                   <p className='entry-line font-medium shrink-0'>
                     <SplitText text={group.title} id={`animate-skill-${group.id}`} />
                   </p>
+                  {/* (kept to part of the row's width, so a long list
+                    stays clear of its category) */}
                   <p className='entry-line flex flex-wrap text-muted
+                    tablet:w-[55%] laptop:w-[50%] laptop-lg:w-[48%] desktop:w-[45%]
                     tablet:justify-end tablet:text-right
                     laptop:justify-end laptop:text-right
                     laptop-lg:justify-end laptop-lg:text-right

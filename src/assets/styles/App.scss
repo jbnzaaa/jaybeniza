@@ -508,33 +508,37 @@
 }
 
 
+// a project page's cards (ProjectPage.jsx) - start state: clipped away to
+// their bottom edge, opened as each comes up the screen
+* body .case-card {
+  clip-path: inset(100% 0% 0% 0%);
+}
+
 // my name in the About page's introduction (AboutPage.jsx): underlined,
-// to say it can be pointed at - it shows my picture. the underline starts
-// undrawn (--name-line: 0) and the introduction's reveal draws it across
-// from the left once the name's letters are up
+// to say it can be pointed at - it shows my picture. the underline
+// (.about-name-line) starts undrawn, and the introduction's reveal draws
+// it across from the left as the name's letters land
 * body .about-name {
-  --name-line: 0;
   position: relative;
   display: inline-flex;
   padding-bottom: .125rem;
   cursor: pointer;
 }
 
-* body .about-name::after {
-  content: '';
+* body .about-name-line {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   height: .125rem;
   background: var(--text);
-  transform: scaleX(var(--name-line));
+  transform: scaleX(0);
   transform-origin: left;
 }
 
 // the underline stops at the name's last letter, and the comma after the
 // name sits tight against it (a word's gap is a margin on its right)
-* body .about-name .split-word:last-of-type {
+* body .about-name .split-word:nth-last-child(2) {
   margin-right: 0;
 }
 
@@ -747,6 +751,17 @@
   min-height: 100vh;
   min-height: 100svh;
   min-height: var(--screen-h, 100svh);
+}
+
+// the same, from laptop width up only: below it the section is as tall as
+// its content (the landing page's "About the Designer", whose short
+// paragraph left most of a phone screen empty above its button)
+@media (min-width: 1024px) {
+  * body .min-h-screen-safe-laptop {
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: var(--screen-h, 100svh);
+  }
 }
 
 * body .logo-container {

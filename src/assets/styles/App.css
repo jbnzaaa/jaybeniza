@@ -369,13 +369,29 @@
   transition: clip-path 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
+* body .case-card {
+  clip-path: inset(100% 0% 0% 0%);
+}
+
 * body .about-name {
+  position: relative;
   display: inline-flex;
-  border-bottom: 0.125rem solid var(--text);
+  padding-bottom: 0.125rem;
   cursor: pointer;
 }
 
-* body .about-name .split-word:last-of-type {
+* body .about-name-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0.125rem;
+  background: var(--text);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+* body .about-name .split-word:nth-last-child(2) {
   margin-right: 0;
 }
 
@@ -554,6 +570,13 @@
   min-height: var(--screen-h, 100svh);
 }
 
+@media (min-width: 1024px) {
+  * body .min-h-screen-safe-laptop {
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: var(--screen-h, 100svh);
+  }
+}
 * body .logo-container {
   height: auto;
   position: relative;

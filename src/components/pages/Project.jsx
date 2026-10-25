@@ -16,7 +16,7 @@ import SplitText from '../common/SplitText'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const DESCRIPTION = 'Selected work. Each project shows my role, my process, and the result.';
+const DESCRIPTION = 'Projects that show how I navigate the design to development process.';
 
 /**
  * Selected projects, on the dark surface: a list of project names set very
@@ -140,7 +140,7 @@ function Project() {
                     mobile:aspect-[4/3] tablet:aspect-[16/9]
                     laptop:hidden laptop-lg:hidden desktop:hidden'>
                     {project.picture || project.image ? (
-                      <span className={`project-cover-image block w-full h-full bg-cover ${project.picture ? 'bg-left-top' : `bg-center ${project.image}`}`}
+                      <span className={`project-cover-image block w-full h-full bg-cover ${project.picture ? 'bg-center' : `bg-center ${project.image}`}`}
                         style={project.picture ? { backgroundImage: `url(${project.picture})` } : undefined}/>
                     ) : (
                       /* nothing to picture yet: the empty card (.project-empty, App.scss) */
@@ -155,7 +155,7 @@ function Project() {
             ))}
           </ul>
           {/* hover preview, from laptop width up */}
-          <div className={`project-preview bg-cover ${shown?.picture ? 'bg-left-top' : shown?.image ? `bg-center ${shown.image}` : 'project-empty'}`}
+          <div className={`project-preview bg-cover ${shown?.picture ? 'bg-center' : shown?.image ? `bg-center ${shown.image}` : 'project-empty'}`}
             style={shown?.picture ? { backgroundImage: `url(${shown.picture})` } : undefined}
             ref={fxPreview} aria-hidden='true'>
             {/* a project with nothing to picture yet previews as the empty
