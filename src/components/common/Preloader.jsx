@@ -15,7 +15,9 @@ const FONTS = [
   ['700 1em MonoLisa', 'A'],
 ];
 // never hold the page hostage to a font that fails or stalls
-const TIMEOUT_MS = 8000;
+const TIMEOUT_MS = 4000;
+// whether this visit has already seen the screen (App.jsx skips it then)
+export const SEEN_KEY = 'preloader-seen';
 
 /**
  * Full-screen black loading screen with the loaded percentage in the
@@ -61,9 +63,12 @@ function Preloader({ onExitStart, onDone }) {
       onExitStart();
       // a fast load can finish while the figure is still rising
       gsap.killTweensOf(figure);
+      // (kept short: every tenth of a second here is a tenth before the
+      // page can be seen)
+      try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (e) { /* storage blocked: shown again next time */ }
       exit = gsap.timeline({ onComplete: () => { releaseReveals(); onDone(); } })
-        .to(figure, { yPercent: 110, duration: .6, ease: 'power1.in' })
-        .to(panel, { height: 0, duration: .7, ease: 'power2.inOut', onUpdate: () => releaseWhenLifted(panel) }, '-=.1');
+        .to(figure, { yPercent: 110, duration: .45, ease: 'power1.in' })
+        .to(panel, { height: 0, duration: .6, ease: 'power2.inOut', onUpdate: () => releaseWhenLifted(panel) }, '-=.1');
     };
 
     // the figure eases toward the real share of fonts loaded, and the
@@ -71,7 +76,7 @@ function Preloader({ onExitStart, onDone }) {
     const advance = () => {
       gsap.to(counter, {
         value: (loaded / FONTS.length) * 100,
-        duration: .8,
+        duration: .5,
         ease: 'power1.out',
         overwrite: true,
         onUpdate: render,
@@ -86,7 +91,7 @@ function Preloader({ onExitStart, onDone }) {
     // face has arrived - otherwise it would appear in a fallback and swap
     loads[0].then(() => {
       if (exiting) return;
-      gsap.to(figure, { yPercent: 0, duration: .6, ease: 'power1.in' });
+      gsap.to(figure, { yPercent: 0, duration: .45, ease: 'power1.in' });
     });
 
     const timeout = setTimeout(() => { loaded = FONTS.length; advance(); }, TIMEOUT_MS);

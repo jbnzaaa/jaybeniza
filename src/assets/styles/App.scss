@@ -3,21 +3,17 @@
 @tailwind components;
 @tailwind utilities;
 
-// Google Fonts
-@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;700&display=swap'); // Teko
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap'); // Montserrat
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Teko&display=swap'); // Space Mono
-@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Text:wght@400;500;600&display=swap'); // Big Shoulder
-@import url('https://fonts.googleapis.com/css2?family=Unica+One&display=swap'); // Unica one
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Unica+One&display=swap'); // Lexend
 
-// local fonts (src/assets/fonts). Flexible is a variable display face with
+// local fonts (src/assets/fonts), as WOFF2 cut down to the characters the
+// site's text uses (Latin, punctuation, currency, arrows) - the full
+// MonoLisa .otf was 3.2MB, most of the page's weight. the originals are
+// kept beside them. Flexible is a variable display face with
 // width + height axes and no weight axis; MonoLisa ships here as a single
 // Bold file. Each declares the whole weight range so the browser never
 // synthesises a bolder weight on top of the one real face
 @font-face {
   font-family: 'Flexible';
-  src: url('../fonts/Flexible-Variable.ttf') format('truetype');
+  src: url('../fonts/Flexible-Variable.woff2') format('woff2');
   font-weight: 100 900;
   font-display: swap;
 }
@@ -41,7 +37,7 @@
 
 @font-face {
   font-family: 'MonoLisa';
-  src: url('../fonts/MonoLisa-Bold.otf') format('opentype');
+  src: url('../fonts/MonoLisa-Bold.woff2') format('woff2');
   font-weight: 100 900;
   font-display: swap;
 }

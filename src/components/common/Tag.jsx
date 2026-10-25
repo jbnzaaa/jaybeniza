@@ -12,10 +12,10 @@ import SplitText from './SplitText'
  *
  * @param {string} label
  * @param {string} id - unique; the letters carry it
- * @param {string} [as] - the element to render (a heading where the tag is
- *   the page's title); a paragraph otherwise
+ * @param {string} [as] - the element to render: the section's heading, a
+ *   level 2 heading unless the tag is the page's title (h1)
  */
-function Tag({ label, id, as: Element = 'p' }) {
+function Tag({ label, id, as: Element = 'h2' }) {
   const fxTag = useRef();
 
   useEffect(() => {

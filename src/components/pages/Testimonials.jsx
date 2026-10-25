@@ -13,7 +13,7 @@ import { inTurn } from '../../utils/scrollReveal'
 import sergio from '../../assets/files/images/team/sergio-ramos-iii.jpg'
 import paula from '../../assets/files/images/team/paula-malupa.jpg'
 import richard from '../../assets/files/images/team/richard-ordinario.jpg'
-import prince from '../../assets/files/images/team/prince-bernard-diana.png'
+import prince from '../../assets/files/images/team/prince-bernard-diana.webp'
 gsap.registerPlugin(ScrollTrigger)
 
 // reviews from the people I work with, in their own words. `quote` is one

@@ -7,7 +7,7 @@
 //
 // a slot with no `image` previews as a plain panel
 // Portfolio 2026's preview: a screen of this site
-import v3_services from '../../assets/files/images/portfolio/portfolio-v3-2.jpg'
+import v3_services from '../../assets/files/images/portfolio/portfolio-v3-2.webp'
 // the mock-ups of the others
 import bitewise_cover from '../../assets/files/images/bitewise/mockup-cover.webp'
 import gurover_cover from '../../assets/files/images/gurover/mockup-cover.webp'

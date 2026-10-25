@@ -232,9 +232,9 @@ function Cards({ id, items, rows = false }) {
 // a case study's lead - the one line a section turns on, set large
 function Lead({ id, text, className = '' }) {
   return (
-    <h2 className={`flex flex-wrap font-flexible font-medium leading-[.95] tracking-tight text-heading ${className}`}>
+    <h3 className={`flex flex-wrap font-flexible font-medium leading-[.95] tracking-tight text-heading ${className}`}>
       <SplitText text={text} id={`animate-case-${id}`} />
-    </h2>
+    </h3>
   )
 }
 

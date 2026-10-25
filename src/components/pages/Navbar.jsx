@@ -130,7 +130,7 @@ function Navbar() {
         <nav aria-label='Main' className={`grid grid-cols-[1fr_auto_1fr] items-center gap-x-4 ${BAR}`}>
           {/* logo - left */}
           <div className='logo-container justify-self-start'>
-            <TransitionLink to='/' onClick={toTopIfHere('/')} aria-label='Jay Beniza, home'>
+            <TransitionLink to='/' onClick={toTopIfHere('/')} aria-label='jaybeniza - Jay Beniza, home'>
               <span className='logo block font-flexible font-medium leading-none cursor-pointer tracking-tighter
                 text-logo'>
                 <SplitText text='jaybeniza' id='animate-nav' />

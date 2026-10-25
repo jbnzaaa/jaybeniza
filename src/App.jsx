@@ -1,22 +1,14 @@
 // React
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 //
 import './assets/styles/App.css';
 // Pages
 import Navbar from './components/pages/Navbar';
 import Home from './components/pages/Home';
-import AboutPage from './components/pages/AboutPage';
-import ProjectsPage from './components/pages/ProjectsPage';
-import ContactPage from './components/pages/ContactPage';
-import DailyDiscount from './components/pages/projects/DailyDiscount';
-import Jaysonbeniza from './components/pages/projects/Jaysonbeniza';
-import Jbnza from './components/pages/projects/Jbnza';
-import Regain from './components/pages/projects/Regain';
-import ProjectPage from './components/pages/projects/ProjectPage';
 import { PROJECTS } from './components/pages/projects/projects';
 // loading screen + page-to-page wipe
-import Preloader from './components/common/Preloader';
+import Preloader, { SEEN_KEY } from './components/common/Preloader';
 import { PageTransitionProvider } from './components/common/PageTransition';
 // the square cursor
 import Cursor from './components/common/Cursor';
@@ -27,6 +19,29 @@ import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import ScrollSmoother from 'gsap/ScrollSmoother'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
+
+// every page but the landing page is its own file, fetched when it is
+// first needed - so the first visit downloads only what the landing page
+// uses. once the landing page is up they are all fetched in the
+// background (below), so moving to one never waits on the network
+const PAGES = {
+  about: () => import('./components/pages/AboutPage'),
+  work: () => import('./components/pages/ProjectsPage'),
+  contact: () => import('./components/pages/ContactPage'),
+  project: () => import('./components/pages/projects/ProjectPage'),
+  dailydiscount: () => import('./components/pages/projects/DailyDiscount'),
+  jaysonbeniza: () => import('./components/pages/projects/Jaysonbeniza'),
+  jbnza: () => import('./components/pages/projects/Jbnza'),
+  regain: () => import('./components/pages/projects/Regain'),
+};
+const AboutPage = lazy(PAGES.about);
+const ProjectsPage = lazy(PAGES.work);
+const ContactPage = lazy(PAGES.contact);
+const ProjectPage = lazy(PAGES.project);
+const DailyDiscount = lazy(PAGES.dailydiscount);
+const Jaysonbeniza = lazy(PAGES.jaysonbeniza);
+const Jbnza = lazy(PAGES.jbnza);
+const Regain = lazy(PAGES.regain);
 
 // re-measures every ScrollTrigger against the new route's content height,
 // and resets scroll to the top, whenever the page changes. Goes through
@@ -63,8 +78,13 @@ function ScrollManager() {
 function App() {
   // the page mounts when the loading screen starts to leave, so its
   // reveals play as the panel lifts instead of unseen behind it
-  const [entered, setEntered] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // the loading screen plays once a visit: opened again in the same tab
+  // (a reload, a link back) the page shows at once - its fonts are cached
+  const [seen] = useState(() => {
+    try { return sessionStorage.getItem(SEEN_KEY) === '1'; } catch (e) { return false; }
+  });
+  const [entered, setEntered] = useState(seen);
+  const [loading, setLoading] = useState(!seen);
   const handleExitStart = useCallback(() => setEntered(true), []);
   const handleDone = useCallback(() => setLoading(false), []);
 
@@ -156,6 +176,23 @@ function App() {
     };
   }, []);
 
+  // without the loading screen, index.html's black cover - which the
+  // screen would have taken over from - goes at once
+  useEffect(() => {
+    if (seen) document.getElementById('boot-cover')?.remove();
+  }, [seen]);
+
+  // the other pages, fetched in the background once the page is up and
+  // the browser is idle (PAGES, above)
+  useEffect(() => {
+    if (!entered) return undefined;
+    const fetchAll = () => Object.values(PAGES).forEach((page) => page().catch(() => {}));
+    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1500));
+    const cancel = window.cancelIdleCallback || clearTimeout;
+    const id = idle(fetchAll);
+    return () => cancel(id);
+  }, [entered]);
+
   // letter-roll hover on every text link and button
   useEffect(() => enableHoverRoll(), []);
 
@@ -205,6 +242,8 @@ function App() {
         <div id='smooth-wrapper'>
           <div id='smooth-content'>
             {entered && (
+              /* (a page not fetched yet shows nothing for the moment it takes) */
+              <Suspense fallback={null}>
               <Routes>
                 <Route path='/' element={<Home/>}/>
                 <Route path='/about' element={<AboutPage/>}/>
@@ -235,6 +274,7 @@ function App() {
                 {/* anything else: back to the landing page */}
                 <Route path='*' element={<Navigate to='/' replace/>}/>
               </Routes>
+              </Suspense>
             )}
           </div>
         </div>

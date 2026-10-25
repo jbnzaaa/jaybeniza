@@ -34,7 +34,7 @@ const NAME = 'Jay Beniza';
 // (the comma after the name is set on its own, outside the underline)
 const [BEFORE, AFTER] = INTRO[0].split(NAME + ',').map((part) => part.trim());
 // my picture (public/images)
-const PORTRAIT = `${process.env.PUBLIC_URL}/images/profile.JPG`;
+const PORTRAIT = `${process.env.PUBLIC_URL}/images/profile.webp`;
 
 const RESUME_DESCRIPTION = 'My CV covers my experience, skills, certificates, and awards in full. Download a copy, or email me about a role on your team.';
 const RESUME_LINKS = [
