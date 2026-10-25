@@ -8,7 +8,7 @@ import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
 // the page's one queue of reveals
-import { inTurn } from '../../utils/scrollReveal'
+import { inTurn, whenNear, refreshSoon } from '../../utils/scrollReveal'
 // their pictures - small square crops of the photographs in /reference
 import sergio from '../../assets/files/images/team/sergio-ramos-iii.jpg'
 import paula from '../../assets/files/images/team/paula-malupa.jpg'
@@ -96,66 +96,79 @@ function Testimonials() {
 
   useEffect(() => {
     const section = fxSection.current;
-    const cards = gsap.utils.toArray('.testimonial-card', section);
+    // the stack's timeline is built only once the section is near
+    // (whenNear, scrollReveal.js): tied to the scroll, it is re-rendered -
+    // every card's words read again - each time the page is re-measured,
+    // and the page is re-measured several times as it loads
+    // (pinning adds the stack's scroll length to the page: what is below is
+    // measured again once it is in - refreshSoon, scrollReveal.js)
+    const build = () => {
+      const cards = gsap.utils.toArray('.testimonial-card', section);
 
-    // (below laptop width the cards travel up the screen instead)
-    const vertical = window.matchMedia('(max-width: 1023px)').matches;
-    const away = vertical ? { y: () => window.innerHeight } : { x: () => window.innerWidth };
-    const home = vertical ? { y: 0 } : { x: 0 };
-    const frame = { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.out' };
+      // (below laptop width the cards travel up the screen instead)
+      const vertical = window.matchMedia('(max-width: 1023px)').matches;
+      const away = vertical ? { y: () => window.innerHeight } : { x: () => window.innerWidth };
+      const home = vertical ? { y: 0 } : { x: 0 };
+      const frame = { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.out' };
 
-    // the first card, on its own time: it slides to its place, its text
-    // rises, and its picture wipes open from its bottom edge. it plays
-    // when the stack has come far enough up the screen (in its turn among
-    // the section's reveals - scrollReveal.js), and goes back if the page
-    // is scrolled back above that
-    const first = gsap.timeline({ paused: true })
-      .fromTo(cards[0], away, { ...home, ease: 'power3.out', duration: 1.4 }, 0)
-      .to(cards[0].querySelectorAll('.split-letter'), { y: 0, ease: 'power2.out', duration: .7, stagger: { amount: .5 } }, .55)
-      .to(cards[0].querySelector('.testimonial-avatar'), { ...frame, duration: .7 }, .7);
-    const turn = inTurn(first, section.querySelector('.testimonial-stack'));
-    const arrive = ScrollTrigger.create({
-      trigger: section.querySelector('.testimonial-stack'),
-      start: FIRST_AT,
-      onEnter: () => turn.play(),
-      onLeaveBack: () => turn.reverse(),
-    });
+      // the first card, on its own time: it slides to its place, its text
+      // rises, and its picture wipes open from its bottom edge. it plays
+      // when the stack has come far enough up the screen (in its turn among
+      // the section's reveals - scrollReveal.js), and goes back if the page
+      // is scrolled back above that
+      const first = gsap.timeline({ paused: true })
+        .fromTo(cards[0], away, { ...home, ease: 'power3.out', duration: 1.4 }, 0)
+        .to(cards[0].querySelectorAll('.split-letter'), { y: 0, ease: 'power2.out', duration: .7, stagger: { amount: .5 } }, .55)
+        .to(cards[0].querySelector('.testimonial-avatar'), { ...frame, duration: .7 }, .7);
+      const turn = inTurn(first, section.querySelector('.testimonial-stack'));
+      const arrive = ScrollTrigger.create({
+        trigger: section.querySelector('.testimonial-stack'),
+        start: FIRST_AT,
+        onEnter: () => turn.play(),
+        onLeaveBack: () => turn.reverse(),
+      });
 
-    // the rest, moved by the scroll while the section is pinned. each has
-    // READ steps in which nothing moves, then one step in which it crosses
-    // to its place at the scroll's own pace - its text rising and its
-    // picture opening over the last part of the way, when most of the
-    // card is on screen
-    const later = cards.slice(1);
-    const stack = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: `+=${(later.length * (READ + 1) + READ) * STEP_LENGTH * 100}%`,
-        pin: true,
-        scrub: FOLLOW,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
-    });
-    later.forEach((card, i) => {
-      const at = READ + i * (READ + 1);
-      stack
-        .fromTo(card, away, { ...home, ease: 'none', duration: 1 }, at)
-        .to(card.querySelectorAll('.split-letter'), { y: 0, duration: .3, stagger: { amount: .25 } }, at + .45)
-        .to(card.querySelector('.testimonial-avatar'), { ...frame, ease: 'none', duration: .4 }, at + .55);
-    });
-    // the finished stack is held a moment before the page moves on
-    stack.to({}, { duration: READ });
+      // the rest, moved by the scroll while the section is pinned. each has
+      // READ steps in which nothing moves, then one step in which it crosses
+      // to its place at the scroll's own pace - its text rising and its
+      // picture opening over the last part of the way, when most of the
+      // card is on screen
+      const later = cards.slice(1);
+      const stack = gsap.timeline({
+        defaults: { ease: 'none' },
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: `+=${(later.length * (READ + 1) + READ) * STEP_LENGTH * 100}%`,
+          pin: true,
+          scrub: FOLLOW,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+      later.forEach((card, i) => {
+        const at = READ + i * (READ + 1);
+        stack
+          .fromTo(card, away, { ...home, ease: 'none', duration: 1 }, at)
+          .to(card.querySelectorAll('.split-letter'), { y: 0, duration: .3, stagger: { amount: .25 } }, at + .45)
+          .to(card.querySelector('.testimonial-avatar'), { ...frame, ease: 'none', duration: .4 }, at + .55);
+      });
+      // the finished stack is held a moment before the page moves on
+      stack.to({}, { duration: READ });
 
-    return () => {
-      arrive.kill();
-      turn.kill();
-      first.revert();
-      stack.scrollTrigger?.kill();
-      stack.revert();
+      refreshSoon();
+
+      return {
+        kill() {
+          arrive.kill();
+          turn.kill();
+          first.revert();
+          stack.scrollTrigger?.kill();
+          stack.revert();
+        },
+      };
     };
+    return whenNear(section, build).kill;
   }, []);
 
   const last = TESTIMONIALS.length - 1;

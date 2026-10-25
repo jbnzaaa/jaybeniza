@@ -14,6 +14,8 @@ import { PageTransitionProvider } from './components/common/PageTransition';
 import Cursor from './components/common/Cursor';
 // button hover
 import { enableHoverRoll } from './utils/hoverRoll';
+// one re-measure of the page a frame, however many ask
+import { refreshSoon } from './utils/scrollReveal';
 // GSAP
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -65,11 +67,11 @@ function ScrollManager() {
       window.scrollTo(0, 0);
     };
     toTop();
-    const id = requestAnimationFrame(() => {
-      ScrollTrigger.refresh();
-      toTop();
-    });
-    return () => cancelAnimationFrame(id);
+    // (the refresh is shared with anything else asking for one this frame -
+    // refreshSoon, scrollReveal.js)
+    let live = true;
+    refreshSoon(() => { if (live) toTop(); });
+    return () => { live = false; };
   }, [location.pathname]);
 
   return null;
@@ -210,7 +212,7 @@ function App() {
       if (window.innerWidth === width) return;
       width = window.innerWidth;
       document.documentElement.style.setProperty('--screen-h', `${window.innerHeight}px`);
-      ScrollTrigger.refresh();
+      refreshSoon();
     };
     measure();
     window.addEventListener('resize', measure);
@@ -224,9 +226,7 @@ function App() {
   // the content only exists once the loading screen leaves - re-measure
   // every trigger against its real height
   useEffect(() => {
-    if (!entered) return;
-    const id = requestAnimationFrame(() => ScrollTrigger.refresh());
-    return () => cancelAnimationFrame(id);
+    if (entered) refreshSoon();
   }, [entered]);
 
   return (

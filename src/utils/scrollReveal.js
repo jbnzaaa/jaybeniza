@@ -55,6 +55,75 @@ function startFor(el, start) {
   probe.kill();
   return first ? 'top bottom' : start;
 }
+// ---- building a reveal only once it is near
+// building one costs: ScrollTrigger measures the page for it, and GSAP
+// reads the style of everything it moves. built all at once as a page
+// mounted, the landing page's thirty-odd reveals held a phone's browser
+// for over a second. each is built instead when its trigger comes within
+// NEAR of the screen, so the work is spread down the page. (seen by an
+// IntersectionObserver on the smoothed scroll's wrapper - which clips the
+// page, and is where the margin has to be added - so it sees where
+// ScrollSmoother has actually moved things to)
+const NEAR = '150%';
+export function whenNear(el, build) {
+  const target = gsap.utils.toArray(el)[0];
+  if (!target || typeof IntersectionObserver === 'undefined') return build();
+  const wrapper = document.getElementById('smooth-wrapper');
+  let built = null;
+  let io = new IntersectionObserver((entries) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    io.disconnect();
+    io = null;
+    built = build();
+  }, { root: wrapper && wrapper.contains(target) ? wrapper : null, rootMargin: `${NEAR} 0px ${NEAR} 0px` });
+  io.observe(target);
+  return {
+    kill() {
+      io?.disconnect();
+      built?.kill();
+    },
+  };
+}
+
+// ---- re-measuring the page, once a frame at most
+// ScrollTrigger.refresh() re-measures every trigger, and re-renders every
+// animation tied to the scroll - the testimonials' alone reads the style
+// of a few hundred elements. as a page opened it was asked for three
+// times over (a new route, the screen's height, the content arriving);
+// every ask in a frame now shares one refresh, at the frame's start.
+// `after` runs once it is done
+let refreshQueue = null;
+export function refreshSoon(after) {
+  if (!refreshQueue) {
+    refreshQueue = [];
+    requestAnimationFrame(() => {
+      const list = refreshQueue;
+      refreshQueue = null;
+      ScrollTrigger.refresh();
+      list.forEach((fn) => fn());
+    });
+  }
+  if (after) refreshQueue.push(after);
+}
+
+// ---- reveals already due when they are built
+// a reveal built with its trigger already past its start (on a page's
+// first screen, say) plays at once. telling needs the trigger measured:
+// those built together are measured together, in one frame, rather than
+// each laying the page out again as it is built
+let dueChecks = [];
+function playIfDue(trig, play) {
+  dueChecks.push([trig, play]);
+  if (dueChecks.length > 1) return;
+  requestAnimationFrame(() => {
+    const live = ScrollTrigger.getAll();
+    const list = dueChecks.filter(([t]) => live.includes(t));
+    dueChecks = [];
+    list.forEach(([t]) => t.refresh());
+    list.forEach(([t, p]) => { if (t.isActive) p(); });
+  });
+}
+
 // a tall card opened at the default start is opening with only its top
 // edge on screen. this start waits until 60% of the card's own height is
 // above the foot of the screen - or, for a card taller than the screen
@@ -264,7 +333,12 @@ export function inTurn(anim, el) {
  * @param {string} [opts.start] - ScrollTrigger start position (defaults to REVEAL_AT)
  * @returns {{kill: () => void}}
  */
-export function scrollReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
+export function scrollReveal(targets, vars, opts = {}) {
+  // (built once it is near - whenNear, above)
+  return whenNear(opts.trigger || targets, () => buildReveal(targets, vars, opts));
+}
+
+function buildReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
   // every letter rises over the same time here as in a sequence
   const tween = gsap.to(targets, { duration: LETTER_DURATION, ...vars, ease: EASE, paused: true });
   // the reveal's own length at its authored stagger - grows with the text
@@ -292,16 +366,15 @@ export function scrollReveal(targets, vars, { trigger, start = REVEAL_AT } = {})
   // safety net: if the trigger's condition is ALREADY satisfied the instant
   // it's created (e.g. above-the-fold content visible without scrolling),
   // don't rely on onEnter firing asynchronously on a later refresh pass -
-  // play it right now so it's never stuck in its hidden starting state.
-  // trig.refresh() is called explicitly first because isActive/start/end
-  // aren't guaranteed to be fully computed synchronously the instant
-  // ScrollTrigger.create() returns - without forcing it, this check can
-  // read stale/default values and silently never fire.
-  trig.refresh();
-  if (trig.isActive) {
+  // play it as soon as that is known, so it's never stuck in its hidden
+  // starting state. the trigger has to be re-measured first
+  // (isActive/start/end aren't guaranteed to be computed the instant
+  // ScrollTrigger.create() returns), which playIfDue does for all the
+  // reveals built together, at once
+  playIfDue(trig, () => {
     tween.duration(totalForVelocity(natural, 0));
     turn.play();
-  }
+  });
 
   return {
     // revert (not just kill) so GSAP's inline styles get cleared - this
@@ -333,7 +406,12 @@ export function scrollReveal(targets, vars, { trigger, start = REVEAL_AT } = {})
  *   should happen higher up the screen than `start` (defaults to `start`)
  * @returns {{kill: () => void}}
  */
-export function scrollRevealSequence(stages, { trigger, start = REVEAL_AT, reverseStart } = {}) {
+export function scrollRevealSequence(stages, opts = {}) {
+  // (built once it is near - whenNear, above)
+  return whenNear(opts.trigger || stages[0].targets, () => buildSequence(stages, opts));
+}
+
+function buildSequence(stages, { trigger, start = REVEAL_AT, reverseStart } = {}) {
   // a stage with a stagger (text) is paced like scrollReveal: its whole
   // length scales with how many letters it covers, so a long row reads as
   // a ripple instead of landing at once and a short one is not rushed. a
@@ -388,10 +466,8 @@ export function scrollRevealSequence(stages, { trigger, start = REVEAL_AT, rever
     onLeaveBack: (self) => turn.reverse(rate(self.getVelocity())),
   }) : null;
 
-  // safety net: see scrollReveal() above for why trig.refresh() is needed
-  // before this check
-  trig.refresh();
-  if (trig.isActive) turn.play();
+  // safety net: see buildReveal() above
+  playIfDue(trig, () => turn.play());
 
   return {
     // revert (not just kill) so GSAP's inline styles get cleared - see the
