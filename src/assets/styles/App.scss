@@ -240,10 +240,21 @@
 // a section's label (Tag.jsx)
 * body .tag {
   display: inline-flex;
+  // as wide as its label, wherever it sits: a flex or grid parent would
+  // otherwise stretch it across the column
+  width: fit-content;
+  max-width: 100%;
+  align-self: flex-start;
+  justify-self: start;
   padding: .5rem 1rem;
   border: 1px solid var(--rule);
   // start state: clipped away to its bottom edge, like the buttons
   clip-path: inset(100% 0% 0% 0%);
+}
+// (a word's gap is a margin on its right: none after the last, so the
+// padding is even on both sides)
+* body .tag .split-word:last-child {
+  margin-right: 0;
 }
 
 // selected projects (Project.jsx). pointing at one name steps the others back

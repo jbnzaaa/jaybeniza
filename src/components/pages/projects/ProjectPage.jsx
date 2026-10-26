@@ -443,13 +443,6 @@ function ProjectPage({ project: given, id }) {
 
   // a case study still being written has no cover yet, and shows none
   const hasCover = !!hero || !isDraft;
-  // the hero's arrow scrolls on to the cover - or, without one, to the
-  // section that says where the write-up stands
-  const onward = hasCover ? '#case-visual' : '#case-status';
-  const toCover = (e) => {
-    e.preventDefault();
-    ScrollSmoother.get()?.scrollTo(onward, true);
-  };
 
   return (
     <>
@@ -505,16 +498,12 @@ function ProjectPage({ project: given, id }) {
                 </div>
               ))}
             </dl>
-            {/* lower right: the link to the live site, where there is one,
-              and the landing hero's arrow, on to the cover. below laptop
-              width the row is the full width, the arrow still at its
-              right end */}
-            <div className='shrink-0 flex items-center gap-x-4
-              mobile:w-full mobile:justify-between
-              tablet:w-full tablet:justify-between'>
-              {project.link ? <Button label='Visit site' href={project.link.href} external /> : <span/>}
-              <Button label='See the project' href={onward} onClick={toCover} iconOnly outline />
-            </div>
+            {/* lower right: the link to the live site, where there is one */}
+            {project.link && (
+              <div className='shrink-0'>
+                <Button label='Visit site' href={project.link.href} external />
+              </div>
+            )}
           </div>
         </section>
         {/* hero visual - the whole section, edge to edge; a full screen

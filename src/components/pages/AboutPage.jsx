@@ -8,15 +8,13 @@ import CertificatesAwards from './CertificatesAwards';
 import Footer from './Footer';
 // GSAP
 import gsap from 'gsap'
-import ScrollSmoother from 'gsap/ScrollSmoother'
 // Resume
 import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 // scroll reveal
 import { scrollReveal, scrollRevealSequence } from '../../utils/scrollReveal'
 // my picture opens in pixels
 import { pixelToggle } from '../../utils/pixels'
-// the site's button and section label
-import Button from '../common/Button'
+// the site's section label
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
@@ -153,20 +151,12 @@ function AboutPage() {
     };
   }, []);
 
-  // the arrow scrolls on to how I work
-  const toProcess = (e) => {
-    e.preventDefault();
-    ScrollSmoother.get()?.scrollTo('#process', true);
-  };
-
   return (
     <>
       {/* first screen - the introduction itself, with no headline over it:
         its label, then the two paragraphs at the lead step of the type
-        scale (size: .about-paragraph, App.scss), from the left edge, and
-        along the foot the arrow on to the rest of the page (lower right),
-        as on every other page's first screen. top padding clears the nav
-        bar */}
+        scale (size: .about-paragraph, App.scss), from the left edge. top
+        padding clears the nav bar */}
       <section id='about-hero' className='theme-light relative flex flex-col justify-between min-h-screen-safe overflow-hidden
         mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-12
         tablet:px-[1rem] tablet:pt-20 tablet:pb-8 tablet:gap-y-12
@@ -216,10 +206,6 @@ function AboutPage() {
               </p>
             ))}
           </div>
-        </div>
-        {/* the arrow on to how I work, lower right */}
-        <div className='relative z-10 flex justify-end'>
-          <Button label='More about me' href='#process' onClick={toProcess} iconOnly outline />
         </div>
       </section>
       {/* how I work */}

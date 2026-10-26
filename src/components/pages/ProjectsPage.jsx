@@ -8,8 +8,6 @@ import { PROJECTS } from './projects/projects'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import ScrollSmoother from 'gsap/ScrollSmoother'
-// the site's button
-import Button from '../common/Button'
 // page-to-page wipe
 import { TransitionLink } from '../common/PageTransition'
 // scroll reveal
@@ -89,7 +87,7 @@ const DESCRIPTION = 'UX case studies and shipped products, each showing how I mo
 /**
  * The work page (route /work), in the landing page's layout: a first
  * screen with the headline and, along its foot, a short description
- * (lower left) and an arrow on to the projects (lower right),
+ * (lower left),
  * then every project on a six column grid, newest year first - each in a
  * row of its own and in a different place across it. A project is its
  * card - the cover - with its name and its label (year / category)
@@ -150,18 +148,10 @@ function ProjectsPage() {
     };
   }, []);
 
-  // the arrow scrolls on to the projects
-  const toProjects = (e) => {
-    e.preventDefault();
-    ScrollSmoother.get()?.scrollTo('#work-projects', true);
-  };
-
   return (
     <>
       {/* first screen - headline at the top; along the foot, the
-        description in the lower left and the arrow on to the projects in
-        the lower right, as on the landing page. top padding clears the
-        nav bar */}
+        description in the lower left. top padding clears the nav bar */}
       <section id='projects-hero' className='theme-light flex flex-col justify-between min-h-screen-safe
         mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-16
         tablet:px-[1rem] tablet:pt-20 tablet:pb-8 tablet:gap-y-16
@@ -177,10 +167,6 @@ function ProjectsPage() {
           ))}
         </h1>
         <div className='flex justify-between items-end gap-x-6'>
-          {/* the landing hero's arrow - after the description */}
-          <div className='shrink-0 order-2'>
-            <Button label='See the projects' href='#work-projects' onClick={toProjects} iconOnly outline />
-          </div>
           <p className='flex flex-wrap text-caption
             mobile:w-[78%]
             tablet:w-[52%]

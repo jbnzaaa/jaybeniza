@@ -107,29 +107,16 @@ import pci_mockup_cover from '../../../assets/files/images/pci/mockup-cover.webp
 import pci_colors_light_mode from '../../../assets/files/images/pci/screen-colors-light-mode.webp'
 import pci_colors_dark_mode from '../../../assets/files/images/pci/screen-colors-dark-mode.webp'
 import pci_color_guidance from '../../../assets/files/images/pci/screen-color-guidance.webp'
-import pci_font_family from '../../../assets/files/images/pci/screen-font-family.webp'
 import pci_font_size from '../../../assets/files/images/pci/screen-font-size.webp'
 import pci_spacing from '../../../assets/files/images/pci/screen-spacing.webp'
-import pci_sizing from '../../../assets/files/images/pci/screen-sizing.webp'
-import pci_radius from '../../../assets/files/images/pci/screen-radius.webp'
 import pci_elevation from '../../../assets/files/images/pci/screen-elevation.webp'
 import pci_icons from '../../../assets/files/images/pci/screen-icons.webp'
-import pci_icon_label from '../../../assets/files/images/pci/screen-icon-label.webp'
 import pci_buttons from '../../../assets/files/images/pci/screen-buttons.webp'
 import pci_text_fields from '../../../assets/files/images/pci/screen-text-fields.webp'
-import pci_search from '../../../assets/files/images/pci/screen-search.webp'
-import pci_chips from '../../../assets/files/images/pci/screen-chips.webp'
-import pci_badges from '../../../assets/files/images/pci/screen-badges.webp'
-import pci_avatar from '../../../assets/files/images/pci/screen-avatar.webp'
 import pci_cards from '../../../assets/files/images/pci/screen-cards.webp'
 import pci_menus from '../../../assets/files/images/pci/screen-menus.webp'
 import pci_navigations from '../../../assets/files/images/pci/screen-navigations.webp'
-import pci_breadcrumbs from '../../../assets/files/images/pci/screen-breadcrumbs.webp'
 import pci_dialogs from '../../../assets/files/images/pci/screen-dialogs.webp'
-import pci_alert_box from '../../../assets/files/images/pci/screen-alert-box.webp'
-import pci_tooltips from '../../../assets/files/images/pci/screen-tooltips.webp'
-import pci_progress_indicator from '../../../assets/files/images/pci/screen-progress-indicator.webp'
-import pci_divider from '../../../assets/files/images/pci/screen-divider.webp'
 
 // content for the project pages (ProjectPage.jsx). a screenshot's `start` is
 // the grid column it begins on from laptop width up, where it spans five
@@ -366,7 +353,6 @@ export const PROJECTS = {
     description: 'An AI-assisted, offline-first workspace that takes the paperwork off Philippine teachers, from public school classrooms to college lecture halls.',
     category: 'Web/Mobile Platform / Team Project',
     roles: ['UI/UX Designer', 'Web Developer'],
-    status: 'In Development',
     technologies: [],
     cover: gurover_mockup_cover,
     screenshots: [
@@ -385,10 +371,7 @@ export const PROJECTS = {
         { title: 'Attendance and forms', text: 'Attendance feeds the SF2 and SF9 report card templates, so nothing is typed twice.' },
       ],
       featuresIntro: 'Everything a teacher records, entered once and reused across the platform.',
-      overview: [
-        'Teachers in the Philippines spend hours on records: attendance, the DepEd class record, lesson plans, assessments, and the SF2 and SF9 forms. GuRover brings all of it into one workspace, where each record is entered once and reused everywhere, AI drafts the first version, and the work carries on without a connection.',
-        'I designed and built the landing page to make that value clear quickly, with structured feature sections, a step-by-step walkthrough, plan comparisons, and clear calls to action that lead teachers to sign up.',
-      ],
+      overview: "Teachers in the Philippines spend hours on records such as attendance, the DepEd class record, lesson plans, and the SF2 and SF9 forms. GuRover brings them into one workspace that works without a connection, where each record is entered once and reused everywhere, and AI drafts the first version for teachers to refine.",
       role: 'I worked on GuRover as its UI/UX designer and web developer: I designed the platform and built it with AI-assisted development.',
       contributions: [
         'Designed and developed the landing page, structuring its feature sections, step-by-step walkthrough, and plan comparisons to guide teachers toward sign-up',
@@ -396,9 +379,6 @@ export const PROJECTS = {
         'Developed the mobile app, extending the platform beyond the browser',
       ],
       system: null,
-      outcome: 'GuRover was still in development when I left the company.',
-      // (no results to show for a product still being built)
-      metrics: null,
     },
   },
   comelec: {
@@ -409,6 +389,7 @@ export const PROJECTS = {
     description: 'A 3D interactive game that teaches COMELEC personnel how the Automated Counting Machine (ACM) works, part by part.',
     category: 'Software Platform / Client Project',
     roles: ['UI/UX Designer'],
+    status: 'Delivered to client',
     technologies: [],
     cover: comelec_mockup_cover,
     screenshots: [
@@ -426,17 +407,13 @@ export const PROJECTS = {
       { src: comelec_screen_10, alt: 'COMELEC Gamified 3D for ACM screen 10', start: 4 },
     ],
     platform: {
-      overview: [
-        'Election personnel need to understand the ACM, the machine that counts ballots in Philippine elections, well enough to operate it with confidence. Manuals and lectures make a machine like that hard to picture.',
-        'This software turns the training into a 3D interactive game. Personnel explore the machine from different angles, examine its individual parts, and learn what each one does through labeled diagrams and organized information.',
-      ],
+      overview: "COMELEC Gamified 3D for ACM turns the training of election personnel into a 3D interactive game. Instead of relying on manuals and lectures, personnel explore the Automated Counting Machine from every angle and learn what each part does through labeled diagrams, so they can operate it with confidence.",
       role: 'I worked on COMELEC Gamified 3D for ACM as its UI/UX designer, prototyping the full flow of the game for the developers to build.',
       contributions: [
         'Designed the layout of every screen in the game, serving as the build reference for the development team',
         'Authored the design handoff documentation to guide developers through implementation',
         "Created the brand guidelines that define the software's visual identity",
       ],
-      outcome: 'The software is live and in use.',
     },
   },
   psgs: {
@@ -447,6 +424,7 @@ export const PROJECTS = {
     description: 'Training pathways for Filipino surgeons learning minimally invasive surgery, from junior to senior level, built for the Philippine Society of General Surgeons (PSGS).',
     category: 'Web Platform / Client Project',
     roles: ['UI/UX Designer'],
+    status: 'Delivered to client',
     technologies: [],
     cover: psgs_mockup_cover,
     screenshots: [
@@ -463,17 +441,13 @@ export const PROJECTS = {
       { src: psgs_screen_admin_enrollment, alt: 'PSGS admin enrollment', start: 2 },
     ],
     platform: {
-      overview: [
-        'The Philippine Society of General Surgeons runs its minimally invasive surgery training in three levels: junior, intermediate, and senior. Course details, requirements, and announcements needed one clear home.',
-        'The website brings them together. Surgeons compare the training programs, check what each course requires, and keep up with announcements and FAQs, while instructors and administrators manage courses and enrollment.',
-      ],
+      overview: "PSGS brings the Philippine Society of General Surgeons' minimally invasive surgery training, across its junior, intermediate, and senior levels, into one platform. Surgeons compare programs, check course requirements, and follow announcements, while instructors and administrators manage courses and enrollment.",
       role: "I worked on PSGS as its UI/UX designer: I redesigned the landing page and designed the platform's modules, from wireframes to prototypes.",
       contributions: [
         'Redesigned the landing page to present the three training levels, course requirements, and announcements in one clear structure',
         'Designed the student, instructor, and administrator modules, from wireframes to prototypes',
       ],
       system: null,
-      outcome: 'The platform is live and in production.',
     },
   },
   aaccup: {
@@ -484,6 +458,7 @@ export const PROJECTS = {
     description: "AACCUP's website, where colleges, universities, and stakeholders find accreditation information, program classifications, and resources.",
     category: 'Web Platform / Client Project',
     roles: ['UI/UX Designer'],
+    status: 'Delivered to client',
     technologies: [],
     cover: aaccup_mockup_cover,
     screenshots: [
@@ -498,17 +473,13 @@ export const PROJECTS = {
       { src: aaccup_screen_accreditor, alt: 'AACCUP accreditor', start: 3 },
     ],
     platform: {
-      overview: [
-        'AACCUP, the Accrediting Agency of Chartered Colleges and Universities in the Philippines, evaluates the quality of state universities and colleges and their academic programs. Its website holds a lot of that work: accreditation tables, institutional achievements, program classifications, and downloadable resources.',
-        'The redesign organizes it into clear sections with consistent navigation, so institutions and stakeholders can review accreditation standards, look up an institution, and find the resources they need.',
-      ],
+      overview: "AACCUP, the Accrediting Agency of Chartered Colleges and Universities in the Philippines, evaluates state universities and colleges and their academic programs. The redesigned website organizes its accreditation tables, institutional achievements, program classifications, and resources into clear sections with consistent navigation, so institutions and stakeholders can find what they need.",
       role: 'I worked on AACCUP as its UI/UX designer: I redesigned the full landing page and designed the admin and content creator modules, from wireframes to prototypes.',
       contributions: [
         'Designed the administrator and content creator modules, from wireframes to prototypes',
         'Redesigned the full landing page, organizing accreditation information, institutions, and resources into clear sections with consistent navigation',
       ],
       system: null,
-      outcome: 'The platform is live and in production.',
     },
   },
   arise: {
@@ -519,6 +490,7 @@ export const PROJECTS = {
     description: "A web platform for DOST-SEI's ARISE program, giving Filipino teachers and students STEM learning resources, innovations, and digital teaching tools.",
     category: 'Web Platform / Client Project',
     roles: ['UI/UX Designer'],
+    status: 'Delivered to client',
     technologies: [],
     cover: arise_mockup_cover,
     screenshots: [
@@ -534,16 +506,12 @@ export const PROJECTS = {
       { src: arise_screen_admin_forum, alt: 'DOST ARISE admin forum', start: 4 },
     ],
     platform: {
-      overview: [
-        'ARISE (Access to Resources and Innovations in Science Education) is a program of the Department of Science and Technology – Science Education Institute (DOST-SEI) that supports science and mathematics teaching in the Philippines.',
-        'The platform gives teachers and students one place to discover learning resources, explore new teaching materials, and use digital tools, while its landing page introduces the program, its partners, and how to register.',
-      ],
+      overview: "ARISE (Access to Resources and Innovations in Science Education) is a DOST-SEI program that supports science and mathematics teaching in the Philippines. Its platform gives teachers and students one place to discover learning resources, explore new teaching materials, and use digital tools, with a landing page that introduces the program, its partners, and how to register.",
       role: 'I worked on DOST ARISE as its UI/UX designer: I enhanced the landing page and designed the admin and educator modules, from wireframes to prototypes.',
       contributions: [
         'Designed the administrator and educator modules, from wireframes to prototypes',
         'Enhanced the landing page to introduce the program, its partners, and the registration process',
       ],
-      outcome: 'The platform is live and in production.',
     },
   },
   dailydiscount: {
@@ -626,11 +594,7 @@ export const PROJECTS = {
       { src: regain_history, alt: 'ReGain history', start: 4 },
     ],
     // a capstone project, laid out as a build: what it is, then my role and its stack
-    overview: [
-      'REGAIN is a web-based mental health support system developed as a capstone project for STI College Novaliches, addressing the challenges students faced in accessing guidance counseling and managing emotional stress during the COVID-19 pandemic.',
-      'The project focuses on providing a private and accessible digital environment where students can complete weekly self-assessments, express their thoughts through e-journaling, communicate with guidance counselors, and receive chatbot assistance when counselors are unavailable.',
-      "The system also includes counselor dashboards, student progress monitoring, and automated assessment reports to support guidance counselors in understanding students' emotional well-being and providing appropriate assistance.",
-    ],
+    overview: "ReGain is a web-based mental health support system built as a capstone project at STI College Novaliches during the COVID-19 pandemic. Students complete weekly self-assessments, keep an e-journal, message guidance counselors, and get chatbot support when counselors are unavailable, while counselors follow each student's progress through dashboards and automated assessment reports.",
   },
   // a design system, made at a company and shown with permission, laid out
   // as a build: its foundations, then its components. (no mock-up yet: its
@@ -644,40 +608,23 @@ export const PROJECTS = {
     category: 'Design System / Team Project',
     roles: ['UI/UX Designer'],
     technologies: ['Figma'],
-    overview: [
-      "The Central App design system is the single source of truth for how one of the company's central applications looks and behaves. I built it so designers and developers work from the same set of parts, and every new screen starts consistent instead of being styled from scratch.",
-      'Its foundations set the visual language: color tokens for light and dark mode with guidance on when to use each, a type scale, spacing and sizing steps, corner radius, elevation, and an icon set.',
-      'Its components put those foundations to work. Buttons, text fields, chips, cards, menus, navigation, dialogs, tooltips, and more are each documented with their variants, states, and the exact values developers build from.',
-    ],
+    overview: "The Central App design system is the single source of truth for how one of the company's central applications looks and behaves. It sets the foundations, from light and dark color tokens to the type scale, spacing, radius, elevation, and icons, and documents every component's variants, states, and values, so designers and developers build each new screen from the same set of parts.",
     cover: pci_mockup_cover,
     screenshots: [
       { src: pci_mockup_cover, alt: 'Central App mock-up', start: 'full' },
       { src: pci_colors_light_mode, alt: 'Central App colors, light mode', start: 'full' },
       { src: pci_colors_dark_mode, alt: 'Central App colors, dark mode', start: 2 },
       { src: pci_color_guidance, alt: 'Central App color guidance', start: 4 },
-      { src: pci_font_family, alt: 'Central App font family', start: 1 },
-      { src: pci_font_size, alt: 'Central App type scale', start: 3 },
-      { src: pci_spacing, alt: 'Central App spacing', start: 2 },
-      { src: pci_sizing, alt: 'Central App sizing', start: 4 },
-      { src: pci_radius, alt: 'Central App corner radius', start: 1 },
-      { src: pci_elevation, alt: 'Central App elevation', start: 3 },
-      { src: pci_icons, alt: 'Central App icons', start: 2 },
-      { src: pci_icon_label, alt: 'Central App icon labels', start: 4 },
+      { src: pci_font_size, alt: 'Central App type scale', start: 1 },
+      { src: pci_spacing, alt: 'Central App spacing', start: 3 },
+      { src: pci_elevation, alt: 'Central App elevation', start: 2 },
+      { src: pci_icons, alt: 'Central App icons', start: 4 },
       { src: pci_buttons, alt: 'Central App buttons', start: 1 },
       { src: pci_text_fields, alt: 'Central App text fields', start: 3 },
-      { src: pci_search, alt: 'Central App search', start: 2 },
-      { src: pci_chips, alt: 'Central App chips', start: 4 },
-      { src: pci_badges, alt: 'Central App badges', start: 1 },
-      { src: pci_avatar, alt: 'Central App avatars', start: 3 },
       { src: pci_cards, alt: 'Central App cards', start: 2 },
       { src: pci_menus, alt: 'Central App menus', start: 4 },
       { src: pci_navigations, alt: 'Central App navigation', start: 1 },
-      { src: pci_breadcrumbs, alt: 'Central App breadcrumbs', start: 3 },
-      { src: pci_dialogs, alt: 'Central App dialogs', start: 2 },
-      { src: pci_alert_box, alt: 'Central App alert boxes', start: 4 },
-      { src: pci_tooltips, alt: 'Central App tooltips', start: 1 },
-      { src: pci_progress_indicator, alt: 'Central App progress indicators', start: 3 },
-      { src: pci_divider, alt: 'Central App dividers', start: 2 },
+      { src: pci_dialogs, alt: 'Central App dialogs', start: 3 },
     ],
   },
 };

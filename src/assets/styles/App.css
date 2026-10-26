@@ -171,9 +171,17 @@
 
 * body .tag {
   display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-self: flex-start;
+  justify-self: start;
   padding: 0.5rem 1rem;
   border: 1px solid var(--rule);
   clip-path: inset(100% 0% 0% 0%);
+}
+
+* body .tag .split-word:last-child {
+  margin-right: 0;
 }
 
 * body .project-row {

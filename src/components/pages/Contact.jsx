@@ -111,13 +111,9 @@ function Contact({ page = false, projects = false, next, previous, current }) {
             laptop:col-span-5 laptop:row-start-1
             laptop-lg:col-span-5 laptop-lg:row-start-1
             desktop:col-span-5 desktop:row-start-1'>
-            {/* (leading on to a project, the heading is the link to it,
-              held still under the pointer) */}
-            {next ? (
-              <TransitionLink to={next.path} className='flex flex-wrap font-flexible font-semibold [color:inherit]' aria-label={`Next project: ${next.title}`} data-no-hover-roll>
-                <SplitText text={heading} id='animate-contact' />
-              </TransitionLink>
-            ) : <SplitText text={heading} id='animate-contact' />}
+            {/* (leading on to a project, the heading only names it: the
+              way there is the "Next project" link beside it) */}
+            <SplitText text={heading} id='animate-contact' />
           </h2>
           {/* invitation + links - right */}
           <div className='text-caption
