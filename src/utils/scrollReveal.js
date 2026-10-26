@@ -3,8 +3,8 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 // reveal-speed bounds, in seconds
-const MIN_DURATION = 0.55;  // fast flick down the page -> quick reveal
-const MAX_DURATION = 0.7;  // slow, deliberate scroll -> gentle reveal
+const MIN_DURATION = 0.45;  // fast flick down the page -> quick reveal
+const MAX_DURATION = 0.6;  // slow, deliberate scroll -> gentle reveal
 // scroll speeds (px/s) at or beyond this are treated as "fastest"
 const VELOCITY_RANGE = 3000;
 
@@ -22,13 +22,13 @@ function durationForVelocity(velocity) {
 // (the floor is one letter's own rise, so a short label is never
 // stretched: only a very long text is squeezed, to the ceiling)
 const MIN_TOTAL = 0.5;
-const MAX_TOTAL = 1.6;
+const MAX_TOTAL = 1.2;
 // a fast flick plays a reveal in this share of its slow-scroll time
 // (1: how fast the page is scrolled no longer changes a reveal's speed -
 // it made the same kind of text rise at different speeds)
 const FASTEST = 1;
-// one letter's own rise, in seconds, before any pacing (gsap's default)
-const LETTER_DURATION = 0.5;
+// one letter's own rise, in seconds, before any pacing
+const LETTER_DURATION = 0.4;
 
 function totalForVelocity(natural, velocity) {
   const v = Math.min(Math.abs(velocity || 0), VELOCITY_RANGE);
@@ -66,7 +66,12 @@ function startFor(el, start) {
 // ScrollSmoother has actually moved things to)
 const NEAR = '150%';
 export function whenNear(el, build) {
-  const target = gsap.utils.toArray(el)[0];
+  // a letter waiting to rise sits below its clip box, wholly clipped, and
+  // an IntersectionObserver never sees a clipped element come into view:
+  // reveals triggered off their own letters (the footer, the work list's
+  // description) were never built. the clip box itself is what is watched
+  const first = gsap.utils.toArray(el)[0];
+  const target = first?.closest?.('.split-letter-clip') || first;
   if (!target || typeof IntersectionObserver === 'undefined') return build();
   const wrapper = document.getElementById('smooth-wrapper');
   let built = null;
@@ -133,8 +138,10 @@ export const CARD_SHARE = .6;
 export const CARD_AT = (self) => `top+=${Math.round(Math.min(self.trigger.offsetHeight, window.innerHeight) * CARD_SHARE)} bottom`;
 // every reveal starts at once and slows into place. (an ease that starts
 // slowly reads as one more wait before anything shows; one at an even
-// pace, start to finish, stops dead and reads as hurried)
-const EASE = 'power2.out';
+// pace, start to finish, stops dead and reads as hurried). a strong
+// ease-out - a quick push off, then a long glide in, like a stride or a
+// pedal stroke - gives the site its sense of pace
+const EASE = 'power3.out';
 
 // ---- one reveal at a time, within a section
 // a reveal that is triggered while another in its section is still
@@ -223,10 +230,10 @@ function advance(q) {
 }
 
 // ---- held behind a cover
-// while a full-screen panel is over the page (the loading screen, the
-// wipe between pages) the page's reveals are held: they would play out
-// unseen behind it. the panel lets them go once it has lifted far enough
-// that only COVER_LEFT of it is still on screen
+// while a full-screen cover is over the page (the loading screen, the
+// wipe between pages - both in pixels, pixels.js) the page's reveals are
+// held: they would play out unseen behind it. the cover lets them go once
+// it has cleared far enough that only COVER_LEFT of it is still on screen
 export const COVER_LEFT = .2;
 // what it lets go does not queue: each starts this long after the one
 // before, at its own speed, so a first screen comes in as one movement
@@ -249,17 +256,17 @@ export function releaseReveals() {
   held = false;
   release?.kill();
   release = null;
-  due.splice(0).forEach(({ turn, rate }, i) => turn.start(rate, i * OVERLAP));
-}
-
-/**
- * For a cover's own lift: call it as the panel's height changes, and the
- * reveals are let go once the panel is down to COVER_LEFT of the screen.
- *
- * @param {Element} panel
- */
-export function releaseWhenLifted(panel) {
-  if (held && panel.getBoundingClientRect().height <= window.innerHeight * COVER_LEFT) releaseReveals();
+  // in reading order - down the page, then across - not the order they
+  // were asked in, which goes by when each was built: the contact form's
+  // fields came in scattered, a few before the headline over them
+  const place = ({ el }) => {
+    const box = el?.getBoundingClientRect?.();
+    return box ? [Math.round(box.top), box.left] : [Infinity, Infinity];
+  };
+  due.splice(0)
+    .map((entry) => ({ ...entry, at: place(entry) }))
+    .sort((a, b) => a.at[0] - b.at[0] || a.at[1] - b.at[1])
+    .forEach(({ turn, rate }, i) => turn.start(rate, i * OVERLAP));
 }
 
 /**
@@ -282,7 +289,7 @@ export function inTurn(anim, el) {
       if (held) {
         const waitingFor = due.find((entry) => entry.turn === turn);
         if (waitingFor) waitingFor.rate = rate;
-        else due.push({ turn, rate });
+        else due.push({ turn, rate, el: item.el });
         return;
       }
       item.rate = rate;
@@ -396,9 +403,10 @@ function buildReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
  * is still mid-animation. Each stage still uses the same scroll-velocity
  * based pacing as scrollReveal.
  *
- * @param {{targets: string|Element|Element[], vars: object, position?: string|number}[]} stages - played
+ * @param {{targets: string|Element|Element[], vars?: object, build?: () => gsap.core.Animation, position?: string|number}[]} stages - played
  *   in order; a stage's optional `position` is a gsap timeline position ('<' starts it with the
- *   stage before it instead of after)
+ *   stage before it instead of after). a stage with `build` puts in the animation it returns
+ *   (its `targets` still name what it reveals, for the trigger)
  * @param {object} [opts]
  * @param {string|Element} [opts.trigger] - ScrollTrigger trigger (defaults to the first stage's targets)
  * @param {string} [opts.start] - ScrollTrigger start position (defaults to REVEAL_AT)
@@ -424,8 +432,15 @@ function buildSequence(stages, { trigger, start = REVEAL_AT, reverseStart } = {}
   // already revealed records "revealed" as its starting point too, so
   // reversing it went nowhere and the row just stayed on screen
   const tl = gsap.timeline({ paused: true });
-  stages.forEach(({ targets, vars, position }) => {
-    if (!vars.stagger) {
+  stages.forEach(({ targets, vars, position, build }) => {
+    // (a stage made by `build` is put in as it is: an image opening in
+    // pixels, pixels.js)
+    if (build) {
+      tl.add(build(), position);
+      return;
+    }
+    // (a stage that sets its own duration keeps it, stagger and all)
+    if (!vars.stagger || vars.duration != null) {
       tl.to(targets, { ...vars, ease: EASE, duration: vars.duration ?? durationForVelocity(0) }, position);
       return;
     }

@@ -2,7 +2,9 @@ import React, { useEffect, useLayoutEffect, useRef } from 'react'
 // GSAP
 import gsap from 'gsap'
 // the page's reveals wait behind this screen
-import { holdReveals, releaseReveals, releaseWhenLifted } from '../../utils/scrollReveal'
+import { holdReveals, releaseReveals, COVER_LEFT } from '../../utils/scrollReveal'
+// the screen's pixels
+import { pixelSweep } from '../../utils/pixels'
 
 // the local faces the page is set in, each with sample text. they are
 // requested explicitly because the browser only fetches a font once
@@ -16,22 +18,36 @@ const FONTS = [
 ];
 // never hold the page hostage to a font that fails or stalls
 const TIMEOUT_MS = 4000;
-// whether this visit has already seen the screen (App.jsx skips it then)
-export const SEEN_KEY = 'preloader-seen';
+
+// the screen is given time to be seen, however fast the fonts arrive: the
+// count runs for at least COUNT seconds, and rests at 100 for HOLD before
+// the screen goes. (it was over in about a second on a cached visit -
+// too quick to see the count or the pixels)
+const COUNT = 1.6;
+const HOLD = .35;
+// how long the pixels take to clear, in seconds
+const SWEEP = 1.4;
 
 /**
- * Full-screen black loading screen with the loaded percentage in the
- * lower left, set at the hero headline's size. It moves the way the menu
- * overlay does: the figure rises out of a clip box, and on exit it drops
- * back down before the panel collapses upward off the page.
+ * Full-screen black loading screen, made of pixels - the material a
+ * designer adjusts. In the lower left the loaded percentage, at the hero
+ * headline's size, rising out of a clip box. On exit the figure drops
+ * back down, then
+ * the screen breaks into square pixels that switch off in a sweep from
+ * the top left - each lit for a moment, like a pixel being edited, before
+ * it goes - and the page shows through.
+ *
+ * Drawn on one canvas, a rectangle a pixel, so the exit costs a few
+ * hundred fills a frame and nothing for the page's layout.
  *
  * @param {() => void} onExitStart - fired as the exit begins, so the page
- *   can mount underneath and play its own reveals while the panel lifts
- * @param {() => void} onDone - fired once the panel is fully gone
+ *   can mount underneath and play its own reveals while the pixels clear
+ * @param {() => void} onDone - fired once the screen is fully gone
  */
 function Preloader({ onExitStart, onDone }) {
   const fxPanel = useRef();
   const fxFigure = useRef();
+  const fxCanvas = useRef();
 
   // index.html paints a static black cover so nothing light flashes before
   // React mounts - this screen takes over from it. the figure starts
@@ -44,6 +60,7 @@ function Preloader({ onExitStart, onDone }) {
   useEffect(() => {
     const panel = fxPanel.current;
     const figure = fxFigure.current;
+    const canvas = fxCanvas.current;
     const counter = { value: 0 };
     const render = () => {
       figure.textContent = `${Math.round(counter.value)}%`;
@@ -52,35 +69,54 @@ function Preloader({ onExitStart, onDone }) {
     let loaded = 0;
     let exiting = false;
     let exit;
+    let rest;
+    let sweep;
+    const started = performance.now();
 
     const leave = () => {
       if (exiting) return;
       exiting = true;
-      // the page mounts under the panel now, but its reveals wait: they
-      // start when only a fifth of the panel is still on screen
-      // (COVER_LEFT, scrollReveal.js)
+      // the page mounts under the screen now, but its reveals wait: they
+      // start when only a fifth of the pixels are still on (COVER_LEFT,
+      // scrollReveal.js)
       holdReveals();
       onExitStart();
       // a fast load can finish while the figure is still rising
       gsap.killTweensOf(figure);
-      // (kept short: every tenth of a second here is a tenth before the
-      // page can be seen)
-      try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (e) { /* storage blocked: shown again next time */ }
-      exit = gsap.timeline({ onComplete: () => { releaseReveals(); onDone(); } })
-        .to(figure, { yPercent: 110, duration: .45, ease: 'power1.in' })
-        .to(panel, { height: 0, duration: .6, ease: 'power2.inOut', onUpdate: () => releaseWhenLifted(panel) }, '-=.1');
+      exit = gsap.timeline()
+        .to(figure, { yPercent: 110, duration: .5, ease: 'power3.in' })
+        // the solid panel hands over to its pixels, drawn the same black
+        // (pixels.js), which clear from the top left
+        .add(() => {
+          sweep = pixelSweep(canvas, {
+            duration: SWEEP,
+            onUpdate: (at) => { if (at >= 1 - COVER_LEFT) releaseReveals(); },
+          });
+          sweep.eventCallback('onComplete', () => { releaseReveals(); onDone(); });
+          panel.style.background = 'transparent';
+          panel.firstElementChild.style.visibility = 'hidden';
+        });
+    };
+
+    // at 100: the screen rests there a moment, once it has been up long
+    // enough to be seen (COUNT, HOLD)
+    const finish = () => {
+      const wait = Math.max(0, COUNT - (performance.now() - started) / 1000) + HOLD;
+      rest = gsap.delayedCall(wait, leave);
     };
 
     // the figure eases toward the real share of fonts loaded, and the
     // screen only leaves once it has visibly reached 100
     const advance = () => {
+      // (paced so the whole count takes COUNT seconds, wherever it is)
+      const value = (loaded / FONTS.length) * 100;
       gsap.to(counter, {
-        value: (loaded / FONTS.length) * 100,
-        duration: .5,
-        ease: 'power1.out',
+        value,
+        duration: Math.max(.5, ((value - counter.value) / 100) * COUNT),
+        ease: 'power1.inOut',
         overwrite: true,
         onUpdate: render,
-        onComplete: () => { if (loaded === FONTS.length) leave(); },
+        onComplete: () => { if (loaded === FONTS.length && !rest) finish(); },
       });
     };
 
@@ -91,7 +127,7 @@ function Preloader({ onExitStart, onDone }) {
     // face has arrived - otherwise it would appear in a fallback and swap
     loads[0].then(() => {
       if (exiting) return;
-      gsap.to(figure, { yPercent: 0, duration: .45, ease: 'power1.in' });
+      gsap.to(figure, { yPercent: 0, duration: .7, ease: 'power3.out' });
     });
 
     const timeout = setTimeout(() => { loaded = FONTS.length; advance(); }, TIMEOUT_MS);
@@ -99,7 +135,9 @@ function Preloader({ onExitStart, onDone }) {
     return () => {
       clearTimeout(timeout);
       gsap.killTweensOf([counter, figure, panel]);
+      rest?.kill();
       exit?.kill();
+      sweep?.kill();
     };
   }, [onExitStart, onDone]);
 
@@ -120,6 +158,8 @@ function Preloader({ onExitStart, onDone }) {
           </span>
         </div>
       </div>
+      {/* the screen's pixels, drawn on the way out */}
+      <canvas className='absolute inset-0 w-full h-full pointer-events-none' aria-hidden='true' ref={fxCanvas}/>
     </div>
   )
 }

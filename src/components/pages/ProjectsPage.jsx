@@ -103,7 +103,6 @@ function ProjectsPage() {
 
   useEffect(() => {
     const section = fxGrid.current;
-    const open = { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.out' };
     // a cover's picture settling into its frame as the frame opens
     const settle = { yPercent: 0, scale: 1, ease: 'power2.out' };
     // the pictures start slightly large and low in their frames
@@ -119,7 +118,7 @@ function ProjectsPage() {
     // (each in its turn among the page's reveals - scrollReveal.js)
     const reveals = gsap.utils.toArray('.work-item', section).map((item) => {
       const wipe = gsap.timeline({ paused: true })
-        .to(item.querySelector('.work-cover'), { ...open, duration: 1 }, 0)
+        .to(item.querySelector('.work-cover'), { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.out', duration: 1 }, 0)
         .to(item.querySelector('.work-cover-image'), { ...settle, duration: 1.2 }, 0);
       const turn = inTurn(wipe, item);
       const trigger = ScrollTrigger.create({ trigger: item, start: REVEAL_AT, onEnter: () => turn.play(), onLeaveBack: () => turn.reverse() });

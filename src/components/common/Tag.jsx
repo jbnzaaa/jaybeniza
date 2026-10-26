@@ -20,9 +20,13 @@ function Tag({ label, id, as: Element = 'h2' }) {
 
   useEffect(() => {
     const tag = fxTag.current;
+    // quick, and on set times: the tag is the first reveal in its section,
+    // and the section's content waits for it to finish (scrollReveal.js).
+    // at the usual pace it took 0.9s, and the content under it was
+    // halfway up the screen before it began
     const reveal = scrollRevealSequence([
-      { targets: tag, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },
-      { targets: tag.querySelectorAll('.split-letter'), vars: { y: 0, stagger: .02, ease: 'power1.in' }, position: '<.2' },
+      { targets: tag, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.out', duration: .3 } },
+      { targets: tag.querySelectorAll('.split-letter'), vars: { y: 0, duration: .3, stagger: { amount: .15 }, ease: 'power2.out' }, position: '<.1' },
     ], { trigger: tag });
     return () => reveal.kill();
   }, []);

@@ -9,7 +9,7 @@ module.exports = {
       // the type scale. every step is fluid - it grows with the screen's
       // width between a floor and a ceiling, so there are no jumps between
       // breakpoints - and each step is clearly apart from the next: small
-      // quiet text against large headings. the hero and contact headlines
+      // quiet text against large headings. the hero and closing headlines
       // sit above this scale, sized to the screen's width where they are set
       fontSize: {
         caption: 'clamp(.8125rem, .7rem + .15vw, .875rem)',
@@ -22,7 +22,8 @@ module.exports = {
         // evenly as the window does, with no step at a breakpoint
         logo: 'clamp(1.4rem, 1.25rem + .6vw, 1.8rem)',
         hero: 'calc(3rem + 6.67vw)',
-        project: 'calc(1rem + 7.6vw)',
+        // (the work list is set below the hero: the hero is the louder line)
+        project: 'calc(1rem + 5vw)',
         case: 'calc(2.3rem + 9.43vw)',
         next: 'calc(2.625rem + 6.1vw)',
         closing: 'calc(3rem + 11.6vw)',

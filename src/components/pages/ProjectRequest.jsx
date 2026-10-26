@@ -5,7 +5,7 @@ import { RiArrowDownSLine, RiArrowRightDownLine, RiInformationLine } from 'react
 // GSAP
 import gsap from 'gsap'
 // scroll reveal
-import { scrollReveal } from '../../utils/scrollReveal'
+import { scrollReveal, scrollRevealSequence } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
 
@@ -125,14 +125,21 @@ function ProjectRequest() {
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    // heading and introduction rise letter by letter, like every section's
-    const reveal = scrollReveal('#animate-request', { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: '#project-request', start: 'top bottom' });
-    // then the form, one field at a time as each comes up the screen: it
-    // rises a little into place as it fades in, after the text above it
-    // (each in its turn among the section's reveals - scrollReveal.js)
+    // each field rises a little into place as it fades in
     const fields = gsap.utils.toArray('.project-form > .form-field');
     const lowered = gsap.set(fields, { y: 24, autoAlpha: 0 });
-    const rises = fields.map((field) => scrollReveal(field, { y: 0, autoAlpha: 1 }));
+    // heading and introduction rise letter by letter, like every section's,
+    // and the fields on the first screen follow them in one sequence, in
+    // reading order. revealed apart, a field (in a single fade) was seen
+    // before the heading's first letters had risen
+    const first = fields.filter((field) => field.getBoundingClientRect().top < window.innerHeight);
+    const reveal = scrollRevealSequence([
+      { targets: '#animate-request', vars: { y: 0, stagger: .02, ease: 'power1.in' } },
+      ...(first.length ? [{ targets: first, vars: { y: 0, autoAlpha: 1, duration: .5, stagger: .08 }, position: '-=.3' }] : []),
+    ], { trigger: '#project-request', start: 'top bottom' });
+    // the rest one at a time, as each comes up the screen (each in its
+    // turn among the section's reveals - scrollReveal.js)
+    const rises = fields.filter((field) => !first.includes(field)).map((field) => scrollReveal(field, { y: 0, autoAlpha: 1 }));
     return () => {
       reveal.kill();
       rises.forEach((rise) => rise.kill());

@@ -13,6 +13,8 @@ import ScrollSmoother from 'gsap/ScrollSmoother'
 import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 // scroll reveal
 import { scrollReveal, scrollRevealSequence } from '../../utils/scrollReveal'
+// my picture opens in pixels
+import { pixelToggle } from '../../utils/pixels'
 // the site's button and section label
 import Button from '../common/Button'
 import Tag from '../common/Tag'
@@ -55,8 +57,8 @@ function AboutPage() {
   useEffect(() => {
     // my picture, shown while the pointer is on my name, centred on the
     // pointer and following it. it opens with the site's image reveal -
-    // the frame wipes open from its bottom edge while the picture inside
-    // eases down from slightly large - and wipes shut the same way when
+    // the frame opens in pixels from its bottom edge up while the picture
+    // inside eases down from slightly large - and shuts the same way when
     // the pointer leaves. on a touch screen, or from the keyboard, the
     // name is pressed instead and the picture opens under it
     const hero = fxHero.current;
@@ -67,6 +69,8 @@ function AboutPage() {
     const toX = gsap.quickTo(portrait, 'x', { duration: .35, ease: 'power3.out' });
     const toY = gsap.quickTo(portrait, 'y', { duration: .35, ease: 'power3.out' });
     let open = false;
+    // (it opens and shuts in pixels - pixels.js)
+    const pixels = pixelToggle(portrait);
 
     // its middle on a point of the screen (`jump`: there at once, for
     // when it opens)
@@ -82,13 +86,13 @@ function AboutPage() {
       if (open) return;
       open = true;
       place(clientX, clientY, true);
-      gsap.to(portrait, { clipPath: 'inset(0% 0% 0% 0%)', duration: .5, ease: 'power2.inOut', overwrite: 'auto' });
+      pixels.show(.5);
       gsap.fromTo(picture, { scale: 1.15 }, { scale: 1, duration: .7, ease: 'power2.out', overwrite: 'auto' });
     };
     const hide = () => {
       if (!open) return;
       open = false;
-      gsap.to(portrait, { clipPath: 'inset(100% 0% 0% 0%)', duration: .4, ease: 'power2.in', overwrite: 'auto' });
+      pixels.hide(.4);
     };
     // (pressed rather than pointed at: under the name, clear of it)
     const under = () => {
@@ -119,6 +123,7 @@ function AboutPage() {
       name.removeEventListener('keydown', onKey);
       name.removeEventListener('blur', hide);
       gsap.killTweensOf([portrait, picture]);
+      pixels.kill();
     };
   }, []);
 

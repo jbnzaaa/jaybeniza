@@ -9,6 +9,8 @@ import Button from '../../common/Button'
 import Tag from '../../common/Tag'
 // scroll reveal
 import { scrollReveal, scrollRevealSequence } from '../../../utils/scrollReveal'
+// the screenshots open in pixels
+import { pixelReveal } from '../../../utils/pixels'
 // per-letter text split
 import SplitText from '../../common/SplitText'
 // every project's content - for the link to the next one
@@ -352,10 +354,11 @@ function ProjectPage({ project }) {
     const sections = gsap.utils.toArray('[id^="case-"]').filter((section) => document.querySelector(`#animate-${section.id}`)).map((section) => scrollReveal(
       `#animate-${section.id}`, { y: 0, stagger: .012, ease: 'power1.in' }, { trigger: section }));
 
-    // each screenshot reveals as it scrolls into view: the frame wipes up
-    // from its bottom edge while the image inside eases down to its real size
+    // each screenshot reveals as it scrolls into view: the frame opens in
+    // pixels from its bottom edge up (pixels.js) while the image inside
+    // eases down to its real size
     const images = gsap.utils.toArray('.screenshot-container').map((card) => scrollRevealSequence([
-      { targets: card, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },
+      { targets: card, build: () => pixelReveal(card, { duration: 1 }) },
       { targets: card.querySelector('.screenshot-img'), vars: { scale: 1, ease: 'power2.out' }, position: '<' },
     ], { trigger: card }));
 

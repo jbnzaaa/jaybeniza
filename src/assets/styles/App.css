@@ -1110,6 +1110,11 @@
   position: relative;
 }
 
+* body .form-field:has(.form-select-open) {
+  position: relative;
+  z-index: 7;
+}
+
 * body .form-select-button {
   display: flex;
   justify-content: space-between;
@@ -1305,4 +1310,11 @@ html.has-cursor * {
   cursor: none;
 }
 
+
+
+* body .project-preview-next {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(100% 0% 0% 0%);
+}
 /*# sourceMappingURL=App.css.map */

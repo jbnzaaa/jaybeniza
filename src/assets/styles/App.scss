@@ -1392,6 +1392,14 @@
   position: relative;
 }
 
+// an open dropdown's field is drawn over the fields after it: each field
+// keeps the transform of its reveal, which makes it a layer of its own,
+// and a later one (the send button) was drawn over the open list
+* body .form-field:has(.form-select-open) {
+  position: relative;
+  z-index: 7;
+}
+
 * body .form-select-button {
   display: flex;
   justify-content: space-between;
@@ -1606,3 +1614,13 @@ html.has-cursor,
 html.has-cursor * {
   cursor: none;
 }
+
+
+// the next project opening over the one the preview shows (Project.jsx):
+// the same face, laid over it, opening in pixels (pixels.js)
+* body .project-preview-next {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(100% 0% 0% 0%);
+}
+

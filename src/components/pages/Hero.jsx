@@ -1,11 +1,7 @@
 //
 import React, { useEffect } from 'react'
-// GSAP
-import ScrollSmoother from 'gsap/ScrollSmoother'
 // scroll reveal - same helper every other section on the site uses
 import { scrollReveal } from '../../utils/scrollReveal'
-// the site's button
-import Button from '../common/Button'
 // per-letter text split
 import SplitText from '../common/SplitText'
 
@@ -24,8 +20,7 @@ const PROFESSION = PROFESSION_LINES.join(' ');
 
 /**
  * The landing page's first screen, on the light theme: the headline at the
- * top, and along the bottom a short description on the left and an arrow
- * on the right that carries on to the projects.
+ * top, and along the bottom a short description on the left.
  */
 function Hero() {
   useEffect(() => {
@@ -43,12 +38,6 @@ function Hero() {
       highlight.kill();
     };
   }, []);
-
-  // the arrow scrolls on to the projects
-  const toProjects = (e) => {
-    e.preventDefault();
-    ScrollSmoother.get()?.scrollTo('#project', true);
-  };
 
   return (
     <>
@@ -72,7 +61,7 @@ function Hero() {
             <SplitText text={PROFESSION} id='animate-hero-profession' />
           </span>
         </h1>
-        {/* description left, arrow on to the projects right */}
+        {/* description, along the bottom on the left */}
         <div className='flex justify-between items-end gap-x-6'>
           <p className='flex flex-wrap text-caption
             mobile:w-[78%]
@@ -82,9 +71,6 @@ function Hero() {
             desktop:w-[28%]'>
             <SplitText text={HIGHLIGHT_TEXT} id='animate-hero-highlight' by='word' />
           </p>
-          <div className='shrink-0'>
-            <Button label='See selected projects' href='#project' onClick={toProjects} iconOnly outline />
-          </div>
         </div>
       </section>
     </>

@@ -8,7 +8,7 @@ import Navbar from './components/pages/Navbar';
 import Home from './components/pages/Home';
 import { PROJECTS } from './components/pages/projects/projects';
 // loading screen + page-to-page wipe
-import Preloader, { SEEN_KEY } from './components/common/Preloader';
+import Preloader from './components/common/Preloader';
 import { PageTransitionProvider } from './components/common/PageTransition';
 // the square cursor
 import Cursor from './components/common/Cursor';
@@ -79,14 +79,10 @@ function ScrollManager() {
 
 function App() {
   // the page mounts when the loading screen starts to leave, so its
-  // reveals play as the panel lifts instead of unseen behind it
-  // the loading screen plays once a visit: opened again in the same tab
-  // (a reload, a link back) the page shows at once - its fonts are cached
-  const [seen] = useState(() => {
-    try { return sessionStorage.getItem(SEEN_KEY) === '1'; } catch (e) { return false; }
-  });
-  const [entered, setEntered] = useState(seen);
-  const [loading, setLoading] = useState(!seen);
+  // reveals play as the pixels clear instead of unseen behind them. the
+  // loading screen plays on every load of the site, a reload included
+  const [entered, setEntered] = useState(false);
+  const [loading, setLoading] = useState(true);
   const handleExitStart = useCallback(() => setEntered(true), []);
   const handleDone = useCallback(() => setLoading(false), []);
 
@@ -177,12 +173,6 @@ function App() {
       smoother.kill();
     };
   }, []);
-
-  // without the loading screen, index.html's black cover - which the
-  // screen would have taken over from - goes at once
-  useEffect(() => {
-    if (seen) document.getElementById('boot-cover')?.remove();
-  }, [seen]);
 
   // the other pages, fetched in the background once the page is up and
   // the browser is idle (PAGES, above)

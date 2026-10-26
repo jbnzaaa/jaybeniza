@@ -1,5 +1,5 @@
 //
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
@@ -8,6 +8,7 @@ import SplitText from '../common/SplitText'
 // the footer sits inside the closing screen (Contact.jsx, and the about
 // page's resume screen), so it takes that screen's colour
 function Footer() {
+  const fxFooter = useRef();
 
   useEffect(() => {
     // 'top bottom' (most lenient) instead of the shared default: the
@@ -18,13 +19,13 @@ function Footer() {
       y: 0,
       stagger: .02,
       ease: 'power1.in',
-    }, { start: 'top bottom' });
+    }, { trigger: fxFooter.current, start: 'top bottom' });
     return () => reveal.kill();
   }, []);
 
   return (
     <>
-      <footer className='flex justify-between gap-x-6 font-monolisa text-caption
+      <footer ref={fxFooter} className='flex justify-between gap-x-6 font-monolisa text-caption
         mobile:px-[1rem] mobile:py-6 mobile:flex-col mobile:gap-y-1
         tablet:px-[1rem] tablet:py-6
         laptop:px-[2rem] laptop:py-6

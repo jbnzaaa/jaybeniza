@@ -9,6 +9,8 @@ import Tag from '../common/Tag'
 import SplitText from '../common/SplitText'
 // the page's one queue of reveals
 import { inTurn, whenNear, refreshSoon } from '../../utils/scrollReveal'
+// the pictures open in pixels
+import { pixelReveal } from '../../utils/pixels'
 // their pictures - small square crops of the photographs in /reference
 import sergio from '../../assets/files/images/team/sergio-ramos-iii.jpg'
 import paula from '../../assets/files/images/team/paula-malupa.jpg'
@@ -109,17 +111,16 @@ function Testimonials() {
       const vertical = window.matchMedia('(max-width: 1023px)').matches;
       const away = vertical ? { y: () => window.innerHeight } : { x: () => window.innerWidth };
       const home = vertical ? { y: 0 } : { x: 0 };
-      const frame = { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.out' };
 
       // the first card, on its own time: it slides to its place, its text
-      // rises, and its picture wipes open from its bottom edge. it plays
+      // rises, and its picture opens in pixels from its bottom edge up. it plays
       // when the stack has come far enough up the screen (in its turn among
       // the section's reveals - scrollReveal.js), and goes back if the page
       // is scrolled back above that
       const first = gsap.timeline({ paused: true })
         .fromTo(cards[0], away, { ...home, ease: 'power3.out', duration: 1.4 }, 0)
         .to(cards[0].querySelectorAll('.split-letter'), { y: 0, ease: 'power2.out', duration: .7, stagger: { amount: .5 } }, .55)
-        .to(cards[0].querySelector('.testimonial-avatar'), { ...frame, duration: .7 }, .7);
+        .add(pixelReveal(cards[0].querySelector('.testimonial-avatar'), { duration: .7 }), .7);
       const turn = inTurn(first, section.querySelector('.testimonial-stack'));
       const arrive = ScrollTrigger.create({
         trigger: section.querySelector('.testimonial-stack'),
@@ -151,7 +152,7 @@ function Testimonials() {
         stack
           .fromTo(card, away, { ...home, ease: 'none', duration: 1 }, at)
           .to(card.querySelectorAll('.split-letter'), { y: 0, duration: .3, stagger: { amount: .25 } }, at + .45)
-          .to(card.querySelector('.testimonial-avatar'), { ...frame, ease: 'none', duration: .4 }, at + .55);
+          .add(pixelReveal(card.querySelector('.testimonial-avatar'), { duration: .4, ease: 'none' }), at + .55);
       });
       // the finished stack is held a moment before the page moves on
       stack.to({}, { duration: READ });
