@@ -361,8 +361,13 @@ function Panel({ label, className = '' }) {
  * `lead` line set large, `text` (a paragraph, or a list of them),
  * `notes` (labelled paragraphs), `cards` (`cardRows`: one to a row), `points` (a labelled list) and
  * `shots` (its screens, and their `layout`).
+ *
+ * The project is given whole, or by its key in PROJECTS as `id` - the
+ * routes give the key, so projects.js stays out of the first download
+ * (App.jsx).
  */
-function ProjectPage({ project }) {
+function ProjectPage({ project: given, id }) {
+  const project = given || PROJECTS[id];
   // which layout: a case study, a platform, or a build
   const isStudy = !!project.caseStudy;
   const isDraft = !!project.inProgress;

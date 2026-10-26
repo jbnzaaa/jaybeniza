@@ -6,7 +6,6 @@ import './assets/styles/App.css';
 // Pages
 import Navbar from './components/pages/Navbar';
 import Home from './components/pages/Home';
-import { PROJECTS } from './components/pages/projects/projects';
 // loading screen + page-to-page wipe
 import Preloader from './components/common/Preloader';
 import { PageTransitionProvider } from './components/common/PageTransition';
@@ -248,18 +247,18 @@ function App() {
                 <Route path='/jbnza' element={<Jbnza/>}/>
                 <Route path='/jaysonbeniza' element={<Jaysonbeniza/>}/>
                 <Route path='/regain' element={<Regain/>}/>
-                <Route path='/portfolio-2026' element={<ProjectPage project={PROJECTS.portfoliov3}/>}/>
+                <Route path='/portfolio-2026' element={<ProjectPage id='portfoliov3'/>}/>
                 {/* work shown with permission (projects.js) */}
-                <Route path='/gurover' element={<ProjectPage project={PROJECTS.gurover}/>}/>
-                <Route path='/comelec-acm' element={<ProjectPage project={PROJECTS.comelec}/>}/>
-                <Route path='/psgs' element={<ProjectPage project={PROJECTS.psgs}/>}/>
-                <Route path='/pci-central-app' element={<ProjectPage project={PROJECTS.pci}/>}/>
-                <Route path='/aaccup' element={<ProjectPage project={PROJECTS.aaccup}/>}/>
-                <Route path='/dost-arise' element={<ProjectPage project={PROJECTS.arise}/>}/>
+                <Route path='/gurover' element={<ProjectPage id='gurover'/>}/>
+                <Route path='/comelec-acm' element={<ProjectPage id='comelec'/>}/>
+                <Route path='/psgs' element={<ProjectPage id='psgs'/>}/>
+                <Route path='/pci-central-app' element={<ProjectPage id='pci'/>}/>
+                <Route path='/aaccup' element={<ProjectPage id='aaccup'/>}/>
+                <Route path='/dost-arise' element={<ProjectPage id='arise'/>}/>
                 {/* case studies in progress */}
                 {/* (the project's key is still its first name, tingi; so is
                   its old address, which is sent on) */}
-                <Route path='/bitewise' element={<ProjectPage project={PROJECTS.tingi}/>}/>
+                <Route path='/bitewise' element={<ProjectPage id='tingi'/>}/>
                 <Route path='/tingi' element={<Navigate to='/bitewise' replace/>}/>
                 {/* (StockNear is hidden for now; its case study stays in projects.js) */}
                 <Route path='/stocknear' element={<Navigate to='/work' replace/>}/>

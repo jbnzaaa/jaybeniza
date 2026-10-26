@@ -6,11 +6,11 @@
 // an imported `picture` instead.
 //
 // a slot with no `image` previews as a plain panel
-// the mock-ups
-import p26_cover from '../../assets/files/images/portfolio/portfolio-2026-mockup-cover.webp'
-import bitewise_cover from '../../assets/files/images/bitewise/mockup-cover.webp'
-import gurover_cover from '../../assets/files/images/gurover/mockup-cover.webp'
-import pci_cover from '../../assets/files/images/pci/mockup-cover.webp'
+// the mock-ups, at card size (1200px; the project pages use the full ones)
+import p26_cover from '../../assets/files/images/portfolio/portfolio-2026-mockup-cover-card.webp'
+import bitewise_cover from '../../assets/files/images/bitewise/mockup-cover-card.webp'
+import gurover_cover from '../../assets/files/images/gurover/mockup-cover-card.webp'
+import pci_cover from '../../assets/files/images/pci/mockup-cover-card.webp'
 
 export const PROJECT_CARDS = [
   {
