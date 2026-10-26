@@ -253,6 +253,7 @@ function App() {
                 <Route path='/gurover' element={<ProjectPage project={PROJECTS.gurover}/>}/>
                 <Route path='/comelec-acm' element={<ProjectPage project={PROJECTS.comelec}/>}/>
                 <Route path='/psgs' element={<ProjectPage project={PROJECTS.psgs}/>}/>
+                <Route path='/pci-central-app' element={<ProjectPage project={PROJECTS.pci}/>}/>
                 <Route path='/aaccup' element={<ProjectPage project={PROJECTS.aaccup}/>}/>
                 <Route path='/dost-arise' element={<ProjectPage project={PROJECTS.arise}/>}/>
                 {/* case studies in progress */}

@@ -22,7 +22,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 // list, in its order (ProjectsPage.jsx) - newest first, and back to the
 // first after the last. a project that is not on that list (DailyDiscount)
 // is never offered as the next one, and leads on to the first
-const ORDER = ['tingi', 'portfoliov3', 'gurover', 'comelec', 'psgs', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
+const ORDER = ['tingi', 'portfoliov3', 'gurover', 'comelec', 'psgs', 'pci', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
 
 // grid placement of a screenshot by its `start` (see projects.js)
 const SHOT_LAYOUT = {
@@ -56,31 +56,6 @@ const SHOT_LAYOUT = {
     laptop:col-span-5 laptop:col-start-4
     laptop-lg:col-span-5 laptop-lg:col-start-4
     desktop:col-span-5 desktop:col-start-4`,
-};
-
-// what each section of a platform page shows until a project supplies its
-// own under `platform` in projects.js, with the same keys (one it sets to
-// null is left off the page). these are
-// projects already made, so nothing here calls them ongoing: each line
-// only says that part of the page is still to be written
-const PLATFORM_PLACEHOLDER = {
-  overview: 'An overview of the platform and the need it meets is to be added.',
-  role: 'What I was responsible for on this platform is to be added.',
-  contributions: ['Contributions to be added'],
-  featuresIntro: 'The main features of the platform are to be added.',
-  features: [
-    { title: 'Feature one', text: 'To be added.' },
-    { title: 'Feature two', text: 'To be added.' },
-    { title: 'Feature three', text: 'To be added.' },
-  ],
-  approach: 'How the platform was designed, from its structure and user flows to the final interface, is to be added.',
-  system: 'The components and visual language the platform is built on are to be added.',
-  outcome: 'Where the platform stands and the difference it made are to be added.',
-  metrics: [
-    { value: '--', label: 'Result to be added' },
-    { value: '--', label: 'Result to be added ' },
-    { value: '--', label: 'Result to be added  ' },
-  ],
 };
 
 // what a case study that is still being written will cover, once it is:
@@ -362,18 +337,18 @@ function Panel({ label, className = '' }) {
  *
  * A platform - a project with `platform` in projects.js, a product made
  * for a client or company - is its hero, its cover, then an overview of
- * the platform, my role and contributions, its key
- * features, the design approach, its screens, the design system (unless
- * it is left out), and
- * where it stands and what it achieved. Its written parts come from its
- * `platform` and fall back to PLATFORM_PLACEHOLDER above.
+ * the platform, my role and contributions, its key features, the design
+ * approach, its screens, the design system, and where it stands and what
+ * it achieved - each only when its `platform` has it written, so no part
+ * shows a placeholder. The sections it has turn light and dark in turn.
  *
  * A case study in progress - a project with `inProgress` - is its hero,
  * its cover, and a note that the write-up is to come.
  *
  * A build - a project with no `caseStudy` in projects.js, which is every
  * web development project - is shown as what it is: the hero, the cover,
- * an overview of my role and what it was built with, then its screens,
+ * an overview (what it is, when it has an `overview`, then my role and
+ * what it was built with), then its screens,
  * and the link to the next project. No research or process sections it
  * has nothing to put in.
  *
@@ -392,12 +367,23 @@ function ProjectPage({ project }) {
   const isStudy = !!project.caseStudy;
   const isDraft = !!project.inProgress;
   const isPlatform = !!project.platform;
-  const platform = { ...PLATFORM_PLACEHOLDER, ...(project.platform || {}) };
-  // a platform page that leaves out its design system has one section
-  // fewer, so the sections after it keep turning light and dark
-  const afterScreens = platform.system ? LIGHT : DARK;
+  const platform = project.platform || {};
   // (a project may have no screenshots yet: panels stand in for them)
   const [hero, ...shots] = project.screenshots || [];
+  // a platform's sections: only those it has written, light and dark in turn
+  const platformParts = [
+    platform.overview && 'overview',
+    (platform.role || platform.contributions) && 'role',
+    platform.features && 'features',
+    platform.approach && 'approach',
+    shots.length > 0 && 'screens',
+    platform.system && 'system',
+    (platform.outcome || platform.metrics) && 'outcome',
+  ].filter(Boolean);
+  const themeOf = (part) => (platformParts.indexOf(part) % 2 ? DARK : LIGHT);
+  const has = (part) => platformParts.includes(part);
+  // a build's overview: what it is, a paragraph to each entry
+  const overview = [].concat(project.overview || []);
   const here = ORDER.findIndex((key) => PROJECTS[key] === project);
   const next = PROJECTS[ORDER[(here + 1) % ORDER.length]];
   // (and the one before it, the last for the first - or for a project not on the list)
@@ -416,8 +402,12 @@ function ProjectPage({ project }) {
     // section on its own trigger
     // (only the sections that have text: the cover and the screens are
     // pictures, and asking for their letters found none)
+    // the text goes on its own first line, not on the section: the
+    // section's top is a padding above its tag, so the text set off first
+    // and the tag - one reveal at a time in a section (scrollReveal.js) -
+    // waited until every line under it was in
     const sections = gsap.utils.toArray('[id^="case-"]').filter((section) => document.querySelector(`#animate-${section.id}`)).map((section) => scrollReveal(
-      `#animate-${section.id}`, { y: 0, stagger: .012, ease: 'power1.in' }, { trigger: section }));
+      `#animate-${section.id}`, { y: 0, stagger: .012, ease: 'power1.in' }));
 
     // each screenshot reveals as it scrolls into view: the frame wipes up
     // from its bottom edge while the image inside eases down to its real size
@@ -563,33 +553,41 @@ function ProjectPage({ project }) {
         ) : isPlatform ? (
         <>
         {/* a platform. overview - what it is, a paragraph to each entry */}
-        <CaseSection id='overview' title='Project Overview' theme={LIGHT}>
+        {has('overview') && (
+        <CaseSection id='overview' title='Project Overview' theme={themeOf('overview')}>
           {[].concat(platform.overview).map((paragraph, i, all) => (
             <Copy id='overview' text={paragraph} className={i < all.length - 1 ? BELOW : ''} key={paragraph} />
           ))}
         </CaseSection>
+        )}
 
         {/* my role - what I owned, and the tools, once there are any */}
-        <CaseSection id='role' title='My Role & Contributions' theme={DARK}>
-          <Copy id='role' text={platform.role} className={BELOW} />
-          <Points id='role' label='Contributions' items={platform.contributions} className={project.technologies.length > 0 ? BELOW : ''} />
+        {has('role') && (
+        <CaseSection id='role' title='My Role & Contributions' theme={themeOf('role')}>
+          {platform.role && <Copy id='role' text={platform.role} className={platform.contributions || project.technologies.length > 0 ? BELOW : ''} />}
+          {platform.contributions && <Points id='role' label='Contributions' items={platform.contributions} className={project.technologies.length > 0 ? BELOW : ''} />}
           {project.technologies.length > 0 && <Points id='role' label='Tools' items={project.technologies} />}
         </CaseSection>
+        )}
 
         {/* key features - a card each, side by side */}
-        <CaseSection id='features' title='Key Features' theme={LIGHT}>
-          <Copy id='features' text={platform.featuresIntro} className={BELOW} />
+        {has('features') && (
+        <CaseSection id='features' title='Key Features' theme={themeOf('features')}>
+          {platform.featuresIntro && <Copy id='features' text={platform.featuresIntro} className={BELOW} />}
           <Cards id='features' items={platform.features} />
         </CaseSection>
+        )}
 
         {/* design approach - structure and user flows */}
-        <CaseSection id='approach' title='Design Approach' theme={DARK}>
-          <Copy id='approach' text={platform.approach} className={BELOW} />
-          <Panel label='User flow / Sitemap' className='aspect-[16/9]' />
+        {has('approach') && (
+        <CaseSection id='approach' title='Design Approach' theme={themeOf('approach')}>
+          <Copy id='approach' text={platform.approach} />
         </CaseSection>
+        )}
 
         {/* its screens, under the label at full width */}
-        <CaseSection id='screens' title='Platform Screens' theme={LIGHT} wide>
+        {has('screens') && (
+        <CaseSection id='screens' title='Platform Screens' theme={themeOf('screens')} wide>
           <div className='grid grid-cols-8 gap-x-6
             mobile:gap-y-6
             tablet:gap-y-10
@@ -601,32 +599,21 @@ function ProjectPage({ project }) {
                 <img src={src} alt={alt} className='screenshot-img' onLoad={remeasure}/>
               </div>
             ))}
-            {!shots.length && [['Screen one', 1], ['Screen two', 4], ['Screen three', 2]].map(([name, start]) => (
-              <Panel label={name} className={`aspect-[16/10] ${SHOT_LAYOUT[start]}`} key={name} />
-            ))}
-          </div>
-        </CaseSection>
-
-        {/* design system - its three parts as three panels, side by side */}
-        {platform.system && (
-        <CaseSection id='system' title='Design System' theme={DARK}>
-          <Copy id='system' text={platform.system} className={BELOW} />
-          <div className='grid gap-4
-            mobile:grid-cols-1
-            tablet:grid-cols-3
-            laptop:grid-cols-3
-            laptop-lg:grid-cols-3
-            desktop:grid-cols-3'>
-            {['Color', 'Typography', 'Components'].map((part) => (
-              <Panel label={part} className='aspect-[4/3]' key={part} />
-            ))}
           </div>
         </CaseSection>
         )}
 
+        {/* design system - what the platform is built from */}
+        {has('system') && (
+        <CaseSection id='system' title='Design System' theme={themeOf('system')}>
+          <Copy id='system' text={platform.system} />
+        </CaseSection>
+        )}
+
         {/* status and impact - where it stands, then one card per figure */}
-        <CaseSection id='outcome' title='Status & Impact' theme={afterScreens}>
-          <Copy id='outcome' text={platform.outcome} className={platform.metrics ? BELOW : ''} />
+        {has('outcome') && (
+        <CaseSection id='outcome' title='Status & Impact' theme={themeOf('outcome')}>
+          {platform.outcome && <Copy id='outcome' text={platform.outcome} className={platform.metrics ? BELOW : ''} />}
           {platform.metrics && (
           <ul className='grid gap-4
             mobile:grid-cols-1
@@ -653,11 +640,16 @@ function ProjectPage({ project }) {
           </ul>
           )}
         </CaseSection>
+        )}
         </>
         ) : (
         <>
-        {/* a build. overview - my role on it, and what it was built with */}
-        <CaseSection id='overview' title='Role & Tech Stack' theme={LIGHT}>
+        {/* a build. overview - what it is, when it says, then my role on it
+          and what it was built with */}
+        <CaseSection id='overview' title={overview.length ? 'Project Overview' : 'Role & Tech Stack'} theme={LIGHT}>
+          {overview.map((paragraph) => (
+            <Copy id='overview' text={paragraph} className={BELOW} key={paragraph} />
+          ))}
           <Points id='overview' label='My role' items={project.roles} className={BELOW} />
           <Points id='overview' label='Built with' items={project.technologies} />
         </CaseSection>

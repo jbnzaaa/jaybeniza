@@ -25,7 +25,8 @@ const settled = () => new Promise((resolve) => { setTimeout(resolve, 250); });
  * particular - the route changes underneath, then the pixels clear off the
  * new page from the top left, as they do off the first one. The new page
  * mounts under them, and its own reveals start once only a fifth of the
- * pixels are left (COVER_LEFT, scrollReveal.js).
+ * pixels are left (COVER_LEFT, scrollReveal.js). The same pixels can cover
+ * a change on the page itself (usePixelCover, below).
  *
  * Must sit inside the Router and outside the smooth-scroll wrapper (whose
  * transformed content breaks position: fixed).
@@ -35,6 +36,7 @@ export function PageTransitionProvider({ children }) {
   const fxCanvas = useRef();
   const busy = useRef(false);
 
+  // `to` is a route, or what to do under the pixels instead of changing page
   const go = useCallback(async (to, from) => {
     if (busy.current) return;
     busy.current = true;
@@ -47,7 +49,8 @@ export function PageTransitionProvider({ children }) {
 
     await pixelSweep(canvas, { cover: true, origin, duration: COVER });
     holdReveals();
-    navigate(to);
+    if (typeof to === 'function') to();
+    else navigate(to);
     await settled();
 
     await pixelSweep(canvas, {
@@ -65,6 +68,15 @@ export function PageTransitionProvider({ children }) {
       <canvas className='fixed top-0 left-0 w-full h-screen-safe z-[44] pointer-events-none' ref={fxCanvas} aria-hidden='true'/>
     </PageTransitionContext.Provider>
   )
+}
+
+/**
+ * The page wipe for a change on the page itself: `cover(change, from)`
+ * covers the page in pixels spreading from `from` (an element), makes
+ * the change under them, then clears them as after a change of page.
+ */
+export function usePixelCover() {
+  return useContext(PageTransitionContext);
 }
 
 /**

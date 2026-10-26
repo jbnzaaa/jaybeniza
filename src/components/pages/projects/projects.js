@@ -95,6 +95,19 @@ import arise_screen_student_dashboard from '../../../assets/files/images/arise/s
 import arise_screen_student_onboarding from '../../../assets/files/images/arise/screen-student-onboarding.webp'
 import arise_screen_student_resource_preview from '../../../assets/files/images/arise/screen-student-resource-preview.webp'
 import arise_screen_student_rewards from '../../../assets/files/images/arise/screen-student-rewards.webp'
+import pci_colors_light_mode from '../../../assets/files/images/pci/screen-colors-light-mode.webp'
+import pci_colors_dark_mode from '../../../assets/files/images/pci/screen-colors-dark-mode.webp'
+import pci_color_guidance from '../../../assets/files/images/pci/screen-color-guidance.webp'
+import pci_font_size from '../../../assets/files/images/pci/screen-font-size.webp'
+import pci_spacing from '../../../assets/files/images/pci/screen-spacing.webp'
+import pci_elevation from '../../../assets/files/images/pci/screen-elevation.webp'
+import pci_icons from '../../../assets/files/images/pci/screen-icons.webp'
+import pci_buttons from '../../../assets/files/images/pci/screen-buttons.webp'
+import pci_text_fields from '../../../assets/files/images/pci/screen-text-fields.webp'
+import pci_cards from '../../../assets/files/images/pci/screen-cards.webp'
+import pci_menus from '../../../assets/files/images/pci/screen-menus.webp'
+import pci_navigations from '../../../assets/files/images/pci/screen-navigations.webp'
+import pci_dialogs from '../../../assets/files/images/pci/screen-dialogs.webp'
 
 // content for the project pages (ProjectPage.jsx). a screenshot's `start` is
 // the grid column it begins on from laptop width up, where it spans five
@@ -102,10 +115,12 @@ import arise_screen_student_rewards from '../../../assets/files/images/arise/scr
 // screenshot is full width
 // `category` is always 'what it is / the setting it was made in', from one
 // short list: UX Case Study, Web Application, Portfolio Website, Web Platform,
-// Web/Mobile Platform, Software Platform, Mobile App; Team Project, Personal
-// Project, Client Project.
+// Web/Mobile Platform, Software Platform, Mobile App, Design System; Team
+// Project, Personal Project, Client Project.
 // a project with a `caseStudy` is laid out as a case study; one without
-// is laid out as a build (ProjectPage.jsx). one with `inProgress` - a case
+// is laid out as a build (ProjectPage.jsx), with an `overview` (a paragraph,
+// or a list of them) over its role when it has one. one with `platform`
+// is laid out as a platform, showing only the parts it has written. one with `inProgress` - a case
 // study not written up yet - shows its summary and that note, and nothing
 // it has no content for. `link`, `status` and `screenshots` may
 // be left out. `short` is the project in a few words, the last part of
@@ -311,8 +326,8 @@ export const PROJECTS = {
   },
   // work from my time as a designer at a company, shown with permission.
   // each is laid out as a platform: its `platform` holds the written
-  // parts, and any it leaves out show as still to be added; one set to
-  // null is left off the page (the design system, where it is not shown).
+  // parts, and only those show - one it leaves out or sets to null is left
+  // off the page.
   // the first screenshot is the page's cover, the mock-up, which is also
   // its `cover` on the work page
   gurover: {
@@ -393,7 +408,7 @@ export const PROJECTS = {
         'Wrote the handoff documentation',
         'Designed the brand guidelines',
       ],
-      outcome: 'The software is live and in use. Its results are to be added.',
+      outcome: 'The software is live and in use.',
     },
   },
   psgs: {
@@ -430,7 +445,7 @@ export const PROJECTS = {
         'Designed the student, instructor, and admin modules',
       ],
       system: null,
-      outcome: 'The platform is live and in production. Its results are to be added.',
+      outcome: 'The platform is live and in production.',
     },
   },
   aaccup: {
@@ -465,7 +480,7 @@ export const PROJECTS = {
         'Redesigned the full landing page',
       ],
       system: null,
-      outcome: 'The platform is live and in production. Its results are to be added.',
+      outcome: 'The platform is live and in production.',
     },
   },
   arise: {
@@ -500,7 +515,7 @@ export const PROJECTS = {
         'Designed the platform modules (admin and educator accounts)',
         'Enhanced the landing page',
       ],
-      outcome: 'The platform is live and in production. Its results are to be added.',
+      outcome: 'The platform is live and in production.',
     },
   },
   dailydiscount: {
@@ -582,13 +597,45 @@ export const PROJECTS = {
       { src: regain_message, alt: 'ReGain messages', start: 1 },
       { src: regain_history, alt: 'ReGain history', start: 4 },
     ],
-    // laid out as a platform: an overview, then the rest still to be added
-    platform: {
-      overview: [
-        'REGAIN is a web-based mental health support system developed as a capstone project for STI College Novaliches, addressing the challenges students faced in accessing guidance counseling and managing emotional stress during the COVID-19 pandemic.',
-        'The project focuses on providing a private and accessible digital environment where students can complete weekly self-assessments, express their thoughts through e-journaling, communicate with guidance counselors, and receive chatbot assistance when counselors are unavailable.',
-        "The system also includes counselor dashboards, student progress monitoring, and automated assessment reports to support guidance counselors in understanding students' emotional well-being and providing appropriate assistance.",
-      ],
-    },
+    // a capstone project, laid out as a build: what it is, then my role and its stack
+    overview: [
+      'REGAIN is a web-based mental health support system developed as a capstone project for STI College Novaliches, addressing the challenges students faced in accessing guidance counseling and managing emotional stress during the COVID-19 pandemic.',
+      'The project focuses on providing a private and accessible digital environment where students can complete weekly self-assessments, express their thoughts through e-journaling, communicate with guidance counselors, and receive chatbot assistance when counselors are unavailable.',
+      "The system also includes counselor dashboards, student progress monitoring, and automated assessment reports to support guidance counselors in understanding students' emotional well-being and providing appropriate assistance.",
+    ],
+  },
+  // a design system, made at a company and shown with permission, laid out
+  // as a build: its foundations, then its components. (no mock-up yet: its
+  // cover is its light colour palette)
+  pci: {
+    path: '/pci-central-app',
+    title: 'PCI Central App',
+    short: 'Design system for a company central application',
+    year: '2024',
+    description: "A design system of foundations and components I built for the PCI Central App, one of the company's central applications, so its screens are designed and built from one shared set of parts.",
+    category: 'Design System / Team Project',
+    roles: ['UI/UX Designer'],
+    technologies: ['Figma'],
+    overview: [
+      "The PCI Central App design system is the single source of truth for how one of the company's central applications looks and behaves. I built it so designers and developers work from the same set of parts, and every new screen starts consistent instead of being styled from scratch.",
+      'Its foundations set the visual language: color tokens for light and dark mode with guidance on when to use each, a type scale, spacing and sizing steps, corner radius, elevation, and an icon set.',
+      'Its components put those foundations to work. Buttons, text fields, chips, cards, menus, navigation, dialogs, tooltips, and more are each documented with their variants, states, and the exact values developers build from.',
+    ],
+    cover: pci_colors_light_mode,
+    screenshots: [
+      { src: pci_colors_light_mode, alt: 'PCI Central App colors, light mode', start: 'full' },
+      { src: pci_colors_dark_mode, alt: 'PCI Central App colors, dark mode', start: 2 },
+      { src: pci_color_guidance, alt: 'PCI Central App color guidance', start: 4 },
+      { src: pci_font_size, alt: 'PCI Central App type scale', start: 1 },
+      { src: pci_spacing, alt: 'PCI Central App spacing', start: 3 },
+      { src: pci_elevation, alt: 'PCI Central App elevation', start: 2 },
+      { src: pci_icons, alt: 'PCI Central App icons', start: 4 },
+      { src: pci_buttons, alt: 'PCI Central App buttons', start: 1 },
+      { src: pci_text_fields, alt: 'PCI Central App text fields', start: 3 },
+      { src: pci_cards, alt: 'PCI Central App cards', start: 2 },
+      { src: pci_menus, alt: 'PCI Central App menus', start: 4 },
+      { src: pci_navigations, alt: 'PCI Central App navigation', start: 1 },
+      { src: pci_dialogs, alt: 'PCI Central App dialogs', start: 3 },
+    ],
   },
 };

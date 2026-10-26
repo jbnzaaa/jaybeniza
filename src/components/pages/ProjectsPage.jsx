@@ -28,7 +28,7 @@ const COVERS = {
 // order). a project with no cover class shows its own `cover` picture, or its first screenshot; one
 // with neither (the example case study) shows a plain panel that says so.
 // StockNear is hidden for now: its page sends visitors to the work page (App.jsx)
-const SHOWN = ['tingi', 'portfoliov3', 'gurover', 'comelec', 'psgs', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
+const SHOWN = ['tingi', 'portfoliov3', 'gurover', 'comelec', 'psgs', 'pci', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
 const BY_YEAR = SHOWN.slice()
   .sort((a, b) => Number(PROJECTS[b].year) - Number(PROJECTS[a].year));
 

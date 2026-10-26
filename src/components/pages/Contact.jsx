@@ -9,8 +9,8 @@ import SplitText from '../common/SplitText'
 // footer
 import Footer from './Footer'
 // page-to-page wipe
-import { TransitionLink } from '../common/PageTransition'
-// GSAP - back to the top of the page
+import { TransitionLink, usePixelCover } from '../common/PageTransition'
+// GSAP - back to the top of the page, under the pixel wipe
 import ScrollSmoother from 'gsap/ScrollSmoother'
 
 const EMAIL = 'mailto:jaysonbeniza@gmail.com';
@@ -45,11 +45,7 @@ const PROJECTS_LINKS = [
 // the project has one (its `behance`, projects.js), all the work, and back
 // to the top of this one. (getting in touch and the CV are in the top bar)
 const brief = (description) => description.match(/^.*?[.!?](?=s|$)/)?.[0] || description;
-const toTop = (e) => {
-  e.preventDefault();
-  ScrollSmoother.get()?.scrollTo(0, true);
-};
-const nextLinks = (next, previous, current) => [
+const nextLinks = (next, previous, current, toTop) => [
   { label: 'Next project', to: next.path },
   ...(previous ? [{ label: `Previous: ${previous.title}`, to: previous.path }] : []),
   ...(current?.behance ? [{ label: 'Full case study on Behance', href: current.behance }] : []),
@@ -79,7 +75,18 @@ const nextLinks = (next, previous, current) => [
 function Contact({ page = false, projects = false, next, previous, current }) {
   const heading = next ? next.title : projects ? PROJECTS_HEADING : 'Send Me a Message';
   const text = next ? brief(next.description) : projects ? PROJECTS_TEXT : `${QUESTION} ${SUPPORT}`;
-  const links = next ? nextLinks(next, previous, current) : projects ? PROJECTS_LINKS : LINKS;
+  // back to the top: the pixels cover the page, it jumps to its top
+  // underneath, and they clear - the wipe between pages, on the same page
+  const cover = usePixelCover();
+  const toTop = (e) => {
+    e.preventDefault();
+    const smoother = ScrollSmoother.get();
+    cover(() => {
+      smoother?.scrollTo(0, false);
+      window.scrollTo(0, 0);
+    }, e.currentTarget);
+  };
+  const links = next ? nextLinks(next, previous, current, toTop) : projects ? PROJECTS_LINKS : LINKS;
   useEffect(() => {
     // headline, text and links rise letter by letter
     const reveal = scrollReveal('#animate-contact', { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: '#contact' });

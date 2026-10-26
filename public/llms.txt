@@ -12,13 +12,13 @@
 ## Case studies
 
 - [BiteWise](https://jaybeniza.vercel.app/bitewise): mobile grocery shopping concept shaped by dietary needs - research, insights and design decisions
-- [StockNear](https://jaybeniza.vercel.app/stocknear): mobile app connecting shoppers with nearby sari-sari and convenience stores (write-up in progress)
 
 ## Client and team projects
 
 - [GuRover](https://jaybeniza.vercel.app/gurover): AI-assisted, offline-first workspace for Philippine teachers
 - [COMELEC Gamified 3D for ACM](https://jaybeniza.vercel.app/comelec-acm): 3D interactive game teaching election personnel how the Automated Counting Machine works
 - [PSGS](https://jaybeniza.vercel.app/psgs): minimally invasive surgery training for the Philippine Society of General Surgeons
+- [PCI Central App](https://jaybeniza.vercel.app/pci-central-app): design system of foundations and components for a company central application (2024)
 - [AACCUP](https://jaybeniza.vercel.app/aaccup): accreditation information for Philippine state universities and colleges
 - [DOST ARISE](https://jaybeniza.vercel.app/dost-arise): STEM learning platform for teachers and students
 

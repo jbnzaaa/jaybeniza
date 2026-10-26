@@ -11,6 +11,8 @@ import v3_services from '../../assets/files/images/portfolio/portfolio-v3-2.webp
 // the mock-ups of the others
 import bitewise_cover from '../../assets/files/images/bitewise/mockup-cover.webp'
 import gurover_cover from '../../assets/files/images/gurover/mockup-cover.webp'
+// (no mock-up yet: its light colour palette)
+import pci_cover from '../../assets/files/images/pci/screen-colors-light-mode.webp'
 
 export const PROJECT_CARDS = [
   {
@@ -39,5 +41,14 @@ export const PROJECT_CARDS = [
     picture: gurover_cover,
     category: 'Web/Mobile Platform / Team Project',
     meta: '2026 / Web/Mobile Platform / UI/UX Designer',
+  },
+  {
+    id: 'pci',
+    title: 'PCI Central App',
+    to: '/pci-central-app',
+    image: null,
+    picture: pci_cover,
+    category: 'Design System / Team Project',
+    meta: '2024 / Design System / UI/UX Designer',
   },
 ];

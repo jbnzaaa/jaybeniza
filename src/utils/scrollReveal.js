@@ -147,13 +147,23 @@ const EASE = 'power3.out';
 // a reveal that is triggered while another in its section is still
 // playing waits for it to finish, so no two of a section's components are
 // ever part way in together. they go in the order they were triggered -
-// down the section, as it is scrolled. sections do not wait for each other
+// down the section, as it is scrolled. sections do not wait for each other.
+// those triggered in the same moment - a section's tag and the text level
+// with it, crossing the line in one frame of a scroll - go in reading
+// order, down then across, not in whichever order they were called: the
+// text went first and the tag over it waited for all of it
 const queues = new WeakMap();
+// where a reveal is on the page, for reading order
+const place = (el) => {
+  const box = el?.getBoundingClientRect?.();
+  return box ? [Math.round(box.top), box.left] : [Infinity, Infinity];
+};
+const byPlace = (a, b) => a.at[0] - b.at[0] || a.at[1] - b.at[1];
 const queueOf = (el) => {
   // its section - or, where a part of a page is not marked up as one, the
   // nearest block around it that has a name
   const key = el?.closest?.('section') || el?.parentElement?.closest?.('[id]') || document.body;
-  if (!queues.has(key)) queues.set(key, { waiting: [], current: null, guard: null });
+  if (!queues.has(key)) queues.set(key, { waiting: [], current: null, guard: null, starting: false });
   return queues.get(key);
 };
 
@@ -259,13 +269,9 @@ export function releaseReveals() {
   // in reading order - down the page, then across - not the order they
   // were asked in, which goes by when each was built: the contact form's
   // fields came in scattered, a few before the headline over them
-  const place = ({ el }) => {
-    const box = el?.getBoundingClientRect?.();
-    return box ? [Math.round(box.top), box.left] : [Infinity, Infinity];
-  };
   due.splice(0)
-    .map((entry) => ({ ...entry, at: place(entry) }))
-    .sort((a, b) => a.at[0] - b.at[0] || a.at[1] - b.at[1])
+    .map((entry) => ({ ...entry, at: place(entry.el) }))
+    .sort(byPlace)
     .forEach(({ turn, rate }, i) => turn.start(rate, i * OVERLAP));
 }
 
@@ -295,7 +301,18 @@ export function inTurn(anim, el) {
       item.rate = rate;
       if (q.current === item) { pace(q); return; }
       if (q.waiting.includes(item) || (anim.progress() === 1 && !anim.reversed())) return;
-      if (q.current) { q.waiting.push(item); pace(q); hold(q); } else begin(item);
+      if (q.current) { q.waiting.push(item); pace(q); hold(q); return; }
+      // nothing playing: it starts once everything triggered in this same
+      // moment has joined it, the first of them in reading order first
+      q.waiting.push(item);
+      if (q.starting) return;
+      q.starting = true;
+      queueMicrotask(() => {
+        q.starting = false;
+        if (q.current) return;
+        q.waiting = q.waiting.map((entry) => ({ entry, at: place(entry.el) })).sort(byPlace).map(({ entry }) => entry);
+        advance(q);
+      });
     },
     // played outside the queue, after a delay: for what a cover lets go
     start(rate = 1, delay = 0) {
