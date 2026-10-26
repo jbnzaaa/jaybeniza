@@ -18,11 +18,8 @@ import { scrollReveal, REVEAL_AT, inTurn } from '../../utils/scrollReveal'
 import SplitText from '../common/SplitText'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
-// each project's cover - the mock-up picture of the project (a background
-// class, see backgroundImage in tailwind.config.js)
-const COVERS = {
-  dailydiscount: 'bg-dailydiscount',
-};
+// a project's cover given as a background class instead of a picture (none now)
+const COVERS = {};
 
 // the projects shown, newest year first (projects of one year keep this
 // order). a project with no cover class shows its own `cover` picture, or its first screenshot; one

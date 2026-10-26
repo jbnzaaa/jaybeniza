@@ -54,47 +54,6 @@ module.exports = {
         // the light sections' background
         'paper': '#F1F1F1'
       },
-      backgroundImage: {
-        // // regain
-        'regain': "url('/public/images/portfolio_mockup_1.webp')",
-        // // project screenshots
-        // 'regain-landing-page': "url('/public/images/regain/regain-landing-page.webp')",
-        // 'regain-login': "url('/public/images/regain/student-login-page.webp')",
-        // 'regain-dashboard': "url('/public/images/regain/student-dashboard-page.webp')",
-        // 'regain-assessment': "url('/public/images/regain/student-assessment-page-1.webp')",
-        // 'regain-ejournal': "url('/public/images/regain/student-e-journal-page.webp')",
-        // 'regain-message': "url('/public/images/regain/student-message-page.webp')",
-        // 'regain-history': "url('/public/images/regain/student-history-page.webp')",
-
-        // // jbnza
-        'jbnza': "url('/public/images/portfolio_mockup_2.webp')",
-        // // project screenshots
-        // 'jbnza-hero': "url('/public/images/portfolio/jbnza-landing-page-1.webp')",
-        // 'jbnza-project': "url('/public/images/portfolio/jbnza-landing-page-2.webp')",
-        // 'jbnza-about': "url('/public/images/portfolio/jbnza-landing-page-3.webp')",
-        // 'jbnza-contact': "url('/public/images/portfolio/jbnza-landing-page-4.webp')",
-        
-        // // dailydiscount
-        'dailydiscount': "url('/public/images/portfolio_mockup_3.webp')",
-        // // project screenshots
-        // 'dd-landing-page': "url('/public/images/dailydiscount/landing-page.webp')",
-        // 'dd-dashboard': "url('/public/images/dailydiscount/dashboard-page.webp')",
-        // 'dd-heroes-and-skins': "url('/public/images/dailydiscount/heroes-&-skins-page.webp')",
-        // 'dd-price': "url('/public/images/dailydiscount/price-page.webp')",
-        // 'dd-order-details': "url('/public/images/dailydiscount/order-details-page.webp')",
-        // 'dd-cart': "url('/public/images/dailydiscount/cart-page.webp')",
-        
-        // // jaysonbeniza
-        'jaysonbeniza': "url('/public/images/portfolio_mockup_4.webp')",
-        // // project screenshots
-        // 'jaysonbeniza-hero': "url('/public/images/portfolio/jaysonbeniza-landing-page-1.webp')",
-        // 'jaysonbeniza-about': "url('/public/images/portfolio/jaysonbeniza-landing-page-2.webp')",
-        // 'jaysonbeniza-project': "url('/public/images/portfolio/jaysonbeniza-landing-page-3.webp')",
-        // 'jaysonbeniza-contact': "url('/public/images/portfolio/jaysonbeniza-landing-page-4.webp')",
-        
-        // profile
-        'profile': "url(/public/images/profile.JPG)",
-      },
       screens: {
         //current
         // 'desktop': {'max': '4000px'},
