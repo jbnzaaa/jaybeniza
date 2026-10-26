@@ -16,6 +16,8 @@ import { PROJECTS } from './projects'
 // the closing section - the landing page's contact block, here leading
 // on to the next project
 import Contact from '../Contact'
+// the tab's title
+import { usePageTitle } from '../../../utils/pageTitle'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 // the order the projects run in, for "next project": the work page's own
@@ -368,6 +370,7 @@ function Panel({ label, className = '' }) {
  */
 function ProjectPage({ project: given, id }) {
   const project = given || PROJECTS[id];
+  usePageTitle(project.title);
   // which layout: a case study, a platform, or a build
   const isStudy = !!project.caseStudy;
   const isDraft = !!project.inProgress;

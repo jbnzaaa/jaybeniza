@@ -42,7 +42,7 @@ export const PROJECT_CARDS = [
   },
   {
     id: 'pci',
-    title: 'PCI Central App',
+    title: 'Central App',
     to: '/pci-central-app',
     image: null,
     picture: pci_cover,

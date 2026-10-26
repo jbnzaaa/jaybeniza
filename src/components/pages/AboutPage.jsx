@@ -20,6 +20,8 @@ import Button from '../common/Button'
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// the tab's title
+import { usePageTitle } from '../../utils/pageTitle'
 
 // the longer introduction. everything in it is drawn from the work
 // experience entries below it - nothing here that they do not back up
@@ -52,6 +54,7 @@ const RESUME_LINKS = [
  * resume screen with the footer inside it (darkest).
  */
 function AboutPage() {
+  usePageTitle('About');
   const fxHero = useRef();
 
   useEffect(() => {

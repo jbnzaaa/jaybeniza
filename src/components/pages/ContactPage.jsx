@@ -3,6 +3,8 @@ import React from 'react'
 // Components
 import ProjectRequest from './ProjectRequest';
 import Contact from './Contact';
+// the tab's title
+import { usePageTitle } from '../../utils/pageTitle'
 
 /**
  * The contact page (route /get-in-touch): the project request - a form
@@ -11,6 +13,7 @@ import Contact from './Contact';
  * the way to get in touch.
  */
 function ContactPage() {
+  usePageTitle('Get in Touch');
   return (
     <>
       <ProjectRequest/>

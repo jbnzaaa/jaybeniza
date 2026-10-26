@@ -16,6 +16,8 @@ import { TransitionLink } from '../common/PageTransition'
 import { scrollReveal, REVEAL_AT, inTurn } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// the tab's title
+import { usePageTitle } from '../../utils/pageTitle'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 // a project's cover given as a background class instead of a picture (none now)
@@ -94,6 +96,7 @@ const DESCRIPTION = 'UX case studies and shipped products, each showing how I mo
  * under it, outside the card; they rise as the card scrolls into view.
  */
 function ProjectsPage() {
+  usePageTitle('Work');
   const fxGrid = useRef();
 
   useEffect(() => {

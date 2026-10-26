@@ -107,16 +107,29 @@ import pci_mockup_cover from '../../../assets/files/images/pci/mockup-cover.webp
 import pci_colors_light_mode from '../../../assets/files/images/pci/screen-colors-light-mode.webp'
 import pci_colors_dark_mode from '../../../assets/files/images/pci/screen-colors-dark-mode.webp'
 import pci_color_guidance from '../../../assets/files/images/pci/screen-color-guidance.webp'
+import pci_font_family from '../../../assets/files/images/pci/screen-font-family.webp'
 import pci_font_size from '../../../assets/files/images/pci/screen-font-size.webp'
 import pci_spacing from '../../../assets/files/images/pci/screen-spacing.webp'
+import pci_sizing from '../../../assets/files/images/pci/screen-sizing.webp'
+import pci_radius from '../../../assets/files/images/pci/screen-radius.webp'
 import pci_elevation from '../../../assets/files/images/pci/screen-elevation.webp'
 import pci_icons from '../../../assets/files/images/pci/screen-icons.webp'
+import pci_icon_label from '../../../assets/files/images/pci/screen-icon-label.webp'
 import pci_buttons from '../../../assets/files/images/pci/screen-buttons.webp'
 import pci_text_fields from '../../../assets/files/images/pci/screen-text-fields.webp'
+import pci_search from '../../../assets/files/images/pci/screen-search.webp'
+import pci_chips from '../../../assets/files/images/pci/screen-chips.webp'
+import pci_badges from '../../../assets/files/images/pci/screen-badges.webp'
+import pci_avatar from '../../../assets/files/images/pci/screen-avatar.webp'
 import pci_cards from '../../../assets/files/images/pci/screen-cards.webp'
 import pci_menus from '../../../assets/files/images/pci/screen-menus.webp'
 import pci_navigations from '../../../assets/files/images/pci/screen-navigations.webp'
+import pci_breadcrumbs from '../../../assets/files/images/pci/screen-breadcrumbs.webp'
 import pci_dialogs from '../../../assets/files/images/pci/screen-dialogs.webp'
+import pci_alert_box from '../../../assets/files/images/pci/screen-alert-box.webp'
+import pci_tooltips from '../../../assets/files/images/pci/screen-tooltips.webp'
+import pci_progress_indicator from '../../../assets/files/images/pci/screen-progress-indicator.webp'
+import pci_divider from '../../../assets/files/images/pci/screen-divider.webp'
 
 // content for the project pages (ProjectPage.jsx). a screenshot's `start` is
 // the grid column it begins on from laptop width up, where it spans five
@@ -378,9 +391,9 @@ export const PROJECTS = {
       ],
       role: 'I worked on GuRover as its UI/UX designer and web developer: I designed the platform and built it with AI-assisted development.',
       contributions: [
-        'Designed and developed the landing page',
-        'Built the core teaching features: lesson plan generation, class and subject management, learning activities, gradebook configuration, attendance tracking, and report card templates',
-        'Developed the mobile app',
+        'Designed and developed the landing page, structuring its feature sections, step-by-step walkthrough, and plan comparisons to guide teachers toward sign-up',
+        'Designed and built the core teaching features: AI-assisted lesson plan generation, class and subject management, learning activities, gradebook configuration, attendance tracking, and the SF2 and SF9 report card templates',
+        'Developed the mobile app, extending the platform beyond the browser',
       ],
       system: null,
       outcome: 'GuRover was still in development when I left the company.',
@@ -419,9 +432,9 @@ export const PROJECTS = {
       ],
       role: 'I worked on COMELEC Gamified 3D for ACM as its UI/UX designer, prototyping the full flow of the game for the developers to build.',
       contributions: [
-        'Designed the layout of every screen for the developers to follow',
-        'Wrote the handoff documentation',
-        'Designed the brand guidelines',
+        'Designed the layout of every screen in the game, serving as the build reference for the development team',
+        'Authored the design handoff documentation to guide developers through implementation',
+        "Created the brand guidelines that define the software's visual identity",
       ],
       outcome: 'The software is live and in use.',
     },
@@ -456,8 +469,8 @@ export const PROJECTS = {
       ],
       role: "I worked on PSGS as its UI/UX designer: I redesigned the landing page and designed the platform's modules, from wireframes to prototypes.",
       contributions: [
-        'Redesigned the landing page',
-        'Designed the student, instructor, and admin modules',
+        'Redesigned the landing page to present the three training levels, course requirements, and announcements in one clear structure',
+        'Designed the student, instructor, and administrator modules, from wireframes to prototypes',
       ],
       system: null,
       outcome: 'The platform is live and in production.',
@@ -491,8 +504,8 @@ export const PROJECTS = {
       ],
       role: 'I worked on AACCUP as its UI/UX designer: I redesigned the full landing page and designed the admin and content creator modules, from wireframes to prototypes.',
       contributions: [
-        'Designed the platform modules (admin and content creator accounts)',
-        'Redesigned the full landing page',
+        'Designed the administrator and content creator modules, from wireframes to prototypes',
+        'Redesigned the full landing page, organizing accreditation information, institutions, and resources into clear sections with consistent navigation',
       ],
       system: null,
       outcome: 'The platform is live and in production.',
@@ -527,8 +540,8 @@ export const PROJECTS = {
       ],
       role: 'I worked on DOST ARISE as its UI/UX designer: I enhanced the landing page and designed the admin and educator modules, from wireframes to prototypes.',
       contributions: [
-        'Designed the platform modules (admin and educator accounts)',
-        'Enhanced the landing page',
+        'Designed the administrator and educator modules, from wireframes to prototypes',
+        'Enhanced the landing page to introduce the program, its partners, and the registration process',
       ],
       outcome: 'The platform is live and in production.',
     },
@@ -624,34 +637,47 @@ export const PROJECTS = {
   // cover is its light colour palette)
   pci: {
     path: '/pci-central-app',
-    title: 'PCI Central App',
+    title: 'Central App',
     short: 'Design system for a company central application',
     year: '2024',
-    description: "A design system of foundations and components I built for the PCI Central App, one of the company's central applications, so its screens are designed and built from one shared set of parts.",
+    description: "A design system of foundations and components I built for the Central App, one of the company's central applications, so its screens are designed and built from one shared set of parts.",
     category: 'Design System / Team Project',
     roles: ['UI/UX Designer'],
     technologies: ['Figma'],
     overview: [
-      "The PCI Central App design system is the single source of truth for how one of the company's central applications looks and behaves. I built it so designers and developers work from the same set of parts, and every new screen starts consistent instead of being styled from scratch.",
+      "The Central App design system is the single source of truth for how one of the company's central applications looks and behaves. I built it so designers and developers work from the same set of parts, and every new screen starts consistent instead of being styled from scratch.",
       'Its foundations set the visual language: color tokens for light and dark mode with guidance on when to use each, a type scale, spacing and sizing steps, corner radius, elevation, and an icon set.',
       'Its components put those foundations to work. Buttons, text fields, chips, cards, menus, navigation, dialogs, tooltips, and more are each documented with their variants, states, and the exact values developers build from.',
     ],
     cover: pci_mockup_cover,
     screenshots: [
-      { src: pci_mockup_cover, alt: 'PCI Central App mock-up', start: 'full' },
-      { src: pci_colors_light_mode, alt: 'PCI Central App colors, light mode', start: 'full' },
-      { src: pci_colors_dark_mode, alt: 'PCI Central App colors, dark mode', start: 2 },
-      { src: pci_color_guidance, alt: 'PCI Central App color guidance', start: 4 },
-      { src: pci_font_size, alt: 'PCI Central App type scale', start: 1 },
-      { src: pci_spacing, alt: 'PCI Central App spacing', start: 3 },
-      { src: pci_elevation, alt: 'PCI Central App elevation', start: 2 },
-      { src: pci_icons, alt: 'PCI Central App icons', start: 4 },
-      { src: pci_buttons, alt: 'PCI Central App buttons', start: 1 },
-      { src: pci_text_fields, alt: 'PCI Central App text fields', start: 3 },
-      { src: pci_cards, alt: 'PCI Central App cards', start: 2 },
-      { src: pci_menus, alt: 'PCI Central App menus', start: 4 },
-      { src: pci_navigations, alt: 'PCI Central App navigation', start: 1 },
-      { src: pci_dialogs, alt: 'PCI Central App dialogs', start: 3 },
+      { src: pci_mockup_cover, alt: 'Central App mock-up', start: 'full' },
+      { src: pci_colors_light_mode, alt: 'Central App colors, light mode', start: 'full' },
+      { src: pci_colors_dark_mode, alt: 'Central App colors, dark mode', start: 2 },
+      { src: pci_color_guidance, alt: 'Central App color guidance', start: 4 },
+      { src: pci_font_family, alt: 'Central App font family', start: 1 },
+      { src: pci_font_size, alt: 'Central App type scale', start: 3 },
+      { src: pci_spacing, alt: 'Central App spacing', start: 2 },
+      { src: pci_sizing, alt: 'Central App sizing', start: 4 },
+      { src: pci_radius, alt: 'Central App corner radius', start: 1 },
+      { src: pci_elevation, alt: 'Central App elevation', start: 3 },
+      { src: pci_icons, alt: 'Central App icons', start: 2 },
+      { src: pci_icon_label, alt: 'Central App icon labels', start: 4 },
+      { src: pci_buttons, alt: 'Central App buttons', start: 1 },
+      { src: pci_text_fields, alt: 'Central App text fields', start: 3 },
+      { src: pci_search, alt: 'Central App search', start: 2 },
+      { src: pci_chips, alt: 'Central App chips', start: 4 },
+      { src: pci_badges, alt: 'Central App badges', start: 1 },
+      { src: pci_avatar, alt: 'Central App avatars', start: 3 },
+      { src: pci_cards, alt: 'Central App cards', start: 2 },
+      { src: pci_menus, alt: 'Central App menus', start: 4 },
+      { src: pci_navigations, alt: 'Central App navigation', start: 1 },
+      { src: pci_breadcrumbs, alt: 'Central App breadcrumbs', start: 3 },
+      { src: pci_dialogs, alt: 'Central App dialogs', start: 2 },
+      { src: pci_alert_box, alt: 'Central App alert boxes', start: 4 },
+      { src: pci_tooltips, alt: 'Central App tooltips', start: 1 },
+      { src: pci_progress_indicator, alt: 'Central App progress indicators', start: 3 },
+      { src: pci_divider, alt: 'Central App dividers', start: 2 },
     ],
   },
 };
