@@ -5,10 +5,13 @@ import dd_heroes_skins from '../../../assets/files/images/dailydiscount/heroes-&
 import dd_price from '../../../assets/files/images/dailydiscount/price-page.webp'
 import dd_order_details from '../../../assets/files/images/dailydiscount/order-details-page.webp'
 import dd_cart from '../../../assets/files/images/dailydiscount/cart-page.webp'
+import jaysonbeniza_mockup_cover from '../../../assets/files/images/portfolio/jaysonbeniza-mockup-cover.webp'
 import jaysonbeniza_hero from '../../../assets/files/images/portfolio/jaysonbeniza-landing-page-1.webp'
 import jaysonbeniza_about from '../../../assets/files/images/portfolio/jaysonbeniza-landing-page-2.webp'
 import jaysonbeniza_project from '../../../assets/files/images/portfolio/jaysonbeniza-landing-page-3.webp'
 import jaysonbeniza_contact from '../../../assets/files/images/portfolio/jaysonbeniza-landing-page-4.webp'
+import jbnza_mockup_cover from '../../../assets/files/images/portfolio/jbnza-mockup-cover.webp'
+import jbnza_landing_page from '../../../assets/files/images/portfolio/jbnza-landing-page.webp'
 import jbnza_hero from '../../../assets/files/images/portfolio/jbnza-landing-page-1.webp'
 import jbnza_about from '../../../assets/files/images/portfolio/jbnza-landing-page-2.webp'
 import jbnza_project from '../../../assets/files/images/portfolio/jbnza-landing-page-3.webp'
@@ -18,6 +21,7 @@ import v3_services from '../../../assets/files/images/portfolio/portfolio-v3-2.w
 import v3_about from '../../../assets/files/images/portfolio/portfolio-v3-3.webp'
 import v3_work from '../../../assets/files/images/portfolio/portfolio-v3-4.webp'
 import v3_contact from '../../../assets/files/images/portfolio/portfolio-v3-5.webp'
+import regain_mockup_cover from '../../../assets/files/images/regain/mockup-cover.webp'
 import regain_landingpage from '../../../assets/files/images/regain/regain-landing-page.webp'
 import regain_login from '../../../assets/files/images/regain/student-login-page.webp'
 import regain_dashboard from '../../../assets/files/images/regain/student-dashboard-page.webp'
@@ -41,6 +45,7 @@ import bitewise_d2_4 from '../../../assets/files/images/bitewise/decision-02-04.
 import bitewise_d3_1 from '../../../assets/files/images/bitewise/decision-03-01.webp'
 import bitewise_d3_2 from '../../../assets/files/images/bitewise/decision-03-02.webp'
 import bitewise_d3_3 from '../../../assets/files/images/bitewise/decision-03-03.webp'
+import bitewise_d3_4 from '../../../assets/files/images/bitewise/decision-03-04.webp'
 import gurover_landing_page from '../../../assets/files/images/gurover/landing-page.webp'
 import gurover_mockup_cover from '../../../assets/files/images/gurover/mockup-cover.webp'
 import gurover_screen_ai_assistant from '../../../assets/files/images/gurover/screen-ai-assistant.webp'
@@ -105,7 +110,8 @@ import arise_screen_student_rewards from '../../../assets/files/images/arise/scr
 // it has no content for. `link`, `status` and `screenshots` may
 // be left out. `short` is the project in a few words, the last part of
 // its label on the work page. `cover` is the picture for its card on the work page, where
-// it has no cover class there (ProjectsPage.jsx)
+// it has no cover class there (ProjectsPage.jsx). `behance` is the address of
+// its full case study on Behance, linked at the end of its page when given
 export const PROJECTS = {
   // this site
   portfoliov3: {
@@ -212,7 +218,7 @@ export const PROJECTS = {
           { label: 'Design rationale', text: 'Collecting these preferences upfront provides a foundation for a more relevant shopping experience based on what matters to each shopper.' },
         ],
         shots: {
-          layout: 'trio',
+          layout: 'stagger',
           items: [
             { src: bitewise_d1_1, alt: 'BiteWise decision 01, screen 1' },
             { src: bitewise_d1_2, alt: 'BiteWise decision 01, screen 2' },
@@ -233,7 +239,7 @@ export const PROJECTS = {
           { label: 'Design rationale', text: 'Combining dietary relevance with practical shopping information helps shoppers compare suitable products while considering their budget and preferences.' },
         ],
         shots: {
-          layout: 'quad',
+          layout: 'stagger',
           items: [
             { src: bitewise_d2_1, alt: 'BiteWise decision 02, screen 1' },
             { src: bitewise_d2_2, alt: 'BiteWise decision 02, screen 2' },
@@ -248,15 +254,16 @@ export const PROJECTS = {
         lead: 'Supporting informed purchasing',
         notes: [
           { label: 'The challenge', text: 'Shoppers need enough information to evaluate a product before adding it to their order.' },
-          { label: 'Solution', text: 'A product details screen presenting ingredients and nutritional information, followed by cart and checkout screens.' },
+          { label: 'Solution', text: 'A product details screen presenting ingredients, nutritional information, and reviews, an Ask Wise assistant for cooking and nutrition questions, followed by the checkout screen.' },
           { label: 'Design rationale', text: 'Providing dietary information before purchasing supports more informed product selection, while cart and checkout organize the final order review.' },
         ],
         shots: {
-          layout: 'trio',
+          layout: 'stagger',
           items: [
             { src: bitewise_d3_1, alt: 'BiteWise decision 03, screen 1' },
             { src: bitewise_d3_2, alt: 'BiteWise decision 03, screen 2' },
             { src: bitewise_d3_3, alt: 'BiteWise decision 03, screen 3' },
+            { src: bitewise_d3_4, alt: 'BiteWise decision 03, screen 4' },
           ],
         },
       },
@@ -525,11 +532,13 @@ export const PROJECTS = {
     roles: ['UI/UX Designer', 'Front-End Developer'],
     technologies: ['React JS', 'Tailwind CSS', 'SASS', 'GSAP', 'Figma', 'Vercel App'],
     link: { href: 'https://jaysonbeniza.vercel.app' },
+    cover: jaysonbeniza_mockup_cover,
     screenshots: [
-      { src: jaysonbeniza_hero, alt: 'Portfolio 2022 hero section', start: 'full' },
-      { src: jaysonbeniza_about, alt: 'Portfolio 2022 about section', start: 3 },
-      { src: jaysonbeniza_project, alt: 'Portfolio 2022 projects section', start: 2 },
-      { src: jaysonbeniza_contact, alt: 'Portfolio 2022 contact section', start: 4 },
+      { src: jaysonbeniza_mockup_cover, alt: 'Portfolio 2022 mock-up', start: 'full' },
+      { src: jaysonbeniza_hero, alt: 'Portfolio 2022 hero section', start: 2 },
+      { src: jaysonbeniza_about, alt: 'Portfolio 2022 about section', start: 4 },
+      { src: jaysonbeniza_project, alt: 'Portfolio 2022 projects section', start: 1 },
+      { src: jaysonbeniza_contact, alt: 'Portfolio 2022 contact section', start: 3 },
     ],
   },
   jbnza: {
@@ -542,8 +551,11 @@ export const PROJECTS = {
     roles: ['UI/UX Designer', 'Front-End Developer'],
     technologies: ['React JS', 'Material UI', 'SASS', 'Figma', 'Vercel App'],
     link: { href: 'https://jbnza.vercel.app' },
+    cover: jbnza_mockup_cover,
     screenshots: [
-      { src: jbnza_hero, alt: 'Portfolio 2022 (First Edition) hero section', start: 'full' },
+      { src: jbnza_mockup_cover, alt: 'Portfolio 2022 (First Edition) mock-up', start: 'full' },
+      { src: jbnza_hero, alt: 'Portfolio 2022 (First Edition) hero section', start: 3 },
+      { src: jbnza_landing_page, alt: 'Portfolio 2022 (First Edition) landing page', start: 1 },
       { src: jbnza_project, alt: 'Portfolio 2022 (First Edition) projects section', start: 2 },
       { src: jbnza_about, alt: 'Portfolio 2022 (First Edition) about section', start: 4 },
       { src: jbnza_contact, alt: 'Portfolio 2022 (First Edition) contact section', start: 1 },
@@ -559,8 +571,10 @@ export const PROJECTS = {
     roles: ['Lead Programmer'],
     technologies: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Bootstrap', 'NodeJS', 'Dialogflow', 'Firebase Realtime Database', 'Cloud Firestore', 'Firebase Admin', 'Google Cloud Storage'],
     link: { href: 'https://regain-caps.web.app/' },
+    cover: regain_mockup_cover,
     screenshots: [
-      { src: regain_landingpage, alt: 'ReGain landing page', start: 'full' },
+      { src: regain_mockup_cover, alt: 'ReGain mock-up', start: 'full' },
+      { src: regain_landingpage, alt: 'ReGain landing page', start: 2 },
       { src: regain_login, alt: 'ReGain student login', start: 3 },
       { src: regain_dashboard, alt: 'ReGain student dashboard', start: 1 },
       { src: regain_assessment, alt: 'ReGain self-assessment', start: 4 },

@@ -403,10 +403,9 @@ function buildReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
  * is still mid-animation. Each stage still uses the same scroll-velocity
  * based pacing as scrollReveal.
  *
- * @param {{targets: string|Element|Element[], vars?: object, build?: () => gsap.core.Animation, position?: string|number}[]} stages - played
+ * @param {{targets: string|Element|Element[], vars: object, position?: string|number}[]} stages - played
  *   in order; a stage's optional `position` is a gsap timeline position ('<' starts it with the
- *   stage before it instead of after). a stage with `build` puts in the animation it returns
- *   (its `targets` still name what it reveals, for the trigger)
+ *   stage before it instead of after)
  * @param {object} [opts]
  * @param {string|Element} [opts.trigger] - ScrollTrigger trigger (defaults to the first stage's targets)
  * @param {string} [opts.start] - ScrollTrigger start position (defaults to REVEAL_AT)
@@ -432,13 +431,7 @@ function buildSequence(stages, { trigger, start = REVEAL_AT, reverseStart } = {}
   // already revealed records "revealed" as its starting point too, so
   // reversing it went nowhere and the row just stayed on screen
   const tl = gsap.timeline({ paused: true });
-  stages.forEach(({ targets, vars, position, build }) => {
-    // (a stage made by `build` is put in as it is: an image opening in
-    // pixels, pixels.js)
-    if (build) {
-      tl.add(build(), position);
-      return;
-    }
+  stages.forEach(({ targets, vars, position }) => {
     // (a stage that sets its own duration keeps it, stagger and all)
     if (!vars.stagger || vars.duration != null) {
       tl.to(targets, { ...vars, ease: EASE, duration: vars.duration ?? durationForVelocity(0) }, position);

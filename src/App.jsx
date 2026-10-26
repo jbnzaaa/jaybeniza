@@ -260,7 +260,8 @@ function App() {
                   its old address, which is sent on) */}
                 <Route path='/bitewise' element={<ProjectPage project={PROJECTS.tingi}/>}/>
                 <Route path='/tingi' element={<Navigate to='/bitewise' replace/>}/>
-                <Route path='/stocknear' element={<ProjectPage project={PROJECTS.stocknear}/>}/>
+                {/* (StockNear is hidden for now; its case study stays in projects.js) */}
+                <Route path='/stocknear' element={<Navigate to='/work' replace/>}/>
                 {/* anything else: back to the landing page */}
                 <Route path='*' element={<Navigate to='/' replace/>}/>
               </Routes>

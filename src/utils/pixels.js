@@ -137,17 +137,10 @@ export function pixelReveal(el, { duration = 1, ease = 'power1.inOut' } = {}) {
 export function pixelToggle(el) {
   const set = clipper(el);
   const sweep = { at: 0 };
-  // where it was last asked to go: open (1) or shut (0)
-  let target = 0;
-  const to = (at, duration) => {
-    target = at;
-    return gsap.to(sweep, { at, duration, ease: 'power1.inOut', overwrite: true, onUpdate: () => set(sweep.at) });
-  };
+  const to = (at, duration) => gsap.to(sweep, { at, duration, ease: 'power1.inOut', overwrite: true, onUpdate: () => set(sweep.at) });
   return {
     show: (duration = .5) => to(1, duration),
     hide: (duration = .4) => to(0, duration),
-    // (open, or opening)
-    isOpen: () => target === 1,
     kill: () => gsap.killTweensOf(sweep),
   };
 }

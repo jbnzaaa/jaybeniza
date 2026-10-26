@@ -9,8 +9,6 @@ import Button from '../../common/Button'
 import Tag from '../../common/Tag'
 // scroll reveal
 import { scrollReveal, scrollRevealSequence } from '../../../utils/scrollReveal'
-// the screenshots open in pixels
-import { pixelReveal } from '../../../utils/pixels'
 // per-letter text split
 import SplitText from '../../common/SplitText'
 // every project's content - for the link to the next one
@@ -24,7 +22,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 // list, in its order (ProjectsPage.jsx) - newest first, and back to the
 // first after the last. a project that is not on that list (DailyDiscount)
 // is never offered as the next one, and leads on to the first
-const ORDER = ['tingi', 'stocknear', 'portfoliov3', 'gurover', 'comelec', 'psgs', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
+const ORDER = ['tingi', 'portfoliov3', 'gurover', 'comelec', 'psgs', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
 
 // grid placement of a screenshot by its `start` (see projects.js)
 const SHOT_LAYOUT = {
@@ -270,7 +268,72 @@ const SHOTS = {
   quad: 'grid items-start gap-4 mx-auto max-w-[1656px] mobile:grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-4 laptop-lg:grid-cols-4 desktop:grid-cols-4',
   pair: 'grid items-start gap-4 mx-auto max-w-[820px] grid-cols-2',
 };
+// `stagger`: Portfolio 2026's screens, at a phone screen's size. its
+// screens step across the width as that page's do, two to a row on a
+// twelve-column grid, the second set lower than the first - so a row is a
+// pair of screens offset from each other, and each row starts somewhere
+// else, a zigzag down the page. the grid is held to the width that shows
+// a screen at its own 402px or under
+const STAGGER_GRID = `grid grid-cols-12 gap-x-6 mx-auto max-w-[1656px] items-start
+  mobile:gap-y-8
+  tablet:gap-y-12
+  laptop:gap-y-14
+  laptop-lg:gap-y-20
+  desktop:gap-y-20`;
+// each screen's place by its turn: the rows' pairs of columns, in turn
+const STAGGER_PLACES = [
+  // the first of a row
+  [`mobile:col-span-6 mobile:col-start-1
+    tablet:col-span-4 tablet:col-start-1
+    laptop:col-span-3 laptop:col-start-1
+    laptop-lg:col-span-3 laptop-lg:col-start-1
+    desktop:col-span-3 desktop:col-start-1`,
+  `mobile:col-span-6 mobile:col-start-1
+    tablet:col-span-4 tablet:col-start-3
+    laptop:col-span-3 laptop:col-start-4
+    laptop-lg:col-span-3 laptop-lg:col-start-4
+    desktop:col-span-3 desktop:col-start-4`,
+  `mobile:col-span-6 mobile:col-start-1
+    tablet:col-span-4 tablet:col-start-2
+    laptop:col-span-3 laptop:col-start-2
+    laptop-lg:col-span-3 laptop-lg:col-start-2
+    desktop:col-span-3 desktop:col-start-2`],
+  // the second, set lower
+  [`mobile:col-span-6 mobile:col-start-7
+    tablet:col-span-4 tablet:col-start-7
+    laptop:col-span-3 laptop:col-start-7
+    laptop-lg:col-span-3 laptop-lg:col-start-7
+    desktop:col-span-3 desktop:col-start-7`,
+  `mobile:col-span-6 mobile:col-start-7
+    tablet:col-span-4 tablet:col-start-9
+    laptop:col-span-3 laptop:col-start-10
+    laptop-lg:col-span-3 laptop-lg:col-start-10
+    desktop:col-span-3 desktop:col-start-10`,
+  `mobile:col-span-6 mobile:col-start-7
+    tablet:col-span-4 tablet:col-start-8
+    laptop:col-span-3 laptop:col-start-8
+    laptop-lg:col-span-3 laptop-lg:col-start-8
+    desktop:col-span-3 desktop:col-start-8`],
+];
+const STAGGER_DROP = 'mobile:mt-12 tablet:mt-20 laptop:mt-24 laptop-lg:mt-32 desktop:mt-40';
+const staggerPlace = (i) => {
+  const second = i % 2;
+  const row = Math.floor(i / 2) % STAGGER_PLACES[0].length;
+  return `${STAGGER_PLACES[second][row]} ${second ? STAGGER_DROP : ''}`;
+};
+
 function Shots({ items, layout = 'trio', onLoad }) {
+  if (layout === 'stagger') {
+    return (
+      <div className={STAGGER_GRID}>
+        {items.map(({ src, alt }, i) => (
+          <div className={`screenshot-container ${staggerPlace(i)}`} key={alt}>
+            <img src={src} alt={alt} className='screenshot-img' onLoad={onLoad}/>
+          </div>
+        ))}
+      </div>
+    )
+  }
   return (
     <div className={SHOTS[layout]}>
       {items.map(({ src, alt }) => (
@@ -337,6 +400,8 @@ function ProjectPage({ project }) {
   const [hero, ...shots] = project.screenshots || [];
   const here = ORDER.findIndex((key) => PROJECTS[key] === project);
   const next = PROJECTS[ORDER[(here + 1) % ORDER.length]];
+  // (and the one before it, the last for the first - or for a project not on the list)
+  const previous = PROJECTS[ORDER[((here < 0 ? 0 : here) - 1 + ORDER.length) % ORDER.length]];
 
   // the screenshots have no size until they load, so the page grows after
   // it mounts and everything below them moves down. re-measure the scroll
@@ -354,11 +419,10 @@ function ProjectPage({ project }) {
     const sections = gsap.utils.toArray('[id^="case-"]').filter((section) => document.querySelector(`#animate-${section.id}`)).map((section) => scrollReveal(
       `#animate-${section.id}`, { y: 0, stagger: .012, ease: 'power1.in' }, { trigger: section }));
 
-    // each screenshot reveals as it scrolls into view: the frame opens in
-    // pixels from its bottom edge up (pixels.js) while the image inside
-    // eases down to its real size
+    // each screenshot reveals as it scrolls into view: the frame wipes up
+    // from its bottom edge while the image inside eases down to its real size
     const images = gsap.utils.toArray('.screenshot-container').map((card) => scrollRevealSequence([
-      { targets: card, build: () => pixelReveal(card, { duration: 1 }) },
+      { targets: card, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },
       { targets: card.querySelector('.screenshot-img'), vars: { scale: 1, ease: 'power2.out' }, position: '<' },
     ], { trigger: card }));
 
@@ -621,7 +685,7 @@ function ProjectPage({ project }) {
 
       </article>
       {/* the close: the next project, in the contact section's layout */}
-      <Contact next={next}/>
+      <Contact next={next} previous={previous} current={project}/>
     </>
   )
 }

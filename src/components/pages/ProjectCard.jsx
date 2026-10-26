@@ -23,14 +23,6 @@ export const PROJECT_CARDS = [
     meta: '2026 / UX Case Study / UI/UX Designer',
   },
   {
-    id: 'stocknear',
-    title: 'StockNear',
-    to: '/stocknear',
-    image: null,
-    category: 'UX Case Study / Mobile App',
-    meta: '2026 / UX Case Study / Product Designer',
-  },
-  {
     id: 'portfoliov3',
     title: 'Portfolio 2026',
     to: '/portfolio-2026',

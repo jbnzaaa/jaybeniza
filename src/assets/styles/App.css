@@ -1312,9 +1312,4 @@ html.has-cursor * {
 
 
 
-* body .project-preview-next {
-  position: absolute;
-  inset: 0;
-  clip-path: inset(100% 0% 0% 0%);
-}
 /*# sourceMappingURL=App.css.map */

@@ -1,5 +1,5 @@
 //
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 // Resume
 import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 // scroll reveal
@@ -10,6 +10,8 @@ import SplitText from '../common/SplitText'
 import Footer from './Footer'
 // page-to-page wipe
 import { TransitionLink } from '../common/PageTransition'
+// GSAP - back to the top of the page
+import ScrollSmoother from 'gsap/ScrollSmoother'
 
 const EMAIL = 'mailto:jaysonbeniza@gmail.com';
 
@@ -31,17 +33,28 @@ const PROJECTS_TEXT = 'Not sure yet? Take your time with the work first.';
 const PROJECTS_LINKS = [
   { label: 'All work', to: '/work' },
   { label: 'BiteWise', to: '/bitewise' },
-  { label: 'StockNear', to: '/stocknear' },
+  { label: 'GuRover', to: '/gurover' },
   { label: 'Portfolio 2026', to: '/portfolio-2026' },
   { label: 'ReGain', to: '/regain' },
 ];
 
-// its third face, closing a project page: the contact screen as it is on
-// the landing page, with a band over the footer leading on to the next
-// project - its name is the way to it, beside a line on what it is
-const nextLinks = (next) => [
-  { label: 'View project', to: next.path },
+// its third face, closing a project page: the next project, by name - the
+// heading itself is the way to it - over a brief description of it (the
+// first sentence of its own) and the ways on from here: to it, back to the
+// project before this one (by name), the full case study on Behance when
+// the project has one (its `behance`, projects.js), all the work, and back
+// to the top of this one. (getting in touch and the CV are in the top bar)
+const brief = (description) => description.match(/^.*?[.!?](?=s|$)/)?.[0] || description;
+const toTop = (e) => {
+  e.preventDefault();
+  ScrollSmoother.get()?.scrollTo(0, true);
+};
+const nextLinks = (next, previous, current) => [
+  { label: 'Next project', to: next.path },
+  ...(previous ? [{ label: `Previous: ${previous.title}`, to: previous.path }] : []),
+  ...(current?.behance ? [{ label: 'Full case study on Behance', href: current.behance }] : []),
   { label: 'All work', to: '/work' },
+  { label: 'Back to top', href: '#top', onClick: toTop },
 ];
 
 /**
@@ -51,30 +64,26 @@ const nextLinks = (next) => [
  *
  * @param {boolean} [projects] - the same screen as "View My Projects":
  *   the heading, the text and the links are to the work (ContactPage.jsx)
- * @param {object} [next] - the project to lead on to (its entry in
- *   projects.js): a band over the footer with its name, linked, and a
- *   line on what it is (ProjectPage.jsx)
+ * @param {object} [next] - the same screen leading on to this project
+ *   (its entry in projects.js): its name as the heading, and a link to it
+ *   (ProjectPage.jsx)
+ * @param {object} [previous] - with `next`, the project before this one,
+ *   for the link back to it
+ * @param {object} [current] - with `next`, the project this page is about,
+ *   for the link to its full case study on Behance
  * @param {boolean} [page] - true when this is the whole page
  *   rather than a page's closing section: it then starts under the top bar
  *   instead of sliding over it, so it leaves room for the bar and does not
  *   ask the bar to hide (data-nav-cover, Navbar.jsx)
  */
-function Contact({ page = false, projects = false, next }) {
-  const heading = projects ? PROJECTS_HEADING : 'Send Me a Message';
-  const text = projects ? PROJECTS_TEXT : `${QUESTION} ${SUPPORT}`;
-  const links = projects ? PROJECTS_LINKS : LINKS;
-  const fxNext = useRef();
-
+function Contact({ page = false, projects = false, next, previous, current }) {
+  const heading = next ? next.title : projects ? PROJECTS_HEADING : 'Send Me a Message';
+  const text = next ? brief(next.description) : projects ? PROJECTS_TEXT : `${QUESTION} ${SUPPORT}`;
+  const links = next ? nextLinks(next, previous, current) : projects ? PROJECTS_LINKS : LINKS;
   useEffect(() => {
     // headline, text and links rise letter by letter
     const reveal = scrollReveal('#animate-contact', { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: '#contact' });
-    // the next project's band, as it comes up over the footer
-    const band = next && scrollReveal('#animate-contact-next', { y: 0, stagger: .02, ease: 'power1.in' },
-      { trigger: fxNext.current, start: 'top bottom' });
-    return () => {
-      reveal.kill();
-      band?.kill();
-    };
+    return () => reveal.kill();
   },[next]);
 
   return (
@@ -95,7 +104,13 @@ function Contact({ page = false, projects = false, next }) {
             laptop:col-span-5 laptop:row-start-1
             laptop-lg:col-span-5 laptop-lg:row-start-1
             desktop:col-span-5 desktop:row-start-1'>
-            <SplitText text={heading} id='animate-contact' />
+            {/* (leading on to a project, the heading is the link to it,
+              held still under the pointer) */}
+            {next ? (
+              <TransitionLink to={next.path} className='flex flex-wrap font-flexible font-semibold [color:inherit]' aria-label={`Next project: ${next.title}`} data-no-hover-roll>
+                <SplitText text={heading} id='animate-contact' />
+              </TransitionLink>
+            ) : <SplitText text={heading} id='animate-contact' />}
           </h2>
           {/* invitation + links - right */}
           <div className='text-caption
@@ -108,7 +123,7 @@ function Contact({ page = false, projects = false, next }) {
               <SplitText text={text} id='animate-contact' by='word' />
             </p>
             <ul className='flex flex-col gap-y-2'>
-              {links.map(({ label, href, to, download }) => (
+              {links.map(({ label, href, to, download, onClick }) => (
                 <li className='account-container m-0' key={label}>
                   <div className='accounts'>
                     {to ? (
@@ -116,7 +131,7 @@ function Contact({ page = false, projects = false, next }) {
                         <SplitText text={label} id='animate-contact' />
                       </TransitionLink>
                     ) : (
-                      <a href={href} {...(download ? { download } : href.startsWith('mailto') ? {} : { target: '_blank', rel: 'noreferrer' })}>
+                      <a href={href} onClick={onClick} {...(download ? { download } : /^(mailto|#)/.test(href) ? {} : { target: '_blank', rel: 'noreferrer' })}>
                         <SplitText text={label} id='animate-contact' />
                       </a>
                     )}
@@ -126,58 +141,6 @@ function Contact({ page = false, projects = false, next }) {
             </ul>
           </div>
         </section>
-        {/* the next project: label left, its name (the link to it) in the
-          middle, what it is and the ways on right. (its name's letters
-          roll under the pointer and the cursor's square goes into it,
-          like the top bar's links) */}
-        {next && (
-          <div ref={fxNext} className='grid grid-cols-8 gap-x-6 items-end border-t border-rule
-            mobile:mx-[1rem] mobile:pt-6 mobile:gap-y-4
-            tablet:mx-[1rem] tablet:pt-6 tablet:gap-y-4
-            laptop:mx-[2rem] laptop:pt-8
-            laptop-lg:mx-[3rem] laptop-lg:pt-8
-            desktop:mx-[3rem] desktop:pt-10'>
-            <p className='flex flex-wrap text-caption self-start
-              mobile:col-span-8
-              tablet:col-span-8
-              laptop:col-span-2
-              laptop-lg:col-span-2
-              desktop:col-span-2'>
-              <SplitText text='Next project' id='animate-contact-next' />
-            </p>
-            <h3 className='flex flex-wrap font-flexible font-semibold leading-[.92] tracking-tight text-heading
-              mobile:col-span-8
-              tablet:col-span-8
-              laptop:col-span-4
-              laptop-lg:col-span-4
-              desktop:col-span-4'>
-              <TransitionLink to={next.path} className='nav-item flex flex-wrap font-flexible font-semibold [color:inherit]' aria-label={`Next project: ${next.title}`} data-cursor-snap>
-                <SplitText text={next.title} id='animate-contact-next' />
-              </TransitionLink>
-            </h3>
-            <div className='text-caption
-              mobile:col-span-8
-              tablet:col-span-6
-              laptop:col-span-2
-              laptop-lg:col-span-2
-              desktop:col-span-2'>
-              <p className='flex flex-wrap mb-4'>
-                <SplitText text={`${next.short}.`} id='animate-contact-next' by='word' sentence />
-              </p>
-              <ul className='flex flex-wrap gap-x-6 gap-y-2'>
-                {nextLinks(next).map(({ label, to }) => (
-                  <li className='account-container m-0' key={label}>
-                    <div className='accounts'>
-                      <TransitionLink to={to}>
-                        <SplitText text={label} id='animate-contact-next' />
-                      </TransitionLink>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
         <Footer/>
       </div>
     </>

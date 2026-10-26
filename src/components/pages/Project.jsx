@@ -8,8 +8,6 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 import { TransitionLink } from '../common/PageTransition'
 // scroll reveal
 import { scrollReveal, REVEAL_AT, inTurn } from '../../utils/scrollReveal'
-// pictures that open in pixels
-import { pixelReveal, pixelToggle } from '../../utils/pixels'
 // the site's button and section label
 import Button from '../common/Button'
 import Tag from '../common/Tag'
@@ -29,44 +27,11 @@ const DESCRIPTION = 'Projects that show how I navigate the design to development
  * page's card instead: its cover, opening as it scrolls into view, with
  * its name and label under it.
  */
-// what a preview shows of a project: its picture, its image class, or the
-// empty card (.project-empty, App.scss)
-const face = (project) => (project?.picture ? 'bg-center' : project?.image ? `bg-center ${project.image}` : 'project-empty');
-
-// a project with nothing to picture yet previews as the empty card, which
-// says so
-function Empty({ project }) {
-  if (!project || project.picture || project.image) return null;
-  return (
-    <>
-      <span className='text-caption'>Ongoing project</span>
-      <span className='text-caption text-muted'>Case study in progress</span>
-    </>
-  );
-}
-
 function Project() {
   const fxList = useRef();
   const fxPreview = useRef();
-  // the preview's pixels (pixels.js)
-  const fxPixels = useRef();
   // the project whose image the preview is showing
   const [shown, setShown] = useState(null);
-  // the project opening over it, when the pointer has moved on to another
-  // row with the preview open: it opens in pixels over the one shown, and
-  // then is the one shown
-  const [incoming, setIncoming] = useState(null);
-  const fxNext = useRef();
-
-  useEffect(() => {
-    if (!incoming) return undefined;
-    const open = pixelReveal(fxNext.current, { duration: .5 });
-    open.eventCallback('onComplete', () => {
-      setShown(incoming);
-      setIncoming(null);
-    });
-    return () => open.kill();
-  }, [incoming]);
 
   useEffect(() => {
     // each name and its details rise letter by letter as that row scrolls
@@ -77,7 +42,6 @@ function Project() {
 
     // the preview is placed across the row by its centre (left, App.scss)
     gsap.set(fxPreview.current, { xPercent: -50 });
-    fxPixels.current = pixelToggle(fxPreview.current);
 
     // below laptop width, each row's cover as it comes up the screen: its
     // frame wipes open from its bottom edge while the picture inside,
@@ -103,31 +67,22 @@ function Project() {
         open.revert();
       });
       pictures.revert();
-      fxPixels.current?.kill();
     };
   }, []);
 
-  // the preview moves level with the row under the pointer and opens in
-  // pixels, the way the covers do - the recognition list's reveal. moved
-  // on to another row while it is open, the next project opens in pixels
-  // over the one showing. it keeps one place across the row; leaving the
-  // list closes it
+  // the preview moves level with the row under the pointer and wipes open
+  // from its bottom edge, the way the cards do - the recognition list's
+  // reveal. it keeps one place across the row; leaving the list closes it
   const show = (project) => (e) => {
     const preview = fxPreview.current;
     const row = e.currentTarget;
+    setShown(project);
     gsap.to(preview, { y: row.offsetTop + row.offsetHeight / 2 - preview.offsetHeight / 2, duration: .5, ease: 'power3.out' });
-    if (!fxPixels.current?.isOpen() || !shown) {
-      setShown(project);
-      setIncoming(null);
-      fxPixels.current?.show();
-      return;
-    }
-    if (project === (incoming || shown)) return;
-    // (one still opening is let land first)
-    if (incoming) setShown(incoming);
-    setIncoming(project);
+    gsap.to(preview, { clipPath: 'inset(0% 0% 0% 0%)', duration: .4, ease: 'power2.out' });
   };
-  const hide = () => fxPixels.current?.hide();
+  const hide = () => {
+    gsap.to(fxPreview.current, { clipPath: 'inset(100% 0% 0% 0%)', duration: .3, ease: 'power2.in' });
+  };
 
   return (
     <>
@@ -200,16 +155,17 @@ function Project() {
             ))}
           </ul>
           {/* hover preview, from laptop width up */}
-          <div className={`project-preview bg-cover ${face(shown)}`}
+          <div className={`project-preview bg-cover ${shown?.picture ? 'bg-center' : shown?.image ? `bg-center ${shown.image}` : 'project-empty'}`}
             style={shown?.picture ? { backgroundImage: `url(${shown.picture})` } : undefined}
             ref={fxPreview} aria-hidden='true'>
-            <Empty project={shown} />
-            {/* the next project, opening over it */}
-            <div className={`project-preview-next bg-cover ${incoming ? face(incoming) : ''}`}
-              style={incoming?.picture ? { backgroundImage: `url(${incoming.picture})` } : undefined}
-              ref={fxNext}>
-              <Empty project={incoming} />
-            </div>
+            {/* a project with nothing to picture yet previews as the empty
+              card, which says so */}
+            {shown && !shown.picture && !shown.image && (
+              <>
+                <span className='text-caption'>Ongoing project</span>
+                <span className='text-caption text-muted'>Case study in progress</span>
+              </>
+            )}
           </div>
         </div>
         {/* description + the way to every project */}

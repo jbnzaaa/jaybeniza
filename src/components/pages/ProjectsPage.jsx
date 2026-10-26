@@ -22,15 +22,13 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 // class, see backgroundImage in tailwind.config.js)
 const COVERS = {
   dailydiscount: 'bg-dailydiscount',
-  jaysonbeniza: 'bg-jaysonbeniza',
-  jbnza: 'bg-jbnza',
-  regain: 'bg-regain',
 };
 
 // the projects shown, newest year first (projects of one year keep this
 // order). a project with no cover class shows its own `cover` picture, or its first screenshot; one
-// with neither (the example case study) shows a plain panel that says so
-const SHOWN = ['tingi', 'stocknear', 'portfoliov3', 'gurover', 'comelec', 'psgs', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
+// with neither (the example case study) shows a plain panel that says so.
+// StockNear is hidden for now: its page sends visitors to the work page (App.jsx)
+const SHOWN = ['tingi', 'portfoliov3', 'gurover', 'comelec', 'psgs', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
 const BY_YEAR = SHOWN.slice()
   .sort((a, b) => Number(PROJECTS[b].year) - Number(PROJECTS[a].year));
 

@@ -1616,11 +1616,4 @@ html.has-cursor * {
 }
 
 
-// the next project opening over the one the preview shows (Project.jsx):
-// the same face, laid over it, opening in pixels (pixels.js)
-* body .project-preview-next {
-  position: absolute;
-  inset: 0;
-  clip-path: inset(100% 0% 0% 0%);
-}
 
