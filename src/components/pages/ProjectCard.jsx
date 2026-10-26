@@ -6,13 +6,11 @@
 // an imported `picture` instead.
 //
 // a slot with no `image` previews as a plain panel
-// Portfolio 2026's preview: a screen of this site
-import v3_services from '../../assets/files/images/portfolio/portfolio-v3-2.webp'
-// the mock-ups of the others
+// the mock-ups
+import p26_cover from '../../assets/files/images/portfolio/portfolio-2026-mockup-cover.webp'
 import bitewise_cover from '../../assets/files/images/bitewise/mockup-cover.webp'
 import gurover_cover from '../../assets/files/images/gurover/mockup-cover.webp'
-// (no mock-up yet: its light colour palette)
-import pci_cover from '../../assets/files/images/pci/screen-colors-light-mode.webp'
+import pci_cover from '../../assets/files/images/pci/mockup-cover.webp'
 
 export const PROJECT_CARDS = [
   {
@@ -29,7 +27,7 @@ export const PROJECT_CARDS = [
     title: 'Portfolio 2026',
     to: '/portfolio-2026',
     image: null,
-    picture: v3_services,
+    picture: p26_cover,
     category: 'Portfolio Website / Personal Project',
     meta: '2026 / Portfolio Website / UI/UX Designer',
   },

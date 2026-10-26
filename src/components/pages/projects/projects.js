@@ -16,11 +16,19 @@ import jbnza_hero from '../../../assets/files/images/portfolio/jbnza-landing-pag
 import jbnza_about from '../../../assets/files/images/portfolio/jbnza-landing-page-2.webp'
 import jbnza_project from '../../../assets/files/images/portfolio/jbnza-landing-page-3.webp'
 import jbnza_contact from '../../../assets/files/images/portfolio/jbnza-landing-page-4.webp'
-import v3_home from '../../../assets/files/images/portfolio/portfolio-v3-1.webp'
-import v3_services from '../../../assets/files/images/portfolio/portfolio-v3-2.webp'
-import v3_about from '../../../assets/files/images/portfolio/portfolio-v3-3.webp'
-import v3_work from '../../../assets/files/images/portfolio/portfolio-v3-4.webp'
-import v3_contact from '../../../assets/files/images/portfolio/portfolio-v3-5.webp'
+import p26_mockup_cover from '../../../assets/files/images/portfolio/portfolio-2026-mockup-cover.webp'
+import p26_home_hero from '../../../assets/files/images/portfolio/portfolio-2026-home-hero.webp'
+import p26_featured_work from '../../../assets/files/images/portfolio/portfolio-2026-featured-work.webp'
+import p26_about_the_designer from '../../../assets/files/images/portfolio/portfolio-2026-about-the-designer.webp'
+import p26_areas_of_expertise from '../../../assets/files/images/portfolio/portfolio-2026-areas-of-expertise.webp'
+import p26_testimonials from '../../../assets/files/images/portfolio/portfolio-2026-testimonials.webp'
+import p26_work_hero from '../../../assets/files/images/portfolio/portfolio-2026-work-hero.webp'
+import p26_work_list from '../../../assets/files/images/portfolio/portfolio-2026-work-list.webp'
+import p26_project_hero from '../../../assets/files/images/portfolio/portfolio-2026-project-hero.webp'
+import p26_project_role from '../../../assets/files/images/portfolio/portfolio-2026-project-role.webp'
+import p26_project_screens from '../../../assets/files/images/portfolio/portfolio-2026-project-screens.webp'
+import p26_about_page from '../../../assets/files/images/portfolio/portfolio-2026-about-page.webp'
+import p26_contact_page from '../../../assets/files/images/portfolio/portfolio-2026-contact-page.webp'
 import regain_mockup_cover from '../../../assets/files/images/regain/mockup-cover.webp'
 import regain_landingpage from '../../../assets/files/images/regain/regain-landing-page.webp'
 import regain_login from '../../../assets/files/images/regain/student-login-page.webp'
@@ -95,6 +103,7 @@ import arise_screen_student_dashboard from '../../../assets/files/images/arise/s
 import arise_screen_student_onboarding from '../../../assets/files/images/arise/screen-student-onboarding.webp'
 import arise_screen_student_resource_preview from '../../../assets/files/images/arise/screen-student-resource-preview.webp'
 import arise_screen_student_rewards from '../../../assets/files/images/arise/screen-student-rewards.webp'
+import pci_mockup_cover from '../../../assets/files/images/pci/mockup-cover.webp'
 import pci_colors_light_mode from '../../../assets/files/images/pci/screen-colors-light-mode.webp'
 import pci_colors_dark_mode from '../../../assets/files/images/pci/screen-colors-dark-mode.webp'
 import pci_color_guidance from '../../../assets/files/images/pci/screen-color-guidance.webp'
@@ -138,15 +147,21 @@ export const PROJECTS = {
     category: 'Portfolio Website / Personal Project',
     roles: ['UI/UX Designer', 'Front-End Developer'],
     technologies: ['React', 'Tailwind CSS', 'SASS', 'GSAP (ScrollTrigger, ScrollSmoother)', 'Hairline', 'Figma', 'Claude Code'],
-    // its card on the work page: a dark screen, which stands out on the
-    // page's light ground where the light landing screen would not
-    cover: v3_services,
+    cover: p26_mockup_cover,
     screenshots: [
-      { src: v3_home, alt: 'Portfolio 2026 landing page', start: 'full' },
-      { src: v3_services, alt: 'Portfolio 2026 what I do section', start: 2 },
-      { src: v3_about, alt: 'Portfolio 2026 about page', start: 4 },
-      { src: v3_work, alt: 'Portfolio 2026 work page', start: 1 },
-      { src: v3_contact, alt: 'Portfolio 2026 contact page', start: 3 },
+      { src: p26_mockup_cover, alt: 'Portfolio 2026 mock-up', start: 'full' },
+      { src: p26_home_hero, alt: 'Portfolio 2026 landing page', start: 'full' },
+      { src: p26_featured_work, alt: 'Portfolio 2026 featured work section', start: 2 },
+      { src: p26_about_the_designer, alt: 'Portfolio 2026 about the designer section', start: 4 },
+      { src: p26_areas_of_expertise, alt: 'Portfolio 2026 areas of expertise section', start: 1 },
+      { src: p26_testimonials, alt: 'Portfolio 2026 team testimonials section', start: 3 },
+      { src: p26_about_page, alt: 'Portfolio 2026 about page', start: 2 },
+      { src: p26_work_hero, alt: 'Portfolio 2026 work page', start: 4 },
+      { src: p26_work_list, alt: 'Portfolio 2026 work page project list', start: 1 },
+      { src: p26_project_hero, alt: 'Portfolio 2026 project page', start: 3 },
+      { src: p26_project_role, alt: 'Portfolio 2026 project page role and contributions', start: 2 },
+      { src: p26_project_screens, alt: 'Portfolio 2026 project page platform screens', start: 4 },
+      { src: p26_contact_page, alt: 'Portfolio 2026 contact page', start: 1 },
     ],
   },
   // case studies. one that is written up has `caseStudy`: its sections,
@@ -621,8 +636,9 @@ export const PROJECTS = {
       'Its foundations set the visual language: color tokens for light and dark mode with guidance on when to use each, a type scale, spacing and sizing steps, corner radius, elevation, and an icon set.',
       'Its components put those foundations to work. Buttons, text fields, chips, cards, menus, navigation, dialogs, tooltips, and more are each documented with their variants, states, and the exact values developers build from.',
     ],
-    cover: pci_colors_light_mode,
+    cover: pci_mockup_cover,
     screenshots: [
+      { src: pci_mockup_cover, alt: 'PCI Central App mock-up', start: 'full' },
       { src: pci_colors_light_mode, alt: 'PCI Central App colors, light mode', start: 'full' },
       { src: pci_colors_dark_mode, alt: 'PCI Central App colors, dark mode', start: 2 },
       { src: pci_color_guidance, alt: 'PCI Central App color guidance', start: 4 },
