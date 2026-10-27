@@ -68,7 +68,7 @@ function Process({ light = false }) {
                   laptop:p-6 laptop:gap-y-8
                   laptop-lg:p-6 laptop-lg:gap-y-8
                   desktop:p-6 desktop:gap-y-10'>
-                  {/* the step's figure, in the card's own greys (.process-art, App.scss) */}
+                  {/* the step's figure, in the card's own greys (.process-art, App.css) */}
                   <div className='process-art flex items-center justify-center'>
                     <Hairline figure={step.figure} />
                   </div>

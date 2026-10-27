@@ -329,7 +329,7 @@ function Shots({ items, layout = 'trio', onLoad }) {
 
 // where an image will go: the site's image placeholder - a pale panel
 // crossed corner to corner, as a picture box is drawn in a wireframe
-// (.project-placeholder, App.scss) - that says what belongs in it
+// (.project-placeholder, App.css) - that says what belongs in it
 function Panel({ label, className = '' }) {
   return (
     <div className={`case-panel theme-light project-placeholder flex flex-col justify-between p-6 ${className}`}>
@@ -512,16 +512,20 @@ function ProjectPage({ project: given, id }) {
                 </div>
               ))}
             </dl>
-            {/* lower right: the link to the live site, where there is one */}
-            {project.link && (
-              <div className='shrink-0'>
+            {/* lower right: the link to the live site, where there is one,
+              then the scroll cue */}
+            <div className='flex items-end shrink-0 gap-x-6'>
+              {project.link && (
                 <Button label='Visit site' href={project.link.href} external />
-              </div>
-            )}
+              )}
+              <p className='flex flex-wrap text-caption'>
+                <SplitText text='Scroll down' id='animate-case-hero' by='word' />
+              </p>
+            </div>
           </div>
         </section>
         {/* hero visual - the whole section, edge to edge; a full screen
-          from laptop width up (.case-visual, App.scss) */}
+          from laptop width up (.case-visual, App.css) */}
         {hasCover && (
         <section className={DARK}>
           <div className='case-visual screenshot-container

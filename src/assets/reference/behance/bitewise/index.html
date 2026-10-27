@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1400">
+<title>BiteWise Behance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Behance UX case study template.
+     Every <section class="slide"> is one 1400px-wide image module; render.js
+     exports each as a 2x PNG. To reuse for another project: swap the tokens
+     below for its brand, the IMG path, and the copy. ?s=N shows module N alone.
+
+     One sans family, plain section titles, a 120px margin on every module,
+     screens in device frames. [data-crop="file|x|y|w|h|imageWidth"] shows a
+     region of a screen, in that screen's own pixels, scaled to the element's
+     width (script at the bottom). */
+  :root {
+    /* brand, sampled from the BiteWise screens */
+    --primary: #3DC37A;
+    --soft: #A1D697;
+    --teal: #1F7769;
+    --promo: #F9BD00;
+    --match: #F3FDF7;
+    --surface: #F1F1F1;
+    /* presentation */
+    --night: #0E2A20;
+    --forest: #123B2C;
+    --ink: #1A1D1C;
+    --muted: #666B69;
+    --line: #E3E6E4;
+    --paper: #F5F6F3;
+    --display: 'Inter Tight', Inter, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #cfd3cf; font-family: Inter, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  .slide { position: relative; width: 1400px; overflow: hidden; background: #fff; margin: 0 auto 24px; }
+  body.solo { background: #fff; }
+  body.solo .slide { display: none; margin: 0; }
+  body.solo .slide.on { display: block; }
+  .pad { padding: 120px 120px; }
+
+  /* section head: label and title left, intro right */
+  .head { display: grid; grid-template-columns: 1fr 440px; gap: 80px; align-items: end; }
+  .label { font-size: 15px; font-weight: 600; color: var(--primary); }
+  .label span { color: var(--muted); font-weight: 500; margin-right: 10px; font-variant-numeric: tabular-nums; }
+  h2 { margin-top: 20px; font-family: var(--display); font-weight: 700; font-size: 56px; line-height: 1.05; letter-spacing: -.03em; }
+  .intro { font-size: 18px; line-height: 1.65; color: var(--muted); }
+  .dark { color: #fff; background-repeat: no-repeat; }
+  .dark .label { color: var(--soft); }
+  .dark .label span, .dark .intro { color: rgba(255,255,255,.6); }
+
+  /* challenge / solution pair under a decision head */
+  .brief { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .brief h4 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 12px; }
+  .brief p { font-size: 17px; line-height: 1.65; color: var(--muted); }
+  .brief p + p { margin-top: 12px; }
+  .dark .brief { border-color: rgba(255,255,255,.14); }
+  .dark .brief h4 { color: #fff; }
+  .dark .brief p { color: rgba(255,255,255,.62); }
+
+  /* device frame; the screen keeps a 9:19.5 phone ratio, cropped from the top */
+  .device { position: relative; flex: none; padding: 9px; border-radius: 46px; background: #121715;
+    box-shadow: 0 50px 90px -40px rgba(8,36,24,.5), inset 0 0 0 1px #2B322F; }
+  .device .scr { border-radius: 37px; overflow: hidden; background: #fff; aspect-ratio: 9 / 19.5; }
+  .device img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .device.sm { padding: 6px; border-radius: 30px; }
+  .device.sm .scr { border-radius: 24px; }
+
+  .zoom { border-radius: 16px; background: #fff; box-shadow: 0 24px 50px -28px rgba(10,40,25,.35), 0 0 0 1px rgba(0,0,0,.06); }
+  [data-crop] { position: relative; overflow: hidden; }
+  [data-crop] > img { position: absolute; max-width: none; }
+
+  .cap { margin-top: 18px; font-size: 15px; line-height: 1.5; color: var(--muted); }
+  .cap b { display: block; font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .dark .cap { color: rgba(255,255,255,.6); }
+  .dark .cap b { color: #fff; }
+  .k { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  /* numbered marker for annotated screens */
+  .pin { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 14px; font-weight: 700; flex: none;
+    box-shadow: 0 0 0 4px rgba(61,195,122,.22); }
+</style>
+</head>
+<body>
+
+<!-- 01 · Cover: title left, three framed screens rising off the bottom edge -->
+<section class="slide" style="height:1000px;background:var(--primary);color:var(--night)">
+  <div style="position:absolute;left:120px;right:120px;top:64px;display:flex;justify-content:space-between;font-size:15px;font-weight:500">
+    <span style="font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.04em">BiteWise</span>
+    <span style="opacity:.7">UX Case Study · 2026</span>
+  </div>
+  <h1 style="position:absolute;left:120px;top:250px;width:470px;font-family:var(--display);font-weight:700;font-size:72px;line-height:1.02;letter-spacing:-.04em">Smarter grocery shopping, shaped by how you eat.</h1>
+  <div style="position:absolute;left:120px;bottom:96px;display:flex;gap:48px;font-size:15px;line-height:1.6">
+    <div><div style="opacity:.6">Role</div><b style="font-weight:600">UI/UX Designer</b></div>
+    <div><div style="opacity:.6">Platform</div><b style="font-weight:600">Mobile App</b></div>
+    <div><div style="opacity:.6">Timeline</div><b style="font-weight:600">1 Month</b></div>
+  </div>
+  <div class="device" style="position:absolute;width:300px;left:620px;top:430px"><div class="scr"><img src="../../../files/images/bitewise/screen-onboarding-1.webp" alt=""></div></div>
+  <div class="device" style="position:absolute;width:300px;left:900px;top:300px;z-index:1"><div class="scr"><img src="../../../files/images/bitewise/screen-home.webp" alt=""></div></div>
+  <div class="device" style="position:absolute;width:300px;left:1180px;top:480px"><div class="scr"><img src="../../../files/images/bitewise/screen-product-preview.webp" alt=""></div></div>
+</section>
+
+<!-- 02 · Overview: summary and project facts, then the hero mockup -->
+<section class="slide pad">
+  <div class="label"><span>01</span>Overview</div>
+  <div style="display:grid;grid-template-columns:1fr 440px;gap:80px;margin-top:20px">
+    <div>
+      <h2 style="margin-top:0">Grocery shopping, built around dietary needs.</h2>
+      <p class="intro" style="margin-top:28px;max-width:600px">BiteWise is a mobile grocery shopping concept designed for busy individuals with dietary needs, food preferences, and nutrition goals. It explores how personalized product discovery can make it easier to find, evaluate, and purchase groceries that fit individual needs.</p>
+    </div>
+    <style>
+      .facts > div { display: flex; justify-content: space-between; padding: 18px 0; border-top: 1px solid var(--line); font-size: 17px; }
+      .facts > div:last-child { border-bottom: 1px solid var(--line); }
+      .facts span { color: var(--muted); }
+      .facts b { font-weight: 600; }
+    </style>
+    <div class="facts" style="align-self:end">
+      <div><span>Role</span><b>UI/UX Designer</b></div>
+      <div><span>Platform</span><b>Mobile App</b></div>
+      <div><span>Timeline</span><b>1 Month</b></div>
+      <div><span>Type</span><b>UX Case Study · Personal Concept</b></div>
+    </div>
+  </div>
+  <div style="margin-top:72px;height:640px;border-radius:24px;overflow:hidden;background:#EDEDED">
+    <img src="../../../files/images/bitewise/mockup-cover.webp" alt="" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 55%">
+  </div>
+</section>
+
+<!-- 03 · Problem: one product card, annotated with the questions a shopper asks of it -->
+<section class="slide pad" style="background:var(--paper)">
+  <div class="head">
+    <div>
+      <div class="label"><span>02</span>The Problem</div>
+      <h2>Finding groceries that fit your needs takes more effort than it should.</h2>
+    </div>
+    <p class="intro">Shoppers with dietary needs often spend extra time checking ingredients, nutrition, and product suitability. For busy individuals, comparing products can make grocery shopping more time-consuming.</p>
+  </div>
+  <style>
+    .q { position: absolute; display: flex; align-items: center; gap: 14px; font-size: 19px; font-weight: 500; white-space: nowrap; }
+    .q.l { right: 830px; flex-direction: row-reverse; }
+    .q.r { left: 830px; }
+  </style>
+  <div style="position:relative;margin-top:72px;height:520px;background:#fff;border-radius:24px">
+    <svg width="1160" height="520" style="position:absolute;inset:0" fill="none" stroke="#B5BAB7" stroke-width="1.2">
+      <path d="M344 104 H 400 L 466 150"/><path d="M344 264 H 400 L 476 300"/><path d="M344 404 H 476"/>
+      <path d="M816 114 H 760 L 700 150"/><path d="M816 284 H 760 L 690 300"/>
+      <g fill="var(--primary)" stroke="#fff" stroke-width="2"><circle cx="466" cy="150" r="5"/><circle cx="476" cy="300" r="5"/><circle cx="476" cy="404" r="5"/><circle cx="700" cy="150" r="5"/><circle cx="690" cy="300" r="5"/></g>
+    </svg>
+    <div class="zoom" style="position:absolute;left:430px;top:60px;width:300px" data-crop="screen-home.webp|45|1075|390|495"></div>
+    <div class="q l" style="top:90px"><span class="pin">1</span>What's in it?</div>
+    <div class="q l" style="top:250px"><span class="pin">2</span>Any allergens?</div>
+    <div class="q l" style="top:390px"><span class="pin">3</span>How much protein?</div>
+    <div class="q r" style="top:100px"><span class="pin">4</span>Which one is better?</div>
+    <div class="q r" style="top:270px"><span class="pin">5</span>Is this right for my diet?</div>
+  </div>
+</section>
+
+<!-- 04 · Research: competitive review table, then the three gaps -->
+<section class="slide pad">
+  <div class="head">
+    <div>
+      <div class="label"><span>03</span>Research</div>
+      <h2>Competitive review</h2>
+    </div>
+    <p class="intro">I reviewed three grocery shopping apps to understand how they support shoppers with specific dietary needs. They covered the basics, but left dietary needs to the shopper.</p>
+  </div>
+  <style>
+    .mx { margin-top: 64px; border-top: 2px solid var(--ink); }
+    .mx .r { display: grid; grid-template-columns: 1fr 160px 160px 160px; align-items: center; height: 72px; border-bottom: 1px solid var(--line); font-size: 18px; }
+    .mx .r:first-child { height: 60px; font-size: 14px; font-weight: 600; color: var(--muted); }
+    .mx .r > span:not(:first-child) { justify-self: center; }
+    .mx .gap { background: var(--match); }
+    .mx .gap > span:first-child { font-weight: 600; }
+    .mx .r > span:first-child { padding-left: 20px; }
+    .yes { width: 14px; height: 14px; border-radius: 50%; background: var(--primary); }
+    .not { width: 16px; height: 2px; background: #B5BAB7; }
+    .finds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; margin-top: 72px; }
+    .finds b { display: block; font-family: var(--display); font-size: 48px; font-weight: 700; letter-spacing: -.03em; color: var(--primary); line-height: 1; }
+    .finds h3 { font-family: var(--display); font-size: 24px; font-weight: 600; letter-spacing: -.015em; margin: 20px 0 10px; }
+    .finds p { font-size: 17px; line-height: 1.6; color: var(--muted); }
+  </style>
+  <div class="mx">
+    <div class="r"><span>What shoppers can do</span><span>App A</span><span>App B</span><span>App C</span></div>
+    <div class="r"><span>Browse product categories</span><span class="yes"></span><span class="yes"></span><span class="yes"></span></div>
+    <div class="r"><span>Return to search history</span><span class="yes"></span><span class="yes"></span><span class="yes"></span></div>
+    <div class="r"><span>Build a cart</span><span class="yes"></span><span class="yes"></span><span class="yes"></span></div>
+    <div class="r gap"><span>Filter by individual dietary needs</span><span class="not"></span><span class="not"></span><span class="not"></span></div>
+    <div class="r gap"><span>See ingredients, allergens and nutrition on product pages</span><span class="not"></span><span class="not"></span><span class="not"></span></div>
+    <div class="r gap"><span>Compare products without switching pages</span><span class="not"></span><span class="not"></span><span class="not"></span></div>
+  </div>
+  <div style="display:flex;gap:28px;margin-top:16px;font-size:14px;color:var(--muted)">
+    <span style="display:flex;align-items:center;gap:8px"><i class="yes" style="display:inline-block;width:10px;height:10px"></i>Supported</span>
+    <span style="display:flex;align-items:center;gap:8px"><i class="not" style="display:inline-block;width:12px"></i>Not supported</span>
+    <span style="display:flex;align-items:center;gap:8px"><i style="display:inline-block;width:14px;height:14px;background:var(--match);box-shadow:inset 0 0 0 1px #CDEBD9"></i>Shared gap</span>
+  </div>
+  <div class="finds">
+    <div><b>01</b><h3>Limited dietary filtering</h3><p>Filters focused on general categories, leaving shoppers to identify suitable products themselves.</p></div>
+    <div><b>02</b><h3>Missing product information</h3><p>Product pages lacked ingredients, allergens, and nutrition, making suitability harder to evaluate.</p></div>
+    <div><b>03</b><h3>Time-consuming comparisons</h3><p>Shoppers navigated between product pages to compare information, adding effort.</p></div>
+  </div>
+</section>
+
+<!-- 05 · Insights: each gap becomes a principle, shown in the screen it shaped -->
+<section class="slide pad dark" style="background:var(--forest)" data-ht="1 0">
+  <div class="head">
+    <div>
+      <div class="label"><span>04</span>Key Insights</div>
+      <h2>From gaps to design principles</h2>
+    </div>
+    <p class="intro">Each gap from the review became a principle that the screens had to answer.</p>
+  </div>
+  <style>
+    .prin { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 64px; }
+    .prin > div { background: rgba(255,255,255,.05); border-radius: 24px; padding: 36px; display: flex; flex-direction: column; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+    .prin .from { font-size: 14px; color: rgba(255,255,255,.5); padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,.12); }
+    .prin h3 { font-family: var(--display); font-size: 30px; font-weight: 600; letter-spacing: -.02em; color: var(--soft); margin-top: 24px; }
+    .prin p { margin-top: 12px; font-size: 16px; line-height: 1.6; color: rgba(255,255,255,.7); }
+    .prin .zoom { width: 100%; margin-top: auto; box-shadow: 0 30px 50px -20px rgba(0,0,0,.5); }
+    .prin p + .zoom { margin-top: 36px; }
+  </style>
+  <div class="prin">
+    <div><div class="from">Gap · Limited dietary filtering</div><h3>Personalization</h3><p>Allow shoppers to communicate their dietary needs and preferences instead of repeatedly searching for suitable products.</p><div class="zoom" data-crop="screen-onboarding-1.webp|26|570|848|230"></div></div>
+    <div><div class="from">Gap · Time-consuming comparisons</div><h3>Relevant Discovery</h3><p>Help shoppers narrow their choices by presenting products aligned with their selected preferences.</p><div class="zoom" data-crop="screen-home.webp|20|830|880|150"></div></div>
+    <div><div class="from">Gap · Missing product information</div><h3>Product Transparency</h3><p>Provide clear product information so shoppers can evaluate suitability before purchasing.</p><div class="zoom" data-crop="screen-product-preview.webp|20|1530|860|200"></div></div>
+  </div>
+</section>
+
+<!-- 06 · How Might We: one statement, key verbs marked -->
+<section class="slide" style="height:760px">
+  <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 140px">
+    <div class="label"><span>05</span>How Might We</div>
+    <style>.mk { background: linear-gradient(transparent 58%, #C9EFD8 58%, #C9EFD8 92%, transparent 92%); padding: 0 4px; }</style>
+    <p style="margin-top:32px;font-family:var(--display);font-weight:600;font-size:58px;line-height:1.14;letter-spacing:-.03em">How might we help busy individuals <span class="mk">discover</span> and <span class="mk">evaluate</span> groceries that match their dietary needs, food preferences, and nutrition goals?</p>
+  </div>
+</section>
+
+<!-- 07 · User flow: three stage lanes drawn as a flow diagram -->
+<section class="slide pad" style="background:var(--paper)">
+  <div class="head">
+    <div>
+      <div class="label"><span>06</span>User Flow</div>
+      <h2>Three stages, one journey</h2>
+    </div>
+    <p class="intro">I structured the BiteWise experience around communicating preferences, discovering relevant products, and making informed purchasing decisions.</p>
+  </div>
+  <style>
+    .fl { margin-top: 64px; background: #fff; border-radius: 24px; padding: 16px 48px; }
+    .fl .row { display: grid; grid-template-columns: 200px 1fr; align-items: center; padding: 36px 0; }
+    .fl .row + .row { border-top: 1px dashed var(--line); }
+    .fl .st { font-size: 13px; font-weight: 600; color: var(--primary); }
+    .fl .st b { display: block; margin-top: 6px; font-family: var(--display); font-size: 20px; font-weight: 600; letter-spacing: -.01em; color: var(--ink); line-height: 1.2; }
+    .chain { display: flex; align-items: center; }
+    .nd { flex: 0 1 auto; min-width: 104px; max-width: 150px; padding: 14px 14px; border: 1.5px solid var(--line); border-radius: 12px; background: #fff; font-size: 15px; font-weight: 500; line-height: 1.3; text-align: center; }
+    .nd.key { background: var(--forest); border-color: var(--forest); color: #fff; }
+    .nd.opt { border-style: dashed; color: var(--muted); }
+    .nd.end { min-width: 0; width: 18px; height: 18px; padding: 0; border-radius: 50%; border: 0; background: var(--primary); }
+    .ar { flex: 1 1 18px; min-width: 18px; height: 1.5px; background: #A9AFAC; position: relative; }
+    .ar::after { content: ''; position: absolute; right: -1px; top: -4px; border: 4.5px solid transparent; border-left: 7px solid #A9AFAC; border-right: 0; }
+    .lg { display: flex; gap: 28px; margin-top: 20px; font-size: 14px; color: var(--muted); }
+    .lg span { display: flex; align-items: center; gap: 8px; }
+    .lg i { display: inline-block; width: 22px; height: 14px; border-radius: 4px; border: 1.5px solid var(--line); background: #fff; }
+  </style>
+  <div class="fl">
+    <div class="row">
+      <div class="st">Stage 01<b>Communicate preferences</b></div>
+      <div class="chain"><span class="nd end"></span><i class="ar"></i><span class="nd">Welcome</span><i class="ar"></i><span class="nd">How do you eat?</span><i class="ar"></i><span class="nd">Allergies &amp; intolerances</span><i class="ar"></i><span class="nd">Nutrition goals</span><i class="ar"></i><span class="nd">Shopping priorities</span><i class="ar"></i><span class="nd key">You're all set</span></div>
+    </div>
+    <div class="row">
+      <div class="st">Stage 02<b>Discover relevant products</b></div>
+      <div class="chain"><span class="nd key">Personalized home</span><i class="ar"></i><span class="nd">Preferences at a glance</span><i class="ar"></i><span class="nd">Picked for your preferences</span><i class="ar"></i><span class="nd">Search</span><i class="ar" style="flex-grow:3"></i></div>
+    </div>
+    <div class="row">
+      <div class="st">Stage 03<b>Make informed purchases</b></div>
+      <div class="chain"><span class="nd key">Product details</span><i class="ar"></i><span class="nd opt">Ask Wise (optional)</span><i class="ar"></i><span class="nd">Checkout</span><i class="ar"></i><span class="nd">Place order</span><i class="ar"></i><span class="nd end"></span></div>
+    </div>
+  </div>
+  <div class="lg">
+    <span><i style="background:var(--forest);border-color:var(--forest)"></i>Key screen</span>
+    <span><i></i>Step</span>
+    <span><i style="border-style:dashed"></i>Optional</span>
+    <span><i style="width:12px;height:12px;border-radius:50%;border:0;background:var(--primary)"></i>Start / end</span>
+  </div>
+</section>
+
+<!-- 08 · Style guide: colors, type and components cut from the real screens -->
+<section class="slide pad">
+  <div class="head">
+    <div>
+      <div class="label"><span>07</span>Visual Language</div>
+      <h2>Style guide</h2>
+    </div>
+    <p class="intro">Fresh greens for food and confirmation, yellow reserved for deals, and neutral surfaces that keep product photos in front.</p>
+  </div>
+  <style>
+    .sw { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-top: 64px; }
+    .sw i { display: block; height: 180px; border-radius: 16px; }
+    .sw b { display: block; margin-top: 16px; font-size: 16px; font-weight: 600; }
+    .sw span { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .tp { display: grid; grid-template-columns: 420px 1fr; gap: 64px; margin-top: 64px; padding-top: 48px; border-top: 1px solid var(--line); }
+    .tp .w > div { display: grid; grid-template-columns: 120px 1fr; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .tp .w > div:first-child { padding-top: 0; }
+    .kit { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 64px; }
+    .kit > div { background: var(--paper); border-radius: 24px; padding: 32px; }
+    .kit .k { margin-bottom: 20px; }
+  </style>
+  <div class="sw">
+    <div><i style="background:var(--primary)"></i><b>Primary</b><span>#3DC37A</span></div>
+    <div><i style="background:var(--soft)"></i><b>Fresh</b><span>#A1D697</span></div>
+    <div><i style="background:var(--teal)"></i><b>Deep teal</b><span>#1F7769</span></div>
+    <div><i style="background:var(--promo)"></i><b>Promo</b><span>#F9BD00</span></div>
+    <div><i style="background:var(--match);box-shadow:inset 0 0 0 1px #D5F0E0"></i><b>Match</b><span>#F3FDF7</span></div>
+    <div><i style="background:var(--surface)"></i><b>Surface</b><span>#F1F1F1</span></div>
+  </div>
+  <div class="tp">
+    <div>
+      <div class="k">Typeface</div>
+      <div style="font-family:Inter;font-weight:600;font-size:160px;letter-spacing:-.05em;line-height:1;margin-top:16px">Aa</div>
+      <div style="margin-top:20px;font-size:28px;font-weight:600">Inter</div>
+      <div style="margin-top:12px;font-size:15px;line-height:1.7;color:var(--muted);word-break:break-all">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789 ₱ / %</div>
+    </div>
+    <div class="w">
+      <div><span class="k">Bold</span><span style="font-size:34px;font-weight:700;letter-spacing:-.02em">Fresh deals, just for you</span></div>
+      <div><span class="k">Semibold</span><span style="font-size:28px;font-weight:600">Firm Tofu · ₱55 / 400g</span></div>
+      <div><span class="k">Medium</span><span style="font-size:22px;font-weight:500">Picked for your preferences</span></div>
+      <div><span class="k">Regular</span><span style="font-size:18px;color:var(--muted);line-height:1.5">Smooth, firm tofu made from whole soybeans. It holds its shape when cooked.</span></div>
+      <p style="margin-top:20px;font-size:15px;color:var(--muted)">Bold for screen titles, medium for product names, regular for descriptions and labels.</p>
+    </div>
+  </div>
+  <div class="kit">
+    <div>
+      <div class="k">Buttons</div>
+      <div class="zoom" style="width:100%" data-crop="screen-product-checkout.webp|26|2540|848|110"></div>
+      <div class="zoom" style="width:100%;margin-top:14px" data-crop="screen-onboarding-1.webp|26|1786|848|110"></div>
+    </div>
+    <div>
+      <div class="k">Preference chips</div>
+      <div class="zoom" style="width:100%" data-crop="screen-onboarding-1.webp|26|570|848|230"></div>
+    </div>
+    <div>
+      <div class="k">Feedback</div>
+      <div class="zoom" style="width:100%" data-crop="screen-product-checkout.webp|20|262|860|108"></div>
+      <div class="zoom" style="width:100%;margin-top:14px" data-crop="screen-product-preview.webp|20|1530|860|200"></div>
+    </div>
+    <div>
+      <div class="k">Product cards</div>
+      <div style="display:flex;gap:14px">
+        <div class="zoom" style="width:50%" data-crop="screen-home.webp|45|1075|390|495"></div>
+        <div class="zoom" style="width:50%" data-crop="screen-home.webp|470|1600|390|495"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 · Decision 01: the onboarding as a numbered row of screens -->
+<section class="slide" style="padding-top:120px">
+  <div style="padding:0 120px">
+    <div class="label"><span>08</span>Decision 01 · Communicate</div>
+    <h2>Personalizing the experience</h2>
+    <div class="brief">
+      <div><h4>Challenge</h4><p>Shoppers have different dietary needs and shopping priorities, making it difficult to find groceries that fit their requirements.</p></div>
+      <div><h4>Solution</h4><p>A guided onboarding flow that collects dietary preferences, allergies, nutrition goals, and shopping priorities such as affordability, convenience, and product sourcing.</p><p>Collecting these preferences upfront provides a foundation for a more relevant shopping experience based on what matters to each shopper.</p></div>
+    </div>
+  </div>
+  <style>
+    .strip { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+    .strip .cap b { font-size: 15px; }
+    .strip .cap b span { color: var(--primary); margin-right: 6px; }
+  </style>
+  <div style="margin-top:96px;background:var(--match);padding:96px 120px 110px">
+    <div class="strip">
+      <div><div class="device sm"><div class="scr"><img src="../../../files/images/bitewise/decision-01-01.webp" alt=""></div></div><p class="cap"><b><span>01</span>Welcome</b>Sets expectations: about a minute.</p></div>
+      <div><div class="device sm"><div class="scr"><img src="../../../files/images/bitewise/screen-onboarding-1.webp" alt=""></div></div><p class="cap"><b><span>02</span>Diet</b>Eating style, religious needs, meats to avoid.</p></div>
+      <div><div class="device sm"><div class="scr"><img src="../../../files/images/bitewise/screen-onboarding-2.webp" alt=""></div></div><p class="cap"><b><span>03</span>Allergies</b>Grouped by food type, so they are quick to find.</p></div>
+      <div><div class="device sm"><div class="scr"><img src="../../../files/images/bitewise/screen-onboarding-3.webp" alt=""></div></div><p class="cap"><b><span>04</span>Nutrition</b>Up to three goals, to keep it focused.</p></div>
+      <div><div class="device sm"><div class="scr"><img src="../../../files/images/bitewise/screen-onboarding-4.webp" alt=""></div></div><p class="cap"><b><span>05</span>Priorities</b>Money, time, sourcing, and cooking style.</p></div>
+      <div><div class="device sm"><div class="scr"><img src="../../../files/images/bitewise/screen-onboarding-5.webp" alt=""></div></div><p class="cap"><b><span>06</span>Summary</b>Everything editable later in Profile.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · Decision 02: the home screen with numbered markers, details either side -->
+<section class="slide" style="padding-top:120px">
+  <div style="padding:0 120px">
+    <div class="label"><span>09</span>Decision 02 · Discover</div>
+    <h2>Making product discovery relevant</h2>
+    <div class="brief">
+      <div><h4>Challenge</h4><p>Standard grocery listings require shoppers to manually identify products that match their dietary needs and shopping priorities.</p></div>
+      <div><h4>Solution</h4><p>A personalized home screen displaying relevant groceries with dietary tags, availability information, prices, and promotional indicators.</p><p>Combining dietary relevance with practical shopping information helps shoppers compare suitable products while considering their budget and preferences.</p></div>
+    </div>
+  </div>
+  <style>
+    .ann { position: absolute; width: 320px; }
+    .ann .t { display: flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 600; margin-bottom: 18px; }
+    .ann .cap { margin-top: 14px; }
+    .onpin { position: absolute; z-index: 2; }
+  </style>
+  <div style="position:relative;margin-top:96px;height:1000px;background:var(--match)">
+    <!-- device: 380 wide, screen scale 362/900; marker y = 100 + 9 + screenY * .402 -->
+    <div class="device" style="position:absolute;left:510px;top:100px;width:380px"><div class="scr"><img src="../../../files/images/bitewise/screen-home.webp" alt=""></div></div>
+    <span class="pin onpin" style="left:496px;top:336px">1</span>
+    <span class="pin onpin" style="left:496px;top:457px">2</span>
+    <span class="pin onpin" style="left:876px;top:658px">3</span>
+    <span class="pin onpin" style="left:876px;top:750px">4</span>
+    <div class="ann" style="left:120px;top:160px">
+      <div class="t"><span class="pin">1</span>Deals for this shopper</div>
+      <div class="zoom" style="width:320px" data-crop="screen-home.webp|30|400|850|410"></div>
+      <p class="cap">Promotions sit beside relevance, not instead of it.</p>
+    </div>
+    <div class="ann" style="left:120px;top:600px">
+      <div class="t"><span class="pin">2</span>Preferences up front</div>
+      <div class="zoom" style="width:320px" data-crop="screen-home.webp|20|830|880|150"></div>
+      <p class="cap">The shopper's own needs head the screen, one tap from editing.</p>
+    </div>
+    <div class="ann" style="left:960px;top:160px">
+      <div class="t"><span class="pin">3</span>Tags on every card</div>
+      <div class="zoom" style="width:240px" data-crop="screen-home.webp|45|1075|390|495"></div>
+      <p class="cap">Diet tags, stock and delivery city, before opening the product.</p>
+    </div>
+    <div class="ann" style="left:960px;top:600px">
+      <div class="t"><span class="pin">4</span>Price at a glance</div>
+      <div class="zoom" style="width:240px" data-crop="screen-home.webp|45|1600|390|495"></div>
+      <p class="cap">Discount badges and price drops for budget-minded shoppers.</p>
+    </div>
+  </div>
+  <div style="background:var(--paper);padding:110px 120px 120px">
+    <div style="display:grid;grid-template-columns:1fr 440px;gap:80px;align-items:end">
+      <h3 style="font-family:var(--display);font-size:32px;font-weight:600;letter-spacing:-.02em">Search, from suggestions to results</h3>
+      <p class="intro" style="font-size:17px">Suggestions before typing, matching names while typing, and results that keep the same dietary tags, with quick filters on top.</p>
+    </div>
+    <div style="display:flex;gap:40px;justify-content:center;margin-top:56px">
+      <div class="device" style="width:320px"><div class="scr"><img src="../../../files/images/bitewise/decision-02-02.webp" alt=""></div></div>
+      <div class="device" style="width:320px"><div class="scr"><img src="../../../files/images/bitewise/decision-02-03.webp" alt=""></div></div>
+      <div class="device" style="width:320px"><div class="scr"><img src="../../../files/images/bitewise/decision-02-04.webp" alt=""></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 · Decision 03: evaluate, ask, confirm, on dark -->
+<section class="slide dark" style="background:var(--night);padding:120px 0 130px" data-ht=".5 1">
+  <div style="padding:0 120px">
+    <div class="label"><span>10</span>Decision 03 · Decide</div>
+    <h2>Supporting informed purchasing</h2>
+    <div class="brief">
+      <div><h4>Challenge</h4><p>Shoppers need enough information to evaluate a product before adding it to their order.</p></div>
+      <div><h4>Solution</h4><p>A product details screen presenting ingredients, nutritional information, and reviews, an Ask Wise assistant for cooking and nutrition questions, followed by the checkout screen.</p><p>Providing dietary information and on-demand guidance before purchasing supports more informed product selection, while checkout organizes the final order review.</p></div>
+    </div>
+  </div>
+  <style>
+    .steps3 { display: grid; grid-template-columns: repeat(3, 320px); justify-content: center; gap: 80px; margin-top: 96px; }
+    .steps3 .n { display: flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 600; margin-bottom: 28px; }
+    .steps3 > div { position: relative; }
+    .steps3 > div + div::before { content: ''; position: absolute; left: -64px; top: 360px; width: 48px; height: 1.5px; background: rgba(255,255,255,.3); }
+    .steps3 .device { width: 320px; box-shadow: 0 50px 90px -30px rgba(0,0,0,.7), inset 0 0 0 1px #3A433F; }
+  </style>
+  <div class="steps3">
+    <div>
+      <div class="n"><span class="pin">1</span>Evaluate</div>
+      <div class="device"><div class="scr"><img src="../../../files/images/bitewise/screen-product-preview.webp" alt=""></div></div>
+      <p class="cap" style="margin-top:28px"><b>Matches at a glance</b>How many of the shopper's preferences the product meets, and which.</p>
+    </div>
+    <div>
+      <div class="n"><span class="pin">2</span>Ask</div>
+      <div class="device"><div class="scr"><img src="../../../files/images/bitewise/decision-03-03.webp" alt=""></div></div>
+      <p class="cap" style="margin-top:28px"><b>Ask Wise</b>Cooking ideas and nutrition answers, without leaving the product.</p>
+    </div>
+    <div>
+      <div class="n"><span class="pin">3</span>Confirm</div>
+      <div class="device"><div class="scr"><img src="../../../files/images/bitewise/screen-product-checkout.webp" alt=""></div></div>
+      <p class="cap" style="margin-top:28px"><b>A last check</b>Checkout confirms every item still fits the shopper's preferences.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12 · Showcase: a wall of screens in perspective -->
+<section class="slide" style="height:1100px;background:var(--primary)">
+  <style>
+    .wall { position: absolute; left: 50%; top: 50%; display: flex; gap: 36px; transform: translate(-50%, -50%) rotateX(48deg) rotateZ(-34deg); transform-style: preserve-3d; }
+    .wall > div { display: flex; flex-direction: column; gap: 36px; }
+    .wall .scr { width: 260px; border-radius: 26px; overflow: hidden; background: #fff; box-shadow: -30px 40px 60px -20px rgba(8,50,30,.45); }
+    .wall img { display: block; width: 100%; }
+  </style>
+  <div style="position:absolute;inset:0;perspective:2400px">
+    <div class="wall">
+      <div style="margin-top:300px">
+        <div class="scr"><img src="../../../files/images/bitewise/decision-01-01.webp" alt=""></div>
+        <div class="scr"><img src="../../../files/images/bitewise/screen-onboarding-3.webp" alt=""></div>
+      </div>
+      <div>
+        <div class="scr"><img src="../../../files/images/bitewise/screen-onboarding-1.webp" alt=""></div>
+        <div class="scr"><img src="../../../files/images/bitewise/screen-onboarding-5.webp" alt=""></div>
+        <div class="scr"><img src="../../../files/images/bitewise/decision-02-03.webp" alt=""></div>
+      </div>
+      <div style="margin-top:-200px">
+        <div class="scr"><img src="../../../files/images/bitewise/screen-home.webp" alt=""></div>
+        <div class="scr"><img src="../../../files/images/bitewise/decision-02-04.webp" alt=""></div>
+      </div>
+      <div style="margin-top:120px">
+        <div class="scr"><img src="../../../files/images/bitewise/decision-02-02.webp" alt=""></div>
+        <div class="scr"><img src="../../../files/images/bitewise/screen-product-preview.webp" alt=""></div>
+      </div>
+      <div style="margin-top:-120px">
+        <div class="scr"><img src="../../../files/images/bitewise/decision-03-03.webp" alt=""></div>
+        <div class="scr"><img src="../../../files/images/bitewise/screen-product-checkout.webp" alt=""></div>
+      </div>
+      <div style="margin-top:200px">
+        <div class="scr"><img src="../../../files/images/bitewise/screen-onboarding-2.webp" alt=""></div>
+        <div class="scr"><img src="../../../files/images/bitewise/screen-onboarding-4.webp" alt=""></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 · Reflection: takeaway and limits left, next steps right -->
+<section class="slide pad">
+  <div class="label"><span>11</span>Reflection</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:96px;margin-top:20px">
+    <div>
+      <h2 style="margin-top:0">Design connected experiences, not isolated screens.</h2>
+      <p class="intro" style="margin-top:28px">BiteWise reinforced the importance of designing connected experiences rather than isolated screens.</p>
+      <div style="margin-top:48px;padding:28px 32px;border-radius:20px;background:var(--paper)">
+        <h4 style="font-size:14px;font-weight:600">Limitations</h4>
+        <p style="margin-top:10px;font-size:16px;line-height:1.65;color:var(--muted)">BiteWise is a personal concept informed by course-provided personas and an exploratory review of existing grocery apps. Its assumptions and proposed experience have not yet been validated with users.</p>
+      </div>
+    </div>
+    <div>
+      <div class="k" style="padding-bottom:20px;border-bottom:2px solid var(--ink)">Next steps · Future validation</div>
+      <style>
+        .ns > div { display: grid; grid-template-columns: 72px 1fr; padding: 30px 0; border-bottom: 1px solid var(--line); }
+        .ns span { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--primary); font-variant-numeric: tabular-nums; }
+        .ns h3 { font-family: var(--display); font-size: 24px; font-weight: 600; letter-spacing: -.015em; }
+        .ns p { margin-top: 6px; font-size: 16px; line-height: 1.6; color: var(--muted); }
+      </style>
+      <div class="ns">
+        <div><span>01</span><div><h3>Usability</h3><p>Assessing how easily shoppers navigate onboarding, discovery, and checkout.</p></div></div>
+        <div><span>02</span><div><h3>Relevance</h3><p>Evaluating whether personalized product options match shoppers' dietary needs.</p></div></div>
+        <div><span>03</span><div><h3>Clarity</h3><p>Identifying missing information or difficulties when evaluating products.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · Thank you: three screens rising from the bottom edge -->
+<section class="slide dark" style="height:900px;background:var(--night);text-align:center" data-ht=".5 1">
+  <div style="padding-top:120px">
+    <div style="font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.04em;color:var(--primary)">BiteWise</div>
+    <h2 style="margin-top:24px;font-size:96px;letter-spacing:-.045em">Thank you</h2>
+    <p style="margin-top:20px;font-size:18px;color:rgba(255,255,255,.6)">Full case study at <span style="color:#fff;font-weight:600">jaybeniza.vercel.app/bitewise</span></p>
+  </div>
+  <div class="device" style="position:absolute;left:330px;top:560px;width:280px;opacity:.85"><div class="scr"><img src="../../../files/images/bitewise/screen-onboarding-5.webp" alt=""></div></div>
+  <div class="device" style="position:absolute;left:560px;top:480px;width:280px;z-index:1;box-shadow:0 -20px 90px rgba(61,195,122,.25)"><div class="scr"><img src="../../../files/images/bitewise/screen-home.webp" alt=""></div></div>
+  <div class="device" style="position:absolute;left:790px;top:560px;width:280px;opacity:.85"><div class="scr"><img src="../../../files/images/bitewise/screen-product-preview.webp" alt=""></div></div>
+</section>
+
+<script>
+  // crops: "file|x|y|w|h|imageWidth" in the screen's own pixels
+  var IMG = '../../../files/images/bitewise/';
+  document.querySelectorAll('[data-crop]').forEach(function (el) {
+    var p = el.dataset.crop.split('|');
+    var x = +p[1], y = +p[2], w = +p[3], h = +p[4], iw = +(p[5] || 900);
+    var s = el.getBoundingClientRect().width / w;
+    el.style.height = h * s + 'px';
+    var img = new Image();
+    img.src = IMG + p[0];
+    img.alt = '';
+    img.style.width = iw * s + 'px';
+    img.style.left = -x * s + 'px';
+    img.style.top = -y * s + 'px';
+    el.appendChild(img);
+  });
+  // halftone on dark modules: a dot grid whose dots shrink with distance from
+  // a focal point, data-ht="fx fy" as fractions of the module. Spacing is in
+  // CSS px and it is drawn at devicePixelRatio, so the 2x export stays sharp.
+  // It lands as a background image over the module's color, not a live canvas,
+  // which headless screenshots of tall modules can drop.
+  var HT = { gap: 14, max: 5.6, reach: .85, color: 'rgba(161,214,151,.16)' };
+  function halftone(el) {
+    var w = el.offsetWidth, h = el.offsetHeight, dpr = window.devicePixelRatio || 1;
+    if (!w || !h || el.dataset.htSize === w + 'x' + h + '@' + dpr) return;
+    el.dataset.htSize = w + 'x' + h + '@' + dpr;
+    var c = document.createElement('canvas');
+    c.width = w * dpr; c.height = h * dpr;
+    var ctx = c.getContext('2d');
+    ctx.scale(dpr, dpr);
+    ctx.fillStyle = HT.color;
+    var f = el.dataset.ht.split(' '), fx = f[0] * w, fy = f[1] * h;
+    var span = Math.hypot(w, h) * HT.reach;
+    for (var y = HT.gap / 2; y < h; y += HT.gap) {
+      // every other row shifts half a step, the classic 45° halftone screen
+      var off = (Math.round(y / HT.gap) % 2) * HT.gap / 2;
+      for (var x = HT.gap / 2 + off; x < w; x += HT.gap) {
+        var t = 1 - Math.hypot(x - fx, y - fy) / span;
+        if (t <= 0) continue;
+        var r = HT.max * Math.pow(t, 1.6);
+        if (r < .5) continue;
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    el.style.backgroundImage = 'url(' + c.toDataURL() + ')';
+    el.style.backgroundSize = w + 'px ' + h + 'px';
+  }
+  document.querySelectorAll('[data-ht]').forEach(function (el) {
+    // redraw whenever the module's size settles (fonts, crops, solo mode)
+    new ResizeObserver(function () { halftone(el); }).observe(el);
+  });
+  // ?s=N shows only module N, for exporting it as an image
+  var s = new URLSearchParams(location.search).get('s');
+  if (s) {
+    document.body.classList.add('solo');
+    document.querySelectorAll('.slide')[s - 1].classList.add('on');
+  }
+  function drawAll() { document.querySelectorAll('[data-ht]').forEach(halftone); }
+  drawAll();
+  window.addEventListener('load', drawAll);
+  document.fonts.ready.then(drawAll);
+</script>
+</body>
+</html>

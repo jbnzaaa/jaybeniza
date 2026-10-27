@@ -1,19 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* headlines (font-flexible) - League Gothic, variable in width; set at
+   its narrowest (.font-flexible) so the capitals stand tall */
 @font-face {
-  font-family: "Flexible";
-  src: url("../fonts/Flexible-Variable.woff2") format("woff2");
+  font-family: "League Gothic";
+  src: url("../fonts/LeagueGothic-Variable.woff2") format("woff2");
   font-weight: 100 900;
+  font-stretch: 75% 100%;
   font-display: swap;
-}
-@font-face {
-  font-family: "Flexible";
-  src: url("../fonts/LeagueGothic-Condensed.woff2") format("woff2");
-  font-weight: 100 900;
-  font-display: swap;
-  size-adjust: 125%;
-  unicode-range: U+0025-0026, U+002B, U+0030-0039;
 }
 @font-face {
   font-family: "MonoLisa";
@@ -110,6 +105,17 @@
   color: var(--text);
 }
 
+/* the count beside a link (Work [11]): smaller, raised to the top of
+   the word, and in the link's own colour - muted while idle, full when
+   the page is open or hovered (Navbar.jsx) */
+* body .nav-count {
+  margin-left: 0.2em;
+  font-size: 0.6em;
+  line-height: 1;
+  vertical-align: top;
+  color: inherit;
+}
+
 * body .cta-button {
   --sweep: var(--button-text, var(--ground));
   --sweep-text: var(--button-bg, var(--text));
@@ -175,12 +181,11 @@
   max-width: 100%;
   align-self: flex-start;
   justify-self: start;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--rule);
   clip-path: inset(100% 0% 0% 0%);
 }
 
-* body .tag .split-word:last-child {
+/* the last word sits against the closing bracket (Tag.jsx) */
+* body .tag .split-word:nth-last-child(2) {
   margin-right: 0;
 }
 
@@ -529,6 +534,15 @@
   transform: translateY(1.35em);
 }
 
+/* a headline's line is as tall as its words' clip box, so the box is cut
+   to just past the capitals (.75em) - at the 1.15em above, a third of every
+   line was empty. its line height matches so the capitals sit in it with
+   a little air above and below */
+* body .font-flexible .split-letter-clip {
+  height: 0.9em;
+  line-height: 0.9em;
+}
+
 * body .menu-icon-clip {
   display: inline-flex;
   overflow: hidden;
@@ -558,7 +572,7 @@
 }
 
 * body .font-flexible {
-  font-variation-settings: "HGHT" 900, "wdth" 200;
+  font-variation-settings: "wdth" 75;
   letter-spacing: 0;
 }
 
@@ -844,6 +858,17 @@
 * body .project-container .screenshot-container .screenshot-img {
   display: block;
   width: 100%;
+  transform: scale(1.15);
+}
+
+/* the archive's pictures start hidden under their bottom edge and slightly
+   large, as a case study's screenshots do (ArchivePage.jsx) */
+* body .archive-item {
+  overflow: hidden;
+  clip-path: inset(100% 0% 0% 0%);
+}
+
+* body .archive-item img {
   transform: scale(1.15);
 }
 
@@ -1330,4 +1355,3 @@ html.has-cursor * {
   cursor: none;
 }
 
-/*# sourceMappingURL=App.css.map */

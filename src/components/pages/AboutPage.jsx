@@ -155,7 +155,7 @@ function AboutPage() {
     <>
       {/* first screen - the introduction itself, with no headline over it:
         its label, then the two paragraphs at the lead step of the type
-        scale (size: .about-paragraph, App.scss), from the left edge. top
+        scale (size: .about-paragraph, App.css), from the left edge. top
         padding clears the nav bar */}
       <section id='about-hero' className='theme-light relative flex flex-col justify-between min-h-screen-safe overflow-hidden
         mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-12
@@ -165,7 +165,7 @@ function AboutPage() {
         desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'
         ref={fxHero}>
         {/* my picture - opened by my name in the introduction (the effect
-          above; start state: .about-portrait, App.scss) */}
+          above; start state: .about-portrait, App.css) */}
         <div className='about-portrait' aria-hidden='true'>
           <img src={PORTRAIT} alt='' loading='lazy'/>
         </div>
@@ -206,6 +206,12 @@ function AboutPage() {
               </p>
             ))}
           </div>
+        </div>
+        {/* scroll cue, along the bottom on the right */}
+        <div className='relative z-10 flex justify-end'>
+          <p className='flex flex-wrap text-caption'>
+            <SplitText text='Scroll down' id='animate-about-intro' by='word' />
+          </p>
         </div>
       </section>
       {/* how I work */}

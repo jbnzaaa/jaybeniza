@@ -37,7 +37,7 @@ const PRESSABLE = 'a, button, [role="button"], [data-hairline]';
  * it reads on light and dark sections alike; so is the label, a light box
  * with a black word, which inverts like the top bar's button.
  * Only where there is a pointer that hovers - a touch screen keeps its own
- * behaviour (.cursor, App.scss).
+ * behaviour (.cursor, App.css).
  */
 function Cursor() {
   const fxCursor = useRef();

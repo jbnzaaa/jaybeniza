@@ -190,10 +190,10 @@ function Testimonials() {
           a low screen the cards still clear the label above them) */}
         {/* the stack, centred in the room under the label - on a phone it
           fills that room instead, and every card is the one fixed height
-          (.testimonial-stack, App.scss). every card sits
+          (.testimonial-stack, App.css). every card sits
           in the one grid cell, so they are all as tall as the tallest;
           each is pushed right by its share of the
-          room left over (--i / --last, App.scss), the last one all the way */}
+          room left over (--i / --last, App.css), the last one all the way */}
         <div className='flex flex-1 min-h-0 items-center
           mobile:mt-6
           tablet:mt-8
@@ -223,7 +223,7 @@ function Testimonials() {
                   </p>
                 </blockquote>
                 {/* who said it. the square is their profile picture. it is revealed with
-                  the card (start state: .testimonial-avatar, App.scss) */}
+                  the card (start state: .testimonial-avatar, App.css) */}
                 <figcaption className='flex items-center gap-x-4'>
                   <img className='testimonial-avatar shrink-0 w-12 h-12 object-cover' src={avatar} alt='' loading='lazy'/>
                   {/* centred on the picture. the nudge down is optical: the

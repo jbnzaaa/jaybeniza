@@ -21,15 +21,19 @@ module.exports = {
         // each is one line from a phone to a wide screen, so it grows
         // evenly as the window does, with no step at a breakpoint
         logo: 'clamp(1.4rem, 1.25rem + .6vw, 1.8rem)',
-        hero: 'calc(3rem + 6.67vw)',
+        // the hero spans three quarters of the page's width: its longest
+        // line is 5.3em wide in League Gothic (with the gap after each
+        // word), so it is .75 x (100vw - 6rem of side padding) / 5.35
+        hero: 'calc(14vw - .84rem)',
         // (the work list is set below the hero: the hero is the louder line)
-        project: 'calc(1rem + 5vw)',
+        project: 'calc(1.5rem + 7vw)',
         case: 'calc(2.3rem + 9.43vw)',
         next: 'calc(2.625rem + 6.1vw)',
         closing: 'calc(3rem + 11.6vw)',
       },
       fontFamily: {
-        flexible: ["Flexible", "sans-serif"],
+        // headlines - League Gothic (the class keeps its old name)
+        flexible: ["League Gothic", "sans-serif"],
         monolisa: ["MonoLisa", "ui-monospace", "monospace"],
       },
       colors: {
@@ -45,7 +49,7 @@ module.exports = {
         // at 60%, for supporting text one step below titles
         'white': '#f2f2f2',
         'offwhite': '#E5E4E3',
-        // muted and rule follow the section's theme (App.scss): supporting
+        // muted and rule follow the section's theme (App.css): supporting
         // text and hairlines, light on the dark sections, dark on the light
         'muted': 'var(--muted)',
         'rule': 'var(--rule)',

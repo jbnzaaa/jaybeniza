@@ -49,7 +49,7 @@ function Skills() {
             <Tag label='Skills & Tools' id='animate-skills-tag' />
           </div>
           {/* rows - category, its skills, and a rule under each (the rule's
-            start state is the cert-line rule in App.scss). on a phone the
+            start state is the cert-line rule in App.css). on a phone the
             skills go under their category, both from the left edge */}
           <ul data-no-hover-roll>
             {GROUPS.map((group) => (

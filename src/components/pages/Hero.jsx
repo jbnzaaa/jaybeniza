@@ -71,6 +71,10 @@ function Hero() {
             desktop:w-[28%]'>
             <SplitText text={HIGHLIGHT_TEXT} id='animate-hero-highlight' by='word' />
           </p>
+          {/* scroll cue, along the bottom on the right */}
+          <p className='flex flex-wrap shrink-0 text-caption'>
+            <SplitText text='Scroll down' id='animate-hero-highlight' by='word' />
+          </p>
         </div>
       </section>
     </>

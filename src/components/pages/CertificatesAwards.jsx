@@ -56,7 +56,7 @@ function CertificatesAwards() {
       { targets: `#cert-line-${id}`, vars: { width: '100%', ease: 'power1.in' }, position: '<' },
     ], { trigger: `#cert-row-${id}` }));
 
-    // the preview is centred on its left edge's position (left: 50%, App.scss)
+    // the preview is centred on its left edge's position (left: 50%, App.css)
     gsap.set(fxPreview.current, { xPercent: -50 });
 
     return () => {

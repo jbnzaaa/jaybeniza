@@ -18,7 +18,7 @@ export const BUTTON_PARTS = '.split-letter, .menu-icon';
  * button uses it, so they share one layout, one style and one reveal - the
  * box wipes open from its bottom edge, then the label rises letter by
  * letter and the arrow after it. It is filled in the section's text colour
- * (App.scss decides, from the section's theme), or an outline with
+ * (App.css decides, from the section's theme), or an outline with
  * `outline`; on hover its colours swap, the new fill sweeping up from the bottom.
  *
  * It is a page link (`to`) or an ordinary link (`href`).

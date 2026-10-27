@@ -121,7 +121,7 @@ function ServiceCard({ id, title, text, includes, detailed }) {
             {detailed && (
               /* what it covers - ruled rows, each a button that shows its
                 drawing; the row whose drawing is up is the one at full
-                strength (.service-item, App.scss) */
+                strength (.service-item, App.css) */
               <ul className='flex flex-col mt-4'>
                 {includes.map(({ label }, i) => (
                   <li className={`service-item border-t border-white/20 m-0 ${i === shown ? 'service-item-on' : ''}`} key={label}>
@@ -139,7 +139,7 @@ function ServiceCard({ id, title, text, includes, detailed }) {
           </div>
         </div>
         {/* the figure - on the dark base, in the site's greys
-          (.service-art, App.scss). the first is drawn in, line by line,
+          (.service-art, App.css). the first is drawn in, line by line,
           with the card; keyed, so another takes its place whole */}
         <div className='service-art bg-black flex items-center justify-center
           mobile:py-4

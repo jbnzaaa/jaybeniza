@@ -71,7 +71,7 @@ function About() {
           <div>
             <Tag label='About the Designer' id='animate-about-tag' />
             {/* the statement, in its two paragraphs - body face, at the lead step of the type scale
-              (size: .about-paragraph, App.scss). its letters start below
+              (size: .about-paragraph, App.css). its letters start below
               their lines, like all text that reveals */}
             <div className='flex flex-col
               mobile:mt-6 mobile:w-full mobile:gap-y-6

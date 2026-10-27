@@ -14,14 +14,19 @@ import ScrollSmoother from 'gsap/ScrollSmoother'
 import Button from '../common/Button'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// the projects on the work page, counted beside its link
+import { SHOWN } from './projects/shown'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 // every destination. from tablet width up they are all in the bar itself;
 // on a phone, where there is no room for them, they are in the menu. the
 // logo is the way home, and each route is named after its link. Download
-// CV is not a page: it downloads my CV (`href`, `download`)
+// CV is not a page: it downloads my CV (`href`, `download`). Work carries
+// the number of projects on it (`count`), small in its upper right
 const NAV_LINKS = [
-  { label: 'Work', to: '/work' },
+  { label: 'Work', count: SHOWN.length, to: '/work' },
+  // hidden for now, with its page (App.jsx)
+  // { label: 'Archive', to: '/archive' },
   { label: 'About', to: '/about' },
   { label: 'Download CV', href: Resume, download: 'Jay-Beniza-CV.pdf' },
 ];
@@ -144,7 +149,7 @@ function Navbar() {
             laptop:gap-x-10
             laptop-lg:gap-x-12
             desktop:gap-x-12`}>
-            {NAV_LINKS.map(({ label, to, href, download }) => (
+            {NAV_LINKS.map(({ label, count, to, href, download }) => (
               <li className='m-0' key={label}>
                 {href ? (
                   <a href={href} download={download} className={NAV_ITEM_IDLE} aria-label='Download my CV (PDF)'>
@@ -155,6 +160,11 @@ function Navbar() {
                   className={pathname === to ? NAV_ITEM : NAV_ITEM_IDLE}
                   aria-current={pathname === to ? 'page' : undefined}>
                   <SplitText text={label} id='animate-nav' />
+                  {count != null && (
+                    <sup className='nav-count'>
+                      <SplitText text={`[${count}]`} id='animate-nav' />
+                    </sup>
+                  )}
                 </TransitionLink>
                 )}
               </li>
@@ -162,7 +172,7 @@ function Navbar() {
           </ul>
           {/* right - the way to the contact page: filled, and blended
             like the logo, so it inverts with the section under it
-            (.nav-blend, App.scss). revealed on mount. on a phone its
+            (.nav-blend, App.css). revealed on mount. on a phone its
             place is taken by the word "Menu" */}
           <div className='col-start-3 justify-self-end'>
             <div className={FROM_TABLET}>
@@ -179,12 +189,12 @@ function Navbar() {
         </nav>
       </div>
       {/* the phone's menu - a black panel that wipes down over the page
-        (.nav-menu, App.scss), under the bar - whose "Menu" opened it and
+        (.nav-menu, App.css), under the bar - whose "Menu" opened it and
         now reads "Close" */}
       <div className={`nav-menu ${menuOpen ? 'nav-menu-open' : ''} fixed inset-0 z-[21] flex flex-col justify-end bg-black px-[1rem] pt-20 pb-8 ${PHONE_ONLY}`}
         id='nav-menu' inert={menuOpen ? undefined : ''}>
         <ul className='flex flex-col'>
-          {MENU_LINKS.map(({ label, to, href, download }) => (
+          {MENU_LINKS.map(({ label, count, to, href, download }) => (
             <li className='border-t border-rule m-0' key={label}>
               {href ? (
                 <a href={href} download={download} className='block py-4 font-flexible font-medium leading-none text-[15vw] text-muted'
@@ -196,6 +206,7 @@ function Navbar() {
                 className={`block py-4 font-flexible font-medium leading-none text-[15vw] ${pathname === to ? '' : 'text-muted'}`}
                 aria-current={pathname === to ? 'page' : undefined} data-no-hover-roll>
                 {label}
+                {count != null && <sup className='nav-count'>[{count}]</sup>}
               </TransitionLink>
               )}
             </li>

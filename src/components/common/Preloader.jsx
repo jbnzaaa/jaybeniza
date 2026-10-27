@@ -9,11 +9,9 @@ import { pixelSweep } from '../../utils/pixels'
 // the local faces the page is set in, each with sample text. they are
 // requested explicitly because the browser only fetches a font once
 // something on screen uses it, and nothing but this screen is mounted
-// while it is up. the heading family is two files - Flexible for letters
-// and a numeral face for figures, % and & - and the sample text decides
-// which get fetched, so it names a character from each
+// while it is up: League Gothic for headlines, MonoLisa for the rest
 const FONTS = [
-  ['1em Flexible', 'A0%&'],
+  ['1em "League Gothic"', 'A0%&'],
   ['700 1em MonoLisa', 'A'],
 ];
 // never hold the page hostage to a font that fails or stalls
@@ -123,7 +121,7 @@ function Preloader({ onExitStart, onDone }) {
     const settle = () => { loaded += 1; advance(); };
     const loads = FONTS.map(([font, sample]) => document.fonts.load(font, sample).then(settle, settle));
 
-    // the figure is set in Flexible, so it only rises into view once that
+    // the figure is set in League Gothic, so it only rises into view once that
     // face has arrived - otherwise it would appear in a fallback and swap
     loads[0].then(() => {
       if (exiting) return;

@@ -29,6 +29,8 @@ const PAGES = {
   about: () => import('./components/pages/AboutPage'),
   work: () => import('./components/pages/ProjectsPage'),
   contact: () => import('./components/pages/ContactPage'),
+  // the archive page is hidden for now (its route sends home, below)
+  // archive: () => import('./components/pages/ArchivePage'),
   project: () => import('./components/pages/projects/ProjectPage'),
   dailydiscount: () => import('./components/pages/projects/DailyDiscount'),
   jaysonbeniza: () => import('./components/pages/projects/Jaysonbeniza'),
@@ -38,6 +40,7 @@ const PAGES = {
 const AboutPage = lazy(PAGES.about);
 const ProjectsPage = lazy(PAGES.work);
 const ContactPage = lazy(PAGES.contact);
+// const ArchivePage = lazy(PAGES.archive);
 const ProjectPage = lazy(PAGES.project);
 const DailyDiscount = lazy(PAGES.dailydiscount);
 const Jaysonbeniza = lazy(PAGES.jaysonbeniza);
@@ -237,6 +240,8 @@ function App() {
                 <Route path='/' element={<Home/>}/>
                 <Route path='/about' element={<AboutPage/>}/>
                 <Route path='/work' element={<ProjectsPage/>}/>
+                {/* the archive page is hidden for now */}
+                <Route path='/archive' element={<Navigate to='/' replace/>}/>
                 <Route path='/get-in-touch' element={<ContactPage/>}/>
                 {/* the routes' earlier names */}
                 <Route path='/projects' element={<Navigate to='/work' replace/>}/>

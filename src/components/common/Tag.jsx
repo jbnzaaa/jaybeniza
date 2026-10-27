@@ -5,10 +5,10 @@ import { scrollRevealSequence } from '../../utils/scrollReveal'
 import SplitText from './SplitText'
 
 /**
- * A section's label: a small boxed tag over its content, in place of a
- * large section title. It reveals the way the buttons do - the box wipes
- * open from its bottom edge, then its letters rise - as it scrolls into
- * view (start state: .tag, App.scss).
+ * A section's label: a small tag in brackets over its content - [Label] -
+ * in place of a large section title. It wipes open from its bottom edge,
+ * then its letters rise, as it scrolls into view (start state: .tag,
+ * App.css).
  *
  * @param {string} label
  * @param {string} id - unique; the letters carry it
@@ -33,9 +33,21 @@ function Tag({ label, id, as: Element = 'h2' }) {
 
   return (
     <Element className='tag text-caption' id={`tag-${id}`} ref={fxTag}>
+      <Bracket mark='[' id={id} />
       <SplitText text={label} id={id} />
+      <Bracket mark=']' id={id} />
     </Element>
   )
+}
+
+// a bracket around the label: a letter of its own, so it rises and rolls
+// with the rest, but not read out
+function Bracket({ mark, id }) {
+  return (
+    <span className='split-letter-clip' aria-hidden='true'>
+      <span className='split-letter' id={id}>{mark}</span>
+    </span>
+  );
 }
 
 export default Tag

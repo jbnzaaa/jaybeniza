@@ -40,7 +40,7 @@ function Project() {
       { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: `#project-row-${id}` }));
     const description = scrollReveal('#animate-project', { y: 0, stagger: .02, ease: 'power1.in' });
 
-    // the preview is placed across the row by its centre (left, App.scss)
+    // the preview is placed across the row by its centre (left, App.css)
     gsap.set(fxPreview.current, { xPercent: -50 });
 
     // below laptop width, each row's cover as it comes up the screen: its
@@ -115,7 +115,7 @@ function Project() {
                     laptop-lg:items-end
                     desktop:items-end'>
                     <span className='project-name font-flexible font-medium leading-[.92] tracking-tight whitespace-nowrap
-                      text-project mobile:text-heading tablet:text-heading'>
+                      text-project mobile:text-title tablet:text-title'>
                       <SplitText text={project.title} id={`animate-project-${project.id}`} />
                     </span>
                     <span className='project-label flex flex-wrap text-caption text-muted
@@ -134,7 +134,7 @@ function Project() {
                   </span>
                   {/* below laptop width: the cover, first in the card, in
                     a frame that wipes open on scroll (start state:
-                    .project-cover, App.scss) */}
+                    .project-cover, App.css) */}
                   <span className='project-cover block overflow-hidden mb-4
                     mobile:order-first tablet:order-first
                     mobile:aspect-[4/3] tablet:aspect-[16/9]
@@ -143,7 +143,7 @@ function Project() {
                       <span className={`project-cover-image block w-full h-full bg-cover ${project.picture ? 'bg-center' : `bg-center ${project.image}`}`}
                         style={project.picture ? { backgroundImage: `url(${project.picture})` } : undefined}/>
                     ) : (
-                      /* nothing to picture yet: the empty card (.project-empty, App.scss) */
+                      /* nothing to picture yet: the empty card (.project-empty, App.css) */
                       <span className='project-cover-image project-empty w-full h-full'>
                         <span className='text-caption'>Ongoing project</span>
                         <span className='text-caption text-muted'>Case study in progress</span>

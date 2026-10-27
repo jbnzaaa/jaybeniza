@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import Contact from './Contact';
 // project content
 import { PROJECTS } from './projects/projects'
+import { SHOWN } from './projects/shown'
 // GSAP
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -24,8 +25,7 @@ const COVERS = {};
 // the projects shown, newest year first (projects of one year keep this
 // order). a project with no cover class shows its own `cover` picture, or its first screenshot; one
 // with neither (the example case study) shows a plain panel that says so.
-// StockNear is hidden for now: its page sends visitors to the work page (App.jsx)
-const SHOWN = ['tingi', 'portfoliov3', 'gurover', 'comelec', 'psgs', 'pci', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
+// (the list itself: shown.js)
 const BY_YEAR = SHOWN.slice()
   .sort((a, b) => Number(PROJECTS[b].year) - Number(PROJECTS[a].year));
 
@@ -62,7 +62,7 @@ const ITEMS = [
 // where each project sits on the six column grid, in turn: the column it
 // starts on and how many it spans. every project has a grid row to
 // itself, so no card reaches into another's. on a phone every project is
-// the full width (.work-item, App.scss)
+// the full width (.work-item, App.css)
 const PLACES = [
   '1 / span 3',
   '4 / span 3',
@@ -175,10 +175,14 @@ function ProjectsPage() {
             desktop:w-[28%]'>
             <SplitText text={DESCRIPTION} id='animate-projects-page' by='word' />
           </p>
+          {/* scroll cue, along the bottom on the right */}
+          <p className='flex flex-wrap shrink-0 text-caption'>
+            <SplitText text='Scroll down' id='animate-projects-page' by='word' />
+          </p>
         </div>
       </section>
       {/* the projects - six columns; each one's place on them is in
-        PLACES above (.work-grid, App.scss) */}
+        PLACES above (.work-grid, App.css) */}
       {/* (pulled up a pixel over the first screen: the two are one light
         ground, and a sub-pixel gap between them let the dark page show
         through as a hairline) */}
@@ -194,7 +198,7 @@ function ProjectsPage() {
             const item = (
               <>
                 {/* the card - the cover. wipes open on scroll (start
-                  state: .work-cover, App.scss) */}
+                  state: .work-cover, App.css) */}
                 <div className='work-cover overflow-hidden aspect-[4/3]' data-cursor-anchor>
                   {cover && <div className={`work-cover-image w-full h-full bg-cover bg-center ${cover}`}/>}
                   {!cover && picture && <div className='work-cover-image w-full h-full bg-cover bg-left-top' style={{ backgroundImage: `url(${picture})` }}/>}
