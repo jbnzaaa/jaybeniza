@@ -71,6 +71,11 @@ const COMING = [
   'Outcome and reflection',
 ];
 
+// a project with its full case study on Behance (`behance`, projects.js)
+// shows the short version here: its key screens, at most this many under
+// a section, and only its case study's key sections (not `extra`)
+const KEY_SHOTS = 4;
+
 // the two section themes the page alternates between, as on the landing page
 const LIGHT = 'theme-light';
 const DARK = 'bg-surface';
@@ -377,7 +382,13 @@ function ProjectPage({ project: given, id }) {
   const isPlatform = !!project.platform;
   const platform = project.platform || {};
   // (a project may have no screenshots yet: panels stand in for them)
-  const [hero, ...shots] = project.screenshots || [];
+  // (with its full case study on Behance, the page is the short version)
+  const short = !!project.behance;
+  const [hero, ...allShots] = project.screenshots || [];
+  const shots = short ? allShots.slice(0, KEY_SHOTS) : allShots;
+  const studyParts = (project.caseStudy || [])
+    .filter((part) => !(short && part.extra))
+    .map((part) => (short && part.shots ? { ...part, shots: { ...part.shots, items: part.shots.items.slice(0, KEY_SHOTS) } } : part));
   // a platform's sections: only those it has written, light and dark in turn
   const platformParts = [
     platform.overview && 'overview',
@@ -392,6 +403,9 @@ function ProjectPage({ project: given, id }) {
   const has = (part) => platformParts.includes(part);
   // a build's overview: what it is, a paragraph to each entry
   const overview = [].concat(project.overview || []);
+  // the link to the full case study closes the page, after the sections
+  // before it, in the next theme in turn
+  const sectionCount = isDraft ? 1 : isStudy ? studyParts.length : isPlatform ? platformParts.length : 2;
   const here = ORDER.findIndex((key) => PROJECTS[key] === project);
   const next = PROJECTS[ORDER[(here + 1) % ORDER.length]];
   // (and the one before it, the last for the first - or for a project not on the list)
@@ -533,7 +547,7 @@ function ProjectPage({ project: given, id }) {
         ) : isStudy ? (
         <>
         {/* a case study: its own sections, light and dark in turn */}
-        {project.caseStudy.map((part, i) => (
+        {studyParts.map((part, i) => (
           <CaseSection id={part.id} title={part.title} theme={i % 2 ? DARK : LIGHT} key={part.id}
             below={part.shots && <Shots {...part.shots} onLoad={remeasure} />}>
             {part.lead && <Lead id={part.id} text={part.lead} className={part.text || part.notes || part.cards || part.points ? BELOW : ''} />}
@@ -670,6 +684,14 @@ function ProjectPage({ project: given, id }) {
           </div>
         </CaseSection>
         </>
+        )}
+
+        {/* the full case study, on Behance - after the short version here */}
+        {short && !isDraft && (
+        <CaseSection id='full' title='Full Case Study' theme={sectionCount % 2 ? DARK : LIGHT}>
+          <Copy id='full' text='This is the short version. The full case study, with the complete process and every screen, is on Behance.' className={BELOW} />
+          <Button label='View on Behance' href={project.behance} external />
+        </CaseSection>
         )}
 
       </article>

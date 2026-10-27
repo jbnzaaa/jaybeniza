@@ -430,8 +430,23 @@
   --hairline-lo: #444141;
 }
 
+// my design process (Process.jsx) - a figure in each card, drawn in the
+// card's greys: plates in the card's own colour, so they cover what is
+// behind them on it
+* body .process-art {
+  --hairline-plate: var(--card);
+  --hairline-hi: #E5E4E3;
+  --hairline-edge: #A8A5A3;
+  --hairline-mid: #7E7B79;
+  --hairline-lo: #5E5B59;
+}
+
+* body .process-art [data-hairline] {
+  width: 100%;
+}
+
 // the figures' lines meet in sharp corners (the engine rounds its joins)
-* body .service-art [data-hairline] svg :is(path, polygon, line) {
+* body :is(.service-art, .process-art) [data-hairline] svg :is(path, polygon, line) {
   stroke-linejoin: miter;
   stroke-linecap: butt;
 }

@@ -4,8 +4,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 // scroll reveal
 import { scrollRevealSequence } from '../../utils/scrollReveal'
-// the preview opens in pixels
-import { pixelToggle } from '../../utils/pixels'
 // section label
 import Tag from '../common/Tag'
 // per-letter text split
@@ -47,8 +45,6 @@ const isPdf = (file) => /\.pdf($|\?)/i.test(file);
 function CertificatesAwards() {
   const fxList = useRef();
   const fxPreview = useRef();
-  // the preview's pixels (pixels.js)
-  const fxPixels = useRef();
   // the row whose certificate the preview is showing
   const [shown, setShown] = useState(null);
 
@@ -62,25 +58,23 @@ function CertificatesAwards() {
 
     // the preview is centred on its left edge's position (left: 50%, App.scss)
     gsap.set(fxPreview.current, { xPercent: -50 });
-    fxPixels.current = pixelToggle(fxPreview.current);
 
     return () => {
       rows.forEach((row) => row.kill());
-      fxPixels.current?.kill();
     };
   }, []);
 
-  // the preview moves level with the row under the pointer and opens in
-  // pixels (pixels.js), the way the covers do. it closes when the pointer
+  // the preview moves level with the row under the pointer and wipes open
+  // from its bottom edge, the way the cards do. it closes when the pointer
   // moves to a row with nothing to show, or leaves the list
-  const hide = () => fxPixels.current?.hide();
+  const hide = () => gsap.to(fxPreview.current, { clipPath: 'inset(100% 0% 0% 0%)', duration: .3, ease: 'power2.in' });
   const show = (item) => (e) => {
     if (!item.file) { hide(); return; }
     const preview = fxPreview.current;
     const row = e.currentTarget;
     setShown(item);
     gsap.to(preview, { y: row.offsetTop + row.offsetHeight / 2 - preview.offsetHeight / 2, duration: .5, ease: 'power3.out' });
-    fxPixels.current?.show();
+    gsap.to(preview, { clipPath: 'inset(0% 0% 0% 0%)', duration: .4, ease: 'power2.out' });
   };
 
   return (

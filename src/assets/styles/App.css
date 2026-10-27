@@ -306,7 +306,19 @@
   --hairline-lo: #444141;
 }
 
-* body .service-art [data-hairline] svg :is(path, polygon, line) {
+* body .process-art {
+  --hairline-plate: var(--card);
+  --hairline-hi: #E5E4E3;
+  --hairline-edge: #A8A5A3;
+  --hairline-mid: #7E7B79;
+  --hairline-lo: #5E5B59;
+}
+
+* body .process-art [data-hairline] {
+  width: 100%;
+}
+
+* body :is(.service-art, .process-art) [data-hairline] svg :is(path, polygon, line) {
   stroke-linejoin: miter;
   stroke-linecap: butt;
 }
@@ -1317,7 +1329,5 @@ html.has-cursor,
 html.has-cursor * {
   cursor: none;
 }
-
-
 
 /*# sourceMappingURL=App.css.map */

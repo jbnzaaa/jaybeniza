@@ -135,7 +135,9 @@ import pci_dialogs from '../../../assets/files/images/pci/screen-dialogs.webp'
 // be left out. `short` is the project in a few words, the last part of
 // its label on the work page. `cover` is the picture for its card on the work page, where
 // it has no cover class there (ProjectsPage.jsx). `behance` is the address of
-// its full case study on Behance, linked at the end of its page when given
+// its full case study on Behance: when given, its page here is the short version,
+// its key screens and its case study's key sections (a section with
+// extra is left for Behance), closing on the link to it
 export const PROJECTS = {
   // this site
   portfoliov3: {
@@ -187,6 +189,7 @@ export const PROJECTS = {
     caseStudy: [
       {
         id: 'context',
+        extra: true,
         title: 'Project Context',
         text: 'The app explores how personalized product discovery can make it easier to find, evaluate, and purchase groceries that fit individual needs.',
       },
@@ -198,6 +201,7 @@ export const PROJECTS = {
       },
       {
         id: 'discovery',
+        extra: true,
         title: 'Understanding the Existing Experience',
         text: [
           'I reviewed three grocery shopping apps to understand how they support shoppers with specific dietary needs.',
@@ -212,6 +216,7 @@ export const PROJECTS = {
       },
       {
         id: 'opportunity',
+        extra: true,
         title: 'The Design Opportunity',
         lead: 'Make suitable groceries easier to discover and evaluate by connecting dietary preferences with relevant products and useful information.',
       },
@@ -234,6 +239,7 @@ export const PROJECTS = {
       },
       {
         id: 'decisions',
+        extra: true,
         title: 'Design Decisions',
         lead: 'Translating shopping challenges into design decisions',
         text: 'I structured the BiteWise experience around three connected stages: communicating preferences, discovering relevant products, and making informed purchasing decisions.',
@@ -299,6 +305,7 @@ export const PROJECTS = {
       },
       {
         id: 'together',
+        extra: true,
         title: 'Bringing the Experience Together',
         text: 'BiteWise connects preference onboarding, product discovery, and purchasing into one shopping journey. The experience is designed to help shoppers move from identifying their needs to finding suitable groceries and making informed purchasing decisions.',
       },
@@ -310,6 +317,7 @@ export const PROJECTS = {
       },
       {
         id: 'next-steps',
+        extra: true,
         title: 'Limitations & Next Steps',
         text: [
           'BiteWise is a personal concept informed by course-provided personas and an exploratory review of existing grocery apps. Its assumptions and proposed experience have not yet been validated with users.',
@@ -323,6 +331,7 @@ export const PROJECTS = {
       },
       {
         id: 'final-thoughts',
+        extra: true,
         title: 'Final Thoughts',
         text: 'BiteWise demonstrates how a connected, preference-driven shopping experience can be designed to make grocery discovery more relevant and product evaluation more straightforward.',
       },
