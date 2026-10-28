@@ -730,6 +730,11 @@
   height: 1.12em;
   line-height: 1em;
   margin-bottom: -0.17em;
+  /* some letters (R's leg) reach past their advance at a word's end: a
+     little room each side, given back in the margin so spacing holds */
+  padding: 0 0.08em;
+  margin-left: -0.08em;
+  margin-right: -0.08em;
 }
 
 * body .menu-icon-clip {

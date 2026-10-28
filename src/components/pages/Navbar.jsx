@@ -197,13 +197,13 @@ function Navbar() {
           {MENU_LINKS.map(({ label, count, to, href, download }) => (
             <li className='border-t border-rule m-0' key={label}>
               {href ? (
-                <a href={href} download={download} className='block py-4 font-flexible font-medium leading-none text-[15vw] text-muted'
+                <a href={href} download={download} className='block py-4 font-flexible font-medium leading-none whitespace-nowrap text-[10vw] text-muted'
                   aria-label='Download my CV (PDF)' data-no-hover-roll>
                   {label}
                 </a>
               ) : (
               <TransitionLink to={to} onClick={toTopIfHere(to)}
-                className={`block py-4 font-flexible font-medium leading-none text-[15vw] ${pathname === to ? '' : 'text-muted'}`}
+                className={`block py-4 font-flexible font-medium leading-none whitespace-nowrap text-[10vw] ${pathname === to ? '' : 'text-muted'}`}
                 aria-current={pathname === to ? 'page' : undefined} data-no-hover-roll>
                 {label}
                 {count != null && <sup className='nav-count'>[{count}]</sup>}
