@@ -5,6 +5,7 @@ import Process from './Process';
 import WorkExperience from './WorkExperience';
 import Skills from './Skills';
 import CertificatesAwards from './CertificatesAwards';
+import Testimonials from './Testimonials';
 import Footer from './Footer';
 // GSAP
 import gsap from 'gsap'
@@ -18,6 +19,8 @@ import { pixelToggle } from '../../utils/pixels'
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// a link to another page, through the page wipe
+import { TransitionLink } from '../common/PageTransition'
 // the button down to what is below the first screen
 import ScrollCue from '../common/ScrollCue'
 // the tab's title
@@ -40,8 +43,10 @@ const [BEFORE, AFTER] = INTRO[0].split(NAME + ',').map((part) => part.trim());
 // my picture (public/images)
 const PORTRAIT = `${process.env.PUBLIC_URL}/images/profile.webp`;
 
-const RESUME_DESCRIPTION = 'My CV covers my experience, skills, certificates, and awards in full. Download a copy, or email me about a role on your team.';
+const RESUME_DESCRIPTION = 'Have a product to design or build? Start a project and tell me about it. My CV covers my experience, skills, certificates, and awards in full, or email me about a project or a role.';
 const RESUME_LINKS = [
+  // first, the way to start a project: the request form (ContactPage.jsx)
+  { label: 'Start a project', to: '/get-in-touch' },
   { label: 'Download CV', href: Resume, download: 'Jay-Beniza-CV.pdf' },
   { label: 'Email me', href: 'mailto:jaysonbeniza@gmail.com' },
 ];
@@ -50,8 +55,9 @@ const RESUME_LINKS = [
  * The About page, laid out like the landing page - light and dark sections
  * in turn, each under a small boxed label: a first screen with the
  * introduction set large and centred (light), how I work (dark), experience
- * (light), skills and tools (dark), recognition (light), then the closing
- * resume screen with the footer inside it (darkest).
+ * (light), skills and tools (dark), recognition (light), what my team
+ * says (dark), then the closing screen - start a project, or the CV - with
+ * the footer inside it (darkest).
  */
 function AboutPage() {
   usePageTitle('About');
@@ -223,6 +229,9 @@ function AboutPage() {
       <Skills/>
       {/* certificates and awards */}
       <CertificatesAwards/>
+      {/* what the people I work with say, on the dark surface - the light
+        sections and dark in turn - just before the way to start a project */}
+      <Testimonials dark/>
       {/* download resume - this page's closing screen, laid out like the
         contact section (Contact.jsx) with the footer inside it. the top
         bar goes behind it the same way (data-nav-cover, Navbar.jsx) */}
@@ -234,13 +243,13 @@ function AboutPage() {
           laptop-lg:px-[3rem] laptop-lg:pt-20 laptop-lg:pb-16
           desktop:px-[3rem] desktop:pt-24 desktop:pb-16'>
           {/* heading - left, its top level with the text on the right */}
-          <h2 className='self-start flex flex-wrap font-flexible font-semibold leading-[.92] tracking-tight
+          <h2 className='self-start flex flex-wrap font-flexible font-semibold leading-[.95] tracking-tight
             mobile:col-span-8 mobile:row-start-1 text-closing
             tablet:col-span-8 tablet:row-start-1
             laptop:col-span-5 laptop:row-start-1
             laptop-lg:col-span-5 laptop-lg:row-start-1
             desktop:col-span-5 desktop:row-start-1'>
-            <SplitText text='See My Full Experience' id='animate-about-page-resume' />
+            <SplitText text='Work With Me' id='animate-about-page-resume' />
           </h2>
           {/* description + links - right */}
           <div className='text-caption
@@ -253,12 +262,18 @@ function AboutPage() {
               <SplitText text={RESUME_DESCRIPTION} id='animate-about-page-resume' by='word' />
             </p>
             <ul className='flex flex-col gap-y-2'>
-              {RESUME_LINKS.map(({ label, ...link }) => (
+              {RESUME_LINKS.map(({ label, to, ...link }) => (
                 <li className='account-container m-0' key={label}>
                   <div className='accounts'>
-                    <a {...link}>
-                      <SplitText text={label} id='animate-about-page-resume' />
-                    </a>
+                    {to ? (
+                      <TransitionLink to={to}>
+                        <SplitText text={label} id='animate-about-page-resume' />
+                      </TransitionLink>
+                    ) : (
+                      <a {...link}>
+                        <SplitText text={label} id='animate-about-page-resume' />
+                      </a>
+                    )}
                   </div>
                 </li>
               ))}

@@ -71,11 +71,14 @@ function Button({ label, to, href, external = false, download, small = false, ic
   const content = (
     <>
       {iconOnly ? <span className='sr-only'>{label}</span> : <SplitText text={label} id='button-letter' />}
-      <span className='menu-icon-clip' aria-hidden='true'>
-        <span className='menu-icon'>
-          {Icon
-            ? <Icon className={iconOnly ? 'button-glyph text-base' : 'button-glyph ml-1.5 text-base'}/>
-            : <RiArrowRightDownLine className={iconOnly ? 'button-arrow text-base' : 'button-arrow ml-1.5 text-base'}/>}
+      {/* the arrow, in a box of its own at the button's end (App.css) */}
+      <span className='button-icon-box' aria-hidden='true'>
+        <span className='menu-icon-clip'>
+          <span className='menu-icon'>
+            {Icon
+              ? <Icon className='button-glyph text-base'/>
+              : <RiArrowRightDownLine className='button-arrow text-base'/>}
+          </span>
         </span>
       </span>
     </>

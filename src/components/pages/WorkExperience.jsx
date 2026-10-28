@@ -98,7 +98,7 @@ function WorkExperience() {
                 </div>
                 {/* bullets */}
                 <ul className='flex flex-col gap-y-4
-                  text-body
+                  text-caption
                   '>
                   {role.bullets.map((bullet, i) => (
                     <li key={i} className='entry-container m-0'>

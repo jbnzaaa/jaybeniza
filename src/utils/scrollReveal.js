@@ -43,6 +43,29 @@ function totalForVelocity(natural, velocity) {
 // their own: what is on a page's first screen, and the footer, which is
 // too near the page's end to come that high)
 export const REVEAL_AT = 'top 85%';
+// where a reveal goes back, everywhere on the site: scrolling back up,
+// once the thing has dropped below the bottom of the screen. (each went
+// back where it had come in, or halfway up the screen: scrolling up, one
+// card closed while the one above it stayed open, and a section was left
+// half revealed, half not. going back out of sight, everything in view
+// stays as it is, and is revealed again as it comes back up)
+export const REVERSE_AT = 'top bottom';
+
+/**
+ * The site's reveal trigger for a reveal in its turn (inTurn): it plays
+ * when its trigger comes up to `start`, and goes back only once the
+ * trigger has dropped below the screen again (REVERSE_AT).
+ *
+ * @param {string|Element} trigger
+ * @param {string|Function} start
+ * @param {{play: Function, reverse: Function}} turn
+ * @returns {{kill: () => void}}
+ */
+export function revealTrigger(trigger, start, turn) {
+  const show = ScrollTrigger.create({ trigger, start, onEnter: () => turn.play() });
+  const hide = ScrollTrigger.create({ trigger, start: REVERSE_AT, onLeaveBack: () => turn.reverse() });
+  return { kill() { show.kill(); hide.kill(); } };
+}
 // where a reveal on the default start really starts. something that is
 // on a page's first screen when the page opens - an arrow button at the
 // foot of a hero, say - is under that line, and would stay hidden until
@@ -381,6 +404,11 @@ function buildReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
       tween.duration(totalForVelocity(natural, self.getVelocity()));
       turn.play();
     },
+  });
+  // (back once it is below the screen - REVERSE_AT)
+  const back = ScrollTrigger.create({
+    trigger: trigger || targets,
+    start: REVERSE_AT,
     onLeaveBack: (self) => {
       tween.duration(totalForVelocity(natural, self.getVelocity()));
       turn.reverse();
@@ -407,6 +435,7 @@ function buildReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
     // from the previous mount, making the reveal look like it never played
     kill() {
       trig.kill();
+      back.kill();
       turn.kill();
       tween.revert();
     },
@@ -475,21 +504,16 @@ function buildSequence(stages, { trigger, start = REVEAL_AT, reverseStart } = {}
     start: startFor(trigger || stages[0].targets, start),
     onEnter: (self) => turn.play(rate(self.getVelocity())),
     onEnterBack: (self) => turn.play(rate(self.getVelocity())),
-    // scrolling back up past the start: text goes first, then the line -
-    // the reveal in reverse, like the section titles
-    onLeaveBack: (self) => { if (!reverseStart) turn.reverse(rate(self.getVelocity())); },
   });
 
-  // a tall block (a card) that only reversed at `start` would be all but
-  // off the bottom of the screen by then, and its reversal never seen. with
-  // reverseStart it goes while most of it is still in view, and comes back
-  // at the same line if the page is scrolled down again
-  const back = reverseStart ? ScrollTrigger.create({
+  // scrolling back up, it goes back once it is below the screen
+  // (REVERSE_AT, or `reverseStart`): text first, then the line - the
+  // reveal in reverse
+  const back = ScrollTrigger.create({
     trigger: trigger || stages[0].targets,
-    start: reverseStart,
-    onEnter: (self) => turn.play(rate(self.getVelocity())),
+    start: reverseStart || REVERSE_AT,
     onLeaveBack: (self) => turn.reverse(rate(self.getVelocity())),
-  }) : null;
+  });
 
   // safety net: see buildReveal() above
   playIfDue(trig, () => turn.play());
@@ -499,7 +523,7 @@ function buildSequence(stages, { trigger, start = REVEAL_AT, reverseStart } = {}
     // comment on scrollReveal()'s kill() above for why this matters
     kill() {
       trig.kill();
-      back?.kill();
+      back.kill();
       turn.kill();
       tl.revert();
     },
@@ -532,9 +556,6 @@ export function scrollRevealCards(cards, { group, rowFrom = 1024, scrub = false,
   // wipe its text begins
   const STEP = .25;
   const TEXT_DELAY = .28;
-  // scrolling back up, a card closes again once its top edge is this far
-  // down the screen - while most of it can still be seen closing
-  const REVERSE_AT = 'top 55%';
 
   const inner = (card) => `${card} .reveal-card-inner`;
   const inners = cards.map(({ card }) => inner(card));

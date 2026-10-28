@@ -8,7 +8,7 @@ import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
 // the page's one queue of reveals
-import { inTurn, whenNear, refreshSoon } from '../../utils/scrollReveal'
+import { inTurn, whenNear, refreshSoon, revealTrigger } from '../../utils/scrollReveal'
 // the pictures open in pixels
 import { pixelReveal } from '../../utils/pixels'
 // their pictures - small square crops of the photographs in /reference
@@ -66,34 +66,26 @@ const TESTIMONIALS = [
 // screen: with 30% of its height above the bottom of the screen - so it
 // is in, and can be read, by the time the section pins
 const FIRST_AT = '30% bottom';
-// the pinned scroll, in steps: a later card takes one step to arrive,
-// moved by the scroll itself. STEP_LENGTH is how much scroll (in screen
-// heights) one step is; READ is how long, in steps, the page is scrolled
-// before a card starts - the card showing is left alone for that long -
-// and how long the finished stack is held before the page moves on
-const STEP_LENGTH = .36;
-const READ = .2;
-// how closely a card follows the scroll: the seconds it takes to catch
-// up. a card crosses the whole screen in a third of a screen of scroll,
-// so one step of the wheel is a long way for it: followed closely it
-// jumped there and stopped. given this long it glides on after each
-// step of the wheel and the steps run together
-const FOLLOW = 1.3;
+// the pinned scroll, in steps: how much scroll (in screen heights) each
+// card holds the section for. a step's scroll only says which card is
+// due: reaching it plays that card in on its own time, whatever the pace
+// of the scroll, and scrolling back plays it out again
+const STEP_LENGTH = .6;
 
 /**
- * What my team says, on the light theme: dark cards that stack as the
- * page scrolls. The first card comes in by itself as the section comes up
- * the screen, so it is there to read when the section pins. Pinned, each
- * next card is moved by the scroll itself - it is exactly as far in as
- * the page has been scrolled, forwards or back - after a short stretch
- * in which nothing moves, to read the card showing: it slides in over
- * the card before and stops a step further right, the last one's right
- * edge landing on the right gutter, every earlier card part in view
- * behind the next, its text rising as it nears its place.
+ * What my team says, on the light theme (or the dark surface, `dark`): dark cards, the full
+ * height of the room under the label, that stack as the page scrolls. The
+ * first card comes in by itself as the section comes up the screen, so it
+ * is there to read when the section pins. Pinned, each stretch of
+ * scrolling brings in the next card by itself - not tied to the scroll's
+ * pace: it slides in over the card before and stops a step further right,
+ * the last one's right edge landing on the right gutter, every earlier
+ * card part in view behind the next, its text rising and its picture
+ * opening as it lands. Scrolling back sends it out again.
  * Below laptop width the same happens top to bottom: the cards are full width,
  * come up from below, and each stops a step lower than the one before.
  */
-function Testimonials() {
+function Testimonials({ dark = false }) {
   const fxSection = useRef();
 
   useEffect(() => {
@@ -122,40 +114,35 @@ function Testimonials() {
         .to(cards[0].querySelectorAll('.split-letter'), { y: 0, ease: 'power2.out', duration: .7, stagger: { amount: .5 } }, .55)
         .add(pixelReveal(cards[0].querySelector('.testimonial-avatar'), { duration: .7 }), .7);
       const turn = inTurn(first, section.querySelector('.testimonial-stack'));
-      const arrive = ScrollTrigger.create({
-        trigger: section.querySelector('.testimonial-stack'),
-        start: FIRST_AT,
-        onEnter: () => turn.play(),
-        onLeaveBack: () => turn.reverse(),
-      });
+      const arrive = revealTrigger(section.querySelector('.testimonial-stack'), FIRST_AT, turn);
 
-      // the rest, moved by the scroll while the section is pinned. each has
-      // READ steps in which nothing moves, then one step in which it crosses
-      // to its place at the scroll's own pace - its text rising and its
-      // picture opening over the last part of the way, when most of the
-      // card is on screen
-      const later = cards.slice(1);
-      const stack = gsap.timeline({
-        defaults: { ease: 'none' },
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: `+=${(later.length * (READ + 1) + READ) * STEP_LENGTH * 100}%`,
-          pin: true,
-          scrub: FOLLOW,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
+      // the rest, each with its own entrance on its own time: it slides to
+      // its place, its text rising and its picture opening as it lands
+      const later = cards.slice(1).map((card) => gsap.timeline({ paused: true })
+        .fromTo(card, away, { ...home, ease: 'power3.out', duration: 1 }, 0)
+        .to(card.querySelectorAll('.split-letter'), { y: 0, ease: 'power2.out', duration: .5, stagger: { amount: .35 } }, .4)
+        .add(pixelReveal(card.querySelector('.testimonial-avatar'), { duration: .5 }), .5));
+      // the section pinned for a step of scroll a later card, and one more
+      // to read the last. each card due by the scroll comes in; any past
+      // it (scrolled back) goes out
+      const pin = ScrollTrigger.create({
+        trigger: section,
+        start: 'top top',
+        end: `+=${(later.length + 1) * STEP_LENGTH * 100}%`,
+        pin: true,
+        anticipatePin: 1,
+        // scrolling back up out of the pin, the first card goes out too,
+        // as the later ones have - and comes back on the way down
+        onLeaveBack: () => turn.reverse(),
+        onEnter: () => turn.play(),
+        onUpdate: ({ progress }) => {
+          const due = Math.floor(progress * (later.length + 1));
+          later.forEach((entrance, i) => {
+            if (i < due) entrance.play();
+            else entrance.reverse();
+          });
         },
       });
-      later.forEach((card, i) => {
-        const at = READ + i * (READ + 1);
-        stack
-          .fromTo(card, away, { ...home, ease: 'none', duration: 1 }, at)
-          .to(card.querySelectorAll('.split-letter'), { y: 0, duration: .3, stagger: { amount: .25 } }, at + .45)
-          .add(pixelReveal(card.querySelector('.testimonial-avatar'), { duration: .4, ease: 'none' }), at + .55);
-      });
-      // the finished stack is held a moment before the page moves on
-      stack.to({}, { duration: READ });
 
       refreshSoon();
 
@@ -164,8 +151,8 @@ function Testimonials() {
           arrive.kill();
           turn.kill();
           first.revert();
-          stack.scrollTrigger?.kill();
-          stack.revert();
+          pin.kill();
+          later.forEach((entrance) => entrance.revert());
         },
       };
     };
@@ -176,15 +163,15 @@ function Testimonials() {
 
   return (
     <>
-      <section id='testimonials' className='theme-light flex flex-col h-screen-safe overflow-hidden
+      <section id='testimonials' className={`${dark ? 'bg-surface' : 'theme-light'} flex flex-col h-screen-safe overflow-hidden
         mobile:px-[1rem] mobile:pt-16 mobile:pb-4
         tablet:px-[1rem] tablet:pt-16 tablet:pb-8
         laptop:px-[2rem] laptop:pt-20 laptop:pb-10
         laptop-lg:px-[3rem] laptop-lg:pt-20 laptop-lg:pb-12
-        desktop:px-[3rem] desktop:pt-20 desktop:pb-12'
+        desktop:px-[3rem] desktop:pt-20 desktop:pb-12`}
         ref={fxSection}>
         <div className='shrink-0'>
-          <Tag label='Team Testimonials' id='animate-testimonials-tag' />
+          <Tag label='What Collaborators Say' id='animate-testimonials-tag' />
         </div>
         {/* (the section's padding is kept short, top and bottom, so that on
           a low screen the cards still clear the label above them) */}
@@ -233,7 +220,7 @@ function Testimonials() {
                     <span className='font-flexible font-medium leading-none text-subtitle'>
                       <SplitText text={name} id={`animate-testimonial-${id}`} />
                     </span>
-                    <span className='flex flex-wrap text-caption leading-tight text-muted'>
+                    <span className='flex flex-wrap text-copy leading-tight text-muted'>
                       <SplitText text={role} id={`animate-testimonial-${id}`} />
                     </span>
                   </span>

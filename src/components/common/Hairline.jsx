@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 // when a reveal starts
-import { REVEAL_AT, CARD_AT, CARD_SHARE } from '../../utils/scrollReveal'
+import { REVEAL_AT, REVERSE_AT, CARD_AT, CARD_SHARE } from '../../utils/scrollReveal'
 // the Hairline engine
 import HL from '../../utils/hairline/kernel'
 gsap.registerPlugin(ScrollTrigger)
@@ -124,7 +124,7 @@ function Hairline({ figure, play = false, reveal = true }) {
       // (in a card, it goes by the card: drawn as the card opens)
       const card = stage.closest('.reveal-card');
       wait = ScrollTrigger.create({ trigger: card || stage, start: card ? CARD_AT : REVEAL_AT, onEnter: draw });
-      back = ScrollTrigger.create({ trigger: card || stage, start: 'top 55%', onEnter: draw, onLeaveBack: undraw });
+      back = ScrollTrigger.create({ trigger: card || stage, start: REVERSE_AT, onLeaveBack: undraw });
       const box = (card || stage).getBoundingClientRect();
       if ((card ? box.top + Math.min(box.height, window.innerHeight) * CARD_SHARE : box.top + window.innerHeight * .15) < window.innerHeight) draw();
     }

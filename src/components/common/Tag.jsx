@@ -3,6 +3,8 @@ import React, { useEffect, useRef } from 'react'
 import { scrollRevealSequence } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from './SplitText'
+// labels read in sentence case
+import sentenceCase from '../../utils/sentenceCase'
 
 /**
  * A section's label: a small tag in brackets over its content - [Label] -
@@ -33,18 +35,18 @@ function Tag({ label, id, as: Element = 'h2' }) {
 
   return (
     <Element className='tag text-caption' id={`tag-${id}`} ref={fxTag}>
-      <Bracket mark='[' id={id} />
-      <SplitText text={label} id={id} />
-      <Bracket mark=']' id={id} />
+      <Bracket mark='[' id={id} space='mr-[.4em]' />
+      <SplitText text={sentenceCase(label)} id={id} />
+      <Bracket mark=']' id={id} space='ml-[.4em]' />
     </Element>
   )
 }
 
 // a bracket around the label: a letter of its own, so it rises and rolls
-// with the rest, but not read out
-function Bracket({ mark, id }) {
+// with the rest, but not read out. `space` keeps it clear of the label
+function Bracket({ mark, id, space }) {
   return (
-    <span className='split-letter-clip' aria-hidden='true'>
+    <span className={`split-letter-clip ${space}`} aria-hidden='true'>
       <span className='split-letter' id={id}>{mark}</span>
     </span>
   );

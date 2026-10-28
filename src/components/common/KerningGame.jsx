@@ -1,5 +1,5 @@
 //
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 // GSAP
 import gsap from 'gsap'
@@ -9,8 +9,8 @@ import Button from './Button'
 import PixelBug from './PixelBug'
 // per-letter text split
 import SplitText from './SplitText'
-// the site's pixel wipe, from the page transitions
-import { usePixelCover } from './PageTransition'
+// the modal opens and shuts in pixels
+import { pixelToggle } from '../../utils/pixels'
 
 // the words to space - the trade's own, ten letters at most so each is
 // one line on a phone. a game is ROUNDS of them, drawn at random, none twice
@@ -36,14 +36,28 @@ const draw = () => [...BANK].sort(() => Math.random() - .5).slice(0, ROUNDS);
 // a letter that stays put: the first and the last, and a space between
 // words
 const isFixed = (word, i) => i === 0 || i === word.length - 1 || word[i] === ' ';
-// how far a letter starts off its place, as a share of the type's size
-const SHIFT = [.06, .16];
-// a word whose letters sit this far off on average, as a share of the
-// type's size, scores nothing
-const ZERO_AT = .12;
-// how long after it opens its text waits: until the pixels over it have
-// mostly cleared (PageTransition.jsx)
-const OPENED = 1.1;
+// how far a letter starts off its place, as a share of the type's size -
+// small: further, and neighbouring letters overlap
+const SHIFT = [.015, .04];
+// the least a word can start off by, as its spacing error (below): a word
+// that happened to start nearly right still has a scale to be scored on
+const MIN_START = .02;
+
+// how far a word's spacing is off. what is judged is spacing - the gaps
+// between neighbouring letters - not where each letter is: a run of
+// letters moved together is spaced as before inside it, and only the two
+// gaps at its ends are wrong. each gap's error is how far it is from the
+// type's own, as a share of the type's size, less `slack` (half a screen
+// pixel, which no one can place a letter closer than); the word's is the
+// average over its gaps. (gaps either side of a space are counted as any
+// other: the space is a fixed letter)
+const spacingError = (word, all, slack = 0) => {
+  const gaps = all.slice(1).map((x, i) => Math.max(0, Math.abs(x - all[i]) - slack));
+  return gaps.reduce((sum, gap) => sum + gap, 0) / (gaps.length || 1);
+};
+// how long after it opens its text waits: until the modal's pixels have
+// mostly switched on (KerningGame, below)
+const OPENED = .5;
 // the site's letter rise - the hero's (Hero.jsx)
 const RISE = { y: 0, stagger: .02, ease: 'power1.in' };
 
@@ -69,6 +83,8 @@ function KerningTest({ onClose }) {
   const [words, setWords] = useState(draw);
   const [index, setIndex] = useState(0);
   const [offsets, setOffsets] = useState(() => scatter(words[0]));
+  // where this word's letters started, for its score's scale
+  const [start, setStart] = useState(offsets);
   const [scores, setScores] = useState([]);
   const [compared, setCompared] = useState(false);
   const drag = useRef(null);
@@ -77,13 +93,17 @@ function KerningTest({ onClose }) {
 
   // the type's size, to turn a drag in px into a share of it
   const size = () => parseFloat(getComputedStyle(fxWord.current).fontSize);
+  // out of 100: 100 with every gap right (to within half a pixel), 0 with
+  // the spacing as far off as it started - or further. so leaving the word
+  // as it came scores nothing, and the score is the share of its error put
+  // right
   const score = (all) => {
-    const inner = all.filter((_, i) => !isFixed(word, i));
-    const off = inner.reduce((sum, x) => sum + Math.abs(x), 0) / inner.length;
-    return Math.round(100 * Math.max(0, 1 - off / ZERO_AT));
+    const slack = .5 / size();
+    const from = Math.max(MIN_START, spacingError(word, start, slack));
+    return Math.round(100 * Math.max(0, 1 - spacingError(word, all, slack) / from));
   };
 
-  const move = (i, x) => setOffsets((all) => all.map((offset, j) => (j === i ? Math.max(-.3, Math.min(.3, x)) : offset)));
+  const move = (i, x) => setOffsets((all) => all.map((offset, j) => (j === i ? Math.max(-.15, Math.min(.15, x)) : offset)));
   const onPointerDown = (i) => (event) => {
     if (compared) return;
     event.currentTarget.setPointerCapture(event.pointerId);
@@ -103,21 +123,27 @@ function KerningTest({ onClose }) {
     move(i, offsets[i] + (step * (event.shiftKey ? 10 : 1)) / size());
   };
 
+  // (once a word: Compare is only offered before it is compared)
   const compare = () => {
+    if (compared) return;
     setScores((all) => [...all, score(offsets)]);
     setCompared(true);
   };
   const next = () => {
     const to = index + 1;
+    const scattered = scatter(words[to]);
     setIndex(to);
-    setOffsets(scatter(words[to]));
+    setOffsets(scattered);
+    setStart(scattered);
     setCompared(false);
   };
   const again = () => {
     const fresh = draw();
+    const scattered = scatter(fresh[0]);
     setWords(fresh);
     setIndex(0);
-    setOffsets(scatter(fresh[0]));
+    setOffsets(scattered);
+    setStart(scattered);
     setScores([]);
     setCompared(false);
   };
@@ -169,7 +195,7 @@ function KerningTest({ onClose }) {
 
       {/* the word - or, at the end, the average */}
       <div className='flex flex-col items-center gap-y-8'>
-        <div className='kerning-word relative flex font-flexible font-bold leading-none text-[16vw] tablet:text-[13vw] laptop:text-[10vw] laptop-lg:text-[10vw] desktop:text-[9vw]'
+        <div className='kerning-word relative flex font-flexible font-bold leading-none text-[15vw] tablet:text-[12vw] laptop:text-[9vw] laptop-lg:text-[8vw] desktop:text-[7vw]'
           ref={fxWord}>
           {finished ? (
             <span className='kerning-letter-clip'><span className='kerning-letter inline-block'>{average}</span></span>
@@ -229,21 +255,35 @@ function KerningTest({ onClose }) {
 
 /**
  * The landing hero's game: a button in its lower right, with a pixel bug
- * on it, that opens the kerning test over the whole screen - in the
- * site's own pixel wipe, as a change of page is (usePixelCover): the
- * pixels spread from the button, the test opens under them, and they
- * clear off it; closing runs the same back to the hero. While it is open
- * the page stops scrolling under it; Escape or Close shuts it.
+ * on it, that opens the kerning test in a modal - a dark box over the
+ * page, which dims behind it. The box opens in square pixels from its
+ * bottom edge up and shuts the same way. While it is open the page stops
+ * scrolling under it; Escape, Close or a click outside the box shuts it.
  */
 function KerningGame() {
   const [open, setOpen] = useState(false);
-  const cover = usePixelCover();
-  const fxOpener = useRef();
+  const fxBackdrop = useRef();
+  const fxModal = useRef();
+  const toggle = useRef(null);
 
-  // (the pixels spread from what was pressed: the button to open, and to
-  // close, the button it is back on)
-  const show = (event) => cover(() => setOpen(true), event.currentTarget);
-  const close = useCallback(() => cover(() => setOpen(false), fxOpener.current), [cover]);
+  const show = () => setOpen(true);
+  const close = useCallback(() => {
+    if (!toggle.current) return;
+    gsap.to(fxBackdrop.current, { autoAlpha: 0, duration: .4, ease: 'power2.in' });
+    toggle.current.hide(.4).eventCallback('onComplete', () => setOpen(false));
+  }, []);
+
+  // as it opens: the page behind dims and the box switches on in pixels
+  useLayoutEffect(() => {
+    if (!open) return undefined;
+    toggle.current = pixelToggle(fxModal.current);
+    gsap.fromTo(fxBackdrop.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: .4, ease: 'power2.out' });
+    toggle.current.show(.6);
+    return () => {
+      toggle.current?.kill();
+      toggle.current = null;
+    };
+  }, [open]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -259,20 +299,20 @@ function KerningGame() {
 
   return (
     <>
-      <span className='inline-flex' ref={fxOpener}>
+      <span className='inline-flex'>
         <Button label='Test your eye' onClick={show} icon={PixelBug} outline />
       </span>
       {open && createPortal(
-        // the phone menu's ground and margins; its top bar sits where the
-        // nav bar's does
-        <div className='kerning-panel bg-black fixed inset-0 z-[40]
-          mobile:px-[1rem] mobile:pt-6 mobile:pb-8
-          tablet:px-[1rem] tablet:pt-6 tablet:pb-8
-          laptop:px-[2rem] laptop:pt-6 laptop:pb-10
-          laptop-lg:px-[3rem] laptop-lg:pt-8 laptop-lg:pb-12
-          desktop:px-[3rem] desktop:pt-8 desktop:pb-12'
-          role='dialog' aria-modal='true' aria-label='Kerning test'>
-          <KerningTest onClose={close} />
+        // the page dimmed behind, and the box centred on it
+        <div className='kerning-backdrop fixed inset-0 z-[40] flex items-center justify-center
+          mobile:p-[1rem] tablet:p-[1rem] laptop:p-[2rem] laptop-lg:p-[3rem] desktop:p-[3rem]'
+          ref={fxBackdrop} onClick={(event) => { if (event.target === event.currentTarget) close(); }}>
+          <div className='kerning-panel bg-black w-full max-w-[72rem]
+            mobile:h-[80svh] tablet:h-[70svh] laptop:h-[min(80svh,44rem)] laptop-lg:h-[min(80svh,44rem)] desktop:h-[min(80svh,48rem)]
+            mobile:p-4 tablet:p-6 laptop:p-6 laptop-lg:p-8 desktop:p-8'
+            ref={fxModal} role='dialog' aria-modal='true' aria-label='Kerning test'>
+            <KerningTest onClose={close} />
+          </div>
         </div>,
         document.body,
       )}

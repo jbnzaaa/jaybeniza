@@ -180,7 +180,7 @@ function Navbar() {
             </div>
             {/* on a phone: the word alone, no box, blended like the rest
               of the bar */}
-            <button type='button' className={`nav-menu-text font-monolisa text-caption leading-none uppercase py-2 ${PHONE_ONLY}`}
+            <button type='button' className={`nav-menu-text font-monolisa text-caption leading-none py-2 ${PHONE_ONLY}`}
               aria-expanded={menuOpen} aria-controls='nav-menu'
               onClick={() => setMenuOpen((open) => !open)}>
               {menuOpen ? 'Close' : 'Menu'}

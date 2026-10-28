@@ -12,29 +12,32 @@ module.exports = {
       // quiet text against large headings. the hero and closing headlines
       // sit above this scale, sized to the screen's width where they are set
       fontSize: {
-        caption: 'clamp(.8125rem, .7rem + .15vw, .875rem)',
-        body: 'clamp(.9375rem, .8rem + .25vw, 1.125rem)',
+        caption: 'clamp(.75rem, .68rem + .12vw, .8125rem)',
+        body: '18px',
+        // a section's own text - descriptions, lists, the invitation to get
+        // in touch. body and copy are both a fixed 18px, at every width
+        copy: '18px',
         subtitle: 'clamp(1.125rem, .9rem + .6vw, 1.75rem)',
-        heading: 'clamp(2.25rem, 1.5rem + 1.6vw, 3.5rem)',
-        title: 'clamp(2.75rem, 1.4rem + 2.4vw, 4.5rem)',
+        heading: 'clamp(1.875rem, 1.25rem + 1.35vw, 2.875rem)',
+        title: 'clamp(2.25rem, 1.15rem + 2vw, 3.75rem)',
         // the display sizes - headlines set against the screen's width.
         // each is one line from a phone to a wide screen, so it grows
         // evenly as the window does, with no step at a breakpoint
-        logo: 'clamp(1.4rem, 1.25rem + .6vw, 1.8rem)',
-        // the hero spans three quarters of the page's width: its longest
-        // line is 5.3em wide in League Gothic (with the gap after each
-        // word), so it is .75 x (100vw - 6rem of side padding) / 5.35
-        hero: 'calc(14vw - .84rem)',
+        logo: 'clamp(1.1rem, 1rem + .4vw, 1.4rem)',
+        // the hero headline, sized to the screen's width - never under 2.5rem,
+        // so on a phone it is still the page's largest line
+        hero: 'max(2.5rem, calc(7.5vw - .4rem))',
         // (the work list is set below the hero: the hero is the louder line)
-        project: 'calc(1.5rem + 7vw)',
-        case: 'calc(2.3rem + 9.43vw)',
-        next: 'calc(2.625rem + 6.1vw)',
-        closing: 'calc(3rem + 11.6vw)',
+        project: 'calc(1.25rem + 5.6vw)',
+        case: 'calc(1.9rem + 7.8vw)',
+        next: 'calc(2.2rem + 5vw)',
+        closing: 'calc(2rem + 6.5vw)',
       },
       fontFamily: {
-        // headlines - League Gothic (the class keeps its old name)
-        flexible: ["League Gothic", "sans-serif"],
-        monolisa: ["MonoLisa", "ui-monospace", "monospace"],
+        // headlines - Ayr Garon; text - Gilgan (the classes keep their
+        // old names)
+        flexible: ["Ayr Garon", "serif"],
+        monolisa: ["Gilgan", "sans-serif"],
       },
       colors: {
         // the palette, on the 60/30/10 rule.

@@ -6,6 +6,8 @@ import { scrollRevealSequence } from '../../utils/scrollReveal'
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// lists read in sentence case
+import sentenceCase from '../../utils/sentenceCase'
 
 // everything I work with, grouped by the kind of work - design first
 const GROUPS = [
@@ -66,7 +68,7 @@ function Skills() {
                   laptop-lg:py-6
                   desktop:py-8'>
                   <p className='entry-line font-medium shrink-0'>
-                    <SplitText text={group.title} id={`animate-skill-${group.id}`} />
+                    <SplitText text={sentenceCase(group.title)} id={`animate-skill-${group.id}`} />
                   </p>
                   {/* (kept to part of the row's width, so a long list
                     stays clear of its category) */}
@@ -76,7 +78,7 @@ function Skills() {
                     laptop:justify-end laptop:text-right
                     laptop-lg:justify-end laptop-lg:text-right
                     desktop:justify-end desktop:text-right'>
-                    <SplitText text={group.items.join(', ')} id={`animate-skill-${group.id}`} by='word' />
+                    <SplitText text={group.items.map(sentenceCase).join(', ')} id={`animate-skill-${group.id}`} by='word' />
                   </p>
                 </div>
                 <div id={`cert-line-skill-${group.id}`}/>

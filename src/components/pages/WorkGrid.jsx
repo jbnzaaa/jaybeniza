@@ -6,7 +6,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 // page-to-page wipe
 import { TransitionLink } from '../common/PageTransition'
 // scroll reveal
-import { REVEAL_AT, inTurn } from '../../utils/scrollReveal'
+import { REVEAL_AT, inTurn, revealTrigger } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
 gsap.registerPlugin(ScrollTrigger)
@@ -59,7 +59,7 @@ function WorkGrid({ items }) {
         .to(item.querySelector('.work-cover'), { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.out', duration: 1 }, 0)
         .to(item.querySelector('.work-cover-image'), { ...settle, duration: 1.2 }, 0);
       const turn = inTurn(wipe, item);
-      const trigger = ScrollTrigger.create({ trigger: item, start: REVEAL_AT, onEnter: () => turn.play(), onLeaveBack: () => turn.reverse() });
+      const trigger = revealTrigger(item, REVEAL_AT, turn);
       return { wipe, turn, trigger };
     });
 
@@ -70,7 +70,7 @@ function WorkGrid({ items }) {
     const texts = gsap.utils.toArray('.work-item-info', section).map((info) => {
       const rise = gsap.to(info.querySelectorAll('.split-letter'), { y: 0, duration: .7, stagger: { amount: .35 }, ease: 'power2.out', paused: true });
       const turn = inTurn(rise, info);
-      const trigger = ScrollTrigger.create({ trigger: info, start: 'top 92%', onEnter: () => turn.play(), onLeaveBack: () => turn.reverse() });
+      const trigger = revealTrigger(info, 'top 92%', turn);
       return { rise, turn, trigger };
     });
 

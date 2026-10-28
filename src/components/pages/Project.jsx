@@ -7,7 +7,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 // page-to-page wipe
 import { TransitionLink } from '../common/PageTransition'
 // scroll reveal
-import { scrollReveal, REVEAL_AT, inTurn } from '../../utils/scrollReveal'
+import { scrollReveal, REVEAL_AT, inTurn, revealTrigger } from '../../utils/scrollReveal'
 // the site's button and section label
 import Button from '../common/Button'
 import Tag from '../common/Tag'
@@ -16,7 +16,7 @@ import SplitText from '../common/SplitText'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const DESCRIPTION = 'Projects that show how I navigate the design to development process.';
+const DESCRIPTION = 'Products I’ve taken from problem to shipped interface: research, design, and front-end build.';
 
 /**
  * Selected projects, on the dark surface: a list of project names set very
@@ -43,6 +43,7 @@ function Project() {
     // the preview is placed across the row by its centre (left, App.css)
     gsap.set(fxPreview.current, { xPercent: -50 });
 
+
     // below laptop width, each row's cover as it comes up the screen: its
     // frame wipes open from its bottom edge while the picture inside,
     // which starts slightly large and low, eases down to size - the work
@@ -54,7 +55,7 @@ function Project() {
         .to(cover, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.out', duration: 1 }, 0)
         .to(cover.firstElementChild, { yPercent: 0, scale: 1, ease: 'power2.out', duration: 1.2 }, 0);
       const turn = inTurn(open, cover);
-      const trigger = ScrollTrigger.create({ trigger: cover, start: REVEAL_AT, onEnter: () => turn.play(), onLeaveBack: () => turn.reverse() });
+      const trigger = revealTrigger(cover, REVEAL_AT, turn);
       return { open, turn, trigger };
     });
 
@@ -72,7 +73,8 @@ function Project() {
 
   // the preview moves level with the row under the pointer and wipes open
   // from its bottom edge, the way the cards do - the recognition list's
-  // reveal. it keeps one place across the row; leaving the list closes it
+  // reveal. it keeps one place across the row, and one size; leaving the
+  // list closes it
   const show = (project) => (e) => {
     const preview = fxPreview.current;
     const row = e.currentTarget;
@@ -103,7 +105,7 @@ function Project() {
           ref={fxList}>
           <ul className='project-list' onMouseLeave={hide} data-no-hover-roll>
             {PROJECT_CARDS.map((project) => (
-              <li className='m-0 mobile:mb-10 tablet:mb-12' id={`project-row-${project.id}`} key={project.id} onMouseEnter={show(project)}>
+              <li className='m-0 mobile:mb-10 tablet:mb-12 laptop:py-3 laptop-lg:py-4 desktop:py-5' id={`project-row-${project.id}`} key={project.id} onMouseEnter={show(project)}>
                 <TransitionLink to={project.to} className='project-row block mobile:flex mobile:flex-col tablet:flex tablet:flex-col' aria-label={`${project.title}, ${project.meta}`}>
                   {/* name left, year and role right. on a phone the label
                     goes under the name, which then has the row to itself
@@ -114,11 +116,11 @@ function Project() {
                     laptop:items-end
                     laptop-lg:items-end
                     desktop:items-end'>
-                    <span className='project-name font-flexible font-medium leading-[.92] tracking-tight whitespace-nowrap
+                    <span className='project-name font-flexible font-medium leading-[.95] tracking-tight whitespace-nowrap
                       text-project mobile:text-title tablet:text-title'>
                       <SplitText text={project.title} id={`animate-project-${project.id}`} />
                     </span>
-                    <span className='project-label flex flex-wrap text-caption text-muted
+                    <span className='project-label flex flex-wrap text-copy text-muted
                       mobile:justify-start mobile:text-left
                       tablet:justify-end tablet:text-right
                       laptop:justify-end laptop:text-right
@@ -129,7 +131,18 @@ function Project() {
                       laptop:pb-4
                       laptop-lg:pb-5
                       desktop:pb-6'>
-                      <SplitText text={project.meta} id={`animate-project-${project.id}`} />
+                      {/* the parts of the label, a small pixel box between
+                        each (.meta-pixel, App.css) */}
+                      {project.meta.split(' / ').map((part, i) => (
+                        <React.Fragment key={part}>
+                          {i > 0 && (
+                            <span className='split-letter-clip meta-pixel-clip' aria-hidden='true'>
+                              <span className='split-letter meta-pixel' id={`animate-project-${project.id}`}/>
+                            </span>
+                          )}
+                          <SplitText text={part} id={`animate-project-${project.id}`} />
+                        </React.Fragment>
+                      ))}
                     </span>
                   </span>
                   {/* below laptop width: the cover, first in the card, in
@@ -175,7 +188,7 @@ function Project() {
           laptop:mt-12
           laptop-lg:mt-12
           desktop:mt-16'>
-          <p className='flex flex-wrap text-caption
+          <p className='flex flex-wrap text-copy
             mobile:w-[78%]
             tablet:w-[52%]
             laptop:w-[34%]

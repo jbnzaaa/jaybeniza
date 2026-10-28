@@ -16,6 +16,20 @@
   font-weight: 100 900;
   font-display: swap;
 }
+/* headlines (font-flexible) - Ayr Garon, one bold weight */
+@font-face {
+  font-family: "Ayr Garon";
+  src: url("../fonts/AyrGaron-Bold.otf") format("opentype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+/* text content - Gilgan, one regular weight */
+@font-face {
+  font-family: "Gilgan";
+  src: url("../fonts/Gilgan-Regular.otf") format("opentype");
+  font-weight: 100 900;
+  font-display: swap;
+}
 @media (min-width: 1536px) {
   html {
     font-size: 1.0416666667vw;
@@ -78,8 +92,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "MonoLisa", ui-monospace, monospace;
+  font-family: "Gilgan", sans-serif;
   color: var(--text);
+  text-transform: none;
+}
+
+/* headlines keep their capitals: every letter span inside them too, as
+   the rule above sets lower case on each element, not by inheritance */
+* body .font-flexible,
+* body .font-flexible * {
+  font-family: "Ayr Garon", serif;
   text-transform: uppercase;
 }
 
@@ -122,9 +144,10 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  --fill: var(--button-bg, var(--text));
   display: inline-flex;
   align-items: center;
-  padding: 0.375rem 0.75rem;
+  padding: 0.25rem 0.25rem 0.25rem 0.5rem;
   line-height: 1;
   border: 1px solid var(--button-bg, var(--text));
   background: var(--button-bg, var(--text));
@@ -149,7 +172,36 @@
 }
 
 * body .cta-button:hover {
+  --fill: var(--sweep);
   color: var(--sweep-text);
+}
+
+/* the arrow sits in a small box of its own at the button's end: the box
+   in the label's colour, the arrow in the button's fill - both swap with
+   the hover fill. the box clips the arrow as it rises in */
+* body .cta-button .button-icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.375rem;
+  height: 1.375rem;
+  overflow: hidden;
+  margin-left: 0.5em;
+  background: currentColor;
+  transition: background-color 0.35s ease-in-out;
+}
+
+* body .cta-button .button-icon-box .menu-icon-clip {
+  padding: 0;
+  margin: 0;
+}
+
+* body .cta-button .button-icon-box svg,
+* body .cta-button .button-icon-box .button-glyph rect {
+  color: var(--fill);
+  fill: var(--fill);
+  transition: color 0.35s ease-in-out, fill 0.35s ease-in-out;
 }
 
 * body .cta-button * {
@@ -163,21 +215,24 @@
 * body .cta-button.cta-button-outline {
   --sweep: var(--text);
   --sweep-text: var(--ground);
+  --fill: var(--ground);
   border-color: var(--text);
   background: transparent;
   color: var(--text);
 }
 
 * body .cta-button.cta-button-outline:hover {
+  --fill: var(--sweep);
   color: var(--sweep-text);
 }
 
-/* the label's clip box, centred on its capitals: in MonoLisa they run
-   from .105em to .805em of the line, so the usual 1.15em box
-   (.split-letter-clip) sat them above the arrow beside them. .91em puts
-   their middle in the box's middle, still holding every letter */
+/* the label's clip box, centred on Gilgan's letters (capitals from
+   .175em of the line, lower case from .375em, to the baseline at .875em)
+   so they sit level with the arrow's box beside them; still holding the
+   descenders */
 * body .cta-button .split-letter-clip {
-  height: 0.91em;
+  height: 1.15em;
+  line-height: 1;
 }
 
 /* a Button's own icon (a react-icons one, or the pixel bug) is drawn in
@@ -216,6 +271,28 @@
 /* the kerning test (KerningGame.jsx). the word's letters rise in through
    a box that clips only above and below, so a letter dragged sideways is
    never cut; the faint letters behind show where they belong */
+/* every letter in the word's own face (League Gothic, .font-flexible):
+   the site sets its mono face on every element (*), and a letter left to
+   it was spaced by a monospaced font - nothing to kern */
+/* the test's modal: the page dimmed behind it, and the box shut until it
+   switches on in pixels (KerningGame.jsx) */
+* body .kerning-backdrop {
+  background: rgb(27 26 26 / .75);
+}
+
+* body .kerning-panel {
+  clip-path: inset(100% 0% 0% 0%);
+}
+
+* body .kerning-word,
+* body .kerning-word * {
+  font-family: inherit;
+}
+
+* body .kerning-word {
+  font-family: "Ayr Garon", serif;
+}
+
 * body .kerning-letter-clip {
   display: inline-block;
   clip-path: inset(0 -50% 0 -50%);
@@ -244,7 +321,11 @@
 }
 
 * body .cta-button-icon {
-  padding: 0.375rem;
+  padding: 0.25rem;
+}
+
+* body .cta-button-icon .button-icon-box {
+  margin-left: 0;
 }
 
 * body .tag {
@@ -273,12 +354,14 @@
     opacity: 1;
   }
 }
+/* every project's preview the one size, centred across the row at
+   `left` (Project.jsx) */
 * body .project-preview {
   display: none;
   position: absolute;
   top: 0;
-  left: 58%;
-  width: 28vw;
+  left: 64%;
+  width: 20vw;
   aspect-ratio: 16/10;
   pointer-events: none;
   clip-path: inset(100% 0% 0% 0%);
@@ -288,6 +371,22 @@
   * body .project-preview {
     display: block;
   }
+}
+
+/* the separator between a featured project's label parts: an extra small
+   pixel box in place of a slash, centred on the letters beside it */
+* body .meta-pixel-clip {
+  margin: 0 0.6em;
+}
+
+/* raised off the baseline to the middle of the capitals and figures
+   (Gilgan's are .7em tall): .35em, less half the box */
+* body .meta-pixel {
+  display: inline-block;
+  width: 0.25em;
+  height: 0.25em;
+  vertical-align: 0.225em;
+  background: currentColor;
 }
 * body .project-empty {
   flex-direction: column;
@@ -329,7 +428,15 @@
     --card-w: 48%;
   }
 }
+/* the stack fills the room under the label, and every card is its full
+   height */
+* body .testimonial-stack {
+  align-self: stretch;
+  grid-template-rows: minmax(0, 1fr);
+}
+
 * body .testimonial-card {
+  height: 100%;
   width: var(--card-w);
   margin-left: calc(var(--i) * (100% - var(--card-w)) / var(--last));
   border-left: 1px solid var(--paper);
@@ -337,10 +444,6 @@
 }
 
 @media (max-width: 1023px) {
-  * body .testimonial-stack {
-    align-self: stretch;
-    grid-template-rows: minmax(0, 1fr);
-  }
   * body .testimonial-card {
     height: calc(100% - var(--last) * 1rem);
     width: 100%;
@@ -352,17 +455,17 @@
 }
 @media (min-width: 1024px) {
   * body .testimonial-quote {
-    font-size: min(clamp(1.125rem, 0.9rem + 0.6vw, 1.75rem), 2.9vh);
+    font-size: min(clamp(1.25rem, 1rem + 0.6vw, 1.875rem), 3.2vh);
   }
 }
 @media (min-width: 768px) and (max-width: 1023px) {
   * body .testimonial-quote {
-    font-size: min(clamp(1.5rem, 1rem + 2vw, 2.25rem), 3.4vh);
+    font-size: min(clamp(1.375rem, 1.1rem + 1.4vw, 2rem), 3.4vh);
   }
 }
 @media (max-width: 767px) {
   * body .testimonial-quote {
-    font-size: min(clamp(0.9375rem, 0.8rem + 0.25vw, 1.125rem), 2.1vh);
+    font-size: min(clamp(1rem, 0.9rem + 0.4vw, 1.25rem), 2.4vh);
   }
 }
 * body .testimonial-who {
@@ -420,10 +523,16 @@
   padding-right: 0;
 }
 
+/* the top bar's text, blended by difference: the logo, the open page's
+   link and a hovered one are pure white, which inverts exactly - black
+   over the light sections, white over the dark. the other links are a
+   solid mid grey, which comes out a mid grey over both, so the open page
+   stands out wherever the bar is. (a see-through tone came out a muddy
+   grey that changed with the section) */
 * body .nav-blend {
   --ground: #1B1A1A;
-  --muted: rgb(229 228 227 / .6);
-  --text: #E5E4E3;
+  --muted: #8F8F8F;
+  --text: #FFFFFF;
   --button-bg: #E5E4E3;
   --button-text: #000;
 }
@@ -518,7 +627,7 @@
   height: 200%;
   z-index: 50;
   pointer-events: none;
-  opacity: 0.22;
+  opacity: 0.38;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 15rem 15rem;
 }
@@ -586,12 +695,17 @@
   color: inherit;
 }
 
+/* a word's clip box sets its own line, whatever the line height around
+   it: Gilgan's letters run from the line's top to 1.25em (ascent 1em,
+   descent .25em), so at a 1.3em line they sit .025em down and end at
+   1.275em - nothing of them, descenders included, is cut */
 * body .split-letter-clip {
   display: inline-block;
   font-family: inherit;
   color: inherit;
   overflow: hidden;
-  height: 1.15em;
+  height: 1.3em;
+  line-height: 1.3em;
   vertical-align: top;
 }
 
@@ -606,13 +720,16 @@
   transform: translateY(1.35em);
 }
 
-/* a headline's line is as tall as its words' clip box, so the box is cut
-   to just past the capitals (.75em) - at the 1.15em above, a third of every
-   line was empty. its line height matches so the capitals sit in it with
-   a little air above and below */
-* body .font-flexible .split-letter-clip {
-  height: 0.9em;
-  line-height: 0.9em;
+/* a headline's words sit in clip boxes tall enough for every letter -
+   Ayr Garon's capitals from .118em to the baseline at .868em of a 1em
+   line, and its commas and descenders to 1.106em - but the lines are set
+   .95em apart, leaving .2em between one line's baseline and the next
+   line's capitals: the box's foot overlaps the next line by its negative
+   margin, so nothing is cut. (not the logo, which has a line of its own) */
+* body .font-flexible:not(.logo) .split-letter-clip {
+  height: 1.12em;
+  line-height: 1em;
+  margin-bottom: -0.17em;
 }
 
 * body .menu-icon-clip {
@@ -644,7 +761,6 @@
 }
 
 * body .font-flexible {
-  font-variation-settings: "wdth" 75;
   letter-spacing: 0;
 }
 
@@ -686,6 +802,8 @@
    outer edges: a little room each side, given back in the margin so the
    logo keeps its place */
 * body .logo .split-letter-clip {
+  height: 1.15em;
+  line-height: 1;
   padding: 0 0.08em;
   margin-left: -0.08em;
   margin-right: -0.08em;
@@ -1005,16 +1123,23 @@
 }
 
 * body .about-paragraph {
-  font-size: min(clamp(1.125rem, 0.6rem + 2vw, 3rem), 4.6vh);
+  font-size: min(clamp(1.25rem, 0.7rem + 1.7vw, 2.5rem), 4.4vh);
+}
+
+/* the landing page's about statement (.about-statement) rises in the
+   muted text colour, then its words darken one by one as the page
+   scrolls (About.jsx). the About page's paragraphs keep the full colour */
+* body .about-statement .split-letter {
+  color: var(--muted);
 }
 
 @media (max-width: 767px) {
   * body .about-paragraph {
-    font-size: clamp(1.25rem, 0.6rem + 2vw, 3rem);
+    font-size: clamp(1.125rem, 0.95rem + 1vw, 1.5rem);
   }
 }
 * body .cta-button-small {
-  padding: 0.375rem 0.75rem;
+  padding: 0.25rem 0.25rem 0.25rem 0.5rem;
 }
 
 * body .cta-button .button-arrow {
@@ -1044,8 +1169,11 @@
 }
 
 @media (max-width: 767px) {
-  * body .cta-button-small .menu-icon-clip {
+  * body .cta-button-small .button-icon-box {
     display: none;
+  }
+  * body .cta-button-small {
+    padding: 0.25rem 0.5rem;
   }
 }
 * body .work-card .screenshot-img {
@@ -1425,3 +1553,10 @@ html.has-cursor * {
   cursor: none;
 }
 
+/* a first screen's scroll cue (ScrollCue.jsx): its label alone, as text */
+* body .scroll-cue {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}

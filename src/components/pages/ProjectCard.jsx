@@ -1,5 +1,6 @@
 // the landing page's selected projects (Project.jsx): one project per kind
-// of work, in this order. `title` is the project's name; `category` is the
+// of work, in this order - the team products first, then the personal
+// ones. `title` is the project's name; `category` is the
 // kind of work and `meta` the year and my part in it, shown beside the
 // title. `image` is a background class (see backgroundImage in
 // tailwind.config.js) for the preview; a project with no such class gives
@@ -13,24 +14,6 @@ import gurover_cover from '../../assets/files/images/gurover/mockup-cover-card.w
 import pci_cover from '../../assets/files/images/pci/mockup-cover-card.webp'
 
 export const PROJECT_CARDS = [
-  {
-    id: 'tingi',
-    title: 'BiteWise',
-    to: '/bitewise',
-    image: null,
-    picture: bitewise_cover,
-    category: 'UX Case Study / Personal Concept',
-    meta: '2026 / UX Case Study / UI/UX Designer',
-  },
-  {
-    id: 'portfoliov3',
-    title: 'Portfolio 2026',
-    to: '/portfolio-2026',
-    image: null,
-    picture: p26_cover,
-    category: 'Portfolio Website / Personal Project',
-    meta: '2026 / Portfolio Website / UI/UX Designer',
-  },
   {
     id: 'gurover',
     title: 'GuRover',
@@ -48,5 +31,23 @@ export const PROJECT_CARDS = [
     picture: pci_cover,
     category: 'Design System / Team Project',
     meta: '2024 / Design System / UI/UX Designer',
+  },
+  {
+    id: 'tingi',
+    title: 'BiteWise',
+    to: '/bitewise',
+    image: null,
+    picture: bitewise_cover,
+    category: 'UX Case Study / Personal Concept',
+    meta: '2026 / UX Case Study / UI/UX Designer',
+  },
+  {
+    id: 'portfoliov3',
+    title: 'Portfolio',
+    to: '/portfolio-2026',
+    image: null,
+    picture: p26_cover,
+    category: 'Portfolio Website / Personal Project',
+    meta: '2026 / Portfolio Website / UI/UX Designer',
   },
 ];

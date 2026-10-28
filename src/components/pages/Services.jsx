@@ -115,7 +115,7 @@ function ServiceCard({ id, title, text, includes, detailed }) {
             <SplitText text={title} id={`animate-service-${id}`} />
           </h3>
           <div className='flex flex-col gap-y-4'>
-            <p className='flex flex-wrap text-caption'>
+            <p className='flex flex-wrap text-copy'>
               <SplitText text={text} id={`animate-service-${id}`} by='word' />
             </p>
             {detailed && (
@@ -125,7 +125,7 @@ function ServiceCard({ id, title, text, includes, detailed }) {
               <ul className='flex flex-col mt-4'>
                 {includes.map(({ label }, i) => (
                   <li className={`service-item border-t border-white/20 m-0 ${i === shown ? 'service-item-on' : ''}`} key={label}>
-                    <button className='flex flex-wrap w-full py-3 text-left text-caption' type='button' aria-pressed={i === shown} data-cursor-free
+                    <button className='flex flex-wrap w-full py-3 text-left text-copy' type='button' aria-pressed={i === shown} data-cursor-free
                       onMouseEnter={() => show(i)} onFocus={() => show(i)} onClick={() => show(i)}
                       onMouseLeave={() => setPlaying(false)} onBlur={() => setPlaying(false)}>
                       {/* by the letter, so the label rolls on hover like every

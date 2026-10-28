@@ -176,29 +176,40 @@ export const PROJECTS = {
   // this site
   portfoliov3: {
     path: '/portfolio-2026',
-    title: 'Portfolio 2026',
+    title: 'Portfolio',
     short: 'Personal portfolio, designed and developed end to end',
     year: '2026',
-    description: 'Portfolio 2026 is my latest portfolio, and a record of how far I have come in user interface design and web development. I rebuilt it to showcase what I am capable of now, with carefully laid-out pages, scroll-driven animations, and an interface I designed and built end to end.',
+    description: 'This is my latest portfolio, and a record of how far I have come in user interface design and web development. I rebuilt it to showcase what I am capable of now, with carefully laid-out pages, scroll-driven animations, and an interface I designed and built end to end.',
     category: 'Portfolio Website / Personal Project',
     roles: ['UI/UX Designer', 'Front-End Developer'],
     technologies: ['React', 'Tailwind CSS', 'SASS', 'GSAP (ScrollTrigger, ScrollSmoother)', 'Hairline', 'Figma', 'Claude Code'],
     cover: p26_mockup_cover,
     screenshots: [
-      { src: p26_mockup_cover, alt: 'Portfolio 2026 mock-up', start: 'full' },
-      { src: p26_home_hero, alt: 'Portfolio 2026 landing page', start: 'full' },
-      { src: p26_featured_work, alt: 'Portfolio 2026 featured work section', start: 2 },
-      { src: p26_about_the_designer, alt: 'Portfolio 2026 about the designer section', start: 4 },
-      { src: p26_areas_of_expertise, alt: 'Portfolio 2026 areas of expertise section', start: 1 },
-      { src: p26_testimonials, alt: 'Portfolio 2026 team testimonials section', start: 3 },
-      { src: p26_about_page, alt: 'Portfolio 2026 about page', start: 2 },
-      { src: p26_work_hero, alt: 'Portfolio 2026 work page', start: 4 },
-      { src: p26_work_list, alt: 'Portfolio 2026 work page project list', start: 1 },
-      { src: p26_project_hero, alt: 'Portfolio 2026 project page', start: 3 },
-      { src: p26_project_role, alt: 'Portfolio 2026 project page role and contributions', start: 2 },
-      { src: p26_project_screens, alt: 'Portfolio 2026 project page platform screens', start: 4 },
-      { src: p26_contact_page, alt: 'Portfolio 2026 contact page', start: 1 },
+      { src: p26_mockup_cover, alt: 'Portfolio mock-up', start: 'full' },
+      { src: p26_home_hero, alt: 'Portfolio landing page', start: 'full' },
+      { src: p26_featured_work, alt: 'Portfolio featured work section', start: 2 },
+      { src: p26_about_the_designer, alt: 'Portfolio about the designer section', start: 4 },
+      { src: p26_areas_of_expertise, alt: 'Portfolio areas of expertise section', start: 1 },
+      { src: p26_testimonials, alt: 'Portfolio team testimonials section', start: 3 },
+      { src: p26_about_page, alt: 'Portfolio about page', start: 2 },
+      { src: p26_work_hero, alt: 'Portfolio work page', start: 4 },
+      { src: p26_work_list, alt: 'Portfolio work page project list', start: 1 },
+      { src: p26_project_hero, alt: 'Portfolio project page', start: 3 },
+      { src: p26_project_role, alt: 'Portfolio project page role and contributions', start: 2 },
+      { src: p26_project_screens, alt: 'Portfolio project page platform screens', start: 4 },
+      { src: p26_contact_page, alt: 'Portfolio contact page', start: 1 },
     ],
+    platform: {
+      overview: "This is the site you are on: my portfolio, designed and built end to end, to show my projects and how I work to future clients and collaborators.",
+      challenge: "Show the work, and make it easy to start a project. My earlier portfolios, from 2022, no longer reflected the work I do now. I needed a site that shows both halves of what I offer, design and front-end development, lets the projects speak first, and gives a visitor a clear way to start a project.",
+      approach: [
+        { title: "One restrained system", text: "Black, white, and the greys between, Ayr Garon for headlines and Gilgan for everything else, so the projects carry the color." },
+        { title: "Motion with a purpose", text: "Text rises into place and images open in square pixels as they scroll into view, a nod to the pixel as the material a designer adjusts." },
+        { title: "Designed and built by me", text: "Designed in Figma and built in React with Tailwind CSS and GSAP, using AI-assisted development in Claude Code." },
+        { title: "A clear way in", text: "Every page closes on a next step: another project to read, or a project request form that asks what a client needs up front." },
+      ],
+      role: "I designed and built this portfolio end to end, as its UI/UX designer and front-end developer.",
+    },
   },
   // case studies. one that is written up has `caseStudy`: its sections,
   // in order (their shape: ProjectPage.jsx). one still being written has
@@ -415,6 +426,13 @@ export const PROJECTS = {
       ],
       featuresIntro: 'Everything a teacher records, entered once and reused across the platform.',
       overview: "Teachers in the Philippines spend hours on records such as attendance, the DepEd class record, lesson plans, and the SF2 and SF9 forms. GuRover brings them into one workspace that works without a connection, where each record is entered once and reused everywhere, and AI drafts the first version for teachers to refine.",
+      challenge: "Teachers were doing the same paperwork twice. Public school and college teachers in the Philippines keep attendance, the DepEd class record, lesson plans, and the SF2 and SF9 forms, and much of the same information is copied by hand from one record into the next. Many teach where the internet is unreliable, so a tool that only works online would fail at the moment it is needed. Any AI help also had to save time without taking decisions out of the teacher’s hands.",
+      approach: [
+        { title: "Enter once, reuse everywhere", text: "Each record lives in one place and feeds the others. Attendance flows into the SF2 and SF9 report card templates, and classes, subjects, and the gradebook share one setup, so nothing is typed twice." },
+        { title: "AI drafts, the teacher decides", text: "Lesson plans and learning activities start as an AI-generated first version, presented as a draft to edit rather than a finished answer. The teacher stays the author; the AI removes the blank page." },
+        { title: "Offline first", text: "The workspace keeps working without a connection, so a weak signal never stops a teacher mid-task, and the platform carries over to a mobile app beyond the browser." },
+        { title: "A landing page that leads to sign-up", text: "Feature sections, a step-by-step walkthrough, and plan comparisons answer a teacher’s questions in the order they ask them, ending at sign-up." },
+      ],
       role: 'I worked on GuRover as its UI/UX designer and web developer: I designed the platform and built it with AI-assisted development.',
       contributions: [
         'Designed and developed the landing page, structuring its feature sections, step-by-step walkthrough, and plan comparisons to guide teachers toward sign-up',
@@ -451,6 +469,14 @@ export const PROJECTS = {
     ],
     platform: {
       overview: "COMELEC Gamified 3D for ACM turns the training of election personnel into a 3D interactive game. Instead of relying on manuals and lectures, personnel explore the Automated Counting Machine from every angle and learn what each part does through labeled diagrams, so they can operate it with confidence.",
+      challenge: "Training relied on reading about the machine, not handling it. Election personnel must operate the Automated Counting Machine correctly. Learning it from manuals and lectures meant reading about each part instead of seeing where it is and what it does. The training needed to let personnel explore the machine safely, and the design had to be precise enough for a development team to build a 3D game from it.",
+      approach: [
+        { title: "Learn by exploring", text: "Personnel turn the machine around in 3D and learn each part through labeled diagrams and numbered, step-by-step tasks, at their own pace instead of following a lecture." },
+        { title: "Every screen as the build reference", text: "I laid out every screen of the game, so the development team built from a complete reference instead of interpreting a brief." },
+        { title: "Handoff and brand, documented", text: "Design handoff documentation guided developers through implementation, and brand guidelines defined the software’s visual identity so it stayed consistent from the first screen to the last." },
+      ],
+      outcome: "Delivered to COMELEC, with the development team building the game from my screen layouts and handoff documentation.",
+      delivered: ["Layouts for every screen of the game", "Design handoff documentation for the development team", "Brand guidelines for the software’s visual identity"],
       role: 'I worked on COMELEC Gamified 3D for ACM as its UI/UX designer, prototyping the full flow of the game for the developers to build.',
       contributions: [
         'Designed the layout of every screen in the game, serving as the build reference for the development team',
@@ -485,6 +511,14 @@ export const PROJECTS = {
     ],
     platform: {
       overview: "PSGS brings the Philippine Society of General Surgeons' minimally invasive surgery training, across its junior, intermediate, and senior levels, into one platform. Surgeons compare programs, check course requirements, and follow announcements, while instructors and administrators manage courses and enrollment.",
+      challenge: "Three training levels and three kinds of users, in one place. The Philippine Society of General Surgeons runs minimally invasive surgery training at junior, intermediate, and senior levels, each with its own programs, requirements, and announcements. Surgeons needed to compare programs and check requirements, while instructors and administrators needed to manage courses and enrollment, all on one platform without each audience getting lost in the others’ tasks.",
+      approach: [
+        { title: "One structure for the public side", text: "The redesigned landing page presents the three training levels, their course requirements, and announcements together, so a surgeon can see where they fit before signing in." },
+        { title: "A module for each role", text: "Student, instructor, and administrator modules are each designed around what that role does: following courses, creating courses, and managing enrollment." },
+        { title: "From wireframes to prototypes", text: "Each module was taken from wireframes to prototypes, so its flows could be reviewed before development." },
+      ],
+      outcome: "Delivered to PSGS.",
+      delivered: ["Redesigned landing page", "Student, instructor, and administrator module prototypes"],
       role: "I worked on PSGS as its UI/UX designer: I redesigned the landing page and designed the platform's modules, from wireframes to prototypes.",
       contributions: [
         'Redesigned the landing page to present the three training levels, course requirements, and announcements in one clear structure',
@@ -517,6 +551,14 @@ export const PROJECTS = {
     ],
     platform: {
       overview: "AACCUP, the Accrediting Agency of Chartered Colleges and Universities in the Philippines, evaluates state universities and colleges and their academic programs. The redesigned website organizes its accreditation tables, institutional achievements, program classifications, and resources into clear sections with consistent navigation, so institutions and stakeholders can find what they need.",
+      challenge: "A lot of accreditation information, for many audiences. AACCUP evaluates state universities and colleges and their programs, and publishes accreditation tables, program classifications, institutional achievements, and resources for colleges, universities, and other stakeholders. Visitors needed to find the right information quickly, and the people managing the site needed a way to publish and update it.",
+      approach: [
+        { title: "Clear sections", text: "The full landing page was reorganized so each kind of information, from accreditation tables to resources, has a section of its own." },
+        { title: "Consistent navigation", text: "Every page is reached the same way, so a visitor who learns one part of the site can find the rest." },
+        { title: "Tools for the people behind it", text: "Administrator and content creator modules, designed from wireframes to prototypes, give AACCUP’s team a place to manage what the site publishes." },
+      ],
+      outcome: "Delivered to AACCUP.",
+      delivered: ["Redesigned landing page", "Administrator and content creator module prototypes"],
       role: 'I worked on AACCUP as its UI/UX designer: I redesigned the full landing page and designed the admin and content creator modules, from wireframes to prototypes.',
       contributions: [
         'Designed the administrator and content creator modules, from wireframes to prototypes',
@@ -550,6 +592,13 @@ export const PROJECTS = {
     ],
     platform: {
       overview: "ARISE (Access to Resources and Innovations in Science Education) is a DOST-SEI program that supports science and mathematics teaching in the Philippines. Its platform gives teachers and students one place to discover learning resources, explore new teaching materials, and use digital tools, with a landing page that introduces the program, its partners, and how to register.",
+      challenge: "One platform for teachers, students, and the program team. ARISE is DOST-SEI’s program for science and mathematics teaching in the Philippines. Teachers and students needed one place to discover learning resources, explore new teaching materials, and use digital tools. Newcomers also needed to understand the program, its partners, and how to register, and the program team needed to manage the content behind it.",
+      approach: [
+        { title: "A landing page that explains the program", text: "I enhanced the landing page to introduce ARISE, its partners, and the registration process, so visitors know what it offers before they join." },
+        { title: "Modules for those who run it", text: "Administrator and educator modules, designed from wireframes to prototypes, cover managing content and the community forum." },
+      ],
+      outcome: "Delivered to DOST-SEI.",
+      delivered: ["Enhanced landing page", "Administrator and educator module prototypes"],
       role: 'I worked on DOST ARISE as its UI/UX designer: I enhanced the landing page and designed the admin and educator modules, from wireframes to prototypes.',
       contributions: [
         'Designed the administrator and educator modules, from wireframes to prototypes',
@@ -636,11 +685,22 @@ export const PROJECTS = {
       { src: regain_message, alt: 'ReGain messages', start: 1 },
       { src: regain_history, alt: 'ReGain history', start: 4 },
     ],
-    // a capstone project, laid out as a build: what it is, then my role and its stack
-    overview: "ReGain is a web-based mental health support system built as a capstone project at STI College Novaliches during the COVID-19 pandemic. Students complete weekly self-assessments, keep an e-journal, message guidance counselors, and get chatbot support when counselors are unavailable, while counselors follow each student's progress through dashboards and automated assessment reports.",
+    // a capstone project, written up like the client platforms
+    platform: {
+      overview: "ReGain is a web-based mental health support system built as a capstone project at STI College Novaliches during the COVID-19 pandemic. Students complete weekly self-assessments, keep an e-journal, message guidance counselors, and get chatbot support when counselors are unavailable, while counselors follow each student's progress through dashboards and automated assessment reports.",
+      challenge: "Support students could reach privately, at any hour. ReGain was built at STI College Novaliches during the COVID-19 pandemic. Students needed a private way to check on their mental health and reach guidance counselors. Counselors, in turn, needed to follow many students at once and see who needed help.",
+      approach: [
+        { title: "Regular check-ins", text: "Weekly self-assessments give students a routine and give counselors a record over time." },
+        { title: "Private reflection and contact", text: "An e-journal and private messaging let students reflect on their own and reach a counselor directly." },
+        { title: "Help when counselors are away", text: "A chatbot built with Dialogflow responds to students when counselors are unavailable." },
+        { title: "The whole picture for counselors", text: "Dashboards and automated assessment reports show each student’s progress." },
+      ],
+      outcome: "Built and deployed as our capstone project at STI College Novaliches.",
+      role: "I was ReGain’s lead programmer, building the platform with my capstone team.",
+    },
   },
-  // a design system, made at a company and shown with permission, laid out
-  // as a build: its foundations, then its components. (no mock-up yet: its
+  // a design system, made at a company and shown with permission, written
+  // up like the platforms: its foundations, then its components. (its
   // cover is its light colour palette)
   pci: {
     path: '/pci-central-app',
@@ -651,7 +711,6 @@ export const PROJECTS = {
     category: 'Design System / Team Project',
     roles: ['UI/UX Designer'],
     technologies: ['Figma'],
-    overview: "The Central App design system is the single source of truth for how one of the company's central applications looks and behaves. It sets the foundations, from light and dark color tokens to the type scale, spacing, radius, elevation, and icons, and documents every component's variants, states, and values, so designers and developers build each new screen from the same set of parts.",
     cover: pci_mockup_cover,
     screenshots: [
       { src: pci_mockup_cover, alt: 'Central App mock-up', start: 'full' },
@@ -669,6 +728,20 @@ export const PROJECTS = {
       { src: pci_navigations, alt: 'Central App navigation', start: 1 },
       { src: pci_dialogs, alt: 'Central App dialogs', start: 3 },
     ],
+    platform: {
+      overview: "The Central App design system is the single source of truth for how one of the company's central applications looks and behaves. It sets the foundations, from light and dark color tokens to the type scale, spacing, radius, elevation, and icons, and documents every component's variants, states, and values, so designers and developers build each new screen from the same set of parts.",
+      challenge: "Screens were drifting apart. Components were being used inconsistently, so screens that should have looked and behaved alike did not. Without one shared source, every new screen risked drifting further, and developers had to guess at values the design did not state.",
+      approach: [
+        { title: "Foundations first", text: "Color tokens, the type scale, spacing, radius, elevation, and icons set the rules before any component was built on them." },
+        { title: "Light and dark from the start", text: "Every color is defined for both modes, so dark mode is part of the system rather than an afterthought." },
+        { title: "Documented for developers", text: "Each component lists its variants, states, and values, so developers build it from the documentation instead of guessing." },
+      ],
+      role: "I built the Central App design system in Figma as its UI/UX designer.",
+      contributions: [
+        "Defined the foundations: light and dark color tokens, the type scale, spacing, radius, elevation, and icons",
+        "Documented every component’s variants, states, and values",
+      ],
+    },
   },
   // the archive (archive.js): earlier design explorations and redesigns,
   // laid out as builds - the hero, with the link to the full project on
@@ -737,6 +810,7 @@ export const PROJECTS = {
     category: 'Design Exploration / Personal Project',
     roles: ['UI/UX Designer'],
     technologies: [],
+    link: { href: 'https://www.behance.net/gallery/147261877/Archstone', label: 'View on Behance' },
     ...archivePictures('archstone'),
   },
   'nba-redesign': {

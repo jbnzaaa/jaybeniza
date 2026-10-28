@@ -9,10 +9,10 @@ import { pixelSweep } from '../../utils/pixels'
 // the local faces the page is set in, each with sample text. they are
 // requested explicitly because the browser only fetches a font once
 // something on screen uses it, and nothing but this screen is mounted
-// while it is up: League Gothic for headlines, MonoLisa for the rest
+// while it is up: Ayr Garon for headlines, Gilgan for the rest
 const FONTS = [
-  ['1em "League Gothic"', 'A0%&'],
-  ['700 1em MonoLisa', 'A'],
+  ['700 1em "Ayr Garon"', 'A0%&'],
+  ['1em Gilgan', 'a'],
 ];
 // never hold the page hostage to a font that fails or stalls
 const TIMEOUT_MS = 4000;
@@ -121,7 +121,7 @@ function Preloader({ onExitStart, onDone }) {
     const settle = () => { loaded += 1; advance(); };
     const loads = FONTS.map(([font, sample]) => document.fonts.load(font, sample).then(settle, settle));
 
-    // the figure is set in League Gothic, so it only rises into view once that
+    // the figure is set in Ayr Garon, so it only rises into view once that
     // face has arrived - otherwise it would appear in a fallback and swap
     loads[0].then(() => {
       if (exiting) return;
@@ -150,7 +150,7 @@ function Preloader({ onExitStart, onDone }) {
         laptop-lg:px-[3rem] laptop-lg:pb-[3rem]
         desktop:px-[3rem] desktop:pb-[3rem]'>
         <div className='overflow-hidden' role='status' aria-label='Loading'>
-          <span className='inline-block font-flexible font-bold leading-none text-offwhite text-[14.5vw]'
+          <span className='inline-block font-flexible font-bold leading-none text-offwhite text-[8vw]'
             ref={fxFigure}>
             0%
           </span>

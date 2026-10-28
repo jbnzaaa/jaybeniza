@@ -15,11 +15,13 @@ import ScrollSmoother from 'gsap/ScrollSmoother'
 
 const EMAIL = 'mailto:jaysonbeniza@gmail.com';
 
-const QUESTION = 'Have a product or a role in mind?';
-const SUPPORT = "Tell me about it, and I'll reply by email.";
+const QUESTION = 'Have a product to design or build?';
+const SUPPORT = "Tell me what you need, and I'll reply with next steps.";
 
 // the ways through
 const LINKS = [
+  // first, the way to start a project: the request form (ContactPage.jsx)
+  { label: 'Start a project', to: '/get-in-touch' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/jaybeniza/' },
   { label: 'Behance', href: 'https://www.behance.net/jbnza' },
   { label: 'Email', href: EMAIL },
@@ -34,7 +36,7 @@ const PROJECTS_LINKS = [
   { label: 'All work', to: '/work' },
   { label: 'BiteWise', to: '/bitewise' },
   { label: 'GuRover', to: '/gurover' },
-  { label: 'Portfolio 2026', to: '/portfolio-2026' },
+  { label: 'Portfolio', to: '/portfolio-2026' },
   { label: 'ReGain', to: '/regain' },
 ];
 
@@ -105,7 +107,7 @@ function Contact({ page = false, projects = false, next, previous, current }) {
           laptop-lg:px-[3rem] laptop-lg:py-24 laptop-lg:gap-y-12
           desktop:px-[3rem] desktop:py-28 desktop:gap-y-16'>
           {/* drop a message - left, its top level with the text on the right */}
-          <h2 className='self-start flex flex-wrap font-flexible font-semibold leading-[.92] tracking-tight
+          <h2 className='self-start flex flex-wrap font-flexible font-semibold leading-[.95] tracking-tight
             mobile:col-span-8 mobile:row-start-1 text-closing
             tablet:col-span-8 tablet:row-start-1
             laptop:col-span-5 laptop:row-start-1
@@ -116,11 +118,11 @@ function Contact({ page = false, projects = false, next, previous, current }) {
             <SplitText text={heading} id='animate-contact' />
           </h2>
           {/* invitation + links - right */}
-          <div className='text-caption
+          <div className='text-copy
             mobile:col-span-8 mobile:row-start-2
             tablet:col-span-6 tablet:row-start-2
-            laptop:col-span-2 laptop:col-start-7 laptop:row-start-1
-            laptop-lg:col-span-2 laptop-lg:col-start-7 laptop-lg:row-start-1
+            laptop:col-span-3 laptop:col-start-6 laptop:row-start-1
+            laptop-lg:col-span-3 laptop-lg:col-start-6 laptop-lg:row-start-1
             desktop:col-span-2 desktop:col-start-7 desktop:row-start-1'>
             <p className='flex flex-wrap mb-8'>
               <SplitText text={text} id='animate-contact' by='word' />

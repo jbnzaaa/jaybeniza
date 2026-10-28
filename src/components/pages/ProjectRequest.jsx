@@ -12,8 +12,21 @@ import SplitText from '../common/SplitText'
 // where a request is sent
 const EMAIL = 'jaysonbeniza@gmail.com';
 
+// the Web3Forms access key that sends a request to my inbox (.env.local; see
+// .env.example). without it the form falls back to the visitor's email app
+const WEB3FORMS_KEY = process.env.REACT_APP_WEB3FORMS_KEY;
+
 const HEADLINE = 'Start a Project';
-const INTRO = 'What are you building? The details below help me understand it before we talk.';
+const INTRO = 'Tell me what you’re building. These details let me come back with a plan and the right questions, not just a hello.';
+
+// what is said under the button, for each state of the request
+const STATUS_TEXT = {
+  '': '',
+  sending: 'Sending your request…',
+  sent: 'Thank you, your request is in. I’ll reply by email.',
+  failed: `Your request couldn’t be sent. Please email me at ${EMAIL} instead.`,
+  'email-app': 'Your email app should have opened with the request written out. Send it from there, and I’ll reply by email.',
+};
 
 // what the project is
 const TYPES = ['Website', 'Web application', 'Mobile app', 'Design system', 'UX audit or redesign', 'Something else'];
@@ -116,13 +129,16 @@ function Select({ labelId, options, value, onChange }) {
  * like the section labels, its choices are boxes that fill when picked,
  * and it is sent with the site's button.
  *
- * There is no server behind the site, so the form does not send anything
- * itself: on submit it opens the visitor's own email app with the request
- * written out, addressed to me, for them to send.
+ * There is no server behind the site: the request is sent through
+ * Web3Forms, which emails it to me, once its access key is set - until
+ * then the form opens the visitor's own email app with the request written
+ * out, addressed to me, for them to send.
  */
 function ProjectRequest() {
   const [form, setForm] = useState(EMPTY);
-  const [sent, setSent] = useState(false);
+  // where the request is: '' (not sent), 'sending', 'sent', 'failed', or
+  // 'email-app' (handed to the visitor's email app)
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
     // each field rises a little into place as it fades in
@@ -155,9 +171,12 @@ function ProjectRequest() {
     services: now.services.includes(service) ? now.services.filter((s) => s !== service) : [...now.services, service],
   }));
 
-  // the request as an email, opened in the visitor's own email app
-  const submit = (e) => {
+  // the request: sent straight to my inbox through Web3Forms when its
+  // access key is set (REACT_APP_WEB3FORMS_KEY, in .env.local); without it, or if
+  // sending fails, written out in the visitor's own email app instead
+  const submit = async (e) => {
     e.preventDefault();
+    if (status === 'sending') return;
     const lines = [
       `Name: ${form.name}`,
       `Email: ${form.email}`,
@@ -178,8 +197,36 @@ function ProjectRequest() {
       form.materials || '-',
     ];
     const subject = `Project request: ${form.type} from ${form.name}`;
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
-    setSent(true);
+    const byEmailApp = () => {
+      window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+      setStatus('email-app');
+    };
+    if (!WEB3FORMS_KEY) {
+      byEmailApp();
+      return;
+    }
+    setStatus('sending');
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject,
+          from_name: form.name,
+          // (replies go to the visitor)
+          replyto: form.email,
+          email: form.email,
+          message: lines.join('\n'),
+        }),
+      });
+      const result = await response.json();
+      if (!result.success) throw new Error(result.message);
+      setStatus('sent');
+      setForm(EMPTY);
+    } catch (error) {
+      setStatus('failed');
+    }
   };
 
   return (
@@ -192,7 +239,7 @@ function ProjectRequest() {
         laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-24 laptop-lg:gap-y-12
         desktop:px-[3rem] desktop:pt-28 desktop:pb-28 desktop:gap-y-16'>
         {/* start a project - left */}
-        <h1 className='self-start flex flex-wrap font-flexible font-semibold leading-[.92] tracking-tight text-closing
+        <h1 className='self-start flex flex-wrap font-flexible font-semibold leading-[.95] tracking-tight text-closing
           mobile:col-span-8
           tablet:col-span-8
           laptop:col-span-4
@@ -255,13 +302,15 @@ function ProjectRequest() {
             </Field>
             <div className='form-field form-field-wide form-foot'>
               {/* the site's button, as a real button */}
-              <button type='submit' className='form-submit cta-button text-caption font-monolisa uppercase'>
-                Send request
-                <RiArrowRightDownLine className='button-arrow ml-2 text-base' aria-hidden='true'/>
+              <button type='submit' className='form-submit cta-button text-caption font-monolisa' disabled={status === 'sending'}>
+                {status === 'sending' ? 'Sending' : 'Send request'}
+                <span className='button-icon-box' aria-hidden='true'>
+                  <RiArrowRightDownLine className='button-arrow text-base'/>
+                </span>
               </button>
               {/* after sending only. said aloud to a screen reader when it appears */}
               <p className='text-caption text-muted' role='status'>
-                {sent ? 'Your email app should have opened with the request written out. Send it from there.' : ''}
+                {STATUS_TEXT[status]}
               </p>
             </div>
           </form>

@@ -64,7 +64,7 @@ const HEADLINE_LINES = [
   'from brief to build.',
 ];
 
-const DESCRIPTION = 'UX case studies and shipped products, each showing how I move from research to design to code.';
+const DESCRIPTION = 'Shipped products and UX case studies: the problem, the decisions, and what came of them.';
 
 /**
  * The work page (route /work), in the landing page's layout: a first
@@ -97,7 +97,7 @@ function ProjectsPage() {
         desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'>
         <h1>
           {HEADLINE_LINES.map((line) => (
-            <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.92] tracking-tight
+            <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.95] tracking-tight
               text-hero'>
               <SplitText text={line} id='animate-projects-page' />
             </span>

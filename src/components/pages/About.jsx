@@ -9,7 +9,7 @@ import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
 // when a reveal starts
-import { REVEAL_AT, inTurn } from '../../utils/scrollReveal'
+import { REVEAL_AT, inTurn, revealTrigger } from '../../utils/scrollReveal'
 gsap.registerPlugin(ScrollTrigger)
 
 // what to take away about me, set large
@@ -18,42 +18,58 @@ const PARAGRAPHS = [
   'I listen more than I talk, and that shapes how I work. I watch how people use a product, find the real problem, and design the simplest interface that solves it. I also build what I designed, so the small details make it into the final product.',
 ];
 
-// when its text starts to rise: the site's one rule (scrollReveal.js) -
-// with 30% of the section on screen
-
 /**
  * The designer, on the light theme: one large statement, and along the
- * foot the button to the full About page (AboutPage.jsx). The section scrolls with the page -
- * it is not pinned. When 30% of it is showing
- * the paragraph rises out of its lines, letter by letter in reading order
- * - the site's text reveal - and drops back if the page is scrolled back
- * above that point. The button reveals itself as it comes into view.
+ * foot the button to the full About page (AboutPage.jsx). The tag reveals
+ * first, then the statement rises into its lines in the muted text colour,
+ * and its words turn to the full text colour one by one, in reading
+ * order, as the page is scrolled - back again if it is scrolled up. From
+ * laptop width up the section is pinned to the screen until every word
+ * has turned. The button reveals itself as it comes into view.
  */
 function About() {
   const fxSection = useRef();
 
   useEffect(() => {
-    // the letters rise across a set time rather than a fixed step each,
-    // so a long paragraph's last line is not seconds behind its first
-    const reveal = gsap.to('#animate-about', {
-      y: 0, duration: .4, ease: 'power3.out', stagger: { amount: .6 }, paused: true,
+    const section = fxSection.current;
+    const paragraph = section.querySelector('.about-statement');
+    const words = paragraph.querySelectorAll('.split-letter');
+
+    // the statement rises into its lines once the tag has revealed: in
+    // its turn among the section's reveals (scrollReveal.js), which puts
+    // it after the tag above it
+    const rise = gsap.to(words, { y: 0, duration: .4, ease: 'power3.out', stagger: { amount: .6 }, paused: true });
+    const turn = inTurn(rise, paragraph);
+    const trigger = revealTrigger(paragraph, REVEAL_AT, turn);
+
+    // each word darkens in its turn, tied to the scroll. (the text colour
+    // is read from the section, which sets it for its theme)
+    const darken = (scrollTrigger) => gsap.to(words, {
+      color: getComputedStyle(section).getPropertyValue('--text').trim(),
+      ease: 'none',
+      stagger: 1,
+      scrollTrigger: { ...scrollTrigger, scrub: true },
     });
-    // in its turn among the section's reveals (scrollReveal.js). its
-    // trigger is the paragraph itself, which is under the tag: the tag
-    // has come far enough up the screen first, so it is revealed first
-    const paragraph = fxSection.current.querySelector('.about-paragraph');
-    const turn = inTurn(reveal, paragraph);
-    const trigger = ScrollTrigger.create({
-      trigger: paragraph,
-      start: REVEAL_AT,
-      onEnter: () => turn.play(),
-      onLeaveBack: () => turn.reverse(),
+    const mm = gsap.matchMedia();
+    // from laptop width up the section holds the screen from when its top
+    // reaches the top, for a screen and a half of scrolling - the words
+    // turning over that stretch - then moves on
+    mm.add('(min-width: 1024px)', () => {
+      darken({ trigger: section, start: 'top top', end: '+=150%', pin: true });
+    });
+    // below it the section is taller than the screen on some phones, so it
+    // is not pinned: the words turn from when the paragraph's top is 60%
+    // of the way down the screen - after it has risen - to when its foot
+    // is 30% of the way down
+    mm.add('(max-width: 1023px)', () => {
+      darken({ trigger: paragraph, start: 'top 60%', end: 'bottom 30%' });
     });
 
     return () => {
+      mm.revert();
       trigger.kill();
       turn.kill();
-      reveal.revert();
+      rise.revert();
     };
   }, []);
 
@@ -75,19 +91,19 @@ function About() {
               their lines, like all text that reveals */}
             <div className='flex flex-col
               mobile:mt-6 mobile:w-full mobile:gap-y-6
-              tablet:mt-8 tablet:w-[94%] tablet:gap-y-8
-              laptop:mt-8 laptop:w-[90%] laptop:gap-y-8
-              laptop-lg:mt-10 laptop-lg:w-[88%] laptop-lg:gap-y-10
-              desktop:mt-10 desktop:w-[84%] desktop:gap-y-10'>
+              tablet:mt-8 tablet:w-[80%] tablet:gap-y-8
+              laptop:mt-8 laptop:w-[70%] laptop:gap-y-8
+              laptop-lg:mt-10 laptop-lg:w-[64%] laptop-lg:gap-y-10
+              desktop:mt-10 desktop:w-[60%] desktop:gap-y-10'>
               {PARAGRAPHS.map((paragraph) => (
-                <p className='about-paragraph flex flex-wrap font-monolisa
+                <p className='about-paragraph about-statement flex flex-wrap font-monolisa
                   mobile:leading-snug
                   tablet:leading-tight
                   laptop:leading-tight
                   laptop-lg:leading-tight
                   desktop:leading-tight'
                   key={paragraph}>
-                  <SplitText text={paragraph} id='animate-about' />
+                  <SplitText text={paragraph} id='animate-about' by='word' />
                 </p>
               ))}
             </div>

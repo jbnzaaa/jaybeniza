@@ -16,7 +16,7 @@ import ScrollCue from '../common/ScrollCue'
 import { usePageTitle } from '../../utils/pageTitle'
 
 // the cards: the work page's. one with a page (projects.js) opens it, with
-// its label as on the work page (year / type / role) and its cover; one
+// its label (year / design exploration - none of these is client work) and its cover; one
 // with no page yet opens nothing, its label is year / what it is, and its
 // picture is the first in its folder, if it has one (archivePictures)
 const ITEMS = ARCHIVE.map(({ id, title, year }) => {
@@ -25,7 +25,7 @@ const ITEMS = ARCHIVE.map(({ id, title, year }) => {
     return {
       key: `archive-${id}`,
       title: project.title,
-      label: [project.year, project.category.split(' / ')[0], project.roles[0]].join(' / '),
+      label: `${project.year} / Design exploration`,
       to: project.path,
       action: 'View project',
       picture: project.card || project.cover || project.screenshots?.[0]?.src,
@@ -35,25 +35,25 @@ const ITEMS = ARCHIVE.map(({ id, title, year }) => {
   return {
     key: `archive-${id}`,
     title,
-    label: `${year} / UI/UX Design`,
+    label: `${year} / Design exploration`,
     picture: (({ card, cover, screenshots }) => card || cover || screenshots[1]?.src || screenshots[1]?.phones?.[0].src)(archivePictures(id)),
     empty: [title, 'Preview coming soon'],
   };
 });
 
 const HEADLINE_LINES = [
-  'Earlier work,',
-  'explored and kept.',
+  'Design explorations,',
+  'outside client work.',
 ];
 
-const DESCRIPTION = 'App concepts, website explorations, and redesigns, each an earlier study in layout, type, and interaction.';
+const DESCRIPTION = 'Concepts, redesigns, and visual studies I made on my own to explore layout, type, and interaction. Personal explorations, not client work.';
 
 /**
  * The archive page (route /archive), in the work page's layout: a first
  * screen with the headline and, along its foot, a short description
  * (lower left), then every archived
  * project as a card on the six column grid (WorkGrid.jsx), with its name
- * and its label (year / UI/UX Design) under it.
+ * and its label (year / Design exploration) under it.
  */
 function ArchivePage() {
   usePageTitle('Archive');
@@ -78,7 +78,7 @@ function ArchivePage() {
         desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'>
         <h1>
           {HEADLINE_LINES.map((line) => (
-            <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.92] tracking-tight
+            <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.95] tracking-tight
               text-hero'>
               <SplitText text={line} id='animate-archive-page' />
             </span>

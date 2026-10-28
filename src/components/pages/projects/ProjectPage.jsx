@@ -26,7 +26,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 // list, in its order (ProjectsPage.jsx) - newest first, and back to the
 // first after the last. a project that is not on that list (DailyDiscount)
 // is never offered as the next one, and leads on to the first
-const ORDER = ['tingi', 'portfoliov3', 'gurover', 'comelec', 'psgs', 'pci', 'aaccup', 'arise', 'regain'];
+const ORDER = ['gurover', 'tingi', 'portfoliov3', 'comelec', 'psgs', 'pci', 'aaccup', 'arise', 'regain'];
 // an archived project leads on to the next in the archive, and back to its
 // first after its last
 const ARCHIVE_ORDER = ARCHIVE.map(({ id }) => id).filter((key) => PROJECTS[key]);
@@ -150,7 +150,7 @@ function CaseSection({ id, title, theme, wide = false, below, children }) {
 // a paragraph of the case study
 function Copy({ id, text, className = '' }) {
   return (
-    <p className={`flex flex-wrap text-subtitle leading-snug ${className}`}>
+    <p className={`flex flex-wrap text-body leading-snug ${className}`}>
       <SplitText text={text} id={`animate-case-${id}`} by='word' />
     </p>
   )
@@ -165,7 +165,7 @@ function Points({ id, label, items, className = '' }) {
       </p>
       <ul className='flex flex-col'>
         {items.map((item) => (
-          <li className='flex flex-wrap border-t border-rule py-4 m-0 text-body' key={item}>
+          <li className='flex flex-wrap border-t border-rule py-4 m-0 text-caption' key={item}>
             <SplitText text={item} id={`animate-case-${id}`} by='word' />
           </li>
         ))}
@@ -235,7 +235,7 @@ function Notes({ id, items, className = '' }) {
           <dt className='text-caption text-muted mb-2'>
             <SplitText text={label} id={`animate-case-${id}`} />
           </dt>
-          <dd className='flex flex-wrap text-body m-0'>
+          <dd className='flex flex-wrap text-caption m-0'>
             <SplitText text={text} id={`animate-case-${id}`} by='word' />
           </dd>
         </div>
@@ -255,7 +255,7 @@ const SHOTS = {
   quad: 'grid items-start gap-4 mx-auto max-w-[1656px] mobile:grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-4 laptop-lg:grid-cols-4 desktop:grid-cols-4',
   pair: 'grid items-start gap-4 mx-auto max-w-[820px] grid-cols-2',
 };
-// `stagger`: Portfolio 2026's screens, at a phone screen's size. its
+// `stagger`: Portfolio's screens, at a phone screen's size. its
 // screens step across the width as that page's do, two to a row on a
 // twelve-column grid, the second set lower than the first - so a row is a
 // pair of screens offset from each other, and each row starts somewhere
@@ -349,7 +349,7 @@ function Panel({ label, className = '' }) {
  *
  * A platform - a project with `platform` in projects.js, a product made
  * for a client or company - is its hero, its cover, then an overview of
- * the platform, my role and contributions, its key features, the design
+ * the platform, the challenge it answered, my role and contributions, its key features, the design
  * approach, its screens, the design system, and where it stands and what
  * it achieved - each only when its `platform` has it written, so no part
  * shows a placeholder. The sections it has turn light and dark in turn.
@@ -397,12 +397,13 @@ function ProjectPage({ project: given, id }) {
   // a platform's sections: only those it has written, light and dark in turn
   const platformParts = [
     platform.overview && 'overview',
+    platform.challenge && 'challenge',
     (platform.role || platform.contributions) && 'role',
     platform.features && 'features',
     platform.approach && 'approach',
     shots.length > 0 && 'screens',
     platform.system && 'system',
-    (platform.outcome || platform.metrics) && 'outcome',
+    (platform.outcome || platform.delivered || platform.metrics) && 'outcome',
   ].filter(Boolean);
   const themeOf = (part) => (platformParts.indexOf(part) % 2 ? DARK : LIGHT);
   const has = (part) => platformParts.includes(part);
@@ -480,7 +481,7 @@ function ProjectPage({ project: given, id }) {
           laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-16
           desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16`}>
           <div className='grid grid-cols-8 gap-x-6 gap-y-8'>
-            <h1 className='project-h1 hero-designerdev flex flex-wrap content-start font-flexible font-bold leading-[.92] tracking-tight
+            <h1 className='project-h1 hero-designerdev flex flex-wrap content-start font-flexible font-bold leading-[.95] tracking-tight
               mobile:col-span-8 text-case
               tablet:col-span-8
               laptop:col-span-5
@@ -581,6 +582,18 @@ function ProjectPage({ project: given, id }) {
         </CaseSection>
         )}
 
+        {/* the challenge - what the project had to solve */}
+        {has('challenge') && (
+        <CaseSection id='challenge' title='The Challenge' theme={themeOf('challenge')}>
+          {/* (a line set large, then the paragraphs under it - or the
+            paragraphs alone) */}
+          {platform.challenge.lead && <Lead id='challenge' text={platform.challenge.lead} className={BELOW} />}
+          {[].concat(platform.challenge.text || platform.challenge).map((paragraph, i, all) => (
+            <Copy id='challenge' text={paragraph} className={i < all.length - 1 ? BELOW : ''} key={paragraph} />
+          ))}
+        </CaseSection>
+        )}
+
         {/* my role - what I owned, and the tools, once there are any */}
         {has('role') && (
         <CaseSection id='role' title='My Role & Contributions' theme={themeOf('role')}>
@@ -601,7 +614,12 @@ function ProjectPage({ project: given, id }) {
         {/* design approach - structure and user flows */}
         {has('approach') && (
         <CaseSection id='approach' title='Design Approach' theme={themeOf('approach')}>
-          <Copy id='approach' text={platform.approach} />
+          {/* each decision a card of its own, one to a row - or paragraphs */}
+          {[].concat(platform.approach)[0]?.title
+            ? <Cards id='approach' items={platform.approach} rows />
+            : [].concat(platform.approach).map((paragraph, i, all) => (
+              <Copy id='approach' text={paragraph} className={i < all.length - 1 ? BELOW : ''} key={paragraph} />
+            ))}
         </CaseSection>
         )}
 
@@ -633,7 +651,8 @@ function ProjectPage({ project: given, id }) {
         {/* status and impact - where it stands, then one card per figure */}
         {has('outcome') && (
         <CaseSection id='outcome' title='Status & Impact' theme={themeOf('outcome')}>
-          {platform.outcome && <Copy id='outcome' text={platform.outcome} className={platform.metrics ? BELOW : ''} />}
+          {platform.outcome && <Copy id='outcome' text={platform.outcome} className={platform.delivered || platform.metrics ? BELOW : ''} />}
+          {platform.delivered && <Points id='outcome' label='What was delivered' items={platform.delivered} className={platform.metrics ? BELOW : ''} />}
           {platform.metrics && (
           <ul className='grid gap-4
             mobile:grid-cols-1
