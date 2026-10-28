@@ -13,6 +13,8 @@ import { scrollReveal, scrollRevealSequence } from '../../../utils/scrollReveal'
 import SplitText from '../../common/SplitText'
 // every project's content - for the link to the next one
 import { PROJECTS } from './projects'
+// the archive's projects - which run in their own order
+import { ARCHIVE } from './archive'
 // the closing section - the landing page's contact block, here leading
 // on to the next project
 import Contact from '../Contact'
@@ -24,7 +26,10 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 // list, in its order (ProjectsPage.jsx) - newest first, and back to the
 // first after the last. a project that is not on that list (DailyDiscount)
 // is never offered as the next one, and leads on to the first
-const ORDER = ['tingi', 'portfoliov3', 'gurover', 'comelec', 'psgs', 'pci', 'aaccup', 'arise', 'jaysonbeniza', 'jbnza', 'regain'];
+const ORDER = ['tingi', 'portfoliov3', 'gurover', 'comelec', 'psgs', 'pci', 'aaccup', 'arise', 'regain'];
+// an archived project leads on to the next in the archive, and back to its
+// first after its last
+const ARCHIVE_ORDER = ARCHIVE.map(({ id }) => id).filter((key) => PROJECTS[key]);
 
 // grid placement of a screenshot by its `start` (see projects.js)
 const SHOT_LAYOUT = {
@@ -403,13 +408,17 @@ function ProjectPage({ project: given, id }) {
   const has = (part) => platformParts.includes(part);
   // a build's overview: what it is, a paragraph to each entry
   const overview = [].concat(project.overview || []);
+  // (a design with no build - an archived project - has no tools to list,
+  // and leaves the section out: its role is in the hero)
+  const hasOverview = overview.length > 0 || project.technologies.length > 0;
   // the link to the full case study closes the page, after the sections
   // before it, in the next theme in turn
-  const sectionCount = isDraft ? 1 : isStudy ? studyParts.length : isPlatform ? platformParts.length : 2;
-  const here = ORDER.findIndex((key) => PROJECTS[key] === project);
-  const next = PROJECTS[ORDER[(here + 1) % ORDER.length]];
+  const sectionCount = isDraft ? 1 : isStudy ? studyParts.length : isPlatform ? platformParts.length : hasOverview ? 2 : 1;
+  const order = ARCHIVE_ORDER.some((key) => PROJECTS[key] === project) ? ARCHIVE_ORDER : ORDER;
+  const here = order.findIndex((key) => PROJECTS[key] === project);
+  const next = PROJECTS[order[(here + 1) % order.length]];
   // (and the one before it, the last for the first - or for a project not on the list)
-  const previous = PROJECTS[ORDER[((here < 0 ? 0 : here) - 1 + ORDER.length) % ORDER.length]];
+  const previous = PROJECTS[order[((here < 0 ? 0 : here) - 1 + order.length) % order.length]];
 
   // the screenshots have no size until they load, so the page grows after
   // it mounts and everything below them moves down. re-measure the scroll
@@ -512,16 +521,12 @@ function ProjectPage({ project: given, id }) {
                 </div>
               ))}
             </dl>
-            {/* lower right: the link to the live site, where there is one,
-              then the scroll cue */}
-            <div className='flex items-end shrink-0 gap-x-6'>
-              {project.link && (
-                <Button label='Visit site' href={project.link.href} external />
-              )}
-              <p className='flex flex-wrap text-caption'>
-                <SplitText text='Scroll down' id='animate-case-hero' by='word' />
-              </p>
-            </div>
+            {/* lower right: the link to the live site, where there is one */}
+            {project.link && (
+              <div className='flex items-end shrink-0'>
+                <Button label={project.link.label || 'Visit site'} href={project.link.href} external />
+              </div>
+            )}
           </div>
         </section>
         {/* hero visual - the whole section, edge to edge; a full screen
@@ -661,6 +666,7 @@ function ProjectPage({ project: given, id }) {
         <>
         {/* a build. overview - what it is, when it says, then my role on it
           and what it was built with */}
+        {hasOverview && (
         <CaseSection id='overview' title={overview.length ? 'Project Overview' : 'Role & Tech Stack'} theme={LIGHT}>
           {overview.map((paragraph) => (
             <Copy id='overview' text={paragraph} className={BELOW} key={paragraph} />
@@ -668,20 +674,28 @@ function ProjectPage({ project: given, id }) {
           <Points id='overview' label='My role' items={project.roles} className={BELOW} />
           <Points id='overview' label='Built with' items={project.technologies} />
         </CaseSection>
+        )}
 
-        {/* its screens, under the label at full width */}
-        <CaseSection id='screens' title='Project Screens' theme={DARK} wide>
+        {/* its screens, under the label at full width - light when they
+          follow the cover directly, so the two are not one dark run */}
+        <CaseSection id='screens' title='Project Screens' theme={hasOverview ? DARK : LIGHT} wide>
           <div className='grid grid-cols-8 gap-x-6
             mobile:gap-y-6
             tablet:gap-y-10
             laptop:gap-y-12
             laptop-lg:gap-y-20
             desktop:gap-y-20'>
-            {shots.map(({ src, alt, start }) => (
+            {/* (a row of phone screens - `phones` - spans the width, four
+              to a row from tablet width up) */}
+            {shots.map(({ src, alt, start, phones }) => (phones ? (
+              <div className='col-span-8' key={alt}>
+                <Shots items={phones} layout='quad' onLoad={remeasure} />
+              </div>
+            ) : (
               <div className={`screenshot-container ${SHOT_LAYOUT[start]}`} key={alt}>
                 <img src={src} alt={alt} className='screenshot-img' onLoad={remeasure}/>
               </div>
-            ))}
+            )))}
             {!shots.length && [['Screen one', 1], ['Screen two', 4], ['Screen three', 2]].map(([name, start]) => (
               <Panel label={name} className={`aspect-[16/10] ${SHOT_LAYOUT[start]}`} key={name} />
             ))}

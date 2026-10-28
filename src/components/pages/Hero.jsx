@@ -4,6 +4,8 @@ import React, { useEffect } from 'react'
 import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// the game, opened from the lower right
+import KerningGame from '../common/KerningGame'
 
 // (what the headline does not say: how long, what kind of work, and that I am available)
 const HIGHLIGHT_TEXT = 'A UI/UX designer with 3.5+ years of experience crafting digital experiences for web and mobile products. Open to freelance and full-time roles.';
@@ -20,7 +22,8 @@ const PROFESSION = PROFESSION_LINES.join(' ');
 
 /**
  * The landing page's first screen, on the light theme: the headline at the
- * top, and along the bottom a short description on the left.
+ * top, and along the bottom a short description on the left and a small
+ * button on the right that opens a game - the kerning test.
  */
 function Hero() {
   useEffect(() => {
@@ -61,8 +64,10 @@ function Hero() {
             <SplitText text={PROFESSION} id='animate-hero-profession' />
           </span>
         </h1>
-        {/* description, along the bottom on the left */}
-        <div className='flex justify-between items-end gap-x-6'>
+        {/* description, along the bottom on the left; the game's button on
+          the right (under the description on a phone) */}
+        <div className='flex justify-between items-end gap-x-6
+          mobile:flex-col mobile:items-start mobile:gap-y-10'>
           <p className='flex flex-wrap text-caption
             mobile:w-[78%]
             tablet:w-[52%]
@@ -71,10 +76,9 @@ function Hero() {
             desktop:w-[28%]'>
             <SplitText text={HIGHLIGHT_TEXT} id='animate-hero-highlight' by='word' />
           </p>
-          {/* scroll cue, along the bottom on the right */}
-          <p className='flex flex-wrap shrink-0 text-caption'>
-            <SplitText text='Scroll down' id='animate-hero-highlight' by='word' />
-          </p>
+          <div className='shrink-0'>
+            <KerningGame />
+          </div>
         </div>
       </section>
     </>

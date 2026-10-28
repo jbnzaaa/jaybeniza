@@ -1,11 +1,13 @@
 // React
 import React, { useEffect, useState, useCallback, lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom'
 //
 import './assets/styles/App.css';
 // Pages
 import Navbar from './components/pages/Navbar';
 import Home from './components/pages/Home';
+// the archive's list, for its projects' routes
+import { ARCHIVE } from './components/pages/projects/archive';
 // loading screen + page-to-page wipe
 import Preloader from './components/common/Preloader';
 import { PageTransitionProvider } from './components/common/PageTransition';
@@ -29,8 +31,7 @@ const PAGES = {
   about: () => import('./components/pages/AboutPage'),
   work: () => import('./components/pages/ProjectsPage'),
   contact: () => import('./components/pages/ContactPage'),
-  // the archive page is hidden for now (its route sends home, below)
-  // archive: () => import('./components/pages/ArchivePage'),
+  archive: () => import('./components/pages/ArchivePage'),
   project: () => import('./components/pages/projects/ProjectPage'),
   dailydiscount: () => import('./components/pages/projects/DailyDiscount'),
   jaysonbeniza: () => import('./components/pages/projects/Jaysonbeniza'),
@@ -40,12 +41,22 @@ const PAGES = {
 const AboutPage = lazy(PAGES.about);
 const ProjectsPage = lazy(PAGES.work);
 const ContactPage = lazy(PAGES.contact);
-// const ArchivePage = lazy(PAGES.archive);
+const ArchivePage = lazy(PAGES.archive);
 const ProjectPage = lazy(PAGES.project);
 const DailyDiscount = lazy(PAGES.dailydiscount);
 const Jaysonbeniza = lazy(PAGES.jaysonbeniza);
 const Jbnza = lazy(PAGES.jbnza);
 const Regain = lazy(PAGES.regain);
+
+// an archived project's page (/archive/<key>): the project page, for a key
+// on the archive's list with a page (archive.js); any other sends to the
+// archive
+function ArchiveProject() {
+  const { id } = useParams();
+  return ARCHIVE.some((item) => item.id === id && !item.title)
+    ? <ProjectPage id={id} key={id}/>
+    : <Navigate to='/archive' replace/>;
+}
 
 // re-measures every ScrollTrigger against the new route's content height,
 // and resets scroll to the top, whenever the page changes. Goes through
@@ -240,8 +251,8 @@ function App() {
                 <Route path='/' element={<Home/>}/>
                 <Route path='/about' element={<AboutPage/>}/>
                 <Route path='/work' element={<ProjectsPage/>}/>
-                {/* the archive page is hidden for now */}
-                <Route path='/archive' element={<Navigate to='/' replace/>}/>
+                <Route path='/archive' element={<ArchivePage/>}/>
+                <Route path='/archive/:id' element={<ArchiveProject/>}/>
                 <Route path='/get-in-touch' element={<ContactPage/>}/>
                 {/* the routes' earlier names */}
                 <Route path='/projects' element={<Navigate to='/work' replace/>}/>

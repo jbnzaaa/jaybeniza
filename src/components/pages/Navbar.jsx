@@ -16,6 +16,7 @@ import Button from '../common/Button'
 import SplitText from '../common/SplitText'
 // the projects on the work page, counted beside its link
 import { SHOWN } from './projects/shown'
+import { ARCHIVE } from './projects/archive'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 // every destination. from tablet width up they are all in the bar itself;
@@ -25,8 +26,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 // the number of projects on it (`count`), small in its upper right
 const NAV_LINKS = [
   { label: 'Work', count: SHOWN.length, to: '/work' },
-  // hidden for now, with its page (App.jsx)
-  // { label: 'Archive', to: '/archive' },
+  { label: 'Archive', count: ARCHIVE.length, to: '/archive' },
   { label: 'About', to: '/about' },
   { label: 'Download CV', href: Resume, download: 'Jay-Beniza-CV.pdf' },
 ];

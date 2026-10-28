@@ -124,7 +124,8 @@
   overflow: hidden;
   display: inline-flex;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 0.375rem 0.75rem;
+  line-height: 1;
   border: 1px solid var(--button-bg, var(--text));
   background: var(--button-bg, var(--text));
   color: var(--button-text, var(--ground));
@@ -171,8 +172,79 @@
   color: var(--sweep-text);
 }
 
+/* the label's clip box, centred on its capitals: in MonoLisa they run
+   from .105em to .805em of the line, so the usual 1.15em box
+   (.split-letter-clip) sat them above the arrow beside them. .91em puts
+   their middle in the box's middle, still holding every letter */
+* body .cta-button .split-letter-clip {
+  height: 0.91em;
+}
+
+/* a Button's own icon (a react-icons one, or the pixel bug) is drawn in
+   the button's text colour, every part of it, as its label is - also
+   while the hover fill swaps the colours */
+* body .cta-button .button-glyph,
+* body .cta-button .button-glyph rect {
+  color: inherit;
+  fill: currentColor;
+}
+
+/* (a react-icons icon carries an empty box behind its shape, left
+   unfilled - filled, the icon showed as a solid square) */
+* body .cta-button .button-glyph path[fill='none'] {
+  fill: none;
+}
+
+/* a Button's own icon in place of the arrow wiggles on hover */
+@media (any-hover: hover) {
+  * body .cta-button:hover .button-glyph {
+    animation: glyph-wiggle 0.5s ease-in-out;
+  }
+}
+
+@keyframes glyph-wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-14deg); }
+  60% { transform: rotate(10deg); }
+}
+
+/* a Button with no link is a <button> (Button.jsx) */
+* body button.cta-button {
+  cursor: pointer;
+}
+
+/* the kerning test (KerningGame.jsx). the word's letters rise in through
+   a box that clips only above and below, so a letter dragged sideways is
+   never cut; the faint letters behind show where they belong */
+* body .kerning-letter-clip {
+  display: inline-block;
+  clip-path: inset(0 -50% 0 -50%);
+  white-space: nowrap;
+}
+
+* body .kerning-ghost {
+  color: var(--muted);
+  opacity: .5;
+  white-space: nowrap;
+}
+
+* body .kerning-movable {
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+* body .kerning-movable:active {
+  cursor: grabbing;
+}
+
+* body .kerning-movable:focus-visible {
+  outline: 1px dashed var(--muted);
+  outline-offset: 0.05em;
+}
+
 * body .cta-button-icon {
-  padding: 0.5rem;
+  padding: 0.375rem;
 }
 
 * body .tag {
@@ -610,6 +682,15 @@
   position: relative;
 }
 
+/* the logo's word clip box is as wide as its letters, and shaved their
+   outer edges: a little room each side, given back in the margin so the
+   logo keeps its place */
+* body .logo .split-letter-clip {
+  padding: 0 0.08em;
+  margin-left: -0.08em;
+  margin-right: -0.08em;
+}
+
 * body .link-container {
   position: relative;
 }
@@ -861,17 +942,6 @@
   transform: scale(1.15);
 }
 
-/* the archive's pictures start hidden under their bottom edge and slightly
-   large, as a case study's screenshots do (ArchivePage.jsx) */
-* body .archive-item {
-  overflow: hidden;
-  clip-path: inset(100% 0% 0% 0%);
-}
-
-* body .archive-item img {
-  transform: scale(1.15);
-}
-
 * body .account-container {
   position: relative;
   height: auto;
@@ -944,7 +1014,7 @@
   }
 }
 * body .cta-button-small {
-  padding: 0.5rem 1rem;
+  padding: 0.375rem 0.75rem;
 }
 
 * body .cta-button .button-arrow {

@@ -1,7 +1,8 @@
 //
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 // Components
 import Contact from './Contact';
+import WorkGrid from './WorkGrid';
 // project content
 import { PROJECTS } from './projects/projects'
 import { SHOWN } from './projects/shown'
@@ -9,12 +10,12 @@ import { SHOWN } from './projects/shown'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import ScrollSmoother from 'gsap/ScrollSmoother'
-// page-to-page wipe
-import { TransitionLink } from '../common/PageTransition'
 // scroll reveal
-import { scrollReveal, REVEAL_AT, inTurn } from '../../utils/scrollReveal'
+import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// the button down to what is below the first screen
+import ScrollCue from '../common/ScrollCue'
 // the tab's title
 import { usePageTitle } from '../../utils/pageTitle'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
@@ -45,9 +46,8 @@ const ITEMS = [
     to: PROJECTS[id].path,
     cover: COVERS[id],
     picture: COVERS[id] ? null : (PROJECTS[id].cover || PROJECTS[id].screenshots?.[0]?.src),
-    note: PROJECTS[id].caseStudy || PROJECTS[id].inProgress ? 'Case study' : 'Project',
-    // still being worked on: a case study not written up yet
-    ongoing: !!PROJECTS[id].inProgress,
+    // nothing to show yet: a case study not written up yet, or a preview to come
+    empty: PROJECTS[id].inProgress ? ['Ongoing project', 'Case study in progress'] : [PROJECTS[id].title, 'Preview coming soon'],
     // what the cursor says over the card: what pressing it opens
     action: PROJECTS[id].caseStudy || PROJECTS[id].inProgress ? 'View case study' : 'View project',
   })),
@@ -55,27 +55,9 @@ const ITEMS = [
     key: `upcoming-${i}`,
     title: `Case study 0${i + 1}`,
     label: 'Soon / Case study in progress',
-    note: 'Coming soon',
+    empty: [`Case study 0${i + 1}`, 'Preview coming soon'],
   })),
 ];
-
-// where each project sits on the six column grid, in turn: the column it
-// starts on and how many it spans. every project has a grid row to
-// itself, so no card reaches into another's. on a phone every project is
-// the full width (.work-item, App.css)
-const PLACES = [
-  '1 / span 3',
-  '4 / span 3',
-  '2 / span 3',
-  '1 / span 2',
-  '3 / span 3',
-  '5 / span 2',
-  '2 / span 3',
-];
-const place = (i) => ({
-  '--col': PLACES[i % PLACES.length],
-  gridRow: i + 1,
-});
 
 const HEADLINE_LINES = [
   'Design work,',
@@ -88,64 +70,19 @@ const DESCRIPTION = 'UX case studies and shipped products, each showing how I mo
  * The work page (route /work), in the landing page's layout: a first
  * screen with the headline and, along its foot, a short description
  * (lower left),
- * then every project on a six column grid, newest year first - each in a
- * row of its own and in a different place across it. A project is its
- * card - the cover - with its name and its label (year / category)
- * under it, outside the card; they rise as the card scrolls into view.
+ * then every project as a card on the six column grid (WorkGrid.jsx),
+ * newest year first, with its name and its label (year / category)
+ * under it.
  */
 function ProjectsPage() {
   usePageTitle('Work');
-  const fxGrid = useRef();
 
   useEffect(() => {
-    const section = fxGrid.current;
-    // a cover's picture settling into its frame as the frame opens
-    const settle = { yPercent: 0, scale: 1, ease: 'power2.out' };
-    // the pictures start slightly large and low in their frames
-    const covers = gsap.set(gsap.utils.toArray('.work-cover-image', section), { yPercent: 14, scale: 1.15 });
-
     // the first screen is in view at load, so its reveal is triggered off
     // the section itself
     const intro = scrollReveal('#animate-projects-page', { y: 0, stagger: .02, ease: 'power1.in' },
       { trigger: '#projects-hero', start: 'top bottom' });
-
-    // each project as it comes up the screen: the card wipes open from
-    // its bottom edge, the picture easing down to size inside it
-    // (each in its turn among the page's reveals - scrollReveal.js)
-    const reveals = gsap.utils.toArray('.work-item', section).map((item) => {
-      const wipe = gsap.timeline({ paused: true })
-        .to(item.querySelector('.work-cover'), { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.out', duration: 1 }, 0)
-        .to(item.querySelector('.work-cover-image'), { ...settle, duration: 1.2 }, 0);
-      const turn = inTurn(wipe, item);
-      const trigger = ScrollTrigger.create({ trigger: item, start: REVEAL_AT, onEnter: () => turn.play(), onLeaveBack: () => turn.reverse() });
-      return { wipe, turn, trigger };
-    });
-
-    // its name and label rise on a trigger of their own: when they have
-    // come on screen themselves - by which time the whole cover over them
-    // is showing. (on the card's trigger they rose with the cover's first
-    // edge, a screen before anyone had scrolled down to them)
-    const texts = gsap.utils.toArray('.work-item-info', section).map((info) => {
-      const rise = gsap.to(info.querySelectorAll('.split-letter'), { y: 0, duration: .7, stagger: { amount: .35 }, ease: 'power2.out', paused: true });
-      const turn = inTurn(rise, info);
-      const trigger = ScrollTrigger.create({ trigger: info, start: 'top 92%', onEnter: () => turn.play(), onLeaveBack: () => turn.reverse() });
-      return { rise, turn, trigger };
-    });
-
-    return () => {
-      intro.kill();
-      reveals.forEach(({ wipe, turn, trigger }) => {
-        trigger.kill();
-        turn.kill();
-        wipe.revert();
-      });
-      covers.revert();
-      texts.forEach(({ rise, turn, trigger }) => {
-        trigger.kill();
-        turn.kill();
-        rise.revert();
-      });
-    };
+    return () => intro.kill();
   }, []);
 
   return (
@@ -166,7 +103,8 @@ function ProjectsPage() {
             </span>
           ))}
         </h1>
-        <div className='flex justify-between items-end gap-x-6'>
+        <div className='flex justify-between items-end gap-x-6
+          mobile:flex-col mobile:items-start mobile:gap-y-8'>
           <p className='flex flex-wrap text-caption
             mobile:w-[78%]
             tablet:w-[52%]
@@ -175,14 +113,14 @@ function ProjectsPage() {
             desktop:w-[28%]'>
             <SplitText text={DESCRIPTION} id='animate-projects-page' by='word' />
           </p>
-          {/* scroll cue, along the bottom on the right */}
-          <p className='flex flex-wrap shrink-0 text-caption'>
-            <SplitText text='Scroll down' id='animate-projects-page' by='word' />
-          </p>
+          {/* the way down to the projects, along the bottom on the right */}
+          <div className='shrink-0'>
+            <ScrollCue label='Scroll to explore' />
+          </div>
         </div>
       </section>
       {/* the projects - six columns; each one's place on them is in
-        PLACES above (.work-grid, App.css) */}
+        WorkGrid.jsx (.work-grid, App.css) */}
       {/* (pulled up a pixel over the first screen: the two are one light
         ground, and a sub-pixel gap between them let the dark page show
         through as a hairline) */}
@@ -191,48 +129,8 @@ function ProjectsPage() {
         tablet:px-[1rem] tablet:pt-8 tablet:pb-16
         laptop:px-[2rem] laptop:pt-8 laptop:pb-20
         laptop-lg:px-[3rem] laptop-lg:pt-8 laptop-lg:pb-24
-        desktop:px-[3rem] desktop:pt-8 desktop:pb-28'
-        ref={fxGrid}>
-        <ul className='work-grid'>
-          {ITEMS.map(({ key, title, label: text, to, cover, picture, note, ongoing, action }, i) => {
-            const item = (
-              <>
-                {/* the card - the cover. wipes open on scroll (start
-                  state: .work-cover, App.css) */}
-                <div className='work-cover overflow-hidden aspect-[4/3]' data-cursor-anchor>
-                  {cover && <div className={`work-cover-image w-full h-full bg-cover bg-center ${cover}`}/>}
-                  {!cover && picture && <div className='work-cover-image w-full h-full bg-cover bg-left-top' style={{ backgroundImage: `url(${picture})` }}/>}
-                  {/* nothing to show yet - says so */}
-                  {!cover && !picture && (
-                    <div className='work-cover-image theme-dark project-empty w-full h-full'>
-                      <p className='text-caption'>{ongoing ? 'Ongoing project' : title}</p>
-                      <p className='text-caption text-muted'>{ongoing ? `${note} in progress` : 'Preview coming soon'}</p>
-                    </div>
-                  )}
-                </div>
-                {/* under the card, outside it: name and label - they rise
-                  once they are on screen themselves, the whole cover
-                  showing over them (the effect above) */}
-                <div className='work-item-info pt-4'>
-                  <h2 className='flex flex-wrap font-flexible font-medium leading-none text-heading'>
-                    <SplitText text={title} id={`animate-work-${key}`} />
-                  </h2>
-                  <p className='flex flex-wrap text-caption text-muted mt-2'>
-                    <SplitText text={text} id={`animate-work-${key}`} by='word' />
-                  </p>
-                </div>
-              </>
-            );
-            return (
-              <li className='work-item m-0' style={place(i)} key={key}>
-                {to
-                  // over a project the cursor says what pressing it does (Cursor.jsx)
-                  ? <TransitionLink to={to} className='block' data-cursor={action} data-no-hover-roll>{item}</TransitionLink>
-                  : item}
-              </li>
-            );
-          })}
-        </ul>
+        desktop:px-[3rem] desktop:pt-8 desktop:pb-28'>
+        <WorkGrid items={ITEMS} />
       </section>
       <Contact/>
     </>

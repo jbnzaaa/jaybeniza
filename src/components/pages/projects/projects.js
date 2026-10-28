@@ -1,10 +1,10 @@
 // Project screenshots
-import dd_landingpage from '../../../assets/files/images/dailydiscount/landing-page.webp'
-import dd_dashboard from '../../../assets/files/images/dailydiscount/dashboard-page.webp'
-import dd_heroes_skins from '../../../assets/files/images/dailydiscount/heroes-&-skins-page.webp'
-import dd_price from '../../../assets/files/images/dailydiscount/price-page.webp'
-import dd_order_details from '../../../assets/files/images/dailydiscount/order-details-page.webp'
-import dd_cart from '../../../assets/files/images/dailydiscount/cart-page.webp'
+import dd_landingpage from '../../../assets/files/images/archive/dailydiscount/landing-page.webp'
+import dd_dashboard from '../../../assets/files/images/archive/dailydiscount/dashboard-page.webp'
+import dd_heroes_skins from '../../../assets/files/images/archive/dailydiscount/heroes-&-skins-page.webp'
+import dd_price from '../../../assets/files/images/archive/dailydiscount/price-page.webp'
+import dd_order_details from '../../../assets/files/images/archive/dailydiscount/order-details-page.webp'
+import dd_cart from '../../../assets/files/images/archive/dailydiscount/cart-page.webp'
 import jaysonbeniza_mockup_cover from '../../../assets/files/images/portfolio/jaysonbeniza-mockup-cover.webp'
 import jaysonbeniza_hero from '../../../assets/files/images/portfolio/jaysonbeniza-landing-page-1.webp'
 import jaysonbeniza_about from '../../../assets/files/images/portfolio/jaysonbeniza-landing-page-2.webp'
@@ -117,6 +117,40 @@ import pci_cards from '../../../assets/files/images/pci/screen-cards.webp'
 import pci_menus from '../../../assets/files/images/pci/screen-menus.webp'
 import pci_navigations from '../../../assets/files/images/pci/screen-navigations.webp'
 import pci_dialogs from '../../../assets/files/images/pci/screen-dialogs.webp'
+
+// an archived project's pictures, found at build time in its own folder,
+// src/assets/files/images/archive/<key>: the one with cover in its name
+// (cover, mockup cover) is its cover, and cover-card a smaller copy of it
+// for its card on the archive page,
+// and the rest are its screens, in the order of their file names. a
+// phone screen (named phone-01-..., phone-02-...) joins the others of its
+// project in one row of phones, after the first screen; the first screen
+// is full width, and the rest step across the grid as the other
+// projects' do. with none, panels stand in
+const ARCHIVE_FOLDER = require.context('../../../assets/files/images/archive', true, /\.(jpe?g|png|webp|avif|gif)$/i);
+const SHOT_STARTS = [2, 4, 1, 3];
+export const archivePictures = (key) => {
+  const files = ARCHIVE_FOLDER.keys().filter((file) => file.startsWith(`./${key}/`)).sort();
+  const name = (file) => file.split('/').pop().replace(/\.[^.]+$/, '');
+  const picture = (file) => ({
+    src: ARCHIVE_FOLDER(file),
+    alt: name(file).replace(/^(phone-)?\d+[-_ ]*/, '').replace(/[-_]+/g, ' '),
+  });
+  const card = files.find((file) => /cover-card/i.test(name(file)));
+  const cover = files.find((file) => file !== card && /cover/i.test(name(file)));
+  const phones = files.filter((file) => name(file).startsWith('phone-')).map(picture);
+  const [first, ...rest] = files.filter((file) => file !== cover && file !== card && !name(file).startsWith('phone-'));
+  const screens = [
+    first && { ...picture(first), start: 'full' },
+    phones.length > 0 && { phones, alt: `${key} screens` },
+    ...rest.map((file, i) => ({ ...picture(file), start: SHOT_STARTS[i % SHOT_STARTS.length] })),
+  ].filter(Boolean);
+  return {
+    cover: cover && ARCHIVE_FOLDER(cover),
+    card: card && ARCHIVE_FOLDER(card),
+    screenshots: cover ? [{ src: ARCHIVE_FOLDER(cover), alt: 'Cover', start: 'full' }, ...screens] : [undefined, ...screens],
+  };
+};
 
 // content for the project pages (ProjectPage.jsx). a screenshot's `start` is
 // the grid column it begins on from laptop width up, where it spans five
@@ -635,5 +669,128 @@ export const PROJECTS = {
       { src: pci_navigations, alt: 'Central App navigation', start: 1 },
       { src: pci_dialogs, alt: 'Central App dialogs', start: 3 },
     ],
+  },
+  // the archive (archive.js): earlier design explorations and redesigns,
+  // laid out as builds - the hero, with the link to the full project on
+  // Behance where there is one, the cover and the screens. their
+  // pictures are in their own folders (archivePictures, above)
+  'crit': {
+    path: '/archive/crit',
+    title: 'Crit',
+    year: '2023',
+    description: 'A mobile app concept designed to connect cyclists with local criterium races. The platform helps riders discover events, participate in competitions, and track their progress throughout their cycling journey.',
+    category: 'Design Exploration / Personal Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    link: { href: 'https://www.behance.net/gallery/161889745/Crit', label: 'View on Behance' },
+    ...archivePictures('crit'),
+  },
+  'aestherior': {
+    path: '/archive/aestherior',
+    title: 'Aestherior',
+    year: '2023',
+    description: 'A landing page concept for an interior design firm showcasing its comprehensive services, including space planning, interior design, site coordination, and furnishing consultations.',
+    category: 'Design Exploration / Personal Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    link: { href: 'https://www.behance.net/gallery/160831341/Aestherior-Interior-Design-Firm', label: 'View on Behance' },
+    ...archivePictures('aestherior'),
+  },
+  'regain-redesign': {
+    path: '/archive/regain-redesign',
+    title: 'Regain Redesign',
+    year: '2022',
+    description: "A UI/UX redesign of our college capstone project, focused on improving the platform's usability and accessibility for students seeking emotional support and someone to talk to.",
+    category: 'UI/UX Redesign / Personal Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    link: { href: 'https://www.behance.net/gallery/159179257/Regain-Dashboard-UI-Redesign', label: 'View on Behance' },
+    ...archivePictures('regain-redesign'),
+  },
+  'iscan': {
+    path: '/archive/iscan',
+    title: 'iScan',
+    year: '2022',
+    description: 'A mobile ordering app concept that simplifies the dining experience through QR code-based menus, allowing customers to browse available items and place orders digitally.',
+    category: 'Design Exploration / Personal Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    link: { href: 'https://www.behance.net/gallery/149064883/iSCAN', label: 'View on Behance' },
+    ...archivePictures('iscan'),
+  },
+  'handledare': {
+    path: '/archive/handledare',
+    title: 'Handledare',
+    year: '2022',
+    description: 'A language-learning website concept designed to help users learn Swedish through an accessible and intuitive digital experience, making the learning process more convenient and engaging.',
+    category: 'Design Exploration / Personal Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    link: { href: 'https://www.behance.net/gallery/147330477/Handledare', label: 'View on Behance' },
+    ...archivePictures('handledare'),
+  },
+  'archstone': {
+    path: '/archive/archstone',
+    title: 'Archstone',
+    year: '2022',
+    description: 'A real estate website concept designed to simplify property discovery, buying, selling, and renting through an intuitive browsing experience.',
+    category: 'Design Exploration / Personal Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    ...archivePictures('archstone'),
+  },
+  'nba-redesign': {
+    path: '/archive/nba-redesign',
+    title: 'NBA Redesign',
+    year: '2022',
+    description: 'A conceptual redesign of the 2022 NBA website, focused on improving navigation and making game previews, match information, and basketball updates easier to access.',
+    category: 'UI/UX Redesign / Personal Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    link: { href: 'https://www.behance.net/gallery/146697645/NBA-UI-Redesign', label: 'View on Behance' },
+    ...archivePictures('nba-redesign'),
+  },
+  'codygo': {
+    path: '/archive/codygo',
+    title: 'CodyGo',
+    year: '2022',
+    description: 'A portfolio website concept for a digital agency, designed to showcase its creative services and technology-driven solutions through a modern digital experience.',
+    category: 'Design Exploration / Personal Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    link: { href: 'https://www.behance.net/gallery/144898247/CodyGo', label: 'View on Behance' },
+    ...archivePictures('codygo'),
+  },
+  'wonderlad': {
+    path: '/archive/wonderlad',
+    title: 'Wonderlad',
+    year: '2022',
+    description: 'A travel landing page concept designed to showcase popular destinations across the Philippines, helping travelers discover places to explore and find inspiration for their next trip.',
+    category: 'Design Exploration / Personal Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    link: { href: 'https://www.behance.net/gallery/144895487/Wonderlad', label: 'View on Behance' },
+    ...archivePictures('wonderlad'),
+  },
+  'cryptostorage': {
+    path: '/archive/cryptostorage',
+    title: 'Cryptostorage',
+    year: '2022',
+    description: 'A cryptocurrency wallet app concept designed to help users manage their digital assets, monitor market movements, and access wallet information through a streamlined mobile interface.',
+    category: 'Design Exploration / Personal Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    link: { href: 'https://www.behance.net/gallery/144892141/Crypstorage', label: 'View on Behance' },
+    ...archivePictures('cryptostorage'),
+  },
+  'artisan': {
+    path: '/archive/artisan',
+    title: 'Artisan',
+    year: '2022',
+    description: 'A website concept for Artisan, a construction company, designed across desktop, tablet, and mobile to present its services and projects through a clear, responsive browsing experience.',
+    category: 'Design Exploration / Personal Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    ...archivePictures('artisan'),
   },
 };

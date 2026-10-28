@@ -21,7 +21,8 @@ export const BUTTON_PARTS = '.split-letter, .menu-icon';
  * (App.css decides, from the section's theme), or an outline with
  * `outline`; on hover its colours swap, the new fill sweeping up from the bottom.
  *
- * It is a page link (`to`) or an ordinary link (`href`).
+ * It is a page link (`to`), an ordinary link (`href`), or, with
+ * neither, a button that runs `onClick`.
  *
  * @param {string} label - also the accessible name when `iconOnly`
  * @param {string} [to] - a route; goes through the page wipe
@@ -31,6 +32,8 @@ export const BUTTON_PARTS = '.split-letter, .menu-icon';
  * @param {boolean} [small] - marks the top bar's button, which drops its
  *   arrow on a phone
  * @param {boolean} [iconOnly] - the arrow alone, in a square box
+ * @param {Function} [icon] - the icon in place of the arrow (a react-icons
+ *   component); it wiggles on hover instead of passing through
  * @param {boolean} [outline] - a bordered box with no fill, for the top bar
  *   and the landing hero
  * @param {'scroll'|'mount'|'manual'} [reveal] - when it reveals: as it
@@ -39,7 +42,7 @@ export const BUTTON_PARTS = '.split-letter, .menu-icon';
  *   `#id` (the box's clip-path) and the BUTTON_PARTS inside it
  * @param {string} [id] - needed for `reveal='manual'`
  */
-function Button({ label, to, href, external = false, download, small = false, iconOnly = false, outline = false, reveal = 'scroll', id, onClick }) {
+function Button({ label, to, href, external = false, download, small = false, iconOnly = false, outline = false, icon: Icon, reveal = 'scroll', id, onClick }) {
   const fxButton = useRef();
 
   useEffect(() => {
@@ -70,12 +73,19 @@ function Button({ label, to, href, external = false, download, small = false, ic
       {iconOnly ? <span className='sr-only'>{label}</span> : <SplitText text={label} id='button-letter' />}
       <span className='menu-icon-clip' aria-hidden='true'>
         <span className='menu-icon'>
-          <RiArrowRightDownLine className={iconOnly ? 'button-arrow text-base' : 'button-arrow ml-2 text-base'}/>
+          {Icon
+            ? <Icon className={iconOnly ? 'button-glyph text-base' : 'button-glyph ml-1.5 text-base'}/>
+            : <RiArrowRightDownLine className={iconOnly ? 'button-arrow text-base' : 'button-arrow ml-1.5 text-base'}/>}
         </span>
       </span>
     </>
   );
 
+  if (!to && !href) {
+    return (
+      <button type='button' className={className} id={id} ref={fxButton} onClick={onClick}>{content}</button>
+    );
+  }
   if (to) {
     return (
       <TransitionLink to={to} onClick={onClick} className={className} id={id} ref={fxButton}>{content}</TransitionLink>

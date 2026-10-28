@@ -1,79 +1,75 @@
 //
-import React, { useEffect, useRef, useCallback } from 'react'
+import React, { useEffect } from 'react'
 // Components
 import Contact from './Contact';
-// GSAP
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
+import WorkGrid from './WorkGrid';
+// the archive's projects
+import { ARCHIVE } from './projects/archive'
+import { PROJECTS, archivePictures } from './projects/projects'
 // scroll reveal
-import { scrollReveal, scrollRevealSequence } from '../../utils/scrollReveal'
+import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// the button down to what is below the first screen
+import ScrollCue from '../common/ScrollCue'
 // the tab's title
 import { usePageTitle } from '../../utils/pageTitle'
-gsap.registerPlugin(ScrollTrigger)
 
-// every picture in the archive folder, found at build time: drop a .jpg,
-// .png, .webp, .avif or .gif into src/assets/files/images/archive and it
-// is on the page. they are shown in the order of their file names, so a
-// number in front (01-, 02-) sets the order. the file name, without its
-// number and extension, is the picture's description
-const FOLDER = require.context('../../assets/files/images/archive', false, /\.(jpe?g|png|webp|avif|gif)$/i);
-const IMAGES = FOLDER.keys().sort().map((file) => ({
-  src: FOLDER(file),
-  alt: file.replace(/^\.\//, '').replace(/\.[^.]+$/, '').replace(/^\d+[-_ ]*/, '').replace(/[-_]+/g, ' '),
-}));
+// the cards: the work page's. one with a page (projects.js) opens it, with
+// its label as on the work page (year / type / role) and its cover; one
+// with no page yet opens nothing, its label is year / what it is, and its
+// picture is the first in its folder, if it has one (archivePictures)
+const ITEMS = ARCHIVE.map(({ id, title, year }) => {
+  const project = PROJECTS[id];
+  if (project) {
+    return {
+      key: `archive-${id}`,
+      title: project.title,
+      label: [project.year, project.category.split(' / ')[0], project.roles[0]].join(' / '),
+      to: project.path,
+      action: 'View project',
+      picture: project.card || project.cover || project.screenshots?.[0]?.src,
+      empty: [project.title, 'Preview coming soon'],
+    };
+  }
+  return {
+    key: `archive-${id}`,
+    title,
+    label: `${year} / UI/UX Design`,
+    picture: (({ card, cover, screenshots }) => card || cover || screenshots[1]?.src || screenshots[1]?.phones?.[0].src)(archivePictures(id)),
+    empty: [title, 'Preview coming soon'],
+  };
+});
 
 const HEADLINE_LINES = [
-  'Moments outside',
-  'the case studies.',
+  'Earlier work,',
+  'explored and kept.',
 ];
 
-const DESCRIPTION = 'Snapshots of the work, the events and the people around it.';
+const DESCRIPTION = 'App concepts, website explorations, and redesigns, each an earlier study in layout, type, and interaction.';
 
 /**
- * The archive page (route /archive): a first screen like the work page's,
- * with the headline and, along its foot, a short description (lower left)
- * and the scroll cue (lower right), then every picture in the archive
- * folder in columns, each at its own height. A picture wipes up from its
- * bottom edge as it scrolls into view.
+ * The archive page (route /archive), in the work page's layout: a first
+ * screen with the headline and, along its foot, a short description
+ * (lower left), then every archived
+ * project as a card on the six column grid (WorkGrid.jsx), with its name
+ * and its label (year / UI/UX Design) under it.
  */
 function ArchivePage() {
   usePageTitle('Archive');
-  const fxGrid = useRef();
-
-  // a picture that loads late changes the page's height: the triggers
-  // under it are measured again, once the pictures have settled
-  const remeasure = useCallback(() => {
-    clearTimeout(remeasure.timer);
-    remeasure.timer = setTimeout(() => ScrollTrigger.refresh(), 150);
-  }, []);
 
   useEffect(() => {
     // the first screen is in view at load, so its reveal is triggered off
     // the section itself
     const intro = scrollReveal('#animate-archive-page', { y: 0, stagger: .02, ease: 'power1.in' },
       { trigger: '#archive-hero', start: 'top bottom' });
-
-    // each picture: the frame wipes up from its bottom edge while the
-    // picture inside eases down to its real size (start state:
-    // .archive-item, App.css)
-    const images = gsap.utils.toArray('.archive-item', fxGrid.current).map((item) => scrollRevealSequence([
-      { targets: item, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },
-      { targets: item.querySelector('img'), vars: { scale: 1, ease: 'power2.out' }, position: '<' },
-    ], { trigger: item }));
-
-    return () => {
-      intro.kill();
-      images.forEach((reveal) => reveal.kill());
-    };
+    return () => intro.kill();
   }, []);
 
   return (
     <>
       {/* first screen - headline at the top; along the foot, the
-        description in the lower left and the scroll cue in the lower
-        right. top padding clears the nav bar */}
+        description in the lower left. top padding clears the nav bar */}
       <section id='archive-hero' className='theme-light flex flex-col justify-between min-h-screen-safe
         mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-16
         tablet:px-[1rem] tablet:pt-20 tablet:pb-8 tablet:gap-y-16
@@ -88,7 +84,8 @@ function ArchivePage() {
             </span>
           ))}
         </h1>
-        <div className='flex justify-between items-end gap-x-6'>
+        <div className='flex justify-between items-end gap-x-6
+          mobile:flex-col mobile:items-start mobile:gap-y-8'>
           <p className='flex flex-wrap text-caption
             mobile:w-[78%]
             tablet:w-[52%]
@@ -97,39 +94,22 @@ function ArchivePage() {
             desktop:w-[28%]'>
             <SplitText text={DESCRIPTION} id='animate-archive-page' by='word' />
           </p>
-          {/* scroll cue, along the bottom on the right */}
-          <p className='flex flex-wrap shrink-0 text-caption'>
-            <SplitText text='Scroll down' id='animate-archive-page' by='word' />
-          </p>
+          {/* the way down to the projects, along the bottom on the right */}
+          <div className='shrink-0'>
+            <ScrollCue label='Scroll to explore' />
+          </div>
         </div>
       </section>
-      {/* the pictures - in columns, each at its own height. (pulled up a
-        pixel over the first screen, as on the work page: one light
-        ground, with no hairline between) */}
-      <section className='theme-light relative -mt-px
+      {/* the projects - the work page's grid. (pulled up a pixel over the
+        first screen, as on the work page: one light ground, with no
+        hairline between) */}
+      <section id='archive-projects' className='theme-light relative -mt-px
         mobile:px-[1rem] mobile:pt-8 mobile:pb-16
         tablet:px-[1rem] tablet:pt-8 tablet:pb-16
         laptop:px-[2rem] laptop:pt-8 laptop:pb-20
         laptop-lg:px-[3rem] laptop-lg:pt-8 laptop-lg:pb-24
-        desktop:px-[3rem] desktop:pt-8 desktop:pb-28'
-        ref={fxGrid}>
-        {IMAGES.length ? (
-          <ul className='gap-x-6
-            mobile:columns-1
-            tablet:columns-2
-            laptop:columns-3
-            laptop-lg:columns-3
-            desktop:columns-4'>
-            {IMAGES.map(({ src, alt }) => (
-              <li className='archive-item m-0 mb-6 break-inside-avoid' key={src}>
-                <img src={src} alt={alt} loading='lazy' className='block w-full h-auto' onLoad={remeasure}/>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          // nothing in the folder yet - says so
-          <p className='text-caption text-muted'>No pictures yet.</p>
-        )}
+        desktop:px-[3rem] desktop:pt-8 desktop:pb-28'>
+        <WorkGrid items={ITEMS} />
       </section>
       <Contact/>
     </>

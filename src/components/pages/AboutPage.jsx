@@ -18,6 +18,8 @@ import { pixelToggle } from '../../utils/pixels'
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// the button down to what is below the first screen
+import ScrollCue from '../common/ScrollCue'
 // the tab's title
 import { usePageTitle } from '../../utils/pageTitle'
 
@@ -207,11 +209,10 @@ function AboutPage() {
             ))}
           </div>
         </div>
-        {/* scroll cue, along the bottom on the right */}
+        {/* the way down to my process, the next section, along the bottom
+          on the right */}
         <div className='relative z-10 flex justify-end'>
-          <p className='flex flex-wrap text-caption'>
-            <SplitText text='Scroll down' id='animate-about-intro' by='word' />
-          </p>
+          <ScrollCue label='Scroll to explore' />
         </div>
       </section>
       {/* how I work */}
