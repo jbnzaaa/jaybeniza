@@ -9,6 +9,8 @@ import { TransitionLink } from '../common/PageTransition'
 import { REVEAL_AT, inTurn, revealTrigger } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// the covers open in pixels
+import { pixelReveal } from '../../utils/pixels'
 gsap.registerPlugin(ScrollTrigger)
 
 // where each card sits on the six column grid, in turn: the column it
@@ -51,12 +53,12 @@ function WorkGrid({ items }) {
     // the pictures start slightly large and low in their frames
     const covers = gsap.set(gsap.utils.toArray('.work-cover-image', section), { yPercent: 14, scale: 1.15 });
 
-    // each card as it comes up the screen: it wipes open from its bottom
-    // edge, the picture easing down to size inside it
+    // each card as it comes up the screen: it opens in pixels from its
+    // bottom edge up, the picture easing down to size inside it
     // (each in its turn among the page's reveals - scrollReveal.js)
     const reveals = gsap.utils.toArray('.work-item', section).map((item) => {
       const wipe = gsap.timeline({ paused: true })
-        .to(item.querySelector('.work-cover'), { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.out', duration: 1 }, 0)
+        .add(pixelReveal(item.querySelector('.work-cover'), { duration: 1 }), 0)
         .to(item.querySelector('.work-cover-image'), { ...settle, duration: 1.2 }, 0);
       const turn = inTurn(wipe, item);
       const trigger = revealTrigger(item, REVEAL_AT, turn);

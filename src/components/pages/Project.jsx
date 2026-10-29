@@ -13,6 +13,8 @@ import Button from '../common/Button'
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// the pictures open in pixels
+import { pixelReveal, pixelToggle } from '../../utils/pixels'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -32,6 +34,8 @@ function Project() {
   const fxPreview = useRef();
   // the project whose image the preview is showing
   const [shown, setShown] = useState(null);
+  // the preview opens and shuts in pixels (pixels.js)
+  const fxPixels = useRef(null);
 
   useEffect(() => {
     // each name and its details rise letter by letter as that row scrolls
@@ -42,17 +46,18 @@ function Project() {
 
     // the preview is placed across the row by its centre (left, App.css)
     gsap.set(fxPreview.current, { xPercent: -50 });
+    fxPixels.current = pixelToggle(fxPreview.current);
 
 
     // below laptop width, each row's cover as it comes up the screen: its
-    // frame wipes open from its bottom edge while the picture inside,
+    // frame opens in pixels from its bottom edge up while the picture inside,
     // which starts slightly large and low, eases down to size - the work
     // page's card reveal
     const pictures = gsap.set(gsap.utils.toArray('.project-cover-image', fxList.current), { yPercent: 14, scale: 1.15 });
     // (each in its turn among the page's reveals - scrollReveal.js)
     const covers = gsap.utils.toArray('.project-cover', fxList.current).map((cover) => {
       const open = gsap.timeline({ paused: true })
-        .to(cover, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.out', duration: 1 }, 0)
+        .add(pixelReveal(cover, { duration: 1 }), 0)
         .to(cover.firstElementChild, { yPercent: 0, scale: 1, ease: 'power2.out', duration: 1.2 }, 0);
       const turn = inTurn(open, cover);
       const trigger = revealTrigger(cover, REVEAL_AT, turn);
@@ -68,22 +73,38 @@ function Project() {
         open.revert();
       });
       pictures.revert();
+      fxPixels.current?.kill();
     };
   }, []);
 
-  // the preview moves level with the row under the pointer and wipes open
-  // from its bottom edge, the way the cards do - the recognition list's
-  // reveal. it keeps one place across the row, and one size; leaving the
-  // list closes it
+  // the preview moves level with the row under the pointer and opens in
+  // pixels from its bottom edge up, the way the site's pictures do. it
+  // keeps one place across the row, and one size. moved on to another row
+  // while it is open, it shuts in pixels on the one project, and opens
+  // again on the next; leaving the list closes it
+  const fxOn = useRef(null);
   const show = (project) => (e) => {
     const preview = fxPreview.current;
+    const pixels = fxPixels.current;
     const row = e.currentTarget;
-    setShown(project);
     gsap.to(preview, { y: row.offsetTop + row.offsetHeight / 2 - preview.offsetHeight / 2, duration: .5, ease: 'power3.out' });
-    gsap.to(preview, { clipPath: 'inset(0% 0% 0% 0%)', duration: .4, ease: 'power2.out' });
+    const was = fxOn.current;
+    fxOn.current = project;
+    if (!was || was === project) {
+      setShown(project);
+      pixels?.show(.4);
+      return;
+    }
+    // (only the last row pointed at is the one opened)
+    pixels?.hide(.2).then(() => {
+      if (fxOn.current !== project) return;
+      setShown(project);
+      pixels.show(.35);
+    });
   };
   const hide = () => {
-    gsap.to(fxPreview.current, { clipPath: 'inset(100% 0% 0% 0%)', duration: .3, ease: 'power2.in' });
+    fxOn.current = null;
+    fxPixels.current?.hide(.3);
   };
 
   return (

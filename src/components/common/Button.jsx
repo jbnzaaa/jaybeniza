@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 // icons
-import {RiArrowRightDownLine} from 'react-icons/ri'
+import {RiArrowRightDownLine, RiArrowUpLine} from 'react-icons/ri'
 // GSAP
 import gsap from 'gsap'
 // page-to-page wipe
@@ -34,6 +34,9 @@ export const BUTTON_PARTS = '.split-letter, .menu-icon';
  * @param {boolean} [iconOnly] - the arrow alone, in a square box
  * @param {Function} [icon] - the icon in place of the arrow (a react-icons
  *   component); it wiggles on hover instead of passing through
+ * @param {'down'|'up'} [arrow] - which way the arrow points: down and
+ *   right (the default, as the top bar's), or straight up - drawn and
+ *   moved on hover the same way either way
  * @param {boolean} [outline] - a bordered box with no fill, for the top bar
  *   and the landing hero
  * @param {'scroll'|'mount'|'manual'} [reveal] - when it reveals: as it
@@ -42,7 +45,7 @@ export const BUTTON_PARTS = '.split-letter, .menu-icon';
  *   `#id` (the box's clip-path) and the BUTTON_PARTS inside it
  * @param {string} [id] - needed for `reveal='manual'`
  */
-function Button({ label, to, href, external = false, download, small = false, iconOnly = false, outline = false, icon: Icon, reveal = 'scroll', id, onClick }) {
+function Button({ label, to, href, external = false, download, small = false, iconOnly = false, outline = false, icon: Icon, arrow = 'down', reveal = 'scroll', id, onClick }) {
   const fxButton = useRef();
 
   useEffect(() => {
@@ -77,7 +80,9 @@ function Button({ label, to, href, external = false, download, small = false, ic
           <span className='menu-icon'>
             {Icon
               ? <Icon className='button-glyph text-base'/>
-              : <RiArrowRightDownLine className='button-arrow text-base'/>}
+              : arrow === 'up'
+                ? <RiArrowUpLine className='button-arrow button-arrow-up text-base'/>
+                : <RiArrowRightDownLine className='button-arrow text-base'/>}
           </span>
         </span>
       </span>

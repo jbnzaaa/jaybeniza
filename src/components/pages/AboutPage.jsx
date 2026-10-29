@@ -34,6 +34,20 @@ const INTRO = [
   'I work from research to final interface and stay close to developers through handoff, so the design survives the build. I prefer careful decisions to loud ones, and products that serve both the people who use them and the teams who build them.',
 ];
 
+// no word is left on its own at a line's end or start: a short word (I,
+// I'm, a, to...) is held to the word after it, and a paragraph's last two
+// words are held together, by a no-break space - SplitText keeps a word
+// whole, and splits only at plain spaces
+const SHORT = /^(I'm|I|a|an|to|so|of|in|on|at|by|is|it|my|we|or|and|the|for|with)$/i;
+const tidy = (text) => {
+  const words = text.split(' ').filter(Boolean);
+  return words.reduce((out, word, i) => {
+    if (i === 0) return word;
+    const held = SHORT.test(words[i - 1]) || i === words.length - 1;
+    return `${out}${held ? ' ' : ' '}${word}`;
+  }, '');
+};
+
 // the introduction's first paragraph opens on my name: the words before
 // it, the name (which shows my picture under the pointer), and the rest
 // of that paragraph. the paragraphs after it are set whole
@@ -192,15 +206,18 @@ function AboutPage() {
               laptop:leading-tight
               laptop-lg:leading-tight
               desktop:leading-tight'>
-              <SplitText text={BEFORE} id='animate-about-intro-lead' />
-              {/* my name - point at it (or press it) to see my picture */}
-              <span className='about-name' role='button' tabIndex={0} aria-label='Jay Beniza - show my picture'>
-                <SplitText text={NAME} id='animate-about-intro-lead' />
-                {/* the underline, drawn in by the introduction's reveal */}
-                <span className='about-name-line' aria-hidden='true'/>
+              {/* "I'm", my name and its comma, held on one line */}
+              <span className='inline-flex flex-nowrap whitespace-nowrap'>
+                <SplitText text={BEFORE} id='animate-about-intro-lead' />
+                {/* my name - point at it (or press it) to see my picture */}
+                <span className='about-name' role='button' tabIndex={0} aria-label='Jay Beniza - show my picture'>
+                  <SplitText text={NAME} id='animate-about-intro-lead' />
+                  {/* the underline, drawn in by the introduction's reveal */}
+                  <span className='about-name-line' aria-hidden='true'/>
+                </span>
+                <SplitText text=',' id='animate-about-intro' />
               </span>
-              <SplitText text=',' id='animate-about-intro' />
-              <SplitText text={AFTER} id='animate-about-intro' />
+              <SplitText text={tidy(AFTER)} id='animate-about-intro' />
             </p>
             {INTRO.slice(1).map((paragraph) => (
               <p className='about-paragraph flex flex-wrap
@@ -210,7 +227,7 @@ function AboutPage() {
                 laptop-lg:leading-tight
                 desktop:leading-tight'
                 key={paragraph}>
-                <SplitText text={paragraph} id='animate-about-intro' />
+                <SplitText text={tidy(paragraph)} id='animate-about-intro' />
               </p>
             ))}
           </div>

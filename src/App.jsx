@@ -13,10 +13,14 @@ import Preloader from './components/common/Preloader';
 import { PageTransitionProvider } from './components/common/PageTransition';
 // the square cursor
 import Cursor from './components/common/Cursor';
+// the way back to the top, in the screen's lower right corner
+import ToTop from './components/common/ToTop';
 // button hover
 import { enableHoverRoll } from './utils/hoverRoll';
 // one re-measure of the page a frame, however many ask
 import { refreshSoon } from './utils/scrollReveal';
+// the pixels where one section meets the next
+import { pixelEdges } from './utils/pixelEdges';
 // GSAP
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -87,6 +91,17 @@ function ScrollManager() {
     return () => { live = false; };
   }, [location.pathname]);
 
+  return null;
+}
+
+// where one section meets the next in another colour, the edge in pixels
+// (pixelEdges.js) - laid again on each page
+function PixelEdges() {
+  const location = useLocation();
+  useEffect(() => {
+    const root = document.getElementById('smooth-content');
+    return root ? pixelEdges(root) : undefined;
+  }, [location.pathname]);
   return null;
 }
 
@@ -237,11 +252,13 @@ function App() {
       <Router>
         <PageTransitionProvider>
         <ScrollManager/>
+        {entered && <PixelEdges/>}
         <Cursor/>
         {loading && <Preloader onExitStart={handleExitStart} onDone={handleDone}/>}
         {/* outside the smoother: its transformed content would make
           position: fixed scroll away with the page */}
         {entered && <Navbar/>}
+        {entered && <ToTop/>}
         <div id='smooth-wrapper'>
           <div id='smooth-content'>
             {entered && (
