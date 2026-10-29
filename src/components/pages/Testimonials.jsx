@@ -16,6 +16,8 @@ import sergio from '../../assets/files/images/team/sergio-ramos-iii.jpg'
 import paula from '../../assets/files/images/team/paula-malupa.jpg'
 import richard from '../../assets/files/images/team/richard-ordinario.jpg'
 import prince from '../../assets/files/images/team/prince-bernard-diana.webp'
+// their pictures, in the site's halftone dots
+import HalftoneImage from '../common/HalftoneImage'
 gsap.registerPlugin(ScrollTrigger)
 
 // reviews from the people I work with, in their own words. `quote` is one
@@ -163,7 +165,7 @@ function Testimonials({ dark = false }) {
 
   return (
     <>
-      <section id='testimonials' className={`${dark ? 'bg-surface' : 'theme-light'} flex flex-col h-screen-safe overflow-hidden
+      <section id='testimonials' data-pinned className={`${dark ? 'bg-surface' : 'theme-light'} flex flex-col h-screen-safe overflow-hidden
         mobile:px-[1rem] mobile:pt-16 mobile:pb-4
         tablet:px-[1rem] tablet:pt-16 tablet:pb-8
         laptop:px-[2rem] laptop:pt-20 laptop:pb-10
@@ -206,13 +208,15 @@ function Testimonials({ dark = false }) {
                     laptop:text-subtitle
                     laptop-lg:text-subtitle
                     desktop:text-subtitle'>
-                    <SplitText text={`“${quote.join(' ')}”`} id={`animate-testimonial-${id}`} by='word' />
+                    {/* a thin space inside each mark, so neither sits
+                      against the letter beside it */}
+                    <SplitText text={`“ ${quote.join(' ')} ”`} id={`animate-testimonial-${id}`} by='word' />
                   </p>
                 </blockquote>
-                {/* who said it. the square is their profile picture. it is revealed with
+                {/* who said it. the square is their profile picture, in halftone. it is revealed with
                   the card (start state: .testimonial-avatar, App.css) */}
                 <figcaption className='flex items-center gap-x-4'>
-                  <img className='testimonial-avatar shrink-0 w-12 h-12 object-cover' src={avatar} alt='' loading='lazy'/>
+                  <HalftoneImage className='testimonial-avatar shrink-0 w-12 h-12' src={avatar} cell={2} />
                   {/* centred on the picture. the nudge down is optical: the
                     heading face sits high in its line, which left the
                     pair looking above the picture's middle */}

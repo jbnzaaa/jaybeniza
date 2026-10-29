@@ -28,13 +28,19 @@ const SPREAD = .3;
  *   on it: for as long as this is set, a point travels over the drawing -
  *   from part to part, or a slow figure of eight - and the figure
  *   answers it
+ * @param {boolean} [drawn] - set, the figure is drawn in when this turns
+ *   true and taken up again when it turns false, whatever the scroll: for
+ *   a figure whose turn is decided by its host (the services card)
  */
-function Hairline({ figure, play = false, reveal = true }) {
+function Hairline({ figure, play = false, reveal = true, drawn }) {
   const fxStage = useRef();
   // what the mounted figure handed back
   const fxHandle = useRef();
   // when its reveal will have finished (ms, performance.now's clock)
   const fxReady = useRef(0);
+  // its draw and undraw, for `drawn` to call
+  const fxDraw = useRef(null);
+  const controlled = drawn !== undefined;
 
   useEffect(() => {
     const stage = fxStage.current;
@@ -115,8 +121,12 @@ function Hairline({ figure, play = false, reveal = true }) {
         onComplete: () => gsap.set(stage, { autoAlpha: 0 }),
       });
     };
+    fxDraw.current = { draw, undraw };
     if (!reveal) fxReady.current = 0;
-    else {
+    else if (controlled) {
+      // its host says when (`drawn`, below)
+      if (drawn) draw();
+    } else {
       // drawn when it has come up the screen as far as anything does
       // before it is revealed; undone where its card closes again on the
       // way back up (scrollRevealCards, scrollReveal.js), and drawn again
@@ -130,6 +140,7 @@ function Hairline({ figure, play = false, reveal = true }) {
     }
 
     return () => {
+      fxDraw.current = null;
       wait?.kill();
       back?.kill();
       drawing?.kill();
@@ -141,6 +152,13 @@ function Hairline({ figure, play = false, reveal = true }) {
     // does on arriving, not something to redo if it changes later)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [figure]);
+
+  // drawn and taken up on its host's word, where it has one
+  useEffect(() => {
+    if (!controlled || !reveal) return;
+    if (drawn) fxDraw.current?.draw();
+    else fxDraw.current?.undraw();
+  }, [controlled, reveal, drawn]);
 
   useEffect(() => {
     if (!play) return undefined;

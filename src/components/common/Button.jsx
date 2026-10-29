@@ -66,7 +66,7 @@ function Button({ label, to, href, external = false, download, small = false, ic
     return () => sequence.kill();
   }, [reveal]);
 
-  const className = ['cta-button text-caption', small ? 'cta-button-small' : '', iconOnly ? 'cta-button-icon' : '', outline ? 'cta-button-outline' : '']
+  const className = ['cta-button text-copy', small ? 'cta-button-small' : '', iconOnly ? 'cta-button-icon' : '', outline ? 'cta-button-outline' : '']
     .filter(Boolean).join(' ');
   const content = (
     <>

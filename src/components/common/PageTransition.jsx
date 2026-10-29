@@ -16,7 +16,7 @@ const CLEAR = 1.2;
 // a beat under the pixels: time for the new page to be on screen and
 // scrolled back to its top (the smooth scroller resets a tick after the
 // route changes)
-const settled = () => new Promise((resolve) => { setTimeout(resolve, 250); });
+const settled = (beat = .25) => new Promise((resolve) => { setTimeout(resolve, beat * 1000); });
 
 /**
  * The wipe between pages, in the loading screen's pixels (pixels.js): the
@@ -36,8 +36,10 @@ export function PageTransitionProvider({ children }) {
   const fxCanvas = useRef();
   const busy = useRef(false);
 
-  // `to` is a route, or what to do under the pixels instead of changing page
-  const go = useCallback(async (to, from) => {
+  // `to` is a route, or what to do under the pixels instead of changing
+  // page; `timing` sets the cover, the beat under it and the clear, in
+  // seconds, where a change is smaller than a page (the phone's menu)
+  const go = useCallback(async (to, from, { cover = COVER, beat, clear = CLEAR } = {}) => {
     if (busy.current) return;
     busy.current = true;
     const canvas = fxCanvas.current;
@@ -47,14 +49,14 @@ export function PageTransitionProvider({ children }) {
     const box = from?.getBoundingClientRect?.();
     const origin = box && box.width ? [box.left + box.width / 2, box.top + box.height / 2] : undefined;
 
-    await pixelSweep(canvas, { cover: true, origin, duration: COVER });
+    await pixelSweep(canvas, { cover: true, origin, duration: cover });
     holdReveals();
     if (typeof to === 'function') to();
     else navigate(to);
-    await settled();
+    await settled(beat);
 
     await pixelSweep(canvas, {
-      duration: CLEAR,
+      duration: clear,
       onUpdate: (at) => { if (at >= 1 - COVER_LEFT) releaseReveals(); },
     });
     releaseReveals();
@@ -71,9 +73,10 @@ export function PageTransitionProvider({ children }) {
 }
 
 /**
- * The page wipe for a change on the page itself: `cover(change, from)`
- * covers the page in pixels spreading from `from` (an element), makes
- * the change under them, then clears them as after a change of page.
+ * The page wipe for a change on the page itself: `cover(change, from,
+ * timing)` covers the page in pixels spreading from `from` (an element),
+ * makes the change under them, then clears them as after a change of
+ * page. It resolves once the pixels have cleared.
  */
 export function usePixelCover() {
   return useContext(PageTransitionContext);

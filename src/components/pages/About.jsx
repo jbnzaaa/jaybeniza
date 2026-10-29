@@ -50,23 +50,22 @@ function About() {
       stagger: 1,
       scrollTrigger: { ...scrollTrigger, scrub: true },
     });
-    const mm = gsap.matchMedia();
-    // from laptop width up the section holds the screen from when its top
-    // reaches the top, for a screen and a half of scrolling - the words
-    // turning over that stretch - then moves on
-    mm.add('(min-width: 1024px)', () => {
-      darken({ trigger: section, start: 'top top', end: '+=150%', pin: true });
-    });
-    // below it the section is taller than the screen on some phones, so it
-    // is not pinned: the words turn from when the paragraph's top is 60%
-    // of the way down the screen - after it has risen - to when its foot
-    // is 30% of the way down
-    mm.add('(max-width: 1023px)', () => {
-      darken({ trigger: paragraph, start: 'top 60%', end: 'bottom 30%' });
+    // at every width the section holds the screen for a screen and a half
+    // of scrolling - the words turning over that stretch - then moves on.
+    // it is held from when its top reaches the top; on a phone where it is
+    // taller than the screen, from when its foot reaches the foot instead,
+    // so all of it is on screen while it is held
+    const held = darken({
+      trigger: section,
+      start: () => (section.offsetHeight > window.innerHeight ? 'bottom bottom' : 'top top'),
+      end: '+=150%',
+      pin: true,
+      invalidateOnRefresh: true,
     });
 
     return () => {
-      mm.revert();
+      held.scrollTrigger?.kill();
+      held.revert();
       trigger.kill();
       turn.kill();
       rise.revert();
@@ -75,9 +74,10 @@ function About() {
 
   return (
     <>
-      {/* about container - full width, at least one screen tall from laptop width up */}
+      {/* about container - full width, at least one screen tall: it holds
+        the screen while it is pinned, at every width */}
       <div id='about'>
-        <section className='theme-light flex flex-col justify-between min-h-screen-safe-laptop
+        <section data-pinned className='theme-light flex flex-col justify-between min-h-screen-safe
           mobile:px-[1rem] mobile:py-16 mobile:gap-y-10
           tablet:px-[1rem] tablet:py-16 tablet:gap-y-12
           laptop:px-[2rem] laptop:py-20 laptop:gap-y-12
@@ -91,10 +91,10 @@ function About() {
               their lines, like all text that reveals */}
             <div className='flex flex-col
               mobile:mt-6 mobile:w-full mobile:gap-y-6
-              tablet:mt-8 tablet:w-[80%] tablet:gap-y-8
-              laptop:mt-8 laptop:w-[70%] laptop:gap-y-8
-              laptop-lg:mt-10 laptop-lg:w-[64%] laptop-lg:gap-y-10
-              desktop:mt-10 desktop:w-[60%] desktop:gap-y-10'>
+              tablet:mt-8 tablet:w-[92%] tablet:gap-y-8
+              laptop:mt-8 laptop:w-[86%] laptop:gap-y-8
+              laptop-lg:mt-10 laptop-lg:w-[80%] laptop-lg:gap-y-10
+              desktop:mt-10 desktop:w-[76%] desktop:gap-y-10'>
               {PARAGRAPHS.map((paragraph) => (
                 <p className='about-paragraph about-statement flex flex-wrap font-monolisa
                   mobile:leading-snug

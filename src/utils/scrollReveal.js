@@ -51,6 +51,18 @@ export const REVEAL_AT = 'top 85%';
 // stays as it is, and is revealed again as it comes back up)
 export const REVERSE_AT = 'top bottom';
 
+// ---- reveals inside a pinned section
+// a section that is pinned (About, Areas of Expertise, Testimonials) is
+// marked data-pinned. a trigger inside it has to be told so: measured
+// without it, its place was off by the length of the pin, and scrolling
+// back up took a revealed text back out while it was still on screen
+export const inPin = (trigger) => {
+  const el = gsap.utils.toArray(trigger)[0];
+  // (the pinned section itself, as a trigger, is not inside its own pin)
+  const pinned = el?.parentElement?.closest?.('[data-pinned]');
+  return pinned ? { pinnedContainer: pinned } : {};
+};
+
 /**
  * The site's reveal trigger for a reveal in its turn (inTurn): it plays
  * when its trigger comes up to `start`, and goes back only once the
@@ -62,8 +74,8 @@ export const REVERSE_AT = 'top bottom';
  * @returns {{kill: () => void}}
  */
 export function revealTrigger(trigger, start, turn) {
-  const show = ScrollTrigger.create({ trigger, start, onEnter: () => turn.play() });
-  const hide = ScrollTrigger.create({ trigger, start: REVERSE_AT, onLeaveBack: () => turn.reverse() });
+  const show = ScrollTrigger.create({ trigger, start, onEnter: () => turn.play(), ...inPin(trigger) });
+  const hide = ScrollTrigger.create({ trigger, start: REVERSE_AT, onLeaveBack: () => turn.reverse(), ...inPin(trigger) });
   return { kill() { show.kill(); hide.kill(); } };
 }
 // where a reveal on the default start really starts. something that is
@@ -71,9 +83,15 @@ export function revealTrigger(trigger, start, turn) {
 // foot of a hero, say - is under that line, and would stay hidden until
 // the page was scrolled; it starts as soon as it is on screen instead,
 // which at the top of the page is at once
+// and the same for something in a pinned section that sits low on its
+// screen (About's button, at its foot): held there while the section is
+// pinned, it would not reach the usual line until the pin was over. it
+// starts as soon as it is on screen too - its section's queue still puts
+// it after what is above it
 function startFor(el, start) {
   if (start !== REVEAL_AT) return start;
-  const probe = ScrollTrigger.create({ trigger: el, start: 'top bottom' });
+  if (inPin(el).pinnedContainer) return 'top bottom';
+  const probe = ScrollTrigger.create({ trigger: el, start: 'top bottom', ...inPin(el) });
   const first = probe.start <= 0;
   probe.kill();
   return first ? 'top bottom' : start;
@@ -396,6 +414,7 @@ function buildReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
   const trig = ScrollTrigger.create({
     trigger: trigger || targets,
     start: startFor(trigger || targets, start),
+    ...inPin(trigger || targets),
     onEnter: (self) => {
       tween.duration(totalForVelocity(natural, self.getVelocity()));
       turn.play();
@@ -409,6 +428,7 @@ function buildReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
   const back = ScrollTrigger.create({
     trigger: trigger || targets,
     start: REVERSE_AT,
+    ...inPin(trigger || targets),
     onLeaveBack: (self) => {
       tween.duration(totalForVelocity(natural, self.getVelocity()));
       turn.reverse();
@@ -502,6 +522,7 @@ function buildSequence(stages, { trigger, start = REVEAL_AT, reverseStart } = {}
   const trig = ScrollTrigger.create({
     trigger: trigger || stages[0].targets,
     start: startFor(trigger || stages[0].targets, start),
+    ...inPin(trigger || stages[0].targets),
     onEnter: (self) => turn.play(rate(self.getVelocity())),
     onEnterBack: (self) => turn.play(rate(self.getVelocity())),
   });
@@ -512,6 +533,7 @@ function buildSequence(stages, { trigger, start = REVEAL_AT, reverseStart } = {}
   const back = ScrollTrigger.create({
     trigger: trigger || stages[0].targets,
     start: reverseStart || REVERSE_AT,
+    ...inPin(trigger || stages[0].targets),
     onLeaveBack: (self) => turn.reverse(rate(self.getVelocity())),
   });
 
@@ -570,7 +592,7 @@ export function scrollRevealCards(cards, { group, rowFrom = 1024, scrub = false,
   const scrubbed = (group_, start, end, list) => {
     const tl = gsap.timeline({
       defaults: { ease: 'none' },
-      scrollTrigger: { trigger: group_, start, end, scrub: ScrollTrigger.isTouch ? .5 : true },
+      scrollTrigger: { trigger: group_, start, end, scrub: ScrollTrigger.isTouch ? .5 : true, ...inPin(group_) },
     });
     list.forEach((item, i) => {
       tl.to(item.card, { ...frame, duration: .7 }, i)

@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from 'react'
 // React Router DOM
 import { useLocation } from 'react-router-dom'
 // page-to-page wipe
-import { TransitionLink } from '../common/PageTransition'
+import { TransitionLink, usePixelCover } from '../common/PageTransition'
 // the CV the bar's Download CV link downloads
 import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 // GSAP
@@ -36,6 +36,12 @@ const MENU_LINKS = [...NAV_LINKS, { label: 'Get in touch', to: CONTACT }];
 // the open page is in the full text colour, the others a step back
 const NAV_ITEM = 'nav-item font-monolisa leading-none';
 const NAV_ITEM_IDLE = `${NAV_ITEM} text-muted`;
+// the phone's menu: the same links, set larger, one to a ruled row
+const MENU_ITEM = `${NAV_ITEM} w-full py-5 text-heading`;
+const MENU_ITEM_IDLE = `${MENU_ITEM} text-muted`;
+// the menu opens and closes under the page wipe's pixels, played quicker:
+// cover, the beat under them, clear - in seconds
+const MENU_WIPE = { cover: .5, beat: .05, clear: .6 };
 
 // what is shown from tablet width up, and what only on a phone
 const FROM_TABLET = 'mobile:hidden';
@@ -58,13 +64,29 @@ const BAR = `
  * button is part of that too: a filled box that inverts with the logo.
  *
  * On a phone the links and the contact button give way to the word
- * "Menu" in the bar, which opens a panel over the page with all four in
- * it and reads "Close" while it is open.
+ * "Menu" in the bar, which opens a panel over the page with all of them
+ * in it, set as in the bar, and reads "Close" while it is open. The panel
+ * opens and closes under the page wipe's pixels, spreading from the word.
  */
 function Navbar() {
   const fxBar = useRef();
+  const fxMenu = useRef();
   const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const pixelCover = usePixelCover();
+  const toggleMenu = (e) => pixelCover(() => setMenuOpen((open) => !open), e.currentTarget, MENU_WIPE);
+
+  // the menu's links rise in as the pixels clear off it, as a page's
+  // text does; closed, they are back out of sight
+  useEffect(() => {
+    const letters = fxMenu.current.querySelectorAll('.split-letter');
+    if (!menuOpen) {
+      gsap.set(letters, { clearProps: 'transform' });
+      return undefined;
+    }
+    const rise = gsap.to(letters, { y: 0, duration: .5, ease: 'power3.out', stagger: { amount: .4 }, delay: .1 });
+    return () => rise.kill();
+  }, [menuOpen]);
 
   useEffect(() => {
     // the bar's letters rise in once, on mount. this is a plain tween, not
@@ -144,7 +166,7 @@ function Navbar() {
           </div>
           {/* nav items - centre. the page that is open is brighter. on a
             phone they are in the menu instead */}
-          <ul className={`flex items-center text-caption ${FROM_TABLET}
+          <ul className={`flex items-center text-copy ${FROM_TABLET}
             tablet:gap-x-8
             laptop:gap-x-10
             laptop-lg:gap-x-12
@@ -180,33 +202,38 @@ function Navbar() {
             </div>
             {/* on a phone: the word alone, no box, blended like the rest
               of the bar */}
-            <button type='button' className={`nav-menu-text font-monolisa text-caption leading-none py-2 ${PHONE_ONLY}`}
+            <button type='button' className={`nav-menu-text font-monolisa text-copy leading-none py-2 ${PHONE_ONLY}`}
               aria-expanded={menuOpen} aria-controls='nav-menu'
-              onClick={() => setMenuOpen((open) => !open)}>
+              onClick={toggleMenu}>
               {menuOpen ? 'Close' : 'Menu'}
             </button>
           </div>
         </nav>
       </div>
-      {/* the phone's menu - a black panel that wipes down over the page
-        (.nav-menu, App.css), under the bar - whose "Menu" opened it and
-        now reads "Close" */}
+      {/* the phone's menu - a black panel over the page (.nav-menu,
+        App.css), under the bar - whose "Menu" opened it and now reads
+        "Close". its links are the bar's, set larger: the open page full,
+        the others muted, the counts raised to the top of the word */}
       <div className={`nav-menu ${menuOpen ? 'nav-menu-open' : ''} fixed inset-0 z-[21] flex flex-col justify-end bg-black px-[1rem] pt-20 pb-8 ${PHONE_ONLY}`}
-        id='nav-menu' inert={menuOpen ? undefined : ''}>
+        id='nav-menu' ref={fxMenu} inert={menuOpen ? undefined : ''}>
         <ul className='flex flex-col'>
           {MENU_LINKS.map(({ label, count, to, href, download }) => (
             <li className='border-t border-rule m-0' key={label}>
               {href ? (
-                <a href={href} download={download} className='block py-4 font-flexible font-medium leading-none whitespace-nowrap text-[10vw] text-muted'
+                <a href={href} download={download} className={MENU_ITEM_IDLE}
                   aria-label='Download my CV (PDF)' data-no-hover-roll>
-                  {label}
+                  <SplitText text={label} id='animate-menu' />
                 </a>
               ) : (
               <TransitionLink to={to} onClick={toTopIfHere(to)}
-                className={`block py-4 font-flexible font-medium leading-none whitespace-nowrap text-[10vw] ${pathname === to ? '' : 'text-muted'}`}
+                className={pathname === to ? MENU_ITEM : MENU_ITEM_IDLE}
                 aria-current={pathname === to ? 'page' : undefined} data-no-hover-roll>
-                {label}
-                {count != null && <sup className='nav-count'>[{count}]</sup>}
+                <SplitText text={label} id='animate-menu' />
+                {count != null && (
+                  <sup className='nav-count'>
+                    <SplitText text={`[${count}]`} id='animate-menu' />
+                  </sup>
+                )}
               </TransitionLink>
               )}
             </li>

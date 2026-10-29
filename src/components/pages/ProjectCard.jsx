@@ -1,7 +1,7 @@
 // the landing page's selected projects (Project.jsx): one project per kind
 // of work, in this order - the team products first, then the personal
 // ones. `title` is the project's name; `category` is the
-// kind of work and `meta` the year and my part in it, shown beside the
+// kind of work and `meta` the year and the kind of project, shown beside the
 // title. `image` is a background class (see backgroundImage in
 // tailwind.config.js) for the preview; a project with no such class gives
 // an imported `picture` instead.
@@ -21,7 +21,7 @@ export const PROJECT_CARDS = [
     image: null,
     picture: gurover_cover,
     category: 'Web/Mobile Platform / Team Project',
-    meta: '2026 / Web/Mobile Platform / UI/UX Designer',
+    meta: '2026 / Web/Mobile Platform',
   },
   {
     id: 'pci',
@@ -30,7 +30,7 @@ export const PROJECT_CARDS = [
     image: null,
     picture: pci_cover,
     category: 'Design System / Team Project',
-    meta: '2024 / Design System / UI/UX Designer',
+    meta: '2024 / Design System',
   },
   {
     id: 'tingi',
@@ -39,7 +39,7 @@ export const PROJECT_CARDS = [
     image: null,
     picture: bitewise_cover,
     category: 'UX Case Study / Personal Concept',
-    meta: '2026 / UX Case Study / UI/UX Designer',
+    meta: '2026 / UX Case Study',
   },
   {
     id: 'portfoliov3',
@@ -48,6 +48,6 @@ export const PROJECT_CARDS = [
     image: null,
     picture: p26_cover,
     category: 'Portfolio Website / Personal Project',
-    meta: '2026 / Portfolio Website / UI/UX Designer',
+    meta: '2026 / Portfolio Website',
   },
 ];

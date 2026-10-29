@@ -23,6 +23,8 @@ import SplitText from '../common/SplitText'
 import { TransitionLink } from '../common/PageTransition'
 // the button down to what is below the first screen
 import ScrollCue from '../common/ScrollCue'
+// my picture, in the site's halftone dots
+import HalftoneImage from '../common/HalftoneImage'
 // the tab's title
 import { usePageTitle } from '../../utils/pageTitle'
 
@@ -175,7 +177,7 @@ function AboutPage() {
         {/* my picture - opened by my name in the introduction (the effect
           above; start state: .about-portrait, App.css) */}
         <div className='about-portrait' aria-hidden='true'>
-          <img src={PORTRAIT} alt='' loading='lazy'/>
+          <HalftoneImage src={PORTRAIT} cell={3} className='w-full h-full' />
         </div>
         <div className='relative z-10'>
           <Tag label='Meet the Designer' id='animate-about-intro-tag' as='h1' />

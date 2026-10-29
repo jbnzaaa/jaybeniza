@@ -12,14 +12,19 @@ module.exports = {
       // quiet text against large headings. the hero and closing headlines
       // sit above this scale, sized to the screen's width where they are set
       fontSize: {
-        caption: 'clamp(.75rem, .68rem + .12vw, .8125rem)',
-        body: '18px',
+        // the small and body steps are near one size, and grow together
+        // from a phone (390px) to a laptop (1440px): caption 13 to 14px,
+        // copy 14 to 15px, subtitle 16 to 20px. above 1536px every step
+        // grows with the screen, together (html's font-size, App.css), so
+        // they stay that close there too
+        caption: 'clamp(.8125rem, .789rem + .095vw, .875rem)',
         // a section's own text - descriptions, lists, the invitation to get
-        // in touch. body and copy are both a fixed 18px, at every width
-        copy: '18px',
-        subtitle: 'clamp(1.125rem, .9rem + .6vw, 1.75rem)',
-        heading: 'clamp(1.875rem, 1.25rem + 1.35vw, 2.875rem)',
-        title: 'clamp(2.25rem, 1.15rem + 2vw, 3.75rem)',
+        // in touch
+        body: 'clamp(.875rem, .852rem + .095vw, .9375rem)',
+        copy: 'clamp(.875rem, .852rem + .095vw, .9375rem)',
+        subtitle: 'clamp(1rem, .907rem + .381vw, 1.25rem)',
+        heading: 'clamp(1.5rem, 1.1rem + 1.5vw, 2.875rem)',
+        title: 'clamp(1.875rem, 1.05rem + 2.2vw, 3.75rem)',
         // the display sizes - headlines set against the screen's width.
         // each is one line from a phone to a wide screen, so it grows
         // evenly as the window does, with no step at a breakpoint

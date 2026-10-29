@@ -119,7 +119,8 @@
 }
 
 * body .nav-item {
-  display: inline-block;
+  display: inline-flex;
+  align-items: flex-start;
   transition: color 0.3s ease-in-out;
 }
 
@@ -127,15 +128,23 @@
   color: var(--text);
 }
 
-/* the count beside a link (Work [11]): smaller, raised to the top of
-   the word, and in the link's own colour - muted while idle, full when
-   the page is open or hovered (Navbar.jsx) */
+/* the count beside a link (Work [11]): smaller, its top level with the
+   top of the word's capitals, and in the link's own colour - muted while
+   idle, full when the page is open or hovered (Navbar.jsx). the link is a
+   flex row from the top, so the count's clip box starts where the word's
+   does; a smaller letter sits less far down its box, and `top` makes up
+   the difference */
 * body .nav-count {
-  margin-left: 0.2em;
+  position: relative;
+  top: 0.33em;
+  vertical-align: top;
   font-size: 0.6em;
   line-height: 1;
-  vertical-align: top;
   color: inherit;
+}
+
+* body .nav-count .split-word {
+  margin-right: 0;
 }
 
 * body .cta-button {
@@ -360,8 +369,8 @@
   display: none;
   position: absolute;
   top: 0;
-  left: 64%;
-  width: 20vw;
+  left: 68%;
+  width: 26vw;
   aspect-ratio: 16/10;
   pointer-events: none;
   clip-path: inset(100% 0% 0% 0%);
@@ -507,6 +516,63 @@
   width: min(92%, 38rem);
 }
 
+/* a service's gif, in the drawing's place (Services.jsx): the card's full
+   height and its column's full width, no padding round it - laid over the
+   column from laptop width up, where the text beside it sets the height;
+   stacked below it, at 4:3. faded in as its service comes in. it is drawn
+   in halftone dots on a canvas (HalftoneGif.jsx) */
+* body .service-gif {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+@media (min-width: 1024px) {
+  * body .service-gif {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+  }
+}
+
+* body .service-gif-on {
+  opacity: 1;
+}
+
+/* the halftone: its canvas covers the box; the gif it is read from plays
+   behind it, out of sight (it has to be on the page to play) */
+* body .halftone-gif {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+* body .halftone-gif canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: #1B1A1A;
+}
+
+* body .halftone-gif img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* the column's own padding gives way to the gif */
+* body .service-art-gif {
+  padding: 0;
+}
+
 * body .service-item {
   opacity: 0.45;
   transition: opacity 0.3s ease;
@@ -514,6 +580,13 @@
 
 * body .service-item-on {
   opacity: 1;
+}
+
+/* a row's rule starts undrawn, and is drawn across as its service comes
+   in (Services.jsx) */
+* body .service-rule {
+  transform: scaleX(0);
+  transform-origin: left center;
 }
 
 * body .service-item button {
@@ -557,16 +630,13 @@
   cursor: pointer;
 }
 
+/* (it opens and closes at once, under the page wipe's pixels - Navbar.jsx) */
 * body .nav-menu {
   visibility: hidden;
-  clip-path: inset(0% 0% 100% 0%);
-  transition: clip-path 0.6s cubic-bezier(0.65, 0, 0.35, 1), visibility 0s 0.6s;
 }
 
 * body .nav-menu.nav-menu-open {
   visibility: visible;
-  clip-path: inset(0% 0% 0% 0%);
-  transition: clip-path 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 * body .case-card {
@@ -690,7 +760,7 @@
   display: inline-block;
   font-family: inherit;
   white-space: nowrap;
-  margin-right: 0.28em;
+  margin-right: var(--word-gap, 0.28em);
   text-indent: 0;
   color: inherit;
 }
@@ -734,7 +804,9 @@
      little room each side, given back in the margin so spacing holds */
   padding: 0 0.08em;
   margin-left: -0.08em;
-  margin-right: -0.08em;
+  /* the word gap, less the room given on the right - a bare -0.08em here
+     left headline words touching */
+  margin-right: calc(var(--word-gap, 0.28em) - 0.08em);
 }
 
 * body .menu-icon-clip {
@@ -907,8 +979,9 @@
   overflow: hidden;
 }
 
-* body .hero-designerdev .split-word {
-  margin-right: 0.15em;
+/* the hero's tight-set lines take a narrower word gap */
+* body .hero-designerdev {
+  --word-gap: 0.2em;
 }
 
 * body .about-container {
@@ -1128,7 +1201,7 @@
 }
 
 * body .about-paragraph {
-  font-size: min(clamp(1.25rem, 0.7rem + 1.7vw, 2.5rem), 4.4vh);
+  font-size: min(clamp(1.5rem, 0.85rem + 2.1vw, 3rem), 5.2vh);
 }
 
 /* the landing page's about statement (.about-statement) rises in the
@@ -1140,7 +1213,7 @@
 
 @media (max-width: 767px) {
   * body .about-paragraph {
-    font-size: clamp(1.125rem, 0.95rem + 1vw, 1.5rem);
+    font-size: clamp(1.25rem, 1.05rem + 1vw, 1.625rem);
   }
 }
 * body .cta-button-small {
@@ -1564,4 +1637,19 @@ html.has-cursor * {
   border: 0;
   padding: 0;
   cursor: pointer;
+}
+
+/* a still picture in halftone dots (HalftoneImage.jsx): its canvas fills
+   the box, on the dark ground the dots are light against */
+* body .halftone-image {
+  position: relative;
+  overflow: hidden;
+  background: #1B1A1A;
+}
+
+* body .halftone-image canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
