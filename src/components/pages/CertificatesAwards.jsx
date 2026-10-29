@@ -116,7 +116,7 @@ function CertificatesAwards() {
                         <SplitText text={item.title} id={`animate-cert-${item.id}`} by='word' />
                       )}
                     </p>
-                    <p className='entry-line text-muted shrink-0'>
+                    <p className='entry-line text-copy text-muted shrink-0'>
                       {/* its year and what kind of recognition it is, as a
                         project's label reads: year / kind */}
                       <SplitText text={`${item.year} / ${item.kind}`} id={`animate-cert-${item.id}`} />

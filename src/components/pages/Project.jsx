@@ -131,18 +131,8 @@ function Project() {
                       laptop:pb-4
                       laptop-lg:pb-5
                       desktop:pb-6'>
-                      {/* the parts of the label, a small pixel box between
-                        each (.meta-pixel, App.css) */}
-                      {project.meta.split(' / ').map((part, i) => (
-                        <React.Fragment key={part}>
-                          {i > 0 && (
-                            <span className='split-letter-clip meta-pixel-clip' aria-hidden='true'>
-                              <span className='split-letter meta-pixel' id={`animate-project-${project.id}`}/>
-                            </span>
-                          )}
-                          <SplitText text={part} id={`animate-project-${project.id}`} />
-                        </React.Fragment>
-                      ))}
+                      {/* year / kind, slashes and all */}
+                      <SplitText text={project.meta} id={`animate-project-${project.id}`} />
                     </span>
                   </span>
                   {/* below laptop width: the cover, first in the card, in

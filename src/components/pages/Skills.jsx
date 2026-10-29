@@ -72,7 +72,7 @@ function Skills() {
                   </p>
                   {/* (kept to part of the row's width, so a long list
                     stays clear of its category) */}
-                  <p className='entry-line flex flex-wrap text-muted
+                  <p className='entry-line flex flex-wrap text-copy text-muted
                     tablet:w-[55%] laptop:w-[50%] laptop-lg:w-[48%] desktop:w-[45%]
                     tablet:justify-end tablet:text-right
                     laptop:justify-end laptop:text-right

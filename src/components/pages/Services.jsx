@@ -63,7 +63,7 @@ const SERVICES = [
     title: 'Design Systems',
     text: 'I build design systems that teams can actually use: component libraries with clear states and rules, documented color and type styles, and handoff files developers can build from without guessing.',
     includes: [
-      { label: 'Component libraries', figure: rack, gif: `${TENOR}YPt4M0iV1gsAAAAM/lego-movie-lego-movie-master-builder.gif`, alt: 'A Lego Movie master builder at work' },
+      { label: 'Component libraries', figure: rack, gif: `${TENOR}2YH2HLiOdB4AAAAM/legal-eagle-puts-on-glasses.gif`, alt: 'Putting on glasses, ready to get started' },
       { label: 'Color and typography styles', figure: ramp, gif: `${TENOR}5lLcKZgmIhgAAAAM/american-psycho-patrick-bateman.gif`, alt: 'Patrick Bateman admiring a business card' },
       { label: 'Responsive layouts', figure: reflow, gif: `${TENOR}fTs0jGLUu44AAAAM/taking-measurements-daniel-labelle.gif`, alt: 'Daniel LaBelle taking measurements' },
       { label: 'Design documentation', figure: pages, gif: `${TENOR}LiDD5Bl5AXEAAAAM/spongebob-the.gif`, alt: 'SpongeBob writing his essay' },
@@ -78,7 +78,7 @@ const SERVICES = [
       { label: 'HTML5 and CSS3', figure: markup, gif: `${TENOR}31K0izlbI5cAAAAM/phineas-and-ferb-heinz-doofenschmirtz.gif`, alt: 'Doofenschmirtz building an invention, laughing' },
       { label: 'Tailwind CSS and SASS', figure: waves, gif: `${TENOR}vPeTGrwEZrEAAAAM/iron-man-armor.gif`, alt: 'Iron Man suiting up in the Mark 5 armor' },
       { label: 'JavaScript', figure: key, gif: `${TENOR}XgaU95K_XiwAAAAM/kermit-typing.gif`, alt: 'Kermit typing furiously' },
-      { label: 'React JS', figure: atom, gif: `${TENOR}fTor6GW-vvoAAAAM/bumblebee-transformer.gif`, alt: 'Bumblebee transforming' },
+      { label: 'React JS', figure: atom, gif: `${TENOR}fTor6GW-vvoAAAAM/bumblebee-transformer.gif`, alt: 'Bumblebee transforming', trim: [.14, .14] },
       { label: 'GSAP animations', figure: ease, gif: `${TENOR}hPdjxM-fcegAAAAM/gif.gif`, alt: 'Michael Jackson leaning in Smooth Criminal' },
     ],
   },
@@ -122,7 +122,7 @@ function ServicePanel({ id, title, text, includes, detailed, active, drawn }) {
   // drawn in, line by line, as the card is revealed; one that takes its
   // place afterwards is simply there
   const [swapped, setSwapped] = useState(false);
-  const { figure, gif, alt } = includes[shown];
+  const { figure, gif, alt, trim } = includes[shown];
   const show = (i) => {
     if (i !== shown) setSwapped(true);
     setShown(i);
@@ -198,7 +198,7 @@ function ServicePanel({ id, title, text, includes, detailed, active, drawn }) {
               fetched while its service is the one on screen (.service-gif,
               App.css) */
             <div className={`service-gif ${drawn || swapped ? 'service-gif-on' : ''}`}>
-              {active && <HalftoneGif src={gif} alt={alt} key={gif} />}
+              {active && <HalftoneGif src={gif} alt={alt} trim={trim} key={gif} />}
             </div>
           ) : (
             <Hairline figure={figure} play={playing} reveal={!swapped} drawn={drawn} key={figure.name} />

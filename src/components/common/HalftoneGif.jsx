@@ -48,8 +48,10 @@ async function decodeAll(src, alive) {
  *
  * @param {string} src
  * @param {string} alt - what is in it, said for the canvas
+ * @param {number[]} [trim] - [top, bottom] shares of the clip to cut off:
+ *   bars it was letterboxed in
  */
-function HalftoneGif({ src, alt }) {
+function HalftoneGif({ src, alt, trim }) {
   const fxBox = useRef();
   const fxCanvas = useRef();
   const fxImg = useRef();
@@ -94,14 +96,14 @@ function HalftoneGif({ src, alt }) {
         if (key === drawn) return;
         drawn = key;
         const { bitmap } = list[index];
-        dots(bitmap, bitmap.width, bitmap.height);
+        dots(bitmap, bitmap.width, bitmap.height, trim);
       } else if (img.complete && img.naturalWidth) {
         // (its frames not decoded yet, or not decodable here: the <img> as
         // it stands, ten times a second)
         const key = `${Math.floor(now / 100)}:${size}`;
         if (key === drawn) return;
         drawn = key;
-        dots(img, img.naturalWidth, img.naturalHeight);
+        dots(img, img.naturalWidth, img.naturalHeight, trim);
       }
     };
     const start = () => {
@@ -125,7 +127,10 @@ function HalftoneGif({ src, alt }) {
       watch.disconnect();
       document.removeEventListener('visibilitychange', start);
       list?.forEach(({ bitmap }) => bitmap.close());
+      dots.dispose();
     };
+    // (trim is read once, with its gif)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [src]);
 
   return (

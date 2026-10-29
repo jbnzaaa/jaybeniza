@@ -382,21 +382,6 @@
   }
 }
 
-/* the separator between a featured project's label parts: an extra small
-   pixel box in place of a slash, centred on the letters beside it */
-* body .meta-pixel-clip {
-  margin: 0 0.6em;
-}
-
-/* raised off the baseline to the middle of the capitals and figures
-   (Gilgan's are .7em tall): .35em, less half the box */
-* body .meta-pixel {
-  display: inline-block;
-  width: 0.25em;
-  height: 0.25em;
-  vertical-align: 0.225em;
-  background: currentColor;
-}
 * body .project-empty {
   flex-direction: column;
   justify-content: space-between;
@@ -423,67 +408,12 @@
   background-repeat: no-repeat;
 }
 
-* body .testimonial-stack {
-  --card-w: 88%;
-}
-
-@media (min-width: 768px) {
-  * body .testimonial-stack {
-    --card-w: 70%;
-  }
-}
-@media (min-width: 1024px) {
-  * body .testimonial-stack {
-    --card-w: 48%;
-  }
-}
-/* the stack fills the room under the label, and every card is its full
-   height */
-* body .testimonial-stack {
-  align-self: stretch;
-  grid-template-rows: minmax(0, 1fr);
-}
-
-* body .testimonial-card {
-  height: 100%;
-  width: var(--card-w);
-  margin-left: calc(var(--i) * (100% - var(--card-w)) / var(--last));
-  border-left: 1px solid var(--paper);
-  will-change: transform;
-}
-
-@media (max-width: 1023px) {
-  * body .testimonial-card {
-    height: calc(100% - var(--last) * 1rem);
-    width: 100%;
-    margin-left: 0;
-    margin-top: calc(var(--i) * 1rem);
-    border-left: 0;
-    border-top: 1px solid var(--paper);
-  }
-}
-@media (min-width: 1024px) {
-  * body .testimonial-quote {
-    font-size: min(clamp(1.25rem, 1rem + 0.6vw, 1.875rem), 3.2vh);
-  }
-}
-@media (min-width: 768px) and (max-width: 1023px) {
-  * body .testimonial-quote {
-    font-size: min(clamp(1.375rem, 1.1rem + 1.4vw, 2rem), 3.4vh);
-  }
-}
-@media (max-width: 767px) {
-  * body .testimonial-quote {
-    font-size: min(clamp(1rem, 0.9rem + 0.4vw, 1.25rem), 2.4vh);
-  }
-}
 * body .testimonial-who {
   position: relative;
   top: 0.125rem;
 }
 
 * body .testimonial-avatar {
-  clip-path: inset(100% 0% 0% 0%);
   filter: grayscale(1);
 }
 
@@ -1639,17 +1569,22 @@ html.has-cursor * {
   cursor: pointer;
 }
 
-/* a still picture in halftone dots (HalftoneImage.jsx): its canvas fills
-   the box, on the dark ground the dots are light against */
-* body .halftone-image {
-  position: relative;
-  overflow: hidden;
-  background: #1B1A1A;
+/* a process step's gif (Process.jsx): the card's width, at 5:4, in
+   halftone dots */
+* body .process-gif {
+  width: 100%;
+  aspect-ratio: 5/4;
 }
 
-* body .halftone-image canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+/* a review in What collaborators say (Testimonials.jsx): About's face, a
+   step under its statement's size, so the review and who said it under it
+   sit on one screen */
+* body .testimonial-paragraph {
+  font-size: min(clamp(1.25rem, 0.85rem + 1.25vw, 2.25rem), 3.8vh);
+}
+
+@media (max-width: 767px) {
+  * body .testimonial-paragraph {
+    font-size: clamp(1.125rem, 1rem + 0.8vw, 1.375rem);
+  }
 }
