@@ -9,6 +9,8 @@ import { TransitionLink } from './PageTransition'
 import { scrollRevealSequence } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from './SplitText'
+// its letters open in pixels as they rise
+import { pixelText, withPixels } from '../../utils/pixelText'
 
 // the moving parts inside a button: its label's letters and its arrow
 export const BUTTON_PARTS = '.split-letter, .menu-icon';
@@ -56,10 +58,11 @@ function Button({ label, to, href, external = false, download, small = false, ic
     const rise = { y: 0, stagger: .02, ease: 'power1.in' };
 
     if (reveal === 'mount') {
+      const mask = pixelText(parts);
       const tl = gsap.timeline()
         .to(button, { ...frame, duration: .6 })
-        .to(parts, { ...rise, duration: .5 }, '<.2');
-      return () => tl.revert();
+        .to(parts, withPixels({ ...rise, duration: .5 }, mask), '<.2');
+      return () => { tl.revert(); mask?.clear(); };
     }
 
     const sequence = scrollRevealSequence([

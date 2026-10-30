@@ -14,6 +14,8 @@ import ScrollSmoother from 'gsap/ScrollSmoother'
 import Button from '../common/Button'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// its letters open in pixels as they rise
+import { pixelText, withPixels } from '../../utils/pixelText'
 // the projects on the work page, counted beside its link
 import { SHOWN } from './projects/shown'
 import { ARCHIVE } from './projects/archive'
@@ -84,8 +86,9 @@ function Navbar() {
       gsap.set(letters, { clearProps: 'transform' });
       return undefined;
     }
-    const rise = gsap.to(letters, { y: 0, duration: .5, ease: 'power3.out', stagger: { amount: .4 }, delay: .1 });
-    return () => rise.kill();
+    const mask = pixelText(letters);
+    const rise = gsap.to(letters, withPixels({ y: 0, duration: .5, ease: 'power3.out', stagger: { amount: .4 }, delay: .1 }, mask));
+    return () => { rise.kill(); mask?.clear(); };
   }, [menuOpen]);
 
   useEffect(() => {
@@ -94,8 +97,9 @@ function Navbar() {
     // trigger on it gets re-measured at whatever scroll position a refresh
     // happens to run, and scrolling back up past that point then reversed
     // the reveal - the bar's text vanished
-    const reveal = gsap.to('#animate-nav', { y: 0, duration: .5, stagger: .01, ease: 'power1.in' });
-    return () => reveal.revert();
+    const mask = pixelText('#animate-nav');
+    const reveal = gsap.to('#animate-nav', withPixels({ y: 0, duration: .5, stagger: .01, ease: 'power1.in' }, mask));
+    return () => { reveal.revert(); mask?.clear(); };
   }, []);
 
   useEffect(() => {

@@ -5,6 +5,8 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 import ScrollSmoother from 'gsap/ScrollSmoother'
 // the site's button
 import Button, { BUTTON_PARTS } from './Button'
+// its letters open in pixels as they rise
+import { pixelText, withPixels } from '../../utils/pixelText'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 /**
@@ -22,10 +24,11 @@ function ToTop() {
   useEffect(() => {
     const button = fxBox.current.querySelector('.cta-button');
     const parts = button.querySelectorAll(BUTTON_PARTS);
+    const mask = pixelText(parts);
     // its reveal, the one every button has (Button.jsx), played on and back
     const open = gsap.timeline({ paused: true })
       .fromTo(button, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .5 })
-      .to(parts, { y: 0, ease: 'power1.in', duration: .4 }, '<.15');
+      .to(parts, withPixels({ y: 0, ease: 'power1.in', duration: .4 }, mask), '<.15');
     const trigger = ScrollTrigger.create({
       start: () => window.innerHeight,
       end: 'max',
@@ -39,6 +42,7 @@ function ToTop() {
     return () => {
       trigger.kill();
       open.revert();
+      mask?.clear();
     };
   }, []);
 

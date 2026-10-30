@@ -5,6 +5,8 @@ import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 // scroll reveal - the card opens on the site's card reveal
 import { scrollRevealSequence, refreshSoon, CARD_AT, REVERSE_AT } from '../../utils/scrollReveal'
+// a service's name and description open in pixels as their letters rise
+import { pixelText, withPixels } from '../../utils/pixelText'
 // section label
 import Tag from '../common/Tag'
 // per-letter text split
@@ -244,6 +246,8 @@ function Services({ detailed = false }) {
   const fxTarget = useRef(0);
   const fxBusy = useRef(false);
   const fxOpen = useRef(false);
+  // each service's pixels, over its name and description (pixelText.js)
+  const fxMasks = useRef({});
   // whose turn it is once the one coming in is all in
   const catchUp = () => {
     if (fxOpen.current && !fxBusy.current) setActive(fxTarget.current);
@@ -253,6 +257,8 @@ function Services({ detailed = false }) {
     const section = fxSection.current;
     const card = fxCard.current;
     const inner = '#service-card .reveal-card-inner';
+    const masks = Object.fromEntries(SERVICES.map(({ id }) => [id, pixelText(lettersOf(id))]));
+    fxMasks.current = masks;
     gsap.set(inner, { yPercent: 14, scale: 1.15 });
     // the card opens like every card on the site - its frame wipes up
     // while its inside settles - once 60% of it is on screen, and slowly:
@@ -286,6 +292,8 @@ function Services({ detailed = false }) {
       opening.kill();
       pin.kill();
       gsap.set(inner, { clearProps: 'transform' });
+      Object.values(masks).forEach((mask) => mask?.clear());
+      fxMasks.current = {};
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -293,6 +301,7 @@ function Services({ detailed = false }) {
   // the services' turns
   useEffect(() => {
     fxOpen.current = open;
+    const masks = fxMasks.current;
     if (!open) {
       // closed: every service's text is back out of sight, ready to rise
       // again from the first
@@ -300,6 +309,7 @@ function Services({ detailed = false }) {
         gsap.killTweensOf([lettersOf(id), rulesOf(id)]);
         gsap.set(lettersOf(id), { y: below });
         gsap.set(rulesOf(id), { scaleX: 0 });
+        masks[id]?.set(0);
       });
       fxShown.current = null;
       fxBusy.current = false;
@@ -321,6 +331,7 @@ function Services({ detailed = false }) {
       gsap.killTweensOf([lettersOf(id), rulesOf(id)]);
       gsap.set(lettersOf(id), { y: below });
       gsap.set(rulesOf(id), { scaleX: 0 });
+      masks[id]?.set(0);
     });
     gsap.killTweensOf([lettersOf(next), artOf(next), rulesOf(next)]);
     const tl = gsap.timeline();
@@ -335,7 +346,7 @@ function Services({ detailed = false }) {
     // scrolling back
     if (prev && prev !== next) {
       gsap.killTweensOf([lettersOf(prev), artOf(prev), rulesOf(prev)]);
-      tl.to(lettersOf(prev), { y: leave, duration: OUT, ease: 'power2.in', stagger: { amount: OUT * .5, from: back ? 'end' : 'start' } })
+      tl.to(lettersOf(prev), withPixels({ y: leave, duration: OUT, ease: 'power2.in', stagger: { amount: OUT * .5, from: back ? 'end' : 'start' } }, masks[prev], true))
         .to(artOf(prev), { autoAlpha: 0, duration: OUT }, 0)
         .to(rulesOf(prev), {
           scaleX: 0,
@@ -351,12 +362,12 @@ function Services({ detailed = false }) {
     const count = gsap.utils.toArray(lettersOf(next)).length;
     tl.call(() => setDrawnId(next), null, at)
       .set(artOf(next), { autoAlpha: 1 }, at)
-      .fromTo(lettersOf(next), { y: arrive }, {
+      .fromTo(lettersOf(next), { y: arrive }, withPixels({
         y: 0,
         duration: .4,
         ease: 'power1.in',
         stagger: { each: Math.min(.02, IN_SPREAD / Math.max(count, 1)), from: back ? 'end' : 'start' },
-      }, at)
+      }, masks[next]), at)
       // and its rules drawn across from the left, one after another, as
       // the rows' labels rise
       .fromTo(rulesOf(next), { scaleX: 0 }, {

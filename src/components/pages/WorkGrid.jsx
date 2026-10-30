@@ -11,6 +11,8 @@ import { REVEAL_AT, inTurn, revealTrigger } from '../../utils/scrollReveal'
 import SplitText from '../common/SplitText'
 // the covers open in pixels
 import { pixelReveal } from '../../utils/pixels'
+// its letters open in pixels as they rise
+import { pixelText, withPixels } from '../../utils/pixelText'
 gsap.registerPlugin(ScrollTrigger)
 
 // where each card sits on the six column grid, in turn: the column it
@@ -70,10 +72,11 @@ function WorkGrid({ items }) {
     // is showing. (on the card's trigger they rose with the cover's first
     // edge, a screen before anyone had scrolled down to them)
     const texts = gsap.utils.toArray('.work-item-info', section).map((info) => {
-      const rise = gsap.to(info.querySelectorAll('.split-letter'), { y: 0, duration: .7, stagger: { amount: .35 }, ease: 'power2.out', paused: true });
+      const mask = pixelText(info.querySelectorAll('.split-letter'));
+      const rise = gsap.to(info.querySelectorAll('.split-letter'), withPixels({ y: 0, duration: .7, stagger: { amount: .35 }, ease: 'power2.out', paused: true }, mask));
       const turn = inTurn(rise, info);
       const trigger = revealTrigger(info, 'top 92%', turn);
-      return { rise, turn, trigger };
+      return { rise, turn, trigger, mask };
     });
 
     return () => {
@@ -83,10 +86,11 @@ function WorkGrid({ items }) {
         wipe.revert();
       });
       covers.revert();
-      texts.forEach(({ rise, turn, trigger }) => {
+      texts.forEach(({ rise, turn, trigger, mask }) => {
         trigger.kill();
         turn.kill();
         rise.revert();
+        mask?.clear();
       });
     };
   }, [items]);

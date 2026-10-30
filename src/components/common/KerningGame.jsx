@@ -11,6 +11,8 @@ import PixelBug from './PixelBug'
 import SplitText from './SplitText'
 // the modal opens and shuts in pixels
 import { pixelToggle } from '../../utils/pixels'
+// its letters open in pixels as they rise
+import { pixelText, withPixels } from '../../utils/pixelText'
 
 // the words to space - the trade's own, ten letters at most so each is
 // one line on a phone. a game is ROUNDS of them, drawn at random, none twice
@@ -166,8 +168,9 @@ function KerningTest({ onClose }) {
   useEffect(() => {
     const letters = [...fxTest.current.querySelectorAll('.split-letter')]
       .filter((letter) => !letter.closest('.cta-button') && gsap.getProperty(letter, 'y') !== 0);
-    const tween = gsap.to(letters, { ...RISE, delay: first.current ? OPENED + .2 : .3 });
-    return () => tween.kill();
+    const mask = pixelText(letters);
+    const tween = gsap.to(letters, withPixels({ ...RISE, delay: first.current ? OPENED + .2 : .3 }, mask));
+    return () => { tween.kill(); mask?.clear(); };
   }, [index, compared, finished]);
 
   const average = Math.round(scores.reduce((sum, x) => sum + x, 0) / (scores.length || 1));

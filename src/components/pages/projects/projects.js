@@ -103,6 +103,9 @@ import arise_screen_student_dashboard from '../../../assets/files/images/arise/s
 import arise_screen_student_onboarding from '../../../assets/files/images/arise/screen-student-onboarding.webp'
 import arise_screen_student_resource_preview from '../../../assets/files/images/arise/screen-student-resource-preview.webp'
 import arise_screen_student_rewards from '../../../assets/files/images/arise/screen-student-rewards.webp'
+// colleagues' pictures, for their words on the projects we worked on together
+import prince_avatar from '../../../assets/files/images/team/prince-bernard-diana.webp'
+import richard_avatar from '../../../assets/files/images/team/richard-ordinario.jpg'
 import pci_mockup_cover from '../../../assets/files/images/pci/mockup-cover.webp'
 import pci_colors_light_mode from '../../../assets/files/images/pci/screen-colors-light-mode.webp'
 import pci_colors_dark_mode from '../../../assets/files/images/pci/screen-colors-dark-mode.webp'
@@ -172,6 +175,21 @@ export const archivePictures = (key) => {
 // its full case study on Behance: when given, its page here is the short version,
 // its key screens and its case study's key sections (a section with
 // extra is left for Behance), closing on the link to it
+// what colleagues said of my work, shown on the projects we worked on
+// together (a project's `platform.quote`, in its Results & Impact)
+const PRINCE_QUOTE = {
+  text: 'Jay quickly translates design requests and client feedback into updated web layouts, consistently delivering revisions within a day or two and preparing them for developer implementation.',
+  name: 'Prince Bernard Diana',
+  role: 'Department Manager, PCI Tech Center',
+  avatar: prince_avatar,
+};
+const RICHARD_QUOTE = {
+  text: 'Working with Jay, you can see how much thought he puts into the experience behind a design. He’s creative, detail-oriented, and always thinking about how to make something easier for the user. He’s also curious and open to learning, which makes him the kind of designer and collaborator you want on a project.',
+  name: 'Richard Ordinario',
+  role: 'Senior Full Stack Developer, PCI Tech Center',
+  avatar: richard_avatar,
+};
+
 export const PROJECTS = {
   // this site
   portfoliov3: {
@@ -226,6 +244,7 @@ export const PROJECTS = {
     roles: ['UI/UX Designer'],
     details: [['Platform', 'Mobile Application'], ['Timeline', '1 Month']],
     technologies: [],
+    status: 'Prototype usability testing in progress',
     // its mock-up: the cover on its page and its card on the work page
     cover: bitewise_mockup_cover,
     screenshots: [
@@ -260,27 +279,37 @@ export const PROJECTS = {
         ],
       },
       {
+        id: 'survey',
+        title: 'What Shoppers Told Me',
+        lead: 'Every qualifying shopper compares products and has bought something that did not fit their diet.',
+        text: 'To test what the app review suggested, I surveyed shoppers about how they choose groceries. 15 people responded, and 10 qualified for the study.',
+        cardRows: true,
+        cards: [
+          { title: 'The problem is real', text: 'All 10 have bought something that did not fit their diet, and 4 of 10 can only sometimes or rarely find the product information they need online.' },
+          { title: 'Shoppers do the checking themselves', text: '9 of 10 read ingredient and nutrition labels, 9 of 10 spend at least a minute judging a single product, and all 10 compare products before buying.' },
+          { title: 'Diet and price come first', text: '7 of 10 rated fitting their diet as very important, and 6 of 10 said the same of price. Brand mattered least.' },
+          { title: 'Open to sharing preferences', text: '9 of 10 would set up their dietary preferences in an app. They are split on how to find products: 4 prefer filtering themselves, 3 prefer app highlights, and 3 want both.' },
+        ],
+        points: { label: 'Top frustrations', items: ['Price (4)', 'Availability (3)', 'Unclear product information (2)', 'Allergens (2)', 'Taste (2)'] },
+      },
+      {
         id: 'opportunity',
         extra: true,
         title: 'The Design Opportunity',
-        lead: 'Make suitable groceries easier to discover and evaluate by connecting dietary preferences with relevant products and useful information.',
+        lead: 'How might we help busy individuals discover and evaluate groceries that match their dietary needs, food preferences, and nutrition goals?',
+        text: 'The opportunity: make suitable groceries easier to discover and evaluate by connecting dietary preferences with relevant products and useful information.',
       },
       {
         id: 'insights',
         title: 'Key Insights',
         lead: 'Turning observations into design direction',
-        text: 'The app review highlighted three opportunities to improve the grocery shopping experience.',
+        text: 'The app review and the survey pointed to three opportunities to improve the grocery shopping experience.',
         cardRows: true,
         cards: [
-          { title: 'Personalization', text: 'Allow shoppers to communicate their dietary needs and preferences instead of repeatedly searching for suitable products.' },
+          { title: 'Personalization', text: 'Allow shoppers to communicate their dietary needs and preferences instead of repeatedly searching for suitable products. 9 of 10 surveyed shoppers would set up their preferences in an app.' },
           { title: 'Relevant Discovery', text: 'Help shoppers narrow their choices by presenting products aligned with their selected preferences.' },
-          { title: 'Product Transparency', text: 'Provide clear product information so shoppers can evaluate suitability before purchasing.' },
+          { title: 'Product Transparency', text: 'Provide clear product information so shoppers can evaluate suitability before purchasing. 9 of 10 already read labels, and 4 of 10 struggle to find that information online.' },
         ],
-      },
-      {
-        id: 'hmw',
-        title: 'How Might We',
-        lead: 'How might we help busy individuals discover and evaluate groceries that match their dietary needs, food preferences, and nutrition goals?',
       },
       {
         id: 'decisions',
@@ -299,7 +328,7 @@ export const PROJECTS = {
           { label: 'Design rationale', text: 'Collecting these preferences upfront provides a foundation for a more relevant shopping experience based on what matters to each shopper.' },
         ],
         shots: {
-          layout: 'stagger',
+          layout: 'six',
           items: [
             { src: bitewise_d1_1, alt: 'BiteWise decision 01, screen 1' },
             { src: bitewise_d1_2, alt: 'BiteWise decision 01, screen 2' },
@@ -320,7 +349,7 @@ export const PROJECTS = {
           { label: 'Design rationale', text: 'Combining dietary relevance with practical shopping information helps shoppers compare suitable products while considering their budget and preferences.' },
         ],
         shots: {
-          layout: 'stagger',
+          layout: 'quad',
           items: [
             { src: bitewise_d2_1, alt: 'BiteWise decision 02, screen 1' },
             { src: bitewise_d2_2, alt: 'BiteWise decision 02, screen 2' },
@@ -339,7 +368,7 @@ export const PROJECTS = {
           { label: 'Design rationale', text: 'Providing dietary information before purchasing supports more informed product selection, while cart and checkout organize the final order review.' },
         ],
         shots: {
-          layout: 'stagger',
+          layout: 'quad',
           items: [
             { src: bitewise_d3_1, alt: 'BiteWise decision 03, screen 1' },
             { src: bitewise_d3_2, alt: 'BiteWise decision 03, screen 2' },
@@ -347,12 +376,6 @@ export const PROJECTS = {
             { src: bitewise_d3_4, alt: 'BiteWise decision 03, screen 4' },
           ],
         },
-      },
-      {
-        id: 'together',
-        extra: true,
-        title: 'Bringing the Experience Together',
-        text: 'BiteWise connects preference onboarding, product discovery, and purchasing into one shopping journey. The experience is designed to help shoppers move from identifying their needs to finding suitable groceries and making informed purchasing decisions.',
       },
       {
         id: 'learned',
@@ -365,8 +388,8 @@ export const PROJECTS = {
         extra: true,
         title: 'Limitations & Next Steps',
         text: [
-          'BiteWise is a personal concept informed by course-provided personas and an exploratory review of existing grocery apps. Its assumptions and proposed experience have not yet been validated with users.',
-          'Future validation would focus on:',
+          'BiteWise is a personal concept informed by course-provided personas, a review of existing grocery apps, and a survey of 15 shoppers. The sample is small and no respondent reported an allergy, so the survey results are directional, not conclusive.',
+          'I am now running usability tests on the prototype, focused on:',
         ],
         cards: [
           { title: 'Usability', text: 'Assessing how easily shoppers navigate onboarding, discovery, and checkout.' },
@@ -378,7 +401,10 @@ export const PROJECTS = {
         id: 'final-thoughts',
         extra: true,
         title: 'Final Thoughts',
-        text: 'BiteWise demonstrates how a connected, preference-driven shopping experience can be designed to make grocery discovery more relevant and product evaluation more straightforward.',
+        text: [
+          'BiteWise connects preference onboarding, product discovery, and purchasing into one shopping journey. The experience is designed to help shoppers move from identifying their needs to finding suitable groceries and making informed purchasing decisions.',
+          'BiteWise demonstrates how a connected, preference-driven shopping experience can be designed to make grocery discovery more relevant and product evaluation more straightforward.',
+        ],
       },
     ],
   },
@@ -408,6 +434,7 @@ export const PROJECTS = {
     category: 'Web/Mobile Platform / Team Project',
     roles: ['UI/UX Designer', 'Web Developer'],
     technologies: [],
+    status: 'Pilot tested, handed over',
     cover: gurover_mockup_cover,
     screenshots: [
       { src: gurover_mockup_cover, alt: 'GuRover mock-up', start: 'full' },
@@ -433,13 +460,21 @@ export const PROJECTS = {
         { title: "Offline first", text: "The workspace keeps working without a connection, so a weak signal never stops a teacher mid-task, and the platform carries over to a mobile app beyond the browser." },
         { title: "A landing page that leads to sign-up", text: "Feature sections, a step-by-step walkthrough, and plan comparisons answer a teacher’s questions in the order they ask them, ending at sign-up." },
       ],
-      role: 'I worked on GuRover as its UI/UX designer and web developer: I designed the platform and built it with AI-assisted development.',
+      role: 'I joined GuRover as its UI/UX designer and web developer while many of its features were still missing. I designed and built those features with AI-assisted development, and improved the experience based on a review of competing products.',
       contributions: [
         'Designed and developed the landing page, structuring its feature sections, step-by-step walkthrough, and plan comparisons to guide teachers toward sign-up',
-        'Designed and built the core teaching features: AI-assisted lesson plan generation, class and subject management, learning activities, gradebook configuration, attendance tracking, and the SF2 and SF9 report card templates',
+        'Designed and built the missing core teaching features: AI-assisted lesson plan generation, class and subject management, learning activities, gradebook configuration, attendance tracking, and the SF2 and SF9 report card templates',
+        'Reviewed competing products and improved GuRover’s user experience where it fell short of them',
         'Developed the mobile app, extending the platform beyond the browser',
       ],
       system: null,
+      outcome: 'Before the handover, six evaluators, five teachers and one admin, pilot tested GuRover. Teachers responded well to lesson planning, grade computation, and administrative reporting, and the pilot set the next phase: fixing 5 teacher workflow blockers and 9 major admin issues to raise the admin pass rate from 76.9% to at least 95%.',
+      metrics: [
+        { value: '88%', label: 'Less time across five reported administrative tasks' },
+        { value: '4.5/5', label: 'Average rating for AI output quality' },
+        { value: '5/5', label: 'Average rating for mobile usability' },
+      ],
+      quote: RICHARD_QUOTE,
     },
   },
   comelec: {
@@ -475,7 +510,7 @@ export const PROJECTS = {
         { title: "Every screen as the build reference", text: "I laid out every screen of the game, so the development team built from a complete reference instead of interpreting a brief." },
         { title: "Handoff and brand, documented", text: "Design handoff documentation guided developers through implementation, and brand guidelines defined the software’s visual identity so it stayed consistent from the first screen to the last." },
       ],
-      outcome: "Delivered to COMELEC, with the development team building the game from my screen layouts and handoff documentation.",
+      outcome: "Delivered to COMELEC, with the development team building the game from my screen layouts and handoff documentation. The project manager noted that I delivered the wireframes and prototypes quickly, so development could start early.",
       delivered: ["Layouts for every screen of the game", "Design handoff documentation for the development team", "Brand guidelines for the software’s visual identity"],
       role: 'I worked on COMELEC Gamified 3D for ACM as its UI/UX designer, prototyping the full flow of the game for the developers to build.',
       contributions: [
@@ -517,8 +552,14 @@ export const PROJECTS = {
         { title: "A module for each role", text: "Student, instructor, and administrator modules are each designed around what that role does: following courses, creating courses, and managing enrollment." },
         { title: "From wireframes to prototypes", text: "Each module was taken from wireframes to prototypes, so its flows could be reviewed before development." },
       ],
-      outcome: "Delivered to PSGS.",
       delivered: ["Redesigned landing page", "Student, instructor, and administrator module prototypes"],
+      outcome: "Delivered to PSGS. In QA testing, the platform built from my designs passed 81 of 83 executed test cases (97.6%), with 2 blocked and none failed, and the instructor and learner workflows are next for broader testing.",
+      metrics: [
+        { value: '97.6%', label: 'Pass rate across 83 executed test cases' },
+        { value: '81', label: 'Test cases passed' },
+        { value: '0', label: 'Failed test cases' },
+      ],
+      quote: PRINCE_QUOTE,
       role: "I worked on PSGS as its UI/UX designer: I redesigned the landing page and designed the platform's modules, from wireframes to prototypes.",
       contributions: [
         'Redesigned the landing page to present the three training levels, course requirements, and announcements in one clear structure',
@@ -557,8 +598,14 @@ export const PROJECTS = {
         { title: "Consistent navigation", text: "Every page is reached the same way, so a visitor who learns one part of the site can find the rest." },
         { title: "Tools for the people behind it", text: "Administrator and content creator modules, designed from wireframes to prototypes, give AACCUP’s team a place to manage what the site publishes." },
       ],
-      outcome: "Delivered to AACCUP.",
       delivered: ["Redesigned landing page", "Administrator and content creator module prototypes"],
+      outcome: "Delivered to AACCUP. In regression testing across seven role-specific test sheets, the platform built from my designs passed 1,395 of 1,397 checks (99.9%), with 2 failures left to resolve.",
+      metrics: [
+        { value: '99.9%', label: 'Pass rate in regression testing' },
+        { value: '1,395', label: 'Checks passed' },
+        { value: '7', label: 'User roles covered by regression testing' },
+      ],
+      quote: PRINCE_QUOTE,
       role: 'I worked on AACCUP as its UI/UX designer: I redesigned the full landing page and designed the admin and content creator modules, from wireframes to prototypes.',
       contributions: [
         'Designed the administrator and content creator modules, from wireframes to prototypes',
@@ -597,12 +644,38 @@ export const PROJECTS = {
         { title: "A landing page that explains the program", text: "I enhanced the landing page to introduce ARISE, its partners, and the registration process, so visitors know what it offers before they join." },
         { title: "Modules for those who run it", text: "Administrator and educator modules, designed from wireframes to prototypes, cover managing content and the community forum." },
       ],
-      outcome: "Delivered to DOST-SEI.",
       delivered: ["Enhanced landing page", "Administrator and educator module prototypes"],
+      outcome: "Delivered to DOST-SEI. In QA testing across three sprints, the platform built from my designs passed 209 of 217 executed test cases (96.3%), with 8 blocked for further validation and none failed.",
+      metrics: [
+        { value: '96.3%', label: 'Pass rate across 217 executed test cases' },
+        { value: '209', label: 'Test cases passed across three sprints' },
+        { value: '0', label: 'Failed test cases' },
+      ],
+      quote: PRINCE_QUOTE,
       role: 'I worked on DOST ARISE as its UI/UX designer: I enhanced the landing page and designed the admin and educator modules, from wireframes to prototypes.',
       contributions: [
         'Designed the administrator and educator modules, from wireframes to prototypes',
         'Enhanced the landing page to introduce the program, its partners, and the registration process',
+      ],
+    },
+  },
+  // its screens are still being gathered: until they are, the page and
+  // its card stand in panels (ProjectPage.jsx, WorkGrid.jsx)
+  courseware: {
+    path: '/dost-courseware',
+    title: 'DOST Courseware (Grade 3)',
+    short: 'Mobile courseware for Grade 3 learners',
+    year: '2023',
+    description: 'A mobile courseware application for Grade 3 learners, made for DOST, that takes a learner from loading a course to submitting an assessment.',
+    category: 'Mobile App / Client Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    screenshots: [],
+    platform: {
+      overview: 'DOST Courseware (Grade 3) is a mobile application that delivers a course to Grade 3 learners: from loading a course to submitting its assessments, all in one app.',
+      role: 'I designed the whole courseware as its UI/UX designer: every screen of the mobile application, from loading a course to submitting an assessment.',
+      contributions: [
+        'Designed every screen of the courseware, covering the full flow from course loading to assessment submission',
       ],
     },
   },
@@ -741,6 +814,8 @@ export const PROJECTS = {
         "Defined the foundations: light and dark color tokens, the type scale, spacing, radius, elevation, and icons",
         "Documented every component’s variants, states, and values",
       ],
+      outcome: "The design system was put to work in development: a developer built the company's internal Central App from it. With every component specified down to its exact values, the developer reported that the build matched the design more closely.",
+      quote: PRINCE_QUOTE,
     },
   },
   // the archive (archive.js): earlier design explorations and redesigns,

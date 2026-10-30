@@ -26,44 +26,50 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 // list, in its order (ProjectsPage.jsx) - newest first, and back to the
 // first after the last. a project that is not on that list (DailyDiscount)
 // is never offered as the next one, and leads on to the first
-const ORDER = ['gurover', 'tingi', 'portfoliov3', 'comelec', 'psgs', 'pci', 'aaccup', 'arise', 'regain'];
+const ORDER = ['gurover', 'tingi', 'portfoliov3', 'comelec', 'psgs', 'pci', 'aaccup', 'arise', 'courseware', 'regain'];
 // an archived project leads on to the next in the archive, and back to its
 // first after its last
 const ARCHIVE_ORDER = ARCHIVE.map(({ id }) => id).filter((key) => PROJECTS[key]);
 
-// grid placement of a screenshot by its `start` (see projects.js)
-const SHOT_LAYOUT = {
-  full: `
-    mobile:col-span-8 mobile:col-start-1
-    tablet:col-span-8 tablet:col-start-1
-    laptop:col-span-8 laptop:col-start-1
-    laptop-lg:col-span-8 laptop-lg:col-start-1
-    desktop:col-span-8 desktop:col-start-1`,
-  1: `
-    mobile:col-span-8 mobile:col-start-1
-    tablet:col-span-8 tablet:col-start-1
-    laptop:col-span-5 laptop:col-start-1
-    laptop-lg:col-span-5 laptop-lg:col-start-1
-    desktop:col-span-5 desktop:col-start-1`,
-  2: `
-    mobile:col-span-8 mobile:col-start-1
-    tablet:col-span-8 tablet:col-start-1
-    laptop:col-span-5 laptop:col-start-2
-    laptop-lg:col-span-5 laptop-lg:col-start-2
-    desktop:col-span-5 desktop:col-start-2`,
-  3: `
-    mobile:col-span-8 mobile:col-start-1
-    tablet:col-span-8 tablet:col-start-1
-    laptop:col-span-5 laptop:col-start-3
-    laptop-lg:col-span-5 laptop-lg:col-start-3
-    desktop:col-span-5 desktop:col-start-3`,
-  4: `
-    mobile:col-span-8 mobile:col-start-1
-    tablet:col-span-8 tablet:col-start-1
-    laptop:col-span-5 laptop:col-start-4
-    laptop-lg:col-span-5 laptop-lg:col-start-4
-    desktop:col-span-5 desktop:col-start-4`,
-};
+// a project's screens (`start`, projects.js): one marked 'full' spans the
+// width; the rest run in two columns from tablet width up, one on a phone.
+// they are columns, not rows: a tall screen (a whole landing page) takes
+// its own height in one column while the others stack beside it, so no
+// screen is pushed below a gap. each run of them between full ones is
+// balanced on its own
+const SCREEN_GAP = 'mobile:mb-6 tablet:mb-6 laptop:mb-6 laptop-lg:mb-6 desktop:mb-6';
+const SCREEN_RUN = 'mobile:columns-1 tablet:columns-2 laptop:columns-2 laptop-lg:columns-2 desktop:columns-2 gap-x-6';
+
+function Screen({ src, alt, onLoad }) {
+  return (
+    <div className={`screenshot-container break-inside-avoid ${SCREEN_GAP}`}>
+      <img src={src} alt={alt} className='screenshot-img' onLoad={onLoad}/>
+    </div>
+  );
+}
+
+// the screens, in order: a full one or a row of phones on its own, the
+// others gathered into runs of columns
+function Screens({ shots, onLoad }) {
+  const blocks = [];
+  shots.forEach((shot) => {
+    const alone = shot.start === 'full' || shot.phones;
+    const last = blocks[blocks.length - 1];
+    if (!alone && last?.run) last.run.push(shot);
+    else blocks.push(alone ? { shot } : { run: [shot] });
+  });
+  return blocks.map((block) => (block.run ? (
+    <div className={SCREEN_RUN} key={block.run[0].alt}>
+      {block.run.map((shot) => <Screen {...shot} onLoad={onLoad} key={shot.alt} />)}
+    </div>
+  ) : block.shot.phones ? (
+    <div className={SCREEN_GAP} key={block.shot.alt}>
+      <Shots items={block.shot.phones} layout='quad' onLoad={onLoad} />
+    </div>
+  ) : (
+    <Screen {...block.shot} onLoad={onLoad} key={block.shot.alt} />
+  )));
+}
 
 // what a case study that is still being written will cover, once it is:
 // the parts of the finished layout, in order
@@ -76,22 +82,28 @@ const COMING = [
   'Outcome and reflection',
 ];
 
-// a project with its full case study on Behance (`behance`, projects.js)
-// shows the short version here: its key screens, at most this many under
-// a section, and only its case study's key sections (not `extra`)
+// every project is shown in its key parts only, so a page reads in a
+// few screens: its key screens, at most this many (after the cover) and
+// at most this many under a section; a case study's key sections (not
+// `extra`); and a platform's problem, role, key decisions (at most
+// KEY_DECISIONS), screens and results. the rest stays in projects.js -
+// and, for a project with `behance`, in the full case study there
 const KEY_SHOTS = 4;
+const KEY_DECISIONS = 3;
 
 // the two section themes the page alternates between, as on the landing page
 const LIGHT = 'theme-light';
 const DARK = 'bg-surface';
 
-// the padding every section on the page shares
+// the padding every section on the page shares - tighter than the
+// landing page's: a case study runs to a dozen sections, and at the
+// landing page's padding it was a long scroll
 const SECTION = `
-  mobile:px-[1rem] mobile:py-16
-  tablet:px-[1rem] tablet:py-16
-  laptop:px-[2rem] laptop:py-20
-  laptop-lg:px-[3rem] laptop-lg:py-24
-  desktop:px-[3rem] desktop:py-28`;
+  mobile:px-[1rem] mobile:py-12
+  tablet:px-[1rem] tablet:py-12
+  laptop:px-[2rem] laptop:py-16
+  laptop-lg:px-[3rem] laptop-lg:py-16
+  desktop:px-[3rem] desktop:py-20`;
 
 // the space under a block inside a section
 const BELOW = 'mobile:mb-8 tablet:mb-10 laptop:mb-12 laptop-lg:mb-12 desktop:mb-16';
@@ -216,6 +228,32 @@ function Cards({ id, items, rows = false }) {
   )
 }
 
+// a colleague's words on the project, as a card: the quote, then who
+// said it - their picture, name and role (as on the landing page's
+// testimonials). its text rises with the card (.case-card, below)
+function Quote({ text, name, role, avatar, className = '' }) {
+  return (
+    <figure className={`case-card ${CARD} flex flex-col gap-y-8 ${className}`}>
+      <blockquote className='m-0'>
+        <p className='flex flex-wrap text-body leading-snug'>
+          <SplitText text={`“ ${text} ”`} id='animate-card' by='word' />
+        </p>
+      </blockquote>
+      <figcaption className='flex items-center gap-x-4'>
+        <img className='shrink-0 w-12 h-12 object-cover' src={avatar} alt='' loading='lazy'/>
+        <span className='flex flex-col gap-y-1'>
+          <span className='font-flexible font-medium leading-none text-subtitle'>
+            <SplitText text={name} id='animate-card' />
+          </span>
+          <span className='flex flex-wrap text-caption leading-tight text-muted'>
+            <SplitText text={role} id='animate-card' />
+          </span>
+        </span>
+      </figcaption>
+    </figure>
+  )
+}
+
 // a case study's lead - the one line a section turns on, set large
 function Lead({ id, text, className = '' }) {
   return (
@@ -245,7 +283,8 @@ function Notes({ id, items, className = '' }) {
 }
 
 // a section's screens, full width under it, tops level: three, four or
-// two to a row (`layout`) from tablet width up, two on a phone - kept in
+// two, or six to a row (`layout`) from tablet width up, two or three on a
+// phone - kept in
 // rows so the result is seen without a long scroll. the screens are drawn
 // at 402px wide, so each row is held to the width that shows them at that
 // size or under, never stretched past it. each screen opens with the
@@ -254,73 +293,9 @@ const SHOTS = {
   trio: 'grid items-start gap-4 mx-auto max-w-[1238px] mobile:grid-cols-2 tablet:grid-cols-3 laptop:grid-cols-3 laptop-lg:grid-cols-3 desktop:grid-cols-3',
   quad: 'grid items-start gap-4 mx-auto max-w-[1656px] mobile:grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-4 laptop-lg:grid-cols-4 desktop:grid-cols-4',
   pair: 'grid items-start gap-4 mx-auto max-w-[820px] grid-cols-2',
+  six: 'grid items-start gap-4 mx-auto max-w-[2492px] mobile:grid-cols-3 tablet:grid-cols-3 laptop:grid-cols-6 laptop-lg:grid-cols-6 desktop:grid-cols-6',
 };
-// `stagger`: Portfolio's screens, at a phone screen's size. its
-// screens step across the width as that page's do, two to a row on a
-// twelve-column grid, the second set lower than the first - so a row is a
-// pair of screens offset from each other, and each row starts somewhere
-// else, a zigzag down the page. the grid is held to the width that shows
-// a screen at its own 402px or under
-const STAGGER_GRID = `grid grid-cols-12 gap-x-6 mx-auto max-w-[1656px] items-start
-  mobile:gap-y-8
-  tablet:gap-y-12
-  laptop:gap-y-14
-  laptop-lg:gap-y-20
-  desktop:gap-y-20`;
-// each screen's place by its turn: the rows' pairs of columns, in turn
-const STAGGER_PLACES = [
-  // the first of a row
-  [`mobile:col-span-6 mobile:col-start-1
-    tablet:col-span-4 tablet:col-start-1
-    laptop:col-span-3 laptop:col-start-1
-    laptop-lg:col-span-3 laptop-lg:col-start-1
-    desktop:col-span-3 desktop:col-start-1`,
-  `mobile:col-span-6 mobile:col-start-1
-    tablet:col-span-4 tablet:col-start-3
-    laptop:col-span-3 laptop:col-start-4
-    laptop-lg:col-span-3 laptop-lg:col-start-4
-    desktop:col-span-3 desktop:col-start-4`,
-  `mobile:col-span-6 mobile:col-start-1
-    tablet:col-span-4 tablet:col-start-2
-    laptop:col-span-3 laptop:col-start-2
-    laptop-lg:col-span-3 laptop-lg:col-start-2
-    desktop:col-span-3 desktop:col-start-2`],
-  // the second, set lower
-  [`mobile:col-span-6 mobile:col-start-7
-    tablet:col-span-4 tablet:col-start-7
-    laptop:col-span-3 laptop:col-start-7
-    laptop-lg:col-span-3 laptop-lg:col-start-7
-    desktop:col-span-3 desktop:col-start-7`,
-  `mobile:col-span-6 mobile:col-start-7
-    tablet:col-span-4 tablet:col-start-9
-    laptop:col-span-3 laptop:col-start-10
-    laptop-lg:col-span-3 laptop-lg:col-start-10
-    desktop:col-span-3 desktop:col-start-10`,
-  `mobile:col-span-6 mobile:col-start-7
-    tablet:col-span-4 tablet:col-start-8
-    laptop:col-span-3 laptop:col-start-8
-    laptop-lg:col-span-3 laptop-lg:col-start-8
-    desktop:col-span-3 desktop:col-start-8`],
-];
-const STAGGER_DROP = 'mobile:mt-12 tablet:mt-20 laptop:mt-24 laptop-lg:mt-32 desktop:mt-40';
-const staggerPlace = (i) => {
-  const second = i % 2;
-  const row = Math.floor(i / 2) % STAGGER_PLACES[0].length;
-  return `${STAGGER_PLACES[second][row]} ${second ? STAGGER_DROP : ''}`;
-};
-
 function Shots({ items, layout = 'trio', onLoad }) {
-  if (layout === 'stagger') {
-    return (
-      <div className={STAGGER_GRID}>
-        {items.map(({ src, alt }, i) => (
-          <div className={`screenshot-container ${staggerPlace(i)}`} key={alt}>
-            <img src={src} alt={alt} className='screenshot-img' onLoad={onLoad}/>
-          </div>
-        ))}
-      </div>
-    )
-  }
   return (
     <div className={SHOTS[layout]}>
       {items.map(({ src, alt }) => (
@@ -348,11 +323,11 @@ function Panel({ label, className = '' }) {
  * A project page, in one of four layouts.
  *
  * A platform - a project with `platform` in projects.js, a product made
- * for a client or company - is its hero, its cover, then an overview of
- * the platform, the challenge it answered, my role and contributions, its key features, the design
- * approach, its screens, the design system, and where it stands and what
- * it achieved - each only when its `platform` has it written, so no part
- * shows a placeholder. The sections it has turn light and dark in turn.
+ * for a client or company - is its hero, its cover, then the challenge it
+ * answered (or, without one, an overview), my role and contributions, the
+ * design approach, its screens, the design system, and what it achieved -
+ * each only when its `platform` has it written, so no part shows a
+ * placeholder, and each in its key parts (KEY_SHOTS, KEY_DECISIONS). The sections it has turn light and dark in turn.
  *
  * A case study in progress - a project with `inProgress` - is its hero,
  * its cover, and a note that the write-up is to come.
@@ -387,23 +362,30 @@ function ProjectPage({ project: given, id }) {
   const isPlatform = !!project.platform;
   const platform = project.platform || {};
   // (a project may have no screenshots yet: panels stand in for them)
-  // (with its full case study on Behance, the page is the short version)
+  // (with its full case study on Behance, the page closes on the link to it)
   const short = !!project.behance;
   const [hero, ...allShots] = project.screenshots || [];
-  const shots = short ? allShots.slice(0, KEY_SHOTS) : allShots;
+  const shots = allShots.slice(0, KEY_SHOTS);
+  // (a row of six cut to four is set four to a row)
+  const keyShots = ({ items, layout }) => ({
+    items: items.slice(0, KEY_SHOTS),
+    layout: layout === 'six' && items.length > KEY_SHOTS ? 'quad' : layout,
+  });
   const studyParts = (project.caseStudy || [])
-    .filter((part) => !(short && part.extra))
-    .map((part) => (short && part.shots ? { ...part, shots: { ...part.shots, items: part.shots.items.slice(0, KEY_SHOTS) } } : part));
+    .filter((part) => !part.extra)
+    .map((part) => (part.shots ? { ...part, shots: keyShots(part.shots) } : part));
   // a platform's sections: only those it has written, light and dark in turn
+  // (the overview only where there is no challenge: the hero's summary
+  // already says what it is. its features are in its contributions and
+  // decisions, and are left out)
   const platformParts = [
-    platform.overview && 'overview',
+    platform.overview && !platform.challenge && 'overview',
     platform.challenge && 'challenge',
     (platform.role || platform.contributions) && 'role',
-    platform.features && 'features',
     platform.approach && 'approach',
     shots.length > 0 && 'screens',
     platform.system && 'system',
-    (platform.outcome || platform.delivered || platform.metrics) && 'outcome',
+    (platform.outcome || platform.metrics || platform.quote) && 'outcome',
   ].filter(Boolean);
   const themeOf = (part) => (platformParts.indexOf(part) % 2 ? DARK : LIGHT);
   const has = (part) => platformParts.includes(part);
@@ -603,20 +585,12 @@ function ProjectPage({ project: given, id }) {
         </CaseSection>
         )}
 
-        {/* key features - a card each, side by side */}
-        {has('features') && (
-        <CaseSection id='features' title='Key Features' theme={themeOf('features')}>
-          {platform.featuresIntro && <Copy id='features' text={platform.featuresIntro} className={BELOW} />}
-          <Cards id='features' items={platform.features} />
-        </CaseSection>
-        )}
-
         {/* design approach - structure and user flows */}
         {has('approach') && (
         <CaseSection id='approach' title='Design Approach' theme={themeOf('approach')}>
           {/* each decision a card of its own, one to a row - or paragraphs */}
           {[].concat(platform.approach)[0]?.title
-            ? <Cards id='approach' items={platform.approach} rows />
+            ? <Cards id='approach' items={platform.approach.slice(0, KEY_DECISIONS)} rows />
             : [].concat(platform.approach).map((paragraph, i, all) => (
               <Copy id='approach' text={paragraph} className={i < all.length - 1 ? BELOW : ''} key={paragraph} />
             ))}
@@ -626,18 +600,7 @@ function ProjectPage({ project: given, id }) {
         {/* its screens, under the label at full width */}
         {has('screens') && (
         <CaseSection id='screens' title='Platform Screens' theme={themeOf('screens')} wide>
-          <div className='grid grid-cols-8 gap-x-6
-            mobile:gap-y-6
-            tablet:gap-y-10
-            laptop:gap-y-12
-            laptop-lg:gap-y-20
-            desktop:gap-y-20'>
-            {shots.map(({ src, alt, start }) => (
-              <div className={`screenshot-container ${SHOT_LAYOUT[start]}`} key={alt}>
-                <img src={src} alt={alt} className='screenshot-img' onLoad={remeasure}/>
-              </div>
-            ))}
-          </div>
+          <Screens shots={shots} onLoad={remeasure} />
         </CaseSection>
         )}
 
@@ -648,11 +611,11 @@ function ProjectPage({ project: given, id }) {
         </CaseSection>
         )}
 
-        {/* status and impact - where it stands, then one card per figure */}
+        {/* results and impact - what it achieved, then one card per figure */}
         {has('outcome') && (
-        <CaseSection id='outcome' title='Status & Impact' theme={themeOf('outcome')}>
-          {platform.outcome && <Copy id='outcome' text={platform.outcome} className={platform.delivered || platform.metrics ? BELOW : ''} />}
-          {platform.delivered && <Points id='outcome' label='What was delivered' items={platform.delivered} className={platform.metrics ? BELOW : ''} />}
+        <CaseSection id='outcome' title='Results & Impact' theme={themeOf('outcome')}>
+          {/* one paragraph, then the figures */}
+          {platform.outcome && <Copy id='outcome' text={platform.outcome} className={platform.metrics || platform.quote ? BELOW : ''} />}
           {platform.metrics && (
           <ul className='grid gap-4
             mobile:grid-cols-1
@@ -678,6 +641,8 @@ function ProjectPage({ project: given, id }) {
             ))}
           </ul>
           )}
+          {/* and what a colleague said of the work, under the figures */}
+          {platform.quote && <Quote {...platform.quote} className={platform.metrics ? 'mt-4' : ''} />}
         </CaseSection>
         )}
         </>
@@ -698,27 +663,16 @@ function ProjectPage({ project: given, id }) {
         {/* its screens, under the label at full width - light when they
           follow the cover directly, so the two are not one dark run */}
         <CaseSection id='screens' title='Project Screens' theme={hasOverview ? DARK : LIGHT} wide>
-          <div className='grid grid-cols-8 gap-x-6
-            mobile:gap-y-6
-            tablet:gap-y-10
-            laptop:gap-y-12
-            laptop-lg:gap-y-20
-            desktop:gap-y-20'>
-            {/* (a row of phone screens - `phones` - spans the width, four
-              to a row from tablet width up) */}
-            {shots.map(({ src, alt, start, phones }) => (phones ? (
-              <div className='col-span-8' key={alt}>
-                <Shots items={phones} layout='quad' onLoad={remeasure} />
-              </div>
-            ) : (
-              <div className={`screenshot-container ${SHOT_LAYOUT[start]}`} key={alt}>
-                <img src={src} alt={alt} className='screenshot-img' onLoad={remeasure}/>
-              </div>
-            )))}
-            {!shots.length && [['Screen one', 1], ['Screen two', 4], ['Screen three', 2]].map(([name, start]) => (
-              <Panel label={name} className={`aspect-[16/10] ${SHOT_LAYOUT[start]}`} key={name} />
-            ))}
-          </div>
+          {/* (a row of phone screens - `phones` - spans the width, four
+            to a row from tablet width up) */}
+          <Screens shots={shots} onLoad={remeasure} />
+          {!shots.length && (
+            <div className={SCREEN_RUN}>
+              {['Screen one', 'Screen two', 'Screen three'].map((name) => (
+                <Panel label={name} className={`aspect-[16/10] break-inside-avoid ${SCREEN_GAP}`} key={name} />
+              ))}
+            </div>
+          )}
         </CaseSection>
         </>
         )}
@@ -726,7 +680,7 @@ function ProjectPage({ project: given, id }) {
         {/* the full case study, on Behance - after the short version here */}
         {short && !isDraft && (
         <CaseSection id='full' title='Full Case Study' theme={sectionCount % 2 ? DARK : LIGHT}>
-          <Copy id='full' text='This is the short version. The full case study, with the complete process and every screen, is on Behance.' className={BELOW} />
+          <Copy id='full' text='These are the key parts. The full case study, with the complete process and every screen, is on Behance.' className={BELOW} />
           <Button label='View on Behance' href={project.behance} external />
         </CaseSection>
         )}

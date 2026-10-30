@@ -15,6 +15,8 @@ import SplitText from '../common/SplitText'
 import { inTurn, revealTrigger, REVEAL_AT } from '../../utils/scrollReveal'
 // the pictures open in pixels
 import { pixelToggle } from '../../utils/pixels'
+// and the reviews open in pixels as their words rise
+import { pixelText, withPixels } from '../../utils/pixelText'
 // their pictures - small square crops of the photographs in /reference
 import sergio from '../../assets/files/images/team/sergio-ramos-iii.jpg'
 import paula from '../../assets/files/images/team/paula-malupa.jpg'
@@ -99,6 +101,8 @@ function Testimonials({ dark = false }) {
     const captions = gsap.utils.toArray('.testimonial-caption', section);
     const words = quotes.map((quote) => quote.querySelectorAll('.split-letter'));
     const people = captions.map((caption) => caption.querySelectorAll('.split-letter'));
+    const masks = words.map((list) => pixelText(list));
+    const nameMasks = people.map((list) => pixelText(list));
     // their pictures open and shut in pixels, as the site's pictures do
     // (pixels.js) - each shut until its review comes in
     const pictures = captions.map((caption) => caption.querySelector('.testimonial-avatar'));
@@ -140,16 +144,16 @@ function Testimonials({ dark = false }) {
       const arrive = dir > 0 ? down : up;
       const order = dir > 0 ? 'start' : 'end';
       change = gsap.timeline({ onComplete: wait })
-        .to(words[from], { y: leave, duration: .4, ease: 'power2.in', stagger: { amount: .25, from: order } }, 0)
-        .to(people[from], { y: leave, duration: .4, ease: 'power2.in', stagger: { amount: .1, from: order } }, 0)
+        .to(words[from], withPixels({ y: leave, duration: .4, ease: 'power2.in', stagger: { amount: .25, from: order } }, masks[from], true), 0)
+        .to(people[from], withPixels({ y: leave, duration: .4, ease: 'power2.in', stagger: { amount: .1, from: order } }, nameMasks[from], true), 0)
         // its picture shuts in pixels as its name goes, and the next one's
         // opens as its own name comes in
         .call(() => avatars[from].hide(.35), null, 0)
         .set(captions[from], { autoAlpha: 0 }, .55)
         .set(captions[next], { autoAlpha: 1 }, .55)
         .call(() => avatars[next].show(.6), null, .6)
-        .fromTo(words[next], { y: arrive }, { y: 0, duration: .5, ease: 'power3.out', stagger: { amount: .3, from: order } }, .55)
-        .fromTo(people[next], { y: arrive }, { y: 0, duration: .5, ease: 'power3.out', stagger: { amount: .15, from: order } }, .6);
+        .fromTo(words[next], { y: arrive }, withPixels({ y: 0, duration: .5, ease: 'power3.out', stagger: { amount: .3, from: order } }, masks[next]), .55)
+        .fromTo(people[next], { y: arrive }, withPixels({ y: 0, duration: .5, ease: 'power3.out', stagger: { amount: .15, from: order } }, nameMasks[next]), .6);
     };
     fxGo.current = (dir) => go(current + dir, dir);
 
@@ -165,14 +169,16 @@ function Testimonials({ dark = false }) {
         avatars.forEach((avatar) => avatar.hide(0));
         if (current === 0) return;
         gsap.set([...words[current], ...people[current]], { y: down });
+        masks[current]?.set(0);
+        nameMasks[current]?.set(0);
         gsap.set(captions[current], { autoAlpha: 0 });
         gsap.set(captions[0], { autoAlpha: 1 });
         current = 0;
         setShown(0);
       },
     })
-      .to(words[0], { y: 0, duration: .4, ease: 'power3.out', stagger: { amount: .6 } })
-      .to(people[0], { y: 0, duration: .4, ease: 'power3.out', stagger: { amount: .3 } }, '-=.3')
+      .to(words[0], withPixels({ y: 0, duration: .4, ease: 'power3.out', stagger: { amount: .6 } }, masks[0]))
+      .to(people[0], withPixels({ y: 0, duration: .4, ease: 'power3.out', stagger: { amount: .3 } }, nameMasks[0]), '-=.3')
       // and with who said it, the counter and the buttons - their frames
       // wiping open as every button's does (Button.jsx)
       .call(() => avatars[0].show(.6), null, '<')
@@ -206,6 +212,7 @@ function Testimonials({ dark = false }) {
       gsap.set([...words, ...people].flatMap((list) => [...list]), { clearProps: 'transform' });
       gsap.set(captions, { clearProps: 'opacity,visibility' });
       avatars.forEach((avatar) => avatar.kill());
+      [...masks, ...nameMasks].forEach((mask) => mask?.clear());
       gsap.set(pictures, { clearProps: 'clipPath' });
     };
   }, []);

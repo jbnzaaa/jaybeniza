@@ -1,4 +1,6 @@
 import gsap from 'gsap';
+// headlines and body text open in pixels as their letters rise
+import { pixelText, withPixels } from './pixelText';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
@@ -405,7 +407,8 @@ export function scrollReveal(targets, vars, opts = {}) {
 
 function buildReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
   // every letter rises over the same time here as in a sequence
-  const tween = gsap.to(targets, { duration: LETTER_DURATION, ...vars, ease: EASE, paused: true });
+  const mask = pixelText(targets);
+  const tween = gsap.to(targets, withPixels({ duration: LETTER_DURATION, ...vars, ease: EASE, paused: true }, mask));
   // the reveal's own length at its authored stagger - grows with the text
   const natural = tween.duration();
   // it takes its turn among the page's reveals (inTurn, above)
@@ -458,6 +461,7 @@ function buildReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
       back.kill();
       turn.kill();
       tween.revert();
+      mask?.clear();
     },
   };
 }
@@ -497,7 +501,11 @@ function buildSequence(stages, { trigger, start = REVEAL_AT, reverseStart } = {}
   // already revealed records "revealed" as its starting point too, so
   // reversing it went nowhere and the row just stayed on screen
   const tl = gsap.timeline({ paused: true });
-  stages.forEach(({ targets, vars, position }) => {
+  const masks = [];
+  stages.forEach(({ targets, vars: own, position }) => {
+    const mask = pixelText(targets);
+    if (mask) masks.push(mask);
+    const vars = withPixels(own, mask);
     // (a stage that sets its own duration keeps it, stagger and all)
     if (!vars.stagger || vars.duration != null) {
       tl.to(targets, { ...vars, ease: EASE, duration: vars.duration ?? durationForVelocity(0) }, position);
@@ -548,6 +556,7 @@ function buildSequence(stages, { trigger, start = REVEAL_AT, reverseStart } = {}
       back.kill();
       turn.kill();
       tl.revert();
+      masks.forEach((mask) => mask.clear());
     },
   };
 }
@@ -594,12 +603,13 @@ export function scrollRevealCards(cards, { group, rowFrom = 1024, scrub = false,
       defaults: { ease: 'none' },
       scrollTrigger: { trigger: group_, start, end, scrub: ScrollTrigger.isTouch ? .5 : true, ...inPin(group_) },
     });
+    const masks = list.map((item) => pixelText(item.text));
     list.forEach((item, i) => {
       tl.to(item.card, { ...frame, duration: .7 }, i)
         .to(inner(item.card), { ...settle, duration: .7 }, i)
-        .to(item.text, { y: 0, ease: 'power1.in', duration: .2, stagger: { amount: .4 } }, i + .3);
+        .to(item.text, withPixels({ y: 0, ease: 'power1.in', duration: .2, stagger: { amount: .4 } }, masks[i]), i + .3);
     });
-    return { kill() { tl.scrollTrigger?.kill(); tl.revert(); } };
+    return { kill() { tl.scrollTrigger?.kill(); tl.revert(); masks.forEach((mask) => mask?.clear()); } };
   };
 
   let reveals;

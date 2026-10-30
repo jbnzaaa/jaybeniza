@@ -288,6 +288,7 @@ function App() {
                 <Route path='/pci-central-app' element={<ProjectPage id='pci'/>}/>
                 <Route path='/aaccup' element={<ProjectPage id='aaccup'/>}/>
                 <Route path='/dost-arise' element={<ProjectPage id='arise'/>}/>
+                <Route path='/dost-courseware' element={<ProjectPage id='courseware'/>}/>
                 {/* case studies in progress */}
                 {/* (the project's key is still its first name, tingi; so is
                   its old address, which is sent on) */}

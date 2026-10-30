@@ -10,6 +10,8 @@ import Tag from '../common/Tag'
 import SplitText from '../common/SplitText'
 // when a reveal starts
 import { REVEAL_AT, inTurn, revealTrigger } from '../../utils/scrollReveal'
+// its text opens in pixels as it rises
+import { pixelText, withPixels } from '../../utils/pixelText'
 gsap.registerPlugin(ScrollTrigger)
 
 // what to take away about me, set large
@@ -38,7 +40,9 @@ function About() {
     // the statement rises into its lines once the tag has revealed: in
     // its turn among the section's reveals (scrollReveal.js), which puts
     // it after the tag above it
-    const rise = gsap.to(words, { y: 0, duration: .4, ease: 'power3.out', stagger: { amount: .6 }, paused: true });
+    // (opening in pixels as it rises - pixelText.js)
+    const mask = pixelText(words);
+    const rise = gsap.to(words, withPixels({ y: 0, duration: .4, ease: 'power3.out', stagger: { amount: .6 }, paused: true }, mask));
     const turn = inTurn(rise, paragraph);
     const trigger = revealTrigger(paragraph, REVEAL_AT, turn);
 
@@ -69,6 +73,7 @@ function About() {
       trigger.kill();
       turn.kill();
       rise.revert();
+      mask?.clear();
     };
   }, []);
 

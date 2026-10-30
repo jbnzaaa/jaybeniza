@@ -19,12 +19,14 @@ const TIMEOUT_MS = 4000;
 
 // the screen is given time to be seen, however fast the fonts arrive: the
 // count runs for at least COUNT seconds, and rests at 100 for HOLD before
-// the screen goes. (it was over in about a second on a cached visit -
-// too quick to see the count or the pixels)
-const COUNT = 1.6;
-const HOLD = .35;
-// how long the pixels take to clear, in seconds
-const SWEEP = 1.4;
+// the screen goes. kept short - with the figure's drop (DROP) and the
+// pixels' sweep (SWEEP) the whole screen is gone in under a second on a
+// cached visit, so a visitor is never kept waiting on it
+const COUNT = .35;
+const HOLD = .05;
+// how long the figure takes to drop out, and the pixels to clear, in seconds
+const DROP = .2;
+const SWEEP = .35;
 
 /**
  * Full-screen black loading screen, made of pixels - the material a
@@ -82,7 +84,7 @@ function Preloader({ onExitStart, onDone }) {
       // a fast load can finish while the figure is still rising
       gsap.killTweensOf(figure);
       exit = gsap.timeline()
-        .to(figure, { yPercent: 110, duration: .5, ease: 'power3.in' })
+        .to(figure, { yPercent: 110, duration: DROP, ease: 'power3.in' })
         // the solid panel hands over to its pixels, drawn the same black
         // (pixels.js), which clear from the top left
         .add(() => {
@@ -110,7 +112,7 @@ function Preloader({ onExitStart, onDone }) {
       const value = (loaded / FONTS.length) * 100;
       gsap.to(counter, {
         value,
-        duration: Math.max(.5, ((value - counter.value) / 100) * COUNT),
+        duration: Math.max(.15, ((value - counter.value) / 100) * COUNT),
         ease: 'power1.inOut',
         overwrite: true,
         onUpdate: render,
@@ -125,7 +127,7 @@ function Preloader({ onExitStart, onDone }) {
     // face has arrived - otherwise it would appear in a fallback and swap
     loads[0].then(() => {
       if (exiting) return;
-      gsap.to(figure, { yPercent: 0, duration: .7, ease: 'power3.out' });
+      gsap.to(figure, { yPercent: 0, duration: .3, ease: 'power3.out' });
     });
 
     const timeout = setTimeout(() => { loaded = FONTS.length; advance(); }, TIMEOUT_MS);
