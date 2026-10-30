@@ -9,9 +9,7 @@ import SplitText from '../common/SplitText'
 // footer
 import Footer from './Footer'
 // page-to-page wipe
-import { TransitionLink, usePixelCover } from '../common/PageTransition'
-// GSAP - back to the top of the page, under the pixel wipe
-import ScrollSmoother from 'gsap/ScrollSmoother'
+import { TransitionLink } from '../common/PageTransition'
 
 const EMAIL = 'mailto:jaysonbeniza@gmail.com';
 
@@ -44,15 +42,15 @@ const PROJECTS_LINKS = [
 // heading itself is the way to it - over a brief description of it (the
 // first sentence of its own) and the ways on from here: to it, back to the
 // project before this one (by name), the full case study on Behance when
-// the project has one (its `behance`, projects.js), all the work, and back
-// to the top of this one. (getting in touch and the CV are in the top bar)
+// the project has one (its `behance`, projects.js), and all the work. (back
+// to the top is the button in the corner; getting in touch and the CV are in
+// the top bar)
 const brief = (description) => description.match(/^.*?[.!?](?=s|$)/)?.[0] || description;
-const nextLinks = (next, previous, current, toTop) => [
+const nextLinks = (next, previous, current) => [
   { label: 'Next project', to: next.path },
   ...(previous ? [{ label: `Previous: ${previous.title}`, to: previous.path }] : []),
   ...(current?.behance ? [{ label: 'Full case study on Behance', href: current.behance }] : []),
   { label: 'All work', to: '/work' },
-  { label: 'Back to top', href: '#top', onClick: toTop },
 ];
 
 /**
@@ -77,18 +75,7 @@ const nextLinks = (next, previous, current, toTop) => [
 function Contact({ page = false, projects = false, next, previous, current }) {
   const heading = next ? next.title : projects ? PROJECTS_HEADING : 'Send Me a Message';
   const text = next ? brief(next.description) : projects ? PROJECTS_TEXT : `${QUESTION} ${SUPPORT}`;
-  // back to the top: the pixels cover the page, it jumps to its top
-  // underneath, and they clear - the wipe between pages, on the same page
-  const cover = usePixelCover();
-  const toTop = (e) => {
-    e.preventDefault();
-    const smoother = ScrollSmoother.get();
-    cover(() => {
-      smoother?.scrollTo(0, false);
-      window.scrollTo(0, 0);
-    }, e.currentTarget);
-  };
-  const links = next ? nextLinks(next, previous, current, toTop) : projects ? PROJECTS_LINKS : LINKS;
+  const links = next ? nextLinks(next, previous, current) : projects ? PROJECTS_LINKS : LINKS;
   useEffect(() => {
     // headline, text and links rise letter by letter
     const reveal = scrollReveal('#animate-contact', { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: '#contact' });
@@ -128,7 +115,7 @@ function Contact({ page = false, projects = false, next, previous, current }) {
               <SplitText text={text} id='animate-contact' by='word' />
             </p>
             <ul className='flex flex-col gap-y-2'>
-              {links.map(({ label, href, to, download, onClick }) => (
+              {links.map(({ label, href, to, download }) => (
                 <li className='account-container m-0' key={label}>
                   <div className='accounts'>
                     {to ? (
@@ -136,7 +123,7 @@ function Contact({ page = false, projects = false, next, previous, current }) {
                         <SplitText text={label} id='animate-contact' />
                       </TransitionLink>
                     ) : (
-                      <a href={href} onClick={onClick} {...(download ? { download } : /^(mailto|#)/.test(href) ? {} : { target: '_blank', rel: 'noreferrer' })}>
+                      <a href={href} {...(download ? { download } : /^(mailto|#)/.test(href) ? {} : { target: '_blank', rel: 'noreferrer' })}>
                         <SplitText text={label} id='animate-contact' />
                       </a>
                     )}

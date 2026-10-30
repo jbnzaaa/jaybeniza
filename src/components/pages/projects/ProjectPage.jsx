@@ -1,5 +1,5 @@
 //
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
 // GSAP
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -9,6 +9,8 @@ import Button from '../../common/Button'
 import Tag from '../../common/Tag'
 // scroll reveal
 import { scrollReveal, scrollRevealSequence } from '../../../utils/scrollReveal'
+// a colleague's picture opens in pixels, as on the landing page's testimonials
+import { pixelToggle } from '../../../utils/pixels'
 // per-letter text split
 import SplitText from '../../common/SplitText'
 // every project's content - for the link to the next one
@@ -118,6 +120,18 @@ const CONTENT = `
   laptop:col-span-5 laptop:col-start-4
   laptop-lg:col-span-5 laptop-lg:col-start-4
   desktop:col-span-5 desktop:col-start-4`;
+
+// the figures in Results & Impact, as many to a row as there are (up to
+// four; four go two to a row at tablet width) - and the room between a
+// figure and its label: more for a lone figure, which takes the full width
+const FIGURES = {
+  1: 'grid-cols-1',
+  2: 'mobile:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-2 laptop-lg:grid-cols-2 desktop:grid-cols-2',
+  3: 'mobile:grid-cols-1 tablet:grid-cols-3 laptop:grid-cols-3 laptop-lg:grid-cols-3 desktop:grid-cols-3',
+  4: 'mobile:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-4 laptop-lg:grid-cols-4 desktop:grid-cols-4',
+};
+const FIGURE_ROOM = 'mobile:gap-y-8 tablet:gap-y-12 laptop:gap-y-16 laptop-lg:gap-y-20 desktop:gap-y-24';
+const ONE_FIGURE_ROOM = 'mobile:gap-y-16 tablet:gap-y-20 laptop:gap-y-28 laptop-lg:gap-y-32 desktop:gap-y-40';
 
 // a card inside a section: one shade up from it, with the dark theme's text
 const CARD = `theme-dark bg-card m-0
@@ -240,7 +254,7 @@ function Quote({ text, name, role, avatar, className = '' }) {
         </p>
       </blockquote>
       <figcaption className='flex items-center gap-x-4'>
-        <img className='shrink-0 w-12 h-12 object-cover' src={avatar} alt='' loading='lazy'/>
+        <img className='case-quote-avatar shrink-0 w-12 h-12 object-cover grayscale' src={avatar} alt='' loading='lazy'/>
         <span className='flex flex-col gap-y-1'>
           <span className='font-flexible font-medium leading-none text-subtitle'>
             <SplitText text={name} id='animate-card' />
@@ -411,6 +425,28 @@ function ProjectPage({ project: given, id }) {
     remeasure.timer = setTimeout(() => ScrollTrigger.refresh(), 150);
   }, []);
 
+  // the name keeps the heroes' shared size - unless a word of it is wider
+  // than its column (a word never breaks: SplitText), when the name is set
+  // just small enough for that word to fit. again on every resize
+  const fxTitle = useRef();
+  useLayoutEffect(() => {
+    const title = fxTitle.current;
+    const fit = () => {
+      title.style.fontSize = '';
+      const widest = Math.max(...[...title.querySelectorAll('.split-word')].map((word) => word.scrollWidth));
+      if (widest > title.clientWidth) {
+        title.style.fontSize = `${parseFloat(getComputedStyle(title).fontSize) * title.clientWidth / widest * .98}px`;
+      }
+    };
+    fit();
+    document.fonts?.ready.then(fit);
+    window.addEventListener('resize', fit);
+    return () => {
+      window.removeEventListener('resize', fit);
+      title.style.fontSize = '';
+    };
+  }, [project]);
+
   useEffect(() => {
     // every section's text - the landing page's per-letter reveal, each
     // section on its own trigger
@@ -434,16 +470,36 @@ function ProjectPage({ project: given, id }) {
     // each card - the case study's, a platform's features and results - is
     // a component of its own: its frame wipes up from its bottom edge, then
     // its number, name and note rise, as that card comes up the screen
-    const cards = gsap.utils.toArray('.case-card').map((card) => scrollRevealSequence([
-      { targets: card, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },
-      { targets: card.querySelectorAll('.split-letter'), vars: { y: 0, stagger: .012, ease: 'power1.in' }, position: '<.3' },
-    ], { trigger: card }));
+    // (a colleague's picture on a quote card opens in pixels as its name
+    // rises, as on the landing page's testimonials, and shuts again with
+    // the card scrolled back above it)
+    const toggles = [];
+    const cards = gsap.utils.toArray('.case-card').map((card) => {
+      const avatar = card.querySelector('.case-quote-avatar');
+      const toggle = avatar && pixelToggle(avatar);
+      if (toggle) {
+        gsap.set(avatar, { clipPath: 'inset(100% 0% 0% 0%)' });
+        toggles.push({ avatar, toggle });
+      }
+      return scrollRevealSequence([
+        { targets: card, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },
+        { targets: card.querySelectorAll('.split-letter'), vars: { y: 0, stagger: .012, ease: 'power1.in' }, position: '<.3' },
+        ...(toggle ? [{
+          targets: avatar,
+          vars: { opacity: 1, duration: .6, onStart: () => toggle.show(.6), onReverseComplete: () => toggle.hide(.35) },
+          position: '<',
+        }] : []),
+      ], { trigger: card });
+    });
+    const avatars = toggles.map(({ avatar, toggle }) => ({
+      kill: () => { toggle.kill(); gsap.set(avatar, { clearProps: 'clipPath' }); },
+    }));
 
     const panels = gsap.utils.toArray('.case-panel').map((panel) => scrollReveal(
       panel, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' }));
 
     return () => {
-      [...sections, ...images, ...cards, ...panels].forEach((reveal) => reveal.kill());
+      [...sections, ...images, ...cards, ...avatars, ...panels].forEach((reveal) => reveal.kill());
     };
   }, [project]);
 
@@ -463,7 +519,7 @@ function ProjectPage({ project: given, id }) {
           laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-16
           desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16`}>
           <div className='grid grid-cols-8 gap-x-6 gap-y-8'>
-            <h1 className='project-h1 hero-designerdev flex flex-wrap content-start font-flexible font-bold leading-[.95] tracking-tight
+            <h1 ref={fxTitle} className='project-h1 hero-designerdev flex flex-wrap content-start font-flexible font-bold leading-[.95] tracking-tight
               mobile:col-span-8 text-case
               tablet:col-span-8
               laptop:col-span-5
@@ -617,19 +673,9 @@ function ProjectPage({ project: given, id }) {
           {/* one paragraph, then the figures */}
           {platform.outcome && <Copy id='outcome' text={platform.outcome} className={platform.metrics || platform.quote ? BELOW : ''} />}
           {platform.metrics && (
-          <ul className='grid gap-4
-            mobile:grid-cols-1
-            tablet:grid-cols-3
-            laptop:grid-cols-3
-            laptop-lg:grid-cols-3
-            desktop:grid-cols-3'>
+          <ul className={`grid gap-4 ${FIGURES[Math.min(platform.metrics.length, 4)]}`}>
             {platform.metrics.map((metric) => (
-              <li className={`case-card ${CARD} flex flex-col justify-between
-                mobile:gap-y-8
-                tablet:gap-y-12
-                laptop:gap-y-16
-                laptop-lg:gap-y-20
-                desktop:gap-y-24`}
+              <li className={`case-card ${CARD} flex flex-col justify-between ${platform.metrics.length > 1 ? FIGURE_ROOM : ONE_FIGURE_ROOM}`}
                 key={metric.label}>
                 <p className='font-flexible font-medium leading-none text-title'>
                   <SplitText text={metric.value} id='animate-card' />
@@ -641,8 +687,10 @@ function ProjectPage({ project: given, id }) {
             ))}
           </ul>
           )}
-          {/* and what a colleague said of the work, under the figures */}
-          {platform.quote && <Quote {...platform.quote} className={platform.metrics ? 'mt-4' : ''} />}
+          {/* and what colleagues said of the work, under the figures */}
+          {platform.quote && [].concat(platform.quote).map((quote, i) => (
+            <Quote {...quote} key={quote.name} className={platform.metrics || i > 0 ? 'mt-4' : ''} />
+          ))}
         </CaseSection>
         )}
         </>

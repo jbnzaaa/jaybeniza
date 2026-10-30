@@ -22,6 +22,7 @@ import sergio from '../../assets/files/images/team/sergio-ramos-iii.jpg'
 import paula from '../../assets/files/images/team/paula-malupa.jpg'
 import richard from '../../assets/files/images/team/richard-ordinario.jpg'
 import prince from '../../assets/files/images/team/prince-bernard-diana.webp'
+import adrian from '../../assets/files/images/team/adrian-tolentino.webp'
 gsap.registerPlugin(ScrollTrigger)
 
 // reviews from the people I work with, in their own words. `quote` is one
@@ -65,6 +66,16 @@ const TESTIMONIALS = [
     name: 'Prince Bernard Diana',
     avatar: prince,
     role: 'Department Manager, PCI Tech Center',
+  },
+  {
+    id: 'adrian-tolentino',
+    quote: [
+      'He consistently demonstrates a strong work ethic, adaptability, and user-centered thinking. He delivers high-quality, purposeful designs efficiently, communicates design decisions clearly, and quickly adapts to new tools and technologies.',
+      'His collaborative and approachable nature makes him a valuable asset to any team.',
+    ],
+    name: 'Adrian Tolentino',
+    avatar: adrian,
+    role: 'Project Manager, PCI Tech Center',
   },
 ];
 

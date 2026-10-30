@@ -103,9 +103,22 @@ import arise_screen_student_dashboard from '../../../assets/files/images/arise/s
 import arise_screen_student_onboarding from '../../../assets/files/images/arise/screen-student-onboarding.webp'
 import arise_screen_student_resource_preview from '../../../assets/files/images/arise/screen-student-resource-preview.webp'
 import arise_screen_student_rewards from '../../../assets/files/images/arise/screen-student-rewards.webp'
+import courseware_mockup_cover from '../../../assets/files/images/courseware/mockup-cover.webp'
+import courseware_screen_01 from '../../../assets/files/images/courseware/screen-01.webp'
+import courseware_screen_02 from '../../../assets/files/images/courseware/screen-02.webp'
+import courseware_screen_03 from '../../../assets/files/images/courseware/screen-03.webp'
+import courseware_screen_04 from '../../../assets/files/images/courseware/screen-04.webp'
+import courseware_screen_05 from '../../../assets/files/images/courseware/screen-05.webp'
+import courseware_screen_06 from '../../../assets/files/images/courseware/screen-06.webp'
+import courseware_screen_07 from '../../../assets/files/images/courseware/screen-07.webp'
+import courseware_screen_08 from '../../../assets/files/images/courseware/screen-08.webp'
+import courseware_screen_09 from '../../../assets/files/images/courseware/screen-09.webp'
+import courseware_screen_10 from '../../../assets/files/images/courseware/screen-10.webp'
+import courseware_screen_10_1 from '../../../assets/files/images/courseware/screen-10-1.webp'
 // colleagues' pictures, for their words on the projects we worked on together
 import prince_avatar from '../../../assets/files/images/team/prince-bernard-diana.webp'
 import richard_avatar from '../../../assets/files/images/team/richard-ordinario.jpg'
+import adrian_avatar from '../../../assets/files/images/team/adrian-tolentino.webp'
 import pci_mockup_cover from '../../../assets/files/images/pci/mockup-cover.webp'
 import pci_colors_light_mode from '../../../assets/files/images/pci/screen-colors-light-mode.webp'
 import pci_colors_dark_mode from '../../../assets/files/images/pci/screen-colors-dark-mode.webp'
@@ -176,7 +189,7 @@ export const archivePictures = (key) => {
 // its key screens and its case study's key sections (a section with
 // extra is left for Behance), closing on the link to it
 // what colleagues said of my work, shown on the projects we worked on
-// together (a project's `platform.quote`, in its Results & Impact)
+// together (a project's `platform.quote`, in its Results & Impact - one, or a list)
 const PRINCE_QUOTE = {
   text: 'Jay quickly translates design requests and client feedback into updated web layouts, consistently delivering revisions within a day or two and preparing them for developer implementation.',
   name: 'Prince Bernard Diana',
@@ -188,6 +201,12 @@ const RICHARD_QUOTE = {
   name: 'Richard Ordinario',
   role: 'Senior Full Stack Developer, PCI Tech Center',
   avatar: richard_avatar,
+};
+const ADRIAN_QUOTE = {
+  text: 'He consistently demonstrates a strong work ethic, adaptability, and user-centered thinking. He delivers high-quality, purposeful designs efficiently, communicates design decisions clearly, and quickly adapts to new tools and technologies. His collaborative and approachable nature makes him a valuable asset to any team.',
+  name: 'Adrian Tolentino',
+  role: 'Project Manager, PCI Tech Center',
+  avatar: adrian_avatar,
 };
 
 export const PROJECTS = {
@@ -511,6 +530,9 @@ export const PROJECTS = {
         { title: "Handoff and brand, documented", text: "Design handoff documentation guided developers through implementation, and brand guidelines defined the software’s visual identity so it stayed consistent from the first screen to the last." },
       ],
       outcome: "Delivered to COMELEC, with the development team building the game from my screen layouts and handoff documentation. The project manager noted that I delivered the wireframes and prototypes quickly, so development could start early.",
+      metrics: [
+        { value: '100+', label: 'Screens designed' },
+      ],
       delivered: ["Layouts for every screen of the game", "Design handoff documentation for the development team", "Brand guidelines for the software’s visual identity"],
       role: 'I worked on COMELEC Gamified 3D for ACM as its UI/UX designer, prototyping the full flow of the game for the developers to build.',
       contributions: [
@@ -555,9 +577,9 @@ export const PROJECTS = {
       delivered: ["Redesigned landing page", "Student, instructor, and administrator module prototypes"],
       outcome: "Delivered to PSGS. In QA testing, the platform built from my designs passed 81 of 83 executed test cases (97.6%), with 2 blocked and none failed, and the instructor and learner workflows are next for broader testing.",
       metrics: [
+        { value: '100+', label: 'Screens designed' },
         { value: '97.6%', label: 'Pass rate across 83 executed test cases' },
         { value: '81', label: 'Test cases passed' },
-        { value: '0', label: 'Failed test cases' },
       ],
       quote: PRINCE_QUOTE,
       role: "I worked on PSGS as its UI/UX designer: I redesigned the landing page and designed the platform's modules, from wireframes to prototypes.",
@@ -601,6 +623,7 @@ export const PROJECTS = {
       delivered: ["Redesigned landing page", "Administrator and content creator module prototypes"],
       outcome: "Delivered to AACCUP. In regression testing across seven role-specific test sheets, the platform built from my designs passed 1,395 of 1,397 checks (99.9%), with 2 failures left to resolve.",
       metrics: [
+        { value: '100+', label: 'Screens designed' },
         { value: '99.9%', label: 'Pass rate in regression testing' },
         { value: '1,395', label: 'Checks passed' },
         { value: '7', label: 'User roles covered by regression testing' },
@@ -647,11 +670,12 @@ export const PROJECTS = {
       delivered: ["Enhanced landing page", "Administrator and educator module prototypes"],
       outcome: "Delivered to DOST-SEI. In QA testing across three sprints, the platform built from my designs passed 209 of 217 executed test cases (96.3%), with 8 blocked for further validation and none failed.",
       metrics: [
+        { value: '100+', label: 'Screens designed' },
+        { value: '22', label: 'Components designed' },
         { value: '96.3%', label: 'Pass rate across 217 executed test cases' },
         { value: '209', label: 'Test cases passed across three sprints' },
-        { value: '0', label: 'Failed test cases' },
       ],
-      quote: PRINCE_QUOTE,
+      quote: ADRIAN_QUOTE,
       role: 'I worked on DOST ARISE as its UI/UX designer: I enhanced the landing page and designed the admin and educator modules, from wireframes to prototypes.',
       contributions: [
         'Designed the administrator and educator modules, from wireframes to prototypes',
@@ -659,8 +683,6 @@ export const PROJECTS = {
       ],
     },
   },
-  // its screens are still being gathered: until they are, the page and
-  // its card stand in panels (ProjectPage.jsx, WorkGrid.jsx)
   courseware: {
     path: '/dost-courseware',
     title: 'DOST Courseware (Grade 3)',
@@ -670,9 +692,27 @@ export const PROJECTS = {
     category: 'Mobile App / Client Project',
     roles: ['UI/UX Designer'],
     technologies: [],
-    screenshots: [],
+    cover: courseware_mockup_cover,
+    screenshots: [
+      { src: courseware_mockup_cover, alt: 'DOST Courseware mock-up', start: 'full' },
+      { src: courseware_screen_01, alt: 'DOST Courseware title screen', start: 2 },
+      { src: courseware_screen_02, alt: 'DOST Courseware lesson menu', start: 4 },
+      { src: courseware_screen_03, alt: 'DOST Courseware lesson introduction', start: 1 },
+      { src: courseware_screen_04, alt: 'DOST Courseware everyday examples of matter', start: 3 },
+      { src: courseware_screen_05, alt: 'DOST Courseware materials we see every day', start: 4 },
+      { src: courseware_screen_06, alt: 'DOST Courseware story scene', start: 2 },
+      { src: courseware_screen_07, alt: 'DOST Courseware kitchen scene', start: 1 },
+      { src: courseware_screen_08, alt: 'DOST Courseware balloon pump activity', start: 3 },
+      { src: courseware_screen_09, alt: 'DOST Courseware assessment question', start: 4 },
+      { src: courseware_screen_10, alt: 'DOST Courseware drag-and-drop activity', start: 2 },
+      { src: courseware_screen_10_1, alt: 'DOST Courseware birthday story scene', start: 4 },
+    ],
     platform: {
       overview: 'DOST Courseware (Grade 3) is a mobile application that delivers a course to Grade 3 learners: from loading a course to submitting its assessments, all in one app.',
+      outcome: 'I designed the courseware in close collaboration with the department that produces its course content. Because they worked from my finished screens and shared design assets instead of starting each lesson from scratch, they could produce the prototype version of each course faster.',
+      metrics: [
+        { value: '100+', label: 'Screens designed' },
+      ],
       role: 'I designed the whole courseware as its UI/UX designer: every screen of the mobile application, from loading a course to submitting an assessment.',
       contributions: [
         'Designed every screen of the courseware, covering the full flow from course loading to assessment submission',
@@ -777,7 +817,7 @@ export const PROJECTS = {
   // cover is its light colour palette)
   pci: {
     path: '/pci-central-app',
-    title: 'Central App',
+    title: 'Component Library',
     short: 'Design system for a company central application',
     year: '2024',
     description: "A design system of foundations and components I built for the Central App, one of the company's central applications, so its screens are designed and built from one shared set of parts.",
