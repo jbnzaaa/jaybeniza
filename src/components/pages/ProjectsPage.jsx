@@ -75,7 +75,7 @@ const DESCRIPTION = 'Shipped products and UX case studies: the problem, the deci
  * under it.
  */
 function ProjectsPage() {
-  usePageTitle('Work');
+  usePageTitle('Work', 'Selected UI/UX work by Jay Beniza: case studies and shipped web and mobile products for education, government and business clients.');
 
   useEffect(() => {
     // the first screen is in view at load, so its reveal is triggered off

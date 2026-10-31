@@ -56,7 +56,7 @@ const DESCRIPTION = 'Concepts, redesigns, and visual studies I made on my own to
  * and its label (year / Design exploration) under it.
  */
 function ArchivePage() {
-  usePageTitle('Archive');
+  usePageTitle('Archive', 'Earlier UI/UX design work by Jay Beniza: personal projects, redesigns and design explorations for web and mobile.');
 
   useEffect(() => {
     // the first screen is in view at load, so its reveal is triggered off

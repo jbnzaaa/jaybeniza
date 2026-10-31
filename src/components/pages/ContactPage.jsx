@@ -13,7 +13,7 @@ import { usePageTitle } from '../../utils/pageTitle'
  * the way to get in touch.
  */
 function ContactPage() {
-  usePageTitle('Get in Touch');
+  usePageTitle('Get in Touch', 'Start a project with Jay Beniza. Tell me about your website, web app or mobile app, and I will get back to you about design and build.');
   return (
     <>
       <ProjectRequest/>

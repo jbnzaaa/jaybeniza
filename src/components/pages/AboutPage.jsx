@@ -74,7 +74,7 @@ const RESUME_LINKS = [
  * the footer inside it (darkest).
  */
 function AboutPage() {
-  usePageTitle('About');
+  usePageTitle('About', 'About Jay Beniza, a UI/UX designer and front-end developer in the Philippines: how I work, my experience, skills, tools, and what teammates say.');
   const fxHero = useRef();
 
   useEffect(() => {

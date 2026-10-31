@@ -369,7 +369,7 @@ function Panel({ label, className = '' }) {
  */
 function ProjectPage({ project: given, id }) {
   const project = given || PROJECTS[id];
-  usePageTitle(project.title);
+  usePageTitle(project.title, project.description);
   // which layout: a case study, a platform, or a build
   const isStudy = !!project.caseStudy;
   const isDraft = !!project.inProgress;
