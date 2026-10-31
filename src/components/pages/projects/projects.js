@@ -817,7 +817,7 @@ export const PROJECTS = {
   // cover is its light colour palette)
   pci: {
     path: '/pci-central-app',
-    title: 'Component Library',
+    title: 'UI Kit',
     short: 'Design system for a company central application',
     year: '2024',
     description: "A design system of foundations and components I built for the Central App, one of the company's central applications, so its screens are designed and built from one shared set of parts.",

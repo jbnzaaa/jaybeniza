@@ -25,7 +25,7 @@ export const PROJECT_CARDS = [
   },
   {
     id: 'pci',
-    title: 'Component Library',
+    title: 'UI Kit',
     to: '/pci-central-app',
     image: null,
     picture: pci_cover,

@@ -34,9 +34,6 @@ function Footer() {
         <p className='flex flex-wrap'>
           <SplitText text={`© ${new Date().getFullYear()} Jay Beniza`} id='animate-footer' />
         </p>
-        <p className='flex flex-wrap'>
-          <SplitText text='Last updated October 2026' id='animate-footer' />
-        </p>
       </footer>
     </>
   )
