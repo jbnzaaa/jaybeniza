@@ -7,6 +7,9 @@ const HOLD = 100;
 // the frames are kept this wide, in px: a few times finer than the dot
 // grid, and small enough that a whole gif's worth costs little memory
 const KEEP = 240;
+// how far ahead of the screen a gif starts to download: a screen's height,
+// so it is ready by the time it scrolls in, and not fetched with the page
+const AHEAD = '100% 0px';
 
 /**
  * Every frame of the gif, decoded once, as small bitmaps, each with how
@@ -15,9 +18,8 @@ const KEEP = 240;
  * under the dots is covered. Where ImageDecoder is missing, `null` - the
  * <img> is read instead, and plays only as far as the browser lets it.
  */
-async function decodeAll(src, alive) {
+async function decodeAll(data, alive) {
   if (typeof window.ImageDecoder === 'undefined') return null;
-  const data = await (await fetch(src, { mode: 'cors' })).arrayBuffer();
   const decoder = new window.ImageDecoder({ data, type: 'image/gif' });
   await decoder.tracks.ready;
   const count = decoder.tracks.selectedTrack.frameCount;
@@ -63,6 +65,8 @@ function HalftoneGif({ src, alt, trim }) {
     const img = fxImg.current;
     let alive = true;
     let list = null;
+    let loading = false;
+    let url = '';
     let visible = false;
     let raf = 0;
     // which frame is up, since when, and what was last drawn
@@ -70,13 +74,28 @@ function HalftoneGif({ src, alt, trim }) {
     let since = 0;
     let drawn = '';
 
-    decodeAll(src, () => alive)
-      .then((frames) => {
-        if (!alive) { frames?.forEach(({ bitmap }) => bitmap.close()); return; }
-        if (frames && frames.length) list = frames;
-        // (none: the <img> goes on being read)
-      })
-      .catch(() => {});
+    // the gif is downloaded once, as it nears the screen: the same bytes
+    // go to the <img> (read while the frames decode) and to the decoder.
+    // (the <img> fetching it as well as fetch() had it downloaded twice)
+    const load = () => {
+      if (loading) return;
+      loading = true;
+      fetch(src, { mode: 'cors' })
+        .then((response) => response.arrayBuffer())
+        .then((data) => {
+          if (!alive) return null;
+          url = URL.createObjectURL(new Blob([data], { type: 'image/gif' }));
+          img.src = url;
+          return decodeAll(data, () => alive);
+        })
+        .then((frames) => {
+          if (!alive) { frames?.forEach(({ bitmap }) => bitmap.close()); return; }
+          if (frames && frames.length) list = frames;
+          // (none: the <img> goes on being read)
+        })
+        // (it could not be read: the <img> fetches it itself)
+        .catch(() => { if (alive && !url) img.src = src; });
+    };
 
     const tick = (now) => {
       raf = 0;
@@ -113,7 +132,15 @@ function HalftoneGif({ src, alt, trim }) {
       }
     };
 
-    // only while it is on screen
+    // downloaded as it nears the screen
+    const near = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      near.disconnect();
+      load();
+    }, { rootMargin: AHEAD });
+    near.observe(box);
+
+    // drawn only while it is on screen
     const watch = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
       start();
@@ -125,6 +152,8 @@ function HalftoneGif({ src, alt, trim }) {
       alive = false;
       cancelAnimationFrame(raf);
       watch.disconnect();
+      near.disconnect();
+      if (url) URL.revokeObjectURL(url);
       document.removeEventListener('visibilitychange', start);
       list?.forEach(({ bitmap }) => bitmap.close());
       dots.dispose();
@@ -136,9 +165,10 @@ function HalftoneGif({ src, alt, trim }) {
   return (
     <div className='halftone-gif' ref={fxBox}>
       <canvas ref={fxCanvas} role='img' aria-label={alt} />
-      {/* the gif itself, under the dots: what they are read from where
-        the frames cannot be decoded here */}
-      <img src={src} alt='' aria-hidden='true' crossOrigin='anonymous' decoding='async' ref={fxImg} />
+      {/* the gif itself, under the dots: what they are read from while
+        the frames decode, or where they cannot be decoded here. its
+        source is set once the gif is downloaded (above) */}
+      <img alt='' aria-hidden='true' crossOrigin='anonymous' decoding='async' ref={fxImg} />
     </div>
   )
 }

@@ -290,7 +290,6 @@ export const PROJECTS = {
           'I reviewed three grocery shopping apps to understand how they support shoppers with specific dietary needs.',
           'While the apps offered product categories, search history, and cart features, my review identified three gaps.',
         ],
-        cardRows: true,
         cards: [
           { title: 'Limited Dietary Filtering', text: 'Product filters focused on general categories rather than individual dietary needs, leaving shoppers to identify suitable products themselves.' },
           { title: 'Missing Product Information', text: 'The reviewed product pages lacked key dietary information, such as ingredients, allergens, and nutrition, making suitability harder to evaluate.' },
@@ -300,9 +299,8 @@ export const PROJECTS = {
       {
         id: 'survey',
         title: 'What Shoppers Told Me',
-        lead: 'Every qualifying shopper compares products and has bought something that did not fit their diet.',
+        lead: 'Every qualifying shopper compares products and has made a wrong purchase, and 9 in 10 would share their preferences if it made shopping faster.',
         text: 'To test what the app review suggested, I surveyed shoppers about how they choose groceries. 15 people responded, and 10 qualified for the study.',
-        cardRows: true,
         cards: [
           { title: 'The problem is real', text: 'All 10 have bought something that did not fit their diet, and 4 of 10 can only sometimes or rarely find the product information they need online.' },
           { title: 'Shoppers do the checking themselves', text: '9 of 10 read ingredient and nutrition labels, 9 of 10 spend at least a minute judging a single product, and all 10 compare products before buying.' },
@@ -323,7 +321,6 @@ export const PROJECTS = {
         title: 'Key Insights',
         lead: 'Turning observations into design direction',
         text: 'The app review and the survey pointed to three opportunities to improve the grocery shopping experience.',
-        cardRows: true,
         cards: [
           { title: 'Personalization', text: 'Allow shoppers to communicate their dietary needs and preferences instead of repeatedly searching for suitable products. 9 of 10 surveyed shoppers would set up their preferences in an app.' },
           { title: 'Relevant Discovery', text: 'Help shoppers narrow their choices by presenting products aligned with their selected preferences.' },
@@ -407,7 +404,7 @@ export const PROJECTS = {
         extra: true,
         title: 'Limitations & Next Steps',
         text: [
-          'BiteWise is a personal concept informed by course-provided personas, a review of existing grocery apps, and a survey of 15 shoppers. The sample is small and no respondent reported an allergy, so the survey results are directional, not conclusive.',
+          'BiteWise is a personal concept informed by course-provided personas, a review of existing grocery apps, and a survey of 15 shoppers. The sample is small and no respondent reported an allergy, so the survey results are directional, to be confirmed through usability testing.',
           'I am now running usability tests on the prototype, focused on:',
         ],
         cards: [
@@ -451,7 +448,7 @@ export const PROJECTS = {
     year: '2026',
     description: 'An AI-assisted, offline-first workspace that takes the paperwork off Philippine teachers, from public school classrooms to college lecture halls.',
     category: 'Web/Mobile Platform / Team Project',
-    roles: ['UI/UX Designer', 'Web Developer'],
+    roles: ['UI/UX Designer', 'Web Developer (with Claude Code)'],
     technologies: [],
     status: 'Pilot tested, handed over',
     cover: gurover_mockup_cover,
@@ -479,12 +476,12 @@ export const PROJECTS = {
         { title: "Offline first", text: "The workspace keeps working without a connection, so a weak signal never stops a teacher mid-task, and the platform carries over to a mobile app beyond the browser." },
         { title: "A landing page that leads to sign-up", text: "Feature sections, a step-by-step walkthrough, and plan comparisons answer a teacher’s questions in the order they ask them, ending at sign-up." },
       ],
-      role: 'I joined GuRover as its UI/UX designer and web developer while many of its features were still missing. I designed and built those features with AI-assisted development, and improved the experience based on a review of competing products.',
+      role: 'I joined GuRover as its UI/UX designer, assigned to develop the platform with Claude Code while many of its features were still missing. I designed those features, built them with Claude Code, and improved the experience based on a review of competing products.',
       contributions: [
-        'Designed and developed the landing page, structuring its feature sections, step-by-step walkthrough, and plan comparisons to guide teachers toward sign-up',
-        'Designed and built the missing core teaching features: AI-assisted lesson plan generation, class and subject management, learning activities, gradebook configuration, attendance tracking, and the SF2 and SF9 report card templates',
+        'Designed the landing page and built it with Claude Code, structuring its feature sections, step-by-step walkthrough, and plan comparisons to guide teachers toward sign-up',
+        'Designed the missing core teaching features and built them with Claude Code: AI-assisted lesson plan generation, class and subject management, learning activities, gradebook configuration, attendance tracking, and the SF2 and SF9 report card templates',
         'Reviewed competing products and improved GuRover’s user experience where it fell short of them',
-        'Developed the mobile app, extending the platform beyond the browser',
+        'Built the mobile app with Claude Code, extending the platform beyond the browser',
       ],
       system: null,
       outcome: 'Before the handover, six evaluators, five teachers and one admin, pilot tested GuRover. Teachers responded well to lesson planning, grade computation, and administrative reporting, and the pilot set the next phase: fixing 5 teacher workflow blockers and 9 major admin issues to raise the admin pass rate from 76.9% to at least 95%.',

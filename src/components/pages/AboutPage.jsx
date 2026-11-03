@@ -30,7 +30,7 @@ import { usePageTitle } from '../../utils/pageTitle'
 // experience entries below it - nothing here that they do not back up
 // the introduction: the page's first screen
 const INTRO = [
-  "I'm Jay Beniza, a UI/UX designer based in the Philippines with 3.5+ years of experience designing web and mobile products. I'm quiet by nature, so I listen closely and notice the details others pass over.",
+  "I'm Jay Beniza, a UI/UX designer based in the Philippines with 3.5+ years of experience designing 14 web and mobile products for government, education, and research clients. I'm quiet by nature, so I listen closely and notice the details others pass over.",
   'I work from research to final interface and stay close to developers through handoff, so the design survives the build. I prefer careful decisions to loud ones, and products that serve both the people who use them and the teams who build them.',
 ];
 
@@ -74,7 +74,7 @@ const RESUME_LINKS = [
  * the footer inside it (darkest).
  */
 function AboutPage() {
-  usePageTitle('About', 'About Jay Beniza, a UI/UX designer and front-end developer in the Philippines: how I work, my experience, skills, tools, and what teammates say.');
+  usePageTitle('About', 'About Jay Beniza, a UI/UX and product designer in the Philippines: how I work, my experience, skills, tools, and what teammates say.');
   const fxHero = useRef();
 
   useEffect(() => {

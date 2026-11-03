@@ -8,7 +8,7 @@ import ScrollSmoother from 'gsap/ScrollSmoother'
 import Button from '../../common/Button'
 import Tag from '../../common/Tag'
 // scroll reveal
-import { scrollReveal, scrollRevealSequence } from '../../../utils/scrollReveal'
+import { scrollReveal, scrollRevealSequence, scrollRevealCards } from '../../../utils/scrollReveal'
 // a colleague's picture opens in pixels, as on the landing page's testimonials
 import { pixelToggle } from '../../../utils/pixels'
 // per-letter text split
@@ -121,15 +121,29 @@ const CONTENT = `
   laptop-lg:col-span-5 laptop-lg:col-start-4
   desktop:col-span-5 desktop:col-start-4`;
 
-// the figures in Results & Impact, as many to a row as there are (up to
-// four; four go two to a row at tablet width) - and the room between a
-// figure and its label: more for a lone figure, which takes the full width
+// cards side by side (a section's cards, and the figures in Results &
+// Impact), never narrower than about 260px: they sit in the right-hand
+// columns (CONTENT), which hold two such cards up to laptop-lg width
+// (591-890px) and three from desktop width (891px and up). four never fit,
+// so four go two by two; three go three across on desktop only. one
+// under another on a phone
 const FIGURES = {
   1: 'grid-cols-1',
   2: 'mobile:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-2 laptop-lg:grid-cols-2 desktop:grid-cols-2',
-  3: 'mobile:grid-cols-1 tablet:grid-cols-3 laptop:grid-cols-3 laptop-lg:grid-cols-3 desktop:grid-cols-3',
-  4: 'mobile:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-4 laptop-lg:grid-cols-4 desktop:grid-cols-4',
+  3: 'mobile:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-2 laptop-lg:grid-cols-2 desktop:grid-cols-3',
+  4: 'mobile:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-2 laptop-lg:grid-cols-2 desktop:grid-cols-2',
 };
+// the last of an odd number, where they go two to a row, takes the row
+// to itself rather than leave a gap beside it (three are a row of their
+// own on desktop)
+const lastAlone = (i, count) => {
+  if (count < 3 || count % 2 === 0 || i !== count - 1) return '';
+  return count === 3
+    ? 'tablet:col-span-2 laptop:col-span-2 laptop-lg:col-span-2'
+    : 'tablet:col-span-2 laptop:col-span-2 laptop-lg:col-span-2 desktop:col-span-2';
+};
+// the room between a card's top and its foot: more for a lone card,
+// which takes the full width
 const FIGURE_ROOM = 'mobile:gap-y-8 tablet:gap-y-12 laptop:gap-y-16 laptop-lg:gap-y-20 desktop:gap-y-24';
 const ONE_FIGURE_ROOM = 'mobile:gap-y-16 tablet:gap-y-20 laptop:gap-y-28 laptop-lg:gap-y-32 desktop:gap-y-40';
 
@@ -202,39 +216,42 @@ function Points({ id, label, items, className = '' }) {
 
 // a list of named notes as cards - the site's own card, as in "How I
 // work" (Process.jsx): its number at the top, its name and note at the
-// bottom, three to a row (one under another on a phone)
-// (`rows`: one card to a row, each a band - number, then name and note)
-// (each card opens as it comes up the screen, then its own text rises -
-// .case-card, revealed in ProjectPage below; `id` is no longer needed by
-// the text, which is the card's own)
-// eslint-disable-next-line no-unused-vars
-function Cards({ id, items, rows = false }) {
+// bottom. laid out as Results & Impact's figures are, side by side, as
+// many to a row as fit at a readable width (FIGURES)
+// (the cards of a section open together, in order, as the site's cards
+// do - .case-cards, revealed in ProjectPage below with scrollRevealCards)
+// the name is sized to its own card (the card is a size container), not
+// to the screen: set in capitals, the longest single word in a card name
+// (PERSONALIZATION, 15 letters) runs about 11em wide, so at 6.5% of the
+// card's width it always fits inside the card's padding - where a size
+// set by the screen ran past the edge of a card two to a row and was cut
+// off. never under 1rem, never over the section heading's 1.875rem
+const CARD_NAME = 'text-[length:clamp(1rem,6.5cqi,1.875rem)]';
+// the room under a card's number: more for a lone card, which takes the
+// full width (as FIGURE_ROOM and ONE_FIGURE_ROOM)
+const NUMBER_ROOM = 'mobile:mb-8 tablet:mb-12 laptop:mb-16 laptop-lg:mb-20 desktop:mb-24';
+const ONE_NUMBER_ROOM = 'mobile:mb-16 tablet:mb-20 laptop:mb-28 laptop-lg:mb-32 desktop:mb-40';
+// a card's number, name and note each sit on a row line shared with the
+// cards beside it (subgrid): a name that wraps to two lines moves every
+// name's note down with it, so names line up with names and notes with
+// notes across a row
+const LINED = 'grid row-span-3 [grid-template-rows:subgrid] gap-y-0';
+function Cards({ id, items }) {
   return (
-    <ol className={rows ? 'grid grid-cols-1 gap-4' : `grid gap-4
-      mobile:grid-cols-1
-      tablet:grid-cols-3
-      laptop:grid-cols-3
-      laptop-lg:grid-cols-3
-      desktop:grid-cols-3`}>
+    <ol className={`case-cards grid gap-4 ${FIGURES[Math.min(items.length, 4)]}`} id={`case-cards-${id}`}>
       {items.map((item, i) => (
-        <li className='case-card theme-dark bg-card m-0' key={item.title}>
-          <div className={rows ? 'h-full flex flex-col justify-between p-6 gap-y-8' : `h-full flex flex-col justify-between
-            mobile:p-6 mobile:gap-y-12
-            tablet:p-6 tablet:gap-y-16
-            laptop:p-6 laptop:gap-y-24
-            laptop-lg:p-6 laptop-lg:gap-y-28
-            desktop:p-6 desktop:gap-y-32`}>
-            <p className='text-caption text-muted'>
+        <li className={`reveal-card theme-dark bg-card m-0 [container-type:inline-size] ${LINED} ${lastAlone(i, items.length)}`} id={`case-card-${id}-${i}`} key={item.title}>
+          <div className={`reveal-card-inner ${LINED} p-6`}>
+            <p className={`text-caption text-muted ${items.length > 1 ? NUMBER_ROOM : ONE_NUMBER_ROOM}`}>
               <SplitText text={String(i + 1).padStart(2, '0')} id='animate-card' />
             </p>
-            <div>
-              <h3 className='flex flex-wrap font-flexible font-medium leading-none text-heading mb-4'>
-                <SplitText text={item.title} id='animate-card' />
-              </h3>
-              <p className='flex flex-wrap text-caption text-muted'>
-                <SplitText text={item.text} id='animate-card' by='word' />
-              </p>
-            </div>
+            {/* (a one-line name sits at the foot of its row, by its note) */}
+            <h3 className={`self-end flex flex-wrap font-flexible font-medium leading-none ${CARD_NAME} mb-4`}>
+              <SplitText text={item.title} id='animate-card' />
+            </h3>
+            <p className='self-start flex flex-wrap text-caption text-muted'>
+              <SplitText text={item.text} id='animate-card' by='word' />
+            </p>
           </div>
         </li>
       ))}
@@ -360,7 +377,7 @@ function Panel({ label, className = '' }) {
  * content in the same right-hand columns and its screens full width under
  * it. A section (projects.js) has a `title` for its label and any of: a
  * `lead` line set large, `text` (a paragraph, or a list of them),
- * `notes` (labelled paragraphs), `cards` (`cardRows`: one to a row), `points` (a labelled list) and
+ * `notes` (labelled paragraphs), `cards` (side by side, up to four to a row), `points` (a labelled list) and
  * `shots` (its screens, and their `layout`).
  *
  * The project is given whole, or by its key in PROJECTS as `id` - the
@@ -467,9 +484,9 @@ function ProjectPage({ project: given, id }) {
     ], { trigger: card }));
 
     // placeholder panels wipe up the same way
-    // each card - the case study's, a platform's features and results - is
-    // a component of its own: its frame wipes up from its bottom edge, then
-    // its number, name and note rise, as that card comes up the screen
+    // each quote card (.case-card) is a component of its own: its frame
+    // wipes up from its bottom edge, then its words rise, as it comes up
+    // the screen
     // (a colleague's picture on a quote card opens in pixels as its name
     // rises, as on the landing page's testimonials, and shuts again with
     // the card scrolled back above it)
@@ -495,11 +512,20 @@ function ProjectPage({ project: given, id }) {
       kill: () => { toggle.kill(); gsap.set(avatar, { clearProps: 'clipPath' }); },
     }));
 
+    // a section's cards and its figures (.case-cards) open as the site's
+    // other cards do (scrollRevealCards): side by side, from tablet width,
+    // on one trigger, one after another in reading order - each frame
+    // wiping up while what is inside settles, then its text rising - and
+    // stacked on a phone, each in its own turn
+    const cardGroups = gsap.utils.toArray('.case-cards').map((group) => scrollRevealCards(
+      [...group.children].map((card) => ({ card: `#${card.id}`, text: `#${card.id} .split-letter` })),
+      { group: `#${group.id}`, rowFrom: 768 }));
+
     const panels = gsap.utils.toArray('.case-panel').map((panel) => scrollReveal(
       panel, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' }));
 
     return () => {
-      [...sections, ...images, ...cards, ...avatars, ...panels].forEach((reveal) => reveal.kill());
+      [...sections, ...images, ...cards, ...avatars, ...cardGroups, ...panels].forEach((reveal) => reveal.kill());
     };
   }, [project]);
 
@@ -604,7 +630,7 @@ function ProjectPage({ project: given, id }) {
                 className={j < all.length - 1 || part.notes || part.cards || part.points ? BELOW : ''} />
             ))}
             {part.notes && <Notes id={part.id} items={part.notes} className={part.cards || part.points ? BELOW : ''} />}
-            {part.cards && <Cards id={part.id} items={part.cards} rows={part.cardRows} />}
+            {part.cards && <Cards id={part.id} items={part.cards} />}
             {part.points && <Points id={part.id} label={part.points.label} items={part.points.items} className={part.cards ? 'mt-8' : ''} />}
           </CaseSection>
         ))}
@@ -644,9 +670,9 @@ function ProjectPage({ project: given, id }) {
         {/* design approach - structure and user flows */}
         {has('approach') && (
         <CaseSection id='approach' title='Design Approach' theme={themeOf('approach')}>
-          {/* each decision a card of its own, one to a row - or paragraphs */}
+          {/* each decision a card of its own, side by side - or paragraphs */}
           {[].concat(platform.approach)[0]?.title
-            ? <Cards id='approach' items={platform.approach.slice(0, KEY_DECISIONS)} rows />
+            ? <Cards id='approach' items={platform.approach.slice(0, KEY_DECISIONS)} />
             : [].concat(platform.approach).map((paragraph, i, all) => (
               <Copy id='approach' text={paragraph} className={i < all.length - 1 ? BELOW : ''} key={paragraph} />
             ))}
@@ -673,16 +699,18 @@ function ProjectPage({ project: given, id }) {
           {/* one paragraph, then the figures */}
           {platform.outcome && <Copy id='outcome' text={platform.outcome} className={platform.metrics || platform.quote ? BELOW : ''} />}
           {platform.metrics && (
-          <ul className={`grid gap-4 ${FIGURES[Math.min(platform.metrics.length, 4)]}`}>
-            {platform.metrics.map((metric) => (
-              <li className={`case-card ${CARD} flex flex-col justify-between ${platform.metrics.length > 1 ? FIGURE_ROOM : ONE_FIGURE_ROOM}`}
+          <ul className={`case-cards grid gap-4 ${FIGURES[Math.min(platform.metrics.length, 4)]}`} id='case-cards-outcome'>
+            {platform.metrics.map((metric, i) => (
+              <li className={`reveal-card ${CARD} ${lastAlone(i, platform.metrics.length)}`} id={`case-card-outcome-${i}`}
                 key={metric.label}>
-                <p className='font-flexible font-medium leading-none text-title'>
-                  <SplitText text={metric.value} id='animate-card' />
-                </p>
-                <p className='flex flex-wrap text-caption text-muted'>
-                  <SplitText text={metric.label} id='animate-card' by='word' />
-                </p>
+                <div className={`reveal-card-inner h-full flex flex-col justify-between ${platform.metrics.length > 1 ? FIGURE_ROOM : ONE_FIGURE_ROOM}`}>
+                  <p className='font-flexible font-medium leading-none text-title'>
+                    <SplitText text={metric.value} id='animate-card' />
+                  </p>
+                  <p className='flex flex-wrap text-caption text-muted'>
+                    <SplitText text={metric.label} id='animate-card' by='word' />
+                  </p>
+                </div>
               </li>
             ))}
           </ul>

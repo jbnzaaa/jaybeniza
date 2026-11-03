@@ -14,9 +14,10 @@ const ROLES = [
     company: 'PCI Tech Center',
     dates: 'May 2024 - October 2026',
     bullets: [
-      'Led UI/UX design for 7 web and mobile projects, owning everything from requirements to high-fidelity design, and secured client approval within 2 revision rounds on tracked projects with 1-2 day revision turnaround.',
-      'Designed and built 3 end-to-end web and mobile apps with Claude Code, owning the full process from user feedback to front-end delivery, and cut feature development time by about 50% while simplifying core user flows.',
-      'Initiated centralized Figma component libraries and design systems after identifying inconsistent component use, owning 40+ reusable components that standardized UI patterns across projects and the team.',
+      'Led end-to-end UI/UX design for 7 web and mobile projects, translating client requirements and usability testing findings into user flows, prototypes, and high-fidelity interfaces; used tester feedback to simplify a core flow from 5 steps to 3.',
+      'Designed and built 3 web and mobile applications using Claude Code, collaborating with developers to resolve technical constraints and reducing feature development time by approximately 50%.',
+      'Initiated centralized Figma design systems with 40+ reusable components after identifying inconsistent component use, standardizing UI patterns across projects.',
+      'Turned around client-requested design revisions within 1-2 days, working closely with project managers to update web interfaces and hand them off to developers for implementation.',
     ],
   },
   {
@@ -25,9 +26,10 @@ const ROLES = [
     company: 'PCI Tech Center',
     dates: 'March 2023 - May 2024',
     bullets: [
-      'Designed wireframes, prototypes, and high-fidelity UI for 7 projects (5 web, 2 mobile), responsible for 75+ screens and 25 user flows, with 3 platforms launched to production.',
-      'Delivered developer-ready handoffs within 1-2 days of each request, accountable for specs and design files, giving engineers 2-3 days to review feasibility before development and reducing rework.',
-      'Owned design deliverables within Agile sprints across government and education projects, supporting on-time delivery, including a team that reached 100% sprint completion.',
+      'Designed 75+ screens and 25 user flows across 7 projects (5 web platforms, 2 mobile apps), delivering wireframes, prototypes, and high-fidelity interfaces, with 3 platforms launched to production.',
+      'Collaborated with project managers and developers to clarify requirements, prepare implementation-ready design specifications, and review developed interfaces for visual consistency.',
+      'Delivered developer-ready design handoffs within 1-2 days of requests, supporting Agile sprint delivery and contributing to a team that achieved 100% sprint completion.',
+      "Contributed to a UI/UX knowledge-sharing workshop for the company's interns.",
     ],
   },
 ];

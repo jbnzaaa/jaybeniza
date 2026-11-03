@@ -8,7 +8,7 @@ import SplitText from '../common/SplitText'
 import KerningGame from '../common/KerningGame'
 
 // (what the headline does not say: how long, what kind of work, and that I am available)
-const HIGHLIGHT_TEXT = 'UI/UX designer and front-end developer with 3.5+ years of experience. I design web and mobile products and build them too, so what you approve is what ships.';
+const HIGHLIGHT_TEXT = 'UI/UX and product designer with 3.5+ years of experience designing 14 web and mobile products for government, education, and research clients. I build working versions of my designs with Claude Code.';
 
 // the headline, broken into three set lines from tablet width up. on a
 // phone it is one sentence left to wrap where the screen ends it: set as
