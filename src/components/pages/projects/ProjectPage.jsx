@@ -1,5 +1,5 @@
 //
-import React, { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 // GSAP
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -8,7 +8,7 @@ import ScrollSmoother from 'gsap/ScrollSmoother'
 import Button from '../../common/Button'
 import Tag from '../../common/Tag'
 // scroll reveal
-import { scrollReveal, scrollRevealSequence, scrollRevealCards } from '../../../utils/scrollReveal'
+import { scrollReveal, scrollRevealSequence, scrollRevealCards, REVEAL_AT, REVERSE_AT } from '../../../utils/scrollReveal'
 // a colleague's picture opens in pixels, as on the landing page's testimonials
 import { pixelToggle } from '../../../utils/pixels'
 // per-letter text split
@@ -33,45 +33,10 @@ const ORDER = ['gurover', 'tingi', 'portfoliov3', 'comelec', 'psgs', 'pci', 'aac
 // first after its last
 const ARCHIVE_ORDER = ARCHIVE.map(({ id }) => id).filter((key) => PROJECTS[key]);
 
-// a project's screens (`start`, projects.js): one marked 'full' spans the
-// width; the rest run in two columns from tablet width up, one on a phone.
-// they are columns, not rows: a tall screen (a whole landing page) takes
-// its own height in one column while the others stack beside it, so no
-// screen is pushed below a gap. each run of them between full ones is
-// balanced on its own
+// the placeholder screens of a project with none yet: two columns from
+// tablet width up, one on a phone (its real screens are a bento - Bento)
 const SCREEN_GAP = 'mobile:mb-6 tablet:mb-6 laptop:mb-6 laptop-lg:mb-6 desktop:mb-6';
 const SCREEN_RUN = 'mobile:columns-1 tablet:columns-2 laptop:columns-2 laptop-lg:columns-2 desktop:columns-2 gap-x-6';
-
-function Screen({ src, alt, onLoad }) {
-  return (
-    <div className={`screenshot-container break-inside-avoid ${SCREEN_GAP}`}>
-      <img src={src} alt={alt} className='screenshot-img' onLoad={onLoad}/>
-    </div>
-  );
-}
-
-// the screens, in order: a full one or a row of phones on its own, the
-// others gathered into runs of columns
-function Screens({ shots, onLoad }) {
-  const blocks = [];
-  shots.forEach((shot) => {
-    const alone = shot.start === 'full' || shot.phones;
-    const last = blocks[blocks.length - 1];
-    if (!alone && last?.run) last.run.push(shot);
-    else blocks.push(alone ? { shot } : { run: [shot] });
-  });
-  return blocks.map((block) => (block.run ? (
-    <div className={SCREEN_RUN} key={block.run[0].alt}>
-      {block.run.map((shot) => <Screen {...shot} onLoad={onLoad} key={shot.alt} />)}
-    </div>
-  ) : block.shot.phones ? (
-    <div className={SCREEN_GAP} key={block.shot.alt}>
-      <Shots items={block.shot.phones} layout='quad' onLoad={onLoad} />
-    </div>
-  ) : (
-    <Screen {...block.shot} onLoad={onLoad} key={block.shot.alt} />
-  )));
-}
 
 // what a case study that is still being written will cover, once it is:
 // the parts of the finished layout, in order
@@ -205,7 +170,8 @@ function Points({ id, label, items, className = '' }) {
       </p>
       <ul className='flex flex-col'>
         {items.map((item) => (
-          <li className='flex flex-wrap border-t border-rule py-4 m-0 text-caption' key={item}>
+          <li className='relative flex flex-wrap py-4 m-0 text-caption' key={item}>
+            <span className='case-rule' aria-hidden='true' />
             <SplitText text={item} id={`animate-case-${id}`} by='word' />
           </li>
         ))}
@@ -274,7 +240,8 @@ function Notes({ id, items, className = '' }) {
   return (
     <dl className={`flex flex-col ${className}`}>
       {items.map(({ label, text }) => (
-        <div className='border-t border-rule py-4' key={label}>
+        <div className='relative py-4' key={label}>
+          <span className='case-rule' aria-hidden='true' />
           <dt className='text-caption text-muted mb-2'>
             <SplitText text={label} id={`animate-case-${id}`} />
           </dt>
@@ -287,29 +254,149 @@ function Notes({ id, items, className = '' }) {
   )
 }
 
-// a section's screens, full width under it, tops level: three, four or
-// two, or six to a row (`layout`) from tablet width up, two or three on a
-// phone - kept in
-// rows so the result is seen without a long scroll. the screens are drawn
-// at 402px wide, so each row is held to the width that shows them at that
-// size or under, never stretched past it. each screen opens with the
-// screenshots' reveal (ProjectPage, below)
-const SHOTS = {
-  trio: 'grid items-start gap-4 mx-auto max-w-[1238px] mobile:grid-cols-2 tablet:grid-cols-3 laptop:grid-cols-3 laptop-lg:grid-cols-3 desktop:grid-cols-3',
-  quad: 'grid items-start gap-4 mx-auto max-w-[1656px] mobile:grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-4 laptop-lg:grid-cols-4 desktop:grid-cols-4',
-  pair: 'grid items-start gap-4 mx-auto max-w-[820px] grid-cols-2',
-  six: 'grid items-start gap-4 mx-auto max-w-[2492px] mobile:grid-cols-3 tablet:grid-cols-3 laptop:grid-cols-6 laptop-lg:grid-cols-6 desktop:grid-cols-6',
-  // web screens (a platform's decisions): wide, so two to a row from
-  // tablet width up - or three from laptop width - and one on a phone
-  web: 'grid items-start gap-4 mobile:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-2 laptop-lg:grid-cols-2 desktop:grid-cols-2',
-  web3: 'grid items-start gap-4 mobile:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 laptop-lg:grid-cols-3 desktop:grid-cols-3',
+// a decision's screens as a bento box, in the section's content column
+// (under its notes, the same width). they are set in rows - how many to a
+// row drawn at random for each decision (rowsOf: one, two or three, the
+// same every visit, seeded by the decision's name) - and each row is
+// justified: every screen keeps its own proportions, uncut, and takes a
+// share of the row's width by how wide it is for its height, so the
+// screens of a row stand one height and the row fills the column. on a
+// phone, two to a row, the first alone when there is an odd one out
+const PHONE = '(max-width: 767px)';
+// a string's own steady random numbers (mulberry32, seeded by its hash)
+function seeded(text) {
+  let seed = [...text].reduce((hash, char) => Math.imul(hash ^ char.charCodeAt(0), 16777619), 2166136261) >>> 0;
+  return () => {
+    seed = (seed + 0x6D2B79F5) >>> 0;
+    let t = seed;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+// the rows, drawn at random from every way of setting the screens out
+// that keeps each one large enough to read, in the bento's own width:
+// no screen narrower than ROWS.least (a phone screen, taller than wide,
+// can be narrower than a wide one), no row taller than ROWS.tallest of
+// the window, nor wider for its height than ROWS.max (a strip). at most
+// one row of a single screen. on a phone, wide screens go one to a row
+// and phone screens two. where no way keeps to all of that, the rules
+// give way one at a time: the row of one first, then the height, then
+// the widths
+// (the gap between screens)
+const BENTO_GAP = 16;
+const ROWS = {
+  least: { wide: 260, tall: 140 },
+  tallest: .9,
+  max: 4.4,
 };
-function Shots({ items, layout = 'trio', onLoad }) {
+const PHONE_ROWS = { min: .4, max: 2.4, share: .4 };
+function rowsOf(ratios, seed, phone, width = 1000, height = 900) {
+  const count = ratios.length;
+  const tries = phone ? [{ phone: true }, { phone: true, loose: true }] : [
+    { singles: 1, tall: true, least: true },
+    { singles: Infinity, tall: true, least: true },
+    { singles: Infinity, least: true },
+    { singles: Infinity },
+  ];
+  for (const rule of tries) {
+    const fits = (from, size) => {
+      const row = ratios.slice(from, from + size);
+      const total = row.reduce((sum, ratio) => sum + ratio, 0);
+      if (rule.phone) return rule.loose ? size <= 2 : total >= PHONE_ROWS.min && total <= PHONE_ROWS.max && row.every((ratio) => ratio / total >= PHONE_ROWS.share);
+      const room = width - (size - 1) * BENTO_GAP;
+      if (total > ROWS.max) return false;
+      if (rule.tall && room / total > height * ROWS.tallest) return false;
+      return !rule.least || row.every((ratio) => room * ratio / total >= ROWS.least[ratio < 1 ? 'tall' : 'wide']);
+    };
+    // every way, from a screen on (with how many rows of one it takes)
+    const ways = [];
+    const walk = (at, rows, singles) => {
+      if (ways.length >= 500) return;
+      if (at === count) { ways.push(rows); return; }
+      for (let size = 1; size <= Math.min(6, count - at); size++) {
+        const single = size === 1 ? 1 : 0;
+        if (singles + single <= (rule.singles ?? Infinity) && fits(at, size)) walk(at + size, [...rows, size], singles + single);
+      }
+    };
+    walk(0, [], 0);
+    if (!ways.length) continue;
+    // (kept to the height, any of them; past it, the one whose tallest
+    // row is the least tall)
+    if (rule.tall || (rule.phone && !rule.loose)) return ways[Math.floor(seeded(seed)() * ways.length)];
+    const tallestOf = (way) => {
+      let at = 0;
+      return Math.max(...way.map((size) => {
+        const total = ratios.slice(at, at += size).reduce((sum, ratio) => sum + ratio, 0);
+        return (width - (size - 1) * BENTO_GAP) / total;
+      }));
+    };
+    return ways.reduce((best, way) => (tallestOf(way) < tallestOf(best) ? way : best));
+  }
+  // (none at all: one to a row)
+  return Array(count).fill(1);
+}
+function usePhone() {
+  const [phone, setPhone] = useState(() => window.matchMedia(PHONE).matches);
+  useEffect(() => {
+    const query = window.matchMedia(PHONE);
+    const change = () => setPhone(query.matches);
+    query.addEventListener('change', change);
+    return () => query.removeEventListener('change', change);
+  }, []);
+  return phone;
+}
+function Bento({ items, seed, onLoad, className = ABOVE }) {
+  const phone = usePhone();
+  // how wide it is for the window's height: no row is let stand taller
+  // than the window (read again as either changes)
+  const fxBox = useRef();
+  const [room, setRoom] = useState({ width: 1000, height: 900 });
+  useEffect(() => {
+    const box = fxBox.current;
+    const read = () => setRoom((was) => (was.width === box.clientWidth && was.height === window.innerHeight ? was : { width: box.clientWidth, height: window.innerHeight }));
+    read();
+    const watch = new ResizeObserver(read);
+    watch.observe(box);
+    window.addEventListener('resize', read);
+    return () => { watch.disconnect(); window.removeEventListener('resize', read); };
+  }, []);
+  // each screen's proportions, read before it is shown (wide until then).
+  // the screens are one run, not rows of their own: a row is only the
+  // widths they are given, so they stay the same elements - and keep
+  // their reveals - when the rows are drawn again
+  const [ratios, setRatios] = useState({});
+  useEffect(() => {
+    let live = true;
+    items.forEach(({ src, alt }) => {
+      const image = new Image();
+      image.onload = () => {
+        if (!live) return;
+        const ratio = image.naturalWidth / image.naturalHeight;
+        setRatios((known) => (known[alt] === ratio ? known : { ...known, [alt]: ratio }));
+      };
+      image.src = src;
+    });
+    return () => { live = false; };
+  }, [items]);
+  useEffect(() => { onLoad?.(); }, [ratios, phone, room, onLoad]);
+  const shape = items.map(({ alt }) => ratios[alt] || 16 / 9);
+  // (not on a phone: its window grows and shrinks with the address bar)
+  const rows = rowsOf(shape, seed, phone, room.width, room.height);
+  // each screen's width: its share of its row, after the row's gaps
+  const widths = [];
+  let at = 0;
+  rows.forEach((size) => {
+    const row = shape.slice(at, at + size);
+    const total = row.reduce((sum, ratio) => sum + ratio, 0);
+    row.forEach((ratio) => widths.push(`calc((100% - ${(size - 1) * BENTO_GAP}px) * ${ratio / total} - .5px)`));
+    at += size;
+  });
   return (
-    <div className={SHOTS[layout]}>
-      {items.map(({ src, alt }) => (
-        <div className='screenshot-container' key={alt}>
-          <img src={src} alt={alt} className='screenshot-img' onLoad={onLoad}/>
+    <div ref={fxBox} className={`flex flex-wrap justify-between ${className}`} style={{ rowGap: BENTO_GAP }}>
+      {items.map(({ src, alt }, i) => (
+        <div className='screenshot-container bg-card' style={{ width: widths[i], aspectRatio: shape[i] }} key={alt}>
+          <img src={src} alt={alt} className='screenshot-img h-full' loading='lazy' onLoad={onLoad}/>
         </div>
       ))}
     </div>
@@ -375,6 +462,9 @@ function ProjectPage({ project: given, id }) {
   const short = !!project.behance;
   const [hero, ...allShots] = project.screenshots || [];
   const shots = allShots.slice(0, KEY_SHOTS);
+  // (the same list from one render to the next, for the bento to read once)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const screens = useMemo(() => shots.flatMap((shot) => shot.phones || [shot]), [project]);
   // (a row of six cut to four is set four to a row)
   const keyShots = ({ items, layout }) => ({
     items: items.slice(0, KEY_SHOTS),
@@ -512,8 +602,19 @@ function ProjectPage({ project: given, id }) {
     const panels = gsap.utils.toArray('.case-panel').map((panel) => scrollReveal(
       panel, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' }));
 
+    // each rule over a note or a list row is drawn across from the left as
+    // it comes up the screen, and taken up again with the page scrolled
+    // back above it - as the landing page's service rules are
+    const rules = gsap.utils.toArray('.case-rule').map((rule) => {
+      const draw = gsap.to(rule, { scaleX: 1, duration: .8, ease: 'power2.inOut', paused: true });
+      const on = ScrollTrigger.create({ trigger: rule, start: REVEAL_AT, onEnter: () => draw.play() });
+      const off = ScrollTrigger.create({ trigger: rule, start: REVERSE_AT, onLeaveBack: () => draw.reverse() });
+      if (rule.getBoundingClientRect().top < window.innerHeight * .85) draw.play();
+      return { kill: () => { on.kill(); off.kill(); draw.kill(); gsap.set(rule, { clearProps: 'transform' }); } };
+    });
+
     return () => {
-      [...sections, ...images, ...cards, ...avatars, ...cardGroups, ...panels].forEach((reveal) => reveal.kill());
+      [...sections, ...images, ...cards, ...avatars, ...cardGroups, ...panels, ...rules].forEach((reveal) => reveal.kill());
     };
   }, [project]);
 
@@ -611,7 +712,7 @@ function ProjectPage({ project: given, id }) {
         {/* a case study: its own sections, light and dark in turn */}
         {studyParts.map((part, i) => (
           <CaseSection id={part.id} title={part.title} theme={i % 2 ? DARK : LIGHT} key={part.id}
-            below={part.shots && <Shots {...part.shots} onLoad={remeasure} />}>
+>
             {part.lead && <Lead id={part.id} text={part.lead} className={part.text || part.notes || part.cards || part.points ? BELOW : ''} />}
             {[].concat(part.text || []).map((paragraph, j, all) => (
               <Copy id={part.id} text={paragraph} key={paragraph}
@@ -620,6 +721,8 @@ function ProjectPage({ project: given, id }) {
             {part.notes && <Notes id={part.id} items={part.notes} className={part.cards || part.points ? BELOW : ''} />}
             {part.cards && <Cards id={part.id} items={part.cards} />}
             {part.points && <Points id={part.id} label={part.points.label} items={part.points.items} className={part.cards ? 'mt-8' : ''} />}
+            {/* (its screens as they are written, every one: the bento sets them) */}
+            {part.shots && <Bento items={(project.caseStudy.find(({ id }) => id === part.id) || part).shots.items} seed={part.title} onLoad={remeasure} />}
           </CaseSection>
         ))}
         </>
@@ -699,8 +802,7 @@ function ProjectPage({ project: given, id }) {
           screens that show it under them */}
         {asDecisions && decisions.map((decision, i) => has(`decision-${i}`) && (
         <CaseSection id={`decision-${i}`} title={`Decision ${String(i + 1).padStart(2, '0')}`} theme={themeOf(`decision-${i}`)}
-          key={decision.title}
-          below={decision.shots && <Shots {...decision.shots} onLoad={remeasure} />}>
+          key={decision.title}>
           <Lead id={`decision-${i}`} text={decision.title} className={decision.summary ? 'mb-4' : BELOW} />
           {decision.summary && <Copy id={`decision-${i}`} text={decision.summary} className={BELOW} />}
           <Notes id={`decision-${i}`} items={[
@@ -708,13 +810,14 @@ function ProjectPage({ project: given, id }) {
             { label: 'Solution', text: decision.text },
             ...(decision.rationale ? [{ label: 'Design rationale', text: decision.rationale }] : []),
           ]} />
+          {decision.shots && <Bento items={decision.shots.items} seed={decision.title} onLoad={remeasure} />}
         </CaseSection>
         ))}
 
         {/* its screens, under the label at full width */}
         {has('screens') && (
-        <CaseSection id='screens' title='Platform Screens' theme={themeOf('screens')} wide>
-          <Screens shots={shots} onLoad={remeasure} />
+        <CaseSection id='screens' title='Platform Screens' theme={themeOf('screens')}>
+          <Bento items={screens} seed={project.title} onLoad={remeasure} className='' />
         </CaseSection>
         )}
 
@@ -742,10 +845,10 @@ function ProjectPage({ project: given, id }) {
 
         {/* its screens, under the label at full width - light when they
           follow the cover directly, so the two are not one dark run */}
-        <CaseSection id='screens' title='Project Screens' theme={hasOverview ? DARK : LIGHT} wide>
+        <CaseSection id='screens' title='Project Screens' theme={hasOverview ? DARK : LIGHT}>
           {/* (a row of phone screens - `phones` - spans the width, four
             to a row from tablet width up) */}
-          <Screens shots={shots} onLoad={remeasure} />
+          {screens.length > 0 && <Bento items={screens} seed={project.title} onLoad={remeasure} className='' />}
           {!shots.length && (
             <div className={SCREEN_RUN}>
               {['Screen one', 'Screen two', 'Screen three'].map((name) => (

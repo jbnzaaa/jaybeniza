@@ -133,6 +133,60 @@ import pci_cards from '../../../assets/files/images/pci/screen-cards.webp'
 import pci_menus from '../../../assets/files/images/pci/screen-menus.webp'
 import pci_navigations from '../../../assets/files/images/pci/screen-navigations.webp'
 import pci_dialogs from '../../../assets/files/images/pci/screen-dialogs.webp'
+import gurover_decision_01_01 from '../../../assets/files/images/gurover/decision-01-01.webp'
+import gurover_decision_01_02 from '../../../assets/files/images/gurover/decision-01-02.webp'
+import gurover_decision_02_01 from '../../../assets/files/images/gurover/decision-02-01.webp'
+import gurover_decision_02_03 from '../../../assets/files/images/gurover/decision-02-03.webp'
+import gurover_decision_03_01 from '../../../assets/files/images/gurover/decision-03-01.webp'
+import comelec_decision_01_01 from '../../../assets/files/images/comelec/decision-01-01.webp'
+import comelec_decision_01_02 from '../../../assets/files/images/comelec/decision-01-02.webp'
+import comelec_decision_01_03 from '../../../assets/files/images/comelec/decision-01-03.webp'
+import comelec_decision_02_01 from '../../../assets/files/images/comelec/decision-02-01.webp'
+import comelec_decision_02_02 from '../../../assets/files/images/comelec/decision-02-02.webp'
+import comelec_decision_02_03 from '../../../assets/files/images/comelec/decision-02-03.webp'
+import comelec_decision_03_01 from '../../../assets/files/images/comelec/decision-03-01.webp'
+import comelec_decision_03_02 from '../../../assets/files/images/comelec/decision-03-02.webp'
+import comelec_decision_03_04 from '../../../assets/files/images/comelec/decision-03-04.webp'
+import aaccup_decision_01_01 from '../../../assets/files/images/aaccup/decision-01-01.webp'
+import aaccup_decision_01_02 from '../../../assets/files/images/aaccup/decision-01-02.webp'
+import aaccup_decision_02_01 from '../../../assets/files/images/aaccup/decision-02-01.webp'
+import aaccup_decision_02_02 from '../../../assets/files/images/aaccup/decision-02-02.webp'
+import aaccup_decision_02_03 from '../../../assets/files/images/aaccup/decision-02-03.webp'
+import aaccup_decision_02_04 from '../../../assets/files/images/aaccup/decision-02-04.webp'
+import aaccup_decision_02_05 from '../../../assets/files/images/aaccup/decision-02-05.webp'
+import aaccup_decision_03_01 from '../../../assets/files/images/aaccup/decision-03-01.webp'
+import aaccup_decision_03_02 from '../../../assets/files/images/aaccup/decision-03-02.webp'
+import aaccup_decision_03_03 from '../../../assets/files/images/aaccup/decision-03-03.webp'
+import aaccup_decision_03_04 from '../../../assets/files/images/aaccup/decision-03-04.webp'
+import aaccup_decision_03_05 from '../../../assets/files/images/aaccup/decision-03-05.webp'
+import arise_decision_01_01 from '../../../assets/files/images/arise/decision-01-01.webp'
+import arise_decision_01_02 from '../../../assets/files/images/arise/decision-01-02.webp'
+import arise_decision_01_03 from '../../../assets/files/images/arise/decision-01-03.webp'
+import arise_decision_02_01 from '../../../assets/files/images/arise/decision-02-01.webp'
+import arise_decision_02_02 from '../../../assets/files/images/arise/decision-02-02.webp'
+import arise_decision_02_03 from '../../../assets/files/images/arise/decision-02-03.webp'
+import arise_decision_03_01 from '../../../assets/files/images/arise/decision-03-01.webp'
+import arise_decision_03_02 from '../../../assets/files/images/arise/decision-03-02.webp'
+import arise_decision_03_03 from '../../../assets/files/images/arise/decision-03-03.webp'
+import courseware_decision_01_01 from '../../../assets/files/images/courseware/decision-01-01.webp'
+import courseware_decision_01_02 from '../../../assets/files/images/courseware/decision-01-02.webp'
+import courseware_decision_01_03 from '../../../assets/files/images/courseware/decision-01-03.webp'
+import courseware_decision_02_01 from '../../../assets/files/images/courseware/decision-02-01.webp'
+import courseware_decision_02_02 from '../../../assets/files/images/courseware/decision-02-02.webp'
+import courseware_decision_02_03 from '../../../assets/files/images/courseware/decision-02-03.webp'
+import courseware_decision_02_04 from '../../../assets/files/images/courseware/decision-02-04.webp'
+import courseware_decision_02_05 from '../../../assets/files/images/courseware/decision-02-05.webp'
+import courseware_decision_02_06 from '../../../assets/files/images/courseware/decision-02-06.webp'
+import courseware_decision_03_01 from '../../../assets/files/images/courseware/decision-03-01.webp'
+import courseware_decision_03_02 from '../../../assets/files/images/courseware/decision-03-02.webp'
+import pci_decision_01_01 from '../../../assets/files/images/pci/decision-01-01.webp'
+import pci_decision_01_02 from '../../../assets/files/images/pci/decision-01-02.webp'
+import pci_decision_01_03 from '../../../assets/files/images/pci/decision-01-03.webp'
+import pci_decision_02_01 from '../../../assets/files/images/pci/decision-02-01.webp'
+import pci_decision_02_02 from '../../../assets/files/images/pci/decision-02-02.webp'
+import pci_decision_03_01 from '../../../assets/files/images/pci/decision-03-01.webp'
+import pci_decision_03_02 from '../../../assets/files/images/pci/decision-03-02.webp'
+import pci_decision_03_03 from '../../../assets/files/images/pci/decision-03-03.webp'
 
 // an archived project's pictures, found at build time in its own folder,
 // src/assets/files/images/archive/<key>: the one with cover in its name
@@ -145,9 +199,12 @@ import pci_dialogs from '../../../assets/files/images/pci/screen-dialogs.webp'
 // projects' do. with none, panels stand in
 const ARCHIVE_FOLDER = require.context('../../../assets/files/images/archive', true, /\.(jpe?g|png|webp|avif|gif)$/i);
 const SHOT_STARTS = [2, 4, 1, 3];
+// pictures kept in a project's folder but not shown on its page
+const HIDDEN = { iscan: ['overview'] };
 export const archivePictures = (key) => {
-  const files = ARCHIVE_FOLDER.keys().filter((file) => file.startsWith(`./${key}/`)).sort();
   const name = (file) => file.split('/').pop().replace(/\.[^.]+$/, '');
+  const files = ARCHIVE_FOLDER.keys().filter((file) => file.startsWith(`./${key}/`)).sort()
+    .filter((file) => !(HIDDEN[key] || []).includes(name(file)));
   const picture = (file) => ({
     src: ARCHIVE_FOLDER(file),
     alt: name(file).replace(/^(phone-)?\d+[-_ ]*/, '').replace(/[-_]+/g, ' '),
@@ -219,7 +276,7 @@ export const PROJECTS = {
     description: 'My latest portfolio, designed and built end to end to show where my product design and AI-assisted development stand today, with carefully composed pages, scroll-driven motion, and a fast, optimized build.',
     category: 'Portfolio Website / Personal Project',
     roles: ['UI/UX Designer', 'Web Developer (with Claude Code)'],
-    technologies: ['React', 'Tailwind CSS', 'SASS', 'GSAP (ScrollTrigger, ScrollSmoother)', 'Hairline', 'Figma', 'Claude Code'],
+    technologies: ['Figma', 'React', 'React Router', 'Tailwind CSS', 'GSAP (ScrollTrigger, ScrollSmoother)', 'Hairline', 'Web3Forms', 'Vercel', 'Lighthouse', 'Claude Code'],
     cover: p26_mockup_cover,
     screenshots: [
       { src: p26_mockup_cover, alt: 'Portfolio mock-up', start: 'full' },
@@ -532,9 +589,9 @@ export const PROJECTS = {
           challenge: "The same student data was retyped across attendance sheets, the DepEd class record, lesson plans, and the SF2 and SF9 forms, and every manual copy was another chance for error.",
           text: "I designed the platform around shared records: each is entered once and feeds the rest. Attendance populates the SF2 and SF9 report card templates, and classes, subjects, and the gradebook run on a single setup.",
           rationale: "Removing duplicate entry cuts clerical work at its source and keeps every form consistent with the class record.",
-          shots: { layout: 'web', items: [
-            { src: gurover_screen_classes, alt: 'GuRover classes' },
-            { src: gurover_screen_gradebook, alt: 'GuRover gradebook' },
+          shots: { layout: 'bento', items: [
+            { src: gurover_decision_01_01, alt: 'GuRover class roster and attendance' },
+            { src: gurover_decision_01_02, alt: 'GuRover class record filled from the roster' },
           ] },
         },
         {
@@ -543,10 +600,9 @@ export const PROJECTS = {
           challenge: "AI had to cut preparation time without taking authorship, or accountability, away from the teacher.",
           text: "Lesson plans and learning activities open as clearly labeled AI-generated drafts, fully editable, with a declaration of AI use on every plan.",
           rationale: "The AI removes the blank page; the teacher remains the author and makes the final call.",
-          shots: { layout: 'web3', items: [
-            { src: gurover_screen_lesson_preview, alt: 'GuRover lesson preview' },
-            { src: gurover_screen_learning_activity_preview, alt: 'GuRover learning activity preview' },
-            { src: gurover_screen_ai_assistant, alt: 'GuRover AI assistant' },
+          shots: { layout: 'bento', items: [
+            { src: gurover_decision_02_01, alt: 'GuRover AI lesson plan prompt' },
+            { src: gurover_decision_02_03, alt: 'GuRover lesson plan edited by the teacher' },
           ] },
         },
         {
@@ -555,6 +611,9 @@ export const PROJECTS = {
           challenge: "A benchmark of existing teacher platforms showed most offered the same features as GuRover, while pilot testers found several of its flows too long.",
           text: "Guided by tester feedback, I streamlined sign-in, lesson plan creation, class creation and sharing, and grade entry, reducing a core flow from 5 steps to 3.",
           rationale: "When competitors match feature for feature, a faster, simpler experience becomes the differentiator.",
+          shots: { layout: 'bento', items: [
+            { src: gurover_decision_03_01, alt: 'GuRover streamlined sign-in' },
+          ] },
         },
         // (the fourth, past the three a page shows: the hero already says
         // it is offline-first)
@@ -623,10 +682,10 @@ export const PROJECTS = {
           challenge: "Manuals and lectures described each part of the machine in isolation, without showing where it sits or what it does.",
           text: "Personnel rotate the machine a full 360 degrees, open labeled diagrams for each component, and work through numbered, step-by-step tasks inside a simulated room.",
           rationale: "Practicing at their own pace gives personnel a working familiarity with the machine that a lecture cannot provide.",
-          shots: { layout: 'web3', items: [
-            { src: comelec_screen_01, alt: 'COMELEC Gamified 3D for ACM labeled 3D model' },
-            { src: comelec_screen_04, alt: 'COMELEC Gamified 3D for ACM control review' },
-            { src: comelec_screen_08, alt: 'COMELEC Gamified 3D for ACM numbered task' },
+          shots: { layout: 'bento', items: [
+            { src: comelec_decision_01_01, alt: 'COMELEC Gamified 3D for ACM opening the ACM hard case' },
+            { src: comelec_decision_01_02, alt: 'COMELEC Gamified 3D for ACM retrieving the privacy screens' },
+            { src: comelec_decision_01_03, alt: 'COMELEC Gamified 3D for ACM retrieving the ACM' },
           ] },
         },
         {
@@ -635,10 +694,10 @@ export const PROJECTS = {
           challenge: "A 3D game is assembled screen by screen, so any gap in the design would become a guess during development.",
           text: "I designed wireframes and high-fidelity screens module by module, 100+ in total, and connected them into a working prototype that traces the full training flow.",
           rationale: "Developers built from a complete, interactive reference rather than interpreting a brief, which allowed development to begin early.",
-          shots: { layout: 'web3', items: [
-            { src: comelec_screen_02, alt: 'COMELEC Gamified 3D for ACM screen 2' },
-            { src: comelec_screen_03, alt: 'COMELEC Gamified 3D for ACM screen 3' },
-            { src: comelec_screen_05, alt: 'COMELEC Gamified 3D for ACM screen 5' },
+          shots: { layout: 'bento', items: [
+            { src: comelec_decision_02_01, alt: 'COMELEC Gamified 3D for ACM main menu' },
+            { src: comelec_decision_02_02, alt: 'COMELEC Gamified 3D for ACM utilities menu' },
+            { src: comelec_decision_02_03, alt: 'COMELEC Gamified 3D for ACM inserting the smart card' },
           ] },
         },
         {
@@ -647,8 +706,10 @@ export const PROJECTS = {
           challenge: "The client needed a complete, lasting record of the design: every screen, and the standards that govern the software’s look.",
           text: "I prepared a handoff document for the client with screenshots of every frame, paired with brand guidelines that define the software’s visual identity.",
           rationale: "With one authoritative reference, the client can keep the game consistent from its first screen to its last.",
-          shots: { layout: 'web', items: [
-            { src: comelec_screen_mockup, alt: 'COMELEC Gamified 3D for ACM title screen' },
+          shots: { layout: 'bento', items: [
+            { src: comelec_decision_03_01, alt: 'COMELEC Gamified 3D for ACM brand guide in the design file' },
+            { src: comelec_decision_03_02, alt: 'COMELEC Gamified 3D for ACM screen inventory' },
+            { src: comelec_decision_03_04, alt: 'COMELEC Gamified 3D for ACM handoff specifications' },
           ] },
         },
       ],
@@ -775,8 +836,9 @@ export const PROJECTS = {
           challenge: "AACCUP publishes accreditation tables, program classifications, institutional achievements, and resources, and visitors needed to locate the right information without searching through all of it.",
           text: "I redesigned the full landing page from the old platform, giving each kind of information, from accreditation tables to resources, a clearly defined section of its own.",
           rationale: "Visitors go straight to the information they came for instead of scanning the entire page.",
-          shots: { layout: 'web', items: [
-            { src: aaccup_landing_page, alt: 'AACCUP landing page' },
+          shots: { layout: 'bento', items: [
+            { src: aaccup_decision_01_01, alt: 'AACCUP landing page sections' },
+            { src: aaccup_decision_01_02, alt: 'AACCUP about and accreditation sections' },
           ] },
         },
         {
@@ -785,10 +847,12 @@ export const PROJECTS = {
           challenge: "Most of the site’s users are not technical, and the old platform asked them to work through unnecessary steps to reach the record they needed.",
           text: "I removed the unnecessary workflows and redesigned the directory pages so visitors move from the list of state universities and colleges to an institution, its campuses, and each accredited program, through the same navigation on every page.",
           rationale: "Fewer steps and one familiar pattern let non-technical users find what they need without help.",
-          shots: { layout: 'web3', items: [
-            { src: aaccup_screen_suc_list, alt: 'AACCUP SUC list' },
-            { src: aaccup_screen_institution, alt: 'AACCUP institution' },
-            { src: aaccup_screen_program, alt: 'AACCUP program' },
+          shots: { layout: 'bento', items: [
+            { src: aaccup_decision_02_01, alt: 'AACCUP training form' },
+            { src: aaccup_decision_02_02, alt: 'AACCUP create training dialog' },
+            { src: aaccup_decision_02_03, alt: 'AACCUP accreditation list' },
+            { src: aaccup_decision_02_04, alt: 'AACCUP institution list' },
+            { src: aaccup_decision_02_05, alt: 'AACCUP program list' },
           ] },
         },
         {
@@ -797,9 +861,12 @@ export const PROJECTS = {
           challenge: "The team managing the site needed a dependable way to publish and update accreditation content.",
           text: "I designed administrator and content creator modules, taking each from wireframes to clickable prototypes that cover everything from page navigation to component animation.",
           rationale: "AACCUP’s team manages everything the site publishes from one place.",
-          shots: { layout: 'web', items: [
-            { src: aaccup_screen_dashboard, alt: 'AACCUP dashboard' },
-            { src: aaccup_screen_accreditor, alt: 'AACCUP accreditor' },
+          shots: { layout: 'bento', items: [
+            { src: aaccup_decision_03_01, alt: 'AACCUP admin overview' },
+            { src: aaccup_decision_03_02, alt: 'AACCUP program status charts' },
+            { src: aaccup_decision_03_03, alt: 'AACCUP survey visit calendar' },
+            { src: aaccup_decision_03_04, alt: 'AACCUP institution overview' },
+            { src: aaccup_decision_03_05, alt: 'AACCUP campus overview' },
           ] },
         },
       ],
@@ -858,9 +925,10 @@ export const PROJECTS = {
           challenge: "Newcomers needed to understand the program, its partners, and the registration process, and the existing landing page left too many of those questions unanswered.",
           text: "I expanded the landing experience with new pages, rewrote its copy for clarity, and refreshed its content to introduce ARISE, its partners, and each step of registration.",
           rationale: "Visitors understand what the program offers, and who stands behind it, before they commit to joining.",
-          shots: { layout: 'web', items: [
-            { src: arise_landing_page, alt: 'DOST ARISE landing page' },
-            { src: arise_screen_login, alt: 'DOST ARISE login' },
+          shots: { layout: 'bento', items: [
+            { src: arise_decision_01_01, alt: 'DOST ARISE landing page' },
+            { src: arise_decision_01_02, alt: 'DOST ARISE resources page' },
+            { src: arise_decision_01_03, alt: 'DOST ARISE login' },
           ] },
         },
         {
@@ -869,10 +937,10 @@ export const PROJECTS = {
           challenge: "The original student screens were plain: the dashboard presented every resource as a single compiled set of cards, with no indication of what a student was reading or working on.",
           text: "I redesigned the student experience, from onboarding to resource previews and rewards, and restructured the dashboard into categories driven by each student’s current reading progress and activities.",
           rationale: "Students see at a glance what to continue and what comes next, instead of searching through a wall of identical cards.",
-          shots: { layout: 'web3', items: [
-            { src: arise_screen_student_onboarding, alt: 'DOST ARISE student onboarding' },
-            { src: arise_screen_student_dashboard, alt: 'DOST ARISE student dashboard' },
-            { src: arise_screen_student_resource_preview, alt: 'DOST ARISE student resource preview' },
+          shots: { layout: 'bento', items: [
+            { src: arise_decision_02_01, alt: 'DOST ARISE previous student dashboard' },
+            { src: arise_decision_02_02, alt: 'DOST ARISE dashboard grouped by reading progress' },
+            { src: arise_decision_02_03, alt: 'DOST ARISE resource preview' },
           ] },
         },
         {
@@ -881,10 +949,10 @@ export const PROJECTS = {
           challenge: "Educators and administrators manage different parts of the program, and each needed the right tools without the clutter of the other’s.",
           text: "Educators manage the students enrolled in their courses and publish new content. Administrators inherit everything educators can access, with administrative capabilities such as user management and content management layered on top.",
           rationale: "Building the administrator module on top of the educator module gives both roles one familiar interface, with additional tools only where the role requires them.",
-          shots: { layout: 'web3', items: [
-            { src: arise_screen_admin_content_manager, alt: 'DOST ARISE admin content manager' },
-            { src: arise_screen_admin_content_preview, alt: 'DOST ARISE admin content preview' },
-            { src: arise_screen_admin_forum, alt: 'DOST ARISE admin forum' },
+          shots: { layout: 'bento', items: [
+            { src: arise_decision_03_01, alt: 'DOST ARISE admin content manager' },
+            { src: arise_decision_03_02, alt: 'DOST ARISE dashboard for one account' },
+            { src: arise_decision_03_03, alt: 'DOST ARISE dashboard for another account' },
           ] },
         },
       ],
@@ -944,10 +1012,10 @@ export const PROJECTS = {
           challenge: "The storyboard described each lesson on paper, and it had to become a set of screens a Grade 3 learner could actually use.",
           text: "I followed the storyboard from scratch to final design, laying out every screen of the courseware, from the title screen and lesson menu to each lesson’s introduction.",
           rationale: "Staying faithful to the storyboard kept the lesson content intact while giving it a clear, consistent interface.",
-          shots: { layout: 'web3', items: [
-            { src: courseware_screen_01, alt: 'DOST Courseware title screen' },
-            { src: courseware_screen_02, alt: 'DOST Courseware lesson menu' },
-            { src: courseware_screen_03, alt: 'DOST Courseware lesson introduction' },
+          shots: { layout: 'bento', items: [
+            { src: courseware_decision_01_01, alt: 'DOST Courseware lesson storyboard' },
+            { src: courseware_decision_01_02, alt: 'DOST Courseware balloon scene from the storyboard' },
+            { src: courseware_decision_01_03, alt: 'DOST Courseware follow-up question scene' },
           ] },
         },
         {
@@ -956,10 +1024,13 @@ export const PROJECTS = {
           challenge: "Grade 3 learners needed to take part in each lesson, not just read it.",
           text: "I designed the module’s full interaction, from illustrated story scenes to hands-on activities such as a balloon pump experiment and drag-and-drop exercises, through to assessment questions.",
           rationale: "Learning by doing holds a young learner’s attention and turns each concept into something they can try for themselves.",
-          shots: { layout: 'web3', items: [
-            { src: courseware_screen_06, alt: 'DOST Courseware story scene' },
-            { src: courseware_screen_08, alt: 'DOST Courseware balloon pump activity' },
-            { src: courseware_screen_10, alt: 'DOST Courseware drag-and-drop activity' },
+          shots: { layout: 'bento', items: [
+            { src: courseware_decision_02_01, alt: 'DOST Courseware multiple choice question' },
+            { src: courseware_decision_02_02, alt: 'DOST Courseware picture choice question' },
+            { src: courseware_decision_02_03, alt: 'DOST Courseware test your knowledge' },
+            { src: courseware_decision_02_04, alt: 'DOST Courseware pouring activity' },
+            { src: courseware_decision_02_05, alt: 'DOST Courseware story scene' },
+            { src: courseware_decision_02_06, alt: 'DOST Courseware ice candy scene' },
           ] },
         },
         {
@@ -968,9 +1039,9 @@ export const PROJECTS = {
           challenge: "The content department could not finish a module until it had screens and assets to build from.",
           text: "I produced each course’s wireframe and a working prototype in 2 to 3 days, and shared the finished screens and design assets with the content department.",
           rationale: "Working from ready screens instead of starting each lesson from scratch, the department produced the prototype version of every course faster.",
-          shots: { layout: 'web', items: [
-            { src: courseware_screen_09, alt: 'DOST Courseware assessment question' },
-            { src: courseware_screen_04, alt: 'DOST Courseware everyday examples of matter' },
+          shots: { layout: 'bento', items: [
+            { src: courseware_decision_03_01, alt: 'DOST Courseware prototype flow in Figma' },
+            { src: courseware_decision_03_02, alt: 'DOST Courseware assets handed to the content team' },
           ] },
         },
       ],
@@ -1163,10 +1234,10 @@ export const PROJECTS = {
           challenge: "Inconsistent component use meant screens that should have looked and behaved alike did not.",
           text: "I established the foundations first, defining color tokens, the type scale, spacing, radius, elevation, and iconography as the rules every component would inherit.",
           rationale: "When every component starts from the same rules, consistency is built in rather than enforced screen by screen.",
-          shots: { layout: 'web3', items: [
-            { src: pci_font_size, alt: 'Central App type scale' },
-            { src: pci_spacing, alt: 'Central App spacing' },
-            { src: pci_elevation, alt: 'Central App elevation' },
+          shots: { layout: 'bento', items: [
+            { src: pci_decision_01_01, alt: 'Central App type scale' },
+            { src: pci_decision_01_02, alt: 'Central App elevation' },
+            { src: pci_decision_01_03, alt: 'Central App spacing' },
           ] },
         },
         {
@@ -1175,9 +1246,9 @@ export const PROJECTS = {
           challenge: "Users differ in whether they prefer light or dark interfaces, and dark mode had become a standard expectation in modern platforms.",
           text: "I specified every color token in both light and dark values, so the entire interface adapts to each user’s preference without separate designs.",
           rationale: "Designing both modes into the system from day one makes dark mode a first-class experience rather than an afterthought.",
-          shots: { layout: 'web', items: [
-            { src: pci_colors_dark_mode, alt: 'Central App colors, dark mode' },
-            { src: pci_color_guidance, alt: 'Central App color guidance' },
+          shots: { layout: 'bento', items: [
+            { src: pci_decision_02_01, alt: 'Central App dashboard in light mode' },
+            { src: pci_decision_02_02, alt: 'Central App dashboard in dark mode' },
           ] },
         },
         {
@@ -1186,10 +1257,10 @@ export const PROJECTS = {
           challenge: "Developers had to infer values the design did not specify, and every assumption pulled the build further from the intended design.",
           text: "I documented each of the 40+ components with its variants, interaction states, and exact specifications.",
           rationale: "Developers build directly from the documentation, so what ships matches what was designed.",
-          shots: { layout: 'web3', items: [
-            { src: pci_buttons, alt: 'Central App buttons' },
-            { src: pci_text_fields, alt: 'Central App text fields' },
-            { src: pci_dialogs, alt: 'Central App dialogs' },
+          shots: { layout: 'bento', items: [
+            { src: pci_decision_03_01, alt: 'Central App button specifications' },
+            { src: pci_decision_03_02, alt: 'Central App text field specifications' },
+            { src: pci_decision_03_03, alt: 'Central App card specifications' },
           ] },
         },
       ],

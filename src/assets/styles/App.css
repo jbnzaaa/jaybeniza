@@ -535,6 +535,19 @@
   transform-origin: left center;
 }
 
+/* a project page's rule over each note and list row: undrawn, then drawn
+   across from the left as it comes up the screen (ProjectPage.jsx) */
+* body .case-rule {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--rule, currentColor);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
 * body .service-item button {
   background: none;
   border: 0;
