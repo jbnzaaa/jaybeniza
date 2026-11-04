@@ -88,7 +88,7 @@ const up = (i, el) => -el.offsetHeight * 1.05;
 const down = (i, el) => el.offsetHeight * 1.05;
 
 /**
- * What collaborators say, set as About the designer is: one review at a
+ * People I’ve worked with, set as About the designer is: one review at a
  * time, large, in the full text colour, and under it who said it: their
  * picture (opening in pixels), name and role; along the foot - where
  * About has its button - the buttons to the review before and after. Not
@@ -96,8 +96,8 @@ const down = (i, el) => el.offsetHeight * 1.05;
  * in, and after its reading time it goes up out of its lines as the next
  * rises in with its own name - on round to the first again. The buttons
  * go back or on at once (going back, the one before comes down into its
- * lines). It waits while the section is off the screen or the pointer is
- * over it.
+ * lines). It waits only while the section is off the screen: the section
+ * fills the screen, so a pointer resting on it is no sign of reading.
  * On the light theme, or the dark surface with `dark`.
  */
 function Testimonials({ dark = false }) {
@@ -126,12 +126,12 @@ function Testimonials({ dark = false }) {
     let current = 0;
     let change = null;
     let timer = null;
-    const stops = { away: false, pointer: false };
+    const stops = { away: false };
     let rise = null;
-    // it waits while the section is off the screen, the pointer is on it,
-    // or the first has not come in yet
+    // it waits while the section is off the screen, or the first has not
+    // come in yet
     const sync = () => {
-      timer?.paused(!rise || rise.progress() < 1 || rise.reversed() || stops.away || stops.pointer);
+      timer?.paused(!rise || rise.progress() < 1 || rise.reversed() || stops.away);
     };
     // the review's own time on screen, before the next comes in by itself
     const wait = () => {
@@ -205,10 +205,6 @@ function Testimonials({ dark = false }) {
       end: 'bottom top',
       onToggle: (self) => { stops.away = !self.isActive; sync(); },
     });
-    const enter = (e) => { if (e.pointerType === 'mouse') { stops.pointer = true; sync(); } };
-    const leave = () => { stops.pointer = false; sync(); };
-    section.addEventListener('pointerenter', enter);
-    section.addEventListener('pointerleave', leave);
 
     return () => {
       fxGo.current = () => {};
@@ -217,8 +213,6 @@ function Testimonials({ dark = false }) {
       trigger.kill();
       turn.kill();
       onScreen.kill();
-      section.removeEventListener('pointerenter', enter);
-      section.removeEventListener('pointerleave', leave);
       rise.revert();
       gsap.set([...words, ...people].flatMap((list) => [...list]), { clearProps: 'transform' });
       gsap.set(captions, { clearProps: 'opacity,visibility' });
@@ -237,7 +231,7 @@ function Testimonials({ dark = false }) {
         laptop-lg:px-[3rem] laptop-lg:py-24 laptop-lg:gap-y-12
         desktop:px-[3rem] desktop:py-28 desktop:gap-y-16`}>
         <div>
-          <Tag label='What Collaborators Say' id='animate-testimonials-tag' />
+          <Tag label='People I’ve Worked With' id='animate-testimonials-tag' />
           {/* the reviews, one over another in one grid cell, so the room is
             the longest's - in About's face, a step smaller (.testimonial-paragraph,
             App.css), in quotation marks */}
