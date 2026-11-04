@@ -257,13 +257,14 @@ function KerningTest({ onClose }) {
 }
 
 /**
- * The landing hero's game: a button in its lower right, with a pixel bug
- * on it, that opens the kerning test in a modal - a dark box over the
+ * The kerning game: a button with a pixel bug on it, held beside the
+ * back-to-top arrow (ToTop.jsx, which reveals it: `reveal`, `id`), that
+ * opens the kerning test in a modal - a dark box over the
  * page, which dims behind it. The box opens in square pixels from its
  * bottom edge up and shuts the same way. While it is open the page stops
  * scrolling under it; Escape, Close or a click outside the box shuts it.
  */
-function KerningGame() {
+function KerningGame({ reveal, id }) {
   const [open, setOpen] = useState(false);
   const fxBackdrop = useRef();
   const fxModal = useRef();
@@ -303,7 +304,7 @@ function KerningGame() {
   return (
     <>
       <span className='inline-flex'>
-        <Button label='Test your eye' onClick={show} icon={PixelBug} outline />
+        <Button label='Test your eye' onClick={show} icon={PixelBug} outline reveal={reveal} id={id} />
       </span>
       {open && createPortal(
         // the page dimmed behind, and the box centred on it

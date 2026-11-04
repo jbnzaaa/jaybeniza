@@ -86,7 +86,7 @@ function ArchivePage() {
         </h1>
         <div className='flex justify-between items-end gap-x-6
           mobile:flex-col mobile:items-start mobile:gap-y-8'>
-          <p className='flex flex-wrap text-caption
+          <p className='flex flex-wrap text-copy
             mobile:w-[78%]
             tablet:w-[52%]
             laptop:w-[34%]

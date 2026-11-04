@@ -259,32 +259,6 @@ function Cards({ id, items }) {
   )
 }
 
-// a colleague's words on the project, as a card: the quote, then who
-// said it - their picture, name and role (as on the landing page's
-// testimonials). its text rises with the card (.case-card, below)
-function Quote({ text, name, role, avatar, className = '' }) {
-  return (
-    <figure className={`case-card ${CARD} flex flex-col gap-y-8 ${className}`}>
-      <blockquote className='m-0'>
-        <p className='flex flex-wrap text-body leading-snug'>
-          <SplitText text={`“ ${text} ”`} id='animate-card' by='word' />
-        </p>
-      </blockquote>
-      <figcaption className='flex items-center gap-x-4'>
-        <img className='case-quote-avatar shrink-0 w-12 h-12 object-cover grayscale' src={avatar} alt='' loading='lazy'/>
-        <span className='flex flex-col gap-y-1'>
-          <span className='font-flexible font-medium leading-none text-subtitle'>
-            <SplitText text={name} id='animate-card' />
-          </span>
-          <span className='flex flex-wrap text-caption leading-tight text-muted'>
-            <SplitText text={role} id='animate-card' />
-          </span>
-        </span>
-      </figcaption>
-    </figure>
-  )
-}
-
 // a case study's lead - the one line a section turns on, set large
 function Lead({ id, text, className = '' }) {
   return (
@@ -325,6 +299,10 @@ const SHOTS = {
   quad: 'grid items-start gap-4 mx-auto max-w-[1656px] mobile:grid-cols-2 tablet:grid-cols-4 laptop:grid-cols-4 laptop-lg:grid-cols-4 desktop:grid-cols-4',
   pair: 'grid items-start gap-4 mx-auto max-w-[820px] grid-cols-2',
   six: 'grid items-start gap-4 mx-auto max-w-[2492px] mobile:grid-cols-3 tablet:grid-cols-3 laptop:grid-cols-6 laptop-lg:grid-cols-6 desktop:grid-cols-6',
+  // web screens (a platform's decisions): wide, so two to a row from
+  // tablet width up - or three from laptop width - and one on a phone
+  web: 'grid items-start gap-4 mobile:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-2 laptop-lg:grid-cols-2 desktop:grid-cols-2',
+  web3: 'grid items-start gap-4 mobile:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 laptop-lg:grid-cols-3 desktop:grid-cols-3',
 };
 function Shots({ items, layout = 'trio', onLoad }) {
   return (
@@ -409,14 +387,24 @@ function ProjectPage({ project: given, id }) {
   // (the overview only where there is no challenge: the hero's summary
   // already says what it is. its features are in its contributions and
   // decisions, and are left out)
+  // (what it achieved comes first, under the cover: the proof before the
+  // story. what colleagues said - `quote` - is not shown)
+  // a platform whose decisions each have a `challenge` sets them out as
+  // a case study does (BiteWise): a section to each - its name, then the
+  // challenge, the solution (`text`) and the rationale, with its screens
+  // (`shots`) under it. a decision's screens take the place of the
+  // screens section
+  const decisions = [].concat(platform.approach || []).slice(0, KEY_DECISIONS);
+  const asDecisions = decisions.length > 0 && decisions.every((decision) => decision.challenge);
+  const shotsInDecisions = asDecisions && decisions.some((decision) => decision.shots);
   const platformParts = [
+    (platform.outcome || platform.metrics) && 'outcome',
     platform.overview && !platform.challenge && 'overview',
     platform.challenge && 'challenge',
     (platform.role || platform.contributions) && 'role',
-    platform.approach && 'approach',
-    shots.length > 0 && 'screens',
+    ...(asDecisions ? decisions.map((_, i) => `decision-${i}`) : [platform.approach && 'approach']),
+    shots.length > 0 && !shotsInDecisions && 'screens',
     platform.system && 'system',
-    (platform.outcome || platform.metrics || platform.quote) && 'outcome',
   ].filter(Boolean);
   const themeOf = (part) => (platformParts.indexOf(part) % 2 ? DARK : LIGHT);
   const has = (part) => platformParts.includes(part);
@@ -637,7 +625,33 @@ function ProjectPage({ project: given, id }) {
         </>
         ) : isPlatform ? (
         <>
-        {/* a platform. overview - what it is, a paragraph to each entry */}
+        {/* a platform. first, under the cover, results and impact - what
+          it achieved, then one card per figure */}
+        {has('outcome') && (
+        <CaseSection id='outcome' title='Results & Impact' theme={themeOf('outcome')}>
+          {/* one paragraph, then the figures */}
+          {platform.outcome && <Copy id='outcome' text={platform.outcome} className={platform.metrics ? BELOW : ''} />}
+          {platform.metrics && (
+          <ul className={`case-cards grid gap-4 ${FIGURES[Math.min(platform.metrics.length, 4)]}`} id='case-cards-outcome'>
+            {platform.metrics.map((metric, i) => (
+              <li className={`reveal-card ${CARD} ${lastAlone(i, platform.metrics.length)}`} id={`case-card-outcome-${i}`}
+                key={metric.label}>
+                <div className={`reveal-card-inner h-full flex flex-col justify-between ${platform.metrics.length > 1 ? FIGURE_ROOM : ONE_FIGURE_ROOM}`}>
+                  <p className='font-flexible font-medium leading-none text-title'>
+                    <SplitText text={metric.value} id='animate-card' />
+                  </p>
+                  <p className='flex flex-wrap text-caption text-muted'>
+                    <SplitText text={metric.label} id='animate-card' by='word' />
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+          )}
+        </CaseSection>
+        )}
+
+        {/* overview - what it is, a paragraph to each entry */}
         {has('overview') && (
         <CaseSection id='overview' title='Project Overview' theme={themeOf('overview')}>
           {[].concat(platform.overview).map((paragraph, i, all) => (
@@ -679,6 +693,24 @@ function ProjectPage({ project: given, id }) {
         </CaseSection>
         )}
 
+        {/* or the decisions one to a section, as a case study's (BiteWise):
+          the decision's name set large, a sentence on what it is
+          (`summary`), its challenge, solution and rationale, and the
+          screens that show it under them */}
+        {asDecisions && decisions.map((decision, i) => has(`decision-${i}`) && (
+        <CaseSection id={`decision-${i}`} title={`Decision ${String(i + 1).padStart(2, '0')}`} theme={themeOf(`decision-${i}`)}
+          key={decision.title}
+          below={decision.shots && <Shots {...decision.shots} onLoad={remeasure} />}>
+          <Lead id={`decision-${i}`} text={decision.title} className={decision.summary ? 'mb-4' : BELOW} />
+          {decision.summary && <Copy id={`decision-${i}`} text={decision.summary} className={BELOW} />}
+          <Notes id={`decision-${i}`} items={[
+            { label: 'The challenge', text: decision.challenge },
+            { label: 'Solution', text: decision.text },
+            ...(decision.rationale ? [{ label: 'Design rationale', text: decision.rationale }] : []),
+          ]} />
+        </CaseSection>
+        ))}
+
         {/* its screens, under the label at full width */}
         {has('screens') && (
         <CaseSection id='screens' title='Platform Screens' theme={themeOf('screens')} wide>
@@ -693,34 +725,6 @@ function ProjectPage({ project: given, id }) {
         </CaseSection>
         )}
 
-        {/* results and impact - what it achieved, then one card per figure */}
-        {has('outcome') && (
-        <CaseSection id='outcome' title='Results & Impact' theme={themeOf('outcome')}>
-          {/* one paragraph, then the figures */}
-          {platform.outcome && <Copy id='outcome' text={platform.outcome} className={platform.metrics || platform.quote ? BELOW : ''} />}
-          {platform.metrics && (
-          <ul className={`case-cards grid gap-4 ${FIGURES[Math.min(platform.metrics.length, 4)]}`} id='case-cards-outcome'>
-            {platform.metrics.map((metric, i) => (
-              <li className={`reveal-card ${CARD} ${lastAlone(i, platform.metrics.length)}`} id={`case-card-outcome-${i}`}
-                key={metric.label}>
-                <div className={`reveal-card-inner h-full flex flex-col justify-between ${platform.metrics.length > 1 ? FIGURE_ROOM : ONE_FIGURE_ROOM}`}>
-                  <p className='font-flexible font-medium leading-none text-title'>
-                    <SplitText text={metric.value} id='animate-card' />
-                  </p>
-                  <p className='flex flex-wrap text-caption text-muted'>
-                    <SplitText text={metric.label} id='animate-card' by='word' />
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-          )}
-          {/* and what colleagues said of the work, under the figures */}
-          {platform.quote && [].concat(platform.quote).map((quote, i) => (
-            <Quote {...quote} key={quote.name} className={platform.metrics || i > 0 ? 'mt-4' : ''} />
-          ))}
-        </CaseSection>
-        )}
         </>
         ) : (
         <>

@@ -73,7 +73,7 @@ function Process({ light = false }) {
                     <h3 className='flex flex-wrap font-flexible font-medium leading-none text-heading mb-4'>
                       <SplitText text={step.title} id={`animate-process-${step.id}`} />
                     </h3>
-                    <p className='flex flex-wrap text-caption text-muted'>
+                    <p className='flex flex-wrap text-copy text-muted'>
                       <SplitText text={step.text} id={`animate-process-${step.id}`} by='word' />
                     </p>
                   </div>

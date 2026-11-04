@@ -5,6 +5,8 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 import ScrollSmoother from 'gsap/ScrollSmoother'
 // the site's button
 import Button, { BUTTON_PARTS } from './Button'
+// the kerning game's button, held beside the arrow
+import KerningGame from './KerningGame'
 // its letters open in pixels as they rise
 import { pixelText, withPixels } from '../../utils/pixelText'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
@@ -15,6 +17,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
  * the screen's lower right corner whatever is scrolled under it. It is
  * drawn as the top bar is, light and blended with the page by difference
  * (.nav-blend, App.css), so it shows over light and dark sections alike.
+ * The kerning game's button sits to its left and opens and shuts with it.
  * It opens once the page has been scrolled a screen down, and shuts again
  * nearer the top than that.
  */
@@ -22,12 +25,12 @@ function ToTop() {
   const fxBox = useRef();
 
   useEffect(() => {
-    const button = fxBox.current.querySelector('.cta-button');
-    const parts = button.querySelectorAll(BUTTON_PARTS);
+    const buttons = fxBox.current.querySelectorAll('.cta-button');
+    const parts = fxBox.current.querySelectorAll(BUTTON_PARTS);
     const mask = pixelText(parts);
     // its reveal, the one every button has (Button.jsx), played on and back
     const open = gsap.timeline({ paused: true })
-      .fromTo(button, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .5 })
+      .fromTo(buttons, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .5 })
       .to(parts, withPixels({ y: 0, ease: 'power1.in', duration: .4 }, mask), '<.15');
     const trigger = ScrollTrigger.create({
       start: () => window.innerHeight,
@@ -53,13 +56,14 @@ function ToTop() {
   };
 
   return (
-    <div className='nav-blend fixed z-[22] mix-blend-difference pointer-events-none
+    <div className='nav-blend to-top-row fixed z-[22] flex items-center gap-x-2 mix-blend-difference pointer-events-none
       mobile:right-[1rem] mobile:bottom-[1rem]
       tablet:right-[1rem] tablet:bottom-[1rem]
       laptop:right-[2rem] laptop:bottom-[2rem]
       laptop-lg:right-[3rem] laptop-lg:bottom-[2rem]
       desktop:right-[3rem] desktop:bottom-[2rem]' ref={fxBox}>
-      <Button label='Back to top' iconOnly arrow='up' onClick={toTop} reveal='manual' id='to-top' />
+      <KerningGame reveal='manual' id='kerning-open' />
+      <Button label='Back to top' iconOnly arrow='up' onClick={toTop} reveal='manual' id='to-top' outline />
     </div>
   )
 }

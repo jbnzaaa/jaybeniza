@@ -269,7 +269,7 @@ function AboutPage() {
             <SplitText text='Work With Me' id='animate-about-page-resume' />
           </h2>
           {/* description + links - right */}
-          <div className='text-caption
+          <div className='text-copy
             mobile:col-span-8 mobile:row-start-2
             tablet:col-span-6 tablet:row-start-2
             laptop:col-span-2 laptop:col-start-7 laptop:row-start-1

@@ -4,8 +4,10 @@ import React, { useEffect } from 'react'
 import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
-// the game, opened from the lower right
-import KerningGame from '../common/KerningGame'
+// the site's button
+import Button from '../common/Button'
+// the CV the hero's Download CV button downloads
+import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 
 // (what the headline does not say: how long, what kind of work, and that I am available)
 const HIGHLIGHT_TEXT = 'UI/UX and product designer with 3.5+ years of experience designing 14 web and mobile products for government, education, and research clients. I build working versions of my designs with Claude Code.';
@@ -23,8 +25,8 @@ const PROFESSION = PROFESSION_LINES.join(' ');
 
 /**
  * The landing page's first screen, on the light theme: the headline at the
- * top, and along the bottom a short description on the left and a small
- * button on the right that opens a game - the kerning test.
+ * top, and along the bottom a short description on the left and, on the
+ * right, the way to the work and my CV.
  */
 function Hero() {
   useEffect(() => {
@@ -65,8 +67,8 @@ function Hero() {
             <SplitText text={PROFESSION} id='animate-hero-profession' />
           </span>
         </h1>
-        {/* description, along the bottom on the left; the game's button on
-          the right (under the description on a phone) */}
+        {/* description, along the bottom on the left; See work and
+          Download CV on the right (under the description on a phone) */}
         <div className='flex justify-between items-end gap-x-6
           mobile:flex-col mobile:items-start mobile:gap-y-10'>
           <p className='flex flex-wrap text-copy
@@ -77,8 +79,9 @@ function Hero() {
             desktop:w-[28%]'>
             <SplitText text={HIGHLIGHT_TEXT} id='animate-hero-highlight' by='word' />
           </p>
-          <div className='shrink-0'>
-            <KerningGame />
+          <div className='shrink-0 flex flex-wrap gap-2'>
+            <Button label='See work' to='/work' />
+            <Button label='Download CV' href={Resume} download='Jay-Beniza-CV.pdf' outline />
           </div>
         </div>
       </section>

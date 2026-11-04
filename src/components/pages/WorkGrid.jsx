@@ -120,7 +120,7 @@ function WorkGrid({ items }) {
               <h2 className='flex flex-wrap font-flexible font-medium leading-none text-heading'>
                 <SplitText text={title} id={`animate-work-${key}`} />
               </h2>
-              <p className='flex flex-wrap text-caption text-muted mt-2'>
+              <p className='flex flex-wrap text-copy text-muted mt-2'>
                 <SplitText text={label} id={`animate-work-${key}`} by='word' />
               </p>
             </div>

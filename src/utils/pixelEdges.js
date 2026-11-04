@@ -153,8 +153,18 @@ export function pixelEdges(root) {
     width = window.innerWidth;
     lay();
   };
-  // (once the page has had a moment to lay itself out)
-  const timer = setTimeout(lay, 400);
+  // (once the page has had a moment to lay itself out - and again, a few
+  // times, while it has no edge yet: a page fetched on the way to it, as a
+  // project page is, is not there at the first try, and its contact
+  // section was left with a hard line)
+  let timer;
+  let tries = 0;
+  const attempt = () => {
+    lay();
+    tries += 1;
+    if (!laid.length && tries < 10) timer = setTimeout(attempt, 400);
+  };
+  timer = setTimeout(attempt, 400);
   window.addEventListener('resize', onResize);
   return () => {
     clearTimeout(timer);

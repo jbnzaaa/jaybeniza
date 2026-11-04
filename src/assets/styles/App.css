@@ -338,6 +338,21 @@
   margin-left: 0;
 }
 
+/* the corner row (ToTop.jsx): Test your eye and the back-to-top arrow.
+   both are set to every button's height - the arrow box, the .25rem
+   padding above and below it, and the 1px border - so the arrow box sits
+   .25rem from the top, bottom and right edge alike. the back-to-top
+   arrow is a square of that height, its box centred */
+* body .to-top-row .cta-button {
+  height: calc(1.375rem + 0.5rem + 2px);
+}
+
+* body .to-top-row #to-top.cta-button-icon {
+  width: calc(1.375rem + 0.5rem + 2px);
+  padding: 0;
+  justify-content: center;
+}
+
 * body .tag {
   display: inline-flex;
   width: fit-content;
@@ -1348,7 +1363,8 @@
   border-radius: 0;
   background: transparent;
   font-family: inherit;
-  font-size: clamp(0.8125rem, 0.7rem + 0.15vw, 0.875rem);
+  /* the small text size, as text-copy (tailwind.config.js) */
+  font-size: clamp(14px, 13.26px + .19vw, 16px);
   line-height: 1.6;
   text-transform: none;
   outline: none;
@@ -1584,13 +1600,6 @@ html.has-cursor * {
   cursor: none;
 }
 
-/* a first screen's scroll cue (ScrollCue.jsx): its label alone, as text */
-* body .scroll-cue {
-  background: none;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-}
 
 /* a process step's gif (Process.jsx): the card's width, at 5:4, in
    halftone dots */

@@ -4,8 +4,6 @@ import React, { useRef, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 // page-to-page wipe
 import { TransitionLink, usePixelCover } from '../common/PageTransition'
-// the CV the bar's Download CV link downloads
-import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 // GSAP
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -19,20 +17,24 @@ import { pixelText, withPixels } from '../../utils/pixelText'
 // the projects on the work page, counted beside its link
 import { SHOWN } from './projects/shown'
 import { ARCHIVE } from './projects/archive'
+// the CV the bar's Download CV button downloads
+import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 // every destination. from tablet width up they are all in the bar itself;
 // on a phone, where there is no room for them, they are in the menu. the
-// logo is the way home, and each route is named after its link. Download
-// CV is not a page: it downloads my CV (`href`, `download`). Work carries
-// the number of projects on it (`count`), small in its upper right
+// logo is the way home, and each route is named after its link. Work
+// carries the number of projects on it (`count`), small in its upper
+// right
 const NAV_LINKS = [
   { label: 'Work', count: SHOWN.length, to: '/work' },
   { label: 'Archive', count: ARCHIVE.length, to: '/archive' },
   { label: 'About', to: '/about' },
-  { label: 'Download CV', href: Resume, download: 'Jay-Beniza-CV.pdf' },
 ];
 const CONTACT = '/get-in-touch';
+// the pages where the bar also has a Download CV button, beside Get in
+// touch. (the landing hero and the About page have their own)
+const CV_PAGES = ['/work', '/archive'];
 const MENU_LINKS = [...NAV_LINKS, { label: 'Get in touch', to: CONTACT }];
 
 // the open page is in the full text colour, the others a step back
@@ -175,13 +177,8 @@ function Navbar() {
             laptop:gap-x-10
             laptop-lg:gap-x-12
             desktop:gap-x-12`}>
-            {NAV_LINKS.map(({ label, count, to, href, download }) => (
+            {NAV_LINKS.map(({ label, count, to }) => (
               <li className='m-0' key={label}>
-                {href ? (
-                  <a href={href} download={download} className={NAV_ITEM_IDLE} aria-label='Download my CV (PDF)'>
-                    <SplitText text={label} id='animate-nav' />
-                  </a>
-                ) : (
                 <TransitionLink to={to} onClick={toTopIfHere(to)}
                   className={pathname === to ? NAV_ITEM : NAV_ITEM_IDLE}
                   aria-current={pathname === to ? 'page' : undefined}>
@@ -192,7 +189,6 @@ function Navbar() {
                     </sup>
                   )}
                 </TransitionLink>
-                )}
               </li>
             ))}
           </ul>
@@ -201,7 +197,11 @@ function Navbar() {
             (.nav-blend, App.css). revealed on mount. on a phone its
             place is taken by the word "Menu" */}
           <div className='col-start-3 justify-self-end'>
-            <div className={FROM_TABLET}>
+            <div className={`flex items-center gap-x-2 ${FROM_TABLET}`}>
+              {/* on the work and archive pages: my CV, outlined, before it */}
+              {CV_PAGES.includes(pathname) && (
+                <Button label='Download CV' href={Resume} download='Jay-Beniza-CV.pdf' small outline reveal='mount' key={pathname} />
+              )}
               <Button label='Get in touch' to={CONTACT} onClick={toTopIfHere(CONTACT)} small reveal='mount' />
             </div>
             {/* on a phone: the word alone, no box, blended like the rest
@@ -221,14 +221,8 @@ function Navbar() {
       <div className={`nav-menu ${menuOpen ? 'nav-menu-open' : ''} fixed inset-0 z-[21] flex flex-col justify-end bg-black px-[1rem] pt-20 pb-8 ${PHONE_ONLY}`}
         id='nav-menu' ref={fxMenu} inert={menuOpen ? undefined : ''}>
         <ul className='flex flex-col'>
-          {MENU_LINKS.map(({ label, count, to, href, download }) => (
+          {MENU_LINKS.map(({ label, count, to }) => (
             <li className='border-t border-rule m-0' key={label}>
-              {href ? (
-                <a href={href} download={download} className={MENU_ITEM_IDLE}
-                  aria-label='Download my CV (PDF)' data-no-hover-roll>
-                  <SplitText text={label} id='animate-menu' />
-                </a>
-              ) : (
               <TransitionLink to={to} onClick={toTopIfHere(to)}
                 className={pathname === to ? MENU_ITEM : MENU_ITEM_IDLE}
                 aria-current={pathname === to ? 'page' : undefined} data-no-hover-roll>
@@ -239,9 +233,17 @@ function Navbar() {
                   </sup>
                 )}
               </TransitionLink>
-              )}
             </li>
           ))}
+          {/* on the work and archive pages: my CV, as the bar has it */}
+          {CV_PAGES.includes(pathname) && (
+            <li className='border-t border-rule m-0'>
+              <a href={Resume} download='Jay-Beniza-CV.pdf' className={MENU_ITEM_IDLE}
+                aria-label='Download my CV (PDF)' data-no-hover-roll>
+                <SplitText text='Download CV' id='animate-menu' />
+              </a>
+            </li>
+          )}
         </ul>
       </div>
     </>
