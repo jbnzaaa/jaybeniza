@@ -276,7 +276,7 @@ export const PROJECTS = {
     description: 'My latest portfolio, designed and built end to end to show where my product design and AI-assisted development stand today, with carefully composed pages, scroll-driven motion, and a fast, optimized build.',
     category: 'Portfolio Website / Personal Project',
     roles: ['UI/UX Designer', 'Web Developer (with Claude Code)'],
-    technologies: ['Figma', 'React', 'React Router', 'Tailwind CSS', 'GSAP (ScrollTrigger, ScrollSmoother)', 'Hairline', 'Web3Forms', 'Vercel', 'Lighthouse', 'Claude Code'],
+    technologies: ['Figma', 'React', 'React Router', 'Tailwind CSS', 'GSAP (ScrollTrigger, ScrollSmoother)', 'Web3Forms', 'Vercel', 'Claude Code'],
     cover: p26_mockup_cover,
     screenshots: [
       { src: p26_mockup_cover, alt: 'Portfolio mock-up', start: 'full' },
