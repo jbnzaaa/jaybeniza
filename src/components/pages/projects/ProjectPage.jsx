@@ -82,14 +82,14 @@ const ABOVE = 'mobile:mt-2 tablet:mt-2 laptop:mt-4 laptop-lg:mt-6 desktop:mt-6';
 const CONTENT = `
   mobile:col-span-8
   tablet:col-span-8
-  laptop:col-span-5 laptop:col-start-4
-  laptop-lg:col-span-5 laptop-lg:col-start-4
-  desktop:col-span-5 desktop:col-start-4`;
+  laptop:col-span-6 laptop:col-start-3
+  laptop-lg:col-span-6 laptop-lg:col-start-3
+  desktop:col-span-6 desktop:col-start-3`;
 
 // cards side by side (a section's cards, and the figures in Results &
 // Impact), never narrower than about 260px: they sit in the right-hand
-// columns (CONTENT), which hold two such cards up to laptop-lg width
-// (591-890px) and three from desktop width (891px and up). four never fit,
+// columns (CONTENT, six of the eight), which hold two such cards up to laptop-lg width
+// (about 710-1070px) and three from desktop width. four never fit,
 // so four go two by two; three go three across on desktop only. one
 // under another on a phone
 const FIGURES = {
@@ -139,9 +139,9 @@ function CaseSection({ id, title, theme, wide = false, below, children }) {
       <div className={wide ? 'col-span-8' : `
         mobile:col-span-8
         tablet:col-span-8
-        laptop:col-span-3
-        laptop-lg:col-span-3
-        desktop:col-span-3`}>
+        laptop:col-span-2
+        laptop-lg:col-span-2
+        desktop:col-span-2`}>
         <Tag label={title} id={`animate-case-tag-${id}`} />
       </div>
       <div className={wide ? 'col-span-8' : CONTENT}>
@@ -256,8 +256,8 @@ function Notes({ id, items, className = '' }) {
 
 // a decision's screens as a bento box, in the section's content column
 // (under its notes, the same width). they are set in rows - how many to a
-// row drawn at random for each decision (rowsOf: one, two or three, the
-// same every visit, seeded by the decision's name) - and each row is
+// row chosen so every screen stays large enough to read (rowsOf, clearest:
+// the same every visit, seeded by the decision's name) - and each row is
 // justified: every screen keeps its own proportions, uncut, and takes a
 // share of the row's width by how wide it is for its height, so the
 // screens of a row stand one height and the row fills the column. on a
@@ -274,27 +274,81 @@ function seeded(text) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-// the rows, drawn at random from every way of setting the screens out
-// that keeps each one large enough to read, in the bento's own width:
-// no screen narrower than ROWS.least (a phone screen, taller than wide,
-// can be narrower than a wide one), no row taller than ROWS.tallest of
-// the window, nor wider for its height than ROWS.max (a strip). at most
-// one row of a single screen. on a phone, wide screens go one to a row
-// and phone screens two. where no way keeps to all of that, the rules
-// give way one at a time: the row of one first, then the height, then
-// the widths
+// the rows, the clearest (clearest, below) of every way of setting the
+// screens out that keeps each one large enough to read, in the bento's
+// own width: no screen narrower than ROWS.least (a phone screen, taller
+// than wide, can be narrower than a wide one), no row taller than
+// ROWS.tallest of the window, nor wider for its height than ROWS.max (a
+// strip). on a phone, wide screens go one to a row and phone screens two.
+// where no way keeps to all of that, the rules give way one at a time:
+// the height first, then the widths
 // (the gap between screens)
 const BENTO_GAP = 16;
 const ROWS = {
-  least: { wide: 260, tall: 140 },
+  least: { wide: 320, tall: 140 },
   tallest: .9,
   max: 4.4,
 };
 const PHONE_ROWS = { min: .4, max: 2.4, share: .4 };
+// how readable a way of setting the screens out is: each screen's width
+// against the width of the screen it was taken from (a phone's narrower
+// than a desktop's, READ_WIDTH), its smallest - and how tall it stands in
+// all. the clearest way is the one whose smallest screen reads the
+// largest; of the ways within READ_SLACK of it, the shortest, then one at
+// random (the same every visit)
+const READ_WIDTH = { wide: 1440, tall: 400 };
+const READ_SLACK = .9;
+function clearest(ways, ratios, width, seed) {
+  const measure = (way) => {
+    let at = 0;
+    let least = Infinity;
+    let height = 0;
+    way.forEach((size) => {
+      const row = ratios.slice(at, at += size);
+      const total = row.reduce((sum, ratio) => sum + ratio, 0);
+      const tall = (width - (size - 1) * BENTO_GAP) / total;
+      height += tall;
+      row.forEach((ratio) => { least = Math.min(least, (tall * ratio) / READ_WIDTH[ratio < 1 ? 'tall' : 'wide']); });
+    });
+    return { least, height };
+  };
+  const measured = ways.map((way) => ({ way, ...measure(way) }));
+  const best = Math.max(...measured.map(({ least }) => least));
+  const near = measured.filter(({ least }) => least >= best * READ_SLACK);
+  const shortest = Math.min(...near.map(({ height }) => height));
+  const picks = near.filter(({ height }) => height <= shortest * 1.05);
+  return picks[Math.floor(seeded(seed)() * picks.length)].way;
+}
+// a decision's rows, of the kind GuRover's second decision has: rows of
+// one screen at the full width and rows of two side by side, in an order
+// drawn at random for each decision (the same every visit, seeded by its
+// name) - never two full-width rows one after another. a phone screen
+// (taller than wide) is never left alone in a row: it takes the last
+// screen of a pair before it as its partner, or else joins the row before
+// it (or, first of all, the one after)
+function alternating(ratios, seed) {
+  const random = seeded(seed);
+  const rows = [];
+  for (let at = 0; at < ratios.length;) {
+    const lastAlone = rows.length > 0 && rows[rows.length - 1].length === 1;
+    const size = Math.min(lastAlone || random() < .5 ? 2 : 1, ratios.length - at);
+    rows.push(ratios.slice(at, at + size).map((_, k) => at + k));
+    at += size;
+  }
+  const kept = [];
+  rows.forEach((row, i) => {
+    const lonePhone = row.length === 1 && ratios[row[0]] < 1 && rows.length > 1;
+    const before = kept[kept.length - 1];
+    if (lonePhone && before?.length === 2) { kept.push([before.pop(), ...row]); }
+    else if (lonePhone && before) before.push(...row);
+    else if (lonePhone) rows[i + 1].unshift(...row);
+    else kept.push(row);
+  });
+  return kept.map((row) => row.length);
+}
 function rowsOf(ratios, seed, phone, width = 1000, height = 900) {
   const count = ratios.length;
   const tries = phone ? [{ phone: true }, { phone: true, loose: true }] : [
-    { singles: 1, tall: true, least: true },
     { singles: Infinity, tall: true, least: true },
     { singles: Infinity, least: true },
     { singles: Infinity },
@@ -323,7 +377,11 @@ function rowsOf(ratios, seed, phone, width = 1000, height = 900) {
     if (!ways.length) continue;
     // (kept to the height, any of them; past it, the one whose tallest
     // row is the least tall)
-    if (rule.tall || (rule.phone && !rule.loose)) return ways[Math.floor(seeded(seed)() * ways.length)];
+    if (rule.phone && !rule.loose) return ways[Math.floor(seeded(seed)() * ways.length)];
+    // (kept to the height: the way that shows its smallest screen the
+    // largest, so no screen is too small to read; among those near it, the
+    // shortest)
+    if (rule.tall) return clearest(ways, ratios, width, seed);
     const tallestOf = (way) => {
       let at = 0;
       return Math.max(...way.map((size) => {
@@ -346,7 +404,7 @@ function usePhone() {
   }, []);
   return phone;
 }
-function Bento({ items, seed, onLoad, className = ABOVE }) {
+function Bento({ items, seed, steady = false, turn = 0, grid = false, onLoad, className = ABOVE }) {
   const phone = usePhone();
   // how wide it is for the window's height: no row is let stand taller
   // than the window (read again as either changes)
@@ -382,20 +440,37 @@ function Bento({ items, seed, onLoad, className = ABOVE }) {
   useEffect(() => { onLoad?.(); }, [ratios, phone, room, onLoad]);
   const shape = items.map(({ alt }) => ratios[alt] || 16 / 9);
   // (not on a phone: its window grows and shrinks with the address bar)
-  const rows = rowsOf(shape, seed, phone, room.width, room.height);
+  // (a decision's - steady - in turn, as alternating sets out, where it
+  // has a wide screen; otherwise, and on a phone, rowsOf's)
+  // (a decision whose shots are a `grid` - DOST Courseware - two to a
+  // row, every screen the same size)
+  const rows = grid && !phone
+    ? Array.from({ length: Math.ceil(shape.length / 2) }, (_, k) => Math.min(2, shape.length - k * 2))
+    : steady && !phone && shape.some((ratio) => ratio >= 1)
+    ? alternating(shape, seed)
+    : rowsOf(shape, seed, phone, room.width, room.height);
   // each screen's width: its share of its row, after the row's gaps
   const widths = [];
+  // where each screen stands: in its row's order, or - a decision's
+  // (steady) - every other row of several set right to left, starting
+  // from the other side on every other decision (turn), so the smaller
+  // screens do not all fall on the same side
+  const order = [];
   let at = 0;
-  rows.forEach((size) => {
+  rows.forEach((size, r) => {
     const row = shape.slice(at, at + size);
     const total = row.reduce((sum, ratio) => sum + ratio, 0);
-    row.forEach((ratio) => widths.push(`calc((100% - ${(size - 1) * BENTO_GAP}px) * ${ratio / total} - .5px)`));
+    const back = steady && size > 1 && (turn + r) % 2 === 1;
+    row.forEach((ratio, k) => {
+      widths.push(`calc((100% - ${(size - 1) * BENTO_GAP}px) * ${ratio / total} - .5px)`);
+      order.push(at + (back ? size - 1 - k : k));
+    });
     at += size;
   });
   return (
     <div ref={fxBox} className={`flex flex-wrap justify-between ${className}`} style={{ rowGap: BENTO_GAP }}>
       {items.map(({ src, alt }, i) => (
-        <div className='screenshot-container bg-card' style={{ width: widths[i], aspectRatio: shape[i] }} key={alt}>
+        <div className='screenshot-container bg-card' style={{ width: widths[i], aspectRatio: shape[i], order: order[i] }} key={alt}>
           <img src={src} alt={alt} className='screenshot-img h-full' loading='lazy' onLoad={onLoad}/>
         </div>
       ))}
@@ -722,7 +797,7 @@ function ProjectPage({ project: given, id }) {
             {part.cards && <Cards id={part.id} items={part.cards} />}
             {part.points && <Points id={part.id} label={part.points.label} items={part.points.items} className={part.cards ? 'mt-8' : ''} />}
             {/* (its screens as they are written, every one: the bento sets them) */}
-            {part.shots && <Bento items={(project.caseStudy.find(({ id }) => id === part.id) || part).shots.items} seed={part.title} onLoad={remeasure} />}
+            {part.shots && <Bento items={(project.caseStudy.find(({ id }) => id === part.id) || part).shots.items} seed={part.title} steady turn={i} onLoad={remeasure} />}
           </CaseSection>
         ))}
         </>
@@ -810,7 +885,7 @@ function ProjectPage({ project: given, id }) {
             { label: 'Solution', text: decision.text },
             ...(decision.rationale ? [{ label: 'Design rationale', text: decision.rationale }] : []),
           ]} />
-          {decision.shots && <Bento items={decision.shots.items} seed={decision.title} onLoad={remeasure} />}
+          {decision.shots && <Bento items={decision.shots.items} seed={decision.title} steady turn={i} grid={decision.shots.layout === 'grid'} onLoad={remeasure} />}
         </CaseSection>
         ))}
 

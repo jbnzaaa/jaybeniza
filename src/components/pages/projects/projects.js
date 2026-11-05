@@ -75,6 +75,7 @@ import comelec_screen_10 from '../../../assets/files/images/comelec/screen-10.we
 import comelec_screen_mockup from '../../../assets/files/images/comelec/screen-mockup.webp'
 import psgs_landing_page from '../../../assets/files/images/psgs/landing-page.webp'
 import psgs_mockup_cover from '../../../assets/files/images/psgs/mockup-cover.webp'
+import psgs_decision_01_01 from '../../../assets/files/images/psgs/decision-01-01.webp'
 import psgs_screen_admin_dashboard from '../../../assets/files/images/psgs/screen-admin-dashboard.webp'
 import psgs_screen_admin_enrollment from '../../../assets/files/images/psgs/screen-admin-enrollment.webp'
 import psgs_screen_instructor_create_course from '../../../assets/files/images/psgs/screen-instructor-create-course.webp'
@@ -137,7 +138,10 @@ import gurover_decision_01_01 from '../../../assets/files/images/gurover/decisio
 import gurover_decision_01_02 from '../../../assets/files/images/gurover/decision-01-02.webp'
 import gurover_decision_02_01 from '../../../assets/files/images/gurover/decision-02-01.webp'
 import gurover_decision_02_03 from '../../../assets/files/images/gurover/decision-02-03.webp'
-import gurover_decision_03_01 from '../../../assets/files/images/gurover/decision-03-01.webp'
+import gurover_mobile_onboarding_offline from '../../../assets/files/images/gurover/mobile-onboarding-offline.webp'
+import gurover_mobile_class_detail from '../../../assets/files/images/gurover/mobile-class-detail.webp'
+import gurover_mobile_learning_activities from '../../../assets/files/images/gurover/mobile-learning-activities.webp'
+import gurover_mobile_home from '../../../assets/files/images/gurover/mobile-home.webp'
 import comelec_decision_01_01 from '../../../assets/files/images/comelec/decision-01-01.webp'
 import comelec_decision_01_02 from '../../../assets/files/images/comelec/decision-01-02.webp'
 import comelec_decision_01_03 from '../../../assets/files/images/comelec/decision-01-03.webp'
@@ -166,19 +170,17 @@ import arise_decision_02_01 from '../../../assets/files/images/arise/decision-02
 import arise_decision_02_02 from '../../../assets/files/images/arise/decision-02-02.webp'
 import arise_decision_02_03 from '../../../assets/files/images/arise/decision-02-03.webp'
 import arise_decision_03_01 from '../../../assets/files/images/arise/decision-03-01.webp'
-import arise_decision_03_02 from '../../../assets/files/images/arise/decision-03-02.webp'
-import arise_decision_03_03 from '../../../assets/files/images/arise/decision-03-03.webp'
-import courseware_decision_01_01 from '../../../assets/files/images/courseware/decision-01-01.webp'
+import courseware_sky_title from '../../../assets/files/images/courseware/lesson-sky-title.webp'
+import courseware_sky_swings from '../../../assets/files/images/courseware/lesson-sky-swings.webp'
+import courseware_cone_title from '../../../assets/files/images/courseware/lesson-cone-title.webp'
+import courseware_cone_park from '../../../assets/files/images/courseware/lesson-cone-park.webp'
+import courseware_cone_life_cycle from '../../../assets/files/images/courseware/lesson-cone-life-cycle.webp'
+import courseware_temperature_title from '../../../assets/files/images/courseware/lesson-temperature-title.webp'
+import courseware_temperature_merienda from '../../../assets/files/images/courseware/lesson-temperature-merienda.webp'
 import courseware_decision_01_02 from '../../../assets/files/images/courseware/decision-01-02.webp'
-import courseware_decision_01_03 from '../../../assets/files/images/courseware/decision-01-03.webp'
 import courseware_decision_02_01 from '../../../assets/files/images/courseware/decision-02-01.webp'
 import courseware_decision_02_02 from '../../../assets/files/images/courseware/decision-02-02.webp'
-import courseware_decision_02_03 from '../../../assets/files/images/courseware/decision-02-03.webp'
 import courseware_decision_02_04 from '../../../assets/files/images/courseware/decision-02-04.webp'
-import courseware_decision_02_05 from '../../../assets/files/images/courseware/decision-02-05.webp'
-import courseware_decision_02_06 from '../../../assets/files/images/courseware/decision-02-06.webp'
-import courseware_decision_03_01 from '../../../assets/files/images/courseware/decision-03-01.webp'
-import courseware_decision_03_02 from '../../../assets/files/images/courseware/decision-03-02.webp'
 import pci_decision_01_01 from '../../../assets/files/images/pci/decision-01-01.webp'
 import pci_decision_01_02 from '../../../assets/files/images/pci/decision-01-02.webp'
 import pci_decision_01_03 from '../../../assets/files/images/pci/decision-01-03.webp'
@@ -319,7 +321,7 @@ export const PROJECTS = {
           summary: "Scroll-driven motion that demonstrates front-end craft as the visitor reads.",
           challenge: "The site had to demonstrate front-end skill, not just describe it, without turning motion into decoration.",
           text: "Text rises into place and images open in square pixels as they scroll into view, all driven by GSAP ScrollTrigger.",
-          rationale: "The pixel motif nods to the pixel as the material a designer works in, so every animation reinforces the story the site tells.",
+          rationale: "The pixel motif nods to the pixel, the material a designer works in, so the motion has a reason to be there.",
           shots: { layout: 'web', items: [
             { src: p26_home_hero, alt: 'Portfolio landing page' },
             { src: p26_about_the_designer, alt: 'Portfolio about the designer section' },
@@ -329,8 +331,8 @@ export const PROJECTS = {
           title: "Designed and built by me",
           summary: "A site designed in Figma and built in React, as working proof of both halves of the work.",
           challenge: "Claiming design and development skill means little unless the portfolio itself proves both.",
-          text: "I designed the site in Figma and built it in React with Tailwind CSS and GSAP, using AI-assisted development in Claude Code, then optimized it for fast loading.",
-          rationale: "The site doubles as a case study: every page a visitor reads is evidence of what I can deliver.",
+          text: "Every page went from my Figma file to production code that I built and shipped myself, with Claude Code as my development partner.",
+          rationale: "A client can judge the design and the build in the same visit, before we ever talk.",
           shots: { layout: 'web', items: [
             { src: p26_project_hero, alt: 'Portfolio project page' },
             { src: p26_project_screens, alt: 'Portfolio project page platform screens' },
@@ -338,14 +340,14 @@ export const PROJECTS = {
         },
         { title: "A clear way in", text: "Every page closes on a next step: another project to read, or a project request form that asks what a client needs up front." },
       ],
-      role: "I designed and built this portfolio end to end, from the visual system in Figma to the React build, using AI-assisted development in Claude Code.",
+      role: "I was the sole designer and developer, from the first Figma frame to the deployed site.",
       contributions: [
-        'Designed the visual system, page layouts, and motion language in Figma',
-        'Built the site in React with Tailwind CSS and GSAP, using AI-assisted development in Claude Code',
+        'Designed the monochrome visual system, page layouts, and pixel motion language in Figma',
+        'Built every page in React, Tailwind CSS, and GSAP with Claude Code, and deployed it on Vercel',
         'Designed a project request flow so every page ends on a clear next step for potential clients',
-        'Optimized loading performance, raising the mobile Lighthouse score from 55 to 93 and cutting the home page from about 4 MB to 0.5 MB',
+        'Optimized loading speed, converting images to WebP and checking the results with Lighthouse',
       ],
-      outcome: 'Rebuilt for speed as well as design. Measured with Lighthouse on the home page, the optimized build raised the performance score from 55 to 93 on mobile and from 65 to 100 on desktop, cut mobile Largest Contentful Paint from 19.1 seconds to 2.5, and reduced the total transfer size from about 4 MB to 0.5 MB.',
+      outcome: 'Motion and image-heavy pages did not have to mean a slow site. These are the Lighthouse results for the home page, before and after optimization.',
       metrics: [
         { value: '55 → 93', label: 'Mobile Lighthouse performance score' },
         { value: '65 → 100', label: 'Desktop Lighthouse performance score' },
@@ -405,7 +407,7 @@ export const PROJECTS = {
       {
         id: 'survey',
         title: 'What Shoppers Told Me',
-        lead: 'Every qualifying shopper compares products and has made a wrong purchase, and 9 in 10 would share their preferences if it made shopping faster.',
+        lead: 'Shoppers already do the work of checking every product, and most would hand that work to an app.',
         text: 'To test what the app review suggested, I surveyed shoppers about how they choose groceries. 15 people responded, and 10 qualified for the study.',
         cards: [
           { title: 'The problem is real', text: 'All 10 have bought something that did not fit their diet, and 4 of 10 can only sometimes or rarely find the product information they need online.' },
@@ -428,9 +430,9 @@ export const PROJECTS = {
         lead: 'Turning observations into design direction',
         text: 'The app review and the survey pointed to three opportunities to improve the grocery shopping experience.',
         cards: [
-          { title: 'Personalization', text: 'Allow shoppers to communicate their dietary needs and preferences instead of repeatedly searching for suitable products. 9 of 10 surveyed shoppers would set up their preferences in an app.' },
-          { title: 'Relevant Discovery', text: 'Help shoppers narrow their choices by presenting products aligned with their selected preferences.' },
-          { title: 'Product Transparency', text: 'Provide clear product information so shoppers can evaluate suitability before purchasing. 9 of 10 already read labels, and 4 of 10 struggle to find that information online.' },
+          { title: 'Personalization', text: 'Let shoppers state their dietary needs once, instead of searching for suitable products on every visit.' },
+          { title: 'Relevant Discovery', text: 'Narrow the choices by putting products that match those preferences first.' },
+          { title: 'Product Transparency', text: 'Show ingredients, allergens, and nutrition up front, so shoppers can judge a product without leaving the app to check it.' },
         ],
       },
       {
@@ -468,7 +470,7 @@ export const PROJECTS = {
         notes: [
           { label: 'The challenge', text: 'Standard grocery listings require shoppers to manually identify products that match their dietary needs and shopping priorities.' },
           { label: 'Solution', text: 'A personalized home screen displaying relevant groceries with dietary tags, availability information, prices, and promotional indicators.' },
-          { label: 'Design rationale', text: 'Combining dietary relevance with practical shopping information helps shoppers compare suitable products while considering their budget and preferences.' },
+          { label: 'Design rationale', text: 'Putting dietary fit next to price and availability lets shoppers weigh suitable products against their budget on one screen.' },
         ],
         shots: {
           layout: 'quad',
@@ -487,7 +489,7 @@ export const PROJECTS = {
         notes: [
           { label: 'The challenge', text: 'Shoppers need enough information to evaluate a product before adding it to their order.' },
           { label: 'Solution', text: 'A product details screen presenting ingredients, nutritional information, and reviews, an Ask Wise assistant for cooking and nutrition questions, followed by the checkout screen.' },
-          { label: 'Design rationale', text: 'Providing dietary information before purchasing supports more informed product selection, while cart and checkout organize the final order review.' },
+          { label: 'Design rationale', text: 'Showing dietary information before the cart lets shoppers judge a product before they commit to it, and checkout gathers the final order for one last review.' },
         ],
         shots: {
           layout: 'quad',
@@ -503,7 +505,7 @@ export const PROJECTS = {
         id: 'learned',
         title: 'What I Learned',
         lead: 'Design connected experiences, not isolated screens.',
-        text: 'BiteWise reinforced the importance of designing connected experiences rather than isolated screens.',
+        text: 'Each stage of BiteWise depends on the one before it. The preferences set during onboarding decide what the home screen shows, and the product details screen answers whether an item fits those preferences. Designing the three stages as one flow kept every screen working toward the same goal.',
       },
       {
         id: 'next-steps',
@@ -554,7 +556,7 @@ export const PROJECTS = {
     year: '2026',
     description: 'An AI-assisted, offline-first workspace that lifts the record-keeping load off Philippine teachers, from public school classrooms to college lecture halls.',
     category: 'Web/Mobile Platform / Team Project',
-    roles: ['UI/UX Designer', 'Web Developer (with Claude Code)'],
+    roles: ['Product Designer & Developer'],
     technologies: [],
     status: 'Pilot tested, handed over',
     cover: gurover_mockup_cover,
@@ -586,59 +588,69 @@ export const PROJECTS = {
         {
           title: "Enter once, reuse everywhere",
           summary: "One shared record behind every form, so teachers enter data once and the platform fills in the rest.",
-          challenge: "The same student data was retyped across attendance sheets, the DepEd class record, lesson plans, and the SF2 and SF9 forms, and every manual copy was another chance for error.",
-          text: "I designed the platform around shared records: each is entered once and feeds the rest. Attendance populates the SF2 and SF9 report card templates, and classes, subjects, and the gradebook run on a single setup.",
+          challenge: "Shared records only save time when they are right, and the MVP had attendance errors, duplicate learner records, and shared-class data problems.",
+          text: "I expanded the class records, learner profiles, gradebook, attendance, and QR check-in, and fixed the errors that broke the link between them. Attendance carries into the SF2 and SF9 forms, which I polished for printing.",
           rationale: "Removing duplicate entry cuts clerical work at its source and keeps every form consistent with the class record.",
           shots: { layout: 'bento', items: [
             { src: gurover_decision_01_01, alt: 'GuRover class roster and attendance' },
             { src: gurover_decision_01_02, alt: 'GuRover class record filled from the roster' },
+            { src: gurover_mobile_home, alt: 'GuRover mobile home with attendance and class averages' },
           ] },
         },
         {
           title: "AI drafts, the teacher decides",
-          summary: "AI prepares the first draft of lesson plans and activities, and the teacher stays in control of the final version.",
-          challenge: "AI had to cut preparation time without taking authorship, or accountability, away from the teacher.",
-          text: "Lesson plans and learning activities open as clearly labeled AI-generated drafts, fully editable, with a declaration of AI use on every plan.",
-          rationale: "The AI removes the blank page; the teacher remains the author and makes the final call.",
+          summary: "AI prepares the first draft of lesson plans and presentations, and the teacher edits it with the remaining AI tokens in view.",
+          challenge: "AI had to cut preparation time without taking authorship away from the teacher, and every AI request carried a cost.",
+          text: "Lesson plans and presentations open as editable AI drafts, with the key fields moved directly into the editor. I added a counter for the remaining AI tokens to the top navigation and the AI assistant sidebar, backed by usage allowances for each subscription tier.",
+          rationale: "Teachers stay the authors of every plan, and they know how much AI they have left before they run out.",
           shots: { layout: 'bento', items: [
             { src: gurover_decision_02_01, alt: 'GuRover AI lesson plan prompt' },
             { src: gurover_decision_02_03, alt: 'GuRover lesson plan edited by the teacher' },
+            { src: gurover_mobile_learning_activities, alt: 'GuRover mobile learning activities, with AI-generated drafts marked' },
           ] },
         },
         {
           title: "Fewer steps than the competition",
-          summary: "Streamlined core flows that make GuRover faster to use than platforms offering the same features.",
-          challenge: "A benchmark of existing teacher platforms showed most offered the same features as GuRover, while pilot testers found several of its flows too long.",
-          text: "Guided by tester feedback, I streamlined sign-in, lesson plan creation, class creation and sharing, and grade entry, reducing a core flow from 5 steps to 3.",
+          summary: "Shorter core flows, so GuRover stands out against platforms that offer the same features.",
+          challenge: "With the marketing officer, I tested competing teacher platforms and found most offered the same features as GuRover, while pilot testers found several of its flows too long.",
+          text: "Guided by tester feedback, I shortened three core flows. New classes come with default subjects for their grade level, shareable with co-teachers. The fixed gradebook became a configurable table linked to assessments. Attendance gained a button that marks the whole class present, alongside QR check-in.",
           rationale: "When competitors match feature for feature, a faster, simpler experience becomes the differentiator.",
           shots: { layout: 'bento', items: [
-            { src: gurover_decision_03_01, alt: 'GuRover streamlined sign-in' },
+            { src: gurover_screen_gradebook, alt: 'GuRover configurable gradebook' },
+            { src: gurover_mobile_class_detail, alt: 'GuRover mobile class screen with default subjects and tabs' },
           ] },
         },
         // (the fourth, past the three a page shows: the hero already says
         // it is offline-first)
         {
           title: "Offline first",
-          summary: "A workspace that keeps working in classrooms with weak or no internet.",
-          challenge: "Many teachers work with unreliable connectivity, where an online-only tool fails at the moment it is needed.",
-          text: "The workspace runs without a connection and extends to a mobile app beyond the browser.",
-          rationale: "A weak signal never interrupts a teacher mid-task.",
+          summary: "A platform that keeps working in classrooms with weak or no internet.",
+          challenge: "Some areas and classrooms lack reliable internet access, and an online-only tool would stop class activities when the connection drops.",
+          text: "The platform works the same without a connection: attendance and marks are saved on the device first and synchronized later, with the sync status in view.",
+          rationale: "Class activities carry on without interruption, whatever the connection.",
+          shots: { layout: 'bento', items: [
+            { src: gurover_mobile_onboarding_offline, alt: 'GuRover mobile onboarding explaining offline saving' },
+          ] },
         },
         { title: "A landing page that leads to sign-up", text: "Feature sections, a step-by-step walkthrough, and plan comparisons answer a teacher’s questions in the order they ask them, ending at sign-up." },
       ],
-      role: 'I inherited GuRover as a basic MVP covering lesson plan creation, class creation, manual attendance tagging, and an AI assistant. As its UI/UX designer, I designed the features it lacked and shipped them with Claude Code, then streamlined its core flows using pilot tester feedback and a benchmark of competing teacher platforms.',
+      role: 'GuRover came to me as an MVP: a web platform, and a mobile app a senior colleague had built with the same features. As its product designer and developer, I redesigned and extended both with Claude Code.',
       contributions: [
-        'Designed and built the landing page with Claude Code, sequencing its feature sections, step-by-step walkthrough, and plan comparisons to move teachers toward sign-up',
-        'Designed and built the missing core features: subject management, learning activities, gradebook configuration, and the SF2 and SF9 report card templates, while extending the MVP’s lesson planning, class, and attendance tools',
-        'Benchmarked competing teacher platforms and streamlined sign-in, lesson planning, class creation and sharing, and grade entry based on tester feedback, reducing a core flow from 5 steps to 3',
-        'Built the companion mobile app with Claude Code, extending the platform beyond the browser',
+        'Designed and built the landing page, with feature sections, a step-by-step walkthrough, and plan comparisons leading teachers to sign-up',
+        'Built one design system across web and mobile, from navigation, forms, and tables to dialogs and loading states, backed by automated design checks',
+        'Expanded class records, learner profiles, gradebooks, scheduling, and attendance with QR check-in, and polished the SF2, SF9, and Daily Lesson Log documents for printing',
+        'Redesigned AI lesson and presentation generation, with new slide themes, a fullscreen slide viewer, safeguards for uploads and AI requests, and a remaining-token counter',
+        'Developed registration, subscription tiers, AI usage allowances, and payments through PisoPay and GCash, with cost monitoring for administrators',
+        'Reviewed the mobile app against five documented user journeys, brought it in line with the web platform, and fixed offline sync so it no longer needs manual intervention',
+        'Fixed cross-account data exposure and authentication weaknesses, and added automated tests to catch regressions',
       ],
       system: null,
-      outcome: 'Five teachers and one administrator piloted GuRover before handover. Across lesson planning, attendance, grade entry, and assessment creation, teachers reported spending 88% less time on administrative work, and they responded most positively to lesson planning, grade computation, and administrative reporting.',
+      outcome: 'Five teachers and one administrator piloted GuRover, and the company surveyed them before I left. Lesson planning, grade computation, and administrative reporting drew the strongest response.',
       metrics: [
-        { value: '88%', label: 'Less time on lesson planning, attendance, grade entry, and assessment creation' },
-        { value: '4.5/5', label: 'Average teacher rating for AI-generated content' },
-        { value: '5/5', label: 'Average rating for mobile usability' },
+        { value: '88%', label: 'Less time on lesson planning, attendance, grade entry, and assessment creation, reported in the pilot survey' },
+        { value: '5 → 2', label: 'Steps to set up a class’s subjects, now created by default for its grade level' },
+        { value: '5 → 3', label: 'Steps to enter grades in the configurable gradebook' },
+        { value: '1 tap', label: 'To mark a whole class present, where each student was once checked one by one' },
       ],
       quote: RICHARD_QUOTE,
     },
@@ -648,7 +660,7 @@ export const PROJECTS = {
     title: 'COMELEC Gamified 3D for ACM',
     short: '3D interactive game that teaches personnel how the ACM works',
     year: '2025',
-    description: 'A 3D interactive game that trains COMELEC personnel to operate the Automated Counting Machine (ACM), one component at a time.',
+    description: 'A 3D training game that teaches COMELEC election personnel to set up and operate the Automated Counting Machine (ACM), from opening its hard case to inserting the smart card.',
     category: 'Software Platform / Client Project',
     roles: ['UI/UX Designer'],
     status: 'Delivered to client',
@@ -672,16 +684,16 @@ export const PROJECTS = {
       overview: "COMELEC Gamified 3D for ACM turns the training of election personnel into a 3D interactive game. Instead of relying on manuals and lectures, personnel explore the Automated Counting Machine from every angle and learn what each part does through labeled diagrams, so they can operate it with confidence.",
       // (a line set large, then the paragraph under it)
       challenge: {
-        lead: 'Personnel were learning the machine from paper, not practice.',
-        text: "Election personnel must operate the Automated Counting Machine without error, yet training relied on manuals and lectures that described each part without showing where it sits or how it behaves. COMELEC needed a safe, hands-on way to learn the machine, and the design had to be specified precisely enough for a development team to build a 3D game directly from it, on a tight timeline.",
+        lead: 'Personnel learned the counting machine from pages, not practice.',
+        text: "On election day, personnel must set up and run the Automated Counting Machine without error. Their training came from manuals and lectures, which describe each part but never let anyone practice with it. COMELEC wanted a safe way to practice, and the development team needed a design precise enough to build a 3D game from, fast.",
       },
       approach: [
         {
           title: "Learn by exploring",
-          summary: "An interactive 3D model that turns passive reading into hands-on practice.",
-          challenge: "Manuals and lectures described each part of the machine in isolation, without showing where it sits or what it does.",
-          text: "Personnel rotate the machine a full 360 degrees, open labeled diagrams for each component, and work through numbered, step-by-step tasks inside a simulated room.",
-          rationale: "Practicing at their own pace gives personnel a working familiarity with the machine that a lecture cannot provide.",
+          summary: "A machine personnel can turn, open, and set up on screen, one task at a time.",
+          challenge: "Personnel needed practice with the machine itself, and reading about each part could not give them that.",
+          text: "I designed the training around a 360-degree view of the ACM. Personnel turn the machine to any angle, open labeled diagrams of each part, and complete numbered tasks in a simulated room: opening the hard case, retrieving the privacy screens, and taking out the machine. The 3D and game developers built on that view to make the training a game.",
+          rationale: "Every step is practiced before election day, at each trainee’s own pace, which a lecture cannot offer.",
           shots: { layout: 'bento', items: [
             { src: comelec_decision_01_01, alt: 'COMELEC Gamified 3D for ACM opening the ACM hard case' },
             { src: comelec_decision_01_02, alt: 'COMELEC Gamified 3D for ACM retrieving the privacy screens' },
@@ -690,9 +702,9 @@ export const PROJECTS = {
         },
         {
           title: "Every screen as the build reference",
-          summary: "A complete, clickable specification the development team could build from without guesswork.",
+          summary: "One module, four topics, 100+ wireframe screens, linked into a single clickable prototype.",
           challenge: "A 3D game is assembled screen by screen, so any gap in the design would become a guess during development.",
-          text: "I designed wireframes and high-fidelity screens module by module, 100+ in total, and connected them into a working prototype that traces the full training flow.",
+          text: "I wireframed a full training module of four topics, from the menus to tasks such as inserting the smart card, and linked every screen into one prototype that runs from the first task to the last. The 3D designer and game developers built the finished screens shown here from it.",
           rationale: "Developers built from a complete, interactive reference rather than interpreting a brief, which allowed development to begin early.",
           shots: { layout: 'bento', items: [
             { src: comelec_decision_02_01, alt: 'COMELEC Gamified 3D for ACM main menu' },
@@ -702,10 +714,10 @@ export const PROJECTS = {
         },
         {
           title: "Handoff and brand, documented",
-          summary: "A single handoff document that gives the client every screen and the brand standards behind them.",
+          summary: "Every frame, and the rules behind its look, in one document.",
           challenge: "The client needed a complete, lasting record of the design: every screen, and the standards that govern the software’s look.",
-          text: "I prepared a handoff document for the client with screenshots of every frame, paired with brand guidelines that define the software’s visual identity.",
-          rationale: "With one authoritative reference, the client can keep the game consistent from its first screen to its last.",
+          text: "Every frame went into one document, from the title screen to the final task, alongside brand guidelines I created with the project manager.",
+          rationale: "The client and the development team work from one reference for every screen and the software’s look.",
           shots: { layout: 'bento', items: [
             { src: comelec_decision_03_01, alt: 'COMELEC Gamified 3D for ACM brand guide in the design file' },
             { src: comelec_decision_03_02, alt: 'COMELEC Gamified 3D for ACM screen inventory' },
@@ -713,18 +725,22 @@ export const PROJECTS = {
           ] },
         },
       ],
-      outcome: "Delivered to COMELEC, with the development team building the game directly from my screens and working prototype. I took the design from a blank file to wireframes and a working prototype in 3 days before handing it off to the project managers, who noted it arrived early enough for development to start ahead of schedule.",
+      outcome: "Delivered to COMELEC. Three days after the first project meeting, the wireframes and prototype were in the project managers’ hands, early enough for development to start ahead of schedule. The 3D designer and game developers built the game from them.",
       metrics: [
-        { value: '100+', label: 'Screens designed as the build reference' },
-        { value: '3 days', label: 'From a blank file to wireframes and a working prototype, handed off to the project managers' },
+        { value: '3 days', label: 'For the whole design process, from project meetings to wireframes, prototype, and handoff' },
+        { value: '100+', label: 'Wireframe screens, linked into one working prototype' },
+        { value: '4', label: 'Topics in one training module: ACM introduction, procedures for FTS, procedures for election day, and installation of the transmission device' },
       ],
-      delivered: ["Wireframes and high-fidelity layouts for every screen of the game", "A working prototype of the full training flow", "A client handoff document with every frame and the brand guidelines"],
-      role: 'As the UI/UX designer on COMELEC Gamified 3D for ACM, I owned the design end to end: every screen of the game, a working prototype of its full flow for the development team, and the client’s handoff document and brand guidelines.',
+      delivered: ["Wireframes for every screen of the four-topic training module", "A working prototype of the full training flow", "Brand guidelines, created with the project manager", "A handoff document with every frame and the brand guidelines"],
+      role: 'As the UI/UX designer, I took the design from the first project meetings to the handoff: the working wireframes and prototype the team followed. The screens on this page show the finished game, built from them by the 3D designer and game developers.',
       contributions: [
-        'Designed wireframes and high-fidelity screens for every module, 100+ in total, which became the development team’s build reference',
-        'Connected the screens into a working prototype so developers could trace the design flow end to end',
-        'Prepared a client handoff document with screenshots of every frame and the brand guidelines',
-        'Defined the brand guidelines that govern the software’s visual identity',
+        'Took part in the project meetings and turned what was agreed into the training flow',
+        'Designed a complete training module of four topics, from wireframes to a working prototype',
+        'Broke the four topics into 60+ step-by-step tasks, from setting up the transmission devices to authenticating the Electoral Board',
+        'Designed the 360-degree machine view that the 3D and game developers built into the gamified experience',
+        'Created the brand guidelines for the software’s visual identity with the project manager',
+        'Compiled the handoff document, pairing every frame with the brand guidelines',
+        'Handed the wireframes and prototype to the project managers in 3 days, early enough for development to start ahead of schedule',
       ],
     },
   },
@@ -733,7 +749,7 @@ export const PROJECTS = {
     title: 'PSGS',
     short: 'Minimally invasive surgery training for general surgeons',
     year: '2024',
-    description: 'A training platform that guides Filipino surgeons through minimally invasive surgery, from junior to senior level, built for the Philippine Society of General Surgeons (PSGS).',
+    description: 'The Philippine Society of General Surgeons’ platform for MIS Hybrid Online Learning, taking surgical residents through nine courses, from the junior module to the senior post-test.',
     category: 'Web Platform / Client Project',
     roles: ['UI/UX Designer'],
     status: 'Delivered to client',
@@ -756,27 +772,27 @@ export const PROJECTS = {
       overview: "PSGS brings the Philippine Society of General Surgeons' minimally invasive surgery training, across its junior, intermediate, and senior levels, into one platform. Surgeons compare programs, check course requirements, and follow announcements, while instructors and administrators manage courses and enrollment.",
       // (a line set large, then the paragraph under it)
       challenge: {
-        lead: 'Three training levels and three kinds of users, on one platform.',
-        text: "The Philippine Society of General Surgeons runs minimally invasive surgery training at junior, intermediate, and senior levels, each with its own programs, requirements, and announcements. Surgeons needed to compare programs and confirm requirements, while instructors and administrators needed to manage courses and enrollment, all within one platform and without any audience getting lost in another’s tasks.",
+        lead: 'Surgeons were judging a training program by a page that explained almost nothing.',
+        text: "MIS Hybrid Online Learning runs in three levels, junior, intermediate, and senior. Each level has a module, a small group discussion or face-to-face workshop, and a post-test, open only to residents in eligible years. The landing page was the first thing residents saw, and it was plain and thin on detail. Behind it, instructors had to set up every course, and administrators had to enroll residents course by course.",
       },
       approach: [
         {
-          title: "One structure for the public side",
-          summary: "A public landing page that presents all three training levels side by side.",
-          challenge: "Each training level carries its own programs, requirements, and announcements, and surgeons needed to compare them before committing.",
-          text: "I redesigned the landing page to present the three training levels, their course requirements, and current announcements within one consistent structure.",
-          rationale: "Surgeons can see exactly where they fit before they sign in.",
+          title: "Every level, explained up front",
+          summary: "A thin landing page rebuilt into a guide to all three training levels.",
+          challenge: "The old landing page was plain, and it left the details of each program unexplained.",
+          text: "I rebuilt the page section by section: what MIS Hybrid Online Learning is, current announcements, all 12 steps through the junior, intermediate, and senior courses, and the questions residents ask most.",
+          rationale: "A resident can see the whole path, from the first module to certification, before signing in.",
           shots: { layout: 'web', items: [
-            { src: psgs_landing_page, alt: 'PSGS landing page' },
+            { src: psgs_decision_01_01, alt: 'PSGS landing page' },
             { src: psgs_screen_login, alt: 'PSGS login' },
           ] },
         },
         {
-          title: "A module for each role",
-          summary: "Dedicated student, instructor, and administrator modules, each shaped around its own work.",
-          challenge: "Surgeons, instructors, and administrators share one platform, and no audience could afford to get lost in another’s tasks.",
-          text: "I designed a separate module for each role around its core job: students follow courses, instructors create them, and administrators manage enrollment.",
-          rationale: "Each role sees only the tools it needs, which keeps every workflow focused.",
+          title: "One platform, three workspaces",
+          summary: "Separate modules for administrators, instructors, and students, each opening to its own work.",
+          challenge: "Students, instructors, and administrators do different jobs, and one shared interface would bury each role's tools under the others'.",
+          text: "Students see each course as a card, color-coded by level, with its schedule, status, and the residency years it is open to. Instructors set up a course in one form: certificate, module type, eligible years, cost, facilitator, availability, and prerequisites, then save it as a draft or publish it. Administrators enroll residents per course, upload users, export lists, and answer support tickets.",
+          rationale: "Nobody scrolls past another role’s tools to reach their own.",
           shots: { layout: 'web3', items: [
             { src: psgs_screen_student_dashboard, alt: 'PSGS student dashboard' },
             { src: psgs_screen_instructor_create_course, alt: 'PSGS instructor course creation' },
@@ -784,18 +800,21 @@ export const PROJECTS = {
           ] },
         },
       ],
-      delivered: ["Redesigned landing page", "Student, instructor, and administrator module prototypes"],
-      outcome: "Delivered to PSGS. In QA testing, the platform built from my designs passed 81 of 83 executed test cases (97.6%) with zero failures.",
+      delivered: ["Redesigned landing page", "Administrator, instructor, and student module prototypes"],
+      outcome: "Delivered to PSGS. Each design went from wireframe to interactive prototype in one to two days, cleared review after a single round of revision, and went straight to the developers.",
       metrics: [
-        { value: '97.6%', label: 'QA pass rate across 83 executed test cases, with zero failures' },
-        { value: '3', label: 'User roles designed for: student, instructor, and administrator' },
-        { value: '100+', label: 'Screens designed, from wireframes to prototypes' },
+        { value: '1–2 days', label: 'From wireframe to interactive prototype, for each design' },
+        { value: '1', label: 'Round of revision per design submission, as tracked by the project manager' },
+        { value: '16', label: 'Core screens across the administrator, instructor, and student modules' },
       ],
       quote: PRINCE_QUOTE,
-      role: "As the UI/UX designer on PSGS, I redesigned the public landing page and designed the student, instructor, and administrator modules, taking each from wireframes to interactive prototypes.",
+      role: "I was the only designer on PSGS. I rebuilt the public landing page and designed every screen of the three role modules, from wireframe to interactive prototype.",
       contributions: [
-        'Redesigned the landing page to present the three training levels, course requirements, and announcements within one consistent structure',
-        'Designed the student, instructor, and administrator modules, taking each from wireframes to interactive prototypes',
+        'Rebuilt the plain landing page into a guide to MIS Hybrid Online Learning: announcements, the 12-step path through all three levels, and FAQs',
+        'Designed the student module: course cards color-coded by level, a profile, enrolled courses, and a calendar',
+        'Designed the instructor module: a single course setup form, assessments, enrollments, grading, and trash',
+        'Designed the administrator module: dashboard, user management, registration, per-course enrollment, class categories, and support tickets',
+        'Took each design from wireframe to interactive prototype in one to two days',
       ],
       system: null,
     },
@@ -805,7 +824,7 @@ export const PROJECTS = {
     title: 'AACCUP',
     short: 'Accreditation of academic programs in state universities and colleges',
     year: '2023',
-    description: "A redesign of AACCUP's website, where colleges, universities, and stakeholders find accreditation results, program classifications, and resources.",
+    description: "A full redesign of AACCUP's accreditation platform, from the public website to the workspace where nine roles run accreditation for the Philippines' state universities and colleges.",
     category: 'Web Platform / Client Project',
     roles: ['UI/UX Designer'],
     status: 'Delivered to client',
@@ -826,41 +845,41 @@ export const PROJECTS = {
       overview: "AACCUP, the Accrediting Agency of Chartered Colleges and Universities in the Philippines, evaluates state universities and colleges and their academic programs. The redesigned website organizes its accreditation tables, institutional achievements, program classifications, and resources into clear sections with consistent navigation, so institutions and stakeholders can find what they need.",
       // (a line set large, then the paragraph under it)
       challenge: {
-        lead: 'A large body of accreditation data, serving many audiences.',
-        text: "AACCUP evaluates state universities and colleges and their programs, and publishes accreditation tables, program classifications, institutional achievements, and resources for colleges, universities, and other stakeholders. The existing platform made that information hard to find. Visitors needed to reach the right record quickly, and the team behind the site needed a reliable way to publish and update it.",
+        lead: 'An accreditation agency was running on four tabs.',
+        text: "AACCUP sets the accreditation status of thousands of programs at state universities and colleges. Behind that work sit institutions, campuses, programs, accreditors, payments, survey visits, and evaluations, handled by nine different roles. The old admin side gave them a dashboard, three announcement tabs, and forms too thin to hold a full record. Out front, the website had to answer schools, accreditors, and the public at once.",
       },
       approach: [
         {
-          title: "Clear sections",
-          summary: "A landing page restructured into a dedicated section for each kind of accreditation information.",
-          challenge: "AACCUP publishes accreditation tables, program classifications, institutional achievements, and resources, and visitors needed to locate the right information without searching through all of it.",
-          text: "I redesigned the full landing page from the old platform, giving each kind of information, from accreditation tables to resources, a clearly defined section of its own.",
-          rationale: "Visitors go straight to the information they came for instead of scanning the entire page.",
+          title: "A front door for accreditation",
+          summary: "One page that answers what schools come to AACCUP for.",
+          challenge: "Schools, accreditors, and the public all land on the same page, each looking for something different.",
+          text: "I rebuilt the landing page around their questions: what AACCUP accredits and how, the accreditation instruments for every discipline, news and events, APQN awards, and resources ready to download.",
+          rationale: "Each visitor finds their answer in its own section, without digging.",
           shots: { layout: 'bento', items: [
             { src: aaccup_decision_01_01, alt: 'AACCUP landing page sections' },
             { src: aaccup_decision_01_02, alt: 'AACCUP about and accreditation sections' },
           ] },
         },
         {
-          title: "Consistent navigation",
-          summary: "A simplified, consistent path from the full list of institutions down to a single program.",
-          challenge: "Most of the site’s users are not technical, and the old platform asked them to work through unnecessary steps to reach the record they needed.",
-          text: "I removed the unnecessary workflows and redesigned the directory pages so visitors move from the list of state universities and colleges to an institution, its campuses, and each accredited program, through the same navigation on every page.",
-          rationale: "Fewer steps and one familiar pattern let non-technical users find what they need without help.",
+          title: "From four tabs to a full workspace",
+          summary: "An admin side rebuilt around the records the agency keeps.",
+          challenge: "The old admin side had a dashboard and three announcement tabs, and its forms had too few fields to hold a real record.",
+          text: "I organized the workspace into eight task-based sections, accreditor and institution management, finance, schedule, trainings, announcements, and evaluation, and rebuilt every form around the data users must enter.",
+          rationale: "Every record has room for its full details, and every page sits under the task it serves.",
           shots: { layout: 'bento', items: [
-            { src: aaccup_decision_02_01, alt: 'AACCUP training form' },
-            { src: aaccup_decision_02_02, alt: 'AACCUP create training dialog' },
+            { src: aaccup_decision_02_01, alt: 'AACCUP previous training form' },
+            { src: aaccup_decision_02_02, alt: 'AACCUP redesigned create training form' },
             { src: aaccup_decision_02_03, alt: 'AACCUP accreditation list' },
             { src: aaccup_decision_02_04, alt: 'AACCUP institution list' },
             { src: aaccup_decision_02_05, alt: 'AACCUP program list' },
           ] },
         },
         {
-          title: "Tools for the people behind it",
-          summary: "Administrator and content creator modules for the team that runs the site.",
-          challenge: "The team managing the site needed a dependable way to publish and update accreditation content.",
-          text: "I designed administrator and content creator modules, taking each from wireframes to clickable prototypes that cover everything from page navigation to component animation.",
-          rationale: "AACCUP’s team manages everything the site publishes from one place.",
+          title: "Nine roles, one system",
+          summary: "Every role designed from dashboard to profile, on one shared pattern.",
+          challenge: "Nine roles share the platform, each with different records to manage and different things to see.",
+          text: "I designed every role’s pages, from dashboard to profile: super admin, admin, institution, accreditor, finance, QA, guest, monitoring, and content creator. Data tables share one toolbar for search, filters, custom columns, import, and export, and program records track level status, accreditation validity, and grace-period requests.",
+          rationale: "Learn one screen and you know them all, whatever your role.",
           shots: { layout: 'bento', items: [
             { src: aaccup_decision_03_01, alt: 'AACCUP admin overview' },
             { src: aaccup_decision_03_02, alt: 'AACCUP program status charts' },
@@ -870,20 +889,22 @@ export const PROJECTS = {
           ] },
         },
       ],
-      delivered: ["Redesigned landing page and directory pages", "Administrator and content creator module prototypes", "A structured design file for project managers and developers"],
-      outcome: "Delivered to AACCUP. In regression testing across seven role-specific test sheets, the platform built from my designs passed 1,395 of 1,397 checks, a 99.9% pass rate.",
+      delivered: ["Redesigned landing page", "Pages for all nine roles, from dashboard to profile", "A structured design file for project managers and developers"],
+      outcome: "Delivered to AACCUP. As the only designer, I took every design from wireframe to prototype in one to two days, until the public website and all nine role workspaces were covered.",
       metrics: [
-        { value: '99.9%', label: 'Regression testing pass rate across 1,397 checks' },
-        { value: '7', label: 'User roles covered by regression testing' },
-        { value: '100+', label: 'Screens designed, from wireframes to prototypes' },
+        { value: '1–2 days', label: 'From wireframe to prototype, for each design' },
+        { value: '100+', label: 'Screens designed across the public website and nine role workspaces' },
+        { value: '9', label: 'Roles designed, from dashboard to profile: super admin, admin, institution, accreditor, finance, QA, guest, monitoring, and content creator' },
       ],
       quote: PRINCE_QUOTE,
-      role: 'As the UI/UX designer on AACCUP, I redesigned the website from its old platform: the full landing page, the institution and program directory, and the administrator and content creator modules. I organized the work in a well-structured design file so project managers and developers could navigate it with ease.',
+      role: "I was the only designer on AACCUP, responsible for every screen: the public website and all nine role workspaces, from dashboard to profile.",
       contributions: [
-        'Redesigned the full landing page from the old platform, organizing accreditation information, institutions, and resources into clear sections with consistent navigation',
-        'Redesigned the directory of state universities and colleges, their campuses, and their accredited programs, removing unnecessary workflows for non-technical users',
-        'Designed the administrator and content creator modules, taking each from wireframes to clickable prototypes, from page navigation to component animation',
-        'Structured the design file so project managers and developers could find and follow every screen',
+        'Rebuilt the public landing page around what visitors come for: accreditation, instruments by discipline, news, awards, and resources',
+        'Turned a four-tab admin side into an eight-section workspace for running accreditation',
+        'Rebuilt thin forms around the full records the agency keeps',
+        'Designed every page for all nine roles, from dashboard to profile',
+        'Designed one data-table pattern, with search, filters, custom columns, import, and export, used across the platform',
+        'Structured the design file so project managers and developers could find any screen quickly',
       ],
       system: null,
     },
@@ -893,7 +914,7 @@ export const PROJECTS = {
     title: 'DOST ARISE',
     short: 'STEM learning resources for teachers and students',
     year: '2023',
-    description: "A web platform for DOST-SEI's ARISE program that connects Filipino teachers and students with STEM learning resources, innovations, and digital teaching tools.",
+    description: "DOST-SEI's ARISE portal, where Filipino teachers and students reach free science and mathematics resources, from DOST-Courseware and SIMATAR to VLAS, in one place.",
     category: 'Web Platform / Client Project',
     roles: ['UI/UX Designer'],
     status: 'Delivered to client',
@@ -915,16 +936,16 @@ export const PROJECTS = {
       overview: "ARISE (Access to Resources and Innovations in Science Education) is a DOST-SEI program that supports science and mathematics teaching in the Philippines. Its platform gives teachers and students one place to discover learning resources, explore new teaching materials, and use digital tools, with a landing page that introduces the program, its partners, and how to register.",
       // (a line set large, then the paragraph under it)
       challenge: {
-        lead: 'One platform for three audiences with very different needs.',
-        text: "ARISE is DOST-SEI’s program for advancing science and mathematics teaching in the Philippines. Students and teachers needed a single place to discover learning resources, explore new teaching materials, and use digital tools. At the same time, newcomers needed a clear introduction to the program, its partners, and how to register, and educators and administrators each needed dedicated tools to run it day to day.",
+        lead: 'Nine learning platforms had to feel like one.',
+        text: "ARISE puts DOST-SEI's free science and mathematics resources, from 21st CLEM and DOST-Courseware to SIMATAR and VLAS, in the hands of K-12 teachers and students. The platform was already live, and it showed its age: a landing page that told newcomers too little, and a student dashboard that dumped every resource into one grid. I took it over as the only designer and rebuilt it into one seamless flow, from a newcomer's first visit to an administrator's daily work.",
       },
       approach: [
         {
-          title: "A landing page that explains the program",
-          summary: "An expanded landing experience that sets clear expectations before visitors register.",
-          challenge: "Newcomers needed to understand the program, its partners, and the registration process, and the existing landing page left too many of those questions unanswered.",
-          text: "I expanded the landing experience with new pages, rewrote its copy for clarity, and refreshed its content to introduce ARISE, its partners, and each step of registration.",
-          rationale: "Visitors understand what the program offers, and who stands behind it, before they commit to joining.",
+          title: "Every platform, introduced up front",
+          summary: "A landing page that sells the program before anyone registers.",
+          challenge: "The previous landing page gave newcomers too little to go on, so the program had to be taken on trust.",
+          text: "I expanded it into full sections built around the client's content: every resource platform by type, how ARISE works, the teaching and learning it supports, and its reach across schools, all leading to one call to register.",
+          rationale: "Visitors see what ARISE offers, and who stands behind it, before they commit.",
           shots: { layout: 'bento', items: [
             { src: arise_decision_01_01, alt: 'DOST ARISE landing page' },
             { src: arise_decision_01_02, alt: 'DOST ARISE resources page' },
@@ -932,53 +953,55 @@ export const PROJECTS = {
           ] },
         },
         {
-          title: "A dashboard organized around progress",
-          summary: "A student dashboard structured around each learner’s progress, not one undifferentiated list.",
-          challenge: "The original student screens were plain: the dashboard presented every resource as a single compiled set of cards, with no indication of what a student was reading or working on.",
-          text: "I redesigned the student experience, from onboarding to resource previews and rewards, and restructured the dashboard into categories driven by each student’s current reading progress and activities.",
-          rationale: "Students see at a glance what to continue and what comes next, instead of searching through a wall of identical cards.",
+          title: "A dashboard that picks up where you left off",
+          summary: "Resources grouped by what each student is doing, instead of one wall of cards.",
+          challenge: "The old dashboard showed every resource as one grid of identical cards, with no sign of what a student was in the middle of.",
+          text: "I redesigned the student journey, from onboarding to resource previews, added rewards through an account level with XP, badges, and a leaderboard, and rebuilt the dashboard around three questions: what to continue reading, what to continue watching, and what to review again.",
+          rationale: "Students open the dashboard and land straight on their next lesson.",
           shots: { layout: 'bento', items: [
             { src: arise_decision_02_01, alt: 'DOST ARISE previous student dashboard' },
-            { src: arise_decision_02_02, alt: 'DOST ARISE dashboard grouped by reading progress' },
+            { src: arise_decision_02_02, alt: 'DOST ARISE dashboard grouped into sections' },
             { src: arise_decision_02_03, alt: 'DOST ARISE resource preview' },
           ] },
         },
         {
-          title: "Layered access for those who run it",
-          summary: "Educator and administrator modules built in layers, each scoped to its own responsibilities.",
-          challenge: "Educators and administrators manage different parts of the program, and each needed the right tools without the clutter of the other’s.",
-          text: "Educators manage the students enrolled in their courses and publish new content. Administrators inherit everything educators can access, with administrative capabilities such as user management and content management layered on top.",
-          rationale: "Building the administrator module on top of the educator module gives both roles one familiar interface, with additional tools only where the role requires them.",
+          title: "One dashboard to learn, one workspace to run it",
+          summary: "Students and educators share one dashboard, while administrators get a workspace of their own.",
+          challenge: "Students and educators both come to ARISE to learn from its resources, while administrators keep those resources and the community running.",
+          text: "Students and educators share one dashboard, with the same resources, progress, and rewards. Administrators work in a separate workspace: a content manager for adding resources to each platform, a forum, a library, and user management.",
+          rationale: "Learners use one familiar interface, and administrators run the platform without cluttering it.",
           shots: { layout: 'bento', items: [
             { src: arise_decision_03_01, alt: 'DOST ARISE admin content manager' },
-            { src: arise_decision_03_02, alt: 'DOST ARISE dashboard for one account' },
-            { src: arise_decision_03_03, alt: 'DOST ARISE dashboard for another account' },
+            { src: arise_screen_admin_forum, alt: 'DOST ARISE admin forum' },
+            { src: arise_screen_admin_content_preview, alt: 'DOST ARISE admin content preview' },
           ] },
         },
       ],
-      delivered: ["Expanded landing pages and rewritten copy", "Redesigned student experience", "Educator and administrator module prototypes", "22 reusable components"],
-      outcome: "Delivered to DOST-SEI. Across three sprints of QA testing, the platform built from my designs passed 209 of 217 executed test cases, a 96.3% pass rate with zero failures.",
+      delivered: ["Expanded landing pages", "Redesigned student experience", "Administrator workspace prototypes", "22 reusable components"],
+      outcome: "Delivered to DOST-SEI. Working alone on design, I turned every screen around in one to two days, cleared review in one or two rounds, and kept every sprint on track to 100% completion.",
       metrics: [
-        { value: '96.3%', label: 'QA pass rate across 217 executed test cases, with zero failures' },
+        { value: '1–2 days', label: 'From wireframe to prototype, for each design, with one or two rounds of revision' },
+        { value: '100%', label: 'Sprint completion across the project' },
         { value: '22', label: 'Reusable components, applied across the entire interface' },
-        { value: '100+', label: 'Screens designed, from wireframes to prototypes' },
       ],
       quote: ADRIAN_QUOTE,
-      role: 'As the UI/UX designer on DOST ARISE, I expanded the landing experience, redesigned the student experience, and designed the educator and administrator modules, taking each from wireframes to prototypes on a shared set of 22 reusable components.',
+      role: 'I was the only designer on ARISE and owned every screen, from the public landing page to the administrator module.',
       contributions: [
-        'Expanded the landing experience with new pages, rewritten copy, and refreshed content introducing the program, its partners, and the registration process',
-        'Redesigned the student experience, restructuring the dashboard around each student’s reading progress and activities instead of a single compiled set of cards',
-        'Designed educator and administrator modules with layered access: educators manage enrolled students and publish content, while administrators add user and content management',
-        'Built 22 reusable components and applied them across the entire interface for a consistent experience',
+        'Expanded the landing page into full sections around the client’s content, from the resource platforms to registration',
+        'Redesigned the learning journey for students and educators, from onboarding to resource previews, with XP levels, badges, and a leaderboard to keep them coming back',
+        'Regrouped the student dashboard into Continue Reading, Continue Watching, and Review Again',
+        'Designed the administrator workspace: content manager, forum, library, and user management',
+        'Built a library of 22 reusable components used across every screen',
+        'Connected the experience into one flow, from a newcomer’s first visit to an administrator’s daily work',
       ],
     },
   },
   courseware: {
     path: '/dost-courseware',
-    title: 'DOST Courseware (Grade 3)',
-    short: 'Mobile courseware for Grade 3 learners',
+    title: 'DOST Courseware',
+    short: 'Science lessons for Grade 3 and Grade 6 learners',
     year: '2023',
-    description: 'A mobile courseware application built for DOST that guides Grade 3 learners from loading a course to submitting an assessment.',
+    description: 'Mobile courseware for DOST that turns Grade 3 and Grade 6 science lessons, from solids, liquids, and gases to how cone-bearing trees reproduce, into illustrated stories and hands-on activities.',
     category: 'Mobile App / Client Project',
     roles: ['UI/UX Designer'],
     status: 'Delivered to client',
@@ -999,63 +1022,66 @@ export const PROJECTS = {
       { src: courseware_screen_10_1, alt: 'DOST Courseware birthday story scene', start: 4 },
     ],
     platform: {
-      overview: 'DOST Courseware (Grade 3) is a mobile application that delivers a course to Grade 3 learners: from loading a course to submitting its assessments, all in one app.',
+      overview: 'DOST Courseware is a mobile application that delivers science lessons to Grade 3 and Grade 6 learners, from the first story scene to the assessment, all in one app.',
       // (a line set large, then the paragraph under it)
       challenge: {
-        lead: 'A content team that needed finished designs to complete its modules.',
-        text: "DOST’s Grade 3 courseware is produced module by module by a separate content department. To finish each module, that department needed complete, interactive screens to build on, starting from a storyboard provided by the project manager. My role was to turn that storyboard into a finished courseware design quickly enough to keep every module on schedule.",
+        lead: 'Four science lessons existed only as scripts, and nothing could be built until they became screens.',
+        text: "DOST’s courseware rolls out lesson by lesson through the school year. Each lesson starts as a storyboard from the project manager, pages of scenes and dialogue between characters like Paul, Dina, and Auntie, and ends as a working gamified lesson built by the content department. Between the two sat an empty Figma file, and the content department could not start until every scene in it was designed.",
       },
       approach: [
         {
           title: "From storyboard to screen",
-          summary: "A project manager’s storyboard, taken from a blank file to a complete mobile design.",
-          challenge: "The storyboard described each lesson on paper, and it had to become a set of screens a Grade 3 learner could actually use.",
-          text: "I followed the storyboard from scratch to final design, laying out every screen of the courseware, from the title screen and lesson menu to each lesson’s introduction.",
-          rationale: "Staying faithful to the storyboard kept the lesson content intact while giving it a clear, consistent interface.",
-          shots: { layout: 'bento', items: [
-            { src: courseware_decision_01_01, alt: 'DOST Courseware lesson storyboard' },
-            { src: courseware_decision_01_02, alt: 'DOST Courseware balloon scene from the storyboard' },
-            { src: courseware_decision_01_03, alt: 'DOST Courseware follow-up question scene' },
+          summary: "Pages of script, turned into scenes a young learner can step into.",
+          challenge: "A storyboard describes each scene in words, and a learner needs to see it, hear the characters, and tap through it.",
+          text: "Each lesson got its own Figma file, built scene by scene from its storyboard: Auntie twisting a balloon to show that air takes the shape of its container, Paul and Lea spotting the sky from the schoolground swings, a field trip among the pine trees of Wright Park in Baguio, and merienda with fresh calamansi juice. I staged every scene around the characters the content department provided.",
+          rationale: "The lesson stays exactly as the storyboard wrote it, now in a world a learner wants to explore.",
+          shots: { layout: 'grid', items: [
+            { src: courseware_decision_01_02, alt: 'DOST Courseware solid, liquid, and gas, balloon scene' },
+            { src: courseware_sky_swings, alt: 'DOST Courseware natural objects in the sky, schoolground scene' },
+            { src: courseware_cone_park, alt: 'DOST Courseware cone-bearing trees, Wright Park scene in Baguio' },
+            { src: courseware_temperature_merienda, alt: 'DOST Courseware changes in materials, merienda scene with Auntie' },
           ] },
         },
         {
           title: "Lessons learners can interact with",
-          summary: "Story scenes and hands-on activities designed for every module.",
-          challenge: "Grade 3 learners needed to take part in each lesson, not just read it.",
-          text: "I designed the module’s full interaction, from illustrated story scenes to hands-on activities such as a balloon pump experiment and drag-and-drop exercises, through to assessment questions.",
-          rationale: "Learning by doing holds a young learner’s attention and turns each concept into something they can try for themselves.",
-          shots: { layout: 'bento', items: [
+          summary: "Every lesson asks the learner to do something, not just watch.",
+          challenge: "Learners in Grades 3 and 6 needed to take part in each lesson, not just read it.",
+          text: "Each storyboard set out its activities, and I designed how every one of them looks and plays across the four lessons: pouring and pumping activities for solids, liquids, and gases, a cone-bearing tree life cycle where learners pick out each structure, drag-and-drop exercises, and picture-choice and multiple-choice questions that close each lesson’s assessment.",
+          rationale: "Learners test each idea with their own hands, which a page of text cannot offer.",
+          shots: { layout: 'grid', items: [
+            { src: courseware_decision_02_04, alt: 'DOST Courseware pouring activity' },
+            { src: courseware_cone_life_cycle, alt: 'DOST Courseware cone-bearing tree life cycle activity' },
             { src: courseware_decision_02_01, alt: 'DOST Courseware multiple choice question' },
             { src: courseware_decision_02_02, alt: 'DOST Courseware picture choice question' },
-            { src: courseware_decision_02_03, alt: 'DOST Courseware test your knowledge' },
-            { src: courseware_decision_02_04, alt: 'DOST Courseware pouring activity' },
-            { src: courseware_decision_02_05, alt: 'DOST Courseware story scene' },
-            { src: courseware_decision_02_06, alt: 'DOST Courseware ice candy scene' },
           ] },
         },
         {
           title: "A prototype in days, not weeks",
-          summary: "A wireframe and working prototype delivered fast enough to unblock the content team.",
-          challenge: "The content department could not finish a module until it had screens and assets to build from.",
-          text: "I produced each course’s wireframe and a working prototype in 2 to 3 days, and shared the finished screens and design assets with the content department.",
-          rationale: "Working from ready screens instead of starting each lesson from scratch, the department produced the prototype version of every course faster.",
-          shots: { layout: 'bento', items: [
-            { src: courseware_decision_03_01, alt: 'DOST Courseware prototype flow in Figma' },
-            { src: courseware_decision_03_02, alt: 'DOST Courseware assets handed to the content team' },
+          summary: "Each lesson ready to build in two to three days.",
+          challenge: "The content department’s schedule depended on how fast the screens arrived.",
+          text: "I took each lesson from storyboard to wireframe and working prototype in 2 to 3 days, cleared review in one or two rounds, and handed over every screen and design asset, from the title screen to the last assessment question.",
+          rationale: "The content department built each gamified lesson from ready screens instead of a blank page.",
+          shots: { layout: 'grid', items: [
+            { src: courseware_screen_02, alt: 'DOST Courseware solid, liquid, and gas title screen' },
+            { src: courseware_sky_title, alt: 'DOST Courseware natural objects in the sky title screen' },
+            { src: courseware_cone_title, alt: 'DOST Courseware cone-bearing trees title screen' },
+            { src: courseware_temperature_title, alt: 'DOST Courseware changes in materials title screen' },
           ] },
         },
       ],
-      outcome: 'Delivered to DOST. Working closely with the department that produces the course content, I turned the project manager’s storyboard into a complete, interactive courseware design in 2 to 3 days per course, so the department could finish its modules from ready screens and shared design assets instead of starting each lesson from scratch.',
+      outcome: 'Delivered to DOST. Four storyboards became four working gamified lessons, built by the content department straight from my wireframes and prototypes: Meet Solid, Liquid, and Gas; What Are the Natural Objects in the Sky?; Changes in Materials Based on the Effect of Temperature; and How Do Cone-Bearing Trees Reproduce?',
       metrics: [
-        { value: '2–3 days', label: 'From storyboard to wireframe and working prototype, per course' },
-        { value: '100+', label: 'Screens designed, covering the full learner flow' },
+        { value: '2–3 days', label: 'From storyboard to wireframe and working prototype, per lesson' },
+        { value: '4', label: 'Science lessons designed, three for Grade 3 and one for Grade 6, each in its own Figma file' },
+        { value: '~100', label: 'Screens designed per lesson, across all four lessons' },
       ],
-      role: 'As the UI/UX designer on DOST Courseware (Grade 3), I designed the entire module interaction, taking the project manager’s storyboard from scratch to final design, including prototyping, and supplied the content department with the screens and assets it needed to finish each module.',
+      role: 'I was the only designer on DOST Courseware and owned four science lessons for Grades 3 and 6, from the first storyboard page to a working prototype, every scene and interaction included.',
       contributions: [
-        'Translated the project manager’s storyboard into a complete mobile courseware design, from course loading to assessment submission',
-        'Designed the full module interaction: story scenes, hands-on activities, drag-and-drop exercises, and assessments',
-        'Produced each course’s wireframe and working prototype in 2 to 3 days',
-        'Shared finished screens and design assets with the content department so it could complete each module faster',
+        'Designed four science lessons, three for Grade 3 and one for Grade 6, each in its own Figma file, scene by scene from its storyboard',
+        'Staged every story scene, from a Baguio field trip to a merienda table, around the characters the content department provided',
+        'Designed the screens for every activity the storyboards called for, from pouring and life-cycle activities to the assessment',
+        'Took each lesson from storyboard to working prototype in 2 to 3 days, with one or two rounds of revision',
+        'Handed finished screens and design assets to the content department to build each gamified lesson',
       ],
     },
   },
@@ -1064,7 +1090,7 @@ export const PROJECTS = {
     title: 'DailyDiscount',
     short: 'E-commerce web app for discounted game credits',
     year: '2022',
-    description: 'Dailydiscount is a web-based application developed to help small online businesses sell discounted game credits.',
+    description: 'DailyDiscount is a web app for small online sellers of discounted game credits, where buyers browse heroes and skins, compare prices, and check out from a cart.',
     category: 'Web Application / Team Project',
     roles: ['UI Designer', 'Front-End Web Developer'],
     technologies: ['React JS', 'Tailwind CSS', 'SASS', 'Figma', 'Vercel App'],
@@ -1083,7 +1109,7 @@ export const PROJECTS = {
     title: 'Portfolio 2022',
     short: 'Second-generation portfolio site',
     year: '2022',
-    description: 'Portfolio 2022 is a web-based portfolio showcasing my current user interface and web design projects, information about myself, and the programming languages, frameworks, and software I have used.',
+    description: 'My second portfolio, designed in Figma and built in React with GSAP animation, presenting my 2022 UI and web design projects, the tools I worked with, and a way to get in touch.',
     category: 'Portfolio Website / Personal Project',
     roles: ['UI/UX Designer', 'Front-End Developer'],
     technologies: ['React JS', 'Tailwind CSS', 'SASS', 'GSAP', 'Figma', 'Vercel App'],
@@ -1102,7 +1128,7 @@ export const PROJECTS = {
     title: 'Portfolio 2022 (First Edition)',
     short: 'First portfolio site',
     year: '2022',
-    description: 'Portfolio 2022 is a web-based portfolio designed to showcase my most recent projects, the programming languages I use, and a bit of information about myself.',
+    description: 'My first portfolio, designed in Figma and built in React with Material UI, gathering my early projects, the languages I code in, and a short introduction.',
     category: 'Portfolio Website / Personal Project',
     roles: ['UI/UX Designer', 'Front-End Developer'],
     technologies: ['React JS', 'Material UI', 'SASS', 'Figma', 'Vercel App'],
@@ -1122,9 +1148,9 @@ export const PROJECTS = {
     title: 'ReGain',
     short: 'Student mental health support platform',
     year: '2021',
-    description: 'A student mental health support platform built for STI College Novaliches, integrating self-assessments, e-journaling, chatbot assistance, and private guidance counselor communication to help students manage their emotional well-being.',
+    description: 'A mental health support platform for STI College Novaliches students, with weekly self-assessments, a private e-journal, a chatbot, and direct messaging with guidance counselors.',
     category: 'Web Application / Capstone Project',
-    roles: ['Project Manager', 'Lead Programmer'],
+    roles: ['Project Manager', 'Lead Programmer', 'UI Designer'],
     technologies: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Bootstrap', 'NodeJS', 'Dialogflow', 'Firebase Realtime Database', 'Cloud Firestore', 'Firebase Admin', 'Google Cloud Storage'],
     link: { href: 'https://regain-caps.web.app/' },
     cover: regain_mockup_cover,
@@ -1143,16 +1169,16 @@ export const PROJECTS = {
       overview: "ReGain is a web-based mental health support system built as a capstone project at STI College Novaliches during the COVID-19 pandemic. Students complete weekly self-assessments, keep an e-journal, message guidance counselors, and get chatbot support when counselors are unavailable, while counselors follow each student's progress through dashboards and automated assessment reports.",
       // (a line set large, then the paragraph under it)
       challenge: {
-        lead: 'Mental health support students could reach privately, at any hour.',
-        text: "ReGain was built at STI College Novaliches during the COVID-19 pandemic, when students were learning remotely and in-person guidance was out of reach. Students needed a private, dependable way to check on their mental health and contact guidance counselors, while counselors needed to monitor many students at once and identify who needed help first.",
+        lead: 'When the guidance office closed its doors, students still needed somewhere to turn.',
+        text: "ReGain was our capstone at STI College Novaliches during the pandemic, when students learned from home and in-person guidance stopped. Students needed a private, dependable way to check on their mental health and reach a counselor, at any hour. Counselors needed to follow many students at once and see who needed help first.",
       },
       approach: [
         {
           title: "Regular check-ins",
           summary: "Weekly self-assessments that build a routine for students and a record for counselors.",
           challenge: "Students needed a private, low-pressure way to track their mental health over time.",
-          text: "Students complete a short self-assessment each week, and every result is saved to a personal history they can return to.",
-          rationale: "A weekly rhythm builds a habit of reflection for students and gives counselors a record that reveals change over time.",
+          text: "Students complete a short self-assessment each week, and every result is saved to a personal history they can return to. The school counselor reviews each one, with an automated report that shows how a student is doing over time.",
+          rationale: "A weekly rhythm encourages a habit of reflection and gives counselors a record that shows change over time.",
           shots: { layout: 'web', items: [
             { src: regain_assessment, alt: 'ReGain self-assessment' },
             { src: regain_history, alt: 'ReGain history' },
@@ -1173,21 +1199,24 @@ export const PROJECTS = {
           title: "Help when counselors are away",
           summary: "An always-available chatbot that responds whenever a counselor cannot.",
           challenge: "Students needed support at any hour, including times when counselors were unavailable.",
-          text: "I integrated a Dialogflow chatbot that responds to students whenever a counselor is unavailable.",
-          rationale: "No student who reaches out is left without a response, even outside counseling hours.",
+          text: "A Dialogflow chatbot answers students whenever a counselor is unavailable.",
+          rationale: "A student who reaches out gets a response, even outside counseling hours.",
         },
         { title: "The whole picture for counselors", text: "Dashboards and automated assessment reports show each student’s progress." },
       ],
-      outcome: "ReGain was built and deployed as our capstone project at STI College Novaliches and was invited to a symposium. My work leading and building it earned two awards: Eye in the Calm of the Storm, and Most Outstanding Project Manager.",
+      outcome: "Deployed as our capstone at STI College Novaliches and invited to a symposium. Leading the team while building the whole platform earned me two awards, including Most Outstanding Project Manager.",
       metrics: [
-        { value: '2', label: 'Awards: Eye in the Calm of the Storm, and Most Outstanding Project Manager' },
+        { value: '2', label: 'Awards: Most Outstanding Project Manager, and Eye in the Calm of the Storm, for staying composed under pressure' },
+        { value: '4', label: 'Capstone team members, led as project manager while I built the platform' },
         { value: 'Invited', label: 'To a symposium, as a featured capstone project' },
       ],
-      role: "Assigned as ReGain’s project manager, I also took on the work of lead programmer, directing the capstone team while building the platform end to end.",
+      role: "I led a four-person capstone team as project manager, and I designed and built the platform myself, from the student pages to the counselor dashboards.",
       contributions: [
-        'Led the capstone team as project manager, from planning through deployment',
-        'Served as lead programmer, building the platform on Node.js and Firebase',
-        'Integrated a Dialogflow chatbot to support students whenever counselors were unavailable',
+        'Led a four-person team as project manager, from planning through deployment',
+        'Designed the interface on a Bootstrap template, from the student pages to the counselor dashboards',
+        'Built the platform end to end on Node.js and Firebase',
+        'Built the counselor dashboards and automated assessment reports, so counselors could review every student’s check-ins',
+        'Connected a Dialogflow chatbot to answer students when counselors were offline',
       ],
     },
   },
@@ -1199,10 +1228,11 @@ export const PROJECTS = {
     title: 'UI Kit',
     short: 'Design system for a company central application',
     year: '2024',
-    description: "A design system I initiated for the Central App, one of the company's core applications, so every screen is designed and built from one shared set of 40+ components.",
+    description: "A design system I started for the Central App and built from scratch in Figma, so every screen is designed and developed from one set of 40+ components.",
     category: 'Design System / Team Project',
     roles: ['UI/UX Designer'],
     technologies: ['Figma'],
+    status: 'Adopted in development',
     cover: pci_mockup_cover,
     screenshots: [
       { src: pci_mockup_cover, alt: 'Central App mock-up', start: 'full' },
@@ -1224,14 +1254,14 @@ export const PROJECTS = {
       overview: "The Central App design system is the single source of truth for how one of the company's central applications looks and behaves. It sets the foundations, from light and dark color tokens to the type scale, spacing, radius, elevation, and icons, and documents every component's variants, states, and values, so designers and developers build each new screen from the same set of parts.",
       // (a line set large, then the paragraph under it)
       challenge: {
-        lead: 'Screens that should have matched were drifting apart.',
-        text: "Components were applied inconsistently across the Central App, so screens that should have looked and behaved alike did not. With no single source of truth, every new screen widened the gap, and developers were left to infer values the design never specified.",
+        lead: 'Every project rebuilt its buttons from scratch.',
+        text: "Across the projects I designed at the company, the same components kept coming out different: buttons, sidebar layouts, and other UI patterns changed from one project to the next, and developers rebuilt them every time. When the Central App started from a blank file, it was the chance to break the pattern with one set of components, designed once and documented well enough to build from.",
       },
       approach: [
         {
           title: "Foundations first",
           summary: "A shared foundation layer, defined before a single component was built.",
-          challenge: "Inconsistent component use meant screens that should have looked and behaved alike did not.",
+          challenge: "Fixing components one at a time would not stop the next screen, or the next project, from drifting.",
           text: "I established the foundations first, defining color tokens, the type scale, spacing, radius, elevation, and iconography as the rules every component would inherit.",
           rationale: "When every component starts from the same rules, consistency is built in rather than enforced screen by screen.",
           shots: { layout: 'bento', items: [
@@ -1254,9 +1284,9 @@ export const PROJECTS = {
         {
           title: "Documented for developers",
           summary: "Component documentation precise enough to build from without guesswork.",
-          challenge: "Developers had to infer values the design did not specify, and every assumption pulled the build further from the intended design.",
+          challenge: "A component library only helps developers if every value they need is written down.",
           text: "I documented each of the 40+ components with its variants, interaction states, and exact specifications.",
-          rationale: "Developers build directly from the documentation, so what ships matches what was designed.",
+          rationale: "The developer found the specs made consistent components much easier to build, so the build stayed true to the design.",
           shots: { layout: 'bento', items: [
             { src: pci_decision_03_01, alt: 'Central App button specifications' },
             { src: pci_decision_03_02, alt: 'Central App text field specifications' },
@@ -1264,15 +1294,18 @@ export const PROJECTS = {
           ] },
         },
       ],
-      role: "As the UI/UX designer, I identified inconsistent component use across the Central App, then initiated and built its design system in Figma to replace guesswork with a shared standard.",
+      role: "I was the only designer on the Central App, and I started its design system on my own initiative, building it from scratch in Figma.",
       contributions: [
-        "Initiated a centralized Figma design system after identifying inconsistent component use across the Central App",
+        "Started a design system for the Central App, so it would not repeat the mismatched components of earlier projects",
         "Defined the foundations: light and dark color tokens, the type scale, spacing, radius, elevation, and icons",
-        "Built and documented 40+ reusable components, each with its variants, states, and exact values",
+        "Built and documented 40+ components, from buttons and text fields to cards, menus, navigation, and dialogs, each with its variants, states, and exact values",
+        "Designed 100+ Central App screens from the kit, each from wireframe to prototype in one to two days",
       ],
-      outcome: "The design system moved directly into development, where a developer built the company's internal Central App from it. With every component specified to exact values, the developer reported a closer match between the build and the design.",
+      outcome: "The kit went straight into development of the Central App, and the developer said its component specs made consistent UI components much easier to build. Development was later paused when the company shifted its focus to another project.",
       metrics: [
-        { value: '40+', label: 'Reusable components, each documented with variants, states, and exact specifications' },
+        { value: '100+', label: 'Screens built from the kit' },
+        { value: '1–2 days', label: 'To design a screen from wireframe to prototype with the kit' },
+        { value: '40+', label: 'Reusable components, documented with variants, states, and exact values' },
         { value: '2', label: 'Color modes, with light and dark values defined for every token' },
       ],
       quote: PRINCE_QUOTE,
