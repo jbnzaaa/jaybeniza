@@ -467,6 +467,24 @@ function Bento({ items, seed, steady = false, turn = 0, grid = false, onLoad, cl
     });
     at += size;
   });
+  // a grid of five: the first screen large, two rows tall, and the other
+  // four two by two beside it - an odd one out would otherwise stand
+  // alone, full width, under the rest
+  if (grid && !phone && items.length === 5) {
+    const side = (turn % 2) === 1;
+    return (
+      <div ref={fxBox} className={`grid grid-cols-4 ${className}`} style={{ gap: BENTO_GAP }}>
+        {items.map(({ src, alt }, i) => (
+          <div className='screenshot-container bg-card' key={alt}
+            style={i === 0
+              ? { gridColumn: side ? '3 / span 2' : '1 / span 2', gridRow: '1 / span 2' }
+              : { aspectRatio: shape[i] }}>
+            <img src={src} alt={alt} className='screenshot-img w-full h-full object-cover' loading='lazy' onLoad={onLoad}/>
+          </div>
+        ))}
+      </div>
+    )
+  }
   return (
     <div ref={fxBox} className={`flex flex-wrap justify-between ${className}`} style={{ rowGap: BENTO_GAP }}>
       {items.map(({ src, alt }, i) => (
@@ -882,8 +900,8 @@ function ProjectPage({ project: given, id }) {
           {decision.summary && <Copy id={`decision-${i}`} text={decision.summary} className={BELOW} />}
           <Notes id={`decision-${i}`} items={[
             { label: 'The challenge', text: decision.challenge },
-            { label: 'Solution', text: decision.text },
-            ...(decision.rationale ? [{ label: 'Design rationale', text: decision.rationale }] : []),
+            { label: 'What I did', text: decision.text },
+            ...(decision.rationale ? [{ label: 'Why it works', text: decision.rationale }] : []),
           ]} />
           {decision.shots && <Bento items={decision.shots.items} seed={decision.title} steady turn={i} grid={decision.shots.layout === 'grid'} onLoad={remeasure} />}
         </CaseSection>
@@ -891,7 +909,7 @@ function ProjectPage({ project: given, id }) {
 
         {/* its screens, under the label at full width */}
         {has('screens') && (
-        <CaseSection id='screens' title='Platform Screens' theme={themeOf('screens')}>
+        <CaseSection id='screens' title='Screens' theme={themeOf('screens')}>
           <Bento items={screens} seed={project.title} onLoad={remeasure} className='' />
         </CaseSection>
         )}
@@ -920,7 +938,7 @@ function ProjectPage({ project: given, id }) {
 
         {/* its screens, under the label at full width - light when they
           follow the cover directly, so the two are not one dark run */}
-        <CaseSection id='screens' title='Project Screens' theme={hasOverview ? DARK : LIGHT}>
+        <CaseSection id='screens' title='Screens' theme={hasOverview ? DARK : LIGHT}>
           {/* (a row of phone screens - `phones` - spans the width, four
             to a row from tablet width up) */}
           {screens.length > 0 && <Bento items={screens} seed={project.title} onLoad={remeasure} className='' />}

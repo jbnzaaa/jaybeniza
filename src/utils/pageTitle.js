@@ -2,14 +2,14 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 // the site's own title (as in index.html), kept by the landing page
-export const SITE_TITLE = 'Jay Beniza | UI/UX & Product Designer | AI-Assisted Development';
+export const SITE_TITLE = 'Jay Beniza | UI/UX & Product Designer';
 
 // the address the site is served at: the canonical and og:url of every
 // page start with it (as do sitemap.xml and index.html)
 export const SITE_URL = 'https://jaybeniza.vercel.app';
 
 // the site's own description (as in index.html), for a page without one
-export const SITE_DESCRIPTION = 'Explore the portfolio of Jay Beniza, a UI/UX and product designer with 3.5+ years of experience designing 14 web and mobile products, Figma design systems, and apps built with Claude Code.';
+export const SITE_DESCRIPTION = 'Jay Beniza, UI/UX and product designer in the Philippines with 3.5+ years designing 25 web and mobile products, Figma design systems, and AI-assisted front-ends built with Claude Code.';
 
 // sets the content of a <meta> tag, by its name or property, adding the
 // tag if index.html has none
@@ -47,7 +47,7 @@ export function usePageTitle(title, description) {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const fullTitle = title ? `${title} - Jay Beniza` : SITE_TITLE;
+    const fullTitle = title ? `${title} | Jay Beniza` : SITE_TITLE;
     const text = description || SITE_DESCRIPTION;
     // one address per page: no trailing slash, except the landing page's
     const url = SITE_URL + (pathname.replace(/\/+$/, '') || '/');

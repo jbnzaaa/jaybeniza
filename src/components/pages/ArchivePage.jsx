@@ -46,7 +46,7 @@ const HEADLINE_LINES = [
   'outside client work.',
 ];
 
-const DESCRIPTION = 'Concepts, redesigns, and visual studies I made on my own to explore layout, type, and interaction. Personal explorations, not client work.';
+const DESCRIPTION = 'Concepts, redesigns, and visual studies I made on my own to explore layout, type, and interaction.';
 
 /**
  * The archive page (route /archive), in the work page's layout: a first

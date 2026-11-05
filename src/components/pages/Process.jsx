@@ -16,7 +16,7 @@ const STEPS = [
   { id: 'understand', title: 'Understand', text: 'I start by listening. I learn who the product is for, what they need, and what the business wants from it.', gif: `${TENOR}QS_ZPNPtKjsAAAAM/star-atlas-solana.gif`, alt: 'A clip from Star Atlas' },
   { id: 'explore', title: 'Explore', text: 'I map user flows and sketch wireframes, trying a few directions before settling on one.', gif: `${TENOR}pKaWNBpzW68AAAAM/run-lord-of-the-rings.gif`, alt: 'Bilbo running off on an adventure' },
   { id: 'design', title: 'Design', text: 'I turn the strongest direction into high-fidelity screens and a prototype, built on a consistent design system.', gif: `${TENOR}bCUkRcXp8JYAAAAM/painting-bob-ross.gif`, alt: 'Bob Ross painting' },
-  { id: 'build', title: 'Refine', text: 'I stay close to developers through handoff, test with users, and keep refining until it works as well as it looks.', gif: `${TENOR}KVABpmsCXRAAAAAM/smoothening-edges-teddy-safarian.gif`, alt: 'Sanding the edges of wood smooth' },
+  { id: 'build', title: 'Refine', text: 'I stay close to developers through handoff, test every role’s flow for consistent data and UX issues, and keep refining until it works as well as it looks.', gif: `${TENOR}KVABpmsCXRAAAAAM/smoothening-edges-teddy-safarian.gif`, alt: 'Sanding the edges of wood smooth' },
 ];
 
 /**
@@ -47,7 +47,7 @@ function Process({ light = false }) {
           laptop-lg:py-24 laptop-lg:px-[3rem]
           desktop:py-28 desktop:px-[3rem]'>
           <div className='mobile:mb-6 tablet:mb-8 laptop:mb-8 laptop-lg:mb-10 desktop:mb-10'>
-            <Tag label='How We’ll Work Together' id='animate-process-tag' />
+            <Tag label='How I Work' id='animate-process-tag' />
           </div>
           {/* the steps */}
           <ol id='process-steps' className='grid gap-4

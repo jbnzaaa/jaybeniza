@@ -88,7 +88,7 @@ const up = (i, el) => -el.offsetHeight * 1.05;
 const down = (i, el) => el.offsetHeight * 1.05;
 
 /**
- * People I’ve worked with, set as About the designer is: one review at a
+ * What others say, set as About the designer is: one review at a
  * time, large, in the full text colour, and under it who said it: their
  * picture (opening in pixels), name and role; along the foot - where
  * About has its button - the buttons to the review before and after. Not
@@ -231,7 +231,7 @@ function Testimonials({ dark = false }) {
         laptop-lg:px-[3rem] laptop-lg:py-24 laptop-lg:gap-y-12
         desktop:px-[3rem] desktop:py-28 desktop:gap-y-16`}>
         <div>
-          <Tag label='People I’ve Worked With' id='animate-testimonials-tag' />
+          <Tag label='What Others Say' id='animate-testimonials-tag' />
           {/* the reviews, one over another in one grid cell, so the room is
             the longest's - in About's face, a step smaller (.testimonial-paragraph,
             App.css), in quotation marks */}
@@ -282,8 +282,8 @@ function Testimonials({ dark = false }) {
         {/* along the foot, where About has its button: the buttons to the
           review before and after - arrows as the top bar's button has */}
         <div className='flex items-center gap-x-2 shrink-0'>
-          <Button label='Previous' icon={RiArrowLeftUpLine} onClick={() => fxGo.current(-1)} reveal='manual' id='testimonial-back' />
-          <Button label='Next' onClick={() => fxGo.current(1)} reveal='manual' id='testimonial-next' />
+          <Button label='Previous' name='Previous review' icon={RiArrowLeftUpLine} onClick={() => fxGo.current(-1)} reveal='manual' id='testimonial-back' />
+          <Button label='Next' name='Next review' onClick={() => fxGo.current(1)} reveal='manual' id='testimonial-next' />
         </div>
       </section>
     </>

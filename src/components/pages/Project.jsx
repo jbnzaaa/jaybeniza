@@ -18,7 +18,7 @@ import { pixelReveal, pixelToggle } from '../../utils/pixels'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const DESCRIPTION = 'Products I’ve taken from problem to shipped interface: research, design, and front-end build.';
+const DESCRIPTION = 'Selected work, from problem to shipped interface.';
 
 /**
  * Selected projects, on the dark surface: a list of project names set very
@@ -141,7 +141,7 @@ function Project() {
                       text-project mobile:text-title tablet:text-title'>
                       <SplitText text={project.title} id={`animate-project-${project.id}`} />
                     </span>
-                    <span className='project-label flex flex-wrap text-copy text-muted
+                    <span className='project-label shrink-0 flex flex-wrap text-copy text-muted
                       mobile:justify-start mobile:text-left
                       tablet:justify-end tablet:text-right
                       laptop:justify-end laptop:text-right

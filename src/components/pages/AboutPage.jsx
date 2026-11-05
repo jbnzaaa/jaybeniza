@@ -30,8 +30,8 @@ import { usePageTitle } from '../../utils/pageTitle'
 // experience entries below it - nothing here that they do not back up
 // the introduction: the page's first screen
 const INTRO = [
-  "I'm Jay Beniza, a UI/UX designer based in the Philippines with 3.5+ years of experience designing 14 web and mobile products for government, education, and research clients. I'm quiet by nature, so I listen closely and notice the details others pass over.",
-  'I work from research to final interface and stay close to developers through handoff, so the design survives the build. I prefer careful decisions to loud ones, and products that serve both the people who use them and the teams who build them.',
+  "I'm Jay Beniza, a UI/UX and product designer based in the Philippines with 3.5+ years of experience designing 25 web and mobile products, most for government, education, and research clients. I'm quiet by nature, so I listen closely and notice the details others pass over.",
+  'I work from research to final interface and stay close to developers through handoff, so the design survives the build.',
 ];
 
 // no word is left on its own at a line's end or start: a short word (I,
@@ -57,12 +57,12 @@ const [BEFORE, AFTER] = INTRO[0].split(NAME + ',').map((part) => part.trim());
 // my picture (public/images)
 const PORTRAIT = `${process.env.PUBLIC_URL}/images/profile.webp`;
 
-const RESUME_DESCRIPTION = 'Have a product to design or build? Start a project and tell me about it. My CV covers my experience, skills, certificates, and awards in full, or email me about a project or a role.';
+const RESUME_DESCRIPTION = 'Hiring for a UI/UX or product design role? My CV covers my experience, skills, certificates, and awards in full. Have a product to design? Start a project and tell me about it, or email me.';
 const RESUME_LINKS = [
   // first, the way to start a project: the request form (ContactPage.jsx)
   { label: 'Start a project', to: '/get-in-touch' },
   { label: 'Download CV', href: Resume, download: 'Jay-Beniza-CV.pdf' },
-  { label: 'Email me', href: 'mailto:jaysonbeniza@gmail.com' },
+  { label: 'Email', href: 'mailto:jaysonbeniza@gmail.com' },
 ];
 
 /**

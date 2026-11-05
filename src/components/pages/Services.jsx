@@ -11,6 +11,8 @@ import { pixelText, withPixels } from '../../utils/pixelText'
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// the way on to a project request
+import Button from '../common/Button'
 // the drawing beside each service, and the figures drawn for them - one
 // for each thing a service covers
 import Hairline from '../common/Hairline'
@@ -52,18 +54,18 @@ const SERVICES = [
   {
     id: 'product-design',
     title: 'UI/UX Design',
-    text: 'I design web and mobile products from research to final interface. Mapping the user flows, prototyping the key screens, and testing them with users, so problems surface before development begins.',
+    text: 'I design web and mobile products from research to final interface: mapping the user flows, prototyping the key screens, and testing every role’s flow before launch, so data stays consistent and UX issues are caught early.',
     includes: [
       { label: 'User flows', figure: route, gif: `${TENOR}4LvAD8hD5tcAAAAM/charlie-day.gif`, alt: 'Charlie Day explaining a conspiracy board' },
-      { label: 'Low to high-fidelity UI wireframes', figure: wire, gif: `${TENOR}JtzTo08HZY4AAAAM/jarvis-iron-man.gif`, alt: 'Tony Stark giving JARVIS commands' },
+      { label: 'Wireframes and high-fidelity UI', figure: wire, gif: `${TENOR}JtzTo08HZY4AAAAM/jarvis-iron-man.gif`, alt: 'Tony Stark giving JARVIS commands' },
       { label: 'Interactive prototypes', figure: proto, gif: `${TENOR}WwvFH4SrFCIAAAAM/dexters-lab-dexters-laboratory.gif`, alt: 'Dee Dee wondering what a button does' },
-      { label: 'Usability testing', figure: tasks, gif: `${TENOR}PNbVvwHpi6kAAAAM/mr-bean-takes-an-exam-mister-bean-takes-an-exam.gif`, alt: 'Mr. Bean taking an exam' },
+      { label: 'Usability and role-based testing', figure: tasks, gif: `${TENOR}PNbVvwHpi6kAAAAM/mr-bean-takes-an-exam-mister-bean-takes-an-exam.gif`, alt: 'Mr. Bean taking an exam' },
     ],
   },
   {
     id: 'design-systems',
     title: 'Design Systems',
-    text: 'I build design systems that teams can actually use: component libraries with clear states and rules, documented color and type styles, and handoff files developers can build from without guessing.',
+    text: 'I build design systems teams can use: component libraries with clear states and rules, documented color and type styles, and handoff files developers can build from without guessing.',
     includes: [
       { label: 'Component libraries', figure: rack, gif: `${TENOR}2YH2HLiOdB4AAAAM/legal-eagle-puts-on-glasses.gif`, alt: 'Putting on glasses, ready to get started' },
       { label: 'Color and typography styles', figure: ramp, gif: `${TENOR}5lLcKZgmIhgAAAAM/american-psycho-patrick-bateman.gif`, alt: 'Patrick Bateman admiring a business card' },
@@ -74,11 +76,11 @@ const SERVICES = [
   },
   {
     id: 'development',
-    title: 'Built with Claude Code',
-    text: 'I turn my Figma designs into working web and mobile apps with Claude Code, and work with developers on the technical limits. I have built 3 this way, and it cut feature development time by about 50%.',
+    title: 'Design to Code',
+    text: 'I turn my Figma designs into working web and mobile apps with Claude Code, and work with developers on the technical limits. I have built 2 apps this way: Rover and GuRover.',
     includes: [
       { label: 'React and Tailwind CSS builds', figure: atom, gif: `${TENOR}fTor6GW-vvoAAAAM/bumblebee-transformer.gif`, alt: 'Bumblebee transforming', trim: [.14, .14] },
-      { label: 'Claude Code workflows', figure: key, gif: `${TENOR}XgaU95K_XiwAAAAM/kermit-typing.gif`, alt: 'Kermit typing furiously' },
+      { label: 'AI-assisted builds with Claude Code', figure: key, gif: `${TENOR}XgaU95K_XiwAAAAM/kermit-typing.gif`, alt: 'Kermit typing furiously' },
       { label: 'Figma to front-end', figure: markup, gif: `${TENOR}31K0izlbI5cAAAAM/phineas-and-ferb-heinz-doofenschmirtz.gif`, alt: 'Doofenschmirtz building an invention, laughing' },
       { label: 'Developer reviews', figure: waves, gif: `${TENOR}vPeTGrwEZrEAAAAM/iron-man-armor.gif`, alt: 'Iron Man suiting up in the Mark 5 armor' },
       { label: 'GSAP animations', figure: ease, gif: `${TENOR}hPdjxM-fcegAAAAM/gif.gif`, alt: 'Michael Jackson leaning in Smooth Criminal' },
@@ -418,6 +420,15 @@ function Services({ detailed = false }) {
               ))}
             </div>
           </div>
+        </div>
+        {/* the way from the services to a project request */}
+        <div className='flex
+          mobile:mt-6
+          tablet:mt-8
+          laptop:mt-8
+          laptop-lg:mt-10
+          desktop:mt-10'>
+          <Button label='Start a project' to='/get-in-touch' />
         </div>
       </section>
     </>

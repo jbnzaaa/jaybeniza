@@ -179,7 +179,7 @@ function KerningTest({ onClose }) {
   const note = finished
     ? `Your average across ${ROUNDS} words, out of 100`
     : compared
-      ? `${last} out of 100 - the faint letters show where they belong`
+      ? `${last} out of 100. The faint letters show where they belong.`
       : 'Drag the letters until the spacing looks even';
 
   return (

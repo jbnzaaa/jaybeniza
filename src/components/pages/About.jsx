@@ -17,7 +17,7 @@ gsap.registerPlugin(ScrollTrigger)
 // what to take away about me, set large
 // (one paragraph per entry, each set under the one before)
 const PARAGRAPHS = [
-  'I listen more than I talk, and that shapes how I work. I watch how people use a product, find the real problem, and design the simplest interface that solves it. I also build what I designed, so the small details make it into the final product.',
+  'I watch how people use a product, find the real problem, and design the simplest interface that solves it. I also build what I designed, so the small details make it into the final product.',
 ];
 
 /**

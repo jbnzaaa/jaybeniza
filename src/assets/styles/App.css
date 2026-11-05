@@ -584,6 +584,11 @@
   cursor: pointer;
 }
 
+/* the phone's "Menu" / "Close", drawn here (Navbar.jsx) */
+* body .nav-menu-text::after {
+  content: attr(data-label);
+}
+
 * body .nav-menu-button {
   clip-path: none;
   cursor: pointer;
@@ -1313,61 +1318,20 @@
 * body .form-label {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
   padding: 0;
 }
 
-* body .form-tip {
-  position: relative;
-  display: inline-flex;
-  font-size: 1rem;
-  cursor: help;
-}
-
-* body .form-tip svg {
-  fill: var(--muted);
-  transition: fill 0.3s ease-in-out;
-}
-
-* body .form-tip:is(:hover, :focus-visible) svg {
-  fill: var(--text);
-}
-
-* body .form-tip-box {
-  position: absolute;
-  bottom: calc(100% + 0.5rem);
-  left: 0;
-  z-index: 5;
-  width: max-content;
-  max-width: min(18rem, 70vw);
-  padding: 0.5rem 0.75rem;
-  background: var(--text);
-  color: var(--ground);
+/* a field's hint, under it, a step under the label (ProjectRequest.jsx) */
+* body .form-hint {
+  font-size: clamp(12px, 11.4px + .15vw, 14px);
   line-height: 1.5;
-  clip-path: inset(100% 0% 0% 0%);
-  pointer-events: none;
-  transition: clip-path 0.3s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-* body .form-tip:is(:hover, :focus-visible) .form-tip-box {
-  clip-path: inset(0% 0% 0% 0%);
-}
-
-* body .form-tip:focus-visible {
-  outline: 1px solid var(--text);
-  outline-offset: 2px;
-}
-
-@media (max-width: 767px) {
-  * body .form-label {
-    position: relative;
-  }
-  * body .form-tip {
-    position: static;
-  }
-  * body .form-tip-box {
-    max-width: 100%;
-  }
+/* a required field's mark: a true asterisk - the text font draws it as a
+   raised dot - set off from its label */
+* body .form-required {
+  margin-left: .2em;
+  font-family: Arial, Helvetica, sans-serif;
 }
 * body .project-form :is(input:not([type=checkbox]), select, textarea) {
   width: 100%;

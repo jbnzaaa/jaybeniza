@@ -61,7 +61,7 @@ const ITEMS = [
 
 const HEADLINE_LINES = [
   'Design work,',
-  'from brief to build.',
+  'from brief to launch.',
 ];
 
 const DESCRIPTION = 'Shipped products and UX case studies: the problem, the decisions, and what came of them.';
@@ -75,7 +75,7 @@ const DESCRIPTION = 'Shipped products and UX case studies: the problem, the deci
  * under it.
  */
 function ProjectsPage() {
-  usePageTitle('Work', 'Selected UI/UX work by Jay Beniza: case studies and shipped web and mobile products for education, government and business clients.');
+  usePageTitle('Work', 'Selected UI/UX work by Jay Beniza: case studies and shipped web and mobile products for government, education, and research clients.');
 
   useEffect(() => {
     // the first screen is in view at load, so its reveal is triggered off

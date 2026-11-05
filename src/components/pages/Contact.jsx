@@ -13,7 +13,7 @@ import { TransitionLink } from '../common/PageTransition'
 
 const EMAIL = 'mailto:jaysonbeniza@gmail.com';
 
-const QUESTION = 'Have a product to design or build?';
+const QUESTION = 'Hiring a UI/UX designer, or have a product to design?';
 const SUPPORT = "Tell me what you need, and I'll reply with next steps.";
 
 // the ways through
@@ -28,14 +28,14 @@ const LINKS = [
 
 // the section's other face, on the contact page - which is itself the way
 // to get in touch, so it closes on the work instead: `to` is a route
-const PROJECTS_HEADING = 'View My Projects';
+const PROJECTS_HEADING = 'See the Work';
 const PROJECTS_TEXT = 'Not sure yet? Take your time with the work first.';
 const PROJECTS_LINKS = [
-  { label: 'All work', to: '/work' },
-  { label: 'BiteWise', to: '/bitewise' },
+  { label: 'See all work', to: '/work' },
   { label: 'GuRover', to: '/gurover' },
-  { label: 'Portfolio', to: '/portfolio-2026' },
-  { label: 'ReGain', to: '/regain' },
+  { label: 'AACCUP', to: '/aaccup' },
+  { label: 'COMELEC', to: '/comelec-acm' },
+  { label: 'Design System', to: '/pci-central-app' },
 ];
 
 // its third face, closing a project page: the next project, by name - the
@@ -50,7 +50,7 @@ const nextLinks = (next, previous, current) => [
   { label: 'Next project', to: next.path },
   ...(previous ? [{ label: `Previous: ${previous.title}`, to: previous.path }] : []),
   ...(current?.behance ? [{ label: 'Full case study on Behance', href: current.behance }] : []),
-  { label: 'All work', to: '/work' },
+  { label: 'See all work', to: '/work' },
 ];
 
 /**
@@ -58,7 +58,7 @@ const nextLinks = (next, previous, current) => [
  * two fill exactly one screen: "Drop a Message" very large on the left, and on the right a short invitation
  * over the links a recruiter looks for.
  *
- * @param {boolean} [projects] - the same screen as "View My Projects":
+ * @param {boolean} [projects] - the same screen as "See the Work":
  *   the heading, the text and the links are to the work (ContactPage.jsx)
  * @param {object} [next] - the same screen leading on to this project
  *   (its entry in projects.js): its name as the heading, and a link to it
@@ -73,7 +73,7 @@ const nextLinks = (next, previous, current) => [
  *   ask the bar to hide (data-nav-cover, Navbar.jsx)
  */
 function Contact({ page = false, projects = false, next, previous, current }) {
-  const heading = next ? next.title : projects ? PROJECTS_HEADING : 'Send Me a Message';
+  const heading = next ? next.title : projects ? PROJECTS_HEADING : 'Get in Touch';
   const text = next ? brief(next.description) : projects ? PROJECTS_TEXT : `${QUESTION} ${SUPPORT}`;
   const links = next ? nextLinks(next, previous, current) : projects ? PROJECTS_LINKS : LINKS;
   useEffect(() => {

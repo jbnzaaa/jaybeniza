@@ -8,8 +8,8 @@
 //
 // a slot with no `image` previews as a plain panel
 // the mock-ups, at card size (1200px; the project pages use the full ones)
-import p26_cover from '../../assets/files/images/portfolio/portfolio-2026-mockup-cover-card.webp'
-import bitewise_cover from '../../assets/files/images/bitewise/mockup-cover-card.webp'
+import aaccup_cover from '../../assets/files/images/aaccup/mockup-cover-card.webp'
+import comelec_cover from '../../assets/files/images/comelec/mockup-cover-card.webp'
 import gurover_cover from '../../assets/files/images/gurover/mockup-cover-card.webp'
 import pci_cover from '../../assets/files/images/pci/mockup-cover-card.webp'
 
@@ -24,30 +24,30 @@ export const PROJECT_CARDS = [
     meta: '2026 / Web/Mobile Platform',
   },
   {
+    id: 'aaccup',
+    title: 'AACCUP',
+    to: '/aaccup',
+    image: null,
+    picture: aaccup_cover,
+    category: 'Web Platform / Client Project',
+    meta: '2023 / Web Platform',
+  },
+  {
+    id: 'comelec',
+    title: 'COMELEC',
+    to: '/comelec-acm',
+    image: null,
+    picture: comelec_cover,
+    category: '3D Training Game / Client Project',
+    meta: '2025 / 3D Training Game',
+  },
+  {
     id: 'pci',
-    title: 'UI Kit',
+    title: 'Design System',
     to: '/pci-central-app',
     image: null,
     picture: pci_cover,
     category: 'Design System / Team Project',
     meta: '2024 / Design System',
-  },
-  {
-    id: 'tingi',
-    title: 'BiteWise',
-    to: '/bitewise',
-    image: null,
-    picture: bitewise_cover,
-    category: 'UX Case Study / Personal Concept',
-    meta: '2026 / UX Case Study',
-  },
-  {
-    id: 'portfoliov3',
-    title: 'Portfolio',
-    to: '/portfolio-2026',
-    image: null,
-    picture: p26_cover,
-    category: 'Portfolio Website / Personal Project',
-    meta: '2026 / Portfolio Website',
   },
 ];

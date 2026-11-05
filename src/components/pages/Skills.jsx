@@ -12,7 +12,7 @@ import sentenceCase from '../../utils/sentenceCase'
 // everything I work with, grouped by the kind of work - design first
 const GROUPS = [
   { id: 'product-design', title: 'Product Design', items: ['User Flows', 'Information Architecture', 'Interaction Design', 'Wireframing', 'Prototyping', 'High-Fidelity UI', 'Responsive Design', 'Design Systems', 'Design Handoff', 'Usability Testing'] },
-  { id: 'front-end-development', title: 'Front-End Development', items: ['HTML5', 'CSS3', 'SASS/SCSS', 'JavaScript', 'React.js', 'Bootstrap', 'Tailwind CSS'] },
+  { id: 'front-end-development', title: 'AI-Assisted Front-End', items: ['HTML5', 'CSS3', 'SASS/SCSS', 'JavaScript', 'React.js', 'Bootstrap', 'Tailwind CSS'] },
   { id: 'tools', title: 'Design & Development Tools', items: ['Figma', 'Figma AI', 'Claude Code', 'Jira', 'Adobe Photoshop', 'Adobe Illustrator', 'VS Code', 'Git'] },
   { id: 'ways-of-working', title: 'Ways of Working', items: ['Agile/Scrum', 'Cross-Functional Collaboration'] },
 ];

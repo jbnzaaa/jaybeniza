@@ -46,8 +46,10 @@ export const BUTTON_PARTS = '.split-letter, .menu-icon';
  *   a scroll trigger mis-measures); or left to the parent, which animates
  *   `#id` (the box's clip-path) and the BUTTON_PARTS inside it
  * @param {string} [id] - needed for `reveal='manual'`
+ * @param {string} [name] - a fuller accessible name than the label, when
+ *   the label alone does not say what changes (it must contain the label)
  */
-function Button({ label, to, href, external = false, download, small = false, iconOnly = false, outline = false, icon: Icon, arrow = 'down', reveal = 'scroll', id, onClick }) {
+function Button({ label, to, href, external = false, download, small = false, iconOnly = false, outline = false, icon: Icon, arrow = 'down', reveal = 'scroll', id, name, onClick }) {
   const fxButton = useRef();
 
   useEffect(() => {
@@ -94,7 +96,7 @@ function Button({ label, to, href, external = false, download, small = false, ic
 
   if (!to && !href) {
     return (
-      <button type='button' className={className} id={id} ref={fxButton} onClick={onClick}>{content}</button>
+      <button type='button' className={className} id={id} ref={fxButton} onClick={onClick} aria-label={name}>{content}</button>
     );
   }
   if (to) {

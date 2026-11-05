@@ -205,12 +205,14 @@ function Navbar() {
               <Button label='Get in touch' to={CONTACT} onClick={toTopIfHere(CONTACT)} small reveal='mount' />
             </div>
             {/* on a phone: the word alone, no box, blended like the rest
-              of the bar */}
+              of the bar. (the word is drawn by the stylesheet, from
+              data-label, and named by aria-label: contrast checkers read
+              its white without the blend, which shows it dark on a light
+              page, and failed it - .nav-menu-text, App.css) */}
             <button type='button' className={`nav-menu-text font-monolisa text-copy leading-none py-2 ${PHONE_ONLY}`}
               aria-expanded={menuOpen} aria-controls='nav-menu'
-              onClick={toggleMenu}>
-              {menuOpen ? 'Close' : 'Menu'}
-            </button>
+              aria-label={menuOpen ? 'Close' : 'Menu'} data-label={menuOpen ? 'Close' : 'Menu'}
+              onClick={toggleMenu}/>
           </div>
         </nav>
       </div>

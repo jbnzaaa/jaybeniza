@@ -1,7 +1,7 @@
 //
 import React, { useEffect, useRef, useState } from 'react'
 // icons
-import { RiArrowDownSLine, RiArrowRightDownLine, RiInformationLine } from 'react-icons/ri'
+import { RiArrowDownSLine, RiArrowRightDownLine } from 'react-icons/ri'
 // GSAP
 import gsap from 'gsap'
 // scroll reveal
@@ -29,10 +29,12 @@ const STATUS_TEXT = {
 };
 
 // what the project is
-const TYPES = ['Website', 'Web application', 'Mobile app', 'Design system', 'UX audit or redesign', 'Something else'];
+// the three ways to work with me (the landing page's Areas of Expertise),
+// each a 1 to 2 week project
+const TYPES = ['Website design and build', 'App UI design', 'Design system', 'Something else'];
 // what is wanted from me - any number of them
-const SERVICES = ['UX research', 'UI design', 'Interactive prototype', 'Design system', 'Front-end development'];
-const TIMELINES = ['As soon as possible', 'Within 1 to 3 months', 'Within 3 to 6 months', 'Flexible'];
+const SERVICES = ['UX research', 'UI design', 'Interactive prototype', 'Design system', 'AI-assisted front-end'];
+const TIMELINES = ['As soon as possible', 'Within 1–3 months', 'Within 3–6 months', 'Flexible'];
 // in Philippine pesos
 const BUDGETS = ['Under ₱25,000', '₱25,000 to ₱75,000', '₱75,000 to ₱150,000', '₱150,000 to ₱300,000', 'Over ₱300,000', 'Not sure yet'];
 
@@ -41,9 +43,9 @@ const EMPTY = {
   about: '', users: '', materials: '', timeline: TIMELINES[0], budget: BUDGETS[BUDGETS.length - 1],
 };
 
-// one labelled field: its label over whatever is put in it. a `hint` -
-// what to write there - is kept in a tooltip: an info mark beside the
-// label, which shows it under the pointer or when reached by keyboard
+// one labelled field: its label over whatever is put in it, and under it
+// its `hint` - what to write there - in the open, so it is read before the
+// field is filled in (inside the label, a screen reader reads it with it)
 // (`group` is for a field that is not one input - a dropdown: it is then a
 // plain block whose label has an id for the dropdown to be named by, not
 // a <label>, which would pass a press on any option back to the button)
@@ -52,15 +54,10 @@ function Field({ label, hint, required = false, wide = false, group, children })
   return (
     <Box className={wide ? 'form-field form-field-wide' : 'form-field'}>
       <span className='form-label text-caption text-muted' id={group}>
-        {label}{required ? ' *' : ''}
-        {hint && (
-          <span className='form-tip' tabIndex={0} aria-label={hint}>
-            <RiInformationLine aria-hidden='true'/>
-            <span className='form-tip-box text-caption' role='tooltip'>{hint}</span>
-          </span>
-        )}
+        {label}{required && <span className='form-required' aria-hidden='true'>*</span>}
       </span>
       {children}
+      {hint && <span className='form-hint text-muted'>{hint}</span>}
     </Box>
   )
 }
@@ -184,7 +181,7 @@ function ProjectRequest() {
       '',
       `Project type: ${form.type}`,
       `Services needed: ${form.services.join(', ') || '-'}`,
-      `Timeline: ${form.timeline}`,
+      `Preferred start: ${form.timeline}`,
       `Budget: ${form.budget}`,
       '',
       'About the project:',
@@ -267,12 +264,12 @@ function ProjectRequest() {
             <Field label='Company or organization'>
               <input type='text' name='company' autoComplete='organization' value={form.company} onChange={set('company')} />
             </Field>
-            <Field label='Project type' required group='request-type'>
+            <Field label='Project type' required group='request-type' hint='Most projects take 1–2 weeks.'>
               <Select labelId='request-type' options={TYPES} value={form.type} onChange={choose('type')} />
             </Field>
             {/* what is wanted from me - a group of its own, not one field */}
             <fieldset className='form-field form-field-wide'>
-              <legend className='form-label text-caption text-muted'>What you need from me</legend>
+              <legend className='form-label text-caption text-muted'>What you need from me (choose any)</legend>
               <div className='form-checks'>
                 {/* each a box like a section label, filled when picked.
                   the checkbox itself is kept for the keyboard and for
@@ -294,7 +291,7 @@ function ProjectRequest() {
             <Field label='Existing materials' wide hint='Links to a current site or app, brand guide, designs, or references you like.'>
               <textarea name='materials' rows='2' value={form.materials} onChange={set('materials')} />
             </Field>
-            <Field label='Timeline' group='request-timeline'>
+            <Field label='When do you want to start?' group='request-timeline'>
               <Select labelId='request-timeline' options={TIMELINES} value={form.timeline} onChange={choose('timeline')} />
             </Field>
             <Field label='Budget' group='request-budget'>
