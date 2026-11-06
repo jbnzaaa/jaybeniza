@@ -7,6 +7,8 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 import { scrollRevealSequence, refreshSoon, CARD_AT, REVERSE_AT } from '../../utils/scrollReveal'
 // a service's name and description open in pixels as their letters rise
 import { pixelText, withPixels } from '../../utils/pixelText'
+// a service's gif opens in square pixels
+import { pixelReveal } from '../../utils/pixels'
 // section label
 import Tag from '../common/Tag'
 // per-letter text split
@@ -130,6 +132,15 @@ function ServicePanel({ id, title, text, emphasis, includes, detailed, active, d
   // place afterwards is simply there
   const [swapped, setSwapped] = useState(false);
   const { figure, gif, alt, trim } = includes[shown];
+  // the gif opens in square pixels, from its foot up, as the service comes
+  // in and again each time a row puts another in its place
+  const fxGif = useRef();
+  useEffect(() => {
+    if (!gif || !fxGif.current || !(drawn || swapped)) return undefined;
+    const tween = pixelReveal(fxGif.current, { duration: .7, ease: 'power1.out' });
+    return () => tween.kill();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [drawn, shown]);
   const show = (i) => {
     if (i !== shown) setSwapped(true);
     setShown(i);
@@ -204,7 +215,7 @@ function ServicePanel({ id, title, text, emphasis, includes, detailed, active, d
               halftone dots; faded in with the panel's text, and only
               fetched while its service is the one on screen (.service-gif,
               App.css) */
-            <div className={`service-gif ${drawn || swapped ? 'service-gif-on' : ''}`}>
+            <div className={`service-gif ${drawn || swapped ? 'service-gif-on' : ''}`} ref={fxGif}>
               {active && <HalftoneGif src={gif} alt={alt} trim={trim} key={gif} />}
             </div>
           ) : (
@@ -276,12 +287,15 @@ function Services({ detailed = false }) {
       { targets: inner, vars: { yPercent: 0, scale: 1, ease: 'power2.out', duration: WIPE }, position: '<' },
       { targets: card, vars: { duration: .01, onComplete: () => setOpen(true), onReverseComplete: () => setOpen(false) }, position: WIPE * .35 },
     ], { trigger: card, start: CARD_AT, reverseStart: REVERSE_AT });
-    // the section is held at the top of the screen while the services
-    // are scrolled through: the scroll picks whose turn it is
+    // the section is held while the services are scrolled through: the
+    // scroll picks whose turn it is. it is held from when its top reaches
+    // the top; where it is taller than the screen (a phone, the figure
+    // under the text), from when its foot reaches the foot instead, so
+    // all of the card and the button below it are on screen while held
     const n = SERVICES.length;
     const pin = ScrollTrigger.create({
       trigger: section,
-      start: 'top top',
+      start: () => (section.offsetHeight > window.innerHeight ? 'bottom bottom' : 'top top'),
       end: () => `+=${Math.round(window.innerHeight * STEP_SCROLL * n)}`,
       pin: true,
       invalidateOnRefresh: true,
