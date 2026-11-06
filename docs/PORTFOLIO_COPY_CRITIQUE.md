@@ -318,7 +318,7 @@ Your current line, "I pay attention to what others might overlook.", is an accep
 | 3 | Services | Complete | 2 | 0 |
 | 4 | Case-study polish | Complete | 4 | 0 |
 | 5 | Outcomes and reasoning | Complete | 4 | 0 |
-| 6 | Verify and ship | Not started | 3 | 0 |
+| 6 | Verify and ship | In progress | 3 | 0 |
 
 ### Phase 1 — Decisions
 
@@ -370,6 +370,6 @@ These need facts from you. Nothing is written without them.
 
 | ID | Step | Status |
 |---|---|---|
-| 6-1 | Lint and production build | Open |
+| 6-1 | Lint and production build | Done: build compiles, no ESLint warnings |
 | 6-2 | Check every changed page on localhost, desktop and phone (hero line length, Process card text fit) | Open |
-| 6-3 | Commit and push to master after your approval. This includes the 11 fixes from `CONTENT_QUALITY_AUDIT.md` that are still uncommitted. | Open |
+| 6-3 | Commit and push to master after your approval. This includes the 11 fixes from `CONTENT_QUALITY_AUDIT.md` that are still uncommitted. | Committed; push waits on 6-2 |
