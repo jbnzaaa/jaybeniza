@@ -14,7 +14,7 @@ import SplitText from '../common/SplitText'
 // the site's reveals: in their turn, from where everything is revealed
 import { inTurn, revealTrigger, REVEAL_AT } from '../../utils/scrollReveal'
 // the pictures open in pixels
-import { pixelToggle } from '../../utils/pixels'
+import { blockToggle } from '../../utils/pixels'
 // and the reviews open in pixels as their words rise
 import { pixelText, withPixels } from '../../utils/pixelText'
 // their pictures - small square crops of the photographs in /reference
@@ -114,11 +114,13 @@ function Testimonials({ dark = false }) {
     const people = captions.map((caption) => caption.querySelectorAll('.split-letter'));
     const masks = words.map((list) => pixelText(list));
     const nameMasks = people.map((list) => pixelText(list));
-    // their pictures open and shut in pixels, as the site's pictures do
-    // (pixels.js) - each shut until its review comes in
+    // the back and next buttons' labels, by their blocks
+    const buttonParts = section.querySelectorAll(`#testimonial-back :is(${BUTTON_PARTS}), #testimonial-next :is(${BUTTON_PARTS})`);
+    const buttonMask = pixelText(buttonParts);
+    // their pictures open and shut by a block, as the titles do
+    // (pixels.js) - each away until its review comes in
     const pictures = captions.map((caption) => caption.querySelector('.testimonial-avatar'));
-    gsap.set(pictures, { clipPath: 'inset(100% 0% 0% 0%)' });
-    const avatars = pictures.map((picture) => pixelToggle(picture));
+    const avatars = pictures.map((picture) => blockToggle(picture));
     const count = quotes.length;
     // (who said the first is there with it; the rest wait out of sight)
     gsap.set(captions.slice(1), { autoAlpha: 0 });
@@ -194,7 +196,7 @@ function Testimonials({ dark = false }) {
       // wiping open as every button's does (Button.jsx)
       .call(() => avatars[0].show(.6), null, '<')
       .to(['#testimonial-back', '#testimonial-next'], { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .5, stagger: .08 }, '<')
-      .to(section.querySelectorAll(`#testimonial-back :is(${BUTTON_PARTS}), #testimonial-next :is(${BUTTON_PARTS})`), { y: 0, ease: 'power1.in', duration: .4, stagger: .02 }, '<.2')
+      .to(buttonParts, withPixels({ y: 0, ease: 'power1.in', duration: .4, stagger: .02 }, buttonMask), '<.2')
       .call(() => wait());
     const turn = inTurn(rise, quotes[0]);
     const trigger = revealTrigger(quotes[0], REVEAL_AT, turn);
@@ -217,7 +219,8 @@ function Testimonials({ dark = false }) {
       gsap.set([...words, ...people].flatMap((list) => [...list]), { clearProps: 'transform' });
       gsap.set(captions, { clearProps: 'opacity,visibility' });
       avatars.forEach((avatar) => avatar.kill());
-      [...masks, ...nameMasks].forEach((mask) => mask?.clear());
+      [...masks, ...nameMasks, buttonMask].forEach((mask) => mask?.clear());
+      avatars.forEach((avatar) => avatar.kill());
       gsap.set(pictures, { clearProps: 'clipPath' });
     };
   }, []);

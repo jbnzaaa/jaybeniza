@@ -14,7 +14,7 @@ import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 // scroll reveal
 import { scrollReveal, scrollRevealSequence } from '../../utils/scrollReveal'
 // my picture opens in pixels
-import { pixelToggle } from '../../utils/pixels'
+import { wipeToggle } from '../../utils/pixels'
 // the site's section label
 import Tag from '../common/Tag'
 // per-letter text split
@@ -93,7 +93,7 @@ function AboutPage() {
     const toY = gsap.quickTo(portrait, 'y', { duration: .35, ease: 'power3.out' });
     let open = false;
     // (it opens and shuts in pixels - pixels.js)
-    const pixels = pixelToggle(portrait);
+    const pixels = wipeToggle(portrait);
 
     // its middle on a point of the screen (`jump`: there at once, for
     // when it opens)

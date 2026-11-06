@@ -8,7 +8,7 @@ import { scrollRevealSequence, refreshSoon, CARD_AT, REVERSE_AT } from '../../ut
 // a service's name and description open in pixels as their letters rise
 import { pixelText, withPixels } from '../../utils/pixelText'
 // a service's gif opens in square pixels
-import { pixelReveal } from '../../utils/pixels'
+import { wipeReveal } from '../../utils/pixels'
 // section label
 import Tag from '../common/Tag'
 // per-letter text split
@@ -132,13 +132,17 @@ function ServicePanel({ id, title, text, emphasis, includes, detailed, active, d
   // place afterwards is simply there
   const [swapped, setSwapped] = useState(false);
   const { figure, gif, alt, trim } = includes[shown];
-  // the gif opens in square pixels, from its foot up, as the service comes
-  // in and again each time a row puts another in its place
+  // the gif opens as the Work page's covers do, as the service comes in
+  // and again each time a row puts another in its place: its frame wipes
+  // open from its bottom edge while the picture inside, slightly large and
+  // low, eases down to size
   const fxGif = useRef();
   useEffect(() => {
     if (!gif || !fxGif.current || !(drawn || swapped)) return undefined;
-    const tween = pixelReveal(fxGif.current, { duration: .7, ease: 'power1.out' });
-    return () => tween.kill();
+    const picture = fxGif.current.firstElementChild;
+    const tl = gsap.timeline().add(wipeReveal(fxGif.current, { duration: 1 }), 0);
+    if (picture) tl.fromTo(picture, { yPercent: 14, scale: 1.15 }, { yPercent: 0, scale: 1, ease: 'power2.out', duration: 1.2 }, 0);
+    return () => tl.kill();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drawn, shown]);
   const show = (i) => {

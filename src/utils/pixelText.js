@@ -1,130 +1,250 @@
 import gsap from 'gsap';
 
-// ---- text opened in pixels
-// every piece of split text (SplitText) - a headline, a paragraph, a
-// button's label, a tag, a link - opens as square pixels of itself while
-// its letters rise into their lines, as the pictures and the loading
-// screen do (pixels.js). the rise is untouched - it is the motion; the
-// pixels are laid over it, one mask to a word: the word's own clip box
-// (.split-letter-clip) takes a clip-path of square cells, switched on
-// from left to right with some chance as the word's letters rise. it is
-// the word's box and not the block's, so a button or a tag - whose own
-// box has a wipe of its own - opens the same way as a paragraph
+// ---- how split text (SplitText) opens
+// two ways, by what the text is:
+// - a title (inside .font-flexible) opens behind solid blocks, one to each
+//   line it is set on: a line's block grows across the whole line from
+//   its left, in the colour opposite the section's ground (the site's
+//   black on a light section, its white on a dark one), hiding it; then
+//   the block shrinks toward the line's right end, and the line is
+//   uncovered from the left as it goes. taken away, it runs the same way
+//   and leaves the line empty. the lines follow one another down the
+//   title. a line's letters hold still in it while it is blocked
+//   (App.css .split-block): the block is the motion. its lines are found
+//   where the words wrap, measured when it first runs and again if its
+//   box has changed size since
+// - everything else - body copy, the top bar, buttons, tags, labels -
+//   simply rises into its lines, word by word (or letter by letter, for
+//   a short label), out of its clip boxes: nothing is laid over it
 
-// a pixel's side, as a share of the text's size - a few to a letter's
-// height - and never under or over these, in CSS pixels
-const CELL_SHARE = 1 / 2.6;
-const CELL_MIN = 4;
-const CELL_MAX = 36;
-// how much of a pixel's turn is set by its place and how much is chance
-const ORDER = .55;
-// how far into the reveal a word's pixels take to open, past its own
-// share of the letters - about the time one letter takes to rise, so a
-// word is all open just as its last letter is in
-const SPREAD = .25;
-const SHUT = 'inset(100% 0% 0% 0%)';
-
-// a word can only be opened by one reveal at a time: two writing its
-// clip-path would fight over it
-const claimed = new WeakSet();
-const reduced = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-
-// a word's pixels, at a point of its opening (0 shut, 1 open)
-function wordClipper(el) {
-  let rows = null;
-  let measured = '';
-  let size = 0;
-  const measure = () => {
-    const width = el.offsetWidth;
-    const height = el.offsetHeight;
-    if (rows && measured === `${width}x${height}`) return;
-    measured = `${width}x${height}`;
-    const font = parseFloat(getComputedStyle(el).fontSize) || 16;
-    size = Math.round(gsap.utils.clamp(CELL_MIN, CELL_MAX, font * CELL_SHARE));
-    // (a cell over each edge, for the letters that reach past the box)
-    const cols = Math.ceil(width / size) + 2;
-    const count = Math.ceil(height / size) + 2;
-    rows = [];
-    for (let r = 0; r < count; r += 1) {
-      const row = [];
-      // left to right, as the word is read and its letters rise
-      for (let c = 0; c < cols; c += 1) row.push((c / cols) * ORDER + Math.random() * (1 - ORDER));
-      rows.push(row);
-    }
-  };
-  return (at) => {
-    if (at >= 1) { el.style.clipPath = ''; return; }
-    if (at <= 0) { el.style.clipPath = SHUT; return; }
-    measure();
-    // the cells that are on, a row at a time, each run of them one rect
-    let d = '';
-    rows.forEach((row, r) => {
-      const y = (r - 1) * size;
-      let start = -1;
-      for (let c = 0; c <= row.length; c += 1) {
-        const on = c < row.length && row[c] < at;
-        if (on && start < 0) start = c;
-        if (!on && start >= 0) {
-          // (a hair over a cell so no seam shows)
-          const w = (c - start) * size + .5;
-          d += `M${(start - 1) * size} ${y}h${w}v${size + .5}h${-w}z`;
-          start = -1;
-        }
-      }
-    });
-    el.style.clipPath = d ? `path('${d}')` : SHUT;
-  };
-}
+// ---- the blocks (titles)
+// a title's blocks keep their own time, the same for every title on the
+// site whatever reveal sets them off: started as the reveal starts (and
+// taken away as it goes back), each line's block covers it over
+// COVER_TIME and uncovers it, more slowly, over UNCOVER_TIME, each line
+// LINE_STAGGER after the one above
+const COVER_TIME = .4;
+const UNCOVER_TIME = .75;
+const LINE_STAGGER = .14;
+// (the share of a line's turn its block takes to cover it)
+const COVER = COVER_TIME / (COVER_TIME + UNCOVER_TIME);
+const GROW = gsap.parseEase('power2.out');
+const SHRINK = gsap.parseEase('power2.inOut');
+const BLACK = '#1B1A1A';
+const WHITE = '#E5E4E3';
 
 /**
- * The pixels for some split letters (SplitText): one mask on each word
- * they are in, opened as that word's letters rise - each over its own
- * share of the reveal, so the pixels run through a line with the rise.
+ * The block colour for what is set on some ground: the site's white for
+ * light text, its black for dark - the colour opposite the ground.
  *
- * @param {string|Element|Element[]|NodeList} targets - the letters
- * @returns {{set: (progress: number) => void, clear: () => void} | null} -
- *   `set` takes how far the letters' reveal is (0 to 1); `clear` takes the
- *   pixels off. null when there are no words to open (or motion is reduced)
+ * @param {Element} el - the text, or what it sits in
+ * @returns {string}
  */
-export function pixelText(targets) {
-  if (reduced()) return null;
-  // (only split letters: a reveal of anything else is left as it is)
-  const letters = gsap.utils.toArray(targets).filter((el) => el.classList?.contains('split-letter'));
-  const n = letters.length;
-  const words = new Map();
-  letters.forEach((letter, i) => {
-    const word = letter.closest('.split-letter-clip');
-    if (!word) return;
-    const span = words.get(word);
-    if (span) span.last = i;
-    else if (!claimed.has(word)) words.set(word, { first: i, last: i });
+export function blockColour(el) {
+  const [r, g, b] = (getComputedStyle(el).color.match(/[\d.]+/g) || [0, 0, 0]).map(Number);
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255 > .5 ? WHITE : BLACK;
+}
+
+// a title's word can only be opened by one reveal at a time: two
+// writing its block would fight over it
+const claimed = new WeakSet();
+
+// an element's place on the page as laid out - transforms (a card easing
+// to size, the smoothed scroll) left out
+function placeOf(el) {
+  let x = 0;
+  let y = 0;
+  for (let at = el; at; at = at.offsetParent) {
+    x += at.offsetLeft;
+    y += at.offsetTop;
+  }
+  return { x, y };
+}
+
+// the element a line's block is laid in: the words' own box, or the
+// nearest one around it that is not inline
+function holderOf(el) {
+  let at = el;
+  while (at && getComputedStyle(at).display.startsWith('inline')) at = at.parentElement;
+  return at || el;
+}
+
+// the blocks for a title's words: one to a line
+function lineBlocks(words) {
+  words.forEach((_, word) => {
+    word.classList.add('split-block');
+    word.style.setProperty('--letters', 0);
   });
-  if (!words.size) return null;
-  const masks = [...words].map(([word, { first, last }]) => {
-    claimed.add(word);
-    return { word, set: wordClipper(word), from: first / n, span: (last + 1 - first) / n + SPREAD };
-  });
-  const set = (progress) => masks.forEach((mask) => {
-    // (the reveal's whole length is stretched by the spread, so the last
-    // word is all open by its end too)
-    mask.set(gsap.utils.clamp(0, 1, (progress * (1 + SPREAD) - mask.from) / mask.span));
-  });
-  set(0);
+
+  // the lines: the words grouped by the box they are laid in and how far
+  // down it they sit
+  let lines = null;
+  let measured = '';
+  const measure = () => {
+    const first = words.keys().next().value;
+    const holder = holderOf(first.parentElement);
+    const key = `${holder.offsetWidth}x${holder.offsetHeight}`;
+    if (lines && key === measured) return;
+    measured = key;
+    const old = lines;
+    const byBox = new Map();
+    words.forEach(({ first: a, last: b }, word) => {
+      const box = holderOf(word.parentElement);
+      const place = placeOf(word);
+      const id = Math.round(place.y);
+      if (!byBox.has(box)) byBox.set(box, new Map());
+      const rows = byBox.get(box);
+      const row = rows.get(id) || { words: [], first: a, last: b, left: Infinity, right: -Infinity, top: Infinity, bottom: -Infinity };
+      row.words.push(word);
+      row.first = Math.min(row.first, a);
+      row.last = Math.max(row.last, b);
+      row.left = Math.min(row.left, place.x);
+      row.right = Math.max(row.right, place.x + word.offsetWidth);
+      row.top = Math.min(row.top, place.y);
+      row.bottom = Math.max(row.bottom, place.y + word.offsetHeight);
+      rows.set(id, row);
+    });
+    lines = [];
+    byBox.forEach((rows, box) => {
+      if (getComputedStyle(box).position === 'static') box.style.position = 'relative';
+      const origin = placeOf(box);
+      rows.forEach((row) => {
+        const block = document.createElement('span');
+        block.className = 'split-line-block';
+        block.setAttribute('aria-hidden', 'true');
+        Object.assign(block.style, {
+          top: `${row.top - origin.y - box.clientTop}px`,
+          left: `${row.left - origin.x - box.clientLeft}px`,
+          width: `${row.right - row.left}px`,
+          height: `${row.bottom - row.top}px`,
+          background: blockColour(row.words[0]),
+        });
+        box.appendChild(block);
+        lines.push({
+          words: row.words,
+          block,
+          shown: null,
+        });
+      });
+    });
+    old?.forEach((line) => line.block.remove());
+  };
+
+  // a line's block at a point of its turn. opening (t, 0 shut to 1 open)
+  // and taking away (u, 0 shown to 1 gone) run the same way: the block
+  // grows across the line from its left, then shrinks toward its right -
+  // uncovering the line when opening, leaving it empty when taking it
+  // away. (played backwards, an opening ran its block back from the right)
+  const draw = (line, t, hiding = false, u = 0) => {
+    const k = hiding ? u : t;
+    const shown = hiding ? u < COVER : t >= COVER;
+    if (shown !== line.shown) {
+      line.words.forEach((word) => word.style.setProperty('--letters', shown ? 1 : 0));
+      line.shown = shown;
+    }
+    if (k <= 0 || k >= 1) {
+      line.block.style.display = 'none';
+      return;
+    }
+    // covering, it grows from the line's left end; uncovering, it shrinks
+    // into its right end. (scaled, not resized: a transform moves nothing
+    // else on the page and costs no layout - its left and width, changed
+    // each frame, counted as layout shifts)
+    const covering = k < COVER;
+    Object.assign(line.block.style, {
+      display: 'block',
+      transformOrigin: covering ? 'left center' : 'right center',
+      transform: `scaleX(${covering ? GROW(k / COVER) : 1 - SHRINK((k - COVER) / (1 - COVER))})`,
+    });
+  };
+
+  // the blocks played on their own time: opening, or taking away - the
+  // lines in reading order either way, the first first
+  let mode = 'hidden';
+  let tl = null;
+  const play = (showing) => {
+    measure();
+    tl?.kill();
+    mode = showing ? 'showing' : 'hiding';
+    tl = gsap.timeline({ onComplete: () => { mode = showing ? 'shown' : 'hidden'; } });
+    lines.forEach((line, i) => {
+      const turn = { k: 0 };
+      tl.to(turn, {
+        k: 1,
+        duration: COVER_TIME + UNCOVER_TIME,
+        ease: 'none',
+        onUpdate: () => (showing ? draw(line, turn.k) : draw(line, 0, true, turn.k)),
+      }, i * LINE_STAGGER);
+    });
+  };
+
+  // which way the reveal is going: on toward open starts the opening, back
+  // toward shut the taking away
+  let last = 0;
   return {
-    set,
+    set(progress) {
+      const was = last;
+      last = progress;
+      if (!lines && progress <= 0) {
+        // (nothing to show before it starts: the words are hidden already)
+        words.forEach((_, word) => word.style.setProperty('--letters', 0));
+        return;
+      }
+      if (progress > was && (mode === 'hidden' || mode === 'hiding')) play(true);
+      else if (progress < was && (mode === 'shown' || mode === 'showing')) play(false);
+    },
     clear() {
-      masks.forEach((mask) => {
-        mask.set(1);
-        claimed.delete(mask.word);
+      tl?.kill();
+      lines?.forEach((line) => line.block.remove());
+      lines = null;
+      words.forEach((_, word) => {
+        word.classList.remove('split-block');
+        word.style.removeProperty('--letters');
       });
     },
   };
 }
 
 /**
- * A tween's vars with its letters' pixels laid over it: the mask follows
+ * How some split letters (SplitText) open: a title's by blocks, a line at
+ * a time, each line over its own share of the reveal, so they run down the
+ * title in order. Any other text is left to its rise.
+ *
+ * @param {string|Element|Element[]|NodeList} targets - the letters
+ * @returns {{set: (progress: number) => void, clear: () => void, slow: boolean} | null} -
+ *   `set` takes how far the letters' reveal is (0 to 1); `clear` takes the
+ *   blocks off; `slow` says a title is among them, whose blocks want a
+ *   longer reveal (scrollReveal.js). null when there is no title to open
+ */
+export function pixelText(targets) {
+  // (only split letters: a reveal of anything else is left as it is)
+  const letters = gsap.utils.toArray(targets).filter((el) => el.classList?.contains('split-letter'));
+  const titles = new Map();
+  letters.forEach((letter, i) => {
+    const word = letter.closest('.split-letter-clip');
+    if (!word || !word.closest('.font-flexible') || word.closest('.cta-button')) return;
+    const span = titles.get(word);
+    if (span) span.last = i;
+    else if (!claimed.has(word)) titles.set(word, { first: i, last: i });
+  });
+  if (!titles.size) return null;
+  titles.forEach((_, word) => claimed.add(word));
+  const blocks = lineBlocks(titles);
+  blocks.set(0);
+  return {
+    set: blocks.set,
+    slow: true,
+    clear() {
+      blocks.clear();
+      titles.forEach((_, word) => claimed.delete(word));
+    },
+  };
+}
+
+/**
+ * A tween's vars with its letters' blocks run by it: the blocks follow
  * the tween's progress, forward and back. With `out`, the tween takes the
- * letters away, and the pixels shut as it plays.
+ * letters away, and the blocks cover them again as it plays.
  *
  * @param {object} vars - the tween's vars
  * @param {{set: Function} | null} mask - from pixelText

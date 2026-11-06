@@ -203,14 +203,22 @@ function App() {
   }, []);
 
   // the other pages, fetched in the background once the page is up and
-  // the browser is idle (PAGES, above)
+  // has settled - its first screen drawn and the rest of the landing page
+  // set (Home.jsx) - and then when the browser is idle (PAGES, above).
+  // (fetched as soon as the browser was first idle, their code - every
+  // project's content among it - was run while the first screen was still
+  // waiting to be drawn)
   useEffect(() => {
     if (!entered) return undefined;
     const fetchAll = () => Object.values(PAGES).forEach((page) => page().catch(() => {}));
     const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1500));
     const cancel = window.cancelIdleCallback || clearTimeout;
-    const id = idle(fetchAll);
-    return () => cancel(id);
+    let id;
+    const timer = setTimeout(() => { id = idle(fetchAll); }, 3000);
+    return () => {
+      clearTimeout(timer);
+      if (id) cancel(id);
+    };
   }, [entered]);
 
   // letter-roll hover on every text link and button

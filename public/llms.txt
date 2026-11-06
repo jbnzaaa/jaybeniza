@@ -1,0 +1,32 @@
+# Jay Beniza
+
+> UI/UX and product designer based in the Philippines, with 3.5+ years of experience designing 24 web and mobile products for government, education, and research clients. Builds Figma design systems and AI-assisted front-ends with Claude Code.
+
+This is Jay Beniza's portfolio. It shows case studies of selected work, an archive of earlier explorations, an about page with experience and skills, and a project request form for clients.
+
+## Pages
+
+- [Home](https://jaybeniza.vercel.app/): introduction, featured work, areas of expertise, process, and testimonials
+- [Work](https://jaybeniza.vercel.app/work): all case studies
+- [Archive](https://jaybeniza.vercel.app/archive): earlier projects and design explorations
+- [About](https://jaybeniza.vercel.app/about): background, work experience, skills, certificates and awards
+- [Get in Touch](https://jaybeniza.vercel.app/get-in-touch): project request form
+
+## Case studies
+
+- [Portfolio](https://jaybeniza.vercel.app/portfolio-2026)
+- [BiteWise](https://jaybeniza.vercel.app/bitewise)
+- [GuRover](https://jaybeniza.vercel.app/gurover)
+- [COMELEC ACM](https://jaybeniza.vercel.app/comelec-acm)
+- [PSGS](https://jaybeniza.vercel.app/psgs)
+- [AACCUP](https://jaybeniza.vercel.app/aaccup)
+- [DOST ARISE](https://jaybeniza.vercel.app/dost-arise)
+- [DOST Courseware](https://jaybeniza.vercel.app/dost-courseware)
+- [PCI Central App](https://jaybeniza.vercel.app/pci-central-app)
+
+## Services
+
+- UI/UX and product design for web and mobile
+- Design systems and UI kits in Figma
+- Prototyping and usability testing
+- Working front-ends built with Claude Code

@@ -16,28 +16,11 @@
   font-weight: 100 900;
   font-display: swap;
 }
-/* headlines (font-flexible) - Ayr Garon, one bold weight */
-@font-face {
-  font-family: "Ayr Garon";
-  src: url("../fonts/AyrGaron-Bold.otf") format("opentype");
-  font-weight: 100 900;
-  font-display: swap;
-}
-/* emphasis in titles (.split-emphasis, .split-pixel) - Jersey 10, a
-   heavy pixel face, one weight, Latin only (OFL), slanted by transform (it has no italic) */
-@font-face {
-  font-family: "Jersey 10";
-  src: url("../fonts/Jersey10-Regular.woff2") format("woff2");
-  font-weight: 100 900;
-  font-display: swap;
-}
-/* text content - Gilgan, one regular weight */
-@font-face {
-  font-family: "Gilgan";
-  src: url("../fonts/Gilgan-Regular.otf") format("opentype");
-  font-weight: 100 900;
-  font-display: swap;
-}
+/* the faces the first screen needs - Ayr Garon (headlines,
+   font-flexible), Gilgan (text content) and Jersey 10 (emphasis in
+   titles) - are declared in public/index.html, from public/fonts, where
+   they are preloaded with the page: declared here, they were found only
+   once this stylesheet had loaded */
 @media (min-width: 1536px) {
   html {
     font-size: 1.0416666667vw;
@@ -387,13 +370,15 @@
     opacity: 1;
   }
 }
-/* every project's preview the one size, centred across the row at
-   `left` (Project.jsx) */
+/* every project's preview the one shape, fitted between the names and
+   the labels (Project.jsx) */
 * body .project-preview {
   display: none;
   position: absolute;
   top: 0;
-  left: 68%;
+  /* left and width set in the clear space between the names and the
+     labels (Project.jsx) */
+  left: 60%;
   width: 26vw;
   aspect-ratio: 16/10;
   pointer-events: none;
@@ -473,14 +458,16 @@
 /* a service's gif, in the drawing's place (Services.jsx): the card's full
    height and its column's full width, no padding round it - laid over the
    column from laptop width up, where the text beside it sets the height;
-   stacked below it, at 4:3. faded in as its service comes in. it is drawn
-   in halftone dots on a canvas (HalftoneGif.jsx) */
+   stacked below it, at 4:3. shown as its service comes in. it is drawn
+   in halftone dots on a canvas (HalftoneGif.jsx); opened in pixels as the
+   Work page's covers are (Services.jsx) */
 * body .service-gif {
   position: relative;
   width: 100%;
   aspect-ratio: 4/3;
+  overflow: hidden;
+  background-color: #1B1A1A;
   opacity: 0;
-  transition: opacity 0.6s ease;
 }
 
 @media (min-width: 1024px) {
@@ -760,6 +747,23 @@
 
 * body .font-flexible .split-letter {
   transform: translateY(1.35em);
+}
+
+/* the block reveal of titles (pixelText.js): a line under its block keeps its
+   letters still - shown or hidden whole (--letters) - while a block in
+   the colour opposite the ground covers the whole line and then shrinks
+   toward its right end, uncovering it (.split-line-block, placed and
+   sized from pixelText.js) */
+* body .split-block .split-letter {
+  transform: none !important;
+  opacity: var(--letters, 1);
+}
+
+* body .split-line-block {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* a title's emphasised words and letters (SplitText `emphasis`): the
@@ -1370,6 +1374,9 @@
 * body .work-cover,
 * body .project-cover {
   clip-path: inset(100% 0% 0% 0%);
+  /* the site's black behind the picture: what shows round it while it
+     eases to size, as the pixels opening it are */
+  background-color: #1B1A1A;
 }
 
 * body .work-cover-image {

@@ -14,9 +14,11 @@ import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
 // the part of a project's title set in the pixel face
-import { titleEmphasis } from './projects/projects'
+import { titleEmphasis } from './projects/emphasis'
 // the pictures open in pixels
-import { pixelReveal, pixelToggle } from '../../utils/pixels'
+import { wipeReveal, wipeToggle } from '../../utils/pixels'
+// the empty cover's words, by their blocks
+import { pixelText, withPixels } from '../../utils/pixelText'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -47,32 +49,38 @@ function Project() {
     const description = scrollReveal('#animate-project', { y: 0, stagger: .02, ease: 'power1.in' });
 
     // the preview is placed across the row by its centre (left, App.css)
-    gsap.set(fxPreview.current, { xPercent: -50 });
-    fxPixels.current = pixelToggle(fxPreview.current);
+    // (placed in the clear space between the names and the labels - show)
+    // (it wipes open from its bottom edge, and shut again)
+    fxPixels.current = wipeToggle(fxPreview.current);
 
 
     // below laptop width, each row's cover as it comes up the screen: its
-    // frame opens in pixels from its bottom edge up while the picture inside,
+    // frame wipes open from its bottom edge up while the picture inside,
     // which starts slightly large and low, eases down to size - the work
     // page's card reveal
     const pictures = gsap.set(gsap.utils.toArray('.project-cover-image', fxList.current), { yPercent: 14, scale: 1.15 });
     // (each in its turn among the page's reveals - scrollReveal.js)
     const covers = gsap.utils.toArray('.project-cover', fxList.current).map((cover) => {
+      // (an empty cover's words come in by their blocks once it is open)
+      const words = cover.querySelectorAll('.split-letter');
+      const mask = words.length ? pixelText(words) : null;
       const open = gsap.timeline({ paused: true })
-        .add(pixelReveal(cover, { duration: 1 }), 0)
+        .add(wipeReveal(cover, { duration: 1 }), 0)
         .to(cover.firstElementChild, { yPercent: 0, scale: 1, ease: 'power2.out', duration: 1.2 }, 0);
+      if (words.length) open.to(words, withPixels({ y: 0, duration: .5, stagger: { amount: .3 }, ease: 'power1.in' }, mask), .9);
       const turn = inTurn(open, cover);
       const trigger = revealTrigger(cover, REVEAL_AT, turn);
-      return { open, turn, trigger };
+      return { open, turn, trigger, mask };
     });
 
     return () => {
       rows.forEach((row) => row.kill());
       description.kill();
-      covers.forEach(({ open, turn, trigger }) => {
+      covers.forEach(({ open, turn, trigger, mask }) => {
         trigger.kill();
         turn.kill();
         open.revert();
+        mask?.clear();
       });
       pictures.revert();
       fxPixels.current?.kill();
@@ -85,23 +93,41 @@ function Project() {
   // while it is open, it shuts in pixels on the one project, and opens
   // again on the next; leaving the list closes it
   const fxOn = useRef(null);
+  // where the preview can go without covering any name or label: the
+  // space right of the longest name and left of the widest label, its
+  // width filling that space up to its own (App.css); no room, no preview
+  const fit = () => {
+    const list = fxList.current;
+    const preview = fxPreview.current;
+    const box = list.getBoundingClientRect();
+    const right = Math.max(...[...list.querySelectorAll('.project-name')].map((el) => el.getBoundingClientRect().right));
+    const left = Math.min(...[...list.querySelectorAll('.project-label')].map((el) => el.getBoundingClientRect().left));
+    const gutter = 24;
+    const room = left - right - gutter * 2;
+    const width = Math.min(window.innerWidth * .26, room);
+    if (width < 160) return false;
+    preview.style.width = `${width}px`;
+    preview.style.left = `${right - box.left + gutter + (room - width) / 2}px`;
+    return true;
+  };
   const show = (project) => (e) => {
     const preview = fxPreview.current;
     const pixels = fxPixels.current;
     const row = e.currentTarget;
+    if (!fit()) return;
     gsap.to(preview, { y: row.offsetTop + row.offsetHeight / 2 - preview.offsetHeight / 2, duration: .5, ease: 'power3.out' });
     const was = fxOn.current;
     fxOn.current = project;
     if (!was || was === project) {
       setShown(project);
-      pixels?.show(.4);
+      pixels?.show(.5);
       return;
     }
     // (only the last row pointed at is the one opened)
     pixels?.hide(.2).then(() => {
       if (fxOn.current !== project) return;
       setShown(project);
-      pixels.show(.35);
+      pixels.show(.4);
     });
   };
   const hide = () => {
@@ -171,8 +197,8 @@ function Project() {
                     ) : (
                       /* nothing to picture yet: the empty card (.project-empty, App.css) */
                       <span className='project-cover-image project-empty w-full h-full'>
-                        <span className='text-caption'>Ongoing project</span>
-                        <span className='text-caption text-muted'>Case study in progress</span>
+                        <span className='flex flex-wrap text-caption'><SplitText text='Ongoing project' /></span>
+                        <span className='flex flex-wrap text-caption text-muted'><SplitText text='Case study in progress' /></span>
                       </span>
                     )}
                   </span>

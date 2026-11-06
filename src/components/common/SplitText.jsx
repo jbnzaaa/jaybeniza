@@ -16,11 +16,12 @@ import React from 'react'
  *
  * `by='word'` reveals whole words instead of letters - for body copy,
  * where a per-letter stagger across a few hundred characters takes
- * seconds to finish and holds the reader up. Left unset, text longer
- * than LONG characters (a paragraph, not a heading or label) goes by the
- * word: two elements a word rather than one a letter keeps the page
- * light - split by the letter, the landing page ran to nearly 3,800
- * elements. Pass by='letter' to keep a long line split by the letter.
+ * seconds to finish and holds the reader up. Left unset, any text that is
+ * not a title - body copy, labels, tags, the top bar, buttons - goes by
+ * the word, whatever its length, so all of it rises the same way, word by
+ * word. A title (one given `emphasis`) goes by the letter up to LONG
+ * characters and by the word past it. Pass by='letter' to split by the
+ * letter anyway.
  *
  * `sentence` sets the text as written instead of in the site's capitals -
  * for anything read as a sentence (descriptions, paragraphs, quotes), so
@@ -34,7 +35,14 @@ const LONG = 48;
 
 // a word as it is matched against `emphasis`: lower case, its punctuation
 // dropped ("Interactions." matches "interactions")
-const bare = (word) => word.toLowerCase().replace(/[^\p{L}\p{N}-]/gu, '');
+// (letters told by their case, not by Unicode property escapes: Babel
+// spells a \p{L} out for older browsers as a class of every letter there
+// is, about 30 KB of every page's script)
+const isLetter = (unit) => unit.toLowerCase() !== unit.toUpperCase();
+const isWordUnit = (unit) => isLetter(unit) || (unit >= '0' && unit <= '9');
+const isUpper = (unit) => isLetter(unit) && unit === unit.toUpperCase();
+const isLower = (unit) => isLetter(unit) && unit === unit.toLowerCase();
+const bare = (word) => word.toLowerCase().split('').filter((unit) => isWordUnit(unit) || unit === '-').join('');
 
 // the places of the words to emphasise: each phrase ("design systems")
 // is found where its words run in order, so a word it shares with the
@@ -77,11 +85,11 @@ const pickedWord = (words) => {
 const pickedLetters = (words) => {
   const next = seedOf(words);
   const word = words[0] || '';
-  const at = word.split('').map((unit, ui) => ui).filter((ui) => /[\p{L}\p{N}]/u.test(word[ui]));
+  const at = word.split('').map((unit, ui) => ui).filter((ui) => isWordUnit(word[ui]));
   // a name made of two (StockNear, iScan) parts where its inner capital is
   // - a capital after a small letter, so a word in capitals (COMELEC)
   // is not split at its second letter
-  const inner = word.split('').findIndex((unit, ui) => ui > 0 && /\p{Lu}/u.test(unit) && /\p{Ll}/u.test(word[ui - 1]));
+  const inner = word.split('').findIndex((unit, ui) => ui > 0 && isUpper(unit) && isLower(word[ui - 1]));
   const length = inner > 0 ? at.indexOf(inner) : Math.max(1, Math.ceil(at.length / 2));
   const run = next() < 0.5 ? at.slice(0, length) : at.slice(inner > 0 ? length : at.length - length);
   return new Set(run.map((ui) => `0:${ui}`));
@@ -93,7 +101,7 @@ const placedLetters = (words, at) => {
   const places = new Set();
   let n = 0;
   words.forEach((word, wi) => word.split('').forEach((unit, ui) => {
-    if (/[\p{L}\p{N}]/u.test(unit) && at.includes(n++)) places.add(`${wi}:${ui}`);
+    if (isWordUnit(unit) && at.includes(n++)) places.add(`${wi}:${ui}`);
   }));
   return places;
 };
@@ -111,7 +119,8 @@ const pixelGlyph = (unit) => <span className='split-pixel-glyph'>{unit}</span>;
  * word, its first or last part.
  */
 function SplitText({ text, id, by: asked, sentence = false, emphasis = [] }) {
-  const by = asked || (text.length > LONG ? 'word' : 'letter');
+  const title = Array.isArray(emphasis) ? emphasis.length > 0 : !!emphasis;
+  const by = asked || (!title || text.length > LONG ? 'word' : 'letter');
   const words = text.split(' ').filter(Boolean);
   const auto = emphasis === 'letters';
   const autoWord = auto ? pickedWord(words) : -1;

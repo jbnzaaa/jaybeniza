@@ -7,7 +7,7 @@ import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
 // the part of the next project's title set in the pixel face
-import { titleEmphasis } from './projects/projects'
+import { titleEmphasis } from './projects/emphasis'
 // footer
 import Footer from './Footer'
 // page-to-page wipe

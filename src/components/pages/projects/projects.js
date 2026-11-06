@@ -272,8 +272,6 @@ export const PROJECTS = {
   portfoliov3: {
     path: '/portfolio-2026',
     title: 'Portfolio',
-    // (the part of the title set in the pixel face: SplitText `emphasis`)
-    emphasis: { letters: [4, 5, 6, 7, 8] },
     short: 'This site, designed in Figma and built with Claude Code',
     year: '2026',
     description: 'My latest portfolio, designed in Figma and built in React with Claude Code, to show where my product design and AI-assisted front-end work stand today, with scroll-driven motion and an optimized build.',
@@ -365,8 +363,6 @@ export const PROJECTS = {
   tingi: {
     path: '/bitewise',
     title: 'BiteWise',
-    // (the part of the title set in the pixel face: SplitText `emphasis`)
-    emphasis: { letters: [4, 5, 6, 7] },
     short: 'Grocery shopping shaped by how you eat',
     year: '2026',
     description: 'A mobile grocery shopping concept for busy people with dietary needs, food preferences, and nutrition goals.',
@@ -554,8 +550,6 @@ export const PROJECTS = {
   rover: {
     path: '/rover',
     title: 'Rover SIS',
-    // (the part of the title set in the pixel face: SplitText `emphasis`)
-    emphasis: ['SIS'],
     short: 'School operations, from admissions to payroll, in one platform',
     year: '2026',
     description: 'A multi-tenant platform that brings admissions, academic records, online learning, and back-office operations into one product for Philippine schools, colleges, universities, and training providers.',
@@ -625,8 +619,6 @@ export const PROJECTS = {
   gurover: {
     path: '/gurover',
     title: 'GuRover',
-    // (the part of the title set in the pixel face: SplitText `emphasis`)
-    emphasis: { letters: [0, 1, 2, 3] },
     short: 'AI-assisted, offline-first workspace for teachers',
     year: '2026',
     description: 'An AI-assisted, offline-first workspace that lifts the record-keeping load off Philippine teachers, from public school classrooms to college lecture halls.',
@@ -730,8 +722,6 @@ export const PROJECTS = {
   comelec: {
     path: '/comelec-acm',
     title: 'COMELEC Gamified 3D for ACM',
-    // (the part of the title set in the pixel face: SplitText `emphasis`)
-    emphasis: ['Gamified'],
     short: '3D interactive game that teaches personnel how the ACM works',
     year: '2025',
     description: 'A 3D training game that teaches COMELEC election personnel to set up and operate the Automated Counting Machine (ACM), from opening its hard case to inserting the smart card.',
@@ -820,8 +810,6 @@ export const PROJECTS = {
   psgs: {
     path: '/psgs',
     title: 'PSGS',
-    // (the part of the title set in the pixel face: SplitText `emphasis`)
-    emphasis: { letters: [0, 1] },
     short: 'Minimally invasive surgery training for general surgeons',
     year: '2024',
     description: 'The Philippine Society of General Surgeons’ platform for MIS Hybrid Online Learning, taking surgical residents through nine courses, from the junior module to the senior post-test.',
@@ -895,8 +883,6 @@ export const PROJECTS = {
   aaccup: {
     path: '/aaccup',
     title: 'AACCUP',
-    // (the part of the title set in the pixel face: SplitText `emphasis`)
-    emphasis: { letters: [0, 1] },
     short: 'Accreditation of academic programs in state universities and colleges',
     year: '2023',
     description: "A full redesign of AACCUP's accreditation platform, from the public website to the workspace where nine roles run accreditation for the Philippines' state universities and colleges.",
@@ -986,8 +972,6 @@ export const PROJECTS = {
   arise: {
     path: '/dost-arise',
     title: 'DOST ARISE',
-    // (the part of the title set in the pixel face: SplitText `emphasis`)
-    emphasis: ['ARISE'],
     short: 'STEM learning resources for teachers and students',
     year: '2023',
     description: "DOST-SEI's ARISE portal, where Filipino teachers and students reach free science and mathematics resources, from DOST-Courseware and SIMATAR to VLAS, in one place.",
@@ -1075,8 +1059,6 @@ export const PROJECTS = {
     path: '/dost-courseware',
     count: 5,
     title: 'DOST Courseware',
-    // (the part of the title set in the pixel face: SplitText `emphasis`)
-    emphasis: ['Courseware'],
     short: 'Science and math lessons, from Grade 3 to Senior High',
     year: '2023',
     description: 'Mobile courseware for DOST that turns science and math lessons, from Grade 3 solids, liquids, and gases to Senior High limits and continuity, into illustrated stories and hands-on activities.',
@@ -1166,8 +1148,6 @@ export const PROJECTS = {
     path: '/dost-vlas',
     count: 6,
     title: 'DOST VLAS',
-    // (the part of the title set in the pixel face: SplitText `emphasis`)
-    emphasis: ['VLAS'],
     short: 'Biology lab modules for junior high school learners',
     year: '2023',
     description: 'Six biology modules for DOST-SEI’s Virtual Laboratory Application in Science, a lab simulator that brings hands-on science to students in schools without a laboratory.',
@@ -1309,8 +1289,6 @@ export const PROJECTS = {
   regain: {
     path: '/regain',
     title: 'ReGain',
-    // (the part of the title set in the pixel face: SplitText `emphasis`)
-    emphasis: { letters: [2, 3, 4, 5] },
     short: 'Student mental health support platform',
     year: '2021',
     description: 'A mental health support platform for STI College Novaliches students, with weekly self-assessments, a private e-journal, a chatbot, and direct messaging with guidance counselors.',
@@ -1391,8 +1369,6 @@ export const PROJECTS = {
   pci: {
     path: '/pci-central-app',
     title: 'Design System',
-    // (the part of the title set in the pixel face: SplitText `emphasis`)
-    emphasis: ['System'],
     short: 'Design system for a company central application',
     year: '2024',
     description: "A design system I started for the Central App and built from scratch in Figma, so each screen is designed and developed from one set of 40+ components.",
@@ -1603,8 +1579,6 @@ export const PROJECTS = {
   },
 };
 
-// the part of a project's title set in the pixel face, wherever its title
-// is shown (its card, its page): its own `emphasis`, or letters picked
-// from the title (SplitText)
-export const titleEmphasis = (title) =>
-  Object.values(PROJECTS).find((project) => project.title === title)?.emphasis || 'letters';
+// the part of a project's title set in the pixel face (emphasis.js, kept
+// apart so the landing page can set titles without all of this)
+export { titleEmphasis } from './emphasis';

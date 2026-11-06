@@ -24,7 +24,7 @@ const OUT = .5;
 const ORDER = .45;
 
 // a pixel's side, in CSS pixels, as the page wipe's (pixels.js)
-const CELL = () => (window.innerWidth < 768 ? 16 : 24);
+const CELL = () => (window.innerWidth < 768 ? 8 : 12);
 // how many rows of pixels, and how many of each row's cells are filled,
 // from the edge up
 const DENSITY = [.62, .34, .16, .06];

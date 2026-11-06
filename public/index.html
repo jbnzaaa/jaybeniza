@@ -52,6 +52,32 @@
     <meta name="twitter:title" content="Jay Beniza | UI/UX &amp; Product Designer" />
     <meta name="twitter:description" content="UI/UX and product design portfolio: 24 web and mobile products, Figma design systems, and AI-assisted front-ends." />
     <meta name="twitter:image" content="https://jaybeniza.vercel.app/og-image.webp" />
+    <!-- the faces the first screen needs, fetched with the page instead of
+      after the stylesheet: Ayr Garon (headlines), Gilgan (text) and
+      Jersey 10 (emphasis in titles, OFL - fonts/Jersey10-OFL.md) -->
+    <link rel="preload" href="%PUBLIC_URL%/fonts/AyrGaron-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="%PUBLIC_URL%/fonts/Gilgan-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="%PUBLIC_URL%/fonts/Jersey10-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+      @font-face {
+        font-family: "Ayr Garon";
+        src: url("%PUBLIC_URL%/fonts/AyrGaron-Bold.woff2") format("woff2");
+        font-weight: 100 900;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Gilgan";
+        src: url("%PUBLIC_URL%/fonts/Gilgan-Regular.woff2") format("woff2");
+        font-weight: 100 900;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Jersey 10";
+        src: url("%PUBLIC_URL%/fonts/Jersey10-Regular.woff2") format("woff2");
+        font-weight: 100 900;
+        font-display: swap;
+      }
+    </style>
   </head>
   <body>
     <!-- black cover until the React loading screen takes over -->

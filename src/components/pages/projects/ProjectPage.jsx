@@ -10,7 +10,7 @@ import Tag from '../../common/Tag'
 // scroll reveal
 import { scrollReveal, scrollRevealSequence, scrollRevealCards, REVEAL_AT, REVERSE_AT } from '../../../utils/scrollReveal'
 // a colleague's picture opens in pixels, as on the landing page's testimonials
-import { pixelToggle } from '../../../utils/pixels'
+import { blockToggle } from '../../../utils/pixels'
 // per-letter text split
 import SplitText from '../../common/SplitText'
 // every project's content - for the link to the next one
@@ -502,8 +502,8 @@ function Bento({ items, seed, steady = false, turn = 0, grid = false, onLoad, cl
 function Panel({ label, className = '' }) {
   return (
     <div className={`case-panel theme-light project-placeholder flex flex-col justify-between p-6 ${className}`}>
-      <span className='text-caption text-muted'>Image in progress</span>
-      <span className='font-flexible font-medium leading-none text-heading text-muted'>{label}</span>
+      <span className='flex flex-wrap text-caption text-muted'><SplitText text='Image in progress' /></span>
+      <span className='flex flex-wrap font-flexible font-medium leading-none text-heading text-muted'><SplitText text={label} /></span>
     </div>
   )
 }
@@ -658,29 +658,26 @@ function ProjectPage({ project: given, id }) {
     // each quote card (.case-card) is a component of its own: its frame
     // wipes up from its bottom edge, then its words rise, as it comes up
     // the screen
-    // (a colleague's picture on a quote card opens in pixels as its name
-    // rises, as on the landing page's testimonials, and shuts again with
+    // (a colleague's picture on a quote card opens by a block as its name
+    // rises, as on the landing page's testimonials, and goes again with
     // the card scrolled back above it)
     const toggles = [];
     const cards = gsap.utils.toArray('.case-card').map((card) => {
       const avatar = card.querySelector('.case-quote-avatar');
-      const toggle = avatar && pixelToggle(avatar);
-      if (toggle) {
-        gsap.set(avatar, { clipPath: 'inset(100% 0% 0% 0%)' });
-        toggles.push({ avatar, toggle });
-      }
+      const toggle = avatar && blockToggle(avatar);
+      if (toggle) toggles.push({ avatar, toggle });
       return scrollRevealSequence([
         { targets: card, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },
         { targets: card.querySelectorAll('.split-letter'), vars: { y: 0, stagger: .012, ease: 'power1.in' }, position: '<.3' },
         ...(toggle ? [{
           targets: avatar,
-          vars: { opacity: 1, duration: .6, onStart: () => toggle.show(.6), onReverseComplete: () => toggle.hide(.35) },
+          vars: { duration: .6, onStart: () => toggle.show(.8), onReverseComplete: () => toggle.hide(.8) },
           position: '<',
         }] : []),
       ], { trigger: card });
     });
     const avatars = toggles.map(({ avatar, toggle }) => ({
-      kill: () => { toggle.kill(); gsap.set(avatar, { clearProps: 'clipPath' }); },
+      kill: () => { toggle.kill(); gsap.set(avatar, { clearProps: 'clipPath,opacity' }); },
     }));
 
     // a section's cards and its figures (.case-cards) open as the site's
@@ -692,8 +689,11 @@ function ProjectPage({ project: given, id }) {
       [...group.children].map((card) => ({ card: `#${card.id}`, text: `#${card.id} .split-letter` })),
       { group: `#${group.id}`, rowFrom: 768 }));
 
-    const panels = gsap.utils.toArray('.case-panel').map((panel) => scrollReveal(
-      panel, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' }));
+    // (each opens, then its words come in by their blocks)
+    const panels = gsap.utils.toArray('.case-panel').map((panel) => scrollRevealSequence([
+      { targets: panel, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },
+      { targets: panel.querySelectorAll('.split-letter'), vars: { y: 0, stagger: .012, ease: 'power1.in' }, position: '<.3' },
+    ], { trigger: panel }));
 
     // each rule over a note or a list row is drawn across from the left as
     // it comes up the screen, and taken up again with the page scrolled

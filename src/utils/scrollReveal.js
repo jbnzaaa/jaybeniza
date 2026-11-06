@@ -1,5 +1,5 @@
 import gsap from 'gsap';
-// headlines and body text open in pixels as their letters rise
+// titles open behind blocks, a line at a time; other text in pixels
 import { pixelText, withPixels } from './pixelText';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
@@ -25,6 +25,10 @@ function durationForVelocity(velocity) {
 // stretched: only a very long text is squeezed, to the ceiling)
 const MIN_TOTAL = 0.5;
 const MAX_TOTAL = 1.2;
+// a title opens by blocks, a line at a time (pixelText.js): each line's
+// block needs time to cover it and uncover it slowly
+const SLOW_MIN_TOTAL = 1;
+const SLOW_MAX_TOTAL = 1.8;
 // a fast flick plays a reveal in this share of its slow-scroll time
 // (1: how fast the page is scrolled no longer changes a reveal's speed -
 // it made the same kind of text rise at different speeds)
@@ -32,9 +36,9 @@ const FASTEST = 1;
 // one letter's own rise, in seconds, before any pacing
 const LETTER_DURATION = 0.4;
 
-function totalForVelocity(natural, velocity) {
+function totalForVelocity(natural, velocity, slow = false) {
   const v = Math.min(Math.abs(velocity || 0), VELOCITY_RANGE);
-  const base = Math.min(Math.max(natural, MIN_TOTAL), MAX_TOTAL);
+  const base = Math.min(Math.max(natural, slow ? SLOW_MIN_TOTAL : MIN_TOTAL), slow ? SLOW_MAX_TOTAL : MAX_TOTAL);
   return base * (1 - (v / VELOCITY_RANGE) * (1 - FASTEST));
 }
 
@@ -419,11 +423,11 @@ function buildReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
     start: startFor(trigger || targets, start),
     ...inPin(trigger || targets),
     onEnter: (self) => {
-      tween.duration(totalForVelocity(natural, self.getVelocity()));
+      tween.duration(totalForVelocity(natural, self.getVelocity(), mask?.slow));
       turn.play();
     },
     onEnterBack: (self) => {
-      tween.duration(totalForVelocity(natural, self.getVelocity()));
+      tween.duration(totalForVelocity(natural, self.getVelocity(), mask?.slow));
       turn.play();
     },
   });
@@ -433,7 +437,7 @@ function buildReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
     start: REVERSE_AT,
     ...inPin(trigger || targets),
     onLeaveBack: (self) => {
-      tween.duration(totalForVelocity(natural, self.getVelocity()));
+      tween.duration(totalForVelocity(natural, self.getVelocity(), mask?.slow));
       turn.reverse();
     },
   });
@@ -447,7 +451,7 @@ function buildReveal(targets, vars, { trigger, start = REVEAL_AT } = {}) {
   // ScrollTrigger.create() returns), which playIfDue does for all the
   // reveals built together, at once
   playIfDue(trig, () => {
-    tween.duration(totalForVelocity(natural, 0));
+    tween.duration(totalForVelocity(natural, 0, mask?.slow));
     turn.play();
   });
 
@@ -513,7 +517,7 @@ function buildSequence(stages, { trigger, start = REVEAL_AT, reverseStart } = {}
     }
     const count = gsap.utils.toArray(targets).length;
     const natural = LETTER_DURATION + vars.stagger * Math.max(count - 1, 0);
-    const pace = totalForVelocity(natural, 0) / natural;
+    const pace = totalForVelocity(natural, 0, mask?.slow) / natural;
     tl.to(targets, { ...vars, ease: EASE, duration: LETTER_DURATION * pace, stagger: vars.stagger * pace }, position);
   });
 

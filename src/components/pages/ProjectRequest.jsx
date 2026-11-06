@@ -5,7 +5,7 @@ import { RiArrowDownSLine, RiArrowRightDownLine } from 'react-icons/ri'
 // GSAP
 import gsap from 'gsap'
 // scroll reveal
-import { scrollReveal, scrollRevealSequence } from '../../utils/scrollReveal'
+import { scrollRevealSequence } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
 
@@ -54,10 +54,10 @@ function Field({ label, hint, required = false, wide = false, group, children })
   return (
     <Box className={wide ? 'form-field form-field-wide' : 'form-field'}>
       <span className='form-label text-caption text-muted' id={group}>
-        {label}{required && <span className='form-required' aria-hidden='true'>*</span>}
+        <SplitText text={label} by='word' />{required && <span className='form-required' aria-hidden='true'>*</span>}
       </span>
       {children}
-      {hint && <span className='form-hint text-muted'>{hint}</span>}
+      {hint && <span className='form-hint text-muted'><SplitText text={hint} by='word' /></span>}
     </Box>
   )
 }
@@ -138,9 +138,12 @@ function ProjectRequest() {
   const [status, setStatus] = useState('');
 
   useEffect(() => {
-    // each field rises a little into place as it fades in
+    // each field rises a little into place as it fades in, then its words
+    // (label, hint, choices) come in by their blocks
     const fields = gsap.utils.toArray('.project-form > .form-field');
     const lowered = gsap.set(fields, { y: 24, autoAlpha: 0 });
+    const wordsOf = (list) => list.flatMap((field) => [...field.querySelectorAll('.split-letter')]);
+    const TEXT = { y: 0, stagger: .01, ease: 'power1.in' };
     // heading and introduction rise letter by letter, like every section's,
     // and the fields on the first screen follow them in one sequence, in
     // reading order. revealed apart, a field (in a single fade) was seen
@@ -148,11 +151,17 @@ function ProjectRequest() {
     const first = fields.filter((field) => field.getBoundingClientRect().top < window.innerHeight);
     const reveal = scrollRevealSequence([
       { targets: '#animate-request', vars: { y: 0, stagger: .02, ease: 'power1.in' } },
-      ...(first.length ? [{ targets: first, vars: { y: 0, autoAlpha: 1, duration: .5, stagger: .08 }, position: '-=.3' }] : []),
+      ...(first.length ? [
+        { targets: first, vars: { y: 0, autoAlpha: 1, duration: .5, stagger: .08 }, position: '-=.3' },
+        { targets: wordsOf(first), vars: TEXT, position: '<.2' },
+      ] : []),
     ], { trigger: '#project-request', start: 'top bottom' });
     // the rest one at a time, as each comes up the screen (each in its
     // turn among the section's reveals - scrollReveal.js)
-    const rises = fields.filter((field) => !first.includes(field)).map((field) => scrollReveal(field, { y: 0, autoAlpha: 1 }));
+    const rises = fields.filter((field) => !first.includes(field)).map((field) => scrollRevealSequence([
+      { targets: field, vars: { y: 0, autoAlpha: 1 } },
+      ...(wordsOf([field]).length ? [{ targets: wordsOf([field]), vars: TEXT, position: '<.2' }] : []),
+    ], { trigger: field }));
     return () => {
       reveal.kill();
       rises.forEach((rise) => rise.kill());
@@ -269,7 +278,7 @@ function ProjectRequest() {
             </Field>
             {/* what is wanted from me - a group of its own, not one field */}
             <fieldset className='form-field form-field-wide'>
-              <legend className='form-label text-caption text-muted'>What you need from me (choose any)</legend>
+              <legend className='form-label text-caption text-muted'><SplitText text='What you need from me (choose any)' by='word' /></legend>
               <div className='form-checks'>
                 {/* each a box like a section label, filled when picked.
                   the checkbox itself is kept for the keyboard and for
@@ -277,7 +286,7 @@ function ProjectRequest() {
                 {SERVICES.map((service) => (
                   <label className={form.services.includes(service) ? 'form-check form-check-on text-caption' : 'form-check text-caption'} key={service}>
                     <input type='checkbox' checked={form.services.includes(service)} onChange={toggle(service)} />
-                    <span>{service}</span>
+                    <span><SplitText text={service} by='word' /></span>
                   </label>
                 ))}
               </div>

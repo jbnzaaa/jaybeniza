@@ -9,7 +9,7 @@ import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
 // the preview opens in pixels
-import { pixelToggle } from '../../utils/pixels'
+import { wipeToggle } from '../../utils/pixels'
 // certificate file
 import certDataAnalytics from '../../assets/certificates-and-awards/Data Analytics Level III Training Program.jpg'
 // pictures for the hover preview: the first page of each Coursera
@@ -57,7 +57,7 @@ function CertificatesAwards() {
     // the preview is centred on its left edge's position (left: 62%, App.css)
     gsap.set(fxPreview.current, { xPercent: -50 });
     // (it opens and shuts in pixels - pixels.js)
-    fxPixels.current = pixelToggle(fxPreview.current);
+    fxPixels.current = wipeToggle(fxPreview.current);
 
     return () => {
       rows.forEach((row) => row.kill());

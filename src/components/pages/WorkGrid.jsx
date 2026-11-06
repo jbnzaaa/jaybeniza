@@ -10,9 +10,9 @@ import { REVEAL_AT, inTurn, revealTrigger } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
 // the part of a project's title set in the pixel face
-import { titleEmphasis } from './projects/projects'
+import { titleEmphasis } from './projects/emphasis'
 // the covers open in pixels
-import { pixelReveal } from '../../utils/pixels'
+import { wipeReveal } from '../../utils/pixels'
 // its letters open in pixels as they rise
 import { pixelText, withPixels } from '../../utils/pixelText'
 gsap.registerPlugin(ScrollTrigger)
@@ -57,16 +57,20 @@ function WorkGrid({ items }) {
     // the pictures start slightly large and low in their frames
     const covers = gsap.set(gsap.utils.toArray('.work-cover-image', section), { yPercent: 14, scale: 1.15 });
 
-    // each card as it comes up the screen: it opens in pixels from its
+    // each card as it comes up the screen: it wipes open from its
     // bottom edge up, the picture easing down to size inside it
     // (each in its turn among the page's reveals - scrollReveal.js)
     const reveals = gsap.utils.toArray('.work-item', section).map((item) => {
+      // (an empty card's words come in by their blocks once it is open)
+      const words = item.querySelectorAll('.work-cover .split-letter');
+      const mask = words.length ? pixelText(words) : null;
       const wipe = gsap.timeline({ paused: true })
-        .add(pixelReveal(item.querySelector('.work-cover'), { duration: 1 }), 0)
+        .add(wipeReveal(item.querySelector('.work-cover'), { duration: 1 }), 0)
         .to(item.querySelector('.work-cover-image'), { ...settle, duration: 1.2 }, 0);
+      if (words.length) wipe.to(words, withPixels({ y: 0, duration: .5, stagger: { amount: .3 }, ease: 'power1.in' }, mask), .9);
       const turn = inTurn(wipe, item);
       const trigger = revealTrigger(item, REVEAL_AT, turn);
-      return { wipe, turn, trigger };
+      return { wipe, turn, trigger, mask };
     });
 
     // its name and label rise on a trigger of their own: when they have
@@ -82,10 +86,11 @@ function WorkGrid({ items }) {
     });
 
     return () => {
-      reveals.forEach(({ wipe, turn, trigger }) => {
+      reveals.forEach(({ wipe, turn, trigger, mask }) => {
         trigger.kill();
         turn.kill();
         wipe.revert();
+        mask?.clear();
       });
       covers.revert();
       texts.forEach(({ rise, turn, trigger, mask }) => {
@@ -110,8 +115,8 @@ function WorkGrid({ items }) {
               {/* nothing to show yet - says so */}
               {!cover && !picture && (
                 <div className='work-cover-image theme-dark project-empty w-full h-full'>
-                  <p className='text-caption'>{empty[0]}</p>
-                  <p className='text-caption text-muted'>{empty[1]}</p>
+                  <p className='flex flex-wrap text-caption'><SplitText text={empty[0]} /></p>
+                  <p className='flex flex-wrap text-caption text-muted'><SplitText text={empty[1]} /></p>
                 </div>
               )}
             </div>

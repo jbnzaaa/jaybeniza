@@ -1,4 +1,6 @@
 import gsap from 'gsap';
+// the block's colour, opposite the ground, as the titles' blocks
+import { blockColour } from './pixelText';
 
 // ---- the screen as square pixels
 // the loading screen and the wipe between pages both cover the page with
@@ -8,7 +10,7 @@ import gsap from 'gsap';
 
 // a pixel's side, in CSS pixels: smaller on a phone so there are about as
 // many across
-const CELL = () => (window.innerWidth < 768 ? 24 : 40);
+const CELL = () => (window.innerWidth < 768 ? 12 : 20);
 // the palette (tailwind.config.js): the pixels, and the edge being edited
 const BLACK = '#1B1A1A';
 const EDGE = '#E5E4E3';
@@ -142,6 +144,115 @@ export function pixelToggle(el) {
     show: (duration = .5) => to(1, duration),
     hide: (duration = .4) => to(0, duration),
     kill: () => gsap.killTweensOf(sweep),
+  };
+}
+
+// ---- a picture wiped open
+// the covers (Featured Work, Work, Archive), the Areas of Expertise gifs
+// and the hover previews (Featured Work, certificates, the About
+// portrait) open with a plain wipe from their bottom edge up - no pixels
+const WIPE_SHUT = 'inset(100% 0% 0% 0%)';
+const WIPE_OPEN = 'inset(0% 0% 0% 0%)';
+const wipeAt = (el, at) => {
+  el.style.clipPath = at >= 1 ? WIPE_OPEN : `inset(${(1 - at) * 100}% 0% 0% 0%)`;
+};
+
+/**
+ * A picture wiping open from its bottom edge up, as a tween to put in a
+ * timeline or play: from shut (set at once) to open, and back when it is
+ * reversed.
+ *
+ * @param {Element} el
+ * @param {object} [opts]
+ * @param {number} [opts.duration] - in seconds
+ * @param {string} [opts.ease]
+ * @returns {gsap.core.Tween}
+ */
+export function wipeReveal(el, { duration = 1, ease = 'power2.inOut' } = {}) {
+  const sweep = { at: 0 };
+  wipeAt(el, 0);
+  return gsap.to(sweep, { at: 1, duration, ease, onUpdate: () => wipeAt(el, sweep.at) });
+}
+
+/**
+ * A picture that wipes open and shut on demand - a preview shown under the
+ * pointer. Each call turns it from wherever it has got to.
+ *
+ * @param {Element} el
+ * @returns {{show: (duration?: number) => gsap.core.Tween, hide: (duration?: number) => gsap.core.Tween, kill: () => void}}
+ */
+export function wipeToggle(el) {
+  const sweep = { at: 0 };
+  el.style.clipPath = WIPE_SHUT;
+  const to = (at, duration) => gsap.to(sweep, { at, duration, ease: 'power2.inOut', overwrite: true, onUpdate: () => wipeAt(el, sweep.at) });
+  return {
+    show: (duration = .5) => to(1, duration),
+    hide: (duration = .4) => to(0, duration),
+    kill: () => gsap.killTweensOf(sweep),
+  };
+}
+
+// ---- a colleague's picture, opened by a block
+// the pictures of the people who speak for my work (the landing page's
+// testimonials, the case studies' quotes) open as the titles do: a block
+// in the colour opposite the ground grows across the picture from its
+// left, the picture is switched on under it, and the block shrinks toward
+// its right, uncovering it. taken away, it runs the same way and leaves
+// the place empty. the block is laid beside the picture, in its box
+const COVER = .4;
+const GROW = gsap.parseEase('power2.out');
+const SHRINK = gsap.parseEase('power2.inOut');
+
+/**
+ * A picture opened and taken away by a block, on demand.
+ *
+ * @param {Element} el - the picture (an <img> will do)
+ * @returns {{show: (duration?: number) => gsap.core.Tween, hide: (duration?: number) => gsap.core.Tween, kill: () => void}}
+ */
+export function blockToggle(el) {
+  const box = el.parentElement;
+  if (getComputedStyle(box).position === 'static') box.style.position = 'relative';
+  const block = document.createElement('span');
+  block.className = 'split-line-block';
+  block.setAttribute('aria-hidden', 'true');
+  box.appendChild(block);
+  el.style.clipPath = 'none';
+  el.style.opacity = 0;
+  let shown = false;
+  const state = { k: 0 };
+  // k: how far through its move (0 to 1); showing or taking away
+  const draw = (showing) => {
+    const { k } = state;
+    el.style.opacity = (showing ? k >= COVER : k < COVER) ? 1 : 0;
+    if (k <= 0 || k >= 1) { block.style.display = 'none'; return; }
+    // (scaled, not resized: no layout shift, no layout)
+    const covering = k < COVER;
+    Object.assign(block.style, {
+      display: 'block',
+      background: blockColour(box),
+      top: `${el.offsetTop}px`,
+      height: `${el.offsetHeight}px`,
+      left: `${el.offsetLeft}px`,
+      width: `${el.offsetWidth}px`,
+      transformOrigin: covering ? 'left center' : 'right center',
+      transform: `scaleX(${covering ? GROW(k / COVER) : 1 - SHRINK((k - COVER) / (1 - COVER))})`,
+    });
+  };
+  const run = (showing, duration) => {
+    if (shown === showing) return gsap.to({}, { duration: 0 });
+    shown = showing;
+    gsap.killTweensOf(state);
+    state.k = 0;
+    return gsap.to(state, { k: 1, duration: Math.max(duration, .8), ease: 'none', onUpdate: () => draw(showing) });
+  };
+  return {
+    show: (duration = .8) => run(true, duration),
+    hide: (duration = .8) => run(false, duration),
+    kill: () => {
+      gsap.killTweensOf(state);
+      block.remove();
+      el.style.opacity = '';
+    },
   };
 }
 
