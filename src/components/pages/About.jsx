@@ -17,7 +17,7 @@ gsap.registerPlugin(ScrollTrigger)
 // what to take away about me, set large
 // (one paragraph per entry, each set under the one before)
 const PARAGRAPHS = [
-  'I watch how people use a product, find the real problem, and design the simplest interface that solves it. I also build what I designed, so the small details make it into the final product.',
+  'I look for the extra step: the attendance a teacher types twice, the record an agency splits across four tabs. Then I design it out. On some projects I also build the front-end myself with Claude Code, so the details I designed reach the final product.',
 ];
 
 /**

@@ -54,6 +54,13 @@ import bitewise_d3_1 from '../../../assets/files/images/bitewise/decision-03-01.
 import bitewise_d3_2 from '../../../assets/files/images/bitewise/decision-03-02.webp'
 import bitewise_d3_3 from '../../../assets/files/images/bitewise/decision-03-03.webp'
 import bitewise_d3_4 from '../../../assets/files/images/bitewise/decision-03-04.webp'
+import rover_mockup_cover from '../../../assets/files/images/rover/mockup-cover.webp'
+import rover_cover_card from '../../../assets/files/images/rover/mockup-cover-card.webp'
+import rover_landing_hero from '../../../assets/files/images/rover/landing-hero.webp'
+import rover_landing_how from '../../../assets/files/images/rover/landing-how-it-works.webp'
+import rover_landing_why from '../../../assets/files/images/rover/landing-why-rover.webp'
+import rover_landing_modules_01 from '../../../assets/files/images/rover/landing-modules-01.webp'
+import rover_landing_modules_02 from '../../../assets/files/images/rover/landing-modules-02.webp'
 import gurover_landing_page from '../../../assets/files/images/gurover/landing-page.webp'
 import gurover_mockup_cover from '../../../assets/files/images/gurover/mockup-cover.webp'
 import gurover_screen_ai_assistant from '../../../assets/files/images/gurover/screen-ai-assistant.webp'
@@ -104,6 +111,20 @@ import arise_screen_student_dashboard from '../../../assets/files/images/arise/s
 import arise_screen_student_onboarding from '../../../assets/files/images/arise/screen-student-onboarding.webp'
 import arise_screen_student_resource_preview from '../../../assets/files/images/arise/screen-student-resource-preview.webp'
 import arise_screen_student_rewards from '../../../assets/files/images/arise/screen-student-rewards.webp'
+import vlas_mockup_cover from '../../../assets/files/images/vlas/mockup-cover.webp'
+import vlas_mockup_card from '../../../assets/files/images/vlas/mockup-cover-card.webp'
+import vlas_screen_01 from '../../../assets/files/images/vlas/screen-01.webp'
+import vlas_screen_02 from '../../../assets/files/images/vlas/screen-02.webp'
+import vlas_screen_04 from '../../../assets/files/images/vlas/screen-04.webp'
+import vlas_screen_05 from '../../../assets/files/images/vlas/screen-05.webp'
+import vlas_screen_07 from '../../../assets/files/images/vlas/screen-07.webp'
+import vlas_screen_08 from '../../../assets/files/images/vlas/screen-08.webp'
+import vlas_screen_10 from '../../../assets/files/images/vlas/screen-10.webp'
+import vlas_screen_11 from '../../../assets/files/images/vlas/screen-11.webp'
+import vlas_screen_13 from '../../../assets/files/images/vlas/screen-13.webp'
+import vlas_screen_16 from '../../../assets/files/images/vlas/screen-16.webp'
+import vlas_screen_19 from '../../../assets/files/images/vlas/screen-19.webp'
+import vlas_screen_21 from '../../../assets/files/images/vlas/screen-21.webp'
 import courseware_mockup_cover from '../../../assets/files/images/courseware/mockup-cover.webp'
 import courseware_screen_01 from '../../../assets/files/images/courseware/screen-01.webp'
 import courseware_screen_02 from '../../../assets/files/images/courseware/screen-02.webp'
@@ -251,7 +272,7 @@ export const PROJECTS = {
   portfoliov3: {
     path: '/portfolio-2026',
     title: 'Portfolio',
-    short: 'Personal portfolio, designed and developed end to end',
+    short: 'This site, designed in Figma and built with Claude Code',
     year: '2026',
     description: 'My latest portfolio, designed in Figma and built in React with Claude Code, to show where my product design and AI-assisted front-end work stand today, with scroll-driven motion and an optimized build.',
     category: 'Portfolio Website / Personal Project',
@@ -278,7 +299,7 @@ export const PROJECTS = {
       // (a line set large, then the paragraph under it)
       challenge: {
         lead: 'Show the work, and make it easy to start a project.',
-        text: "My earlier portfolios, from 2022, no longer reflected the work I do now. I needed a site that demonstrates both halves of what I offer, product design and AI-assisted front-end, lets the projects lead, and gives every visitor a clear path to starting a project, without sacrificing load speed for motion.",
+        text: "My earlier portfolios, from 2022, no longer reflected the work I do now. I needed a site that demonstrates both halves of what I offer, product design and AI-assisted front-end, lets the projects lead, and gives each visitor a clear path to starting a project, without sacrificing load speed for motion.",
       },
       approach: [
         // (each decision as BiteWise's are: its challenge, the solution
@@ -309,7 +330,7 @@ export const PROJECTS = {
           title: "Designed and built by me",
           summary: "A site designed in Figma and built in React, as working proof of both halves of the work.",
           challenge: "Claiming design and development skill means little unless the portfolio itself proves both.",
-          text: "Every page went from my Figma file to production code that I built and shipped myself, with Claude Code as my development partner.",
+          text: "The whole site went from my Figma file to production code that I built and shipped myself, with Claude Code as my development partner.",
           rationale: "Anyone reviewing my work can judge the design and the build in the same visit.",
           shots: { layout: 'web', items: [
             { src: p26_project_hero, alt: 'Portfolio project page' },
@@ -321,8 +342,8 @@ export const PROJECTS = {
       role: "I was the sole designer and developer, from the first Figma frame to the deployed site.",
       contributions: [
         'Designed the monochrome visual system, page layouts, and pixel motion language in Figma',
-        'Built every page in React, Tailwind CSS, and GSAP with Claude Code, and deployed it on Vercel',
-        'Designed a project request flow so every page ends on a clear next step for potential clients',
+        'Built the site in React, Tailwind CSS, and GSAP with Claude Code, and deployed it on Vercel',
+        'Designed a project request flow that asks potential clients what they need up front',
         'Optimized loading speed, converting images to WebP and checking the results with Lighthouse',
       ],
       outcome: 'Motion and image-heavy pages did not have to mean a slow site. These are the Lighthouse results for the home page, before and after optimization, measured in local Lighthouse runs.',
@@ -483,7 +504,7 @@ export const PROJECTS = {
         id: 'learned',
         title: 'What I Learned',
         lead: 'Design connected experiences, not isolated screens.',
-        text: 'Each stage of BiteWise depends on the one before it. The preferences set during onboarding decide what the home screen shows, and the product details screen answers whether an item fits those preferences. Designing the three stages as one flow kept every screen working toward the same goal.',
+        text: 'Each stage of BiteWise depends on the one before it. The preferences set during onboarding decide what the home screen shows, and the product details screen answers whether an item fits those preferences. Designing the three stages as one flow kept each screen working toward the same goal.',
       },
       {
         id: 'next-steps',
@@ -526,6 +547,75 @@ export const PROJECTS = {
   // off the page.
   // the first screenshot is the page's cover, the mock-up, which is also
   // its `cover` on the work page
+  rover: {
+    path: '/rover',
+    title: 'Rover SIS',
+    short: 'School operations, from admissions to payroll, in one platform',
+    year: '2026',
+    description: 'A multi-tenant platform that brings admissions, academic records, online learning, and back-office operations into one product for Philippine schools, colleges, universities, and training providers.',
+    category: 'Web Platform / Team Project',
+    roles: ['Product Designer & Developer'],
+    technologies: [],
+    status: 'Live',
+    cover: rover_cover_card,
+    screenshots: [
+      { src: rover_mockup_cover, alt: 'Rover SIS mock-up', start: 'full' },
+      { src: rover_landing_hero, alt: 'Rover SIS early landing page design, hero with the admissions dashboard', start: 2 },
+      { src: rover_landing_how, alt: 'Rover SIS early landing page design, from first inquiry to graduation', start: 4 },
+      { src: rover_landing_modules_01, alt: 'Rover SIS early landing page design, education and CRM modules', start: 1 },
+      { src: rover_landing_modules_02, alt: 'Rover SIS early landing page design, LMS, ERP, and student portal modules', start: 3 },
+    ],
+    platform: {
+      overview: 'Rover SIS is an education operations platform for Philippine schools, colleges, universities, and training providers. It brings admissions and CRM, academic administration, online learning, and back-office ERP into one product, with each institution’s data kept separate from every other’s.',
+      // (a line set large, then the paragraph under it)
+      challenge: {
+        lead: 'Schools were running admissions, grades, and payroll on separate spreadsheets.',
+        text: 'Institutions commonly run admissions, student records, course delivery, billing, payroll, inventory, and reporting through disconnected spreadsheets and systems. The result is duplicate student records, data entered by hand more than once, balances that don’t match, little end-to-end reporting, and slow onboarding for both institutions and learners.',
+      },
+      approach: [
+        {
+          title: 'One system across five modules',
+          summary: 'Shared patterns, so moving between modules never means learning a new interface.',
+          challenge: 'Admissions, academics, learning, and back-office work each have their own workflows, and each could easily have looked like a different product.',
+          text: 'I standardized the shared interface components, data tables, page layouts, and navigation across the education, LMS, and administrative modules.',
+          rationale: 'Staff who work across modules don’t relearn the same controls in each one.',
+          shots: { items: [
+            { src: rover_landing_how, alt: 'Rover SIS early landing page design, from first inquiry to graduation' },
+            { src: rover_landing_modules_01, alt: 'Rover SIS early landing page design, education and CRM modules' },
+            { src: rover_landing_modules_02, alt: 'Rover SIS early landing page design, LMS, ERP, and student portal modules' },
+          ] },
+        },
+        {
+          title: 'Onboarding as a guided setup',
+          summary: 'A complex institution setup, broken into steps an administrator can follow.',
+          challenge: 'Setting up a new institution is a long, complex configuration task.',
+          text: 'I structured institution onboarding into manageable steps, with progress indicators, interactive walkthroughs, contextual instructions, and a setup checklist.',
+          rationale: 'Administrators see what each step needs, track their progress, and finish setup without guessing what comes next.',
+        },
+        {
+          title: 'Tables built for finding records',
+          summary: 'One data table pattern for every information-heavy screen.',
+          challenge: 'Admissions, student, and finance records are information-heavy, and administrators need the right one quickly.',
+          text: 'I introduced a standard data table across the administrative and education modules: searchable records, contextual filters, clear status indicators, and export.',
+          rationale: 'A clear hierarchy and consistent controls help administrators find records and finish routine tasks faster.',
+          shots: { items: [
+            { src: rover_landing_hero, alt: 'Rover SIS early landing page design, hero with the admissions dashboard' },
+            { src: rover_landing_why, alt: 'Rover SIS early landing page design, why institutions choose Rover' },
+          ] },
+        },
+      ],
+      role: 'As Rover’s product designer and developer, I designed the platform and built its interface with Claude Code.',
+      contributions: [
+        'Designed one design system across the education, LMS, and administrative modules: shared components, data tables, page layouts, and navigation',
+        'Designed guided institution onboarding, with steps, progress indicators, walkthroughs, and a setup checklist',
+        'Introduced one data table pattern for searching, filtering, and exporting records across modules',
+        'Designed the landing page, from the first inquiry to graduation story to the five module sections',
+        'Ran moderated, role-based test sessions across the platform’s roles before release',
+        'Built the interface with Claude Code, working from my own designs',
+      ],
+      outcome: 'Rover is live. The landing page shown here is an earlier design of mine; the live product has changed since.',
+    },
+  },
   gurover: {
     path: '/gurover',
     title: 'GuRover',
@@ -567,7 +657,7 @@ export const PROJECTS = {
           summary: "One shared record behind every form, so teachers enter data once and the platform fills in the rest.",
           challenge: "Shared records only save time when they are right, and the MVP had attendance errors, duplicate learner records, and shared-class data problems.",
           text: "I expanded the class records, learner profiles, gradebook, attendance, and QR check-in, and fixed the errors that broke the link between them. Attendance carries into the SF2 and SF9 forms, which I polished for printing.",
-          rationale: "Removing duplicate entry cuts clerical work at its source and keeps every form consistent with the class record.",
+          rationale: "Removing duplicate entry cuts clerical work at its source and keeps each form consistent with the class record.",
           shots: { layout: 'bento', items: [
             { src: gurover_decision_01_01, alt: 'GuRover class roster and attendance' },
             { src: gurover_decision_01_02, alt: 'GuRover class record filled from the roster' },
@@ -578,8 +668,8 @@ export const PROJECTS = {
           title: "AI drafts, the teacher decides",
           summary: "AI prepares the first draft of lesson plans and presentations, and the teacher edits it with the remaining AI tokens in view.",
           challenge: "AI had to cut preparation time without taking authorship away from the teacher, and every AI request carried a cost.",
-          text: "Lesson plans and presentations open as editable AI drafts, with the key fields moved directly into the editor. I added a counter for the remaining AI tokens to the top navigation and the AI assistant sidebar, backed by usage allowances for each subscription tier. Using AI stays the teacher’s choice: it speeds up a plan, but every plan can be written without it.",
-          rationale: "Teachers stay the authors of every plan, and they know how much AI they have left before they run out.",
+          text: "Lesson plans and presentations open as editable AI drafts, with the key fields moved directly into the editor. I added a counter for the remaining AI tokens to the top navigation and the AI assistant sidebar, backed by usage allowances for each subscription tier. Using AI stays the teacher’s choice: it speeds up a plan, but any plan can be written without it.",
+          rationale: "Teachers stay the authors of their plans, and they know how much AI they have left before they run out.",
           shots: { layout: 'bento', items: [
             { src: gurover_decision_02_01, alt: 'GuRover AI lesson plan prompt' },
             { src: gurover_decision_02_03, alt: 'GuRover lesson plan edited by the teacher' },
@@ -666,8 +756,8 @@ export const PROJECTS = {
           title: "Learn by exploring",
           summary: "A machine personnel can turn, open, and set up on screen, one task at a time.",
           challenge: "Personnel needed practice with the machine itself, and reading about each part could not give them that.",
-          text: "The client provided only image assets, so I started from them with the simplest design that would make the training easy to follow, and built it around a 360-degree view of the ACM. Personnel turn the machine to any angle, open labeled diagrams of each part, and complete numbered tasks in a simulated room: opening the hard case, retrieving the privacy screens, and taking out the machine. The 3D and game developers built on that view to make the training a game.",
-          rationale: "Every step is practiced before election day, at each trainee’s own pace, which a lecture cannot offer.",
+          text: "The client provided only image assets, so I started from them with the simplest design that would make the training easy to follow, and built it around a 360-degree view of the ACM. Personnel turn the machine to any angle, open labeled diagrams of each part, and complete numbered tasks in a simulated room: opening the hard case, retrieving the privacy screens, and taking out the machine.",
+          rationale: "Each step is practiced before election day, at each trainee’s own pace, which a lecture cannot offer.",
           shots: { layout: 'bento', items: [
             { src: comelec_decision_01_01, alt: 'COMELEC Gamified 3D for ACM opening the ACM hard case' },
             { src: comelec_decision_01_02, alt: 'COMELEC Gamified 3D for ACM retrieving the privacy screens' },
@@ -675,7 +765,7 @@ export const PROJECTS = {
           ] },
         },
         {
-          title: "Every screen as the build reference",
+          title: "One prototype as the build reference",
           summary: "One module, four topics, 100+ wireframe screens, linked into a single clickable prototype.",
           challenge: "A 3D game is assembled screen by screen, so any gap in the design would become a guess during development.",
           text: "I wireframed a full training module of four topics, from the menus to tasks such as inserting the smart card, and linked every screen into one prototype that runs from the first task to the last. The 3D designer and game developers built the finished screens shown here from it.",
@@ -688,10 +778,10 @@ export const PROJECTS = {
         },
         {
           title: "Handoff and brand, documented",
-          summary: "Every frame, and the rules behind its look, in one document.",
-          challenge: "The client needed a complete, lasting record of the design: every screen, and the standards that govern the software’s look.",
-          text: "Every frame went into one document, from the title screen to the final task, alongside brand guidelines I created with the project manager.",
-          rationale: "The client and the development team work from one reference for every screen and the software’s look.",
+          summary: "All the frames, and the rules behind their look, in one document.",
+          challenge: "The client needed a complete, lasting record of the design: each screen, and the standards that govern the software’s look.",
+          text: "All frames went into one document, from the title screen to the final task, alongside brand guidelines I created with the project manager.",
+          rationale: "The client and the development team work from one reference for the screens and the software’s look.",
           shots: { layout: 'bento', items: [
             { src: comelec_decision_03_01, alt: 'COMELEC Gamified 3D for ACM brand guide in the design file' },
             { src: comelec_decision_03_02, alt: 'COMELEC Gamified 3D for ACM screen inventory' },
@@ -699,13 +789,13 @@ export const PROJECTS = {
           ] },
         },
       ],
-      outcome: "Delivered to COMELEC. Three days after the first project meeting, the wireframes and prototype were in the project managers’ hands, one to two days ahead of the deadline, so development could begin early. The 3D designer and game developers built the game from them.",
+      outcome: "Delivered to COMELEC. Three days after the first project meeting, the wireframes and prototype were in the project managers’ hands, one to two days ahead of the deadline, so development could begin early.",
       metrics: [
         { value: '3 days', label: 'For the whole design process, from project meetings to wireframes, prototype, and handoff' },
         { value: '100+', label: 'Wireframe screens, linked into one working prototype' },
         { value: '4', label: 'Topics in one training module: ACM introduction, procedures for FTS, procedures for election day, and installation of the transmission device' },
       ],
-      delivered: ["Wireframes for every screen of the four-topic training module", "A working prototype of the full training flow", "Brand guidelines, created with the project manager", "A handoff document with every frame and the brand guidelines"],
+      delivered: ["Wireframes for the full four-topic training module", "A working prototype of the full training flow", "Brand guidelines, created with the project manager", "A handoff document with all frames and the brand guidelines"],
       role: 'As the UI/UX designer, I took the design from the first project meetings to the handoff: the working wireframes and prototype the team followed. The screens on this page show the finished game, built from them by the 3D designer and game developers.',
       contributions: [
         'Took part in the project meetings and turned what was agreed into the training flow',
@@ -713,7 +803,7 @@ export const PROJECTS = {
         'Broke the four topics into 60+ step-by-step tasks, from setting up the transmission devices to authenticating the Electoral Board',
         'Designed the 360-degree machine view that the 3D and game developers built into the gamified experience',
         'Created the brand guidelines for the software’s visual identity with the project manager',
-        'Compiled the handoff document, pairing every frame with the brand guidelines',
+        'Compiled the handoff document, pairing each frame with the brand guidelines',
       ],
     },
   },
@@ -742,11 +832,11 @@ export const PROJECTS = {
       { src: psgs_screen_admin_enrollment, alt: 'PSGS admin enrollment', start: 2 },
     ],
     platform: {
-      overview: "PSGS brings the Philippine Society of General Surgeons' minimally invasive surgery training, across its junior, intermediate, and senior levels, into one platform. Surgeons compare programs, check course requirements, and follow announcements, while instructors and administrators manage courses and enrollment.",
+      overview: "PSGS brings the Philippine Society of General Surgeons' minimally invasive surgery training, across its junior, intermediate, and senior levels, into one platform. Residents compare programs, check course requirements, and follow announcements, while instructors and administrators manage courses and enrollment.",
       // (a line set large, then the paragraph under it)
       challenge: {
         lead: 'Residents were judging a training program by a page that explained almost nothing.',
-        text: "MIS Hybrid Online Learning runs in three levels, junior, intermediate, and senior. Each level has a module, a small group discussion or face-to-face workshop, and a post-test, open only to residents in eligible years. The landing page was the first thing residents saw, and it was plain and thin on detail. Behind it, instructors had to set up every course, and administrators had to enroll residents course by course.",
+        text: "MIS Hybrid Online Learning runs in three levels, junior, intermediate, and senior. Each level has a module, a small group discussion or face-to-face workshop, and a post-test, open only to residents in eligible years. The landing page was the first thing residents saw, and it was plain and thin on detail. Behind it, instructors had to set up each course, and administrators had to enroll residents course by course.",
       },
       approach: [
         {
@@ -764,7 +854,7 @@ export const PROJECTS = {
           title: "One platform, three workspaces",
           summary: "Separate modules for administrators, instructors, and students, each opening to its own work.",
           challenge: "Students, instructors, and administrators do different jobs, and one shared interface would bury each role's tools under the others'.",
-          text: "Students see each course as a card, color-coded by level, with its schedule, status, and the residency years it is open to. Instructors set up a course in one form: certificate, module type, eligible years, cost, facilitator, availability, and prerequisites, then save it as a draft or publish it. Administrators enroll residents per course, upload users, export lists, and answer support tickets.",
+          text: "Students see each course as a card, color-coded by level, with its schedule, status, and the residency years it is open to. Instructors set up a course in one form: certificate, module type, eligible years, cost, facilitator, availability, and prerequisites, then save it as a draft or publish it. Keeping it to one form puts what a resident checks before enrolling and what an administrator needs to manage enrollment in the same record. Administrators enroll residents per course, upload users, export lists, and answer support tickets.",
           rationale: "Nobody scrolls past another role’s tools to reach their own.",
           shots: { layout: 'web3', items: [
             { src: psgs_screen_student_dashboard, alt: 'PSGS student dashboard' },
@@ -824,7 +914,7 @@ export const PROJECTS = {
           title: "A front door for accreditation",
           summary: "One page that answers what schools come to AACCUP for.",
           challenge: "Schools, accreditors, and the public all land on the same page, each looking for something different.",
-          text: "I rebuilt the landing page around their questions: what AACCUP accredits and how, the accreditation instruments for every discipline, news and events, APQN awards, and resources ready to download.",
+          text: "I rebuilt the landing page around their questions: what AACCUP accredits and how, the accreditation instruments for each discipline, news and events, APQN awards, and resources ready to download.",
           rationale: "Each visitor finds their answer in its own section, without digging.",
           shots: { layout: 'bento', items: [
             { src: aaccup_decision_01_01, alt: 'AACCUP landing page sections' },
@@ -836,7 +926,7 @@ export const PROJECTS = {
           summary: "An admin side rebuilt around the records the agency keeps.",
           challenge: "The old admin sidebar showed a dashboard and three announcement tabs in no clear order, and its forms had too few fields to hold a real record.",
           text: "I organized the workspace into eight task-based sections, accreditor and institution management, finance, schedule, trainings, announcements, and evaluation, and rebuilt every form around the data users must enter.",
-          rationale: "Every record has room for its full details, and every page sits under the task it serves.",
+          rationale: "Records have room for their full details, and each page sits under the task it serves.",
           shots: { layout: 'bento', items: [
             { src: aaccup_decision_02_01, alt: 'AACCUP previous training form' },
             { src: aaccup_decision_02_02, alt: 'AACCUP redesigned create training form' },
@@ -847,9 +937,9 @@ export const PROJECTS = {
         },
         {
           title: "Nine roles, one system",
-          summary: "Every role designed from dashboard to profile, on one shared pattern.",
+          summary: "Nine roles designed from dashboard to profile, on one shared pattern.",
           challenge: "Nine roles share the platform, each with different records to manage and different things to see.",
-          text: "I designed every role’s pages, from dashboard to profile: super admin, admin, institution, accreditor, finance, QA, guest, monitoring, and content creator. Every role is built from the same UI components, each set up for its own tasks. Data tables share one toolbar for search, filters, custom columns, import, and export, and program records track level status, accreditation validity, and grace-period requests.",
+          text: "I designed the pages for all nine roles, from dashboard to profile: super admin, admin, institution, accreditor, finance, QA, guest, monitoring, and content creator. All nine share the same UI components, set up for each role’s tasks. Data tables share one toolbar for search, filters, custom columns, import, and export, and program records track level status, accreditation validity, and grace-period requests.",
           rationale: "Learn one table and you know them all, whatever your role.",
           shots: { layout: 'bento', items: [
             { src: aaccup_decision_03_01, alt: 'AACCUP admin overview' },
@@ -861,18 +951,18 @@ export const PROJECTS = {
         },
       ],
       delivered: ["Redesigned landing page", "Pages for all nine roles, from dashboard to profile", "A structured design file for project managers and developers"],
-      outcome: "Delivered to AACCUP. As the only designer, I covered every screen, from the public website to all nine role workspaces.",
+      outcome: "Delivered to AACCUP, from the public website to all nine role workspaces. The redesign is not live yet.",
       metrics: [
         { value: '1–2 days', label: 'From wireframe to prototype, for each design' },
         { value: '100+', label: 'Screens designed across the public website and nine role workspaces' },
         { value: '9', label: 'Roles designed, from dashboard to profile: super admin, admin, institution, accreditor, finance, QA, guest, monitoring, and content creator' },
       ],
-      role: "I was the only designer on AACCUP, responsible for every screen: the public website and all nine role workspaces, from dashboard to profile.",
+      role: "As AACCUP’s sole designer, I was responsible for the public website and all nine role workspaces, from dashboard to profile.",
       contributions: [
         'Rebuilt the public landing page around what visitors come for: accreditation, instruments by discipline, news, awards, and resources',
         'Turned a four-tab admin side into an eight-section workspace for running accreditation',
         'Rebuilt thin forms around the full records the agency keeps',
-        'Designed every page for all nine roles, from dashboard to profile',
+        'Designed the pages for all nine roles, from dashboard to profile',
         'Designed one data-table pattern, with search, filters, custom columns, import, and export, used across the platform',
         'Structured the design file so project managers and developers could find any screen quickly',
       ],
@@ -906,15 +996,15 @@ export const PROJECTS = {
       overview: "ARISE (Access to Resources and Innovations in Science Education) is a DOST-SEI program that supports science and mathematics teaching in the Philippines. Its platform gives teachers and students one place to discover learning resources, explore new teaching materials, and use digital tools, with a landing page that introduces the program, its partners, and how to register. It serves three roles: students, educators, and administrators.",
       // (a line set large, then the paragraph under it)
       challenge: {
-        lead: 'ARISE’s learning platforms had to feel like one.',
-        text: "ARISE puts DOST-SEI's free science and mathematics resources, from 21st CLEM and DOST-Courseware to SIMATAR and VLAS, in the hands of K-12 teachers and students. The platform was already live, and it showed its age: a landing page that told newcomers too little, and a student dashboard that dumped every resource into one grid. I took it over as the only designer and rebuilt it into one connected flow, from a newcomer's first visit to an administrator's daily work.",
+        lead: 'A live platform was dumping every resource into one grid.',
+        text: "ARISE puts DOST-SEI's free science and mathematics resources, from 21st CLEM and DOST-Courseware to SIMATAR and VLAS, in the hands of K-12 teachers and students. The platform was already live, and it showed its age: a landing page that told newcomers too little, and a student dashboard that dumped all resources into one grid. I took it over as the only designer and rebuilt it into one connected flow, from a newcomer's first visit to an administrator's daily work.",
       },
       approach: [
         {
-          title: "Every platform, introduced up front",
+          title: "The program, shown before sign-up",
           summary: "A landing page that sells the program before anyone registers.",
           challenge: "The previous landing page gave newcomers too little to go on, so the program had to be taken on trust.",
-          text: "I expanded it into full sections built around the client's content: every resource platform by type, how ARISE works, the teaching and learning it supports, and its reach across schools, all leading to one call to register.",
+          text: "I expanded it into full sections built around the client's content: each resource platform by type, how ARISE works, the teaching and learning it supports, and its reach across schools, all leading to one call to register.",
           rationale: "Visitors see what ARISE offers, and who stands behind it, before they commit.",
           shots: { layout: 'bento', items: [
             { src: arise_decision_01_01, alt: 'DOST ARISE landing page' },
@@ -925,7 +1015,7 @@ export const PROJECTS = {
         {
           title: "A dashboard that picks up where you left off",
           summary: "Resources grouped by what each student is doing, instead of one wall of cards.",
-          challenge: "The old dashboard showed every resource as one grid of identical cards, with no sign of what a student was in the middle of.",
+          challenge: "The old dashboard showed all resources as one grid of identical cards, with no sign of what a student was in the middle of.",
           text: "I redesigned the student journey, from onboarding to resource previews, added rewards through an account level with XP, badges, and a leaderboard, and rebuilt the dashboard around three questions: what to continue reading, what to continue watching, and what to review again.",
           rationale: "Students open the dashboard and land straight on their next lesson.",
           shots: { layout: 'bento', items: [
@@ -948,25 +1038,26 @@ export const PROJECTS = {
         },
       ],
       delivered: ["Expanded landing pages", "Redesigned student experience", "Administrator workspace prototypes", "22 reusable components"],
-      outcome: "Delivered to DOST-SEI, with the team closing the project at 100% sprint completion.",
+      outcome: "Delivered to DOST-SEI, with the team closing the project at 100% sprint completion. The redesign is not live yet.",
       metrics: [
         { value: '1–2 days', label: 'From wireframe to prototype, for each design, with one or two rounds of revision' },
         { value: '100%', label: 'Team sprint completion, with design delivered on time every sprint' },
         { value: '22', label: 'Reusable components, applied across the entire interface' },
       ],
-      role: 'I was the only designer on ARISE and owned every screen, from the public landing page to the administrator module.',
+      role: 'I owned the design from the public landing page to the administrator module.',
       contributions: [
         'Expanded the landing page into full sections around the client’s content, from the resource platforms to registration',
         'Redesigned the learning journey for students and educators, from onboarding to resource previews, with XP levels, badges, and a leaderboard designed to bring them back',
         'Regrouped the student dashboard into Continue Reading, Continue Watching, and Review Again',
         'Designed the administrator workspace: content manager, forum, library, and user management',
-        'Built a library of 22 reusable components used across every screen',
+        'Built a library of 22 reusable components used across the platform',
         'Connected the experience into one flow, from a newcomer’s first visit to an administrator’s daily work',
       ],
     },
   },
   courseware: {
     path: '/dost-courseware',
+    count: 5,
     title: 'DOST Courseware',
     short: 'Science and math lessons, from Grade 3 to Senior High',
     year: '2023',
@@ -995,14 +1086,14 @@ export const PROJECTS = {
       // (a line set large, then the paragraph under it)
       challenge: {
         lead: 'Five lessons existed only as scripts, and nothing could be built until they became screens.',
-        text: "DOST’s courseware rolls out lesson by lesson through the school year. Each lesson starts as a storyboard from the project manager, pages of scenes and dialogue between characters like Paul, Dina, and Auntie, and ends as a working gamified lesson built by the content department. Between the two sat an empty Figma file, and the content department could not start until every scene in it was designed.",
+        text: "DOST’s courseware rolls out lesson by lesson through the school year. Each lesson starts as a storyboard from the project manager, pages of scenes and dialogue between characters like Paul, Dina, and Auntie, and ends as a working gamified lesson built by the content department. Between the two sat an empty Figma file, and the content department could not start until all its scenes were designed.",
       },
       approach: [
         {
           title: "From storyboard to screen",
           summary: "Pages of script, turned into scenes a young learner can step into.",
           challenge: "A storyboard describes each scene in words, and a learner needs to see it, hear the characters, and tap through it.",
-          text: "Each lesson got its own Figma file, built scene by scene from its storyboard, with every scene staged around the characters the content department provided.",
+          text: "Each lesson got its own Figma file, built scene by scene from its storyboard, with each scene staged around the characters the content department provided.",
           rationale: "The lesson stays exactly as the storyboard wrote it, now in a world a learner wants to explore.",
           shots: { layout: 'grid', items: [
             { src: courseware_decision_01_02, alt: 'DOST Courseware solid, liquid, and gas, balloon scene' },
@@ -1013,9 +1104,9 @@ export const PROJECTS = {
         },
         {
           title: "Lessons learners can interact with",
-          summary: "Every lesson asks the learner to do something, not just watch.",
+          summary: "Each lesson asks the learner to do something, not just watch.",
           challenge: "Learners from Grade 3 to Senior High needed to take part in each lesson, not just read it.",
-          text: "Each storyboard set out its activities, and I designed how every one of them looks and plays across the five lessons, such as pouring and pumping activities for solids, liquids, and gases, a cone-bearing tree life cycle where learners pick out each structure, drag-and-drop exercises, and picture-choice and multiple-choice questions that close each lesson’s assessment.",
+          text: "The courseware is a game at heart, so every lesson follows one format: story scenes, then activities, then an assessment. Each storyboard set out its activities, and I designed how they look and play across the five lessons, such as pouring and pumping activities for solids, liquids, and gases, a cone-bearing tree life cycle where learners pick out each structure, drag-and-drop exercises, and picture-choice and multiple-choice questions that close each lesson’s assessment.",
           rationale: "Learners test each idea with their own hands, which a page of text cannot offer.",
           shots: { layout: 'grid', items: [
             { src: courseware_decision_02_04, alt: 'DOST Courseware pouring activity' },
@@ -1028,7 +1119,7 @@ export const PROJECTS = {
           title: "A prototype in days, not weeks",
           summary: "Each lesson ready to build in two to three days.",
           challenge: "The content department’s schedule depended on how fast the screens arrived.",
-          text: "I took each lesson from storyboard to wireframe and working prototype in 2 to 3 days, cleared review in one or two rounds, and handed over every screen and design asset, from the title screen to the last assessment question.",
+          text: "I took each lesson from storyboard to wireframe and working prototype in two to three days, cleared review in one or two rounds, and handed over all screens and design assets, from the title screen to the last assessment question.",
           rationale: "The content department built each gamified lesson from ready screens instead of a blank page.",
           shots: { layout: 'grid', items: [
             { src: courseware_screen_02, alt: 'DOST Courseware solid, liquid, and gas title screen' },
@@ -1043,13 +1134,97 @@ export const PROJECTS = {
       metrics: [
         { value: '2–3 days', label: 'From storyboard to wireframe and working prototype, per lesson' },
         { value: '5', label: 'Lessons designed: three for Grade 3, one for Grade 6, and one for Senior High, each in its own Figma file' },
-        { value: '~100', label: 'Screens designed for each lesson' },
+        { value: '500+', label: 'Screens designed across the five lessons' },
       ],
-      role: 'I was the only designer on DOST Courseware and owned five lessons, from Grade 3 science to Senior High math, from the first storyboard page to a working prototype, every scene and interaction included.',
+      role: 'Working alone on design, I owned five lessons, from Grade 3 science to Senior High math, from the first storyboard page to a working prototype, every scene and interaction included.',
       contributions: [
         'Designed five lessons, three for Grade 3, one for Grade 6, and one for Senior High, each in its own Figma file, scene by scene from its storyboard',
-        'Designed the screens for every activity the storyboards called for, from pouring and life-cycle activities to the assessment',
+        'Designed the screens for each activity the storyboards called for, from pouring and life-cycle activities to the assessment',
         'Handed finished screens and design assets to the content department to build each gamified lesson',
+      ],
+    },
+  },
+  vlas: {
+    path: '/dost-vlas',
+    count: 6,
+    title: 'DOST VLAS',
+    short: 'Biology lab modules for junior high school learners',
+    year: '2023',
+    description: 'Six biology modules for DOST-SEI’s Virtual Laboratory Application in Science, a lab simulator that brings hands-on science to students in schools without a laboratory.',
+    category: 'Mobile App / Client Project',
+    roles: ['UI/UX Designer'],
+    technologies: [],
+    status: 'Delivered to client',
+    cover: vlas_mockup_card,
+    screenshots: [
+      { src: vlas_mockup_cover, alt: 'DOST VLAS mock-up', start: 'full' },
+      { src: vlas_screen_01, alt: 'DOST VLAS Cell Cycle, Mitosis, and Meiosis title screen', start: 2 },
+      { src: vlas_screen_02, alt: 'DOST VLAS introduction with Mr. Curious', start: 4 },
+      { src: vlas_screen_08, alt: 'DOST VLAS genotype and phenotype activity', start: 4 },
+      { src: vlas_screen_16, alt: 'DOST VLAS chi-square test for linkage', start: 1 },
+      { src: vlas_screen_04, alt: 'DOST VLAS assessment question', start: 3 },
+    ],
+    platform: {
+      overview: 'VLAS, the Virtual Laboratory Application in Science, is DOST-SEI’s interactive 360° and 3D science lab simulator. It is designed for students in resource-limited schools, to bridge the gap between science theory and hands-on laboratory work, and its biology modules build core competencies and basic science process skills for junior high school students.',
+      // (a line set large, then the paragraph under it)
+      challenge: {
+        lead: 'Students without a laboratory still needed lab work.',
+        text: 'In resource-limited schools, students learn science from theory, with no lab to try it in. VLAS brings that practice to them. Each of its six biology modules began as a storyboard from the content team, and each had to become screens a learner could work through, from the first lesson to the assessment.',
+      },
+      approach: [
+        {
+          title: 'Six modules, one structure',
+          summary: 'Each module follows the same path, from its title screen to its assessment.',
+          challenge: 'Six modules, each from its own storyboard, had to feel like one application.',
+          text: 'I designed all six modules on the same sequence: a title screen, an introduction, a pre-lab discussion, activities, and an assessment, from Cell Cycle, Mitosis, and Meiosis to Mutations.',
+          rationale: 'Learners always know where they are in a module, and what comes next.',
+          shots: { layout: 'grid', items: [
+            { src: vlas_screen_01, alt: 'DOST VLAS Cell Cycle, Mitosis, and Meiosis title screen' },
+            { src: vlas_screen_05, alt: 'DOST VLAS Mendelian Genetics title screen' },
+            { src: vlas_screen_13, alt: 'DOST VLAS Linkage title screen' },
+            { src: vlas_screen_21, alt: 'DOST VLAS Mutations title screen' },
+          ] },
+        },
+        {
+          title: 'A guide in every lesson',
+          summary: 'One familiar character presents the lessons across all six modules.',
+          challenge: 'Each module opens with dense biology, from chromosomes to the central dogma.',
+          text: 'I staged each introduction and pre-lab discussion around Mr. Curious, the guide from the storyboards, with the lesson text beside him and a large visual of the concept.',
+          rationale: 'A recurring guide and a fixed layout let learners focus on the concept, not on finding their way around the screen.',
+          shots: { layout: 'grid', items: [
+            { src: vlas_screen_02, alt: 'DOST VLAS introduction with Mr. Curious' },
+            { src: vlas_screen_07, alt: 'DOST VLAS pre-lab discussion of genetics terms' },
+            { src: vlas_screen_10, alt: 'DOST VLAS introduction to nucleic acids' },
+            { src: vlas_screen_19, alt: 'DOST VLAS pre-lab discussion of DNA, genes, and chromosomes' },
+          ] },
+        },
+        {
+          title: 'Practice before the assessment',
+          summary: 'Hands-on activities in each module, then a short assessment.',
+          challenge: 'A lab simulator only works if learners do something, not just read.',
+          text: 'I designed the activities each storyboard called for, from building genotypes and phenotypes to matching shapes and working through a chi-square test for linkage, and the assessment that closes each module.',
+          rationale: 'Learners apply each concept before they are tested on it.',
+          shots: { layout: 'grid', items: [
+            { src: vlas_screen_08, alt: 'DOST VLAS genotype and phenotype activity' },
+            { src: vlas_screen_11, alt: 'DOST VLAS shape matching activity' },
+            { src: vlas_screen_16, alt: 'DOST VLAS chi-square test for linkage' },
+            { src: vlas_screen_04, alt: 'DOST VLAS assessment question' },
+          ] },
+        },
+      ],
+      role: 'As the only designer on VLAS’s biology modules, I took six of them from the content team’s storyboards to working prototypes, every screen and interaction included.',
+      contributions: [
+        'Designed six biology modules: Cell Cycle, Mitosis, and Meiosis; Mendelian Genetics; Linkage; Nucleic Acids DNA and RNA; Central Dogma of Molecular Biology; and Mutations',
+        'Set one structure for all six modules: title screen, introduction, pre-lab discussion, activities, and assessment',
+        'Staged the introductions and pre-lab discussions around Mr. Curious, the modules’ guide',
+        'Designed the activities and assessments, from genotype exercises to the chi-square test for linkage',
+        'Handed over the screens and design assets for the final build',
+      ],
+      outcome: 'Delivered to DOST-SEI. The six modules were built from my wireframes and prototypes; the screens on this page are from the final build.',
+      metrics: [
+        { value: '1–2 days', label: 'From storyboard to wireframe and working prototype, per module' },
+        { value: '6', label: 'Biology modules designed, from Cell Cycle, Mitosis, and Meiosis to Mutations' },
+        { value: '500+', label: 'Screens designed across the six modules' },
       ],
     },
   },
@@ -1196,7 +1371,7 @@ export const PROJECTS = {
     title: 'Design System',
     short: 'Design system for a company central application',
     year: '2024',
-    description: "A design system I started for the Central App and built from scratch in Figma, so every screen is designed and developed from one set of 40+ components.",
+    description: "A design system I started for the Central App and built from scratch in Figma, so each screen is designed and developed from one set of 40+ components.",
     category: 'Design System / Team Project',
     roles: ['UI/UX Designer'],
     technologies: ['Figma'],
@@ -1223,15 +1398,15 @@ export const PROJECTS = {
       // (a line set large, then the paragraph under it)
       challenge: {
         lead: 'Every project rebuilt its buttons from scratch.',
-        text: "Across the projects I designed at the company, the same components kept coming out different: buttons, sidebar layouts, and other UI patterns changed from one project to the next, and developers rebuilt them every time. When the Central App started from a blank file, it was the chance to break the pattern with one set of components, designed once and documented well enough to build from.",
+        text: "Across the projects I designed at the company, the same components kept coming out different: buttons, sidebar layouts, and other UI patterns changed from one project to the next, and developers rebuilt them each time. When the Central App started from a blank file, it was the chance to break the pattern with one set of components, designed once and documented well enough to build from.",
       },
       approach: [
         {
           title: "Foundations first",
           summary: "A shared foundation layer, defined before a single component was built.",
           challenge: "Fixing components one at a time would not stop the next screen, or the next project, from drifting.",
-          text: "I established the foundations first, defining color tokens, the type scale, spacing, radius, elevation, and iconography as the rules every component would inherit.",
-          rationale: "When every component starts from the same rules, consistency is built in rather than enforced screen by screen.",
+          text: "I established the foundations first, defining color tokens, the type scale, spacing, radius, elevation, and iconography as the rules all components would inherit.",
+          rationale: "When all components start from the same rules, consistency is built in rather than enforced screen by screen.",
           shots: { layout: 'bento', items: [
             { src: pci_decision_01_01, alt: 'Central App type scale' },
             { src: pci_decision_01_02, alt: 'Central App elevation' },
@@ -1242,7 +1417,7 @@ export const PROJECTS = {
           title: "Light and dark from the start",
           summary: "A complete color system that adapts to each user’s preferred mode.",
           challenge: "The Central App needed to suit users who prefer light or dark interfaces.",
-          text: "I specified every color token in both light and dark values, so the entire interface adapts to each user’s preference without separate designs.",
+          text: "I specified each color token in both light and dark values, so the entire interface adapts to each user’s preference without separate designs.",
           rationale: "Designing both modes into the system from day one makes dark mode a first-class experience rather than an afterthought.",
           shots: { layout: 'bento', items: [
             { src: pci_decision_02_01, alt: 'Central App dashboard in light mode' },
@@ -1252,7 +1427,7 @@ export const PROJECTS = {
         {
           title: "Documented for developers",
           summary: "Component documentation precise enough to build from without guesswork.",
-          challenge: "A component library only helps developers if every value they need is written down.",
+          challenge: "A component library only helps developers if the values they need are written down.",
           text: "I documented each of the 40+ components with its variants, interaction states, and exact specifications.",
           rationale: "The developer found the specs made consistent components much easier to build, so the build stayed true to the design.",
           shots: { layout: 'bento', items: [
@@ -1262,7 +1437,7 @@ export const PROJECTS = {
           ] },
         },
       ],
-      role: "I was the only designer on the Central App, and I started its design system on my own initiative, building it from scratch in Figma.",
+      role: "On the Central App, where I was the only designer, I started its design system on my own initiative and built it from scratch in Figma.",
       contributions: [
         "Started a design system for the Central App, so it would not repeat the mismatched components of earlier projects",
         "Defined the foundations: light and dark color tokens, the type scale, spacing, radius, elevation, and icons",
@@ -1274,7 +1449,7 @@ export const PROJECTS = {
         { value: '100+', label: 'Screens designed from the design system' },
         { value: '1–2 days', label: 'To design a screen from wireframe to prototype with the design system' },
         { value: '40+', label: 'Reusable components, documented with variants, states, and exact values' },
-        { value: '2', label: 'Color modes, with light and dark values defined for every token' },
+        { value: '2', label: 'Color modes, with light and dark values for each token' },
       ],
     },
   },

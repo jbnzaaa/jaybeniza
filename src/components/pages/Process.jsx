@@ -13,10 +13,10 @@ const TENOR = 'https://media1.tenor.com/m/';
 
 // how a project runs with me, start to finish
 const STEPS = [
-  { id: 'understand', title: 'Understand', text: 'I start by listening. I learn who the product is for, what they need, and what the business wants from it.', gif: `${TENOR}QS_ZPNPtKjsAAAAM/star-atlas-solana.gif`, alt: 'A clip from Star Atlas' },
-  { id: 'explore', title: 'Explore', text: 'I map user flows and sketch wireframes, trying a few directions before settling on one.', gif: `${TENOR}pKaWNBpzW68AAAAM/run-lord-of-the-rings.gif`, alt: 'Bilbo running off on an adventure' },
-  { id: 'design', title: 'Design', text: 'I turn the strongest direction into high-fidelity screens and a prototype, built on a consistent design system.', gif: `${TENOR}bCUkRcXp8JYAAAAM/painting-bob-ross.gif`, alt: 'Bob Ross painting' },
-  { id: 'build', title: 'Refine', text: 'I stay close to developers through handoff, test every role’s flow for consistent data and UX issues, and keep refining until it works as well as it looks.', gif: `${TENOR}KVABpmsCXRAAAAAM/smoothening-edges-teddy-safarian.gif`, alt: 'Sanding the edges of wood smooth' },
+  { id: 'understand', title: 'Understand', text: 'I start with the brief, the storyboard, or the people who’ll use it, and learn what each role needs before drawing anything.', gif: `${TENOR}QS_ZPNPtKjsAAAAM/star-atlas-solana.gif`, alt: 'A clip from Star Atlas' },
+  { id: 'explore', title: 'Explore', text: 'I map the flow for each role first. On AACCUP that meant nine, from super admin to guest, before a single screen.', gif: `${TENOR}pKaWNBpzW68AAAAM/run-lord-of-the-rings.gif`, alt: 'Bilbo running off on an adventure' },
+  { id: 'design', title: 'Design', text: 'I design on a system of shared components, so screen 100 is as consistent as screen 1.', gif: `${TENOR}bCUkRcXp8JYAAAAM/painting-bob-ross.gif`, alt: 'Bob Ross painting' },
+  { id: 'build', title: 'Refine', text: 'I stay close to developers through handoff, and test every role’s flow for consistent data and UX issues before launch.', gif: `${TENOR}KVABpmsCXRAAAAAM/smoothening-edges-teddy-safarian.gif`, alt: 'Sanding the edges of wood smooth' },
 ];
 
 /**

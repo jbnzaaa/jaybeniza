@@ -97,7 +97,7 @@ function WorkGrid({ items }) {
 
   return (
     <ul className='work-grid' ref={fxGrid}>
-      {items.map(({ key, title, label, to, action, cover, picture, empty }, i) => {
+      {items.map(({ key, title, count, label, to, action, cover, picture, empty }, i) => {
         const item = (
           <>
             {/* the card - the cover. wipes open on scroll (start state:
@@ -119,6 +119,12 @@ function WorkGrid({ items }) {
             <div className='work-item-info pt-4'>
               <h2 className='flex flex-wrap font-flexible font-medium leading-none text-heading'>
                 <SplitText text={title} id={`animate-work-${key}`} />
+                {/* how many projects the card stands for, set as the nav's counts */}
+                {count != null && (
+                  <sup className='nav-count'>
+                    <SplitText text={`[${count}]`} id={`animate-work-${key}`} />
+                  </sup>
+                )}
               </h2>
               <p className='flex flex-wrap text-copy text-muted mt-2'>
                 <SplitText text={label} id={`animate-work-${key}`} by='word' />

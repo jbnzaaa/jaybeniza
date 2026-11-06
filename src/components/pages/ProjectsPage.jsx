@@ -42,6 +42,8 @@ const ITEMS = [
   ...BY_YEAR.map((id) => ({
     key: id,
     title: PROJECTS[id].title,
+    // (a card that stands for several projects - lessons, modules - says how many)
+    count: PROJECTS[id].count,
     label: label(PROJECTS[id]),
     to: PROJECTS[id].path,
     cover: COVERS[id],

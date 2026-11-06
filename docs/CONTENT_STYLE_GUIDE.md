@@ -140,7 +140,7 @@ The rule: name what's missing and say that it's coming. Never show "No data" alo
 ## 8. Formatting
 
 - **Ranges:** an en dash with no spaces: "1–2 days", "Within 1–3 months". For date ranges, an en dash with spaces: "May 2024 – October 2026".
-- **Numbers:** use numerals for anything measured ("25 web and mobile products", "500+ screens", "9 roles"). Spell out numbers in running prose where they read better ("one to two rounds of revision").
+- **Numbers:** use numerals on metric cards and for counts ("25 web and mobile products", "500+ screens", "9 roles"). Spell out small numbers and durations in running prose ("two to three days", "one or two rounds of revision"), and never mix the two styles in one sentence.
 - **Arrows** only in metrics showing change: "5 → 2".
 - **Years and kinds:** "2025 / Award", "2023 / Web Platform".
 - **Currency:** peso sign with no space ("₱25,000").
@@ -160,7 +160,19 @@ The rule: name what's missing and say that it's coming. Never show "No data" alo
 
 ---
 
-## 10. Weak vs Strong (from this site)
+## 10. Repetition Watch-List
+
+These are words and patterns this site leans on. Each is fine once; across a page they read as a template.
+
+| Pattern | Rule |
+|---|---|
+| "every" | At most twice per case study. Prefer "each", "the", or the actual number ("all nine roles"). |
+| "I was the only designer on …" | Say it once per case study, in the role statement or the challenge, not both. Vary the opening across projects ("Working alone on design…", "As its sole designer…"). |
+| The role restated in the outcome | The outcome states the result. The role statement says who did it. |
+| "1–2 days" | Once per page, on the metric card. |
+| Quotes | Not on project pages. Testimonials live only in What Others Say. |
+
+## 11. Weak vs Strong (from this site)
 
 | Weak (earlier or current) | Strong |
 |---|---|
@@ -174,3 +186,6 @@ The rule: name what's missing and say that it's coming. Never show "No data" alo
 | "BiteWise decision 01, screen 1" | "BiteWise eating style and dietary restrictions" |
 | "Timeline" (next to a hint about duration) | "When do you want to start?" |
 | "I prefer careful decisions to loud ones…" | (removed: it gave the reader nothing to evaluate) |
+| "Delivered to AACCUP. As the only designer, I covered every screen, from the public website to all nine role workspaces." | "Delivered to AACCUP, from the public website to all nine role workspaces." |
+| "Every record has room for its full details, and every page sits under the task it serves." | "Records have room for their full details, and each page sits under the task it serves." |
+| "Fields marked * are required." (extra line) | A true asterisk after each required label, and nothing more |

@@ -65,7 +65,7 @@ const SERVICES = [
   {
     id: 'design-systems',
     title: 'Design Systems',
-    text: 'I build design systems teams can use: component libraries with clear states and rules, documented color and type styles, and handoff files developers can build from without guessing.',
+    text: 'I build design systems from the foundations up. For the Central App: 40+ components in light and dark modes, each documented with its states and exact values, so developers build without guessing.',
     includes: [
       { label: 'Component libraries', figure: rack, gif: `${TENOR}2YH2HLiOdB4AAAAM/legal-eagle-puts-on-glasses.gif`, alt: 'Putting on glasses, ready to get started' },
       { label: 'Color and typography styles', figure: ramp, gif: `${TENOR}5lLcKZgmIhgAAAAM/american-psycho-patrick-bateman.gif`, alt: 'Patrick Bateman admiring a business card' },

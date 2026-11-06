@@ -26,7 +26,7 @@ const ROLES = [
     company: 'PCI Tech Center',
     dates: 'March 2023 – May 2024',
     bullets: [
-      'Designed 500+ screens across 16 projects (5 web platforms, 11 mobile apps), all delivered to clients.',
+      'Designed 1,000+ screens across 16 projects (5 web platforms, 11 mobile apps), all delivered to clients.',
       'Clarified requirements with project managers and developers, wrote implementation-ready specs, and reviewed built screens against the design.',
       'Delivered developer-ready handoffs within 1–2 days of each request, helping the team reach 100% sprint completion.',
       'Helped run a UI/UX knowledge-sharing workshop for the company’s interns.',

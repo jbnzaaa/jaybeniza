@@ -282,6 +282,7 @@ function App() {
                 <Route path='/regain' element={<Regain/>}/>
                 <Route path='/portfolio-2026' element={<ProjectPage id='portfoliov3'/>}/>
                 {/* work shown with permission (projects.js) */}
+                <Route path='/rover' element={<ProjectPage id='rover'/>}/>
                 <Route path='/gurover' element={<ProjectPage id='gurover'/>}/>
                 <Route path='/comelec-acm' element={<ProjectPage id='comelec'/>}/>
                 <Route path='/psgs' element={<ProjectPage id='psgs'/>}/>
@@ -289,6 +290,7 @@ function App() {
                 <Route path='/aaccup' element={<ProjectPage id='aaccup'/>}/>
                 <Route path='/dost-arise' element={<ProjectPage id='arise'/>}/>
                 <Route path='/dost-courseware' element={<ProjectPage id='courseware'/>}/>
+                <Route path='/dost-vlas' element={<ProjectPage id='vlas'/>}/>
                 {/* case studies in progress */}
                 {/* (the project's key is still its first name, tingi; so is
                   its old address, which is sent on) */}
