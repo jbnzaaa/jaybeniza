@@ -9,19 +9,21 @@ import Button from '../common/Button'
 // the CV the hero's Download CV button downloads
 import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 
-// (what the headline does not say: how long, what kind of work, and that I am available)
-const HIGHLIGHT_TEXT = 'UI/UX and product designer with 3.5+ years of experience designing 25 web and mobile products, most for government, education, and research clients. I also build my designs as AI-assisted front-ends with Claude Code.';
+// (what the headline does not say: how long, what kind of work, and how far I take it)
+const HIGHLIGHT_TEXT = 'For over 3.5 years, I’ve been designing digital experiences that bring ideas to life and make complex interactions feel effortless. With experience across 24 web and mobile products, I combine thoughtful design, practical problem-solving, and AI-assisted development to create solutions that work beyond the screen.';
 
 // the headline, broken into three set lines from tablet width up. on a
 // phone it is one sentence left to wrap where the screen ends it: set as
 // the two lines there, "what" was pushed onto a line of its own and the
 // second line still started fresh under it
 const PROFESSION_LINES = [
-  'I pay attention',
-  'to what others',
-  'might overlook.',
+  'I see the friction',
+  'hiding in everyday',
+  'interactions.',
 ];
 const PROFESSION = PROFESSION_LINES.join(' ');
+// the words that say what I do, set in the pixel face (.split-emphasis)
+const EMPHASIS = ['friction', 'interactions'];
 
 /**
  * The landing page's first screen, on the light theme: the headline at the
@@ -49,23 +51,23 @@ function Hero() {
     <>
       {/* hero container - one screen tall. top padding clears the nav bar */}
       <section id='hero' className='theme-light flex flex-col justify-between min-h-screen-safe
-        mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-16
-        tablet:px-[1rem] tablet:pt-20 tablet:pb-8 tablet:gap-y-16
-        laptop:px-[2rem] laptop:pt-24 laptop:pb-10 laptop:gap-y-16
-        laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-16
-        desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'>
+        mobile:px-[1rem] mobile:pt-20 mobile:pb-4 mobile:gap-y-16
+        tablet:px-[1rem] tablet:pt-20 tablet:pb-4 tablet:gap-y-16
+        laptop:px-[2rem] laptop:pt-24 laptop:pb-8 laptop:gap-y-16
+        laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-8 laptop-lg:gap-y-16
+        desktop:px-[3rem] desktop:pt-28 desktop:pb-8 desktop:gap-y-16'>
         {/* headline - the three lines, or on a phone the one sentence. its
           name carries the role, for search and screen readers */}
         <h1 aria-label={`UI/UX & product designer: ${PROFESSION}`}>
           {PROFESSION_LINES.map((line) => (
             <span key={line} aria-hidden='true' className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.95] tracking-tight
               text-hero mobile:hidden'>
-              <SplitText text={line} id='animate-hero-profession' />
+              <SplitText text={line} id='animate-hero-profession' emphasis={EMPHASIS} />
             </span>
           ))}
           <span aria-hidden='true' className='hero-designerdev hidden mobile:flex flex-wrap font-flexible font-bold leading-[.95] tracking-tight
             text-hero'>
-            <SplitText text={PROFESSION} id='animate-hero-profession' />
+            <SplitText text={PROFESSION} id='animate-hero-profession' emphasis={EMPHASIS} />
           </span>
         </h1>
         {/* description, along the bottom on the left; See work and

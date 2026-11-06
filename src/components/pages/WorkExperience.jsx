@@ -14,10 +14,11 @@ const ROLES = [
     company: 'PCI Tech Center',
     dates: 'May 2024 – October 2026',
     bullets: [
-      'Led UI/UX design for 10 projects, from web and mobile platforms to a 3D training game, often as the only designer, taking each from client requirements to user flows, prototypes, and high-fidelity UI in 1–2 days per design.',
-      'Ran moderated usability and role-based test sessions on 4 platforms, including Rover, GuRover, and AACCUP, turning the documented feedback into simpler, more consistent flows across each platform.',
-      'Designed and built 2 web and mobile apps with Claude Code, Rover and GuRover, working with developers to resolve technical constraints.',
-      'Started the Central App’s design system on my own initiative: 40+ documented components in light and dark modes, used to design 100+ screens.',
+      'Led end-to-end UI/UX design for 10 web and mobile products, including enhancement phases for 2 platforms first designed in 2023–2024, translating client requirements into user flows, prototypes, and development-ready interfaces delivered within 1–2 days of each request.',
+      'Conducted moderated usability and role-based testing across 4 platforms, redesigning key workflows to reduce task steps by up to 60%.',
+      'Designed and built front-end interfaces for 2 applications using Claude Code, supporting one production launch and one client pilot.',
+      'Established a Figma design system with 40+ documented components and light/dark variants, standardizing UI patterns across 100+ screens.',
+      'Delivered a 3D training game’s UI/UX design package, interactive prototype, and brand guidelines within 3 days, ahead of schedule.',
     ],
   },
   {
@@ -26,10 +27,9 @@ const ROLES = [
     company: 'PCI Tech Center',
     dates: 'March 2023 – May 2024',
     bullets: [
-      'Designed 1,000+ screens across 16 projects (5 web platforms, 11 mobile apps), all delivered to clients.',
-      'Clarified requirements with project managers and developers, wrote implementation-ready specs, and reviewed built screens against the design.',
-      'Delivered developer-ready handoffs within 1–2 days of each request, helping the team reach 100% sprint completion.',
-      'Helped run a UI/UX knowledge-sharing workshop for the company’s interns.',
+      'Designed 1,000+ screens across 16 client products, producing wireframes, prototypes, and high-fidelity web and mobile interfaces.',
+      'Collaborated with project managers and developers to clarify requirements, prepare implementation-ready specifications, and review developed interfaces.',
+      'Delivered developer-ready handoffs within 1–2 days of requests; co-facilitated a UI/UX workshop introducing interns to design workflows and tools.',
     ],
   },
 ];
@@ -103,7 +103,9 @@ function WorkExperience() {
                   text-copy
                   '>
                   {role.bullets.map((bullet, i) => (
-                    <li key={i} className='entry-container m-0'>
+                    <li key={i} className='entry-container m-0 flex gap-x-3'>
+                      {/* the bullet marker, shown as the line reveals beside it */}
+                      <span aria-hidden='true' className='shrink-0 text-muted'>•</span>
                       <p className='entry-line text-muted'>
                         <SplitText text={bullet} id={`animate-work-${role.id}`} by='word' sentence />
                       </p>

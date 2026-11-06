@@ -15,11 +15,13 @@ The site speaks as Jay, in the first person, to one reader. The voice is calm, s
 
 ### Five voice principles
 
-**1. Specific over impressive**
-- **What it means:** name the actual thing: the form, the role, the number, the user.
+**1. Specific over impressive, but a story, not an inventory**
+- **What it means:** each section makes one clear claim in plain language (what was wrong, what I decided, why it helps), backed by one or two real details.
 - **When:** case studies, Work Experience, service descriptions.
-- **Avoid:** adjectives that judge your own work ("carefully composed", "powerful", "seamless").
+- **Avoid:** adjectives that judge your own work ("carefully composed", "powerful", "seamless"). Also avoid lists of fields, roles, or features inside sentences: those belong in the screenshots, the metrics, or the "Delivered" list.
 - **Example:** "Attendance feeds the SF2 and SF9 report card templates, so nothing is typed twice."
+- **Weak (inventory):** "Instructors set up a course in one form: certificate, module type, eligible years, cost, facilitator, availability, and prerequisites…"
+- **Strong:** "Instructors set up a full course in a single form, so the details residents rely on and the details administrators manage live in one place."
 
 **2. Honest about who did what**
 - **What it means:** separate your work from the team's, and say what isn't measured.
@@ -140,7 +142,7 @@ The rule: name what's missing and say that it's coming. Never show "No data" alo
 ## 8. Formatting
 
 - **Ranges:** an en dash with no spaces: "1–2 days", "Within 1–3 months". For date ranges, an en dash with spaces: "May 2024 – October 2026".
-- **Numbers:** use numerals on metric cards and for counts ("25 web and mobile products", "500+ screens", "9 roles"). Spell out small numbers and durations in running prose ("two to three days", "one or two rounds of revision"), and never mix the two styles in one sentence.
+- **Numbers:** use numerals on metric cards and for counts ("24 web and mobile products", "500+ screens", "9 roles"). Spell out small numbers and durations in running prose ("two to three days", "one or two rounds of revision"), and never mix the two styles in one sentence.
 - **Arrows** only in metrics showing change: "5 → 2".
 - **Years and kinds:** "2025 / Award", "2023 / Web Platform".
 - **Currency:** peso sign with no space ("₱25,000").

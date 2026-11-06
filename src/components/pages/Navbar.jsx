@@ -166,7 +166,7 @@ function Navbar() {
             <TransitionLink to='/' onClick={toTopIfHere('/')} aria-label='jaybeniza - Jay Beniza, home'>
               <span className='logo block font-flexible font-medium leading-none cursor-pointer tracking-tighter
                 text-logo'>
-                <SplitText text='jaybeniza' id='animate-nav' />
+                <SplitText text='jaybeniza' id='animate-nav' emphasis={{ letters: [0, 1, 2] }} />
               </span>
             </TransitionLink>
           </div>

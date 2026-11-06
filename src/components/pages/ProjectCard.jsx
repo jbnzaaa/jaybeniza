@@ -35,6 +35,8 @@ export const PROJECT_CARDS = [
   {
     id: 'comelec',
     title: 'COMELEC',
+    // (ELEC, for elections: the card's short title has no word to stress)
+    emphasis: { letters: [3, 4, 5, 6] },
     to: '/comelec-acm',
     image: null,
     picture: comelec_cover,

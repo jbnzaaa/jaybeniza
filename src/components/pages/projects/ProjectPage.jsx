@@ -14,7 +14,7 @@ import { pixelToggle } from '../../../utils/pixels'
 // per-letter text split
 import SplitText from '../../common/SplitText'
 // every project's content - for the link to the next one
-import { PROJECTS } from './projects'
+import { PROJECTS, titleEmphasis } from './projects'
 // the archive's projects - which run in their own order
 import { ARCHIVE } from './archive'
 // the closing section - the landing page's contact block, here leading
@@ -213,7 +213,7 @@ function Cards({ id, items }) {
             </p>
             {/* (a one-line name sits at the foot of its row, by its note) */}
             <h3 className={`self-end flex flex-wrap font-flexible font-medium leading-none ${CARD_NAME} mb-4`}>
-              <SplitText text={item.title} id='animate-card' />
+              <SplitText text={item.title} id='animate-card' emphasis='letters' />
             </h3>
             <p className='self-start flex flex-wrap text-caption text-muted'>
               <SplitText text={item.text} id='animate-card' by='word' />
@@ -229,7 +229,7 @@ function Cards({ id, items }) {
 function Lead({ id, text, className = '' }) {
   return (
     <h3 className={`flex flex-wrap font-flexible font-medium leading-[.95] tracking-tight text-heading ${className}`}>
-      <SplitText text={text} id={`animate-case-${id}`} />
+      <SplitText text={text} id={`animate-case-${id}`} emphasis='letters' />
     </h3>
   )
 }
@@ -721,11 +721,11 @@ function ProjectPage({ project: given, id }) {
           right; year, role, category and the link to the live site along
           the bottom. top padding clears the fixed nav bar */}
         <section id='case-hero' className={`${LIGHT} flex flex-col justify-between min-h-screen-safe
-          mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-16
-          tablet:px-[1rem] tablet:pt-20 tablet:pb-8 tablet:gap-y-16
-          laptop:px-[2rem] laptop:pt-24 laptop:pb-10 laptop:gap-y-16
-          laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-16
-          desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16`}>
+          mobile:px-[1rem] mobile:pt-20 mobile:pb-4 mobile:gap-y-16
+          tablet:px-[1rem] tablet:pt-20 tablet:pb-4 tablet:gap-y-16
+          laptop:px-[2rem] laptop:pt-24 laptop:pb-8 laptop:gap-y-16
+          laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-8 laptop-lg:gap-y-16
+          desktop:px-[3rem] desktop:pt-28 desktop:pb-8 desktop:gap-y-16`}>
           <div className='grid grid-cols-8 gap-x-6 gap-y-8'>
             <h1 ref={fxTitle} className='project-h1 hero-designerdev flex flex-wrap content-start font-flexible font-bold leading-[.95] tracking-tight
               mobile:col-span-8 text-case
@@ -733,7 +733,7 @@ function ProjectPage({ project: given, id }) {
               laptop:col-span-5
               laptop-lg:col-span-5
               desktop:col-span-5'>
-              <SplitText text={project.title} id='animate-case-hero' />
+              <SplitText text={project.title} id='animate-case-hero' emphasis={titleEmphasis(project.title)} />
             </h1>
             {/* summary - upper right */}
             <p className='flex flex-wrap content-start text-caption

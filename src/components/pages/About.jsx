@@ -17,7 +17,7 @@ gsap.registerPlugin(ScrollTrigger)
 // what to take away about me, set large
 // (one paragraph per entry, each set under the one before)
 const PARAGRAPHS = [
-  'I look for the extra step: the attendance a teacher types twice, the record an agency splits across four tabs. Then I design it out. On some projects I also build the front-end myself with Claude Code, so the details I designed reach the final product.',
+  'I pay attention to where digital experiences fall short, from confusing user flows to overlooked interaction details. I translate those challenges into intuitive interfaces and scalable design systems, then bridge design and development through AI-assisted tools.',
 ];
 
 /**
@@ -25,17 +25,18 @@ const PARAGRAPHS = [
  * foot the button to the full About page (AboutPage.jsx). The tag reveals
  * first, then the statement rises into its lines in the muted text colour,
  * and its words turn to the full text colour one by one, in reading
- * order, as the page is scrolled - back again if it is scrolled up. From
- * laptop width up the section is pinned to the screen until every word
- * has turned. The button reveals itself as it comes into view.
+ * order, as the page is scrolled - back again if it is scrolled up. The
+ * button reveals itself as it comes into view.
  */
 function About() {
   const fxSection = useRef();
 
   useEffect(() => {
     const section = fxSection.current;
+    // (the first paragraph triggers the reveal; the words of both
+    // paragraphs rise and darken, in reading order)
     const paragraph = section.querySelector('.about-statement');
-    const words = paragraph.querySelectorAll('.split-letter');
+    const words = section.querySelectorAll('.about-statement .split-letter');
 
     // the statement rises into its lines once the tag has revealed: in
     // its turn among the section's reveals (scrollReveal.js), which puts
@@ -54,16 +55,13 @@ function About() {
       stagger: 1,
       scrollTrigger: { ...scrollTrigger, scrub: true },
     });
-    // at every width the section holds the screen for a screen and a half
-    // of scrolling - the words turning over that stretch - then moves on.
-    // it is held from when its top reaches the top; on a phone where it is
-    // taller than the screen, from when its foot reaches the foot instead,
-    // so all of it is on screen while it is held
+    // the words turn as the statement scrolls up through the screen - from
+    // its top a fifth of the way up to its foot just past the middle - with
+    // nothing held: the page scrolls on as it does
     const held = darken({
-      trigger: section,
-      start: () => (section.offsetHeight > window.innerHeight ? 'bottom bottom' : 'top top'),
-      end: '+=150%',
-      pin: true,
+      trigger: paragraph.parentElement,
+      start: 'top 80%',
+      end: 'bottom 45%',
       invalidateOnRefresh: true,
     });
 
@@ -79,19 +77,18 @@ function About() {
 
   return (
     <>
-      {/* about container - full width, at least one screen tall: it holds
-        the screen while it is pinned, at every width */}
+      {/* about container - full width, at least one screen tall */}
       <div id='about'>
-        <section data-pinned className='theme-light flex flex-col justify-between min-h-screen-safe
-          mobile:px-[1rem] mobile:py-16 mobile:gap-y-10
-          tablet:px-[1rem] tablet:py-16 tablet:gap-y-12
-          laptop:px-[2rem] laptop:py-20 laptop:gap-y-12
-          laptop-lg:px-[3rem] laptop-lg:py-24 laptop-lg:gap-y-12
-          desktop:px-[3rem] desktop:py-28 desktop:gap-y-16'
+        <section className='theme-light flex flex-col justify-between min-h-screen-safe
+          mobile:px-[1rem] mobile:pt-16 mobile:pb-4 mobile:gap-y-10
+          tablet:px-[1rem] tablet:pt-16 tablet:pb-4 tablet:gap-y-12
+          laptop:px-[2rem] laptop:pt-20 laptop:pb-8 laptop:gap-y-12
+          laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-8 laptop-lg:gap-y-12
+          desktop:px-[3rem] desktop:pt-28 desktop:pb-8 desktop:gap-y-16'
           ref={fxSection}>
           <div>
             <Tag label='About the Designer' id='animate-about-tag' />
-            {/* the statement, in its two paragraphs - body face, at the lead step of the type scale
+            {/* the statement - body face, at the lead step of the type scale
               (size: .about-paragraph, App.css). its letters start below
               their lines, like all text that reveals */}
             <div className='flex flex-col

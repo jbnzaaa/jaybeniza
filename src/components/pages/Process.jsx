@@ -11,7 +11,15 @@ import SplitText from '../common/SplitText'
 import HalftoneGif from '../common/HalftoneGif'
 const TENOR = 'https://media1.tenor.com/m/';
 
-// how a project runs with me, start to finish
+// how a project runs with me, start to finish. `emphasis` is the part of
+// its title set in the pixel face (SplitText): STAND in UNDERSTAND, PLORE
+// in EXPLORE, SIGN in DESIGN, FINE in REFINE
+const EMPHASIS = {
+  understand: { letters: [5, 6, 7, 8, 9] },
+  explore: { letters: [2, 3, 4, 5, 6] },
+  design: { letters: [2, 3, 4, 5] },
+  build: { letters: [2, 3, 4, 5] },
+};
 const STEPS = [
   { id: 'understand', title: 'Understand', text: 'I start with the brief, the storyboard, or the people who’ll use it, and learn what each role needs before drawing anything.', gif: `${TENOR}QS_ZPNPtKjsAAAAM/star-atlas-solana.gif`, alt: 'A clip from Star Atlas' },
   { id: 'explore', title: 'Explore', text: 'I map the flow for each role first. On AACCUP that meant nine, from super admin to guest, before a single screen.', gif: `${TENOR}pKaWNBpzW68AAAAM/run-lord-of-the-rings.gif`, alt: 'Bilbo running off on an adventure' },
@@ -71,7 +79,7 @@ function Process({ light = false }) {
                   </div>
                   <div className='p-6 pt-0'>
                     <h3 className='flex flex-wrap font-flexible font-medium leading-none text-heading mb-4'>
-                      <SplitText text={step.title} id={`animate-process-${step.id}`} />
+                      <SplitText text={step.title} id={`animate-process-${step.id}`} emphasis={EMPHASIS[step.id]} />
                     </h3>
                     <p className='flex flex-wrap text-copy text-muted'>
                       <SplitText text={step.text} id={`animate-process-${step.id}`} by='word' />

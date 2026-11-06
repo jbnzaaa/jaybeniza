@@ -242,7 +242,7 @@ function ProjectRequest() {
           laptop:col-span-4
           laptop-lg:col-span-4
           desktop:col-span-4'>
-          <SplitText text={HEADLINE} id='animate-request' />
+          <SplitText text={HEADLINE} id='animate-request' emphasis={['Project']} />
         </h1>
         {/* introduction + the form - right */}
         <div className='

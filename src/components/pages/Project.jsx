@@ -13,6 +13,8 @@ import Button from '../common/Button'
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// the part of a project's title set in the pixel face
+import { titleEmphasis } from './projects/projects'
 // the pictures open in pixels
 import { pixelReveal, pixelToggle } from '../../utils/pixels'
 
@@ -139,7 +141,7 @@ function Project() {
                     desktop:items-end'>
                     <span className='project-name font-flexible font-medium leading-[.95] tracking-tight whitespace-nowrap
                       text-project mobile:text-title tablet:text-title'>
-                      <SplitText text={project.title} id={`animate-project-${project.id}`} />
+                      <SplitText text={project.title} id={`animate-project-${project.id}`} emphasis={project.emphasis || titleEmphasis(project.title)} />
                     </span>
                     <span className='project-label shrink-0 flex flex-wrap text-copy text-muted
                       mobile:justify-start mobile:text-left

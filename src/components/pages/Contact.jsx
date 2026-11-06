@@ -73,7 +73,7 @@ const nextLinks = (next, previous, current) => [
  *   ask the bar to hide (data-nav-cover, Navbar.jsx)
  */
 function Contact({ page = false, projects = false, next, previous, current }) {
-  const heading = next ? next.title : projects ? PROJECTS_HEADING : 'Get in Touch';
+  const heading = next ? next.title : projects ? PROJECTS_HEADING : 'Let’s build something';
   const text = next ? brief(next.description) : projects ? PROJECTS_TEXT : `${QUESTION} ${SUPPORT}`;
   const links = next ? nextLinks(next, previous, current) : projects ? PROJECTS_LINKS : LINKS;
   useEffect(() => {
@@ -102,7 +102,7 @@ function Contact({ page = false, projects = false, next, previous, current }) {
             desktop:col-span-5 desktop:row-start-1'>
             {/* (leading on to a project, the heading only names it: the
               way there is the "Next project" link beside it) */}
-            <SplitText text={heading} id='animate-contact' />
+            <SplitText text={heading} id='animate-contact' emphasis={next || projects ? [] : ['build']} />
           </h2>
           {/* invitation + links - right */}
           <div className='text-copy

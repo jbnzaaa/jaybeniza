@@ -11,10 +11,10 @@ import sentenceCase from '../../utils/sentenceCase'
 
 // everything I work with, grouped by the kind of work - design first
 const GROUPS = [
-  { id: 'product-design', title: 'Product Design', items: ['User Flows', 'Information Architecture', 'Interaction Design', 'Wireframing', 'Prototyping', 'High-Fidelity UI', 'Responsive Design', 'Design Systems', 'Design Handoff', 'Usability Testing'] },
-  { id: 'front-end-development', title: 'AI-Assisted Front-End', items: ['HTML5', 'CSS3', 'SASS/SCSS', 'JavaScript', 'React.js', 'Bootstrap', 'Tailwind CSS'] },
-  { id: 'tools', title: 'Design & Development Tools', items: ['Figma', 'Figma AI', 'Claude Code', 'Jira', 'Adobe Photoshop', 'Adobe Illustrator', 'VS Code', 'Git'] },
-  { id: 'ways-of-working', title: 'Ways of Working', items: ['Agile/Scrum', 'Cross-Functional Collaboration'] },
+  { id: 'product-design', title: 'UX & Product Design', items: ['User Research', 'Usability Testing', 'User Flows', 'Information Architecture', 'Interaction Design', 'Wireframing', 'Prototyping'] },
+  { id: 'ui-design-systems', title: 'UI & Design Systems', items: ['User Interface Design', 'Responsive Design', 'Component Libraries', 'Design Systems', 'Design Documentation'] },
+  { id: 'front-end-development', title: 'AI-Assisted Front-End', items: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Tailwind CSS', 'Sass/SCSS', 'Bootstrap'] },
+  { id: 'tools', title: 'Tools & Collaboration', items: ['Figma', 'Claude Code', 'Jira', 'Git', 'Visual Studio Code', 'Agile/Scrum', 'Developer Handoff'] },
 ];
 
 /**

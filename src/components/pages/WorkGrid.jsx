@@ -9,6 +9,8 @@ import { TransitionLink } from '../common/PageTransition'
 import { REVEAL_AT, inTurn, revealTrigger } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// the part of a project's title set in the pixel face
+import { titleEmphasis } from './projects/projects'
 // the covers open in pixels
 import { pixelReveal } from '../../utils/pixels'
 // its letters open in pixels as they rise
@@ -118,7 +120,7 @@ function WorkGrid({ items }) {
               them (the effect above) */}
             <div className='work-item-info pt-4'>
               <h2 className='flex flex-wrap font-flexible font-medium leading-none text-heading'>
-                <SplitText text={title} id={`animate-work-${key}`} />
+                <SplitText text={title} id={`animate-work-${key}`} emphasis={titleEmphasis(title)} />
                 {/* how many projects the card stands for, set as the nav's counts */}
                 {count != null && (
                   <sup className='nav-count'>

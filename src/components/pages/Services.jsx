@@ -54,7 +54,8 @@ const SERVICES = [
   {
     id: 'product-design',
     title: 'UI/UX Design',
-    text: 'I design web and mobile products from research to final interface: mapping the user flows, prototyping the key screens, and testing every role’s flow before launch, so data stays consistent and UX issues are caught early.',
+    emphasis: ['UI/UX'],
+    text: 'I design web and mobile products from research to final interface. I map how each role moves through the product, prototype the screens that matter most, and test the flows in moderated sessions before launch, so problems surface while they are still easy to fix.',
     includes: [
       { label: 'User flows', figure: route, gif: `${TENOR}4LvAD8hD5tcAAAAM/charlie-day.gif`, alt: 'Charlie Day explaining a conspiracy board' },
       { label: 'Wireframes and high-fidelity UI', figure: wire, gif: `${TENOR}JtzTo08HZY4AAAAM/jarvis-iron-man.gif`, alt: 'Tony Stark giving JARVIS commands' },
@@ -65,7 +66,8 @@ const SERVICES = [
   {
     id: 'design-systems',
     title: 'Design Systems',
-    text: 'I build design systems from the foundations up. For the Central App: 40+ components in light and dark modes, each documented with its states and exact values, so developers build without guessing.',
+    emphasis: ['Systems'],
+    text: 'I build design systems from the foundations up, so a product stays consistent as it grows and developers build from clear specs instead of guesses. The Central App system I started covers 40+ components in light and dark modes.',
     includes: [
       { label: 'Component libraries', figure: rack, gif: `${TENOR}2YH2HLiOdB4AAAAM/legal-eagle-puts-on-glasses.gif`, alt: 'Putting on glasses, ready to get started' },
       { label: 'Color and typography styles', figure: ramp, gif: `${TENOR}5lLcKZgmIhgAAAAM/american-psycho-patrick-bateman.gif`, alt: 'Patrick Bateman admiring a business card' },
@@ -77,7 +79,8 @@ const SERVICES = [
   {
     id: 'development',
     title: 'Design to Code',
-    text: 'I turn my Figma designs into working web and mobile apps with Claude Code, and work with developers on the technical limits. I have built 2 apps this way: Rover and GuRover.',
+    emphasis: ['Code'],
+    text: 'I take my own Figma designs into working web and mobile front-ends with Claude Code, and work alongside developers on the technical limits. Rover and GuRover were both built this way.',
     includes: [
       { label: 'React and Tailwind CSS builds', figure: atom, gif: `${TENOR}fTor6GW-vvoAAAAM/bumblebee-transformer.gif`, alt: 'Bumblebee transforming', trim: [.14, .14] },
       { label: 'AI-assisted builds with Claude Code', figure: key, gif: `${TENOR}XgaU95K_XiwAAAAM/kermit-typing.gif`, alt: 'Kermit typing furiously' },
@@ -116,7 +119,7 @@ const below = (i, el) => el.offsetHeight * 1.05;
  * another in the card; only the one whose turn it is (`active`) is shown,
  * and its first figure is drawn in when `drawn` says so.
  */
-function ServicePanel({ id, title, text, includes, detailed, active, drawn }) {
+function ServicePanel({ id, title, text, emphasis, includes, detailed, active, drawn }) {
   // which of the things it covers is drawn
   const [shown, setShown] = useState(0);
   // whether that drawing is being played: while its row is pointed at or
@@ -158,7 +161,7 @@ function ServicePanel({ id, title, text, includes, detailed, active, drawn }) {
           laptop-lg:p-6 laptop-lg:gap-y-20
           desktop:p-6 desktop:gap-y-24'>
           <h3 className='flex flex-wrap font-flexible font-medium leading-none text-heading'>
-            <SplitText text={title} id={`animate-service-${id}`} />
+            <SplitText text={title} id={`animate-service-${id}`} emphasis={emphasis} />
           </h3>
           <div className='flex flex-col gap-y-4'>
             <p className='flex flex-wrap text-copy'>
@@ -399,12 +402,12 @@ function Services({ detailed = false }) {
 
   return (
     <>
-      <section id='what-i-do' data-pinned ref={fxSection} className='bg-surface
-        mobile:px-[1rem] mobile:py-16
-        tablet:px-[1rem] tablet:py-16
-        laptop:px-[2rem] laptop:py-20
-        laptop-lg:px-[3rem] laptop-lg:py-24
-        desktop:px-[3rem] desktop:py-28'>
+      <section id='what-i-do' data-pinned ref={fxSection} className='bg-surface flex flex-col min-h-screen-safe
+        mobile:px-[1rem] mobile:pt-16 mobile:pb-4
+        tablet:px-[1rem] tablet:pt-16 tablet:pb-4
+        laptop:px-[2rem] laptop:pt-20 laptop:pb-8
+        laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-8
+        desktop:px-[3rem] desktop:pt-28 desktop:pb-8'>
         <Tag label='Areas of Expertise' id='animate-services-tag' />
         <div className='reveal-card overflow-hidden bg-black
           mobile:mt-6
@@ -422,12 +425,12 @@ function Services({ detailed = false }) {
           </div>
         </div>
         {/* the way from the services to a project request */}
-        <div className='flex
-          mobile:mt-6
-          tablet:mt-8
-          laptop:mt-8
-          laptop-lg:mt-10
-          desktop:mt-10'>
+        <div className='flex mt-auto
+          mobile:pt-6
+          tablet:pt-8
+          laptop:pt-8
+          laptop-lg:pt-10
+          desktop:pt-10'>
           <Button label='Start a project' to='/get-in-touch' />
         </div>
       </section>

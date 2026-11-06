@@ -30,8 +30,8 @@ import { usePageTitle } from '../../utils/pageTitle'
 // experience entries below it - nothing here that they do not back up
 // the introduction: the page's first screen
 const INTRO = [
-  "I'm Jay Beniza, a UI/UX and product designer in the Philippines. For 3.5 years I've designed platforms for schools, agencies, and government bodies, often as the only designer on the team. I'm quiet by nature, so I listen closely and notice the details others pass over.",
-  'I work from research to final interface and stay close to developers through handoff, so the design survives the build.',
+  "I'm Jay Beniza, a UI/UX and Product Designer based in the Philippines with 3.5+ years of experience designing web and mobile products.",
+  'I focus on the details that shape how people experience a product, turning complex workflows into intuitive interfaces through research, prototyping, and design systems in Figma. Beyond design, I use Claude Code to bring my ideas into functional interfaces, bridging the gap between design and development.',
 ];
 
 // no word is left on its own at a line's end or start: a short word (I,
@@ -266,7 +266,7 @@ function AboutPage() {
             laptop:col-span-5 laptop:row-start-1
             laptop-lg:col-span-5 laptop-lg:row-start-1
             desktop:col-span-5 desktop:row-start-1'>
-            <SplitText text='Work With Me' id='animate-about-page-resume' />
+            <SplitText text='Hiring or Building?' id='animate-about-page-resume' emphasis={['Building?']} />
           </h2>
           {/* description + links - right */}
           <div className='text-copy

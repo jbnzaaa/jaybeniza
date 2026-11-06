@@ -225,11 +225,11 @@ function Testimonials({ dark = false }) {
   return (
     <>
       <section id='testimonials' ref={fxSection} className={`${dark ? 'bg-surface' : 'theme-light'} flex flex-col justify-between min-h-screen-safe
-        mobile:px-[1rem] mobile:py-16 mobile:gap-y-10
-        tablet:px-[1rem] tablet:py-16 tablet:gap-y-12
-        laptop:px-[2rem] laptop:py-20 laptop:gap-y-12
-        laptop-lg:px-[3rem] laptop-lg:py-24 laptop-lg:gap-y-12
-        desktop:px-[3rem] desktop:py-28 desktop:gap-y-16`}>
+        mobile:px-[1rem] mobile:pt-16 mobile:pb-4 mobile:gap-y-10
+        tablet:px-[1rem] tablet:pt-16 tablet:pb-4 tablet:gap-y-12
+        laptop:px-[2rem] laptop:pt-20 laptop:pb-8 laptop:gap-y-12
+        laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-8 laptop-lg:gap-y-12
+        desktop:px-[3rem] desktop:pt-28 desktop:pb-8 desktop:gap-y-16`}>
         <div>
           <Tag label='What Others Say' id='animate-testimonials-tag' />
           {/* the reviews, one over another in one grid cell, so the room is

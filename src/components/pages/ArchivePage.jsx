@@ -80,7 +80,7 @@ function ArchivePage() {
           {HEADLINE_LINES.map((line) => (
             <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.95] tracking-tight
               text-hero'>
-              <SplitText text={line} id='animate-archive-page' />
+              <SplitText text={line} id='animate-archive-page' emphasis={['explorations,']} />
             </span>
           ))}
         </h1>

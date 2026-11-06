@@ -23,6 +23,14 @@
   font-weight: 100 900;
   font-display: swap;
 }
+/* emphasis in titles (.split-emphasis, .split-pixel) - Jersey 10, a
+   heavy pixel face, one weight, Latin only (OFL), slanted by transform (it has no italic) */
+@font-face {
+  font-family: "Jersey 10";
+  src: url("../fonts/Jersey10-Regular.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
 /* text content - Gilgan, one regular weight */
 @font-face {
   font-family: "Gilgan";
@@ -754,6 +762,96 @@
   transform: translateY(1.35em);
 }
 
+/* a title's emphasised words and letters (SplitText `emphasis`): the
+   pixel face, so the words that say what I do stand out from the rest.
+   the word's clip box keeps the title's size, so its height, its line
+   and its spacing are the line's own; only the letters are set larger -
+   1.4 times, where Jersey 10's capitals (.536em) stand as tall as Ayr
+   Garon's (.75em) - on a line as tall as the title's, so they sit on its
+   baseline. their rise starts as far below as the other letters' does
+   (1.35em of the title, in their larger em). titles only: body text
+   keeps one face */
+* body .font-flexible .split-emphasis .split-letter,
+* body .font-flexible .split-pixel {
+  font-family: "Jersey 10", "Ayr Garon", serif;
+  font-weight: 400;
+  font-size: 1.4em;
+  line-height: calc(1em / 1.4);
+}
+
+/* the letters that rise start as far below as the title's do */
+* body .font-flexible .split-emphasis .split-letter,
+* body .font-flexible .split-letter.split-pixel {
+  transform: translateY(calc(1.35em / 1.4));
+}
+
+/* a pixel letter inside a word split whole (a long title) rises with
+   its word, so it stays where it is set */
+* body .font-flexible .split-letter .split-pixel {
+  display: inline-block;
+}
+
+/* the slant, 10 degrees. it leans about the middle of the capitals - half
+   their height above the baseline, the middle of the glyph's box and 44%
+   of a title word's clip box - so a letter tips as far left at its foot
+   as right at its head, and its neighbours on both sides get the same
+   room. (no pixel face has an italic of its own) */
+
+/* a whole word slants with its clip box, so the slant never leans out of
+   the box that clips it: a little more room each side, given back in the
+   margins so the word gap only grows by .03em a side */
+* body .font-flexible:not(.logo) .split-emphasis.split-letter-clip {
+  transform: skewX(-10deg);
+  transform-origin: 50% 44%;
+  padding: 0 0.1em;
+  margin-left: -0.07em;
+  margin-right: calc(var(--word-gap, 0.28em) - 0.07em);
+}
+
+/* a single letter slants inside its own span (the span may be the one
+   that rises) */
+* body .font-flexible .split-pixel-glyph {
+  display: inline-block;
+  transform: skewX(-10deg);
+  transform-origin: 50% 50%;
+  font: inherit;
+  line-height: inherit;
+}
+
+/* the same clear room each side of a run of pixel letters, .03em (in the
+   pixel letter's em), so the two faces never touch and the word still
+   reads as one. on each side it has to clear more than that: the slant,
+   which leans a letter's foot .047em to the left and its head .047em to
+   the right, and the title's tight tracking (about .018em). Jersey 10
+   keeps .054em of its own on the right of each letter and none on the
+   left: .095em is given on the left, .041em more on the right.
+   letters within a run (the logo's "jay") keep the font's spacing */
+* body .font-flexible .split-pixel {
+  margin-left: 0.095em;
+  margin-right: 0.041em;
+}
+
+* body .font-flexible .split-pixel + .split-pixel {
+  margin-left: 0;
+}
+
+* body .font-flexible .split-pixel:has(+ .split-pixel) {
+  margin-right: 0;
+}
+
+/* a run that starts or ends its word has no neighbour on that side: no
+   room on its left, so a title that opens with pixel letters (AACCUP,
+   GuRover) lines up with the titles above and below it; and none of the
+   font's on its right, so the gap to the next word is the title's own */
+* body .font-flexible .split-letter-clip > .split-pixel:first-child {
+  margin-left: 0;
+}
+
+* body .font-flexible .split-letter-clip > .split-pixel:last-child,
+* body .font-flexible .split-emphasis .split-letter:last-child {
+  margin-right: -0.054em;
+}
+
 /* a headline's words sit in clip boxes tall enough for every letter -
    Ayr Garon's capitals from .118em to the baseline at .868em of a 1em
    line, and its commas and descenders to 1.106em - but the lines are set
@@ -1181,8 +1279,7 @@
   * body .about-paragraph {
     font-size: clamp(1.25rem, 1.05rem + 1vw, 1.625rem);
   }
-}
-* body .cta-button-small {
+}* body .cta-button-small {
   padding: 0.25rem 0.25rem 0.25rem 0.5rem;
 }
 
