@@ -13,8 +13,6 @@ import Preloader from './components/common/Preloader';
 import { PageTransitionProvider } from './components/common/PageTransition';
 // the square cursor
 import Cursor from './components/common/Cursor';
-// the way back to the top, in the screen's lower right corner
-import ToTop from './components/common/ToTop';
 // button hover
 import { enableHoverRoll } from './utils/hoverRoll';
 // one re-measure of the page a frame, however many ask
@@ -33,6 +31,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 // background (below), so moving to one never waits on the network
 const PAGES = {
   about: () => import('./components/pages/AboutPage'),
+  services: () => import('./components/pages/ServicesPage'),
   work: () => import('./components/pages/ProjectsPage'),
   contact: () => import('./components/pages/ContactPage'),
   archive: () => import('./components/pages/ArchivePage'),
@@ -43,6 +42,7 @@ const PAGES = {
   regain: () => import('./components/pages/projects/Regain'),
 };
 const AboutPage = lazy(PAGES.about);
+const ServicesPage = lazy(PAGES.services);
 const ProjectsPage = lazy(PAGES.work);
 const ContactPage = lazy(PAGES.contact);
 const ArchivePage = lazy(PAGES.archive);
@@ -126,18 +126,20 @@ function App() {
       // how long the page takes to catch up with the wheel, in seconds:
       // long enough that the steps of a mouse wheel run together into
       // one glide. (at 1 each step could be felt, and the page arrived
-      // abruptly; the reveals no longer need it short - they start
-      // earlier on the screen now, scrollReveal.js)
-      smooth: 1.2,
+      // abruptly; at 1.2, on top of the wheel's own easing below, the
+      // page trailed so far behind the wheel it felt heavy)
+      smooth: .8,
       // touch screens get a light version of the same easing (off by
       // default there) - short, so the page still follows the finger
       smoothTouch: .1,
       // how far the page moves for a turn of the wheel, against the
       // browser's own distance: under it, so the page is drawn past
       // rather than thrown. (at .85 a turn of the wheel went too far too
-      // quickly)
-      speed: .55,
-      effects: true,
+      // quickly; at .55 the page took too many turns to move through)
+      speed: .7,
+      // no element uses data-speed or data-lag, so the smoother is not
+      // asked to check for them on every frame
+      effects: false,
     });
 
     // phones and tablets. a touch browser scrolls on its own thread and
@@ -158,11 +160,22 @@ function App() {
     // itself - a long text box, an open list - which keeps the wheel)
     const WHEEL_MAX = 1800;
     let owed = 0;
+    // (the answer is kept for the element under the pointer: a mouse wheel
+    // sends dozens of events a second, and walking up the page reading
+    // each element's styles for every one of them made the wheel lag)
+    let checked = null;
+    let checkedAnswer = false;
     const scrollsItself = (el) => {
+      if (el === checked) return checkedAnswer;
+      checked = el;
+      checkedAnswer = false;
       for (let node = el; node && node !== document.body; node = node.parentElement) {
-        if (node.scrollHeight > node.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(node).overflowY)) return true;
+        if (node.scrollHeight > node.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(node).overflowY)) {
+          checkedAnswer = true;
+          break;
+        }
       }
-      return false;
+      return checkedAnswer;
     };
     const onWheel = (e) => {
       if (e.ctrlKey || smoother.paused() || scrollsItself(e.target)) return;
@@ -174,9 +187,10 @@ function App() {
       owed = gsap.utils.clamp(-window.innerHeight * 1.5, window.innerHeight * 1.5, owed);
     };
     // (what is owed is paid a share at a time - most of it within a
-    // quarter of a second - so one light turn of the wheel starts gently
-    // and tails off, instead of arriving all in the next frame)
-    const SHARE = 6;
+    // tenth of a second - so one light turn of the wheel starts gently
+    // and tails off, instead of arriving all in the next frame. the
+    // smoother's glide does the rest; at 6 the two together lagged)
+    const SHARE = 10;
     const pay = (_time, delta) => {
       if (!owed) return;
       const most = WHEEL_MAX * delta / 1000;
@@ -266,7 +280,6 @@ function App() {
         {/* outside the smoother: its transformed content would make
           position: fixed scroll away with the page */}
         {entered && <Navbar/>}
-        {entered && <ToTop/>}
         <div id='smooth-wrapper'>
           <div id='smooth-content'>
             {entered && (
@@ -275,6 +288,7 @@ function App() {
               <Routes>
                 <Route path='/' element={<Home/>}/>
                 <Route path='/about' element={<AboutPage/>}/>
+                <Route path='/services' element={<ServicesPage/>}/>
                 <Route path='/work' element={<ProjectsPage/>}/>
                 <Route path='/archive' element={<ArchivePage/>}/>
                 <Route path='/archive/:id' element={<ArchiveProject/>}/>
@@ -282,8 +296,8 @@ function App() {
                 {/* the routes' earlier names */}
                 <Route path='/projects' element={<Navigate to='/work' replace/>}/>
                 <Route path='/contact' element={<Navigate to='/get-in-touch' replace/>}/>
-                {/* the What I Do page is gone: its services are on the landing page */}
-                <Route path='/what-i-do' element={<Navigate to='/' replace/>}/>
+                {/* the What I Do page's old address: the services page */}
+                <Route path='/what-i-do' element={<Navigate to='/services' replace/>}/>
                 <Route path='/dailydiscount' element={<DailyDiscount/>}/>
                 <Route path='/jbnza' element={<Jbnza/>}/>
                 <Route path='/jaysonbeniza' element={<Jaysonbeniza/>}/>

@@ -16,6 +16,9 @@ const GAMMA = 1.15;
 const MOST = .6;
 // the canvas is drawn at no more than this many device pixels a CSS pixel
 const MAX_RATIO = 1.5;
+// building up (draw.build): the share of the build a single dot takes to
+// grow to size; the rest is spread over when each one starts
+const GROW = .3;
 
 // the dots are drawn on the graphics card: one pass over the canvas, each
 // pixel working out which cell it is in, how light the picture is at that
@@ -32,6 +35,7 @@ uniform vec2 u_size;
 uniform float u_cell;
 uniform vec4 u_crop;
 uniform vec3 u_ink;
+uniform float u_build;
 void main() {
   vec2 p = vec2(gl_FragCoord.x, u_size.y - gl_FragCoord.y);
   vec2 center = (floor(p / u_cell) + 0.5) * u_cell;
@@ -39,6 +43,10 @@ void main() {
   float grey = dot(texture2D(u_tex, uv).rgb, vec3(0.299, 0.587, 0.114));
   float light = clamp((grey - 0.5) * ${CONTRAST.toFixed(3)} + 0.5, 0.0, 1.0);
   float radius = u_cell * ${MOST.toFixed(3)} * pow(light, ${GAMMA.toFixed(3)});
+  // building up: each cell's dot comes in at its own moment, picked at
+  // random by the cell, and grows to size over the last part of the build
+  float seed = fract(sin(dot(floor(p / u_cell), vec2(12.9898, 78.233))) * 43758.5453);
+  radius *= clamp((u_build - seed * ${(1 - GROW).toFixed(3)}) / ${GROW.toFixed(3)}, 0.0, 1.0);
   float alpha = clamp(radius - length(p - center) + 0.5, 0.0, 1.0);
   gl_FragColor = vec4(u_ink * alpha, alpha);
 }`;
@@ -87,13 +95,14 @@ function cover(boxW, boxH, pw, ph) {
  * @param {HTMLCanvasElement} canvas
  * @param {Element} box - what the canvas covers, for its size
  * @param {number} [cell] - a cell's side in CSS pixels
- * @returns {((picture: CanvasImageSource, width: number, height: number, trim?: number[]) => void) & {dispose: () => void}}
+ * @returns {((picture: CanvasImageSource, width: number, height: number, trim?: number[]) => void) & {build: (amount: number) => void, dispose: () => void}}
  */
 export function halftone(canvas, box, cell = CELL) {
   const gl = canvas.getContext('webgl', { premultipliedAlpha: true, antialias: false, preserveDrawingBuffer: false });
   const prog = gl && program(gl);
   if (!prog) {
     const none = () => {};
+    none.build = () => {};
     none.dispose = () => {};
     return none;
   }
@@ -114,8 +123,10 @@ export function halftone(canvas, box, cell = CELL) {
   const uSize = at('u_size');
   const uCell = at('u_cell');
   const uCrop = at('u_crop');
+  const uBuild = at('u_build');
   gl.uniform3fv(at('u_ink'), INK);
   gl.uniform1i(at('u_tex'), 0);
+  gl.uniform1f(uBuild, 1);
 
   const draw = (picture, pw, ph, trim) => {
     const ratio = Math.min(window.devicePixelRatio || 1, MAX_RATIO);
@@ -141,6 +152,8 @@ export function halftone(canvas, box, cell = CELL) {
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   };
+  // how far the dots have built up, 0 (none) to 1 (all, at full size)
+  draw.build = (amount) => gl.uniform1f(uBuild, amount);
   draw.dispose = () => {
     gl.deleteTexture(texture);
     gl.deleteBuffer(buffer);

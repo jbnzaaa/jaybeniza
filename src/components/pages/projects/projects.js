@@ -1368,7 +1368,7 @@ export const PROJECTS = {
   // cover is its light colour palette)
   pci: {
     path: '/pci-central-app',
-    title: 'Design System',
+    title: 'Central App Design System',
     short: 'Design system for a company central application',
     year: '2024',
     description: "A design system I started for the Central App and built from scratch in Figma, so each screen is designed and developed from one set of 40+ components.",

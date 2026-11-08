@@ -120,6 +120,14 @@
   color: var(--text);
 }
 
+/* the open page's link: full strength - black over the light sections,
+   white over the dark, as the bar inverts - and the rest a mid grey on
+   either (.nav-blend, below) */
+
+
+
+
+
 /* the count beside a link (Work [11]): smaller, its top level with the
    top of the word's capitals, and in the link's own colour - muted while
    idle, full when the page is open or hovered (Navbar.jsx). the link is a
@@ -422,10 +430,6 @@
   top: 0.125rem;
 }
 
-* body .testimonial-avatar {
-  filter: grayscale(1);
-}
-
 * body .service-art {
   --hairline-plate: #1B1A1A;
   --hairline-hi: #E5E4E3;
@@ -458,9 +462,8 @@
 /* a service's gif, in the drawing's place (Services.jsx): the card's full
    height and its column's full width, no padding round it - laid over the
    column from laptop width up, where the text beside it sets the height;
-   stacked below it, at 4:3. shown as its service comes in. it is drawn
-   in halftone dots on a canvas (HalftoneGif.jsx); opened in pixels as the
-   Work page's covers are (Services.jsx) */
+   stacked below it, at 4:3. it is drawn in halftone dots on a canvas
+   (HalftoneGif.jsx) */
 * body .service-gif {
   position: relative;
   width: 100%;
@@ -554,8 +557,9 @@
    link and a hovered one are pure white, which inverts exactly - black
    over the light sections, white over the dark. the other links are a
    solid mid grey, which comes out a mid grey over both, so the open page
-   stands out wherever the bar is. (a see-through tone came out a muddy
-   grey that changed with the section) */
+   stands out wherever the bar is. (a lighter grey inverted to near black
+   over the light sections, as dark as the open page; over the pictures,
+   where any grey is lost, the bar is not blended - .nav-plain) */
 * body .nav-blend {
   --ground: #1B1A1A;
   --muted: #8F8F8F;
@@ -801,15 +805,27 @@
    as right at its head, and its neighbours on both sides get the same
    room. (no pixel face has an italic of its own) */
 
-/* a whole word slants with its clip box, so the slant never leans out of
-   the box that clips it: a little more room each side, given back in the
-   margins so the word gap only grows by .03em a side */
-* body .font-flexible:not(.logo) .split-emphasis.split-letter-clip {
+/* a whole word slants inside the span that rises (.split-slant), so it
+   rises straight up - slanting the clip box around it made the rise run
+   along the slant, diagonally. the clip box gets a little more room each
+   side for the lean, given back in the margins so the word gap only grows
+   by .03em a side */
+* body .font-flexible:not(.logo) .split-emphasis .split-slant {
+  display: inline-block;
+  /* (the pixel face of the letter around it - .font-flexible * would set
+     the headline face on it) */
+  font: inherit;
+  line-height: inherit;
   transform: skewX(-10deg);
   transform-origin: 50% 44%;
-  padding: 0 0.1em;
+}
+
+/* (more room on the right, where the slant leans the letters' heads out:
+   at .1em the last letter's top was cut, about a tenth of an em) */
+* body .font-flexible:not(.logo) .split-emphasis.split-letter-clip {
+  padding: 0 0.24em 0 0.1em;
   margin-left: -0.07em;
-  margin-right: calc(var(--word-gap, 0.28em) - 0.07em);
+  margin-right: calc(var(--word-gap, 0.28em) - 0.21em);
 }
 
 /* a single letter slants inside its own span (the span may be the one
@@ -856,6 +872,30 @@
   margin-right: -0.054em;
 }
 
+/* the same, for pixel letters inside a word split whole (SplitText marks
+   the ones at its edges): no room before a word's first letter, none of
+   the font's after its last. and between a run and the headline face
+   beside it in the word, only Jersey 10's own room on the right (.054em)
+   and a little on the left - the slant's clearance alone read as a gap
+   (AACCUP's AA stood apart from CCUP) */
+* body .font-flexible .split-letter .split-pixel {
+  margin-left: 0.05em;
+  margin-right: 0;
+}
+
+* body .font-flexible .split-letter .split-pixel + .split-pixel {
+  margin-left: 0;
+}
+
+* body .font-flexible .split-letter .split-pixel-start {
+  /* (as far as the slant leans its foot left, so the foot lines up) */
+  margin-left: 0.047em;
+}
+
+* body .font-flexible .split-letter .split-pixel-end {
+  margin-right: -0.054em;
+}
+
 /* a headline's words sit in clip boxes tall enough for every letter -
    Ayr Garon's capitals from .118em to the baseline at .868em of a 1em
    line, and its commas and descenders to 1.106em - but the lines are set
@@ -873,6 +913,13 @@
   /* the word gap, less the room given on the right - a bare -0.08em here
      left headline words touching */
   margin-right: calc(var(--word-gap, 0.28em) - 0.08em);
+}
+
+/* a word that ends in slanted pixel letters (COMELEC) has their lean to
+   clear on its right as well: the same room an emphasised word has */
+* body .font-flexible:not(.logo) .split-letter-clip:has(.split-pixel-end) {
+  padding-right: 0.24em;
+  margin-right: calc(var(--word-gap, 0.28em) - 0.24em);
 }
 
 * body .menu-icon-clip {
@@ -1652,8 +1699,8 @@
   top: 0;
   left: 0;
   z-index: 60;
-  width: 0.75rem;
-  height: 0.75rem;
+  width: 0.5rem;
+  height: 0.5rem;
   background: #E5E4E3;
   mix-blend-mode: difference;
   pointer-events: none;
@@ -1676,9 +1723,11 @@
   opacity: 0;
 }
 
+/* (the square stands in for the browser's own pointer everywhere - no
+   hand over a link or button, whatever rule asks for one) */
 html.has-cursor,
 html.has-cursor * {
-  cursor: none;
+  cursor: none !important;
 }
 
 
@@ -1700,6 +1749,40 @@ html.has-cursor * {
   * body .testimonial-paragraph {
     font-size: clamp(1.125rem, 1rem + 0.8vw, 1.375rem);
   }
+}
+
+/* the review's opening mark (Testimonials.jsx), first on its first line:
+   the pixel face set in italic (Jersey 10 has no italic of its own: the
+   browser slants it), well over the review's size, sitting in
+   a line as tall as the review's. it rises from as far below as the
+   words do (1.35em of the review, in its larger em) */
+* body .testimonial-mark {
+  display: contents;
+}
+
+/* its clip box given room above and to the right - the mark is larger
+   than the line and leans right - and the room taken back in negative
+   margins, so the line and the word after it stay where they are */
+* body .testimonial-mark .split-letter-clip {
+  height: calc(1.3em + 0.5em);
+  padding: 0.5em 0.2em 0 0;
+  margin-top: -0.5em;
+  /* (and a wider gap to the first word than the words keep) */
+  margin-right: calc(var(--word-gap, 0.28em) + 0.12em);
+}
+
+* body .testimonial-mark .split-letter {
+  font-family: "Jersey 10", "Ayr Garon", serif;
+  font-style: italic;
+  font-synthesis: style;
+  font-weight: 400;
+  font-size: 2.2em;
+  line-height: calc(1.3em / 2.2);
+  transform: translateY(calc(1.35em / 2.2));
+  /* (Jersey 10's mark hangs at its capitals' height, which at this size
+     is above the review's own; brought down to start level with them) */
+  position: relative;
+  top: 0.09em;
 }
 
 /* the pixels at a section's foot, in the next section's colour
@@ -1727,4 +1810,152 @@ html.has-cursor * {
   height: 2.25rem;
   /* a hairline frame on the box itself, in the arrow's colour */
   border: 1px solid var(--fill);
+}
+
+/* the tones of a picture opening by the contact edge (edgeToggle, pixels.js): over the picture,
+   inside its frame, under nothing that is pressed */
+* body .pixel-specks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* a run of items a screen at a time (PinnedPanels.jsx): each picture shut
+   until it wipes open; and a shade over
+   it - darker at the top and foot, where the words are */
+* body .pinned-panel-media {
+  clip-path: inset(100% 0% 0% 0%);
+}
+
+* body .pinned-panel-shade {
+  background:
+    linear-gradient(to bottom, rgb(27 26 26 / .7) 0%, rgb(27 26 26 / 0) 30%),
+    linear-gradient(rgb(27 26 26 / .25), rgb(27 26 26 / .25)),
+    linear-gradient(to top, rgb(27 26 26 / .85) 0%, rgb(27 26 26 / .35) 40%, rgb(27 26 26 / 0) 65%);
+  pointer-events: none;
+}
+
+/* the top bar over a run of full-screen pictures (Navbar.jsx): plain
+   white on their dark-shaded tops, not blended by difference */
+* body .nav-blend.nav-plain {
+  mix-blend-mode: normal;
+  --muted: rgb(255 255 255 / .75);
+}
+
+/* Areas of Expertise's hover preview and its phone-width gifs
+   (Services.jsx): a gif in halftone on the site's black */
+* body .service-preview,
+* body .service-row-gif {
+  background-color: #1B1A1A;
+  overflow: hidden;
+}
+
+/* Featured Work's indicator (PinnedPanels.jsx): a bar for each project, a
+   faint track filled from its left as its project comes in */
+* body .pinned-bar {
+  position: relative;
+  height: 4px;
+  background: rgb(229 228 227 / .18);
+  overflow: hidden;
+}
+
+* body .pinned-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #E5E4E3;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+* body .pinned-bar-on::after {
+  transform: scaleX(1);
+}
+
+
+/* the services page's questions (ServicesPage.jsx): a plus beside each,
+   turning to a cross while its answer is open */
+* body .faq-mark {
+  position: relative;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-top: 0.4em;
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+* body .faq-mark::before,
+* body .faq-mark::after {
+  content: '';
+  position: absolute;
+  background: var(--text);
+}
+
+* body .faq-mark::before {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+}
+
+* body .faq-mark::after {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+}
+
+* body .faq-mark-open {
+  transform: rotate(45deg);
+}
+
+/* the services page's item numbers (Services.jsx): figures of one width,
+   in clip boxes with room to spare each side - a digit's ink can reach
+   past its own box and was cut - given back in negative margins, so
+   nothing moves */
+* body .service-num {
+  font-variant-numeric: tabular-nums;
+}
+
+* body .service-num .split-letter-clip {
+  padding: 0 0.15em;
+  margin-left: -0.15em;
+  margin-right: calc(var(--word-gap, 0.28em) - 0.15em);
+}
+
+/* a How I Work card's description (Process.jsx): four lines, whatever
+   the screen width - set no wider than its own 16em, the measure it runs
+   at on a laptop (in its own em: the page scales up faster than its text on
+   a wide screen), so a wide
+   screen's wider card does not take it down to three - and four lines'
+   room (the words' clip boxes are 1.3em lines), so every card's text
+   block is the same height */
+* body .process-copy {
+  min-height: calc(1.3em * 4);
+}
+
+/* (the width held only where the cards sit four in a row: one to a row on
+   a phone or tablet, the text runs the card's width) */
+@media (min-width: 1024px) {
+  * body .process-copy {
+    max-width: 16em;
+  }
+}
+
+/* a run of full-screen items' buttons (PinnedPanels.jsx): only the
+   button takes the pointer, and only while it is shown - the items not on
+   screen keep theirs hidden, out of the way of the one that is */
+* body .pinned-panel-cta .cta-button {
+  pointer-events: auto;
+}
+
+/* a question's plus, before it is revealed (ServicesPage.jsx): nothing,
+   turned back a quarter - it snaps in, upright, as its row comes in */
+* body .faq-mark-in {
+  transform: scale(0) rotate(-90deg);
 }

@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 // the site's button and section label
-import Button from '../common/Button'
+import Button, { BUTTON_PARTS } from '../common/Button'
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
@@ -16,6 +16,10 @@ gsap.registerPlugin(ScrollTrigger)
 
 // what to take away about me, set large
 // (one paragraph per entry, each set under the one before)
+// how much of the section is on screen when the last word has darkened
+// and the button reveals
+const AT_FULL = .9;
+
 const PARAGRAPHS = [
   'I pay attention to where digital experiences fall short, from confusing user flows to overlooked interaction details. I translate those challenges into intuitive interfaces and scalable design systems, then bridge design and development through AI-assisted tools.',
 ];
@@ -25,8 +29,9 @@ const PARAGRAPHS = [
  * foot the button to the full About page (AboutPage.jsx). The tag reveals
  * first, then the statement rises into its lines in the muted text colour,
  * and its words turn to the full text colour one by one, in reading
- * order, as the page is scrolled - back again if it is scrolled up. The
- * button reveals itself as it comes into view.
+ * order, as the page is scrolled - back again if it is scrolled up - all
+ * of them dark by the time 90% of the section is on screen, when the
+ * button reveals.
  */
 function About() {
   const fxSection = useRef();
@@ -55,17 +60,37 @@ function About() {
       stagger: 1,
       scrollTrigger: { ...scrollTrigger, scrub: true },
     });
-    // the words turn as the statement scrolls up through the screen - from
-    // its top a fifth of the way up to its foot just past the middle - with
-    // nothing held: the page scrolls on as it does
+    // the words turn as the section scrolls up into the screen - from the
+    // statement's top a fifth of the way up, all of them dark by the time
+    // 90% of the section is on screen (AT_FULL) - with nothing held: the
+    // page scrolls on as it does
+    const fullAt = () => `top+=${Math.round(section.offsetHeight * AT_FULL)} bottom`;
     const held = darken({
       trigger: paragraph.parentElement,
       start: 'top 80%',
-      end: 'bottom 45%',
+      endTrigger: section,
+      end: fullAt,
       invalidateOnRefresh: true,
     });
 
+    // and the button reveals then, with the last word: its frame wiping
+    // up, its label rising - and goes again, scrolled back above that point
+    const button = section.querySelector('.cta-button');
+    const parts = button.querySelectorAll(BUTTON_PARTS);
+    const open = gsap.timeline({ paused: true })
+      .fromTo(button, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .5 })
+      .fromTo(parts, { y: (i, el) => el.offsetHeight * 1.05 }, { y: 0, ease: 'power1.in', duration: .4, stagger: .02 }, '<.15');
+    const buttonAt = ScrollTrigger.create({
+      trigger: section,
+      start: fullAt,
+      invalidateOnRefresh: true,
+      onEnter: () => open.play(),
+      onLeaveBack: () => open.reverse(),
+    });
+
     return () => {
+      buttonAt.kill();
+      open.revert();
       held.scrollTrigger?.kill();
       held.revert();
       trigger.kill();
@@ -112,7 +137,7 @@ function About() {
           </div>
           {/* along the foot: the button to the full about page */}
           <div className='shrink-0'>
-            <Button label='More about me' to='/about' />
+            <Button label='More about me' to='/about' reveal='manual' />
           </div>
         </section>
       </div>

@@ -117,7 +117,7 @@ function ProjectsPage() {
           </p>
           {/* the way down to the projects, along the bottom on the right */}
           <div className='shrink-0'>
-            <ScrollCue label='Scroll to explore' />
+            <ScrollCue label='Scroll' />
           </div>
         </div>
       </section>

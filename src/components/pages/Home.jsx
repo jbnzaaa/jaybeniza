@@ -57,7 +57,7 @@ function Home() {
           <>
             <Project/>
             <About/>
-            <Services detailed/>
+            <Services/>
             <Testimonials/>
             <Contact/>
           </>

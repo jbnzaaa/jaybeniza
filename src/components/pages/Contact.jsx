@@ -37,7 +37,7 @@ const PROJECTS_LINKS = [
   { label: 'GuRover', to: '/gurover' },
   { label: 'AACCUP', to: '/aaccup' },
   { label: 'COMELEC', to: '/comelec-acm' },
-  { label: 'Design System', to: '/pci-central-app' },
+  { label: 'Central App Design System', to: '/pci-central-app' },
 ];
 
 // its third face, closing a project page: the next project, by name - the
@@ -86,7 +86,7 @@ function Contact({ page = false, projects = false, next, previous, current }) {
 
   return (
     <>
-      <div id='contact' {...(page ? {} : { 'data-nav-cover': '' })} className='flex flex-col min-h-screen-safe bg-black'>
+      <div id='contact' {...(page ? {} : { 'data-nav-cover': '' })} className='relative z-10 flex flex-col min-h-screen-safe bg-black'>
         {/* room for the fixed top bar when this is the page itself */}
         {page && <div className='shrink-0 h-12'/>}
         <section className='flex-1 grid grid-cols-8 content-start gap-x-6

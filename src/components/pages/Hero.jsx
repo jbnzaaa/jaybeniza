@@ -10,7 +10,7 @@ import Button from '../common/Button'
 import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 
 // (what the headline does not say: how long, what kind of work, and how far I take it)
-const HIGHLIGHT_TEXT = 'For over 3.5 years, I’ve been designing digital experiences that bring ideas to life and make complex interactions feel effortless. With experience across 24 web and mobile products, I combine thoughtful design, practical problem-solving, and AI-assisted development to create solutions that work beyond the screen.';
+const HIGHLIGHT_TEXT = 'For over 3.5 years, I’ve designed web and mobile products across 24 projects, turning complex interactions into interfaces that feel effortless. I pair thoughtful design with AI-assisted development.';
 
 // the headline, broken into three set lines from tablet width up. on a
 // phone it is one sentence left to wrap where the screen ends it: set as
@@ -54,8 +54,8 @@ function Hero() {
         mobile:px-[1rem] mobile:pt-20 mobile:pb-4 mobile:gap-y-16
         tablet:px-[1rem] tablet:pt-20 tablet:pb-4 tablet:gap-y-16
         laptop:px-[2rem] laptop:pt-24 laptop:pb-8 laptop:gap-y-16
-        laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-8 laptop-lg:gap-y-16
-        desktop:px-[3rem] desktop:pt-28 desktop:pb-8 desktop:gap-y-16'>
+        laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-16
+        desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'>
         {/* headline - the three lines, or on a phone the one sentence. its
           name carries the role, for search and screen readers */}
         <h1 aria-label={`UI/UX & product designer: ${PROFESSION}`}>

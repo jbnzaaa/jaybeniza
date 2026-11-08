@@ -257,14 +257,15 @@ function KerningTest({ onClose }) {
 }
 
 /**
- * The kerning game: a button with a pixel bug on it, held beside the
- * back-to-top arrow (ToTop.jsx, which reveals it: `reveal`, `id`), that
+ * The kerning game: a button with a pixel bug on it (revealed as `reveal`
+ * says, under `id`) - or, with `text`, a text button whose letters carry
+ * `id` for its host's reveal (the footer, Footer.jsx) - that
  * opens the kerning test in a modal - a dark box over the
  * page, which dims behind it. The box opens in square pixels from its
  * bottom edge up and shuts the same way. While it is open the page stops
  * scrolling under it; Escape, Close or a click outside the box shuts it.
  */
-function KerningGame({ reveal, id }) {
+function KerningGame({ reveal, id, text = false }) {
   const [open, setOpen] = useState(false);
   const fxBackdrop = useRef();
   const fxModal = useRef();
@@ -303,9 +304,16 @@ function KerningGame({ reveal, id }) {
 
   return (
     <>
-      <span className='inline-flex'>
-        <Button label='Test your eye' onClick={show} icon={PixelBug} outline reveal={reveal} id={id} />
-      </span>
+      {text ? (
+        // as a text button, its letters revealed by its host under `id`
+        <button type='button' className='flex flex-wrap text-left' onClick={show}>
+          <SplitText text='Play kerning' id={id} />
+        </button>
+      ) : (
+        <span className='inline-flex'>
+          <Button label='Play kerning' onClick={show} icon={PixelBug} outline reveal={reveal} id={id} />
+        </span>
+      )}
       {open && createPortal(
         // the page dimmed behind, and the box centred on it
         <div className='kerning-backdrop fixed inset-0 z-[40] flex items-center justify-center

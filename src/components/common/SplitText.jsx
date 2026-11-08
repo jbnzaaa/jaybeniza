@@ -16,12 +16,10 @@ import React from 'react'
  *
  * `by='word'` reveals whole words instead of letters - for body copy,
  * where a per-letter stagger across a few hundred characters takes
- * seconds to finish and holds the reader up. Left unset, any text that is
- * not a title - body copy, labels, tags, the top bar, buttons - goes by
- * the word, whatever its length, so all of it rises the same way, word by
- * word. A title (one given `emphasis`) goes by the letter up to LONG
- * characters and by the word past it. Pass by='letter' to split by the
- * letter anyway.
+ * seconds to finish and holds the reader up. Left unset, all text -
+ * titles, body copy, labels, tags, the top bar, buttons - goes by the
+ * word, whatever its length, so all of it rises the same way, word by
+ * word. Pass by='letter' to split by the letter anyway.
  *
  * `sentence` sets the text as written instead of in the site's capitals -
  * for anything read as a sentence (descriptions, paragraphs, quotes), so
@@ -31,7 +29,6 @@ import React from 'react'
  * otherwise announce them letter by letter) and the intact text is
  * exposed once through a visually-hidden span instead.
  */
-const LONG = 48;
 
 // a word as it is matched against `emphasis`: lower case, its punctuation
 // dropped ("Interactions." matches "interactions")
@@ -119,8 +116,8 @@ const pixelGlyph = (unit) => <span className='split-pixel-glyph'>{unit}</span>;
  * word, its first or last part.
  */
 function SplitText({ text, id, by: asked, sentence = false, emphasis = [] }) {
-  const title = Array.isArray(emphasis) ? emphasis.length > 0 : !!emphasis;
-  const by = asked || (!title || text.length > LONG ? 'word' : 'letter');
+  // (titles go by the word too now: one simple word reveal across the site)
+  const by = asked || 'word';
   const words = text.split(' ').filter(Boolean);
   const auto = emphasis === 'letters';
   const autoWord = auto ? pickedWord(words) : -1;
@@ -131,7 +128,9 @@ function SplitText({ text, id, by: asked, sentence = false, emphasis = [] }) {
   // a word split as a whole keeps its pixel letters inside it
   const wholeWord = (word, wi) => (word.split('').some((_, ui) => pixels.has(`${wi}:${ui}`))
     ? word.split('').map((unit, ui) => (pixels.has(`${wi}:${ui}`)
-      ? <span className='split-pixel' key={ui}>{pixelGlyph(unit)}</span>
+      // (marked where it starts or ends its word: the spacing at a word's
+      // edge is the title's own - .split-pixel-start/-end, App.css)
+      ? <span className={`split-pixel${ui === 0 ? ' split-pixel-start' : ''}${ui === word.length - 1 ? ' split-pixel-end' : ''}`} key={ui}>{pixelGlyph(unit)}</span>
       : unit))
     : word);
   return (
@@ -143,7 +142,9 @@ function SplitText({ text, id, by: asked, sentence = false, emphasis = [] }) {
       {words.map((word, wi) => (
         <span className={`${sentence ? 'split-word split-sentence' : 'split-word'} split-letter-clip${stressed.has(wi) ? ' split-emphasis' : ''}`} aria-hidden='true' key={wi}>
           {by === 'word'
-            ? <span className='split-letter' id={id}>{wholeWord(word, wi)}</span>
+            // (an emphasised word slants inside the span that rises, so it
+            // rises straight up: slanted around it, the rise ran diagonally)
+            ? <span className='split-letter' id={id}>{stressed.has(wi) ? <span className='split-slant'>{wholeWord(word, wi)}</span> : wholeWord(word, wi)}</span>
             : word.split('').map((unit, ui) => (pixels.has(`${wi}:${ui}`)
               // (the letter rises as the others do)
               ? <span className='split-letter split-pixel' id={id} key={ui}>{pixelGlyph(unit)}</span>

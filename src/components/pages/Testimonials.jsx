@@ -14,7 +14,7 @@ import SplitText from '../common/SplitText'
 // the site's reveals: in their turn, from where everything is revealed
 import { inTurn, revealTrigger, REVEAL_AT } from '../../utils/scrollReveal'
 // the pictures open in pixels
-import { blockToggle } from '../../utils/pixels'
+import { wipeToggle } from '../../utils/pixels'
 // and the reviews open in pixels as their words rise
 import { pixelText, withPixels } from '../../utils/pixelText'
 // their pictures - small square crops of the photographs in /reference
@@ -110,17 +110,18 @@ function Testimonials({ dark = false }) {
     const section = fxSection.current;
     const quotes = gsap.utils.toArray('.testimonial-statement', section);
     const captions = gsap.utils.toArray('.testimonial-caption', section);
-    const words = quotes.map((quote) => quote.querySelectorAll('.split-letter'));
+    // (the review's words, and the large opening mark over them)
+    const words = quotes.map((quote) => quote.closest('blockquote').querySelectorAll('.split-letter'));
     const people = captions.map((caption) => caption.querySelectorAll('.split-letter'));
     const masks = words.map((list) => pixelText(list));
     const nameMasks = people.map((list) => pixelText(list));
     // the back and next buttons' labels, by their blocks
     const buttonParts = section.querySelectorAll(`#testimonial-back :is(${BUTTON_PARTS}), #testimonial-next :is(${BUTTON_PARTS})`);
     const buttonMask = pixelText(buttonParts);
-    // their pictures open and shut by a block, as the titles do
+    // their pictures wipe open and shut from their bottom edge
     // (pixels.js) - each away until its review comes in
     const pictures = captions.map((caption) => caption.querySelector('.testimonial-avatar'));
-    const avatars = pictures.map((picture) => blockToggle(picture));
+    const avatars = pictures.map((picture) => wipeToggle(picture));
     const count = quotes.length;
     // (who said the first is there with it; the rest wait out of sight)
     gsap.set(captions.slice(1), { autoAlpha: 0 });
@@ -231,8 +232,8 @@ function Testimonials({ dark = false }) {
         mobile:px-[1rem] mobile:pt-16 mobile:pb-4 mobile:gap-y-10
         tablet:px-[1rem] tablet:pt-16 tablet:pb-4 tablet:gap-y-12
         laptop:px-[2rem] laptop:pt-20 laptop:pb-8 laptop:gap-y-12
-        laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-8 laptop-lg:gap-y-12
-        desktop:px-[3rem] desktop:pt-28 desktop:pb-8 desktop:gap-y-16`}>
+        laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-12
+        desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16`}>
         <div>
           <Tag label='What Others Say' id='animate-testimonials-tag' />
           {/* the reviews, one over another in one grid cell, so the room is
@@ -252,7 +253,13 @@ function Testimonials({ dark = false }) {
                   laptop:leading-tight
                   laptop-lg:leading-tight
                   desktop:leading-tight'>
-                  <SplitText text={`“ ${quote.join(' ')} ”`} id={`animate-testimonial-${id}`} by='word' />
+                  {/* the opening mark, first on the review's first line, in
+                    the pixel face set in italic (.testimonial-mark,
+                    App.css); it rises with the review's words */}
+                  <span className='testimonial-mark' aria-hidden='true'>
+                    <SplitText text='“' id={`animate-testimonial-${id}`} by='word' />
+                  </span>
+                  <SplitText text={quote.join(' ')} id={`animate-testimonial-${id}`} by='word' />
                 </p>
               </blockquote>
             ))}

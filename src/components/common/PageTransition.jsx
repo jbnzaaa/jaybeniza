@@ -55,7 +55,11 @@ export function PageTransitionProvider({ children }) {
     else navigate(to);
     await settled(beat);
 
+    // (clearing, it closes in on where it was pressed: the last pixels to
+    // go are the ones over the button that started it)
     await pixelSweep(canvas, {
+      origin,
+      inward: Boolean(origin),
       duration: clear,
       onUpdate: (at) => { if (at >= 1 - COVER_LEFT) releaseReveals(); },
     });

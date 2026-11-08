@@ -1,245 +1,39 @@
 //
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import { PROJECT_CARDS } from './ProjectCard'
-// GSAP
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-// page-to-page wipe
-import { TransitionLink } from '../common/PageTransition'
-// scroll reveal
-import { scrollReveal, REVEAL_AT, inTurn, revealTrigger } from '../../utils/scrollReveal'
-// the site's button and section label
-import Button from '../common/Button'
-import Tag from '../common/Tag'
-// per-letter text split
-import SplitText from '../common/SplitText'
+// a screen at a time
+import PinnedPanels from '../common/PinnedPanels'
 // the part of a project's title set in the pixel face
 import { titleEmphasis } from './projects/emphasis'
-// the pictures open in pixels
-import { wipeReveal, wipeToggle } from '../../utils/pixels'
-// the empty cover's words, by their blocks
-import { pixelText, withPixels } from '../../utils/pixelText'
+// the mock-ups at full size: each fills the screen
+import gurover from '../../assets/files/images/gurover/mockup-cover.webp'
+import aaccup from '../../assets/files/images/aaccup/mockup-cover.webp'
+import comelec from '../../assets/files/images/comelec/mockup-cover.webp'
+import pci from '../../assets/files/images/pci/mockup-cover.webp'
 
-gsap.registerPlugin(ScrollTrigger)
-
-const DESCRIPTION = 'Selected work, from problem to shipped interface.';
+const COVERS = { gurover, aaccup, comelec, pci };
 
 /**
- * Selected projects, on the dark surface: a list of project names set very
- * large, one per line, each with its year and my part in it against the
- * right edge. Pointing at a row brings up that project's image level
- * with it, between the name and the label, and steps the other rows back.
- * Below laptop width (usually no pointer) each project is the work
- * page's card instead: its cover, opening as it scrolls into view, with
- * its name and label under it.
+ * Selected projects, a screen each (PinnedPanels): the project's mock-up
+ * filling the screen, its year and kind in the upper
+ * right, its name and what it is in the lower left, and the way to its
+ * case study in the lower right. The section is held while they are
+ * scrolled through, each opening over the last.
  */
 function Project() {
-  const fxList = useRef();
-  const fxPreview = useRef();
-  // the project whose image the preview is showing
-  const [shown, setShown] = useState(null);
-  // the preview opens and shuts in pixels (pixels.js)
-  const fxPixels = useRef(null);
-
-  useEffect(() => {
-    // each name and its details rise letter by letter as that row scrolls
-    // into view; the description after the list does the same
-    const rows = PROJECT_CARDS.map(({ id }) => scrollReveal(`#animate-project-${id}`,
-      { y: 0, stagger: .02, ease: 'power1.in' }, { trigger: `#project-row-${id}` }));
-    const description = scrollReveal('#animate-project', { y: 0, stagger: .02, ease: 'power1.in' });
-
-    // the preview is placed across the row by its centre (left, App.css)
-    // (placed in the clear space between the names and the labels - show)
-    // (it wipes open from its bottom edge, and shut again)
-    fxPixels.current = wipeToggle(fxPreview.current);
-
-
-    // below laptop width, each row's cover as it comes up the screen: its
-    // frame wipes open from its bottom edge up while the picture inside,
-    // which starts slightly large and low, eases down to size - the work
-    // page's card reveal
-    const pictures = gsap.set(gsap.utils.toArray('.project-cover-image', fxList.current), { yPercent: 14, scale: 1.15 });
-    // (each in its turn among the page's reveals - scrollReveal.js)
-    const covers = gsap.utils.toArray('.project-cover', fxList.current).map((cover) => {
-      // (an empty cover's words come in by their blocks once it is open)
-      const words = cover.querySelectorAll('.split-letter');
-      const mask = words.length ? pixelText(words) : null;
-      const open = gsap.timeline({ paused: true })
-        .add(wipeReveal(cover, { duration: 1 }), 0)
-        .to(cover.firstElementChild, { yPercent: 0, scale: 1, ease: 'power2.out', duration: 1.2 }, 0);
-      if (words.length) open.to(words, withPixels({ y: 0, duration: .5, stagger: { amount: .3 }, ease: 'power1.in' }, mask), .9);
-      const turn = inTurn(open, cover);
-      const trigger = revealTrigger(cover, REVEAL_AT, turn);
-      return { open, turn, trigger, mask };
-    });
-
-    return () => {
-      rows.forEach((row) => row.kill());
-      description.kill();
-      covers.forEach(({ open, turn, trigger, mask }) => {
-        trigger.kill();
-        turn.kill();
-        open.revert();
-        mask?.clear();
-      });
-      pictures.revert();
-      fxPixels.current?.kill();
-    };
-  }, []);
-
-  // the preview moves level with the row under the pointer and opens in
-  // pixels from its bottom edge up, the way the site's pictures do. it
-  // keeps one place across the row, and one size. moved on to another row
-  // while it is open, it shuts in pixels on the one project, and opens
-  // again on the next; leaving the list closes it
-  const fxOn = useRef(null);
-  // where the preview can go without covering any name or label: the
-  // space right of the longest name and left of the widest label, its
-  // width filling that space up to its own (App.css); no room, no preview
-  const fit = () => {
-    const list = fxList.current;
-    const preview = fxPreview.current;
-    const box = list.getBoundingClientRect();
-    const right = Math.max(...[...list.querySelectorAll('.project-name')].map((el) => el.getBoundingClientRect().right));
-    const left = Math.min(...[...list.querySelectorAll('.project-label')].map((el) => el.getBoundingClientRect().left));
-    const gutter = 24;
-    const room = left - right - gutter * 2;
-    const width = Math.min(window.innerWidth * .26, room);
-    if (width < 160) return false;
-    preview.style.width = `${width}px`;
-    preview.style.left = `${right - box.left + gutter + (room - width) / 2}px`;
-    return true;
-  };
-  const show = (project) => (e) => {
-    const preview = fxPreview.current;
-    const pixels = fxPixels.current;
-    const row = e.currentTarget;
-    if (!fit()) return;
-    gsap.to(preview, { y: row.offsetTop + row.offsetHeight / 2 - preview.offsetHeight / 2, duration: .5, ease: 'power3.out' });
-    const was = fxOn.current;
-    fxOn.current = project;
-    if (!was || was === project) {
-      setShown(project);
-      pixels?.show(.5);
-      return;
-    }
-    // (only the last row pointed at is the one opened)
-    pixels?.hide(.2).then(() => {
-      if (fxOn.current !== project) return;
-      setShown(project);
-      pixels.show(.4);
-    });
-  };
-  const hide = () => {
-    fxOn.current = null;
-    fxPixels.current?.hide(.3);
-  };
-
-  return (
-    <>
-      <section id='project' className='bg-surface
-        mobile:px-[1rem] mobile:py-16
-        tablet:px-[1rem] tablet:py-16
-        laptop:px-[2rem] laptop:py-20
-        laptop-lg:px-[3rem] laptop-lg:py-24
-        desktop:px-[3rem] desktop:py-28'>
-        <Tag label='Featured Work' id='animate-project-tag' />
-        {/* the list - and, over its middle, the preview */}
-        <div className='relative
-          mobile:mt-6
-          tablet:mt-8
-          laptop:mt-8
-          laptop-lg:mt-10
-          desktop:mt-10'
-          ref={fxList}>
-          <ul className='project-list' onMouseLeave={hide} data-no-hover-roll>
-            {PROJECT_CARDS.map((project) => (
-              <li className='m-0 mobile:mb-10 tablet:mb-12 laptop:py-3 laptop-lg:py-4 desktop:py-5' id={`project-row-${project.id}`} key={project.id} onMouseEnter={show(project)}>
-                <TransitionLink to={project.to} className='project-row block mobile:flex mobile:flex-col tablet:flex tablet:flex-col' aria-label={`${project.title}, ${project.meta}`}>
-                  {/* name left, year and role right. on a phone the label
-                    goes under the name, which then has the row to itself
-                    and stays on one line */}
-                  <span className='flex justify-between gap-x-6
-                    mobile:flex-col mobile:items-start mobile:gap-y-2
-                    tablet:items-end
-                    laptop:items-end
-                    laptop-lg:items-end
-                    desktop:items-end'>
-                    <span className='project-name font-flexible font-medium leading-[.95] tracking-tight whitespace-nowrap
-                      text-project mobile:text-title tablet:text-title'>
-                      <SplitText text={project.title} id={`animate-project-${project.id}`} emphasis={project.emphasis || titleEmphasis(project.title)} />
-                    </span>
-                    <span className='project-label shrink-0 flex flex-wrap text-copy text-muted
-                      mobile:justify-start mobile:text-left
-                      tablet:justify-end tablet:text-right
-                      laptop:justify-end laptop:text-right
-                      laptop-lg:justify-end laptop-lg:text-right
-                      desktop:justify-end desktop:text-right
-                      mobile:pb-2
-                      tablet:pb-3
-                      laptop:pb-4
-                      laptop-lg:pb-5
-                      desktop:pb-6'>
-                      {/* year / kind, slashes and all */}
-                      <SplitText text={project.meta} id={`animate-project-${project.id}`} />
-                    </span>
-                  </span>
-                  {/* below laptop width: the cover, first in the card, in
-                    a frame that wipes open on scroll (start state:
-                    .project-cover, App.css) */}
-                  <span className='project-cover block overflow-hidden mb-4
-                    mobile:order-first tablet:order-first
-                    mobile:aspect-[4/3] tablet:aspect-[16/9]
-                    laptop:hidden laptop-lg:hidden desktop:hidden'>
-                    {project.picture || project.image ? (
-                      <span className={`project-cover-image block w-full h-full bg-cover ${project.picture ? 'bg-center' : `bg-center ${project.image}`}`}
-                        style={project.picture ? { backgroundImage: `url(${project.picture})` } : undefined}/>
-                    ) : (
-                      /* nothing to picture yet: the empty card (.project-empty, App.css) */
-                      <span className='project-cover-image project-empty w-full h-full'>
-                        <span className='flex flex-wrap text-caption'><SplitText text='Ongoing project' /></span>
-                        <span className='flex flex-wrap text-caption text-muted'><SplitText text='Case study in progress' /></span>
-                      </span>
-                    )}
-                  </span>
-                </TransitionLink>
-              </li>
-            ))}
-          </ul>
-          {/* hover preview, from laptop width up */}
-          <div className={`project-preview bg-cover ${shown?.picture ? 'bg-center' : shown?.image ? `bg-center ${shown.image}` : 'project-empty'}`}
-            style={shown?.picture ? { backgroundImage: `url(${shown.picture})` } : undefined}
-            ref={fxPreview} aria-hidden='true'>
-            {/* a project with nothing to picture yet previews as the empty
-              card, which says so */}
-            {shown && !shown.picture && !shown.image && (
-              <>
-                <span className='text-caption'>Ongoing project</span>
-                <span className='text-caption text-muted'>Case study in progress</span>
-              </>
-            )}
-          </div>
-        </div>
-        {/* description + the way to every project */}
-        <div className='flex flex-col items-start gap-y-6
-          mobile:mt-10
-          tablet:mt-12
-          laptop:mt-12
-          laptop-lg:mt-12
-          desktop:mt-16'>
-          <p className='flex flex-wrap text-copy
-            mobile:w-[78%]
-            tablet:w-[52%]
-            laptop:w-[34%]
-            laptop-lg:w-[30%]
-            desktop:w-[28%]'>
-            <SplitText text={DESCRIPTION} id='animate-project' by='word' />
-          </p>
-          <Button label='See all work' to='/work' />
-        </div>
-      </section>
-    </>
-  )
+  const items = PROJECT_CARDS.map((project) => ({
+    id: project.id,
+    title: project.title,
+    titleLines: project.titleLines,
+    emphasis: project.emphasis || titleEmphasis(project.title),
+    text: project.text,
+    label: project.meta,
+    to: project.to,
+    cta: 'View work',
+    picture: COVERS[project.id] || project.picture,
+    alt: `${project.title} mock-up`,
+  }));
+  return <PinnedPanels id='project' tag='Featured Work' items={items} />;
 }
 
 export default Project

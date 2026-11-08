@@ -6,6 +6,10 @@ import { scrollRevealCards } from '../../utils/scrollReveal'
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// a gif, drawn in halftone dots
+import HalftoneGif from '../common/HalftoneGif'
+
+const TENOR = 'https://media1.tenor.com/m/';
 
 const ROLES = [
   {
@@ -13,6 +17,9 @@ const ROLES = [
     title: 'Mid UI/UX Designer',
     company: 'PCI Tech Center',
     dates: 'May 2024 – October 2026',
+    // a clip beside it, in halftone: stepping up
+    gif: TENOR + 'vPeTGrwEZrEAAAAM/iron-man-armor.gif',
+    alt: 'Iron Man suiting up in the Mark 5 armor',
     bullets: [
       'Led end-to-end UI/UX design for 10 web and mobile products, including enhancement phases for 2 platforms first designed in 2023–2024, translating client requirements into user flows, prototypes, and development-ready interfaces delivered within 1–2 days of each request.',
       'Conducted moderated usability and role-based testing across 4 platforms, redesigning key workflows to reduce task steps by up to 60%.',
@@ -26,8 +33,13 @@ const ROLES = [
     title: 'Junior UI/UX Designer',
     company: 'PCI Tech Center',
     dates: 'March 2023 – May 2024',
+    // putting in the work
+    gif: TENOR + 'LiDD5Bl5AXEAAAAM/spongebob-the.gif',
+    alt: 'SpongeBob writing his essay',
     bullets: [
       'Designed 1,000+ screens across 16 client products, producing wireframes, prototypes, and high-fidelity web and mobile interfaces.',
+      'Redesigned an accreditation platform end to end, from its public website to role-based workspaces for nine user roles.',
+      'Designed three government education products: a science learning portal, a mobile courseware app, and six biology modules for a virtual laboratory.',
       'Collaborated with project managers and developers to clarify requirements, prepare implementation-ready specifications, and review developed interfaces.',
       'Delivered developer-ready handoffs within 1–2 days of requests; co-facilitated a UI/UX workshop introducing interns to design workflows and tools.',
     ],
@@ -35,10 +47,13 @@ const ROLES = [
 ];
 
 /**
- * Professional experience on the About page: a black section with one card per
- * role, side by side from laptop width up and stacked below that.
+ * Professional experience on the About page: one card per role, a row
+ * each, one under another with the same gap between them. In each card,
+ * the role and what was done in it on the left, and on the right a clip
+ * in halftone, its side of the card edge to edge (under the text below
+ * laptop width).
  */
-function WorkExperience() {
+function WorkExperience({ dark = false }) {
   useEffect(() => {
 
     // the cards rise in one after another, each followed by its text
@@ -54,7 +69,7 @@ function WorkExperience() {
 
   return (
     <>
-      <div id='work-experience' className='theme-light'>
+      <div id='work-experience' className={dark ? 'bg-surface' : 'theme-light'}>
         <div className='
           mobile:py-16 mobile:px-[1rem]
           tablet:py-16 tablet:px-[1rem]
@@ -65,16 +80,15 @@ function WorkExperience() {
             <Tag label='Professional Experience' id='animate-work-tag' />
           </div>
           {/* one card per role */}
-          <ul id='work-cards' className='grid gap-6
-            mobile:grid-cols-1
-            tablet:grid-cols-1
-            laptop:grid-cols-2
-            laptop-lg:grid-cols-2
-            desktop:grid-cols-2'>
+          {/* (every row as tall as the tallest, so the cards match) */}
+          <ul id='work-cards' className='grid grid-cols-1 auto-rows-fr gap-6'>
             {ROLES.map((role) => (
               <li className='reveal-card theme-dark overflow-hidden bg-card m-0'
                 id={`work-card-${role.id}`} key={role.id}>
-                <div className='reveal-card-inner h-full flex flex-col
+                <div className='reveal-card-inner h-full grid
+                  mobile:grid-cols-1 tablet:grid-cols-1 laptop:grid-cols-2 laptop-lg:grid-cols-2 desktop:grid-cols-2'>
+                {/* the role at the top, what was done in it at the foot */}
+                <div className='flex flex-col justify-between
                   mobile:p-6 mobile:gap-y-8
                   tablet:p-6 tablet:gap-y-10
                   laptop:p-6 laptop:gap-y-12
@@ -112,6 +126,11 @@ function WorkExperience() {
                     </li>
                   ))}
                 </ul>
+                </div>
+                {/* the clip, its side of the card edge to edge */}
+                <div className='work-gif relative bg-black mobile:aspect-[4/3] tablet:aspect-[16/9]'>
+                  <HalftoneGif src={role.gif} alt={role.alt} />
+                </div>
                 </div>
               </li>
             ))}

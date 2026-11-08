@@ -10,7 +10,7 @@ import Tag from '../../common/Tag'
 // scroll reveal
 import { scrollReveal, scrollRevealSequence, scrollRevealCards, REVEAL_AT, REVERSE_AT } from '../../../utils/scrollReveal'
 // a colleague's picture opens in pixels, as on the landing page's testimonials
-import { blockToggle } from '../../../utils/pixels'
+import { wipeToggle, pixelWipe } from '../../../utils/pixels'
 // per-letter text split
 import SplitText from '../../common/SplitText'
 // every project's content - for the link to the next one
@@ -649,22 +649,30 @@ function ProjectPage({ project: given, id }) {
 
     // each screenshot reveals as it scrolls into view: the frame wipes up
     // from its bottom edge while the image inside eases down to its real size
-    const images = gsap.utils.toArray('.screenshot-container').map((card) => scrollRevealSequence([
-      { targets: card, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },
-      { targets: card.querySelector('.screenshot-img'), vars: { scale: 1, ease: 'power2.out' }, position: '<' },
-    ], { trigger: card }));
+    // - slowly, the image settling a little longer than its frame takes to
+    // open (from slightly large and low), so it eases in rather than lands
+    const images = gsap.utils.toArray('.screenshot-container').map((card) => {
+      // (its frame opening in square pixels from its bottom edge up - pixels.js)
+      const img = card.querySelector('.screenshot-img');
+      const wipe = pixelWipe(card);
+      gsap.set(img, { yPercent: 6 });
+      return scrollRevealSequence([
+        { targets: wipe.target, vars: { at: 1, duration: 1.2, onUpdate: wipe.onUpdate } },
+        { targets: img, vars: { scale: 1, yPercent: 0, duration: 1.6 }, position: '<' },
+      ], { trigger: card });
+    });
 
     // placeholder panels wipe up the same way
     // each quote card (.case-card) is a component of its own: its frame
     // wipes up from its bottom edge, then its words rise, as it comes up
     // the screen
-    // (a colleague's picture on a quote card opens by a block as its name
+    // (a colleague's picture on a quote card wipes open as its name
     // rises, as on the landing page's testimonials, and goes again with
     // the card scrolled back above it)
     const toggles = [];
     const cards = gsap.utils.toArray('.case-card').map((card) => {
       const avatar = card.querySelector('.case-quote-avatar');
-      const toggle = avatar && blockToggle(avatar);
+      const toggle = avatar && wipeToggle(avatar);
       if (toggle) toggles.push({ avatar, toggle });
       return scrollRevealSequence([
         { targets: card, vars: { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' } },

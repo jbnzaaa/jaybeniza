@@ -29,13 +29,14 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 const NAV_LINKS = [
   { label: 'Work', count: SHOWN.length, to: '/work' },
   { label: 'Archive', count: ARCHIVE.length, to: '/archive' },
+  { label: 'Services', to: '/services' },
   { label: 'About', to: '/about' },
 ];
 const CONTACT = '/get-in-touch';
 // the pages where the bar also has a Download CV button, beside Get in
 // touch. (the landing hero and the About page have their own)
 const CV_PAGES = ['/work', '/archive'];
-const MENU_LINKS = [...NAV_LINKS, { label: 'Get in touch', to: CONTACT }];
+const MENU_LINKS = [...NAV_LINKS, { label: 'Let’s talk', to: CONTACT }];
 
 // the open page is in the full text colour, the others a step back
 const NAV_ITEM = 'nav-item font-monolisa leading-none';
@@ -105,6 +106,40 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
+    // over a run of full-screen pictures (PinnedPanels.jsx) the bar is
+    // plain white, not blended: a picture's mid greys leave a blended bar
+    // grey on grey, and the top of each is shaded dark for it. (looked for
+    // once the page's sections are in - some are set up after it settles)
+    const bar = fxBar.current;
+    const triggers = new Map();
+    let tries = 0;
+    const scan = () => {
+      document.querySelectorAll('.pinned-panels').forEach((section) => {
+        if (triggers.has(section)) return;
+        triggers.set(section, ScrollTrigger.create({
+          trigger: section,
+          start: () => `top top+=${bar.offsetHeight}`,
+          end: () => `bottom top+=${bar.offsetHeight}`,
+          onToggle: (self) => bar.classList.toggle('nav-plain', self.isActive),
+          invalidateOnRefresh: true,
+        }));
+      });
+    };
+    // (looked for again each second for a while: the landing page sets
+    // its lower sections up only once it has settled)
+    const timer = setInterval(() => {
+      scan();
+      tries += 1;
+      if (tries >= 10) clearInterval(timer);
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+      triggers.forEach((trigger) => trigger.kill());
+      bar.classList.remove('nav-plain');
+    };
+  }, [pathname]);
+
+  useEffect(() => {
     // the closing contact + footer screen is a full page of its own, and
     // the bar goes behind it: the bar itself never moves, it is clipped
     // away from the bottom in step with the section's top edge passing up
@@ -115,23 +150,39 @@ function Navbar() {
     const bar = fxBar.current;
     // a page with no such closing screen (the contact page, which is one)
     // keeps the bar throughout
-    if (!document.querySelector('[data-nav-cover]')) return undefined;
-    const cover = gsap.fromTo(bar,
-      { clipPath: 'inset(0% 0% 0% 0%)' },
-      {
-        clipPath: 'inset(0% 0% 100% 0%)',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '[data-nav-cover]',
-          start: () => `top ${bar.offsetHeight}px`,
-          end: 'top top',
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-      });
+    // (looked for each second for a while, until it is there: the landing
+    // page sets its closing screen up only once it has settled)
+    let cover = null;
+    let tries = 0;
+    const lay = () => {
+      const block = document.querySelector('[data-nav-cover]');
+      if (!block) return false;
+      cover = gsap.fromTo(bar,
+        { clipPath: 'inset(0% 0% 0% 0%)' },
+        {
+          clipPath: 'inset(0% 0% 100% 0%)',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: block,
+            start: () => `top ${bar.offsetHeight}px`,
+            end: 'top top',
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+      return true;
+    };
+    let timer = null;
+    if (!lay()) {
+      timer = setInterval(() => {
+        tries += 1;
+        if (lay() || tries >= 10) clearInterval(timer);
+      }, 1000);
+    }
     return () => {
-      cover.scrollTrigger?.kill();
-      cover.revert();
+      clearInterval(timer);
+      cover?.scrollTrigger?.kill();
+      cover?.revert();
     };
   }, [pathname]);
 
@@ -202,7 +253,7 @@ function Navbar() {
               {CV_PAGES.includes(pathname) && (
                 <Button label='Download CV' href={Resume} download='Jay-Beniza-CV.pdf' small outline reveal='mount' key={pathname} />
               )}
-              <Button label='Get in touch' to={CONTACT} onClick={toTopIfHere(CONTACT)} small reveal='mount' />
+              <Button label='Let’s talk' to={CONTACT} onClick={toTopIfHere(CONTACT)} small reveal='mount' />
             </div>
             {/* on a phone: the word alone, no box, blended like the rest
               of the bar. (the word is drawn by the stylesheet, from

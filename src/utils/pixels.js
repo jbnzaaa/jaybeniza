@@ -26,11 +26,17 @@ const ORDER = .6;
  *
  * @param {HTMLCanvasElement} canvas - sized to what it covers
  * @param {number[]} [origin] - [x, y] on the canvas the sweep spreads from
+ * @param {boolean} [inward] - with `origin`, the sweep closes in on it instead: the
+ *   pixels farthest from it first, the ones on it last
+ * @param {boolean} [stepped] - the contact section's edge (pixelEdges.js)
+ *   instead: from the top down in blocky steps - runs of a few columns a
+ *   step or so ahead of or behind each other - its front a checker and
+ *   then a half-seen tint of the black, not a lit edge
  * @returns {(sweep: number, covering: boolean) => void} draws the grid at a
  *   point of the sweep: covering, the pixels up to it are on (the newest
  *   lit); clearing, the pixels up to it are off (the next to go lit)
  */
-export function pixelGrid(canvas, origin) {
+export function pixelGrid(canvas, origin, inward = false, stepped = false) {
   const size = CELL();
   const ratio = Math.min(window.devicePixelRatio || 1, 2);
   const width = canvas.clientWidth;
@@ -47,14 +53,40 @@ export function pixelGrid(canvas, origin) {
   // (the farthest corner from the origin, for its distances to scale to)
   const far = origin && Math.max(...[[0, 0], [width, 0], [0, height], [width, height]]
     .map(([x, y]) => Math.hypot(x - origin[0], y - origin[1])));
+  // (stepped: each run of columns a step or so ahead of or behind the next)
+  const steps = [];
+  while (stepped && steps.length < cols) {
+    const step = [0, 1, 1, 2, 3][Math.floor(Math.random() * 5)];
+    const run = 1 + Math.floor(Math.random() * 4);
+    for (let i = 0; i < run && steps.length < cols; i += 1) steps.push(step);
+  }
   const cells = [];
   for (let r = 0; r < rows; r += 1) {
     for (let c = 0; c < cols; c += 1) {
+      if (stepped) {
+        const place = (r + steps[c] * 1.5) / (rows + 4.5);
+        cells.push({ x: edge(c), y: edge(r), w: edge(c + 1) - edge(c), h: edge(r + 1) - edge(r), turn: place * .9 + Math.random() * .1 });
+        continue;
+      }
       const place = origin
-        ? Math.hypot((c + .5) * size - origin[0], (r + .5) * size - origin[1]) / far
+        ? Math.abs((inward ? 1 : 0) - Math.hypot((c + .5) * size - origin[0], (r + .5) * size - origin[1]) / far)
         : (c / cols + r / rows) / 2;
       cells.push({ x: edge(c), y: edge(r), w: edge(c + 1) - edge(c), h: edge(r + 1) - edge(r), turn: place * ORDER + Math.random() * (1 - ORDER) });
     }
+  }
+
+  // the stepped front's tones: a checker of the black, and a tint of it
+  let dither = null;
+  if (stepped) {
+    const tile = document.createElement('canvas');
+    const dot = Math.max(1, Math.round(2 * ratio));
+    tile.width = dot * 2;
+    tile.height = dot * 2;
+    const tctx = tile.getContext('2d');
+    tctx.fillStyle = BLACK;
+    tctx.fillRect(0, 0, dot, dot);
+    tctx.fillRect(dot, dot, dot, dot);
+    dither = ctx.createPattern(tile, 'repeat');
   }
 
   return (sweep, covering) => {
@@ -62,6 +94,14 @@ export function pixelGrid(canvas, origin) {
     cells.forEach(({ x, y, w, h, turn }) => {
       const on = covering ? turn < sweep : turn >= sweep;
       if (!on) return;
+      if (stepped) {
+        // how near the front it is, in spans: the nearest a checker, the
+        // next a tint, the rest solid
+        const near = (covering ? sweep - turn : turn - sweep) / EDGE_SPAN;
+        ctx.fillStyle = near < 1 ? dither : near < 2 ? 'rgba(27, 26, 26, .5)' : BLACK;
+        ctx.fillRect(x, y, w, h);
+        return;
+      }
       const lit = covering ? turn > sweep - EDGE_SPAN : turn < sweep + EDGE_SPAN;
       ctx.fillStyle = lit ? EDGE : BLACK;
       ctx.fillRect(x, y, w, h);
@@ -148,14 +188,26 @@ export function pixelToggle(el) {
 }
 
 // ---- a picture wiped open
-// the covers (Featured Work, Work, Archive), the Areas of Expertise gifs
-// and the hover previews (Featured Work, certificates, the About
-// portrait) open with a plain wipe from their bottom edge up - no pixels
+// every picture - the covers (Featured Work, Work, Archive), the case
+// studies' screenshots, the hover previews and the colleagues' pictures -
+// opens with a plain wipe from its bottom edge up, no pixels
 const WIPE_SHUT = 'inset(100% 0% 0% 0%)';
 const WIPE_OPEN = 'inset(0% 0% 0% 0%)';
 const wipeAt = (el, at) => {
   el.style.clipPath = at >= 1 ? WIPE_OPEN : `inset(${(1 - at) * 100}% 0% 0% 0%)`;
 };
+
+/**
+ * A picture's wipe for a scroll reveal's timeline: an object to
+ * tween from `at: 0` to `at: 1`, with the onUpdate that draws it.
+ *
+ * @param {Element} el
+ * @returns {{target: {at: number}, onUpdate: () => void}}
+ */
+export function pixelWipe(el) {
+  const target = { at: 0 };
+  return { target, onUpdate: () => wipeAt(el, target.at) };
+}
 
 /**
  * A picture wiping open from its bottom edge up, as a tween to put in a
@@ -168,7 +220,7 @@ const wipeAt = (el, at) => {
  * @param {string} [opts.ease]
  * @returns {gsap.core.Tween}
  */
-export function wipeReveal(el, { duration = 1, ease = 'power2.inOut' } = {}) {
+export function wipeReveal(el, { duration = 1.2, ease = 'power3.out' } = {}) {
   const sweep = { at: 0 };
   wipeAt(el, 0);
   return gsap.to(sweep, { at: 1, duration, ease, onUpdate: () => wipeAt(el, sweep.at) });
@@ -188,6 +240,121 @@ export function wipeToggle(el) {
   return {
     show: (duration = .5) => to(1, duration),
     hide: (duration = .4) => to(0, duration),
+    kill: () => gsap.killTweensOf(sweep),
+  };
+}
+
+// ---- a picture opened by the contact section's edge
+// the pictures shown under the pointer (the Featured Work and certificate
+// previews, the About portrait) open as the contact section's edge is
+// built (pixelEdges.js): square pixels in blocky steps - runs of a few
+// columns a step or so ahead of or behind each other - coming up from
+// the picture's foot, and at the front, before a pixel shows the picture
+// clean, a checker and then a half-seen tint of the ground over it. the
+// pixels not yet come are clipped away, so whatever is under the picture
+// shows through them
+const EDGE_BAND = .12;
+const groundOf = (el) => {
+  for (let at = el.parentElement; at; at = at.parentElement) {
+    const bg = getComputedStyle(at).backgroundColor;
+    if (bg && !/rgba\(.*,\s*0\)$|transparent/.test(bg)) return bg;
+  }
+  return 'rgb(229, 228, 227)';
+};
+
+function edger(el) {
+  // (the tones are drawn on a canvas inside the picture's box; an <img>
+  // can hold nothing, so it is opened by the steps alone)
+  const canvas = el.tagName === 'IMG' ? null : document.createElement('canvas');
+  if (canvas) {
+    canvas.className = 'pixel-specks';
+    canvas.setAttribute('aria-hidden', 'true');
+    if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+    el.appendChild(canvas);
+  }
+  let cells = null;
+  let measured = '';
+  let size = 0;
+  const measure = () => {
+    const width = el.offsetWidth;
+    const height = el.offsetHeight;
+    if (cells && measured === `${width}x${height}`) return;
+    measured = `${width}x${height}`;
+    size = Math.max(8, Math.min(24, Math.round(width / 24)));
+    const cols = Math.ceil(width / size);
+    const rows = Math.ceil(height / size);
+    // each run of columns a step or so ahead of or behind its neighbours
+    const steps = [];
+    while (steps.length < cols) {
+      const step = [0, 1, 1, 2, 3][Math.floor(Math.random() * 5)];
+      const run = 1 + Math.floor(Math.random() * 4);
+      for (let i = 0; i < run && steps.length < cols; i += 1) steps.push(step);
+    }
+    cells = [];
+    for (let r = 0; r < rows; r += 1) {
+      for (let c = 0; c < cols; c += 1) {
+        // (from the foot up, held back by its column's step, a little chance)
+        const place = (rows - 1 - r + steps[c] * 1.5) / (rows + 4.5);
+        cells.push({ c, r, turn: Math.min(1 - EDGE_BAND, place * (1 - EDGE_BAND) * .92 + Math.random() * .04) });
+      }
+    }
+    if (canvas) {
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.ceil(width * ratio);
+      canvas.height = Math.ceil(height * ratio);
+    }
+  };
+  return (at) => {
+    if (at <= 0) { el.style.clipPath = WIPE_SHUT; if (canvas) canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); return; }
+    measure();
+    const shown = cells.filter(({ turn }) => turn < at);
+    el.style.clipPath = at >= 1 ? 'none' : (shown.length
+      ? `path('${shown.map(({ c, r }) => `M${c * size} ${r * size}h${size + .5}v${size + .5}h${-(size + .5)}z`).join('')}')`
+      : WIPE_SHUT);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (at >= 1) return;
+    const ratio = canvas.width / el.offsetWidth;
+    const ground = groundOf(el);
+    const [r1, g1, b1] = (ground.match(/[\d.]+/g) || [0, 0, 0]).map(Number);
+    const tile = document.createElement('canvas');
+    const dot = Math.max(1, Math.round(2 * ratio));
+    tile.width = dot * 2;
+    tile.height = dot * 2;
+    const tctx = tile.getContext('2d');
+    tctx.fillStyle = ground;
+    tctx.fillRect(0, 0, dot, dot);
+    tctx.fillRect(dot, dot, dot, dot);
+    const dither = ctx.createPattern(tile, 'repeat');
+    const tint = `rgba(${r1}, ${g1}, ${b1}, .5)`;
+    const edge = (n) => Math.round(n * size * ratio);
+    shown.forEach(({ c, r, turn }) => {
+      // the newest come in under a checker of the ground, then its tint
+      const age = (at - turn) / EDGE_BAND;
+      if (age >= 1) return;
+      ctx.fillStyle = age < .5 ? dither : tint;
+      ctx.fillRect(edge(c), edge(r), edge(c + 1) - edge(c), edge(r + 1) - edge(r));
+    });
+  };
+}
+
+/**
+ * A picture that opens and shuts on demand by the contact section's edge
+ * (see above) - a preview shown under the pointer. Each call turns it from
+ * wherever it has got to.
+ *
+ * @param {Element} el
+ * @returns {{show: (duration?: number) => gsap.core.Tween, hide: (duration?: number) => gsap.core.Tween, kill: () => void}}
+ */
+export function edgeToggle(el) {
+  const set = edger(el);
+  const sweep = { at: 0 };
+  el.style.clipPath = WIPE_SHUT;
+  const to = (at, duration) => gsap.to(sweep, { at, duration, ease: 'power1.inOut', overwrite: true, onUpdate: () => set(sweep.at) });
+  return {
+    show: (duration = .6) => to(1, duration),
+    hide: (duration = .45) => to(0, duration),
     kill: () => gsap.killTweensOf(sweep),
   };
 }
@@ -263,12 +430,14 @@ export function blockToggle(el) {
  * @param {object} opts
  * @param {boolean} [opts.cover] - switch the pixels on rather than off
  * @param {number[]} [opts.origin] - [x, y] the sweep spreads from (else the top left)
+ * @param {boolean} [opts.inward] - closing in on `origin` instead of spreading from it
+ * @param {boolean} [opts.stepped] - as the contact section's edge: blocky steps, top down
  * @param {number} opts.duration - in seconds
  * @param {(sweep: number) => void} [opts.onUpdate] - each frame, with how far it is (0 to 1)
  * @returns {gsap.core.Tween}
  */
-export function pixelSweep(canvas, { cover = false, origin, duration, onUpdate }) {
-  const draw = pixelGrid(canvas, origin);
+export function pixelSweep(canvas, { cover = false, origin, inward = false, stepped = false, duration, onUpdate }) {
+  const draw = pixelGrid(canvas, origin, inward, stepped);
   // (from before the first pixel's turn to past the last one's, edge and all)
   const sweep = { at: -EDGE_SPAN };
   draw(sweep.at, cover);

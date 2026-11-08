@@ -23,7 +23,7 @@ const GROUPS = [
  * a category on the left and its skills on the right, with a rule under it
  * - the same row the certificates use.
  */
-function Skills() {
+function Skills({ light = false }) {
   useEffect(() => {
 
     // each row gets its OWN trigger: its text reveals letter by letter,
@@ -40,7 +40,7 @@ function Skills() {
 
   return (
     <>
-      <div id='skills' className='bg-surface'>
+      <div id='skills' className={light ? 'theme-light' : 'bg-surface'}>
         <div className='
           mobile:py-16 mobile:px-[1rem]
           tablet:py-16 tablet:px-[1rem]

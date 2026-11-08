@@ -18,6 +18,9 @@ import gsap from 'gsap';
 //   a short label), out of its clip boxes: nothing is laid over it
 
 // ---- the blocks (titles)
+// switched off: every title now rises word by word out of its clip boxes,
+// as body copy does. true brings the blocks back
+const TITLE_BLOCKS = false;
 // a title's blocks keep their own time, the same for every title on the
 // site whatever reveal sets them off: started as the reveal starts (and
 // taken away as it goes back), each line's block covers it over
@@ -217,6 +220,8 @@ function lineBlocks(words) {
  *   longer reveal (scrollReveal.js). null when there is no title to open
  */
 export function pixelText(targets) {
+  // (the blocks are off: titles rise word by word like all other text)
+  if (!TITLE_BLOCKS) return null;
   // (only split letters: a reveal of anything else is left as it is)
   const letters = gsap.utils.toArray(targets).filter((el) => el.classList?.contains('split-letter'));
   const titles = new Map();

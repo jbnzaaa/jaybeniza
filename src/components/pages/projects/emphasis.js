@@ -15,7 +15,7 @@ const TITLE_EMPHASIS = {
   'DOST Courseware': ['Courseware'],
   'DOST VLAS': ['VLAS'],
   'ReGain': { letters: [2, 3, 4, 5] },
-  'Design System': ['System'],
+  'Central App Design System': ['System'],
 };
 
 // the part of a title set in the pixel face, wherever it is shown (its

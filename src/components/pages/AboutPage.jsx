@@ -1,7 +1,6 @@
 //
 import React, { useEffect, useRef } from 'react'
 // Components
-import Process from './Process';
 import WorkExperience from './WorkExperience';
 import Skills from './Skills';
 import CertificatesAwards from './CertificatesAwards';
@@ -30,8 +29,8 @@ import { usePageTitle } from '../../utils/pageTitle'
 // experience entries below it - nothing here that they do not back up
 // the introduction: the page's first screen
 const INTRO = [
-  "I'm Jay Beniza, a UI/UX and Product Designer based in the Philippines with 3.5+ years of experience designing web and mobile products.",
-  'I focus on the details that shape how people experience a product, turning complex workflows into intuitive interfaces through research, prototyping, and design systems in Figma. Beyond design, I use Claude Code to bring my ideas into functional interfaces, bridging the gap between design and development.',
+  "I'm Jay Beniza, a UI/UX and Product Designer based in the Philippines with 3.5+ years of experience shaping web and mobile experiences.",
+  'I turn complex workflows into intuitive interfaces through research, prototyping, and Figma design systems, with an eye for the details that shape user experiences. Beyond design, I use Claude Code to build functional interfaces that bridge design and development.',
 ];
 
 // no word is left on its own at a line's end or start: a short word (I,
@@ -52,12 +51,14 @@ const tidy = (text) => {
 // it, the name (which shows my picture under the pointer), and the rest
 // of that paragraph. the paragraphs after it are set whole
 const NAME = 'Jay Beniza';
+// the supporting line along the first screen's foot: what the page holds
+const HERO_FOOT = "I'm more of a listener than a talker, and I enjoy the space to think. Outside design, I stay moving through cycling, hiking, running, skateboarding, and basketball.";
 // (the comma after the name is set on its own, outside the underline)
 const [BEFORE, AFTER] = INTRO[0].split(NAME + ',').map((part) => part.trim());
 // my picture (public/images)
 const PORTRAIT = `${process.env.PUBLIC_URL}/images/profile.webp`;
 
-const RESUME_DESCRIPTION = 'Hiring for a UI/UX or product design role? My CV covers my experience, skills, certificates, and awards in full. Have a product to design? Start a project and tell me about it, or email me.';
+const RESUME_DESCRIPTION = 'Hiring for a UI/UX or product design role? My CV details my experience, skills, certifications, and awards. For product work, start a project or email me directly.';
 const RESUME_LINKS = [
   // first, the way to start a project: the request form (ContactPage.jsx)
   { label: 'Start a project', to: '/get-in-touch' },
@@ -68,13 +69,13 @@ const RESUME_LINKS = [
 /**
  * The About page, laid out like the landing page - light and dark sections
  * in turn, each under a small boxed label: a first screen with the
- * introduction set large and centred (light), how I work (dark), experience
- * (light), skills and tools (dark), recognition (light), what my team
- * says (dark), then the closing screen - start a project, or the CV - with
+ * introduction set large and centred (light), experience (dark), skills
+ * and tools (light), recognition (dark), what my team says (light),
+ * then the closing screen - start a project, or the CV - with
  * the footer inside it (darkest).
  */
 function AboutPage() {
-  usePageTitle('About', 'About Jay Beniza, a UI/UX and product designer in the Philippines: how I work, my experience, skills, tools, and what teammates say.');
+  usePageTitle('About', 'About Jay Beniza, a UI/UX and product designer in the Philippines: my experience, skills, tools, and what teammates say.');
   const fxHero = useRef();
 
   useEffect(() => {
@@ -95,12 +96,14 @@ function AboutPage() {
     // (it opens and shuts in pixels - pixels.js)
     const pixels = wipeToggle(portrait);
 
-    // its middle on a point of the screen (`jump`: there at once, for
+    // its top left corner just below and right of a point of the screen -
+    // the pointer, which it then never covers (`jump`: there at once, for
     // when it opens)
+    const OFFSET = 16;
     const place = (clientX, clientY, jump) => {
       const rect = hero.getBoundingClientRect();
-      const x = clientX - rect.left - portrait.offsetWidth / 2;
-      const y = clientY - rect.top - portrait.offsetHeight / 2;
+      const x = clientX - rect.left + OFFSET;
+      const y = clientY - rect.top + OFFSET;
       if (jump) gsap.set(portrait, { x, y });
       toX(x);
       toY(y);
@@ -120,7 +123,8 @@ function AboutPage() {
     // (pressed rather than pointed at: under the name, clear of it)
     const under = () => {
       const rect = name.getBoundingClientRect();
-      return [rect.left + rect.width / 2, rect.bottom + portrait.offsetHeight / 2 + 8];
+      // (the point its corner sits off: its left with the name's, just below it)
+      return [rect.left - OFFSET, rect.bottom + 8 - OFFSET];
     };
 
     const onEnter = (e) => { if (e.pointerType === 'mouse') show(e.clientX, e.clientY); };
@@ -164,11 +168,15 @@ function AboutPage() {
       { targets: '#about-hero .about-name-line', vars: { scaleX: 1, duration: .6 }, position: '-=.3' },
       { targets: '#animate-about-intro', vars: { y: 0, stagger: .012, ease: 'power1.in' }, position: '<.15' },
     ], { trigger: '#about-hero', start: 'top bottom' });
+    // the supporting line along the foot rises as the other heroes' do
+    const foot = scrollReveal('#animate-about-hero-foot', { y: 0, stagger: .02, ease: 'power1.in' },
+      { trigger: '#about-hero', start: 'top bottom' });
     const resume = scrollReveal('#animate-about-page-resume', { y: 0, stagger: .02, ease: 'power1.in' },
       { trigger: '#resume' });
 
     return () => {
       intro.kill();
+      foot.kill();
       resume.kill();
     };
   }, []);
@@ -180,9 +188,9 @@ function AboutPage() {
         scale (size: .about-paragraph, App.css), from the left edge. top
         padding clears the nav bar */}
       <section id='about-hero' className='theme-light relative flex flex-col justify-between min-h-screen-safe overflow-hidden
-        mobile:px-[1rem] mobile:pt-20 mobile:pb-8 mobile:gap-y-12
-        tablet:px-[1rem] tablet:pt-20 tablet:pb-8 tablet:gap-y-12
-        laptop:px-[2rem] laptop:pt-24 laptop:pb-10 laptop:gap-y-12
+        mobile:px-[1rem] mobile:pt-20 mobile:pb-4 mobile:gap-y-12
+        tablet:px-[1rem] tablet:pt-20 tablet:pb-4 tablet:gap-y-12
+        laptop:px-[2rem] laptop:pt-24 laptop:pb-8 laptop:gap-y-12
         laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-12
         desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'
         ref={fxHero}>
@@ -232,23 +240,32 @@ function AboutPage() {
             ))}
           </div>
         </div>
-        {/* the way down to my process, the next section, along the bottom
-          on the right */}
-        <div className='relative z-10 flex justify-end'>
-          <ScrollCue label='Scroll to explore' />
+        {/* along the foot, as on the other first screens: a supporting line
+          in the lower left, and the way down on the right (under the line,
+          on the left, on a phone) */}
+        <div className='relative z-10 flex justify-between items-end gap-x-6
+          mobile:flex-col mobile:items-start mobile:gap-y-8'>
+          <p className='flex flex-wrap text-copy
+            mobile:w-[78%]
+            tablet:w-[52%]
+            laptop:w-[34%]
+            laptop-lg:w-[30%]
+            desktop:w-[28%]'>
+            <SplitText text={HERO_FOOT} id='animate-about-hero-foot' by='word' />
+          </p>
+          <div className='shrink-0'>
+            <ScrollCue label='Scroll' />
+          </div>
         </div>
       </section>
-      {/* how I work */}
-      <Process/>
-      {/* experience */}
-      <WorkExperience/>
-      {/* skills */}
-      <Skills/>
-      {/* certificates and awards */}
-      <CertificatesAwards/>
-      {/* what the people I work with say, on the dark surface - the light
-        sections and dark in turn - just before the way to start a project */}
-      <Testimonials dark/>
+      {/* the sections below the first screen, dark and light in turn after
+        it: experience (dark), skills (light), certificates and awards
+        (dark), what the people I work with say (light), then the closing
+        screen (darkest) */}
+      <WorkExperience dark/>
+      <Skills light/>
+      <CertificatesAwards dark/>
+      <Testimonials/>
       {/* download resume - this page's closing screen, laid out like the
         contact section (Contact.jsx) with the footer inside it. the top
         bar goes behind it the same way (data-nav-cover, Navbar.jsx) */}
@@ -266,7 +283,7 @@ function AboutPage() {
             laptop:col-span-5 laptop:row-start-1
             laptop-lg:col-span-5 laptop-lg:row-start-1
             desktop:col-span-5 desktop:row-start-1'>
-            <SplitText text='Hiring or Building?' id='animate-about-page-resume' emphasis={['Building?']} />
+            <SplitText text='Let’s Work Together' id='animate-about-page-resume' emphasis={['Together']} />
           </h2>
           {/* description + links - right */}
           <div className='text-copy

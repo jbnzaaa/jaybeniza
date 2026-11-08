@@ -38,7 +38,7 @@ const ITEMS = [
  * landing page's selected projects do; where the row has a preview, it
  * opens in the middle of that row, between the title and the year.
  */
-function CertificatesAwards() {
+function CertificatesAwards({ dark = false }) {
   const fxPreview = useRef();
   // its pixel reveal (pixels.js), and the row it is open on
   const fxPixels = useRef(null);
@@ -97,7 +97,7 @@ function CertificatesAwards() {
 
   return (
     <>
-      <div id='certificates-awards' className='theme-light'>
+      <div id='certificates-awards' className={dark ? 'bg-surface' : 'theme-light'}>
         <div className='
           mobile:py-16 mobile:px-[1rem]
           tablet:py-16 tablet:px-[1rem]

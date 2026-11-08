@@ -20,13 +20,14 @@ const TIMEOUT_MS = 4000;
 // the screen is given time to be seen, however fast the fonts arrive: the
 // count runs for at least COUNT seconds, and rests at 100 for HOLD before
 // the screen goes. kept short - with the figure's drop (DROP) and the
-// pixels' sweep (SWEEP) the whole screen is gone in under a second on a
+// pixels' sweep (SWEEP) the whole screen is gone in about a second on a
 // cached visit, so a visitor is never kept waiting on it
 const COUNT = .35;
 const HOLD = .05;
 // how long the figure takes to drop out, and the pixels to clear, in seconds
 const DROP = .2;
-const SWEEP = .35;
+// (the clear long enough for its blocky steps to be seen)
+const SWEEP = .7;
 
 /**
  * Full-screen black loading screen, made of pixels - the material a
@@ -90,6 +91,9 @@ function Preloader({ onExitStart, onDone }) {
         .add(() => {
           sweep = pixelSweep(canvas, {
             duration: SWEEP,
+            // (as the contact section's edge: blocky steps from the top
+            // down, a checker and a tint at the front - pixels.js)
+            stepped: true,
             onUpdate: (at) => { if (at >= 1 - COVER_LEFT) releaseReveals(); },
           });
           sweep.eventCallback('onComplete', () => { releaseReveals(); onDone(); });

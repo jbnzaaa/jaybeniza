@@ -1,6 +1,10 @@
 import React, { useEffect, useRef } from 'react'
+import gsap from 'gsap'
 // the site's halftone dots
 import { halftone } from '../../utils/halftone'
+
+// how long the dots take to build up (`build`), in seconds
+const BUILD = 1.1;
 
 // a frame with no length of its own is held this long, in ms
 const HOLD = 100;
@@ -52,8 +56,10 @@ async function decodeAll(data, alive) {
  * @param {string} alt - what is in it, said for the canvas
  * @param {number[]} [trim] - [top, bottom] shares of the clip to cut off:
  *   bars it was letterboxed in
+ * @param {boolean} [build] - the dots build up when it first shows, each
+ *   coming in at its own random moment and growing to size, over BUILD
  */
-function HalftoneGif({ src, alt, trim }) {
+function HalftoneGif({ src, alt, trim, build = false }) {
   const fxBox = useRef();
   const fxCanvas = useRef();
   const fxImg = useRef();
@@ -97,11 +103,20 @@ function HalftoneGif({ src, alt, trim }) {
         .catch(() => { if (alive && !url) img.src = src; });
     };
 
+    // building up: from the first frame drawn, over BUILD seconds
+    let builtFrom = 0;
     const tick = (now) => {
       raf = 0;
       if (!alive || !visible || document.hidden) return;
       raf = requestAnimationFrame(tick);
-      const size = `${box.clientWidth}x${box.clientHeight}`;
+      let size = `${box.clientWidth}x${box.clientHeight}`;
+      if (build && (list || (img.complete && img.naturalWidth))) {
+        if (!builtFrom) builtFrom = now;
+        const amount = Math.min(1, (now - builtFrom) / (BUILD * 1000));
+        dots.build(gsap.parseEase('power1.out')(amount));
+        // (redrawn every frame while it builds)
+        if (amount < 1) size += `:${now}`;
+      }
       if (list) {
         // on to the frame whose turn it is, at each frame's own pace
         if (!since) since = now;
