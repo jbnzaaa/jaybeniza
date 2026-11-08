@@ -12,9 +12,8 @@ import SplitText from '../common/SplitText'
 // where a request is sent
 const EMAIL = 'jaysonbeniza@gmail.com';
 
-// the Web3Forms access key that sends a request to my inbox (.env.local; see
-// .env.example). without it the form falls back to the visitor's email app
-const WEB3FORMS_KEY = process.env.REACT_APP_WEB3FORMS_KEY;
+// Vite: set VITE_WEB3FORMS_KEY in .env.local and your hosting environment.
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY?.trim();
 
 const HEADLINE = 'Start a Project';
 const INTRO = 'Tell me what you’re building. These details let me come back with a plan and the right questions, not just a hello.';
@@ -25,7 +24,6 @@ const STATUS_TEXT = {
   sending: 'Sending your request…',
   sent: 'Thank you, your request is in. I’ll reply by email.',
   failed: `Your request couldn’t be sent. Please email me at ${EMAIL} instead.`,
-  'email-app': 'Your email app should have opened with the request written out. Send it from there, and I’ll reply by email.',
 };
 
 // what the project is
@@ -127,15 +125,15 @@ function Select({ labelId, options, value, onChange }) {
  * and it is sent with the site's button.
  *
  * There is no server behind the site: the request is sent through
- * Web3Forms, which emails it to me, once its access key is set - until
- * then the form opens the visitor's own email app with the request written
- * out, addressed to me, for them to send.
+ * Web3Forms, which emails it to me once its access key is configured.
+ * Submission errors are displayed inline; the browser never redirects.
  */
 function ProjectRequest() {
   const [form, setForm] = useState(EMPTY);
-  // where the request is: '' (not sent), 'sending', 'sent', 'failed', or
-  // 'email-app' (handed to the visitor's email app)
+  // Request status: idle, sending, sent, or failed.
   const [status, setStatus] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const submittingRef = useRef(false);
 
   useEffect(() => {
     // each field rises a little into place as it fades in, then its words
@@ -177,16 +175,32 @@ function ProjectRequest() {
     services: now.services.includes(service) ? now.services.filter((s) => s !== service) : [...now.services, service],
   }));
 
-  // the request: sent straight to my inbox through Web3Forms when its
-  // access key is set (REACT_APP_WEB3FORMS_KEY, in .env.local); without it, or if
-  // sending fails, written out in the visitor's own email app instead
+  // Submit via Web3Forms without navigating away from the contact page.
   const submit = async (e) => {
     e.preventDefault();
-    if (status === 'sending') return;
+    if (submittingRef.current) return;
+
+    setErrorMessage('');
+    if (!WEB3FORMS_KEY) {
+      console.error('Missing VITE_WEB3FORMS_KEY. Configure it in .env.local and in your hosting environment.');
+      setErrorMessage('The contact form is not configured yet. Please email me directly.');
+      setStatus('failed');
+      return;
+    }
+
+    const name = form.name.trim();
+    const email = form.email.trim();
+    const about = form.about.trim();
+    if (!name || !email || !about) {
+      setErrorMessage('Please complete your name, email, and project description.');
+      setStatus('failed');
+      return;
+    }
+
     const lines = [
-      `Name: ${form.name}`,
-      `Email: ${form.email}`,
-      `Company: ${form.company || '-'}`,
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Company: ${form.company.trim() || '-'}`,
       '',
       `Project type: ${form.type}`,
       `Services needed: ${form.services.join(', ') || '-'}`,
@@ -194,44 +208,49 @@ function ProjectRequest() {
       `Budget: ${form.budget}`,
       '',
       'About the project:',
-      form.about,
+      about,
       '',
       'Who it is for:',
-      form.users || '-',
+      form.users.trim() || '-',
       '',
       'Existing materials:',
-      form.materials || '-',
+      form.materials.trim() || '-',
     ];
-    const subject = `Project request: ${form.type} from ${form.name}`;
-    const byEmailApp = () => {
-      window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
-      setStatus('email-app');
-    };
-    if (!WEB3FORMS_KEY) {
-      byEmailApp();
-      return;
-    }
+
+    submittingRef.current = true;
     setStatus('sending');
+
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
         body: JSON.stringify({
           access_key: WEB3FORMS_KEY,
-          subject,
-          from_name: form.name,
-          // (replies go to the visitor)
-          replyto: form.email,
-          email: form.email,
+          subject: `Project request: ${form.type} from ${name}`,
+          from_name: name,
+          email,
+          replyto: email,
           message: lines.join('\n'),
+          botcheck: '',
         }),
       });
+
       const result = await response.json();
-      if (!result.success) throw new Error(result.message);
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || `Request failed (${response.status})`);
+      }
+
       setStatus('sent');
-      setForm(EMPTY);
+      setForm({ ...EMPTY, services: [] });
     } catch (error) {
+      console.error('Web3Forms submission error:', error);
+      setErrorMessage('Please try again or contact me directly by email.');
       setStatus('failed');
+    } finally {
+      submittingRef.current = false;
     }
   };
 
@@ -308,15 +327,15 @@ function ProjectRequest() {
             </Field>
             <div className='form-field form-field-wide form-foot'>
               {/* the site's button, as a real button */}
-              <button type='submit' className='form-submit cta-button text-caption font-monolisa' disabled={status === 'sending'}>
+              <button type='submit' className='form-submit cta-button text-caption font-monolisa' disabled={status === 'sending'} aria-busy={status === 'sending'}>
                 {status === 'sending' ? 'Sending' : 'Send request'}
                 <span className='button-icon-box' aria-hidden='true'>
                   <RiArrowRightDownLine className='button-arrow text-base'/>
                 </span>
               </button>
               {/* after sending only. said aloud to a screen reader when it appears */}
-              <p className='text-caption text-muted' role='status'>
-                {STATUS_TEXT[status]}
+              <p className='text-caption text-muted' role='status' aria-live='polite'>
+                {status === 'failed' ? errorMessage || STATUS_TEXT.failed : STATUS_TEXT[status]}
               </p>
             </div>
           </form>
