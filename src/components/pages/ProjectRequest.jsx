@@ -12,8 +12,8 @@ import SplitText from '../common/SplitText'
 // where a request is sent
 const EMAIL = 'jaysonbeniza@gmail.com';
 
-// Vite: set VITE_WEB3FORMS_KEY in .env.local and your hosting environment.
-const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY?.trim();
+// REACT_APP: set REACT_APP_WEB3FORMS_KEY in .env.local and your hosting environment.
+const WEB3FORMS_KEY = process.env.REACT_APP_WEB3FORMS_KEY?.trim();
 
 const HEADLINE = 'Start a Project';
 const INTRO = 'Tell me what you’re building. These details let me come back with a plan and the right questions, not just a hello.';
@@ -182,7 +182,7 @@ function ProjectRequest() {
 
     setErrorMessage('');
     if (!WEB3FORMS_KEY) {
-      console.error('Missing VITE_WEB3FORMS_KEY. Configure it in .env.local and in your hosting environment.');
+      console.error('Missing REACT_APP_WEB3FORMS_KEY. Configure it in .env.local and in your hosting environment.');
       setErrorMessage('The contact form is not configured yet. Please email me directly.');
       setStatus('failed');
       return;
