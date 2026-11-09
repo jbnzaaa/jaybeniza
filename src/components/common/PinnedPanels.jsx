@@ -25,9 +25,11 @@ const above = (i, el) => -el.offsetHeight * 1.05;
 // 0.65 means about 65% of a screen of scrolling reveals the next project.
 const SCROLL_PER_PROJECT = 0.65;
 // Small smoothing value; 0 for direct scroll tracking.
-const SCRUB_SMOOTHING = 0.25;
+
 // Reveal the incoming project as soon as its progress bar starts filling.
-const BAR_ENTRY_THRESHOLD = 0.002;
+// Reserve the first scroll segment for Project 01.
+// Project 02 starts only AFTER the section is pinned and segment 01 is crossed.
+const ENTRY_EPSILON = 0.00001;
 
 function PinnedPanels({ id, tag, items }) {
   const fxSection = useRef(null);
@@ -47,11 +49,10 @@ function PinnedPanels({ id, tag, items }) {
     const fills = gsap.utils.toArray('.pinned-bar-fill', section);
     const bars = gsap.utils.toArray('.pinned-bar', section);
     const clamp = gsap.utils.clamp;
-    let visibleIndex = -1;
     let revealedIndex = 0;
 
-    // One timeline controls everything. No Observer, wheel lock, manual scroll,
-    // pin kill/recreate, or tiny pin boundaries.
+    // The pin tracks native scroll. Each project transition plays on its own
+    // clock after entering the corresponding progress-bar segment.
     const wipes = panels.map(({ media }, index) => {
       const wipe = pixelWipe(media);
       wipe.target.at = index === 0 ? 1 : 0;
@@ -60,116 +61,133 @@ function PinnedPanels({ id, tag, items }) {
     });
 
     panels.forEach(({ article, letters, picture, cta }, index) => {
-      gsap.set(picture, { scale: index === 0 ? 1 : 1.12, yPercent: index === 0 ? 0 : 5 });
+      gsap.set(picture, {
+        scale: index === 0 ? 1 : 1.12,
+        yPercent: index === 0 ? 0 : 5,
+      });
       gsap.set(letters, { y: index === 0 ? 0 : below });
-      gsap.set(cta, { autoAlpha: index === 0 ? 1 : 0, y: index === 0 ? 0 : 14 });
-      const button = cta?.querySelector('.cta-button');
-      if (button) gsap.set(button, { clipPath: 'inset(0% 0% 0% 0%)' });
-      if (cta) gsap.set(cta.querySelectorAll('.split-letter, .menu-icon'), { y: 0 });
+      if (cta) {
+        gsap.set(cta, { autoAlpha: index === 0 ? 1 : 0, y: index === 0 ? 0 : 14 });
+        const button = cta.querySelector('.cta-button');
+        if (button) gsap.set(button, { clipPath: 'inset(0% 0% 0% 0%)' });
+        gsap.set(cta.querySelectorAll('.split-letter, .menu-icon'), { y: 0 });
+      }
       article.style.pointerEvents = 'none';
     });
 
     const setInteractive = (index) => {
-      if (visibleIndex === index) return;
-      visibleIndex = index;
       panels.forEach(({ article, cta }, i) => {
         article.style.pointerEvents = i === index ? 'auto' : 'none';
         if (cta) cta.style.pointerEvents = i === index ? 'auto' : 'none';
       });
     };
 
-    // Text and CTA reveal automatically when the incoming progress bar starts.
-    // Their timing is independent of scroll speed; only the background wipe is scrubbed.
-    const revealProject = (index) => {
+    // Each project owns a scroll segment. The first segment belongs to
+    // Project 01, preventing Project 02 from revealing at pin entry.
+    const indexAt = (progress) => clamp(
+      0,
+      count - 1,
+      Math.floor(Math.max(0, progress - ENTRY_EPSILON) * count)
+    );
+
+    // Progress fills continuously according to native scroll position.
+    // Each bar represents one equal segment of the pinned scroll range.
+    const updateProgress = (progress) => {
+      fills.forEach((fill, i) => {
+        const amount = clamp(0, 1, progress * count - i);
+        gsap.set(fill, {
+          scaleX: amount,
+          transformOrigin: 'left center',
+        });
+        bars[i]?.classList.toggle('pinned-bar-on', amount >= 1);
+      });
+    };
+
+    // Animate both the incoming cover and its content independently of scroll.
+    // On reverse, wipe away the upper panel to reveal the completed lower panel.
+    const transitionTo = (index) => {
       if (index === revealedIndex) return;
       revealedIndex = index;
-      panels.forEach(({ letters, cta }, i) => {
+
+      panels.forEach(({ letters, cta, picture }, i) => {
+        const wipe = wipes[i];
+        gsap.killTweensOf(wipe.target);
+        gsap.killTweensOf(picture);
         gsap.killTweensOf(letters);
-        gsap.killTweensOf(cta);
+        if (cta) gsap.killTweensOf(cta);
+
+        // Panels below the selected one remain fully revealed; panels above
+        // it are hidden. Only the boundary panel needs an animated wipe.
+        const shouldShow = i <= index;
+        const isBoundary = i === Math.max(index, previousIndex);
+        const duration = isBoundary ? 0.62 : 0;
+
+        gsap.to(wipe.target, {
+          at: shouldShow ? 1 : 0,
+          duration,
+          ease: 'power2.inOut',
+          onUpdate: wipe.onUpdate,
+          overwrite: true,
+        });
+        gsap.to(picture, {
+          scale: shouldShow ? 1 : 1.12,
+          yPercent: shouldShow ? 0 : 5,
+          duration,
+          ease: 'power2.out',
+          overwrite: true,
+        });
+
         if (i === index) {
-          gsap.fromTo(letters,
-            { y: below },
-            { y: 0, duration: 0.42, stagger: { amount: 0.16 }, ease: 'power2.out', overwrite: true }
-          );
-          gsap.fromTo(cta,
-            { autoAlpha: 0, y: 14 },
-            { autoAlpha: 1, y: 0, duration: 0.42, delay: 0.10, ease: 'power2.out', overwrite: true }
-          );
+          gsap.fromTo(letters, { y: below }, {
+            y: 0, duration: 0.42, stagger: { amount: 0.16 },
+            ease: 'power2.out', overwrite: true,
+          });
+          if (cta) gsap.fromTo(cta, { autoAlpha: 0, y: 14 }, {
+            autoAlpha: 1, y: 0, duration: 0.42, delay: 0.10,
+            ease: 'power2.out', overwrite: true,
+          });
         } else {
-          gsap.set(letters, { y: above });
-          gsap.set(cta, { autoAlpha: 0, y: -10 });
+          gsap.set(letters, { y: i < index ? above : below });
+          if (cta) gsap.set(cta, { autoAlpha: 0, y: i < index ? -10 : 14 });
         }
       });
       setInteractive(index);
+      previousIndex = index;
     };
 
-    const updateProgress = (progress) => {
-      const position = progress * Math.max(0, count - 1);
-      fills.forEach((fill, index) => {
-        const amount = index === 0 ? 1 : clamp(0, 1, position - (index - 1));
-        gsap.set(fill, { scaleX: amount, transformOrigin: 'left center' });
-        bars[index]?.classList.toggle('pinned-bar-on', amount >= 0.999);
-      });
-    };
-
-    const timeline = gsap.timeline({ paused: true, defaults: { ease: 'none' },
-      onUpdate() { updateProgress(this.progress()); },
-    });
-
-    // Each transition is one unit. The final frame of the last transition
-    // is exactly the end of the pin, so no leftover pinned scroll area.
-    for (let index = 1; index < count; index += 1) {
-      const at = index - 1;
-      const previous = panels[index - 1];
-      const next = panels[index];
-      const wipe = wipes[index];
-
-      timeline.to(wipe.target, {
-        at: 1, duration: 0.72, ease: 'power1.inOut',
-        onUpdate: wipe.onUpdate,
-      }, at);
-      timeline.to(next.picture, {
-        scale: 1, yPercent: 0, duration: 0.86, ease: 'power2.out',
-      }, at);
-      // Ensures the final project is fully revealed before normal scrolling resumes.
-      timeline.to({ hold: 0 }, { hold: 1, duration: 0.01 }, at + 0.99);
-    }
-
+    let previousIndex = 0;
     updateProgress(0);
     setInteractive(0);
 
     const pin = count > 1 ? ScrollTrigger.create({
       trigger: section,
       start: 'top top',
-      end: () => `+=${Math.round(window.innerHeight * SCROLL_PER_PROJECT * (count - 1))}`,
+      end: () => `+=${Math.round(window.innerHeight * SCROLL_PER_PROJECT * count)}`,
       pin: true,
-      scrub: SCRUB_SMOOTHING,
-      animation: timeline,
       anticipatePin: 1,
       invalidateOnRefresh: true,
-      // Content is triggered by REAL scroll position, not the scrubbed timeline.
-      // Once the next bar is entered, the reveal completes on its own clock.
       onUpdate: (self) => {
-        const position = self.progress * (count - 1);
-        const incoming = clamp(0, count - 1, Math.ceil(position - BAR_ENTRY_THRESHOLD));
-        revealProject(incoming);
+        updateProgress(self.progress);
+        transitionTo(indexAt(self.progress));
       },
-      onEnter: () => revealProject(0),
+      onEnter: () => transitionTo(0),
       onEnterBack: (self) => {
-        const position = self.progress * (count - 1);
-        revealProject(clamp(0, count - 1, Math.ceil(position - BAR_ENTRY_THRESHOLD)));
+        updateProgress(self.progress);
+        transitionTo(indexAt(self.progress));
       },
+      onLeaveBack: () => { updateProgress(0); transitionTo(0); },
+      onLeave: () => { updateProgress(1); transitionTo(count - 1); },
     }) : null;
 
-    // Avoid any dependency between text reveal and scroll scrub smoothing.
     refreshSoon();
 
     return () => {
       pin?.kill();
-      timeline.kill();
-      panels.forEach(({ letters, cta }) => {
+      panels.forEach(({ letters, cta, picture }, i) => {
+        gsap.killTweensOf(wipes[i].target);
+        gsap.killTweensOf(picture);
         gsap.killTweensOf(letters);
-        gsap.killTweensOf(cta);
+        if (cta) gsap.killTweensOf(cta);
       });
       panels.forEach(({ article, picture, media, letters, cta }) => {
         article.style.removeProperty('pointer-events');
