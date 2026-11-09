@@ -171,10 +171,10 @@ function ServicesPage() {
         laptop:px-[2rem] laptop:pt-24 laptop:pb-8 laptop:gap-y-16
         laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-16
         desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'>
-        <h1>
+        <h1 className='w-full min-w-0'>
           {HEADLINE_LINES.map((line) => (
-            <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.95] tracking-tight
-              text-hero'>
+            <span key={line} className='hero-designerdev flex flex-nowrap whitespace-nowrap font-flexible font-bold leading-[.95] tracking-tight
+              text-hero mobile:text-[clamp(1.75rem,8.2vw,4rem)] tablet:text-[clamp(2.75rem,7.5vw,5rem)]'>
               <SplitText text={line} id='animate-services-page' emphasis={['complex briefs', 'digital products']} />
             </span>
           ))}
