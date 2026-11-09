@@ -59,7 +59,7 @@ export const SERVICES = [
     meta: 'Design-Led Front-End Development',
     // the mock-up of the project that shows it best, on the services page
     mockup: { src: roverMockup, alt: 'Rover SIS mock-up' },
-    title: 'Design to Code',
+    title: 'Pixels to Code',
     emphasis: ['Code'],
     text: 'A design should hold up beyond the prototype. I use React, Tailwind CSS, and AI-assisted development to translate interface decisions into functional front ends, preserving the details, interactions, and visual consistency established in Figma.',
     includes: [
