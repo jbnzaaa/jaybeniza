@@ -1,9 +1,10 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 // GSAP
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { Observer } from 'gsap/Observer';
 
 // Components
 import Tag from './Tag';
@@ -18,7 +19,7 @@ import {
   refreshSoon,
 } from '../../utils/scrollReveal';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, Observer);
 
 // Text animation helpers
 const below = (i, el) => el.offsetHeight * 1.05;
@@ -26,13 +27,11 @@ const above = (i, el) => -el.offsetHeight * 1.05;
 
 // Animation settings
 const TURN = 1.2;
-const HOLD = 0.6;
+const GESTURE_COOLDOWN = 0.45; // seconds after a panel finishes animating
+const PIN_SCREENS_PER_PROJECT = 4; // generous guard against high-speed scroll jumps
 
 function PinnedPanels({ id, tag, items }) {
   const fxSection = useRef(null);
-
-  // Tracks the currently displayed project
-  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const section = fxSection.current;
@@ -53,14 +52,15 @@ function PinnedPanels({ id, tag, items }) {
         picture: article.querySelector(
           '.pinned-panel-picture'
         ),
+        cta: article.querySelector('.pinned-panel-cta'),
       }));
 
     const n = panels.length;
+    const ctaWrappers = panels.map(({ cta }) => cta);
 
     if (!n) return undefined;
 
-    // Keep background panels non-interactive.
-    // The CTA is rendered separately above them.
+    // Keep background panels non-interactive; each CTA lives inside its panel.
     panels.forEach(({ article, picture }) => {
       article.style.pointerEvents = 'none';
 
@@ -70,6 +70,15 @@ function PinnedPanels({ id, tag, items }) {
           yPercent: 6,
         });
       }
+    });
+
+    // Keep each CTA mounted and animate it on the SAME GSAP timeline
+    // as its project's title and description.
+    ctaWrappers.forEach((wrapper, index) => {
+      gsap.set(wrapper, { autoAlpha: index === 0 ? 1 : 0, y: 0, pointerEvents: index === 0 ? 'auto' : 'none' });
+      const button = wrapper.querySelector('.cta-button');
+      if (button) gsap.set(button, { clipPath: 'inset(0% 0% 0% 0%)' });
+      gsap.set(wrapper.querySelectorAll('.split-letter, .menu-icon'), { y: 0 });
     });
 
     // First panel entrance animation
@@ -166,6 +175,13 @@ function PinnedPanels({ id, tag, items }) {
           },
           at
         )
+        .to(ctaWrappers[k - 1], { autoAlpha: 0, duration: 0.2 }, at)
+        .fromTo(
+          ctaWrappers[k],
+          { autoAlpha: 0, y: 12 },
+          { autoAlpha: 1, y: 0, duration: 0.3, ease: 'power2.out', immediateRender: false },
+          at + 0.45
+        )
         .fromTo(
           now.letters,
           {
@@ -183,21 +199,23 @@ function PinnedPanels({ id, tag, items }) {
         );
     }
 
-    // Progress indicator
-    const bars = [
-      ...section.querySelectorAll('.pinned-bar'),
-    ];
+    // Progress bars fill continuously while the project transition plays.
+    // The first bar is filled when the first project is visible; subsequent
+    // bars track the corresponding timeline segment in both directions.
+    const bars = [...section.querySelectorAll('.pinned-bar')];
+    const fills = [...section.querySelectorAll('.pinned-bar-fill')];
 
-    const markBars = (turn) => {
-      bars.forEach((bar, index) => {
-        bar.classList.toggle(
-          'pinned-bar-on',
-          index <= turn
-        );
+    const updateBars = (timelineTime = 0) => {
+      fills.forEach((fill, index) => {
+        const progress = index === 0
+          ? 1
+          : gsap.utils.clamp(0, 1, timelineTime - (index - 1));
+        gsap.set(fill, { scaleX: progress, transformOrigin: 'left center' });
+        bars[index]?.classList.toggle('pinned-bar-on', progress >= 1);
       });
     };
 
-    markBars(0);
+    updateBars(0);
 
     tl.to({}, { duration: 0 }, n - 1);
 
@@ -208,61 +226,162 @@ function PinnedPanels({ id, tag, items }) {
       if (shown === index) return;
 
       shown = index;
-      markBars(index);
-      setActiveIndex(index);
+      updateBars(tl.time());
+      ctaWrappers.forEach((cta, i) => {
+        gsap.set(cta, { pointerEvents: i === index ? 'auto' : 'none' });
+      });
     };
 
-    // Pin section while scrolling through projects
-    const pin =
-      n > 1
-        ? ScrollTrigger.create({
-            trigger: section,
-            start: 'top top',
-            end: () =>
-              `+=${Math.round(
-                window.innerHeight *
-                  HOLD *
-                  (n - 1)
-              )}`,
-            pin: true,
-            invalidateOnRefresh: true,
+    // Navigation is STEP-based, not tied to scroll progress. The long pin
+    // range is only a safety buffer for fast mouse wheels and trackpads.
+    let current = 0;
+    let transitioning = false;
+    let releasing = false;
+    let active = false;
+    let cooldownCall = null;
+    let motion = null;
+    let pin = null;
 
-            onUpdate: (self) => {
-              const turn = Math.max(
-                0,
-                Math.min(
-                  n - 1,
-                  Math.floor(
-                    self.progress * (n - 1) + 0.75
-                  )
-                )
-              );
+    const setPanelInstantly = (index) => {
+      motion?.kill();
+      tl.pause();
+      tl.seek(`panel-${index}`);
+      current = index;
+      shown = index;
+      updateBars(tl.time());
+      ctaWrappers.forEach((cta, i) => {
+        gsap.set(cta, { pointerEvents: i === index ? 'auto' : 'none' });
+      });
+    };
 
-              if (turn === shown) return;
+    const anchorScroll = () => {
+      if (!pin) return;
+      // Stay well inside the pin, away from either boundary.
+      const anchor = pin.start + Math.min(window.innerHeight, (pin.end - pin.start) / 2);
+      window.scrollTo(0, anchor);
+    };
 
-              const steps = Math.abs(
-                turn - shown
-              );
+    const releaseSection = (direction) => {
+      if (releasing || !pin) return;
+      releasing = true;
+      active = false;
+      observer.disable();
+      cooldownCall?.kill();
+      // Only release after an EXTRA outward scroll on the boundary project.
+      window.scrollTo(0, Math.max(0, direction > 0 ? pin.end + 3 : pin.start - 3));
+      cooldownCall = gsap.delayedCall(0.5, () => {
+        releasing = false;
+        cooldownCall = null;
+      });
+    };
 
-              updateActivePanel(turn);
+    const goToPanel = (direction) => {
+      if (!active || transitioning || releasing) return;
+      const next = current + direction;
+      if (next < 0 || next >= n) {
+        releaseSection(direction);
+        return;
+      }
 
-              tl.tweenTo(`panel-${turn}`, {
-                duration:
-                  TURN * Math.min(steps, 2),
-                ease: 'power1.inOut',
-                overwrite: true,
-              });
-            },
-          })
-        : null;
+      transitioning = true;
+      // Disable CTA clicks while panels are transitioning.
+      ctaWrappers.forEach((cta) => gsap.set(cta, { pointerEvents: 'none' }));
+      // The current project changes only by ONE, even on a huge wheel delta.
+      motion?.kill();
+      motion = tl.tweenTo(`panel-${next}`, {
+        duration: TURN,
+        ease: 'power2.inOut',
+        overwrite: true,
+        onUpdate: () => updateBars(tl.time()),
+        onComplete: () => {
+          updateBars(tl.time());
+          current = next;
+          updateActivePanel(next);
+          motion = null;
+          cooldownCall = gsap.delayedCall(GESTURE_COOLDOWN, () => {
+            transitioning = false;
+            cooldownCall = null;
+          });
+        },
+      });
+    };
+
+    const observer = Observer.create({
+      target: window,
+      type: 'wheel,touch',
+      wheelSpeed: -1,
+      tolerance: 24,
+      preventDefault: true,
+      onUp: () => goToPanel(1),
+      onDown: () => goToPanel(-1),
+      enabled: false,
+    });
+
+    const enterPinned = (fromBelow = false) => {
+      if (releasing || active) return;
+      active = true;
+      cooldownCall?.kill();
+      transitioning = false;
+      setPanelInstantly(fromBelow ? n - 1 : 0);
+      // Reposition BEFORE unlocking the observer; this prevents a large
+      // scroll delta from crossing the pin's far edge on entry.
+      anchorScroll();
+      observer.enable();
+    };
+
+    const onKeyDown = (event) => {
+      if (!active || event.altKey || event.ctrlKey || event.metaKey) return;
+      if (event.target?.closest?.('input, textarea, select, [contenteditable="true"]')) return;
+      if (['ArrowDown', 'PageDown', ' ', 'ArrowUp', 'PageUp'].includes(event.key)) {
+        event.preventDefault();
+        goToPanel(
+          ['ArrowUp', 'PageUp'].includes(event.key) ||
+          (event.key === ' ' && event.shiftKey) ? -1 : 1
+        );
+      }
+    };
+    window.addEventListener('keydown', onKeyDown, { passive: false });
+
+    if (n > 1) {
+      pin = ScrollTrigger.create({
+        trigger: section,
+        start: 'top top',
+        end: () => `+=${Math.max(window.innerHeight * n * PIN_SCREENS_PER_PROJECT, 2000)}`,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onEnter: () => enterPinned(false),
+        onEnterBack: () => enterPinned(true),
+        // Even if a massive scroll tries to cross the entire pin in one
+        // frame, put the viewport back inside instead of skipping projects.
+        onLeave: () => {
+          if (active && !releasing) anchorScroll();
+          else observer.disable();
+        },
+        onLeaveBack: () => {
+          if (active && !releasing) anchorScroll();
+          else observer.disable();
+        },
+      });
+    }
 
     refreshSoon();
 
     // Cleanup
     return () => {
       opening.kill();
+      motion?.kill();
+      observer.kill();
+      window.removeEventListener('keydown', onKeyDown);
+      cooldownCall?.kill();
       pin?.kill();
       tl.revert();
+      ctaWrappers.forEach((wrapper) => {
+        gsap.set(wrapper, { clearProps: 'all' });
+        const button = wrapper.querySelector('.cta-button');
+        if (button) gsap.set(button, { clearProps: 'clipPath' });
+        gsap.set(wrapper.querySelectorAll('.split-letter, .menu-icon'), { clearProps: 'transform' });
+      });
 
       panels.forEach(
         ({ article, picture, media }) => {
@@ -280,8 +399,6 @@ function PinnedPanels({ id, tag, items }) {
       );
     };
   }, [items]);
-
-  const activeItem = items[activeIndex];
 
   return (
     <section
@@ -420,35 +537,22 @@ function PinnedPanels({ id, tag, items }) {
                 </p>
               </div>
 
-              {/* Reserve space for the CTA */}
-              <span className="shrink-0" />
+              {/* CTA belongs to this project, and shares its reveal timeline. */}
+              <div
+                className="pinned-panel-cta relative z-10 shrink-0 pointer-events-auto"
+                style={{ visibility: i === 0 ? 'visible' : 'hidden' }}
+              >
+                <Button
+                  label={item.cta || 'View work'}
+                  to={item.to}
+                  reveal="manual"
+                  name={`View work: ${item.title}`}
+                />
+              </div>
             </div>
           </div>
         </article>
       ))}
-
-      {/* Clickable CTA overlay above all panels */}
-      {activeItem && (
-        <div
-          className="absolute inset-0 z-[70] pointer-events-none
-            flex items-end justify-end
-            mobile:px-[1rem] mobile:pb-[calc(1rem_+_4px)]
-            tablet:px-[1rem] tablet:pb-[calc(1rem_+_4px)]
-            laptop:px-[2rem] laptop:pb-[calc(2rem_+_4px)]
-            laptop-lg:px-[3rem] laptop-lg:pb-[calc(3rem_+_4px)]
-            desktop:px-[3rem] desktop:pb-[calc(3rem_+_4px)]"
-        >
-          <div className="pointer-events-auto">
-            <Button
-              key={activeItem.id}
-              label={activeItem.cta || 'View work'}
-              to={activeItem.to}
-              reveal="mount"
-              name={`View work: ${activeItem.title}`}
-            />
-          </div>
-        </div>
-      )}
 
       {/* Progress bars */}
       {items.length > 1 && (
@@ -458,9 +562,14 @@ function PinnedPanels({ id, tag, items }) {
         >
           {items.map((item) => (
             <span
-              className="pinned-bar flex-1"
+              className="pinned-bar relative flex-1 overflow-hidden"
               key={item.id}
-            />
+            >
+              <span
+                className="pinned-bar-fill absolute inset-0 bg-current"
+                style={{ transform: 'scaleX(0)', transformOrigin: 'left center' }}
+              />
+            </span>
           ))}
         </div>
       )}
