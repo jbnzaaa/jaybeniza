@@ -139,8 +139,8 @@ export function ServiceDetails() {
             <ul className='flex flex-col row-start-2
               mobile:col-span-12 tablet:col-span-12
               laptop:col-span-5 laptop:col-start-8 laptop:mt-16 laptop-lg:col-span-5 laptop-lg:col-start-8 laptop-lg:mt-20 desktop:col-span-4 desktop:col-start-9 desktop:mt-20' id={`service-list-${service.id}`}>
-              {service.includes.map(({ label }, j) => (
-                <li className='service-row relative flex items-baseline gap-x-6 m-0 py-4' key={label}>
+              {service.includes.map(({ label, blurb }, j) => (
+                <li className='service-row relative flex items-start gap-x-2 m-0 py-4' key={label}>
                   {/* the rule above it (not the first), drawn across as the list comes in */}
                   {j > 0 && <span className='service-rule absolute top-0 left-0 w-full h-px bg-current opacity-20' aria-hidden='true' />}
                   {/* (a set width, so the names line up whatever the digits; not a
@@ -148,9 +148,12 @@ export function ServiceDetails() {
                   <span className='service-num shrink-0 w-10 whitespace-nowrap text-caption text-muted'>
                     <SplitText text={`0${j + 1}`} id={`animate-service-list-${service.id}`} />
                   </span>
-                  <span className='flex flex-wrap text-copy'>
-                    <SplitText text={label} id={`animate-service-list-${service.id}`} />
-                  </span>
+                  <div className='flex min-w-0 flex-col gap-y-2'>
+                    <span className='flex flex-wrap text-copy'>
+                      <SplitText text={label} id={`animate-service-list-${service.id}`} />
+                    </span>
+                    <p className='text-caption text-muted leading-relaxed'>{blurb}</p>
+                  </div>
                 </li>
               ))}
             </ul>
