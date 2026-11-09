@@ -29,8 +29,8 @@ import { usePageTitle } from '../../utils/pageTitle'
 // experience entries below it - nothing here that they do not back up
 // the introduction: the page's first screen
 const INTRO = [
-  "I'm Jay Beniza, a UI/UX and Product Designer based in the Philippines with 3.5+ years of experience shaping web and mobile experiences.",
-  'I turn complex workflows into intuitive interfaces through research, prototyping, and Figma design systems, with an eye for the details that shape user experiences. Beyond design, I use Claude Code to build functional interfaces that bridge design and development.',
+  "I'm Jay Beniza, a UI/UX and Product Designer based in the Philippines, with 3.5+ years of experience designing web and mobile products.",
+  'I work through the complicated parts of product design, from unclear requirements to workflows spanning multiple user roles. I turn those challenges into structured, developer-ready interfaces, combining research, design systems, and AI-assisted front-end development.',
 ];
 
 // no word is left on its own at a line's end or start: a short word (I,
@@ -52,13 +52,13 @@ const tidy = (text) => {
 // of that paragraph. the paragraphs after it are set whole
 const NAME = 'Jay Beniza';
 // the supporting line along the first screen's foot: what the page holds
-const HERO_FOOT = "I'm more of a listener than a talker, and I enjoy the space to think. Outside design, I stay moving through cycling, hiking, running, skateboarding, and basketball.";
+const HERO_FOOT = "More observant than outspoken. Away from design, I trade screen time for cycling, hiking trails, running, skateboarding, and the occasional game of basketball.";
 // (the comma after the name is set on its own, outside the underline)
 const [BEFORE, AFTER] = INTRO[0].split(NAME + ',').map((part) => part.trim());
 // my picture (public/images)
 const PORTRAIT = `${process.env.PUBLIC_URL}/images/profile.webp`;
 
-const RESUME_DESCRIPTION = 'Hiring for a UI/UX or product design role? My CV details my experience, skills, certifications, and awards. For product work, start a project or email me directly.';
+const RESUME_DESCRIPTION = "I'm open to product design opportunities, collaborations, and projects where thoughtful design can make complicated experiences easier to use. Explore my experience or get in touch to discuss what you're building.";
 const RESUME_LINKS = [
   // first, the way to start a project: the request form (ContactPage.jsx)
   { label: 'Start a project', to: '/get-in-touch' },
@@ -283,7 +283,7 @@ function AboutPage() {
             laptop:col-span-5 laptop:row-start-1
             laptop-lg:col-span-5 laptop-lg:row-start-1
             desktop:col-span-5 desktop:row-start-1'>
-            <SplitText text='Let’s Work Together' id='animate-about-page-resume' emphasis={['Together']} />
+            <SplitText text='Let’s create something great.' id='animate-about-page-resume' emphasis={['create']} />
           </h2>
           {/* description + links - right */}
           <div className='text-copy

@@ -21,11 +21,12 @@ import { usePageTitle } from '../../utils/pageTitle'
 
 // the headline, in two set lines
 const HEADLINE_LINES = [
-  'From first sketch',
-  'to shipped product.',
+  'From complex briefs',
+  'to considered',
+  'digital products.'
 ];
 
-const DESCRIPTION = 'Product design, design systems and AI-assisted front-end builds, handled by one designer from first research to release.';
+const DESCRIPTION = 'An independent design practice connecting product thinking, interface design, scalable systems, and AI-assisted development. One cohesive approach, from understanding the problem to bringing the solution into focus.';
 
 
 // the questions a client asks before getting in touch, each answered from
@@ -33,27 +34,27 @@ const DESCRIPTION = 'Product design, design systems and AI-assisted front-end bu
 const FAQ = [
   {
     q: 'How long does a project take?',
-    a: 'Most projects take one to two weeks, depending on scope. Larger products are planned in phases, with the timeline agreed before work starts.',
+    a: 'Timelines depend on the scope, complexity, and level of involvement required. Smaller engagements may take one to two weeks, while larger products are structured into clear phases with agreed deliverables and milestones.',
   },
   {
-    q: 'What do you need from me to start?',
-    a: 'A short brief: what you are building, who it is for, and anything you already have, such as a current site, a brand guide, or references you like. The project form asks for exactly that.',
+    q: 'What do you need to get started?',
+    a: "A clear understanding of what you're building, who it's for, and what needs to improve. Existing designs, brand guidelines, product documentation, and references are helpful, but a detailed brief isn't required to begin the conversation.",
   },
   {
-    q: 'Can you build what you design?',
-    a: 'Yes. Designs can be carried into a working React and Tailwind CSS front-end with Claude Code, as Rover and GuRover were.',
+    q: 'Can you develop what you design??',
+    a: "I offer AI-assisted front-end development using React, Tailwind CSS, and Claude Code. This allows me to carry selected design projects into functional interfaces, with the implementation scope defined around each project's requirements.",
   },
   {
-    q: 'Do you work with an existing development team?',
-    a: 'Yes. Handoff comes with specs developers can build from, and I stay close through development, testing each role’s flow before launch.',
+    q: 'Can you work with our development team?',
+    a: "Yes. I've worked closely with developers throughout design and implementation, preparing specifications, clarifying interactions, reviewing developed interfaces, and resolving design issues as products take shape.",
   },
   {
-    q: 'What does a project cost?',
-    a: 'It depends on scope, and smaller pieces of work start under ₱25,000. Share your budget on the project form and I will suggest what fits it.',
+    q: 'How is pricing determined?',
+    a: 'Pricing is based on the scope, complexity, deliverables, and timeline. Smaller engagements can begin below ₱25,000, while larger projects are quoted individually after reviewing the requirements.',
   },
   {
-    q: 'Which tools do you use?',
-    a: 'Figma for design and prototypes, Claude Code with React and Tailwind CSS for front-end builds, and GSAP for motion.',
+    q: 'What tools do you work with?',
+    a: 'Figma is my primary workspace for product design, prototyping, and design systems. For front-end development, I work with React, Tailwind CSS, Claude Code, and GSAP for selected interaction and motion work.',
   },
 ];
 
@@ -174,7 +175,7 @@ function ServicesPage() {
           {HEADLINE_LINES.map((line) => (
             <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.95] tracking-tight
               text-hero'>
-              <SplitText text={line} id='animate-services-page' emphasis={['sketch', 'shipped']} />
+              <SplitText text={line} id='animate-services-page' emphasis={['complex briefs', 'digital products']} />
             </span>
           ))}
         </h1>

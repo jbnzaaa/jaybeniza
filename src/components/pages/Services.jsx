@@ -20,53 +20,53 @@ import roverMockup from '../../assets/files/images/rover/mockup-cover.webp'
 // Tenor at its small `AAAAM` size, `alt` saying what is in it)
 const TENOR = 'https://media1.tenor.com/m/';
 // the line under the landing page's list
-const OVERVIEW = 'Three ways I help teams ship: product design, design systems, and AI-assisted front-end builds.';
+const OVERVIEW = 'From understanding the problem to shaping the interface and bringing it into code, my work connects the decisions that make digital products usable, consistent, and ready to build.';
 
 export const SERVICES = [
   {
     id: 'product-design',
     // its highlights, in short, beside its name on the landing page
-    meta: 'Research / Prototyping / Testing',
+    meta: 'Product & Experience Design',
     // the mock-up of the project that shows it best, on the services page
     mockup: { src: aaccupMockup, alt: 'AACCUP accreditation platform mock-up' },
     title: 'UI/UX Design',
     emphasis: ['UI/UX'],
-    text: 'Every role’s journey is mapped, the screens that matter most are prototyped first, and flows are tested in moderated sessions while changes are still cheap.',
+    text: 'Complex products demand more than polished screens. I untangle user journeys, clarify competing requirements, and shape interfaces that make demanding workflows easier to understand and navigate.',
     includes: [
-      { label: 'Research and journey mapping', blurb: 'Every role’s path through the product, mapped before a screen is drawn.', gif: `${TENOR}4LvAD8hD5tcAAAAM/charlie-day.gif`, alt: 'Charlie Day explaining a conspiracy board' },
-      { label: 'Wireframes and high-fidelity UI', blurb: 'Structure settled in wireframes first, then the final interface, ready for handoff.', gif: `${TENOR}JtzTo08HZY4AAAAM/jarvis-iron-man.gif`, alt: 'Tony Stark giving JARVIS commands' },
-      { label: 'Prototyping and interaction design', blurb: 'Clickable flows for the screens that matter most, tried before they are built.', gif: `${TENOR}WwvFH4SrFCIAAAAM/dexters-lab-dexters-laboratory.gif`, alt: 'Dee Dee wondering what a button does' },
-      { label: 'Usability and role-based testing', blurb: 'Moderated sessions with each role, so problems surface while they are cheap to fix.', gif: `${TENOR}PNbVvwHpi6kAAAAM/mr-bean-takes-an-exam-mister-bean-takes-an-exam.gif`, alt: 'Mr. Bean taking an exam' },
+      { label: 'Research and journey mapping', blurb: 'Understand who uses the product, what they need to accomplish, and where the current experience creates friction.', gif: `${TENOR}4LvAD8hD5tcAAAAM/charlie-day.gif`, alt: 'Charlie Day explaining a conspiracy board' },
+      { label: 'Wireframes and high-fidelity UI', blurb: 'Establish the structure before refining the visual experience, from early layouts to developer-ready screens.', gif: `${TENOR}JtzTo08HZY4AAAAM/jarvis-iron-man.gif`, alt: 'Tony Stark giving JARVIS commands' },
+      { label: 'Prototyping and interaction design', blurb: 'Make important user journeys tangible through interactive prototypes that reveal how the product should behave.', gif: `${TENOR}WwvFH4SrFCIAAAAM/dexters-lab-dexters-laboratory.gif`, alt: 'Dee Dee wondering what a button does' },
+      { label: 'Usability and role-based testing', blurb: 'Evaluate workflows with relevant users, uncover points of confusion, and refine the experience before implementation.', gif: `${TENOR}PNbVvwHpi6kAAAAM/mr-bean-takes-an-exam-mister-bean-takes-an-exam.gif`, alt: 'Mr. Bean taking an exam' },
     ],
   },
   {
     id: 'design-systems',
-    meta: 'Components / Foundations / Handoff',
+    meta: 'Design Systems & UI Foundations',
     // the mock-up of the project that shows it best, on the services page
     mockup: { src: pciMockup, alt: 'Central App design system mock-up' },
     title: 'Design Systems',
     emphasis: ['Systems'],
-    text: 'Components, styles and documentation keep a product consistent as it grows, and give developers specs they can build from. The Central App system now covers 40+ components in light and dark modes.',
+    text: "Consistency shouldn't depend on remembering how the last screen was designed. I establish shared components, visual foundations, and clear usage rules that help teams maintain a coherent product as its interface grows.",
     includes: [
-      { label: 'Component libraries and variants', blurb: 'Components with their variants and states, built once and used on every screen.', gif: `${TENOR}2YH2HLiOdB4AAAAM/legal-eagle-puts-on-glasses.gif`, alt: 'Putting on glasses, ready to get started' },
-      { label: 'Color, type and spacing foundations', blurb: 'Color and type set as shared styles, in light and dark modes.', gif: `${TENOR}5lLcKZgmIhgAAAAM/american-psycho-patrick-bateman.gif`, alt: 'Patrick Bateman admiring a business card' },
-      { label: 'Documentation and usage guidance', blurb: 'Usage guidance beside each component, so the system holds up as the team grows.', gif: `${TENOR}LiDD5Bl5AXEAAAAM/spongebob-the.gif`, alt: 'SpongeBob writing his essay' },
-      { label: 'Specs and developer handoff', blurb: 'Specs clear enough to build from, without guessing at spacing or states.', gif: `${TENOR}EfuLzvwuJlMAAAAM/documents.gif`, alt: 'Handing over a stack of documents' },
+      { label: 'Component libraries and variants', blurb: 'Reusable components with defined states and variations, reducing repeated decisions across screens.', gif: `${TENOR}2YH2HLiOdB4AAAAM/legal-eagle-puts-on-glasses.gif`, alt: 'Putting on glasses, ready to get started' },
+      { label: 'Color, type and spacing foundations', blurb: 'A connected system of typography, color, spacing, and visual rules that gives every interface a shared foundation.', gif: `${TENOR}5lLcKZgmIhgAAAAM/american-psycho-patrick-bateman.gif`, alt: 'Patrick Bateman admiring a business card' },
+      { label: 'Documentation and usage guidance', blurb: '	Practical guidance that clarifies when, where, and how components should be used.', gif: `${TENOR}LiDD5Bl5AXEAAAAM/spongebob-the.gif`, alt: 'SpongeBob writing his essay' },
+      { label: 'Specs and developer handoff', blurb: 'Clear interaction states and implementation details that reduce ambiguity between design and development.', gif: `${TENOR}EfuLzvwuJlMAAAAM/documents.gif`, alt: 'Handing over a stack of documents' },
     ],
   },
   {
     id: 'development',
-    meta: 'React / Claude Code / Motion',
+    meta: 'Design-Led Front-End Development',
     // the mock-up of the project that shows it best, on the services page
     mockup: { src: roverMockup, alt: 'Rover SIS mock-up' },
     title: 'Design to Code',
     emphasis: ['Code'],
-    text: 'Figma files are carried into working web and mobile front-ends with Claude Code, built alongside developers within real technical limits, as Rover and GuRover were.',
+    text: 'A design should hold up beyond the prototype. I use React, Tailwind CSS, and AI-assisted development to translate interface decisions into functional front ends, preserving the details, interactions, and visual consistency established in Figma.',
     includes: [
-      { label: 'React and Tailwind CSS front-ends', blurb: 'Front-ends in React and Tailwind CSS, built straight from the Figma files.', gif: `${TENOR}fTor6GW-vvoAAAAM/bumblebee-transformer.gif`, alt: 'Bumblebee transforming', trim: [.14, .14] },
-      { label: 'AI-assisted development with Claude Code', blurb: 'Claude Code to get from design to working code faster, as on Rover and GuRover.', gif: `${TENOR}XgaU95K_XiwAAAAM/kermit-typing.gif`, alt: 'Kermit typing furiously' },
-      { label: 'Figma-to-code translation', blurb: 'Designs carried into code with their spacing, type and states intact.', gif: `${TENOR}31K0izlbI5cAAAAM/phineas-and-ferb-heinz-doofenschmirtz.gif`, alt: 'Doofenschmirtz building an invention, laughing' },
-      { label: 'Scroll and interaction motion', blurb: 'Scroll and interaction motion in GSAP, like the reveals across this site.', gif: `${TENOR}hPdjxM-fcegAAAAM/gif.gif`, alt: 'Michael Jackson leaning in Smooth Criminal' },
+      { label: 'React and Tailwind CSS front-ends', blurb: 'Responsive interfaces developed from established designs, with attention to layout, hierarchy, and component structure.', gif: `${TENOR}fTor6GW-vvoAAAAM/bumblebee-transformer.gif`, alt: 'Bumblebee transforming', trim: [.14, .14] },
+      { label: 'AI-assisted development with Claude Code', blurb: 'Claude Code supports implementation and refinement, helping move from design decisions to working interfaces..', gif: `${TENOR}XgaU95K_XiwAAAAM/kermit-typing.gif`, alt: 'Kermit typing furiously' },
+      { label: 'Figma-to-code translation', blurb: 'Carry typography, spacing, component states, and responsive behavior from Figma into the browser.', gif: `${TENOR}31K0izlbI5cAAAAM/phineas-and-ferb-heinz-doofenschmirtz.gif`, alt: 'Doofenschmirtz building an invention, laughing' },
+      { label: 'Scroll and interaction motion', blurb: 'Purposeful motion using GSAP to communicate transitions, hierarchy, and feedback without distracting from the experience.', gif: `${TENOR}hPdjxM-fcegAAAAM/gif.gif`, alt: 'Michael Jackson leaning in Smooth Criminal' },
     ],
   },
 ];

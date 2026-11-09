@@ -23,7 +23,7 @@ export const PROJECT_CARDS = [
     picture: gurover_cover,
     category: 'Web/Mobile Platform / Team Project',
     meta: '2026 / Web/Mobile Platform',
-    text: 'An AI-assisted, offline-first workspace that lifts the record-keeping load off Philippine teachers, from public school classrooms to college lecture halls.',
+    text: 'Rethinking how Philippine educators manage academic records through an AI-assisted, offline-first workspace built for the demands of teaching.',
   },
   {
     id: 'aaccup',
@@ -33,7 +33,7 @@ export const PROJECT_CARDS = [
     picture: aaccup_cover,
     category: 'Web Platform / Client Project',
     meta: '2023 / Web Platform',
-    text: "A full redesign of AACCUP's accreditation platform, from the public website to the workspace where nine roles run accreditation for the Philippines' state universities and colleges.",
+    text: "Bringing structure to a complex accreditation process through a redesigned digital platform connecting nine distinct user roles.",
   },
   {
     id: 'comelec',
@@ -45,7 +45,7 @@ export const PROJECT_CARDS = [
     picture: comelec_cover,
     category: '3D Training Game / Client Project',
     meta: '2025 / 3D Training Game',
-    text: 'A 3D training game that teaches COMELEC election personnel to set up and operate the Automated Counting Machine (ACM), from opening its hard case to inserting the smart card.',
+    text: 'Translating technical election procedures into an interactive 3D training experience, helping personnel learn equipment operations through guided practice.',
   },
   {
     id: 'pci',
@@ -57,6 +57,6 @@ export const PROJECT_CARDS = [
     picture: pci_cover,
     category: 'Design System / Team Project',
     meta: '2024 / Design System',
-    text: 'A design system started for the Central App and built from scratch in Figma, so each screen is designed and developed from one set of 40+ components.',
+    text: 'Establishing a shared design foundation with 40+ reusable components to bring consistency across interfaces and clarity to developer handoff.',
   },
 ];

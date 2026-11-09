@@ -11,10 +11,10 @@ import sentenceCase from '../../utils/sentenceCase'
 
 // everything I work with, grouped by the kind of work - design first
 const GROUPS = [
-  { id: 'product-design', title: 'UX & Product Design', items: ['User Research', 'Usability Testing', 'User Flows', 'Information Architecture', 'Interaction Design', 'Wireframing', 'Prototyping'] },
-  { id: 'ui-design-systems', title: 'UI & Design Systems', items: ['User Interface Design', 'Responsive Design', 'Component Libraries', 'Design Systems', 'Design Documentation'] },
-  { id: 'front-end-development', title: 'AI-Assisted Front-End', items: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Tailwind CSS', 'Sass/SCSS', 'Bootstrap'] },
-  { id: 'tools', title: 'Tools & Collaboration', items: ['Figma', 'Claude Code', 'Jira', 'Git', 'Visual Studio Code', 'Agile/Scrum', 'Developer Handoff'] },
+  { id: 'product-design', title: 'Research & Product Thinking', items: ['User Research', 'Usability Testing', 'User Flows', 'Information Architecture', 'Interaction Design', 'Wireframing', 'Prototyping'] },
+  { id: 'ui-design-systems', title: 'Interface Craft & Systems', items: ['User Interface Design', 'Responsive Design', 'Component Libraries', 'Design Systems', 'Design Documentation'] },
+  { id: 'front-end-development', title: 'Design-Led Development', items: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Tailwind CSS', 'Sass/SCSS', 'Bootstrap'] },
+  { id: 'tools', title: 'Tools & Delivery', items: ['Figma', 'Claude Code', 'Jira', 'Git', 'Visual Studio Code', 'Agile/Scrum', 'Developer Handoff'] },
 ];
 
 /**

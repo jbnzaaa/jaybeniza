@@ -26,10 +26,10 @@ const EMPHASIS = {
   build: { letters: [2, 3, 4, 5] },
 };
 const STEPS = [
-  { id: 'understand', title: 'Understand', text: 'I start with the brief, the storyboard, or the people who’ll use it, and learn what each role needs before drawing anything.', gif: TENOR + 'QS_ZPNPtKjsAAAAM/star-atlas-solana.gif', alt: 'A clip from Star Atlas' },
-  { id: 'explore', title: 'Explore', text: 'I map the flow for each role first, from the most powerful user to a first-time guest, before drawing a single screen.', gif: TENOR + 'pKaWNBpzW68AAAAM/run-lord-of-the-rings.gif', alt: 'Bilbo running off on an adventure' },
-  { id: 'design', title: 'Design', text: 'I design on a system of shared components and styles, so screen 100 stays as consistent as screen 1.', gif: TENOR + 'bCUkRcXp8JYAAAAM/painting-bob-ross.gif', alt: 'Bob Ross painting' },
-  { id: 'build', title: 'Refine', text: 'I stay close to developers through handoff, and test every role’s flow for consistent data and UX issues before launch.', gif: TENOR + 'KVABpmsCXRAAAAAM/smoothening-edges-teddy-safarian.gif', alt: 'Sanding the edges of wood smooth' },
+  { id: 'understand', title: 'Understand', text: "Before exploring solutions, I clarify the product's purpose, its users, and the constraints shaping the work. The goal is to distinguish what is being requested from what actually needs solving.", gif: TENOR + 'QS_ZPNPtKjsAAAAM/star-atlas-solana.gif', alt: 'A clip from Star Atlas' },
+  { id: 'explore', title: 'Explore', text: 'I map user roles, key journeys, and information structures to understand how the experience connects before committing to the interface.', gif: TENOR + 'pKaWNBpzW68AAAAM/run-lord-of-the-rings.gif', alt: 'Bilbo running off on an adventure' },
+  { id: 'design', title: 'Design', text: 'I move from wireframes to refined interfaces, establishing interaction patterns and reusable components that keep the experience clear and consistent.', gif: TENOR + 'bCUkRcXp8JYAAAAM/painting-bob-ross.gif', alt: 'Bob Ross painting' },
+  { id: 'build', title: 'Refine', text: 'I review important workflows, test interactions where possible, and collaborate through implementation to address the details that only become visible when a product starts taking shape.', gif: TENOR + 'KVABpmsCXRAAAAAM/smoothening-edges-teddy-safarian.gif', alt: 'Sanding the edges of wood smooth' },
 ];
 
 /**

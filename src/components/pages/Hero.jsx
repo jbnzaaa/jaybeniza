@@ -10,7 +10,7 @@ import Button from '../common/Button'
 import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 
 // (what the headline does not say: how long, what kind of work, and how far I take it)
-const HIGHLIGHT_TEXT = 'For over 3.5 years, I’ve designed web and mobile products across 24 projects, turning complex interactions into interfaces that feel effortless. I pair thoughtful design with AI-assisted development.';
+const HIGHLIGHT_TEXT = "Across 24 web and mobile projects, I've worked to make complex systems easier to understand and use. I bring 3.5+ years of product design experience together with AI-assisted development to take ideas from early decisions to working interfaces.";
 
 // the headline, broken into three set lines from tablet width up. on a
 // phone it is one sentence left to wrap where the screen ends it: set as
@@ -83,7 +83,7 @@ function Hero() {
             <SplitText text={HIGHLIGHT_TEXT} id='animate-hero-highlight' by='word' />
           </p>
           <div className='shrink-0 flex flex-wrap gap-2'>
-            <Button label='See work' to='/work' />
+            <Button label='Explore selected work' to='/work' />
             <Button label='Download CV' href={Resume} download='Jay-Beniza-CV.pdf' outline />
           </div>
         </div>

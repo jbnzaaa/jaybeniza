@@ -15,15 +15,15 @@ const EMAIL = 'jaysonbeniza@gmail.com';
 // REACT_APP: set REACT_APP_WEB3FORMS_KEY in .env.local and your hosting environment.
 const WEB3FORMS_KEY = process.env.REACT_APP_WEB3FORMS_KEY?.trim();
 
-const HEADLINE = 'Start a Project';
-const INTRO = 'Tell me what you’re building. These details let me come back with a plan and the right questions, not just a hello.';
+const HEADLINE = "Share Your Vision With Us";
+const INTRO = "Every project starts with understanding the challenge. Share a little about your idea, the people it's for, and what you're hoping to achieve. I'll review the details and get back to you about the next steps.";
 
 // what is said under the button, for each state of the request
 const STATUS_TEXT = {
   '': '',
   sending: 'Sending your request…',
-  sent: 'Thank you, your request is in. I’ll reply by email.',
-  failed: `Your request couldn’t be sent. Please email me at ${EMAIL} instead.`,
+  sent: "Your inquiry has been received. Thanks for sharing your project. I'll review the details and respond by email.",
+  failed: `Your inquiry couldn't be sent. Please try again or contact me directly at ${EMAIL}.`,
 };
 
 // what the project is
@@ -270,7 +270,7 @@ function ProjectRequest() {
           laptop:col-span-4
           laptop-lg:col-span-4
           desktop:col-span-4'>
-          <SplitText text={HEADLINE} id='animate-request' emphasis={['Project']} />
+          <SplitText text={HEADLINE} id='animate-request' emphasis={['vision']} />
         </h1>
         {/* introduction + the form - right */}
         <div className='
@@ -286,18 +286,18 @@ function ProjectRequest() {
             <Field label='Your name' required>
               <input type='text' name='name' autoComplete='name' required value={form.name} onChange={set('name')} />
             </Field>
-            <Field label='Email' required>
+            <Field label='Email Address' required>
               <input type='email' name='email' autoComplete='email' required value={form.email} onChange={set('email')} />
             </Field>
-            <Field label='Company or organization'>
+            <Field label='Company / Organization'>
               <input type='text' name='company' autoComplete='organization' value={form.company} onChange={set('company')} />
             </Field>
-            <Field label='Project type' required group='request-type' hint='Most projects take 1–2 weeks.'>
+            <Field label='What are you looking to create?' required group='request-type' hint='Most projects take 1–2 weeks.'>
               <Select labelId='request-type' options={TYPES} value={form.type} onChange={choose('type')} />
             </Field>
             {/* what is wanted from me - a group of its own, not one field */}
             <fieldset className='form-field form-field-wide'>
-              <legend className='form-label text-caption text-muted'><SplitText text='What you need from me (choose any)' by='word' /></legend>
+              <legend className='form-label text-caption text-muted'><SplitText text='Where do you need support? any)' by='word' /></legend>
               <div className='form-checks'>
                 {/* each a box like a section label, filled when picked.
                   the checkbox itself is kept for the keyboard and for
@@ -310,25 +310,25 @@ function ProjectRequest() {
                 ))}
               </div>
             </fieldset>
-            <Field label='About the project' required wide hint='What it is, the problem it solves, and what success looks like.'>
+            <Field label='Tell me about the project' required wide hint='What are you building, what problem are you trying to solve, and what would a successful outcome look like?'>
               <textarea name='about' rows='4' required value={form.about} onChange={set('about')} />
             </Field>
-            <Field label='Who it is for' wide hint='The people who will use it, and anything you already know about them.'>
+            <Field label='Who will use it?' wide hint='Tell me who the product is intended for and what you know about their needs, behaviors, or challenges.'>
               <textarea name='users' rows='2' value={form.users} onChange={set('users')} />
             </Field>
-            <Field label='Existing materials' wide hint='Links to a current site or app, brand guide, designs, or references you like.'>
+            <Field label='Existing work & references' wide hint='Share any existing websites, Figma files, brand guidelines, product documentation, or references that could help establish the direction.'>
               <textarea name='materials' rows='2' value={form.materials} onChange={set('materials')} />
             </Field>
-            <Field label='When do you want to start?' group='request-timeline'>
+            <Field label='Preferred start date' group='request-timeline'>
               <Select labelId='request-timeline' options={TIMELINES} value={form.timeline} onChange={choose('timeline')} />
             </Field>
-            <Field label='Budget' group='request-budget'>
+            <Field label='Estimated budget' group='request-budget'>
               <Select labelId='request-budget' options={BUDGETS} value={form.budget} onChange={choose('budget')} />
             </Field>
             <div className='form-field form-field-wide form-foot'>
               {/* the site's button, as a real button */}
               <button type='submit' className='form-submit cta-button text-caption font-monolisa' disabled={status === 'sending'} aria-busy={status === 'sending'}>
-                {status === 'sending' ? 'Sending' : 'Send request'}
+                {status === 'sending' ? 'Sending' : '	Submit inquiry'}
                 <span className='button-icon-box' aria-hidden='true'>
                   <RiArrowRightDownLine className='button-arrow text-base'/>
                 </span>

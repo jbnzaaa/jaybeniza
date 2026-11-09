@@ -42,11 +42,11 @@ const ITEMS = ARCHIVE.map(({ id, title, year }) => {
 });
 
 const HEADLINE_LINES = [
-  'Design explorations,',
-  'outside client work.',
+  'A space for ideas',
+  'beyond the brief.',
 ];
 
-const DESCRIPTION = 'Concepts, redesigns, and visual studies I made on my own to explore layout, type, and interaction.';
+const DESCRIPTION = 'Independent concepts, earlier experiments, and visual studies exploring different approaches to interface design, typography, interaction, and digital expression.';
 
 /**
  * The archive page (route /archive), in the work page's layout: a first
@@ -80,7 +80,7 @@ function ArchivePage() {
           {HEADLINE_LINES.map((line) => (
             <span key={line} className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.95] tracking-tight
               text-hero'>
-              <SplitText text={line} id='animate-archive-page' emphasis={['explorations,']} />
+              <SplitText text={line} id='animate-archive-page' emphasis={['beyond the brief,']} />
             </span>
           ))}
         </h1>

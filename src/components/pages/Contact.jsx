@@ -15,8 +15,8 @@ import { TransitionLink } from '../common/PageTransition'
 
 const EMAIL = 'mailto:jaysonbeniza@gmail.com';
 
-const QUESTION = 'Hiring a UI/UX designer, or have a product to design?';
-const SUPPORT = "Tell me what you need, and I'll reply with next steps.";
+const QUESTION = 'Have a complex problem worth solving?';
+const SUPPORT = "Whether you're shaping a product, improving an existing experience, or looking for a designer to join your team, I'd be glad to hear what you're working on.";
 
 // the ways through
 const LINKS = [
@@ -31,7 +31,7 @@ const LINKS = [
 // the section's other face, on the contact page - which is itself the way
 // to get in touch, so it closes on the work instead: `to` is a route
 const PROJECTS_HEADING = 'See the Work';
-const PROJECTS_TEXT = 'Not sure yet? Take your time with the work first.';
+const PROJECTS_TEXT = 'Explore selected projects to see how I approach complex requirements, structure digital experiences, and carry design decisions through to execution.';
 const PROJECTS_LINKS = [
   { label: 'See all work', to: '/work' },
   { label: 'GuRover', to: '/gurover' },

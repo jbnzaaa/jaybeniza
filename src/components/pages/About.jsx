@@ -21,7 +21,7 @@ gsap.registerPlugin(ScrollTrigger)
 const AT_FULL = .9;
 
 const PARAGRAPHS = [
-  'I pay attention to where digital experiences fall short, from confusing user flows to overlooked interaction details. I translate those challenges into intuitive interfaces and scalable design systems, then bridge design and development through AI-assisted tools.',
+  "I work where requirements are still taking shape and the right solution isn't always obvious. I bring structure to that uncertainty, connecting user needs, product decisions, and development constraints into experiences that make sense.",
 ];
 
 /**

@@ -66,7 +66,7 @@ const HEADLINE_LINES = [
   'from brief to launch.',
 ];
 
-const DESCRIPTION = 'Shipped products and UX case studies: the problem, the decisions, and what came of them.';
+const DESCRIPTION = 'A collection of digital products shaped around real constraints, from multi-role platforms and education systems to interactive training and design foundations. Each project reveals the thinking behind the interface.';
 
 /**
  * The work page (route /work), in the landing page's layout: a first

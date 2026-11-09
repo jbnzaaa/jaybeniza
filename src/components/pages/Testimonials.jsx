@@ -235,7 +235,7 @@ function Testimonials({ dark = false }) {
         laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-12
         desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16`}>
         <div>
-          <Tag label='What Others Say' id='animate-testimonials-tag' />
+          <Tag label="Words from the people I've worked with" id='animate-testimonials-tag' />
           {/* the reviews, one over another in one grid cell, so the room is
             the longest's - in About's face, a step smaller (.testimonial-paragraph,
             App.css), in quotation marks */}
