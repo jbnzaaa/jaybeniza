@@ -1,5 +1,7 @@
 //
 import React, { useEffect } from 'react'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
 // scroll reveal - the parts open on the site's card reveal
 import { scrollReveal, scrollRevealCards, scrollRevealSequence } from '../../utils/scrollReveal'
 // section label
@@ -14,6 +16,8 @@ import { TransitionLink } from '../common/PageTransition'
 import aaccupMockup from '../../assets/files/images/aaccup/mockup-cover.webp'
 import pciMockup from '../../assets/files/images/pci/mockup-cover.webp'
 import roverMockup from '../../assets/files/images/rover/mockup-cover.webp'
+
+gsap.registerPlugin(ScrollTrigger)
 // what I do, in three parts: a service's name, what it is (`text`), its
 // highlights in short (`meta`), the four things it covers (`includes`) -
 // each with a line on it (`blurb`) and a clip in halftone (`gif`, from
@@ -59,7 +63,7 @@ export const SERVICES = [
     meta: 'Design-Led Front-End Development',
     // the mock-up of the project that shows it best, on the services page
     mockup: { src: roverMockup, alt: 'Rover SIS mock-up' },
-    title: 'Pixels to Code',
+    title: 'Design to Code',
     emphasis: ['Code'],
     text: 'A design should hold up beyond the prototype. I use React, Tailwind CSS, and AI-assisted development to translate interface decisions into functional front ends, preserving the details, interactions, and visual consistency established in Figma.',
     includes: [
@@ -91,8 +95,45 @@ export function ServiceDetails() {
       { y: 0, stagger: .015, ease: 'power1.in' }, { trigger: `#service-head-${id}` }));
     const expects = SERVICES.map(({ id }) => scrollReveal(`#animate-service-expect-${id}`,
       { y: 0, stagger: .015, ease: 'power1.in' }, { trigger: `#service-expect-${id}` }));
-    const lists = SERVICES.map(({ id }) => scrollReveal(`#animate-service-list-${id}`,
-      { y: 0, stagger: .015, ease: 'power1.in' }, { trigger: `#service-list-${id}` }));
+    // Each row has ONE animation owner: number + title first, then blurb.
+    // Do not also call scrollReveal() on these SplitText letters.
+    const itemAnimations = SERVICES.flatMap(({ id }) => {
+      const list = document.getElementById(`service-list-${id}`);
+      if (!list) return [];
+      return Array.from(list.querySelectorAll('.service-row')).map((row) => {
+        const number = row.querySelectorAll('.service-num .split-letter');
+        const title = row.querySelectorAll('.service-item-label .split-letter');
+        const blurb = row.querySelector('.service-item-blurb');
+        const heading = [...number, ...title];
+
+        // Explicit starting state matches SplitText's clipped-letter markup.
+        gsap.set(heading, { y: (i, el) => el.offsetHeight * 1.05 });
+        gsap.set(blurb, { autoAlpha: 0, y: 12 });
+
+        const timeline = gsap.timeline({ paused: true });
+        timeline.to(heading, {
+          y: 0,
+          duration: 0.52,
+          stagger: { each: 0.012, from: 'start' },
+          ease: 'power3.out',
+        }, 0);
+        timeline.to(blurb, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.48,
+          ease: 'power2.out',
+        }, 0.18);
+
+        const trigger = ScrollTrigger.create({
+          trigger: row,
+          start: 'top 90%',
+          onEnter: () => timeline.play(),
+          onEnterBack: () => timeline.play(),
+          // No reset on scroll-up: text stays readable, no random re-hiding.
+        });
+        return { timeline, trigger, heading, blurb };
+      });
+    });
     // the rules between each list's items, drawn across from the left one
     // after another as the list comes in
     const rules = SERVICES.map(({ id }) => scrollRevealSequence([
@@ -102,7 +143,12 @@ export function ServiceDetails() {
     return () => {
       heads.forEach((reveal) => reveal.kill());
       expects.forEach((reveal) => reveal.kill());
-      lists.forEach((reveal) => reveal.kill());
+      itemAnimations.forEach(({ timeline, trigger, heading, blurb }) => {
+        trigger.kill();
+        timeline.kill();
+        gsap.set(heading, { clearProps: 'transform' });
+        gsap.set(blurb, { clearProps: 'opacity,visibility,transform' });
+      });
       rules.forEach((reveal) => reveal.kill());
       mockups.kill();
     };
@@ -135,7 +181,7 @@ export function ServiceDetails() {
               </div>
             </div>
             {/* a row of its own under it, on the right: the four things it
-              covers, numbered */}
+              covers */}
             <ul className='flex flex-col row-start-2
               mobile:col-span-12 tablet:col-span-12
               laptop:col-span-5 laptop:col-start-8 laptop:mt-16 laptop-lg:col-span-5 laptop-lg:col-start-8 laptop-lg:mt-20 desktop:col-span-4 desktop:col-start-9 desktop:mt-20' id={`service-list-${service.id}`}>
@@ -143,16 +189,14 @@ export function ServiceDetails() {
                 <li className='service-row relative flex items-start gap-x-2 m-0 py-4' key={label}>
                   {/* the rule above it (not the first), drawn across as the list comes in */}
                   {j > 0 && <span className='service-rule absolute top-0 left-0 w-full h-px bg-current opacity-20' aria-hidden='true' />}
-                  {/* (a set width, so the names line up whatever the digits; not a
-                    flex box, which squeezed the number's clip box and cut it) */}
                   <span className='service-num shrink-0 w-10 whitespace-nowrap text-caption text-muted'>
                     <SplitText text={`0${j + 1}`} id={`animate-service-list-${service.id}`} />
                   </span>
                   <div className='flex min-w-0 flex-col gap-y-2'>
-                    <span className='flex flex-wrap text-copy'>
+                    <span className='service-item-label flex flex-wrap text-copy'>
                       <SplitText text={label} id={`animate-service-list-${service.id}`} />
                     </span>
-                    <p className='text-caption text-muted leading-relaxed'>{blurb}</p>
+                    <p className='service-item-blurb text-caption text-muted leading-relaxed'>{blurb}</p>
                   </div>
                 </li>
               ))}
