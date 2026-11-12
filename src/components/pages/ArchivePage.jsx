@@ -27,7 +27,7 @@ const ITEMS = ARCHIVE.map(({ id, title, year }) => {
       title: project.title,
       label: `${project.year} / Design exploration`,
       to: project.path,
-      action: 'View project',
+      action: 'View',
       picture: project.card || project.cover || project.screenshots?.[0]?.src,
       empty: [project.title, 'Preview coming soon'],
     };
@@ -46,7 +46,7 @@ const HEADLINE_LINES = [
   'beyond the brief.',
 ];
 
-const DESCRIPTION = 'Independent concepts, earlier experiments, and visual studies exploring different approaches to interface design, typography, interaction, and digital expression.';
+const DESCRIPTION = 'Personal projects, redesigns, and design explorations for web and mobile, from 2022 and 2023.';
 
 /**
  * The archive page (route /archive), in the work page's layout: a first

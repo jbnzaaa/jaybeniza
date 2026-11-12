@@ -4,7 +4,9 @@
 // page (Featured Work, the next-project heading) and the Work grid can
 // set titles without loading every project's content
 const TITLE_EMPHASIS = {
-  'Portfolio': { letters: [4, 5, 6, 7, 8] },
+  'Portfolio ’26': { letters: [4, 5, 6, 7, 8] },
+  'Portfolio ’22': { letters: [4, 5, 6, 7, 8] },
+  'Portfolio ’22 (First edition)': { letters: [4, 5, 6, 7, 8] },
   'BiteWise': { letters: [4, 5, 6, 7] },
   'Rover SIS': ['SIS'],
   'GuRover': { letters: [0, 1, 2, 3] },
@@ -12,8 +14,8 @@ const TITLE_EMPHASIS = {
   'PSGS': { letters: [0, 1] },
   'AACCUP': { letters: [0, 1] },
   'DOST ARISE': ['ARISE'],
-  'DOST Courseware': ['Courseware'],
-  'DOST VLAS': ['VLAS'],
+  'DOST Courseware (5 Lessons)': ['Courseware'],
+  'DOST VLAS (6 Modules)': ['VLAS'],
   'ReGain': { letters: [2, 3, 4, 5] },
   'Central App Design System': ['System'],
 };

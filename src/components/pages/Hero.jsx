@@ -4,13 +4,11 @@ import React, { useEffect } from 'react'
 import { scrollReveal } from '../../utils/scrollReveal'
 // per-letter text split
 import SplitText from '../common/SplitText'
-// the site's button
-import Button from '../common/Button'
-// the CV the hero's Download CV button downloads
-import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
+// the cue to scroll on, in the lower right
+import ScrollCue from '../common/ScrollCue'
 
-// (what the headline does not say: how long, what kind of work, and how far I take it)
-const HIGHLIGHT_TEXT = "Across 24 web and mobile projects, I've worked to make complex systems easier to understand and use. I bring 3.5+ years of product design experience together with AI-assisted development to take ideas from early decisions to working interfaces.";
+// (what the headline does not say: my role, what kind of work, how long, and for whom)
+const HIGHLIGHT_TEXT = "UI/UX & Product Designer who turns tangled workflows into products people can use. 24 web and mobile products in 3.5+ years, from first brief to developer handoff.";
 
 // the headline, broken into three set lines from tablet width up. on a
 // phone it is one sentence left to wrap where the screen ends it: set as
@@ -26,9 +24,9 @@ const PROFESSION = PROFESSION_LINES.join(' ');
 const EMPHASIS = ['friction', 'interactions'];
 
 /**
- * The landing page's first screen, on the light theme: the headline at the
- * top, and along the bottom a short description on the left and, on the
- * right, the way to the work and my CV.
+ * The landing page's first screen, on the light theme: the headline in
+ * the upper left; a short description in the lower left, and the cue to
+ * scroll on in the lower right. the description opens with my role.
  */
 function Hero() {
   useEffect(() => {
@@ -56,8 +54,9 @@ function Hero() {
         laptop:px-[2rem] laptop:pt-24 laptop:pb-8 laptop:gap-y-16
         laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-16
         desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16'>
-        {/* headline - the three lines, or on a phone the one sentence. its
-          name carries the role, for search and screen readers */}
+        {/* the headline, in the upper left - the three lines, or on a phone
+          the one sentence. its name carries the role, for search and
+          screen readers */}
         <h1 aria-label={`UI/UX & product designer: ${PROFESSION}`}>
           {PROFESSION_LINES.map((line) => (
             <span key={line} aria-hidden='true' className='hero-designerdev flex flex-wrap font-flexible font-bold leading-[.95] tracking-tight
@@ -70,10 +69,9 @@ function Hero() {
             <SplitText text={PROFESSION} id='animate-hero-profession' emphasis={EMPHASIS} />
           </span>
         </h1>
-        {/* description, along the bottom on the left; See work and
-          Download CV on the right (under the description on a phone) */}
-        <div className='flex justify-between items-end gap-x-6
-          mobile:flex-col mobile:items-start mobile:gap-y-10'>
+        {/* along the foot: the description on the left, the cue to scroll
+          on the right */}
+        <div className='flex justify-between items-end gap-x-6'>
           <p className='flex flex-wrap text-copy
             mobile:w-[78%]
             tablet:w-[52%]
@@ -82,9 +80,8 @@ function Hero() {
             desktop:w-[28%]'>
             <SplitText text={HIGHLIGHT_TEXT} id='animate-hero-highlight' by='word' />
           </p>
-          <div className='shrink-0 flex flex-wrap gap-2'>
-            <Button label='Explore selected work' to='/work' />
-            <Button label='Download CV' href={Resume} download='Jay-Beniza-CV.pdf' outline />
+          <div className='shrink-0'>
+            <ScrollCue label='Scroll' />
           </div>
         </div>
       </section>

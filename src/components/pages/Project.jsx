@@ -15,9 +15,9 @@ const COVERS = { gurover, aaccup, comelec, pci };
 
 /**
  * Selected projects, a screen each (PinnedPanels): the project's mock-up
- * filling the screen, its year and kind in the upper
- * right, its name and what it is in the lower left, and the way to its
- * case study in the lower right. The section is held while they are
+ * filling the screen, the section label in the upper left, its name and
+ * what it is in the lower left, its year and kind in the lower right; the whole panel opens
+ * its case study, the cursor saying so. The section is held while they are
  * scrolled through, each opening over the last.
  */
 function Project() {
@@ -29,7 +29,8 @@ function Project() {
     text: project.text,
     label: project.meta,
     to: project.to,
-    cta: 'View work',
+    // what the cursor says over its panel, as over the work page's cards
+    action: 'View',
     picture: COVERS[project.id] || project.picture,
     alt: `${project.title} mock-up`,
   }));

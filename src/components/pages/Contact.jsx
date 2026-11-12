@@ -15,7 +15,7 @@ import { TransitionLink } from '../common/PageTransition'
 
 const EMAIL = 'mailto:jaysonbeniza@gmail.com';
 
-const QUESTION = 'Have a complex problem worth solving?';
+const QUESTION = 'Have a product your users find hard to use?';
 const SUPPORT = "Whether you're shaping a product, improving an existing experience, or looking for a designer to join your team, I'd be glad to hear what you're working on.";
 
 // the ways through
@@ -31,7 +31,7 @@ const LINKS = [
 // the section's other face, on the contact page - which is itself the way
 // to get in touch, so it closes on the work instead: `to` is a route
 const PROJECTS_HEADING = 'See the Work';
-const PROJECTS_TEXT = 'Explore selected projects to see how I approach complex requirements, structure digital experiences, and carry design decisions through to execution.';
+const PROJECTS_TEXT = 'See how I designed for an accreditation agency, schools, and government training programs, from first requirements to developer handoff.';
 const PROJECTS_LINKS = [
   { label: 'See all work', to: '/work' },
   { label: 'GuRover', to: '/gurover' },

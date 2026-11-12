@@ -26,7 +26,9 @@ import adrian from '../../assets/files/images/team/adrian-tolentino.webp'
 gsap.registerPlugin(ScrollTrigger)
 
 // reviews from the people I work with, in their own words. `quote` is one
-// entry per paragraph, shown one review after another
+// entry per paragraph, shown one review after another: the company's
+// president first, then the review that speaks to how I explain my design
+// decisions
 const TESTIMONIALS = [
   {
     id: 'sergio-ramos',
@@ -39,14 +41,14 @@ const TESTIMONIALS = [
     role: 'President, PCI Tech Center',
   },
   {
-    id: 'paula-malupa',
+    id: 'adrian-tolentino',
     quote: [
-      'Jay has always been someone the team can rely on. Over time, I’ve seen him take on bigger projects, build core systems, and continue to develop his skills.',
-      'What stands out most is how thoughtful and steady he is. He takes the time to do things right and always finds a way to move the work forward.',
+      'He consistently demonstrates a strong work ethic, adaptability, and user-centered thinking. He delivers high-quality, purposeful designs efficiently, communicates design decisions clearly, and quickly adapts to new tools and technologies.',
+      'His collaborative and approachable nature makes him a valuable asset to any team.',
     ],
-    name: 'Paula Malupa',
-    avatar: paula,
-    role: 'Executive Assistant, PCI Tech Center',
+    name: 'Adrian Tolentino',
+    avatar: adrian,
+    role: 'Project Manager, PCI Tech Center',
   },
   {
     id: 'richard-ordinario',
@@ -68,14 +70,14 @@ const TESTIMONIALS = [
     role: 'Department Manager, PCI Tech Center',
   },
   {
-    id: 'adrian-tolentino',
+    id: 'paula-malupa',
     quote: [
-      'He consistently demonstrates a strong work ethic, adaptability, and user-centered thinking. He delivers high-quality, purposeful designs efficiently, communicates design decisions clearly, and quickly adapts to new tools and technologies.',
-      'His collaborative and approachable nature makes him a valuable asset to any team.',
+      'Jay has always been someone the team can rely on. Over time, I’ve seen him take on bigger projects, build core systems, and continue to develop his skills.',
+      'What stands out most is how thoughtful and steady he is. He takes the time to do things right and always finds a way to move the work forward.',
     ],
-    name: 'Adrian Tolentino',
-    avatar: adrian,
-    role: 'Project Manager, PCI Tech Center',
+    name: 'Paula Malupa',
+    avatar: paula,
+    role: 'Executive Assistant, PCI Tech Center',
   },
 ];
 
@@ -228,14 +230,14 @@ function Testimonials({ dark = false }) {
 
   return (
     <>
-      <section id='testimonials' ref={fxSection} className={`${dark ? 'bg-surface' : 'theme-light'} flex flex-col justify-between min-h-screen-safe
+      <section id='testimonials' ref={fxSection} className={`${dark ? 'bg-surface' : 'theme-light'} flex flex-col
         mobile:px-[1rem] mobile:pt-16 mobile:pb-4 mobile:gap-y-10
         tablet:px-[1rem] tablet:pt-16 tablet:pb-4 tablet:gap-y-12
         laptop:px-[2rem] laptop:pt-20 laptop:pb-8 laptop:gap-y-12
         laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-12 laptop-lg:gap-y-12
         desktop:px-[3rem] desktop:pt-28 desktop:pb-12 desktop:gap-y-16`}>
         <div>
-          <Tag label="Words from the people I've worked with" id='animate-testimonials-tag' />
+          <Tag label='What Others Say' id='animate-testimonials-tag' />
           {/* the reviews, one over another in one grid cell, so the room is
             the longest's - in About's face, a step smaller (.testimonial-paragraph,
             App.css), in quotation marks */}
@@ -264,14 +266,22 @@ function Testimonials({ dark = false }) {
               </blockquote>
             ))}
           </div>
-          {/* under the review: who said it - their picture, name and role,
-            one over another as the reviews are */}
-          <div className='grid
-            mobile:mt-8
-            tablet:mt-10
-            laptop:mt-10
-            laptop-lg:mt-12
-            desktop:mt-12'>
+        </div>
+        {/* along the foot, where About has its button: who said it on the
+          left, and the buttons to the review before and after - arrows as
+          the top bar's button has - on the right (on a phone, who said it
+          above the buttons) */}
+        <div className='flex justify-between gap-x-6
+          mobile:flex-col-reverse mobile:items-start mobile:gap-y-8
+          tablet:flex-row-reverse laptop:flex-row-reverse laptop-lg:flex-row-reverse desktop:flex-row-reverse
+          tablet:items-end laptop:items-end laptop-lg:items-end desktop:items-end'>
+          <div className='flex items-center gap-x-2 shrink-0'>
+            <Button label='Previous' name='Previous review' icon={RiArrowLeftUpLine} onClick={() => fxGo.current(-1)} reveal='manual' id='testimonial-back' />
+            <Button label='Next' name='Next review' onClick={() => fxGo.current(1)} reveal='manual' id='testimonial-next' />
+          </div>
+          {/* who said it - their picture, name and role, one over another
+            as the reviews are */}
+          <div className='grid'>
             {TESTIMONIALS.map(({ id, name, role, avatar }, i) => (
               <div className='testimonial-caption [grid-area:1/1] flex items-center gap-x-4' key={id} aria-hidden={i !== shown}>
                 <img className='testimonial-avatar shrink-0 w-12 h-12 object-cover' src={avatar} alt='' loading='lazy'/>
@@ -288,12 +298,6 @@ function Testimonials({ dark = false }) {
               </div>
             ))}
           </div>
-        </div>
-        {/* along the foot, where About has its button: the buttons to the
-          review before and after - arrows as the top bar's button has */}
-        <div className='flex items-center gap-x-2 shrink-0'>
-          <Button label='Previous' name='Previous review' icon={RiArrowLeftUpLine} onClick={() => fxGo.current(-1)} reveal='manual' id='testimonial-back' />
-          <Button label='Next' name='Next review' onClick={() => fxGo.current(1)} reveal='manual' id='testimonial-next' />
         </div>
       </section>
     </>

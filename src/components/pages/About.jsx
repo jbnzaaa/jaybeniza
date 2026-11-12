@@ -6,6 +6,8 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 // the site's button and section label
 import Button, { BUTTON_PARTS } from '../common/Button'
 import Tag from '../common/Tag'
+// the CV its Download CV button downloads
+import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 // per-letter text split
 import SplitText from '../common/SplitText'
 // when a reveal starts
@@ -75,8 +77,9 @@ function About() {
 
     // and the button reveals then, with the last word: its frame wiping
     // up, its label rising - and goes again, scrolled back above that point
-    const button = section.querySelector('.cta-button');
-    const parts = button.querySelectorAll(BUTTON_PARTS);
+    // (both of them: More about me, and Download CV beside it)
+    const button = section.querySelectorAll('.cta-button');
+    const parts = section.querySelectorAll(`.cta-button :is(${BUTTON_PARTS})`);
     const open = gsap.timeline({ paused: true })
       .fromTo(button, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: .5 })
       .fromTo(parts, { y: (i, el) => el.offsetHeight * 1.05 }, { y: 0, ease: 'power1.in', duration: .4, stagger: .02 }, '<.15');
@@ -135,9 +138,11 @@ function About() {
               ))}
             </div>
           </div>
-          {/* along the foot: the button to the full about page */}
-          <div className='shrink-0'>
+          {/* along the foot: the button to the full about page, and my CV
+            beside it */}
+          <div className='shrink-0 flex flex-wrap gap-2'>
             <Button label='More about me' to='/about' reveal='manual' />
+            <Button label='Download CV' href={Resume} download='Jay-Beniza-CV.pdf' reveal='manual' outline />
           </div>
         </section>
       </div>

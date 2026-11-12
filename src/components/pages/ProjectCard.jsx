@@ -23,7 +23,7 @@ export const PROJECT_CARDS = [
     picture: gurover_cover,
     category: 'Web/Mobile Platform / Team Project',
     meta: '2026 / Web/Mobile Platform',
-    text: 'Rethinking how Philippine educators manage academic records through an AI-assisted, offline-first workspace built for the demands of teaching.',
+    text: 'Class setup cut from 5 steps to 2 in an offline-first, AI-assisted workspace for Philippine teachers.',
   },
   {
     id: 'aaccup',
@@ -33,7 +33,7 @@ export const PROJECT_CARDS = [
     picture: aaccup_cover,
     category: 'Web Platform / Client Project',
     meta: '2023 / Web Platform',
-    text: "Bringing structure to a complex accreditation process through a redesigned digital platform connecting nine distinct user roles.",
+    text: 'A dashboard and three tabs, rebuilt into a workspace for each of the nine roles that run accreditation.',
   },
   {
     id: 'comelec',
@@ -45,7 +45,7 @@ export const PROJECT_CARDS = [
     picture: comelec_cover,
     category: '3D Training Game / Client Project',
     meta: '2025 / 3D Training Game',
-    text: 'Translating technical election procedures into an interactive 3D training experience, helping personnel learn equipment operations through guided practice.',
+    text: 'A 3D trainer for election equipment, wireframed and prototyped in three days so development could start early.',
   },
   {
     id: 'pci',
@@ -57,6 +57,6 @@ export const PROJECT_CARDS = [
     picture: pci_cover,
     category: 'Design System / Team Project',
     meta: '2024 / Design System',
-    text: 'Establishing a shared design foundation with 40+ reusable components to bring consistency across interfaces and clarity to developer handoff.',
+    text: '40+ components with light and dark variants, standardizing more than 100 screens.',
   },
 ];

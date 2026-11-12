@@ -262,7 +262,7 @@ const groundOf = (el) => {
   return 'rgb(229, 228, 227)';
 };
 
-function edger(el) {
+function edger(el, cellOf) {
   // (the tones are drawn on a canvas inside the picture's box; an <img>
   // can hold nothing, so it is opened by the steps alone)
   const canvas = el.tagName === 'IMG' ? null : document.createElement('canvas');
@@ -280,7 +280,7 @@ function edger(el) {
     const height = el.offsetHeight;
     if (cells && measured === `${width}x${height}`) return;
     measured = `${width}x${height}`;
-    size = Math.max(8, Math.min(24, Math.round(width / 24)));
+    size = cellOf ? cellOf(width) : Math.max(8, Math.min(24, Math.round(width / 24)));
     const cols = Math.ceil(width / size);
     const rows = Math.ceil(height / size);
     // each run of columns a step or so ahead of or behind its neighbours
@@ -293,9 +293,10 @@ function edger(el) {
     cells = [];
     for (let r = 0; r < rows; r += 1) {
       for (let c = 0; c < cols; c += 1) {
-        // (from the foot up, held back by its column's step, a little chance)
-        const place = (rows - 1 - r + steps[c] * 1.5) / (rows + 4.5);
-        cells.push({ c, r, turn: Math.min(1 - EDGE_BAND, place * (1 - EDGE_BAND) * .92 + Math.random() * .04) });
+        // (from the foot up - or, `down`, from the top down - held back
+        // by its column's step, a little chance)
+        const turnAt = (row) => Math.min(1 - EDGE_BAND, ((row + steps[c] * 1.5) / (rows + 4.5)) * (1 - EDGE_BAND) * .92 + Math.random() * .04);
+        cells.push({ c, r, up: turnAt(rows - 1 - r), down: turnAt(r) });
       }
     }
     if (canvas) {
@@ -304,13 +305,21 @@ function edger(el) {
       canvas.height = Math.ceil(height * ratio);
     }
   };
-  return (at) => {
+  const set = (at, dir = 'up') => {
     if (at <= 0) { el.style.clipPath = WIPE_SHUT; if (canvas) canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); return; }
     measure();
-    const shown = cells.filter(({ turn }) => turn < at);
-    el.style.clipPath = at >= 1 ? 'none' : (shown.length
-      ? `path('${shown.map(({ c, r }) => `M${c * size} ${r * size}h${size + .5}v${size + .5}h${-(size + .5)}z`).join('')}')`
-      : WIPE_SHUT);
+    const shown = cells.filter((cell) => cell[dir] < at);
+    // (each row's neighbouring pixels joined into one run, so the clip
+    // has a rect a run, not a pixel - the cells are in rows, left to right)
+    let path = '';
+    for (let i = 0; i < shown.length;) {
+      const { c, r } = shown[i];
+      let n = 1;
+      while (shown[i + n] && shown[i + n].r === r && shown[i + n].c === c + n) n += 1;
+      path += `M${c * size} ${r * size}h${n * size + .5}v${size + .5}h${-(n * size + .5)}z`;
+      i += n;
+    }
+    el.style.clipPath = at >= 1 ? 'none' : (path ? `path('${path}')` : WIPE_SHUT);
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -329,13 +338,35 @@ function edger(el) {
     const dither = ctx.createPattern(tile, 'repeat');
     const tint = `rgba(${r1}, ${g1}, ${b1}, .5)`;
     const edge = (n) => Math.round(n * size * ratio);
-    shown.forEach(({ c, r, turn }) => {
+    shown.forEach(({ c, r, [dir]: turn }) => {
       // the newest come in under a checker of the ground, then its tint
       const age = (at - turn) / EDGE_BAND;
       if (age >= 1) return;
       ctx.fillStyle = age < .5 ? dither : tint;
       ctx.fillRect(edge(c), edge(r), edge(c + 1) - edge(c), edge(r + 1) - edge(r));
     });
+  };
+  set.canvas = canvas;
+  return set;
+}
+
+/**
+ * A full-screen picture's wipe by the contact section's edge (see above),
+ * for a timeline: an object to tween from `at: 0` (shut) to `at: 1`
+ * (open), with the onUpdate that draws it - from the foot up, or with
+ * `target.dir` 'down', from the top down. Its pixels are small, in step
+ * with the screen (an 80th of its width, 10-20px).
+ *
+ * @param {Element} el
+ * @returns {{target: {at: number}, onUpdate: () => void, kill: () => void}}
+ */
+export function edgeWipe(el) {
+  const set = edger(el, (width) => Math.max(10, Math.min(20, Math.round(width / 80))));
+  const target = { at: 0, dir: 'up' };
+  return {
+    target,
+    onUpdate: () => set(target.at, target.dir),
+    kill: () => { set.canvas?.remove(); el.style.clipPath = ''; },
   };
 }
 

@@ -51,7 +51,7 @@ const ITEMS = [
     // nothing to show yet: a case study not written up yet, or a preview to come
     empty: PROJECTS[id].inProgress ? ['Ongoing project', 'Case study in progress'] : [PROJECTS[id].title, 'Preview coming soon'],
     // what the cursor says over the card: what pressing it opens
-    action: PROJECTS[id].caseStudy || PROJECTS[id].inProgress ? 'View case study' : 'View project',
+    action: 'View',
   })),
   ...Array.from({ length: UPCOMING }, (_, i) => ({
     key: `upcoming-${i}`,
@@ -66,7 +66,7 @@ const HEADLINE_LINES = [
   'from brief to launch.',
 ];
 
-const DESCRIPTION = 'A collection of digital products shaped around real constraints, from multi-role platforms and education systems to interactive training and design foundations. Each project reveals the thinking behind the interface.';
+const DESCRIPTION = 'Case studies and shipped web and mobile products for education, government, and research clients, from multi-role platforms to interactive training and a design system.';
 
 /**
  * The work page (route /work), in the landing page's layout: a first

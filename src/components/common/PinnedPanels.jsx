@@ -8,18 +8,17 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 // Components
 import Tag from './Tag';
 import SplitText from './SplitText';
-import Button from './Button';
+import { TransitionLink } from './PageTransition';
 import HalftoneGif from './HalftoneGif';
 
 // Animation utilities
-import { pixelWipe } from '../../utils/pixels';
+import { edgeWipe } from '../../utils/pixels';
 import { refreshSoon } from '../../utils/scrollReveal';
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Text animation helpers
 const below = (i, el) => el.offsetHeight * 1.05;
-const above = (i, el) => -el.offsetHeight * 1.05;
 
 // Short, natural scroll travel per project (in viewport heights).
 // 0.65 means about 65% of a screen of scrolling reveals the next project.
@@ -40,45 +39,38 @@ function PinnedPanels({ id, tag, items }) {
 
     const panels = gsap.utils.toArray('.pinned-panel', section).map((article) => ({
       article,
+      copy: article.querySelector('.pinned-panel-copy'),
       letters: article.querySelectorAll('.pinned-panel-copy .split-letter'),
       media: article.querySelector('.pinned-panel-media'),
       picture: article.querySelector('.pinned-panel-picture'),
-      cta: article.querySelector('.pinned-panel-cta'),
     }));
     const count = panels.length;
     const fills = gsap.utils.toArray('.pinned-bar-fill', section);
-    const bars = gsap.utils.toArray('.pinned-bar', section);
     const clamp = gsap.utils.clamp;
     let revealedIndex = 0;
 
     // The pin tracks native scroll. Each project transition plays on its own
     // clock after entering the corresponding progress-bar segment.
     const wipes = panels.map(({ media }, index) => {
-      const wipe = pixelWipe(media);
+      const wipe = edgeWipe(media);
       wipe.target.at = index === 0 ? 1 : 0;
       wipe.onUpdate();
       return wipe;
     });
 
-    panels.forEach(({ article, letters, picture, cta }, index) => {
+    panels.forEach(({ article, letters, picture }, index) => {
       gsap.set(picture, {
         scale: index === 0 ? 1 : 1.12,
         yPercent: index === 0 ? 0 : 5,
       });
       gsap.set(letters, { y: index === 0 ? 0 : below });
-      if (cta) {
-        gsap.set(cta, { autoAlpha: index === 0 ? 1 : 0, y: index === 0 ? 0 : 14 });
-        const button = cta.querySelector('.cta-button');
-        if (button) gsap.set(button, { clipPath: 'inset(0% 0% 0% 0%)' });
-        gsap.set(cta.querySelectorAll('.split-letter, .menu-icon'), { y: 0 });
-      }
+      gsap.set(article.querySelector('.pinned-panel-copy'), { autoAlpha: index === 0 ? 1 : 0 });
       article.style.pointerEvents = 'none';
     });
 
     const setInteractive = (index) => {
-      panels.forEach(({ article, cta }, i) => {
+      panels.forEach(({ article }, i) => {
         article.style.pointerEvents = i === index ? 'auto' : 'none';
-        if (cta) cta.style.pointerEvents = i === index ? 'auto' : 'none';
       });
     };
 
@@ -99,58 +91,62 @@ function PinnedPanels({ id, tag, items }) {
           scaleX: amount,
           transformOrigin: 'left center',
         });
-        bars[i]?.classList.toggle('pinned-bar-on', amount >= 1);
       });
     };
 
-    // Animate both the incoming cover and its content independently of scroll.
-    // On reverse, wipe away the upper panel to reveal the completed lower panel.
+    // One transition at a time, and the copy only once the picture is in.
+    // Scrolling down, the next picture builds over the last from its foot
+    // up; scrolling back, the earlier one builds back over it from the top
+    // down (raised above it while it does, then the later ones put away
+    // under it). Every other panel's copy is hidden outright, so a fast
+    // scroll that skips through several projects never leaves two sets of
+    // copy on screen - the running transition is killed before the next
+    // starts, and the next sets every panel where it should be.
+    let current = null;
+    const WIPE = 0.62;
     const transitionTo = (index) => {
       if (index === revealedIndex) return;
       revealedIndex = index;
+      const back = index < previousIndex;
+      current?.kill();
+      current = gsap.timeline();
 
-      panels.forEach(({ letters, cta, picture }, i) => {
+      panels.forEach(({ article, copy, letters, picture }, i) => {
         const wipe = wipes[i];
-        gsap.killTweensOf(wipe.target);
-        gsap.killTweensOf(picture);
-        gsap.killTweensOf(letters);
-        if (cta) gsap.killTweensOf(cta);
-
-        // Panels below the selected one remain fully revealed; panels above
-        // it are hidden. Only the boundary panel needs an animated wipe.
-        const shouldShow = i <= index;
-        const isBoundary = i === Math.max(index, previousIndex);
-        const duration = isBoundary ? 0.62 : 0;
-
-        gsap.to(wipe.target, {
-          at: shouldShow ? 1 : 0,
-          duration,
-          ease: 'power2.inOut',
-          onUpdate: wipe.onUpdate,
-          overwrite: true,
-        });
-        gsap.to(picture, {
-          scale: shouldShow ? 1 : 1.12,
-          yPercent: shouldShow ? 0 : 5,
-          duration,
-          ease: 'power2.out',
-          overwrite: true,
-        });
+        gsap.killTweensOf([wipe.target, picture, letters]);
+        article.style.zIndex = i + 1;
+        // the copy waits, hidden, until the picture is all there
+        gsap.set(letters, { y: below });
+        gsap.set(copy, { autoAlpha: i === index ? 1 : 0 });
 
         if (i === index) {
-          gsap.fromTo(letters, { y: below }, {
-            y: 0, duration: 0.42, stagger: { amount: 0.16 },
-            ease: 'power2.out', overwrite: true,
-          });
-          if (cta) gsap.fromTo(cta, { autoAlpha: 0, y: 14 }, {
-            autoAlpha: 1, y: 0, duration: 0.42, delay: 0.10,
-            ease: 'power2.out', overwrite: true,
-          });
-        } else {
-          gsap.set(letters, { y: i < index ? above : below });
-          if (cta) gsap.set(cta, { autoAlpha: 0, y: i < index ? -10 : 14 });
+          // the picture coming in: from its foot (down) or its top (back)
+          wipe.target.dir = back ? 'down' : 'up';
+          if (back) {
+            article.style.zIndex = count + 1;
+            wipe.target.at = 0;
+            gsap.set(picture, { scale: 1.12, yPercent: -5 });
+          }
+          current.to(wipe.target, { at: 1, duration: WIPE, ease: 'power2.inOut', onUpdate: wipe.onUpdate }, 0);
+          current.to(picture, { scale: 1, yPercent: 0, duration: WIPE, ease: 'power2.out' }, 0);
+          return;
         }
+        // the rest: those under it shown, those over it put away - going
+        // back, only once the earlier picture has covered them
+        const show = i < index;
+        const settle = () => {
+          wipe.target.at = show ? 1 : 0;
+          wipe.onUpdate();
+          gsap.set(picture, { scale: show ? 1 : 1.12, yPercent: show ? 0 : 5 });
+        };
+        if (back && !show) current.add(settle, WIPE);
+        else settle();
       });
+      if (back) current.add(() => { panels[index].article.style.zIndex = index + 1; }, WIPE);
+
+      current.to(panels[index].letters, {
+        y: 0, duration: 0.42, stagger: { amount: 0.16 }, ease: 'power2.out',
+      }, WIPE);
       setInteractive(index);
       previousIndex = index;
     };
@@ -182,21 +178,18 @@ function PinnedPanels({ id, tag, items }) {
     refreshSoon();
 
     return () => {
+      current?.kill();
       pin?.kill();
-      panels.forEach(({ letters, cta, picture }, i) => {
+      panels.forEach(({ letters, picture }, i) => {
         gsap.killTweensOf(wipes[i].target);
+        wipes[i].kill();
         gsap.killTweensOf(picture);
         gsap.killTweensOf(letters);
-        if (cta) gsap.killTweensOf(cta);
       });
-      panels.forEach(({ article, picture, media, letters, cta }) => {
+      panels.forEach(({ article, picture, media, letters, copy }, i) => {
         article.style.removeProperty('pointer-events');
-        gsap.set([picture, media, letters, cta].filter(Boolean), { clearProps: 'all' });
-        if (cta) {
-          const button = cta.querySelector('.cta-button');
-          if (button) gsap.set(button, { clearProps: 'clipPath' });
-          gsap.set(cta.querySelectorAll('.split-letter, .menu-icon'), { clearProps: 'transform' });
-        }
+        article.style.zIndex = i + 1;
+        gsap.set([picture, media, copy, ...letters].filter(Boolean), { clearProps: 'all' });
       });
     };
   }, [items]);
@@ -242,61 +235,25 @@ function PinnedPanels({ id, tag, items }) {
             />
           </div>
 
-          {/* Project information */}
+          {/* Project information - at the foot: its title and
+            description in the lower left, its year and kind in the lower
+            right (under the description on a phone or tablet). the
+            section label, shared by every panel, is in the upper left -
+            below */}
           <div
-            className="pinned-panel-copy relative z-[2] h-full flex flex-col justify-between pointer-events-none
-              mobile:px-[1rem] mobile:pt-16 mobile:pb-[calc(1rem_+_4px)]
-              tablet:px-[1rem] tablet:pt-16 tablet:pb-[calc(1rem_+_4px)]
-              laptop:px-[2rem] laptop:pt-20 laptop:pb-[calc(2rem_+_4px)]
-              laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-[calc(3rem_+_4px)]
-              desktop:px-[3rem] desktop:pt-28 desktop:pb-[calc(3rem_+_4px)]"
+            className="pinned-panel-copy relative z-[2] h-full flex flex-col justify-end pointer-events-none
+              mobile:px-[1rem] mobile:pt-16 mobile:pb-[calc(1rem_+_2px)]
+              tablet:px-[1rem] tablet:pt-16 tablet:pb-[calc(1rem_+_2px)]
+              laptop:px-[2rem] laptop:pt-20 laptop:pb-[calc(2rem_+_2px)]
+              laptop-lg:px-[3rem] laptop-lg:pt-24 laptop-lg:pb-[calc(3rem_+_2px)]
+              desktop:px-[3rem] desktop:pt-28 desktop:pb-[calc(3rem_+_2px)]"
           >
-            {/* Upper-right project metadata */}
-            <div
-              className="flex
-                mobile:justify-start mobile:mt-9
-                tablet:justify-start tablet:mt-9
-                laptop:justify-end
-                laptop-lg:justify-end
-                desktop:justify-end"
-            >
-              <p
-                className="flex flex-col text-caption
-                  mobile:items-start mobile:text-left
-                  tablet:items-start tablet:text-left
-                  laptop:items-end laptop:text-right
-                  laptop-lg:items-end laptop-lg:text-right
-                  desktop:items-end desktop:text-right"
-              >
-                {(
-                  Array.isArray(item.label)
-                    ? item.label
-                    : [item.label]
-                ).map((line) => (
-                  <span
-                    className="flex flex-wrap whitespace-nowrap
-                      mobile:justify-start
-                      tablet:justify-start
-                      laptop:justify-end
-                      laptop-lg:justify-end
-                      desktop:justify-end"
-                    key={line}
-                  >
-                    <SplitText
-                      text={line}
-                      id={`animate-${id}-${item.id}`}
-                    />
-                  </span>
-                ))}
-              </p>
-            </div>
-
-            {/* Lower-left project title and description */}
             <div
               className="flex justify-between items-end gap-x-8
                 mobile:flex-col mobile:items-start mobile:gap-y-6
                 tablet:flex-col tablet:items-start tablet:gap-y-6"
             >
+              {/* Lower-left project title and description */}
               <div
                 className="flex flex-col gap-y-4
                   laptop:w-[52%]
@@ -338,20 +295,47 @@ function PinnedPanels({ id, tag, items }) {
                 </p>
               </div>
 
-              {/* CTA belongs to this project, and shares its reveal timeline. */}
-              <div
-                className="pinned-panel-cta relative z-10 shrink-0 pointer-events-auto"
-                style={{ visibility: i === 0 ? 'visible' : 'hidden' }}
+              {/* Lower-right: its year and kind */}
+              <p
+                className="shrink-0 flex flex-col text-caption
+                  mobile:items-start mobile:text-left
+                  tablet:items-start tablet:text-left
+                  laptop:items-end laptop:text-right
+                  laptop-lg:items-end laptop-lg:text-right
+                  desktop:items-end desktop:text-right"
               >
-                <Button
-                  label={item.cta || 'View work'}
-                  to={item.to}
-                  reveal="manual"
-                  name={`View work: ${item.title}`}
-                />
-              </div>
+                {(
+                  Array.isArray(item.label)
+                    ? item.label
+                    : [item.label]
+                ).map((line) => (
+                  <span
+                    className="flex flex-wrap whitespace-nowrap"
+                    key={line}
+                  >
+                    <SplitText
+                      text={line}
+                      id={`animate-${id}-${item.id}`}
+                    />
+                  </span>
+                ))}
+              </p>
             </div>
           </div>
+
+          {/* The whole panel opens its project; over it the cursor says so,
+            as over the work page's cards (Cursor.jsx). Under the copy,
+            which lets the pointer through; clickable only while its panel
+            is the one up (setInteractive). */}
+          {item.to && (
+            <TransitionLink
+              to={item.to}
+              className="absolute inset-0 z-[1] block"
+              data-cursor={item.action || 'View'}
+              data-no-hover-roll
+              aria-label={`View ${item.title}`}
+            />
+          )}
         </article>
       ))}
 
@@ -375,7 +359,7 @@ function PinnedPanels({ id, tag, items }) {
         </div>
       )}
 
-      {/* Section label */}
+      {/* Section label - upper left */}
       <div
         className="absolute top-0 left-0 z-[60] pointer-events-none
           mobile:px-[1rem] mobile:pt-16

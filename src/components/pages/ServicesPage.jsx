@@ -21,12 +21,12 @@ import { usePageTitle } from '../../utils/pageTitle'
 
 // the headline, in two set lines
 const HEADLINE_LINES = [
-  'From complex briefs',
-  'to considered',
-  'digital products.'
+  'From rough briefs',
+  'to products',
+  'people can use.'
 ];
 
-const DESCRIPTION = 'An independent design practice connecting product thinking, interface design, scalable systems, and AI-assisted development. One cohesive approach, from understanding the problem to bringing the solution into focus.';
+const DESCRIPTION = 'UI/UX design, design systems, and AI-assisted front-end builds for web and mobile products, each linked to the case studies where I did that work.';
 
 
 // the questions a client asks before getting in touch, each answered from
@@ -175,7 +175,7 @@ function ServicesPage() {
           {HEADLINE_LINES.map((line) => (
             <span key={line} className='hero-designerdev flex flex-nowrap whitespace-nowrap font-flexible font-bold leading-[.95] tracking-tight
               text-hero mobile:text-[clamp(1.75rem,8.2vw,4rem)] tablet:text-[clamp(2.75rem,7.5vw,5rem)]'>
-              <SplitText text={line} id='animate-services-page' emphasis={['complex briefs', 'digital products']} />
+              <SplitText text={line} id='animate-services-page' emphasis={['rough briefs', 'use']} />
             </span>
           ))}
         </h1>

@@ -16,9 +16,6 @@ import SplitText from '../common/SplitText'
 import { pixelText, withPixels } from '../../utils/pixelText'
 // the projects on the work page, counted beside its link
 import { SHOWN } from './projects/shown'
-import { ARCHIVE } from './projects/archive'
-// the CV the bar's Download CV button downloads
-import Resume from '../../assets/files/Jayson Beniza 2026.pdf'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 // every destination. from tablet width up they are all in the bar itself;
@@ -28,14 +25,11 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 // right
 const NAV_LINKS = [
   { label: 'Work', count: SHOWN.length, to: '/work' },
-  { label: 'Archive', count: ARCHIVE.length, to: '/archive' },
+  { label: 'Archive', to: '/archive' },
   { label: 'Services', to: '/services' },
   { label: 'About', to: '/about' },
 ];
 const CONTACT = '/get-in-touch';
-// the pages where the bar also has a Download CV button, beside Get in
-// touch. (the landing hero and the About page have their own)
-const CV_PAGES = ['/work', '/archive'];
 const MENU_LINKS = [...NAV_LINKS, { label: 'Let’s talk', to: CONTACT }];
 
 // the open page is in the full text colour, the others a step back
@@ -249,10 +243,6 @@ function Navbar() {
             place is taken by the word "Menu" */}
           <div className='col-start-3 justify-self-end'>
             <div className={`flex items-center gap-x-2 ${FROM_TABLET}`}>
-              {/* on the work and archive pages: my CV, outlined, before it */}
-              {CV_PAGES.includes(pathname) && (
-                <Button label='Download CV' href={Resume} download='Jay-Beniza-CV.pdf' small outline reveal='mount' key={pathname} />
-              )}
               <Button label='Let’s talk' to={CONTACT} onClick={toTopIfHere(CONTACT)} small reveal='mount' />
             </div>
             {/* on a phone: the word alone, no box, blended like the rest
@@ -288,15 +278,6 @@ function Navbar() {
               </TransitionLink>
             </li>
           ))}
-          {/* on the work and archive pages: my CV, as the bar has it */}
-          {CV_PAGES.includes(pathname) && (
-            <li className='border-t border-rule m-0'>
-              <a href={Resume} download='Jay-Beniza-CV.pdf' className={MENU_ITEM_IDLE}
-                aria-label='Download my CV (PDF)' data-no-hover-roll>
-                <SplitText text='Download CV' id='animate-menu' />
-              </a>
-            </li>
-          )}
         </ul>
       </div>
     </>

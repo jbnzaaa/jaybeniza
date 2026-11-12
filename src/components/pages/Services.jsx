@@ -3,11 +3,14 @@ import React, { useEffect } from 'react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 // scroll reveal - the parts open on the site's card reveal
-import { scrollReveal, scrollRevealCards, scrollRevealSequence } from '../../utils/scrollReveal'
+import { REVEAL_AT, inTurn, revealTrigger, scrollReveal, scrollRevealCards, scrollRevealSequence } from '../../utils/scrollReveal'
 // section label
 import Tag from '../common/Tag'
 // per-letter text split
 import SplitText from '../common/SplitText'
+// each service's gif, in halftone, brought up under the pointer
+import HalftoneGif from '../common/HalftoneGif'
+import useRowPreview from '../common/useRowPreview'
 // the way to every service
 import Button from '../common/Button'
 // page-to-page wipe, for the services and the case studies they show in
@@ -31,21 +34,26 @@ export const SERVICES = [
     id: 'product-design',
     // its highlights, in short, beside its name on the landing page
     meta: 'Product & Experience Design',
+    // the clip its row brings up on the landing page, in halftone
+    preview: { gif: `${TENOR}4LvAD8hD5tcAAAAM/charlie-day.gif`, alt: 'Charlie Day explaining a conspiracy board' },
+    // the mock-up of the project that shows it best, on the services page
     // the mock-up of the project that shows it best, on the services page
     mockup: { src: aaccupMockup, alt: 'AACCUP accreditation platform mock-up' },
     title: 'UI/UX Design',
     emphasis: ['UI/UX'],
-    text: 'Complex products demand more than polished screens. I untangle user journeys, clarify competing requirements, and shape interfaces that make demanding workflows easier to understand and navigate.',
+    text: 'Products used by many roles need more than polished screens. I map who does what, sort out competing requirements, and shape interfaces that make demanding workflows easier to follow.',
     includes: [
       { label: 'Research and journey mapping', blurb: 'Understand who uses the product, what they need to accomplish, and where the current experience creates friction.', gif: `${TENOR}4LvAD8hD5tcAAAAM/charlie-day.gif`, alt: 'Charlie Day explaining a conspiracy board' },
       { label: 'Wireframes and high-fidelity UI', blurb: 'Establish the structure before refining the visual experience, from early layouts to developer-ready screens.', gif: `${TENOR}JtzTo08HZY4AAAAM/jarvis-iron-man.gif`, alt: 'Tony Stark giving JARVIS commands' },
       { label: 'Prototyping and interaction design', blurb: 'Make important user journeys tangible through interactive prototypes that reveal how the product should behave.', gif: `${TENOR}WwvFH4SrFCIAAAAM/dexters-lab-dexters-laboratory.gif`, alt: 'Dee Dee wondering what a button does' },
-      { label: 'Usability and role-based testing', blurb: 'Evaluate workflows with relevant users, uncover points of confusion, and refine the experience before implementation.', gif: `${TENOR}PNbVvwHpi6kAAAAM/mr-bean-takes-an-exam-mister-bean-takes-an-exam.gif`, alt: 'Mr. Bean taking an exam' },
+      { label: 'Usability and role-based testing', blurb: 'Evaluate workflows with relevant users, uncover points of confusion, and refine the experience before implementation.', gif: `${TENOR}KVABpmsCXRAAAAAM/smoothening-edges-teddy-safarian.gif`, alt: 'Sanding the edges of wood smooth' },
     ],
   },
   {
     id: 'design-systems',
     meta: 'Design Systems & UI Foundations',
+    preview: { gif: `${TENOR}bCUkRcXp8JYAAAAM/painting-bob-ross.gif`, alt: 'Bob Ross painting' },
+    // the mock-up of the project that shows it best, on the services page
     // the mock-up of the project that shows it best, on the services page
     mockup: { src: pciMockup, alt: 'Central App design system mock-up' },
     title: 'Design Systems',
@@ -53,7 +61,7 @@ export const SERVICES = [
     text: "Consistency shouldn't depend on remembering how the last screen was designed. I establish shared components, visual foundations, and clear usage rules that help teams maintain a coherent product as its interface grows.",
     includes: [
       { label: 'Component libraries and variants', blurb: 'Reusable components with defined states and variations, reducing repeated decisions across screens.', gif: `${TENOR}2YH2HLiOdB4AAAAM/legal-eagle-puts-on-glasses.gif`, alt: 'Putting on glasses, ready to get started' },
-      { label: 'Color, type and spacing foundations', blurb: 'A connected system of typography, color, spacing, and visual rules that gives every interface a shared foundation.', gif: `${TENOR}5lLcKZgmIhgAAAAM/american-psycho-patrick-bateman.gif`, alt: 'Patrick Bateman admiring a business card' },
+      { label: 'Color, type and spacing foundations', blurb: 'A connected system of typography, color, spacing, and visual rules that gives every interface a shared foundation.', gif: `${TENOR}bCUkRcXp8JYAAAAM/painting-bob-ross.gif`, alt: 'Bob Ross painting' },
       { label: 'Documentation and usage guidance', blurb: '	Practical guidance that clarifies when, where, and how components should be used.', gif: `${TENOR}LiDD5Bl5AXEAAAAM/spongebob-the.gif`, alt: 'SpongeBob writing his essay' },
       { label: 'Specs and developer handoff', blurb: 'Clear interaction states and implementation details that reduce ambiguity between design and development.', gif: `${TENOR}EfuLzvwuJlMAAAAM/documents.gif`, alt: 'Handing over a stack of documents' },
     ],
@@ -61,6 +69,8 @@ export const SERVICES = [
   {
     id: 'development',
     meta: 'Design-Led Front-End Development',
+    preview: { gif: `${TENOR}fTor6GW-vvoAAAAM/bumblebee-transformer.gif`, alt: 'Bumblebee transforming', trim: [.14, .14] },
+    // the mock-up of the project that shows it best, on the services page
     // the mock-up of the project that shows it best, on the services page
     mockup: { src: roverMockup, alt: 'Rover SIS mock-up' },
     title: 'Design to Code',
@@ -68,7 +78,7 @@ export const SERVICES = [
     text: 'A design should hold up beyond the prototype. I use React, Tailwind CSS, and AI-assisted development to translate interface decisions into functional front ends, preserving the details, interactions, and visual consistency established in Figma.',
     includes: [
       { label: 'React and Tailwind CSS front-ends', blurb: 'Responsive interfaces developed from established designs, with attention to layout, hierarchy, and component structure.', gif: `${TENOR}fTor6GW-vvoAAAAM/bumblebee-transformer.gif`, alt: 'Bumblebee transforming', trim: [.14, .14] },
-      { label: 'AI-assisted development with Claude Code', blurb: 'Claude Code supports implementation and refinement, helping move from design decisions to working interfaces..', gif: `${TENOR}XgaU95K_XiwAAAAM/kermit-typing.gif`, alt: 'Kermit typing furiously' },
+      { label: 'AI-assisted development with Claude Code', blurb: 'Claude Code supports implementation and refinement, helping move from design decisions to working interfaces.', gif: `${TENOR}XgaU95K_XiwAAAAM/kermit-typing.gif`, alt: 'Kermit typing furiously' },
       { label: 'Figma-to-code translation', blurb: 'Carry typography, spacing, component states, and responsive behavior from Figma into the browser.', gif: `${TENOR}31K0izlbI5cAAAAM/phineas-and-ferb-heinz-doofenschmirtz.gif`, alt: 'Doofenschmirtz building an invention, laughing' },
       { label: 'Scroll and interaction motion', blurb: 'Purposeful motion using GSAP to communicate transitions, hierarchy, and feedback without distracting from the experience.', gif: `${TENOR}hPdjxM-fcegAAAAM/gif.gif`, alt: 'Michael Jackson leaning in Smooth Criminal' },
     ],
@@ -124,14 +134,13 @@ export function ServiceDetails() {
           ease: 'power2.out',
         }, 0.18);
 
-        const trigger = ScrollTrigger.create({
-          trigger: row,
-          start: 'top 90%',
-          onEnter: () => timeline.play(),
-          onEnterBack: () => timeline.play(),
-          // No reset on scroll-up: text stays readable, no random re-hiding.
-        });
-        return { timeline, trigger, heading, blurb };
+        // in its turn among the page's reveals: held while the page's
+        // cover is up (played straight off its trigger, it rose behind
+        // the cover and was already showing when it lifted), and taken
+        // back once it drops below the screen, as every reveal is
+        const turn = inTurn(timeline, row);
+        const trigger = revealTrigger(row, REVEAL_AT, turn);
+        return { timeline, turn, trigger, heading, blurb };
       });
     });
     // the rules between each list's items, drawn across from the left one
@@ -143,8 +152,9 @@ export function ServiceDetails() {
     return () => {
       heads.forEach((reveal) => reveal.kill());
       expects.forEach((reveal) => reveal.kill());
-      itemAnimations.forEach(({ timeline, trigger, heading, blurb }) => {
+      itemAnimations.forEach(({ timeline, turn, trigger, heading, blurb }) => {
         trigger.kill();
+        turn.kill();
         timeline.kill();
         gsap.set(heading, { clearProps: 'transform' });
         gsap.set(blurb, { clearProps: 'opacity,visibility,transform' });
@@ -221,9 +231,13 @@ export function ServiceDetails() {
  * What I do, on the landing page, laid out as Featured Work once was: the
  * services' names set very large, one per line, each with its highlights
  * in short against the right edge; pointing at a row steps the others
- * back. A row leads to that service on the services page.
+ * back and brings up its clip in halftone between the name and the
+ * label, wiping open (useRowPreview). A row leads to that service on the
+ * services page.
  */
 function Services() {
+  const { fxList, fxPreview, shown, show, hide } = useRowPreview();
+
   useEffect(() => {
     // each name and its label rise letter by letter as its row scrolls in;
     // the description after the list does the same
@@ -244,9 +258,11 @@ function Services() {
       laptop-lg:pt-24 laptop-lg:pb-12
       desktop:pt-28 desktop:pb-12`}>
       <Tag label='Areas of Expertise' id='animate-services-tag' />
-      <ul className='project-list mobile:mt-6 tablet:mt-8 laptop:mt-8 laptop-lg:mt-10 desktop:mt-10' data-no-hover-roll>
+      {/* the list - and, over its middle, the preview */}
+      <div className='relative mobile:mt-6 tablet:mt-8 laptop:mt-8 laptop-lg:mt-10 desktop:mt-10' ref={fxList}>
+      <ul className='project-list' onMouseLeave={hide} data-no-hover-roll>
         {SERVICES.map((service) => (
-          <li className='m-0 mobile:mb-10 tablet:mb-12 laptop:py-3 laptop-lg:py-4 desktop:py-5' id={`service-row-${service.id}`} key={service.id}>
+          <li className='m-0 mobile:mb-10 tablet:mb-12 laptop:py-3 laptop-lg:py-4 desktop:py-5' id={`service-row-${service.id}`} key={service.id} onMouseEnter={show(service)}>
             <TransitionLink to={`/services#service-${service.id}`} className='project-row block' aria-label={`${service.title}, ${service.meta}`}>
               <span className='flex justify-between gap-x-6
                 mobile:flex-col mobile:items-start mobile:gap-y-4
@@ -268,6 +284,12 @@ function Services() {
           </li>
         ))}
       </ul>
+      {/* hover preview, from laptop width up: the service's gif in
+        halftone (.project-preview, App.css) */}
+      <div className='project-preview service-preview' ref={fxPreview} aria-hidden='true'>
+        {shown && <HalftoneGif src={shown.preview.gif} alt={shown.preview.alt} trim={shown.preview.trim} key={shown.id} />}
+      </div>
+      </div>
       {/* description + the way to every service */}
       {/* (at the section's foot: the section is a screen tall) */}
       <div className='flex flex-col items-start gap-y-6 mt-auto mobile:pt-10 tablet:pt-12 laptop:pt-12 laptop-lg:pt-12 desktop:pt-16'>

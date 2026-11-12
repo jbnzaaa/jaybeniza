@@ -1857,25 +1857,10 @@ html.has-cursor * {
    faint track filled from its left as its project comes in */
 * body .pinned-bar {
   position: relative;
-  height: 4px;
+  height: 2px;
   background: rgb(229 228 227 / .18);
   overflow: hidden;
 }
-
-* body .pinned-bar::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: #E5E4E3;
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-* body .pinned-bar-on::after {
-  transform: scaleX(1);
-}
-
 
 /* the services page's questions (ServicesPage.jsx): a plus beside each,
    turning to a cross while its answer is open */
@@ -1958,4 +1943,13 @@ html.has-cursor * {
    turned back a quarter - it snaps in, upright, as its row comes in */
 * body .faq-mark-in {
   transform: scale(0) rotate(-90deg);
+}
+
+/* the loading figure's sign (Preloader.jsx): the pixel face, leaning as a
+   title's pixel letters do (.split-pixel-glyph), set a little apart from
+   the count, and given room on its right so its lean is not clipped */
+* body .preloader-sign {
+  display: inline-block;
+  margin-left: 0.06em;
+  padding-right: 0.1em;
 }

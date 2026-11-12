@@ -13,6 +13,8 @@ import { pixelSweep } from '../../utils/pixels'
 const FONTS = [
   ['700 1em "Ayr Garon"', 'A0%&'],
   ['1em Gilgan', 'a'],
+  // (and the pixel face, for the figure's sign and the titles' emphasis)
+  ['1em "Jersey 10"', '%jay'],
 ];
 // never hold the page hostage to a font that fails or stalls
 const TIMEOUT_MS = 4000;
@@ -61,10 +63,11 @@ function Preloader({ onExitStart, onDone }) {
   useEffect(() => {
     const panel = fxPanel.current;
     const figure = fxFigure.current;
+    const count = figure.querySelector('.preloader-count');
     const canvas = fxCanvas.current;
     const counter = { value: 0 };
     const render = () => {
-      figure.textContent = `${Math.round(counter.value)}%`;
+      count.textContent = Math.round(counter.value);
     };
 
     let loaded = 0;
@@ -127,9 +130,10 @@ function Preloader({ onExitStart, onDone }) {
     const settle = () => { loaded += 1; advance(); };
     const loads = FONTS.map(([font, sample]) => document.fonts.load(font, sample).then(settle, settle));
 
-    // the figure is set in Ayr Garon, so it only rises into view once that
-    // face has arrived - otherwise it would appear in a fallback and swap
-    loads[0].then(() => {
+    // the figure is set in Ayr Garon and the pixel face, so it only rises
+    // into view once both have arrived - otherwise it would appear in a
+    // fallback and swap
+    Promise.all([loads[0], loads[2]]).then(() => {
       if (exiting) return;
       gsap.to(figure, { yPercent: 0, duration: .3, ease: 'power3.out' });
     });
@@ -158,7 +162,10 @@ function Preloader({ onExitStart, onDone }) {
         <div className='overflow-hidden' role='status' aria-label='Loading'>
           <span className='inline-block font-flexible font-bold leading-none text-offwhite text-[8vw]'
             ref={fxFigure}>
-            0%
+            {/* the count in the headline face, its sign in the pixel face,
+              as the site's titles mix the two: leaning as theirs do, a little
+              apart from the count (.preloader-sign, App.css) */}
+            <span className='preloader-count'>0</span><span className='split-pixel preloader-sign'><span className='split-pixel-glyph'>%</span></span>
           </span>
         </div>
       </div>

@@ -1,7 +1,5 @@
 //
-import React, { useEffect, useRef, useState } from 'react'
-// GSAP
-import gsap from 'gsap'
+import React, { useEffect } from 'react'
 // scroll reveal
 import { scrollReveal } from '../../utils/scrollReveal'
 // section label
@@ -10,8 +8,8 @@ import Tag from '../common/Tag'
 import SplitText from '../common/SplitText'
 // each step's gif, in halftone, brought up under the pointer
 import HalftoneGif from '../common/HalftoneGif'
-// it wipes open and shut
-import { wipeToggle } from '../../utils/pixels'
+// the gif brought up level with the row pointed at
+import useRowPreview from '../common/useRowPreview'
 
 // Tenor's small size (the AAAAM variant), `alt` saying what is in each
 const TENOR = 'https://media1.tenor.com/m/';
@@ -42,66 +40,13 @@ const STEPS = [
  * surface, or the light theme with `light`.
  */
 function Process({ light = false }) {
-  const fxList = useRef();
-  const fxPreview = useRef();
-  // the step whose gif the preview is showing, and the one pointed at
-  const [shown, setShown] = useState(null);
-  const fxOn = useRef(null);
-  const fxWipe = useRef(null);
+  const { fxList, fxPreview, shown, show, hide } = useRowPreview();
 
   useEffect(() => {
     const rows = STEPS.map(({ id }) => scrollReveal(`#animate-process-${id}`,
       { y: 0, stagger: .015, ease: 'power1.in' }, { trigger: `#process-step-${id}` }));
-    // the preview wipes open from its foot, and shut again (pixels.js)
-    fxWipe.current = wipeToggle(fxPreview.current);
-    return () => {
-      rows.forEach((row) => row.kill());
-      fxWipe.current?.kill();
-    };
+    return () => rows.forEach((row) => row.kill());
   }, []);
-
-  // where the preview goes without covering a name or a sentence: the
-  // space right of the longest name and left of the sentences, its width
-  // filling that space up to its own; no room, no preview
-  const fit = () => {
-    const list = fxList.current;
-    const preview = fxPreview.current;
-    const box = list.getBoundingClientRect();
-    const right = Math.max(...[...list.querySelectorAll('.project-name')].map((el) => el.getBoundingClientRect().right));
-    const left = Math.min(...[...list.querySelectorAll('.project-label')].map((el) => el.getBoundingClientRect().left));
-    const gutter = 24;
-    const room = left - right - gutter * 2;
-    const width = Math.min(window.innerWidth * .22, room);
-    if (width < 160) return false;
-    preview.style.width = `${width}px`;
-    preview.style.left = `${right - box.left + gutter + (room - width) / 2}px`;
-    return true;
-  };
-  // level with the row pointed at; moved on to another, it shuts on the
-  // one and opens on the next; leaving the list closes it
-  const show = (step) => (e) => {
-    const preview = fxPreview.current;
-    const wipe = fxWipe.current;
-    const row = e.currentTarget;
-    if (!fit()) return;
-    gsap.to(preview, { y: row.offsetTop + row.offsetHeight / 2 - preview.offsetHeight / 2, duration: .5, ease: 'power3.out' });
-    const was = fxOn.current;
-    fxOn.current = step;
-    if (!was || was === step) {
-      setShown(step);
-      wipe?.show(.5);
-      return;
-    }
-    wipe?.hide(.2).then(() => {
-      if (fxOn.current !== step) return;
-      setShown(step);
-      wipe.show(.4);
-    });
-  };
-  const hide = () => {
-    fxOn.current = null;
-    fxWipe.current?.hide(.3);
-  };
 
   return (
     <section id='process' className={`${light ? 'theme-light' : 'bg-surface'}
