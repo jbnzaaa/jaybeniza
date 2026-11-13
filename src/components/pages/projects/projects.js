@@ -1058,7 +1058,7 @@ export const PROJECTS = {
   courseware: {
     path: '/dost-courseware',
     count: 5,
-    title: 'DOST Courseware (5 Lessons)',
+    title: 'DOST Courseware',
     short: 'Science and math lessons, from Grade 3 to Senior High',
     year: '2023',
     description: 'Mobile courseware for DOST that turns science and math lessons, from Grade 3 solids, liquids, and gases to Senior High limits and continuity, into illustrated stories and hands-on activities.',
@@ -1147,7 +1147,7 @@ export const PROJECTS = {
   vlas: {
     path: '/dost-vlas',
     count: 6,
-    title: 'DOST VLAS (6 Modules)',
+    title: 'DOST VLAS',
     short: 'Biology lab modules for junior high school learners',
     year: '2023',
     description: 'Six biology modules for DOST-SEI’s Virtual Laboratory Application in Science, a lab simulator that brings hands-on science to students in schools without a laboratory.',
@@ -1347,9 +1347,9 @@ export const PROJECTS = {
         },
         { title: "The whole picture for counselors", text: "Dashboards and automated assessment reports show each student’s progress." },
       ],
-      outcome: "Deployed as our capstone at STI College Novaliches and invited to a symposium. Leading the team while building the whole platform earned me two awards, including Most Outstanding Project Manager.",
+      outcome: "Deployed as our capstone at STI College Novaliches and invited to a symposium.",
       metrics: [
-        { value: '2', label: 'Awards: Most Outstanding Project Manager, and Eye in the Calm of the Storm, for staying composed under pressure' },
+        { value: '24/7', label: 'Chatbot support for students whenever a counselor is unavailable' },
         { value: '4', label: 'Capstone team members, led as project manager while I built the platform' },
         { value: 'Invited', label: 'To a symposium, as a featured capstone project' },
       ],

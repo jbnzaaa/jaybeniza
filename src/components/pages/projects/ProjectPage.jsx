@@ -17,6 +17,8 @@ import SplitText from '../../common/SplitText'
 import { PROJECTS, titleEmphasis } from './projects'
 // the archive's projects - which run in their own order
 import { ARCHIVE } from './archive'
+// the work page's projects - the order "next project" runs in
+import { SHOWN } from './shown'
 // the closing section - the landing page's contact block, here leading
 // on to the next project
 import Contact from '../Contact'
@@ -25,10 +27,10 @@ import { usePageTitle } from '../../../utils/pageTitle'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 // the order the projects run in, for "next project": the work page's own
-// list, in its order (ProjectsPage.jsx) - newest first, and back to the
-// first after the last. a project that is not on that list (DailyDiscount)
-// is never offered as the next one, and leads on to the first
-const ORDER = ['gurover', 'tingi', 'portfoliov3', 'comelec', 'psgs', 'pci', 'aaccup', 'arise', 'courseware', 'regain'];
+// list, in its order (ProjectsPage.jsx: shown.js, newest year first) - and
+// back to the first after the last. a project that is not on that list
+// (DailyDiscount) is never offered as the next one, and leads on to the first
+const ORDER = SHOWN.slice().sort((a, b) => Number(PROJECTS[b].year) - Number(PROJECTS[a].year));
 // an archived project leads on to the next in the archive, and back to its
 // first after its last
 const ARCHIVE_ORDER = ARCHIVE.map(({ id }) => id).filter((key) => PROJECTS[key]);
@@ -621,7 +623,8 @@ function ProjectPage({ project: given, id }) {
     const title = fxTitle.current;
     const fit = () => {
       title.style.fontSize = '';
-      const widest = Math.max(...[...title.querySelectorAll('.split-word')].map((word) => word.scrollWidth));
+      // (the last word and its count, held together, fit as one)
+      const widest = Math.max(...[...title.querySelectorAll('.split-word, .case-title-tail')].map((word) => word.scrollWidth));
       if (widest > title.clientWidth) {
         title.style.fontSize = `${parseFloat(getComputedStyle(title).fontSize) * title.clientWidth / widest * .98}px`;
       }
@@ -741,7 +744,22 @@ function ProjectPage({ project: given, id }) {
               laptop:col-span-5
               laptop-lg:col-span-5
               desktop:col-span-5'>
-              <SplitText text={project.title} id='animate-case-hero' emphasis={titleEmphasis(project.title)} />
+              {project.count == null ? (
+                <SplitText text={project.title} id='animate-case-hero' emphasis={titleEmphasis(project.title)} />
+              ) : (
+                <>
+                  {/* how many lessons or modules the project stands for, set
+                    as its work card's count - held to the name's last word,
+                    so it never wraps to a line of its own */}
+                  <SplitText text={project.title.split(' ').slice(0, -1).join(' ')} id='animate-case-hero' emphasis={titleEmphasis(project.title)} />
+                  <span className='case-title-tail inline-flex whitespace-nowrap'>
+                    <SplitText text={project.title.split(' ').slice(-1)[0]} id='animate-case-hero' emphasis={titleEmphasis(project.title)} />
+                    <sup className='nav-count'>
+                      <SplitText text={`[${project.count}]`} id='animate-case-hero' />
+                    </sup>
+                  </span>
+                </>
+              )}
             </h1>
             {/* summary - upper right */}
             <p className='flex flex-wrap content-start text-caption

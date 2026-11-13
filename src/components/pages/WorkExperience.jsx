@@ -21,11 +21,11 @@ const ROLES = [
     gif: TENOR + 'vPeTGrwEZrEAAAAM/iron-man-armor.gif',
     alt: 'Iron Man suiting up in the Mark 5 armor',
     bullets: [
-      'Led end-to-end UI/UX design for 10 web and mobile products, including enhancement phases for 2 platforms first designed in 2023–2024, translating client requirements into user flows, prototypes, and development-ready interfaces delivered within 1–2 days of each request.',
-      'Conducted moderated usability and role-based testing across 4 platforms, redesigning key workflows to reduce task steps by up to 60%.',
-      'Designed and built front-end interfaces for 2 applications using Claude Code, supporting one production launch and one client pilot.',
-      'Established a Figma design system with 40+ documented components and light/dark variants, standardizing UI patterns across 100+ screens.',
-      'Delivered a 3D training game’s UI/UX design package, interactive prototype, and brand guidelines within 3 days, ahead of schedule.',
+      'Led end-to-end UI/UX design for 10 web and mobile products, including enhancement phases for 2 platforms first designed in 2023–2024, turning client requirements into user flows, prototypes, and developer-ready interfaces within 1–2 days of each request.',
+      'Ran moderated usability and role-based testing across 4 platforms and redesigned key workflows to cut task steps by up to 60%, including class setup reduced from 5 steps to 2.',
+      'Designed and built front-end interfaces for 2 applications with Claude Code, supporting one production launch and one client pilot with teachers and school administrators.',
+      'Built a Figma design system from scratch with 40+ documented components in light and dark modes, standardizing UI patterns across 100+ screens.',
+      'Delivered 100+ wireframe screens as one interactive prototype, plus brand guidelines, for a 3D election training game within 3 days, 1–2 days ahead of the deadline.',
     ],
   },
   {
@@ -37,11 +37,11 @@ const ROLES = [
     gif: TENOR + 'LiDD5Bl5AXEAAAAM/spongebob-the.gif',
     alt: 'SpongeBob writing his essay',
     bullets: [
-      'Designed 1,000+ screens across 16 client products, producing wireframes, prototypes, and high-fidelity web and mobile interfaces.',
-      'Redesigned an accreditation platform end to end, from its public website to role-based workspaces for nine user roles.',
-      'Designed three government education products: a science learning portal, a mobile courseware app, and six biology modules for a virtual laboratory.',
-      'Collaborated with project managers and developers to clarify requirements, prepare implementation-ready specifications, and review developed interfaces.',
-      'Delivered developer-ready handoffs within 1–2 days of requests; co-facilitated a UI/UX workshop introducing interns to design workflows and tools.',
+      'Designed 1,000+ screens across 16 client products, from wireframes and prototypes to high-fidelity web and mobile interfaces.',
+      'Redesigned an accreditation platform end to end, with 100+ screens across its public website and workspaces for 9 user roles.',
+      'Designed 3 government science education products: a learning portal built on 22 reusable components, 5 mobile courseware lessons, and 6 biology modules for a virtual laboratory.',
+      'Took each courseware lesson from storyboard to working prototype in 2–3 days, and delivered developer-ready handoffs within 1–2 days of requests.',
+      'Worked with project managers and developers to clarify requirements, write implementation-ready specs, and review built interfaces; co-facilitated a UI/UX workshop introducing interns to design workflows and tools.',
     ],
   },
 ];

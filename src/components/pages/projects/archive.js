@@ -22,4 +22,6 @@ export const ARCHIVE = [
   { id: 'jbnza' },
   { id: 'archstone' },
   { id: 'artisan' },
+  // 2021: a capstone, not a design exploration (its own label)
+  { id: 'regain', kind: 'Capstone project' },
 ];

@@ -29,7 +29,7 @@ import { usePageTitle } from '../../utils/pageTitle'
 // experience entries below it - nothing here that they do not back up
 // the introduction: the page's first screen
 const INTRO = [
-  "I'm Jay Beniza, a UI/UX and Product Designer based in the Philippines, with 3.5+ years of experience designing web and mobile products.",
+  "I'm Jay Beniza, a UI/UX and Product Designer based in the Philippines, with nearly 4 years of experience designing web and mobile products.",
   'I work through the complicated parts of product design, from unclear requirements to workflows spanning multiple user roles. I turn those challenges into structured, developer-ready interfaces, combining research, design systems, and AI-assisted front-end development.',
 ];
 

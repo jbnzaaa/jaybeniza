@@ -1,6 +1,6 @@
 # Jay Beniza
 
-> UI/UX and product designer based in the Philippines, with 3.5+ years of experience designing 24 web and mobile products for government, education, and research clients. Builds Figma design systems and AI-assisted front-ends with Claude Code.
+> UI/UX and product designer based in the Philippines, with nearly 4 years of experience designing 24 web and mobile products, most for education, government, and public sector clients. Builds Figma design systems and AI-assisted front-ends with Claude Code.
 
 This is Jay Beniza's portfolio. It shows case studies of selected work, an archive of earlier explorations, an about page with experience and skills, and a project request form for clients.
 
@@ -14,15 +14,17 @@ This is Jay Beniza's portfolio. It shows case studies of selected work, an archi
 
 ## Case studies
 
-- [Portfolio](https://jaybeniza.vercel.app/portfolio-2026)
-- [BiteWise](https://jaybeniza.vercel.app/bitewise)
 - [GuRover](https://jaybeniza.vercel.app/gurover)
+- [Rover SIS](https://jaybeniza.vercel.app/rover)
+- [BiteWise](https://jaybeniza.vercel.app/bitewise)
+- [Portfolio](https://jaybeniza.vercel.app/portfolio-2026)
 - [COMELEC ACM](https://jaybeniza.vercel.app/comelec-acm)
 - [PSGS](https://jaybeniza.vercel.app/psgs)
+- [PCI Central App](https://jaybeniza.vercel.app/pci-central-app)
 - [AACCUP](https://jaybeniza.vercel.app/aaccup)
 - [DOST ARISE](https://jaybeniza.vercel.app/dost-arise)
 - [DOST Courseware](https://jaybeniza.vercel.app/dost-courseware)
-- [PCI Central App](https://jaybeniza.vercel.app/pci-central-app)
+- [DOST VLAS](https://jaybeniza.vercel.app/dost-vlas)
 
 ## Services
 

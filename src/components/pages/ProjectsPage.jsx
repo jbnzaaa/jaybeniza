@@ -66,7 +66,7 @@ const HEADLINE_LINES = [
   'from brief to launch.',
 ];
 
-const DESCRIPTION = 'Case studies and shipped web and mobile products for education, government, and research clients, from multi-role platforms to interactive training and a design system.';
+const DESCRIPTION = 'Case studies and shipped web and mobile products for education, government, and public sector clients, from multi-role platforms to interactive training and a design system.';
 
 /**
  * The work page (route /work), in the landing page's layout: a first
@@ -77,7 +77,7 @@ const DESCRIPTION = 'Case studies and shipped web and mobile products for educat
  * under it.
  */
 function ProjectsPage() {
-  usePageTitle('Work', 'Selected UI/UX work by Jay Beniza: case studies and shipped web and mobile products for government, education, and research clients.');
+  usePageTitle('Work', 'Selected UI/UX work by Jay Beniza: case studies and shipped web and mobile products for education, government, and public sector clients.');
 
   useEffect(() => {
     // the first screen is in view at load, so its reveal is triggered off

@@ -27,8 +27,6 @@ const ITEMS = [
   { id: 'award-agility', title: 'Agility Award', kind: 'Award', year: '2025', file: null },
   { id: 'agile-101-scrum', title: 'Agile 101: Scrum Framework Fundamentals', kind: 'Completion', year: '2024', file: null },
   { id: 'civil-service-eligibility', title: 'Civil Service Honor Graduate Eligibility', kind: 'Credential', year: '2023', file: null },
-  { id: 'award-project-manager', title: 'Most Outstanding Project Manager', kind: 'Award', year: '2022', file: null },
-  { id: 'award-calm-storm', title: 'Eye in the Calm of the Storm Award', kind: 'Award', year: '2022', file: null },
 ];
 
 /**

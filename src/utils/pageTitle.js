@@ -9,7 +9,7 @@ export const SITE_TITLE = 'Jay Beniza | UI/UX & Product Designer';
 export const SITE_URL = 'https://jaybeniza.vercel.app';
 
 // the site's own description (as in index.html), for a page without one
-export const SITE_DESCRIPTION = 'Jay Beniza, UI/UX and product designer in the Philippines with 3.5+ years designing 24 web and mobile products, Figma design systems, and AI-assisted front-ends built with Claude Code.';
+export const SITE_DESCRIPTION = 'Jay Beniza, UI/UX and product designer in the Philippines with nearly 4 years designing 24 web and mobile products, Figma design systems, and AI-assisted front-ends built with Claude Code.';
 
 // sets the content of a <meta> tag, by its name or property, adding the
 // tag if index.html has none

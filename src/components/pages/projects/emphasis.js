@@ -14,8 +14,8 @@ const TITLE_EMPHASIS = {
   'PSGS': { letters: [0, 1] },
   'AACCUP': { letters: [0, 1] },
   'DOST ARISE': ['ARISE'],
-  'DOST Courseware (5 Lessons)': ['Courseware'],
-  'DOST VLAS (6 Modules)': ['VLAS'],
+  'DOST Courseware': ['Courseware'],
+  'DOST VLAS': ['VLAS'],
   'ReGain': { letters: [2, 3, 4, 5] },
   'Central App Design System': ['System'],
 };

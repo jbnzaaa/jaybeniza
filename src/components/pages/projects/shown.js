@@ -3,5 +3,5 @@
 // can count them without pulling every project's content into the
 // landing page's download.
 // StockNear is hidden for now: its page sends visitors to the work page (App.jsx)
-export const SHOWN = ['gurover', 'rover', 'tingi', 'portfoliov3', 'comelec', 'psgs', 'pci', 'aaccup', 'arise', 'courseware', 'vlas', 'regain'];
-// (Portfolio 2022 and its first edition are on the archive page: archive.js)
+export const SHOWN = ['gurover', 'rover', 'tingi', 'portfoliov3', 'comelec', 'psgs', 'pci', 'aaccup', 'arise', 'courseware', 'vlas'];
+// (Portfolio 2022, its first edition, and ReGain are on the archive page: archive.js)

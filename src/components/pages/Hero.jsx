@@ -8,7 +8,7 @@ import SplitText from '../common/SplitText'
 import ScrollCue from '../common/ScrollCue'
 
 // (what the headline does not say: my role, what kind of work, how long, and for whom)
-const HIGHLIGHT_TEXT = "UI/UX & Product Designer who turns tangled workflows into products people can use. 24 web and mobile products in 3.5+ years, from first brief to developer handoff.";
+const HIGHLIGHT_TEXT = "UI/UX & Product Designer who turns tangled workflows into products people can use. 24 web and mobile products in nearly 4 years, from first brief to developer handoff.";
 
 // the headline, broken into three set lines from tablet width up. on a
 // phone it is one sentence left to wrap where the screen ends it: set as

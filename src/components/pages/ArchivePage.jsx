@@ -16,16 +16,17 @@ import ScrollCue from '../common/ScrollCue'
 import { usePageTitle } from '../../utils/pageTitle'
 
 // the cards: the work page's. one with a page (projects.js) opens it, with
-// its label (year / design exploration - none of these is client work) and its cover; one
+// its label (year / design exploration - none of these is client work - or
+// the `kind` its entry gives) and its cover; one
 // with no page yet opens nothing, its label is year / what it is, and its
 // picture is the first in its folder, if it has one (archivePictures)
-const ITEMS = ARCHIVE.map(({ id, title, year }) => {
+const ITEMS = ARCHIVE.map(({ id, title, year, kind = 'Design exploration' }) => {
   const project = PROJECTS[id];
   if (project) {
     return {
       key: `archive-${id}`,
       title: project.title,
-      label: `${project.year} / Design exploration`,
+      label: `${project.year} / ${kind}`,
       to: project.path,
       action: 'View',
       picture: project.card || project.cover || project.screenshots?.[0]?.src,
@@ -35,7 +36,7 @@ const ITEMS = ARCHIVE.map(({ id, title, year }) => {
   return {
     key: `archive-${id}`,
     title,
-    label: `${year} / Design exploration`,
+    label: `${year} / ${kind}`,
     picture: (({ card, cover, screenshots }) => card || cover || screenshots[1]?.src || screenshots[1]?.phones?.[0].src)(archivePictures(id)),
     empty: [title, 'Preview coming soon'],
   };
@@ -46,7 +47,7 @@ const HEADLINE_LINES = [
   'beyond the brief.',
 ];
 
-const DESCRIPTION = 'Personal projects, redesigns, and design explorations for web and mobile, from 2022 and 2023.';
+const DESCRIPTION = 'Personal projects, a capstone, redesigns, and design explorations for web and mobile, from 2021 to 2023.';
 
 /**
  * The archive page (route /archive), in the work page's layout: a first

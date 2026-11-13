@@ -16,16 +16,18 @@ import SplitText from '../common/SplitText'
 import { pixelText, withPixels } from '../../utils/pixelText'
 // the projects on the work page, counted beside its link
 import { SHOWN } from './projects/shown'
+// the archive's projects, counted beside its link
+import { ARCHIVE } from './projects/archive'
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 // every destination. from tablet width up they are all in the bar itself;
 // on a phone, where there is no room for them, they are in the menu. the
 // logo is the way home, and each route is named after its link. Work
-// carries the number of projects on it (`count`), small in its upper
+// and Archive carry the number of projects on them (`count`), small in their upper
 // right
 const NAV_LINKS = [
   { label: 'Work', count: SHOWN.length, to: '/work' },
-  { label: 'Archive', to: '/archive' },
+  { label: 'Archive', count: ARCHIVE.length, to: '/archive' },
   { label: 'Services', to: '/services' },
   { label: 'About', to: '/about' },
 ];
